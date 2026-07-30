@@ -1,1 +1,5 @@
 .DS_Store
+vision/node_modules
+vision/.next
+vision/.vercel
+vision/*.log

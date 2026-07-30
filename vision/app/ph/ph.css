@@ -1,0 +1,336 @@
+/* PH Talent — sunrise energy, coral + deep teal, Unbounded + Sora */
+
+.ph {
+  --night: #041820;
+  --deep: #0a3038;
+  --coral: #ff4d6d;
+  --gold: #ffd166;
+  --mint: #06d6a0;
+  --paper: #fff5f0;
+  --mute: #8aa0a8;
+  min-height: 100vh;
+  background: var(--night);
+  color: var(--paper);
+  font-family: "Sora", sans-serif;
+}
+
+.ph-banner {
+  background: #020f14;
+  color: var(--mute);
+}
+
+.ph-banner a {
+  color: var(--gold);
+}
+
+.ph-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem clamp(1.25rem, 4vw, 3.5rem);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.ph-brand {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+}
+
+.ph-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.ph-nav-links {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.88rem;
+  color: var(--mute);
+}
+
+.ph-nav-links a:hover {
+  color: var(--gold);
+}
+
+.ph-lang {
+  display: inline-flex;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.ph-lang button {
+  padding: 0.4rem 0.75rem;
+  color: var(--mute);
+}
+
+.ph-lang button.active {
+  background: var(--coral);
+  color: #fff;
+}
+
+.ph-hero {
+  position: relative;
+  min-height: min(92vh, 840px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3.5rem)
+    clamp(2.5rem, 5vw, 4rem);
+  overflow: hidden;
+}
+
+.ph-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 85%, rgba(255, 77, 109, 0.55), transparent 55%),
+    radial-gradient(ellipse 45% 40% at 90% 20%, rgba(255, 209, 102, 0.3), transparent 50%),
+    radial-gradient(ellipse 40% 35% at 60% 60%, rgba(6, 214, 160, 0.15), transparent 50%),
+    linear-gradient(160deg, #041820 0%, #0a3038 45%, #1a2030 100%);
+  animation: drift 12s ease-in-out infinite alternate;
+}
+
+.ph-hero-orb {
+  position: absolute;
+  width: min(55vw, 420px);
+  height: min(55vw, 420px);
+  right: -8%;
+  top: 8%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 200deg,
+    var(--coral),
+    var(--gold),
+    var(--mint),
+    var(--coral)
+  );
+  filter: blur(2px);
+  opacity: 0.55;
+  animation: drift 10s ease-in-out infinite alternate-reverse;
+  mask-image: radial-gradient(circle, black 40%, transparent 70%);
+}
+
+.ph-hero > *:not(.ph-hero-bg):not(.ph-hero-orb) {
+  position: relative;
+  z-index: 1;
+}
+
+.ph-hero-brand {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+.ph-hero h1 {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.3rem, 6.5vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.1rem;
+  max-width: 13ch;
+}
+
+.ph-hero-lead {
+  max-width: 30rem;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  line-height: 1.55;
+  color: #c5d4da;
+  margin: 0 0 2rem;
+}
+
+.ph-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.ph-btn {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.ph-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+.ph-btn-primary {
+  background: var(--coral);
+  color: #fff;
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+  padding-right: 1.75rem;
+}
+
+.ph-btn-primary:hover {
+  filter: brightness(1.08);
+}
+
+.ph-btn-ghost {
+  color: var(--gold);
+  border-bottom: 2px solid var(--gold);
+  padding: 0.85rem 0.25rem;
+}
+
+.ph-gate-note {
+  font-size: 0.85rem;
+  color: var(--mute);
+  max-width: 28rem;
+}
+
+.ph-gate-note a {
+  color: var(--mint);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ph-proof {
+  padding: clamp(3rem, 7vw, 5rem) clamp(1.25rem, 4vw, 3.5rem);
+  background: var(--deep);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ph-proof-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 0.75rem;
+}
+
+.ph-proof h2 {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  margin: 0 0 1rem;
+  max-width: 16ch;
+  line-height: 1.15;
+}
+
+.ph-proof p {
+  max-width: 34rem;
+  color: #a8bcc4;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+}
+
+.ph-tracks {
+  display: grid;
+  gap: 0.65rem;
+}
+
+@media (min-width: 700px) {
+  .ph-tracks {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ph-track {
+  padding: 1.35rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-top: 3px solid var(--coral);
+}
+
+.ph-track:nth-child(2) {
+  border-top-color: var(--gold);
+}
+
+.ph-track:nth-child(3) {
+  border-top-color: var(--mint);
+}
+
+.ph-track strong {
+  display: block;
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+}
+
+.ph-track span {
+  font-size: 0.88rem;
+  color: var(--mute);
+  line-height: 1.45;
+}
+
+.ph-footer {
+  padding: 1.5rem clamp(1.25rem, 4vw, 3.5rem) 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--mute);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ph-footer a:hover {
+  color: var(--coral);
+}
+
+.ph-apply {
+  min-height: 70vh;
+  padding: clamp(3rem, 8vw, 5.5rem) clamp(1.25rem, 4vw, 3.5rem);
+  max-width: 40rem;
+}
+
+.ph-apply h1 {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  margin: 0 0 1rem;
+  line-height: 1.15;
+}
+
+.ph-apply p {
+  color: #a8bcc4;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.ph-form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.ph-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--mute);
+}
+
+.ph-form input,
+.ph-form select,
+.ph-form textarea {
+  font: inherit;
+  padding: 0.9rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--paper);
+  border-radius: 0;
+}
+
+.ph-form input:focus,
+.ph-form select:focus,
+.ph-form textarea:focus {
+  outline: 1px solid var(--coral);
+  border-color: var(--coral);
+}
+
+.ph-form button {
+  margin-top: 0.5rem;
+  justify-self: start;
+}
