@@ -102,15 +102,10 @@ export default function HubPage() {
             </p>
           </div>
 
-          <div className="hub-trio anim-fade" aria-hidden>
-            {markets.map((m) => (
-              <figure key={m.href}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.img} alt="" />
-                <figcaption>{m.name}</figcaption>
-              </figure>
-            ))}
-          </div>
+          <figure className="hub-hero-visual anim-fade" aria-hidden>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/hero-hub-2026.jpg" alt="" />
+          </figure>
         </div>
 
         <div className="hub-frame anim-fade">

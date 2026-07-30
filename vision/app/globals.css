@@ -966,50 +966,28 @@ a.gate-call:hover {
   }
 }
 
-/* Preview of the three doors — the VAs each market leads with. */
-.hub-trio {
+/* Generic brand atmosphere — no faces. */
+.hub-hero-visual {
   display: none;
+  margin: 0;
 }
 
 @media (min-width: 1040px) {
-  .hub-trio {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.85rem;
-    align-items: start;
+  .hub-hero-visual {
+    display: block;
     max-width: 31rem;
     justify-self: end;
-  }
-
-  .hub-trio figure {
-    margin: 0;
-  }
-
-  .hub-trio figure:nth-child(1) {
-    padding-top: 1.6rem;
-  }
-
-  .hub-trio figure:nth-child(3) {
-    padding-top: 3.2rem;
-  }
-
-  .hub-trio img {
     width: 100%;
-    aspect-ratio: 3 / 4;
+  }
+
+  .hub-hero-visual img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
-    object-position: 50% 14%;
-    border-radius: 14px;
+    object-position: 55% 45%;
+    border-radius: 16px;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16),
       0 18px 40px rgba(4, 14, 26, 0.36);
-  }
-
-  .hub-trio figcaption {
-    margin-top: 0.5rem;
-    font-size: 0.68rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: #9db1c5;
   }
 }
 
@@ -1140,6 +1118,15 @@ a.gate-call:hover {
 .hub-section-head span {
   font-size: 0.94rem;
   color: var(--mute);
+}
+
+.hub-gate-note {
+  margin: 0;
+  padding: 0 var(--shell) 1.35rem;
+  max-width: 42rem;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: #9eb4c8;
 }
 
 .hub-grid {
