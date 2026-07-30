@@ -1,6 +1,6 @@
 # Virtual Coworker — Vision Demo
 
-Interview vision demo: **three sharply different market experiences** for Virtual Coworker, plus a hub to flip between them.
+Interview vision demo: **three market evolutions of the same brand family**, plus a hub to flip between them.
 
 > Frame: “where we could go” — not “replacing WordPress on Monday.”
 
@@ -9,11 +9,19 @@ Interview vision demo: **three sharply different market experiences** for Virtua
 | Path | Audience | Look |
 |------|----------|------|
 | `/` | Hub | Flip between all three |
-| `/us` | US businesses hiring VAs | Steel navy + teal · Syne / Outfit |
-| `/au` | AU businesses hiring VAs | Coastal light · Fraunces / Plus Jakarta |
-| `/ph` | PH talent / VA careers | Sunrise energy · Unbounded / Sora · EN/TL toggle |
+| `/us` | US businesses hiring VAs | Dark navy evolution · Poppins + Century Gothic · gold CTAs |
+| `/au` | AU businesses hiring VAs | Light coastal evolution · same palette · gold CTAs |
+| `/ph` | PH talent / VA careers | Warmer opportunity energy · orange CTAs · EN/TL toggle |
 
 Buyer sites (`/us`, `/au`) gate **hire vs job** on entry. Job seekers are sent to `/ph`. The PH site is talent-only and points buyers to US/AU.
+
+## Brand source
+
+Pulled from live Kadence sites (`virtualcoworker.com` / `.com.au` / `.com.ph`):
+
+- Palette: `#214873` navy · `#33DED8` cyan · `#FAC056` gold · `#0071C9` blue · `#F7630C` orange
+- Fonts: **Poppins** (body) + **Century Gothic Paneuropean** (display/nav, from their theme)
+- Assets: logo-vc, Clutch badges, how-it-works, role photos, PH talent portraits
 
 ## Local
 
@@ -33,6 +41,8 @@ This folder is a Next.js App Router app. On Vercel, set the project **Root Direc
 cd vision
 npx vercel --yes --prod
 ```
+
+Live: https://vision-three-alpha.vercel.app
 
 ## Repo
 

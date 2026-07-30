@@ -12,7 +12,13 @@ export default function PHApply() {
 
       <nav className="ph-nav">
         <Link href="/ph" className="ph-brand">
-          Virtual Coworker Careers
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-vc.png"
+            alt="Virtual Coworker"
+            className="logo-img logo-img-on-dark"
+          />
+          <span className="ph-brand-tag">Careers</span>
         </Link>
         <div className="ph-nav-right">
           <div className="ph-nav-links">

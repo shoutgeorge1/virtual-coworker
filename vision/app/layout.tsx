@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Virtual Coworker · Vision Demo",
   description:
     "Interview vision demo: three market-specific brand experiences for Virtual Coworker.",
+  icons: { icon: "/brand/favicon.png" },
 };
 
 export default function RootLayout({
@@ -22,7 +23,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Unbounded:wght@500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>

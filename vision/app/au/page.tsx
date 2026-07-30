@@ -12,13 +12,17 @@ export default function AUHome() {
   return (
     <main className="au">
       <p className="vision-banner au-banner">
-        Vision demo ·{" "}
-        <Link href="/">back to hub</Link> · not live product
+        Vision demo · <Link href="/">back to hub</Link> · not live product
       </p>
 
       <nav className="au-nav">
         <Link href="/au" className="au-brand">
-          Virtual Coworker
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-vc.png"
+            alt="Virtual Coworker"
+            className="logo-img"
+          />
         </Link>
         <div className="au-nav-links">
           <Link href="/au#proof">Stories</Link>
@@ -29,15 +33,19 @@ export default function AUHome() {
 
       <section className="au-hero">
         <div className="au-hero-sky" aria-hidden />
-        <div className="au-hero-wave" aria-hidden />
+        <div className="au-hero-photo" aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/ea.jpg" alt="" />
+        </div>
 
-        <p className="au-hero-brand anim-rise">Virtual Coworker</p>
+        <p className="au-hero-kicker anim-rise">AU · Hire a virtual assistant</p>
         <h1 className="anim-rise-d1">
           A proper VA for your Australian business.
         </h1>
         <p className="au-hero-lead anim-rise-d2">
           Clear pricing. Local support hours that make sense. An assistant who
-          feels like part of the team — without the twin look of the US site.
+          feels like part of the team — same brand as the US site, daylight
+          feel for AU.
         </p>
 
         <div className="au-cta-row anim-rise-d2">
@@ -68,11 +76,27 @@ export default function AUHome() {
         <div className="au-proof-inner">
           <div>
             <p className="au-proof-label">Built for Aussie operators</p>
-            <h2>Same company. Different door. Different feel.</h2>
+            <h2>Same company. Different door. Same family.</h2>
             <p>
-              Vision direction: coastal light, warm type, and hire-first gating —
-              so AU buyers never land in a US clone or a job board by mistake.
+              Coastal light treatment of Virtual Coworker navy, cyan, and gold —
+              with hire-first gating so AU buyers never land in a US clone or a
+              job board by mistake.
             </p>
+            <div className="au-steps">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/step1.webp" alt="Step 1" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/step2.webp" alt="Step 2" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/support.jpg" alt="Customer support VA" />
+            </div>
+            <div className="au-badge">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/clutch-au.webp"
+                alt="Top Clutch Virtual Assistant Company Australia"
+              />
+            </div>
           </div>
           <div className="au-quote">
             <blockquote>

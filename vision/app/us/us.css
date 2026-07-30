@@ -1,41 +1,44 @@
-/* US Buyers — steel navy + electric teal, Syne + Outfit */
+/* US Buyers — dark navy evolution of VC brand (#214873 + cyan + gold CTA) */
 
 .us {
-  --navy: #071522;
-  --steel: #0e2a3d;
-  --teal: #00c4b4;
-  --teal-dim: #009e91;
-  --paper: #f2f4f7;
-  --mute: #8a9aab;
+  --navy: #142a48;
+  --steel: #1a3558;
+  --deep: #0f1c2e;
+  --cyan: #33ded8;
+  --gold: #fac056;
+  --blue: #0071c9;
+  --paper: #f4f7fa;
+  --mute: #8a9db0;
   --line: rgba(255, 255, 255, 0.12);
   min-height: 100vh;
-  background: var(--navy);
+  background: var(--deep);
   color: var(--paper);
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-body);
 }
 
 .us-banner {
-  background: #041018;
+  background: #0a1420;
   color: var(--mute);
 }
 
 .us-banner a {
-  color: var(--teal);
+  color: var(--cyan);
 }
 
 .us-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.1rem clamp(1.25rem, 4vw, 3.5rem);
+  padding: 0.95rem clamp(1.25rem, 4vw, 3.5rem);
   border-bottom: 1px solid var(--line);
+  background: rgba(15, 28, 46, 0.92);
+  backdrop-filter: blur(8px);
 }
 
 .us-brand {
-  font-family: "Syne", sans-serif;
-  font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 .us-nav-links {
@@ -43,73 +46,78 @@
   gap: 1.25rem;
   font-size: 0.9rem;
   color: var(--mute);
+  font-weight: 500;
 }
 
 .us-nav-links a:hover {
-  color: var(--paper);
+  color: var(--cyan);
 }
 
 .us-hero {
   position: relative;
-  min-height: min(92vh, 820px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  min-height: min(92vh, 840px);
+  display: grid;
+  align-content: end;
   padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3.5rem)
     clamp(2.5rem, 5vw, 4rem);
   overflow: hidden;
+}
+
+.us-hero-media {
+  position: absolute;
+  inset: 0;
+}
+
+.us-hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0.42;
 }
 
 .us-hero-bg {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 85% 15%, rgba(0, 196, 180, 0.28), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(40, 90, 140, 0.35), transparent 50%),
-    linear-gradient(180deg, #0a1c2c 0%, #071522 55%, #050f18 100%);
-  animation: drift 14s ease-in-out infinite alternate;
+    linear-gradient(
+      105deg,
+      rgba(15, 28, 46, 0.96) 0%,
+      rgba(20, 42, 72, 0.88) 48%,
+      rgba(33, 72, 115, 0.55) 100%
+    ),
+    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(51, 222, 216, 0.22), transparent 55%);
 }
 
-.us-hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, black 40%, transparent 95%);
-  pointer-events: none;
-}
-
-.us-hero > *:not(.us-hero-bg):not(.us-hero-grid) {
+.us-hero > *:not(.us-hero-media):not(.us-hero-bg) {
   position: relative;
   z-index: 1;
 }
 
-.us-hero-brand {
-  font-family: "Syne", sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.15rem, 2.5vw, 1.45rem);
-  color: var(--teal);
-  letter-spacing: -0.02em;
-  margin-bottom: 1.25rem;
+.us-hero-kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  font-weight: 600;
+  margin: 0 0 1rem;
 }
 
 .us-hero h1 {
-  font-family: "Syne", sans-serif;
-  font-weight: 800;
-  font-size: clamp(2.6rem, 7.5vw, 5.2rem);
-  line-height: 0.95;
-  letter-spacing: -0.035em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
   margin: 0 0 1.1rem;
-  max-width: 12ch;
+  max-width: 14ch;
 }
 
 .us-hero-lead {
   max-width: 32rem;
-  font-size: clamp(1.05rem, 2vw, 1.2rem);
-  line-height: 1.5;
-  color: #b8c4d0;
+  font-size: clamp(1.05rem, 2vw, 1.18rem);
+  line-height: 1.55;
+  color: #c2cedb;
   margin: 0 0 2rem;
 }
 
@@ -122,20 +130,20 @@
 
 .us-btn {
   display: inline-block;
-  padding: 0.9rem 1.4rem;
+  padding: 0.95rem 1.45rem;
   font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.01em;
-  transition: background 0.2s, color 0.2s, transform 0.2s;
+  transition: background 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
 }
 
 .us-btn-primary {
-  background: var(--teal);
-  color: #041018;
+  background: var(--gold);
+  color: var(--navy);
 }
 
 .us-btn-primary:hover {
-  background: #33d4c6;
+  background: #ffd06e;
   transform: translateY(-1px);
 }
 
@@ -145,11 +153,12 @@
 }
 
 .us-btn-ghost:hover {
-  border-color: rgba(255, 255, 255, 0.35);
+  border-color: var(--cyan);
+  color: var(--cyan);
 }
 
 .us-gate-wrap {
-  max-width: 36rem;
+  max-width: 38rem;
 }
 
 .us-gate-label {
@@ -166,12 +175,12 @@
 }
 
 .us .gate-hire {
-  border-color: rgba(0, 196, 180, 0.45);
-  background: rgba(0, 196, 180, 0.08);
+  border-color: rgba(51, 222, 216, 0.5);
+  background: rgba(51, 222, 216, 0.1);
 }
 
 .us .gate-hire:hover {
-  background: rgba(0, 196, 180, 0.16);
+  background: rgba(51, 222, 216, 0.18);
 }
 
 .us .gate-job:hover {
@@ -184,21 +193,34 @@
   background: var(--steel);
 }
 
+.us-proof-grid {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 900px) {
+  .us-proof-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+  }
+}
+
 .us-proof-label {
   font-size: 0.7rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--teal);
+  color: var(--cyan);
   margin-bottom: 0.75rem;
 }
 
 .us-proof h2 {
-  font-family: "Syne", sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
-  letter-spacing: -0.03em;
+  font-size: clamp(1.65rem, 3.2vw, 2.3rem);
+  letter-spacing: -0.02em;
   margin: 0 0 1rem;
-  max-width: 18ch;
+  max-width: 20ch;
+  line-height: 1.15;
 }
 
 .us-proof p {
@@ -217,16 +239,43 @@
 
 .us-stats strong {
   display: block;
-  font-family: "Syne", sans-serif;
-  font-size: clamp(1.6rem, 3vw, 2rem);
-  font-weight: 800;
-  color: var(--teal);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  font-weight: 700;
+  color: var(--cyan);
   margin-bottom: 0.25rem;
 }
 
 .us-stats span {
   font-size: 0.85rem;
   color: var(--mute);
+}
+
+.us-proof-visual {
+  position: relative;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.us-proof-visual img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.us-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.us-badge-row img {
+  height: 72px;
+  width: auto;
 }
 
 .us-footer {
@@ -241,10 +290,9 @@
 }
 
 .us-footer a:hover {
-  color: var(--teal);
+  color: var(--cyan);
 }
 
-/* Consult page */
 .us-consult {
   min-height: 70vh;
   padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 3.5rem);
@@ -252,10 +300,10 @@
 }
 
 .us-consult h1 {
-  font-family: "Syne", sans-serif;
-  font-weight: 800;
-  font-size: clamp(2rem, 5vw, 3rem);
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  letter-spacing: -0.02em;
   margin: 0 0 1rem;
 }
 
@@ -291,8 +339,8 @@
 .us-form input:focus,
 .us-form select:focus,
 .us-form textarea:focus {
-  outline: 1px solid var(--teal);
-  border-color: var(--teal);
+  outline: 1px solid var(--cyan);
+  border-color: var(--cyan);
 }
 
 .us-form select {

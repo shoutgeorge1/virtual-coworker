@@ -12,13 +12,17 @@ export default function USHome() {
   return (
     <main className="us">
       <p className="vision-banner us-banner">
-        Vision demo ·{" "}
-        <Link href="/">back to hub</Link> · not live product
+        Vision demo · <Link href="/">back to hub</Link> · not live product
       </p>
 
       <nav className="us-nav">
         <Link href="/us" className="us-brand">
-          Virtual Coworker
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-vc.png"
+            alt="Virtual Coworker"
+            className="logo-img logo-img-on-dark"
+          />
         </Link>
         <div className="us-nav-links">
           <Link href="/us#proof">Proof</Link>
@@ -28,10 +32,13 @@ export default function USHome() {
       </nav>
 
       <section className="us-hero">
+        <div className="us-hero-media" aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/hero-us.jpg" alt="" />
+        </div>
         <div className="us-hero-bg" aria-hidden />
-        <div className="us-hero-grid" aria-hidden />
 
-        <p className="us-hero-brand anim-rise">Virtual Coworker</p>
+        <p className="us-hero-kicker anim-rise">US · Hire a virtual assistant</p>
         <h1 className="anim-rise-d1">Your next hire already works remotely.</h1>
         <p className="us-hero-lead anim-rise-d2">
           Dedicated virtual assistants for US businesses that need execution —
@@ -63,25 +70,43 @@ export default function USHome() {
       </section>
 
       <section className="us-proof" id="proof">
-        <p className="us-proof-label">Why US teams stay</p>
-        <h2>One dedicated assistant. Clear ownership. No roulette.</h2>
-        <p>
-          Vision direction: a buyer site that sounds like American business —
-          direct, confident, and gated so job seekers never poison the hire
-          funnel.
-        </p>
-        <div className="us-stats">
+        <div className="us-proof-grid">
           <div>
-            <strong>1:1</strong>
-            <span>Dedicated match</span>
+            <p className="us-proof-label">Why US teams stay</p>
+            <h2>One dedicated assistant. Clear ownership. No roulette.</h2>
+            <p>
+              Same Virtual Coworker brand — navy, cyan, gold — evolved for a
+              confident US buyer door. Hire intent stays gated so job seekers
+              never poison the funnel.
+            </p>
+            <div className="us-stats">
+              <div>
+                <strong>1:1</strong>
+                <span>Dedicated match</span>
+              </div>
+              <div>
+                <strong>US</strong>
+                <span>Business hours overlap</span>
+              </div>
+              <div>
+                <strong>0</strong>
+                <span>Upfront hiring fees*</span>
+              </div>
+            </div>
+            <div className="us-badge-row">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/clutch-us.webp"
+                alt="Top Clutch Virtual Assistant Company United States 2026"
+              />
+            </div>
           </div>
-          <div>
-            <strong>US</strong>
-            <span>Business hours overlap</span>
-          </div>
-          <div>
-            <strong>0</strong>
-            <span>Upfront hiring fees*</span>
+          <div className="us-proof-visual">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/how-it-works.webp"
+              alt="How Virtual Coworker virtual assistants work"
+            />
           </div>
         </div>
       </section>

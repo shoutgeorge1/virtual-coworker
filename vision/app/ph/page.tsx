@@ -6,42 +6,68 @@ import "./ph.css";
 
 const copy = {
   en: {
-    brand: "Virtual Coworker Careers",
+    brandTag: "Careers",
     navApply: "Apply",
     navHub: "All markets",
+    kicker: "PH · Build a VA career",
     h1: "Your next chapter starts here.",
     lead: "Real VA roles with real clients. Training, support, and a path — not another gig post that disappears.",
     cta: "Apply now",
     cta2: "See open tracks",
     gate: "Hiring a VA for your business? Use the US or AU buyer sites — this door is for talent only.",
     proofLabel: "Why people apply",
-    proofH2: "Opportunity energy. Career, not chaos.",
+    proofH2: "Opportunity energy. Same brand. Career, not chaos.",
     proofP:
-      "Vision direction: a totally different look from the buyer sites — sunrise color, bold type, and an apply path that never mixes with hire funnels.",
+      "Warmer evolution of Virtual Coworker — navy, cyan, gold, with orange CTAs — built for talent, never mixed with hire funnels.",
     tracks: [
-      { t: "Admin & ops", d: "Inbox, calendars, follow-ups that keep owners sane." },
-      { t: "Support", d: "Customers who feel heard — across time zones." },
-      { t: "Growth support", d: "CRM hygiene, outreach assists, campaign help." },
+      {
+        t: "Admin & ops",
+        d: "Inbox, calendars, follow-ups that keep owners sane.",
+        img: "/brand/ea.jpg",
+      },
+      {
+        t: "Support",
+        d: "Customers who feel heard — across time zones.",
+        img: "/brand/support.jpg",
+      },
+      {
+        t: "Growth support",
+        d: "CRM hygiene, outreach assists, campaign help.",
+        img: "/brand/marketing.webp",
+      },
     ],
     foot: "PH talent vision · Virtual Coworker",
   },
   tl: {
-    brand: "Virtual Coworker Careers",
+    brandTag: "Careers",
     navApply: "Mag-apply",
     navHub: "Lahat ng market",
+    kicker: "PH · Magtayo ng VA career",
     h1: "Dito nagsisimula ang susunod mong chapter.",
     lead: "Totoong VA roles, totoong clients. May training at support — hindi gig na biglang nawawala.",
     cta: "Mag-apply ngayon",
     cta2: "Tingnan ang tracks",
     gate: "Naghahanap ng VA para sa business? Pumunta sa US o AU buyer site — ang pintong ito ay para sa talent lang.",
     proofLabel: "Bakit nag-a-apply ang mga tao",
-    proofH2: "Opportunity energy. Career, hindi chaos.",
+    proofH2: "Opportunity energy. Parehong brand. Career, hindi chaos.",
     proofP:
-      "Vision: ibang itsura sa buyer sites — sunrise colors, bold type, at apply path na hindi nahahalo sa hire funnel.",
+      "Mas mainit na evolution ng Virtual Coworker — navy, cyan, gold, orange CTAs — para sa talent, hindi nahahalo sa hire funnel.",
     tracks: [
-      { t: "Admin & ops", d: "Inbox, calendars, follow-ups para sa owners." },
-      { t: "Support", d: "Customers na nararamdaman — kahit iba ang timezone." },
-      { t: "Growth support", d: "CRM, outreach assists, campaign help." },
+      {
+        t: "Admin & ops",
+        d: "Inbox, calendars, follow-ups para sa owners.",
+        img: "/brand/ea.jpg",
+      },
+      {
+        t: "Support",
+        d: "Customers na nararamdaman — kahit iba ang timezone.",
+        img: "/brand/support.jpg",
+      },
+      {
+        t: "Growth support",
+        d: "CRM, outreach assists, campaign help.",
+        img: "/brand/marketing.webp",
+      },
     ],
     foot: "PH talent vision · Virtual Coworker",
   },
@@ -59,7 +85,13 @@ export default function PHHome() {
 
       <nav className="ph-nav">
         <Link href="/ph" className="ph-brand">
-          {t.brand}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-vc.png"
+            alt="Virtual Coworker"
+            className="logo-img logo-img-on-dark"
+          />
+          <span className="ph-brand-tag">{t.brandTag}</span>
         </Link>
         <div className="ph-nav-right">
           <div className="ph-nav-links">
@@ -86,10 +118,13 @@ export default function PHHome() {
       </nav>
 
       <section className="ph-hero">
+        <div className="ph-hero-media" aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/jumping.webp" alt="" />
+        </div>
         <div className="ph-hero-bg" aria-hidden />
-        <div className="ph-hero-orb" aria-hidden />
 
-        <p className="ph-hero-brand anim-rise">Virtual Coworker</p>
+        <p className="ph-hero-kicker anim-rise">{t.kicker}</p>
         <h1 className="anim-rise-d1">{t.h1}</h1>
         <p className="ph-hero-lead anim-rise-d2">{t.lead}</p>
 
@@ -115,10 +150,22 @@ export default function PHHome() {
         <div className="ph-tracks">
           {t.tracks.map((track) => (
             <div className="ph-track" key={track.t}>
-              <strong>{track.t}</strong>
-              <span>{track.d}</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={track.img} alt="" />
+              <div className="ph-track-body">
+                <strong>{track.t}</strong>
+                <span>{track.d}</span>
+              </div>
             </div>
           ))}
+        </div>
+        <div className="ph-faces">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/talent-arvin.jpg" alt="VA team member" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/talent-john.jpeg" alt="VA team member" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/hire-talent.webp" alt="Specialized talent" />
         </div>
       </section>
 

@@ -13,7 +13,12 @@ export default function USConsult() {
 
       <nav className="us-nav">
         <Link href="/us" className="us-brand">
-          Virtual Coworker
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-vc.png"
+            alt="Virtual Coworker"
+            className="logo-img logo-img-on-dark"
+          />
         </Link>
         <div className="us-nav-links">
           <Link href="/us">← US home</Link>

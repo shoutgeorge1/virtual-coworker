@@ -13,7 +13,12 @@ export default function AUConsult() {
 
       <nav className="au-nav">
         <Link href="/au" className="au-brand">
-          Virtual Coworker
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-vc.png"
+            alt="Virtual Coworker"
+            className="logo-img"
+          />
         </Link>
         <div className="au-nav-links">
           <Link href="/au">← AU home</Link>
