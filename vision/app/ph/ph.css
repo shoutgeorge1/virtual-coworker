@@ -119,23 +119,65 @@
     linear-gradient(150deg, #0e2135 0%, #16375a 55%, #123049 100%);
 }
 
+/* Three zones on desktop: copy · the VA · the form. The VA gets her own
+   column so no card ever lands on top of a face. */
 .ph-hero-inner {
   display: grid;
-  gap: clamp(1.75rem, 3.5vw, 3rem);
-  align-items: center;
-  max-width: 82rem;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  max-width: 84rem;
   margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "copy"
+    "va"
+    "form";
 }
 
-@media (min-width: 1000px) {
+.ph-hero-copy {
+  grid-area: copy;
+}
+
+.ph-hero .va-card {
+  grid-area: va;
+}
+
+.ph-hero-inner .gate-card {
+  grid-area: form;
+}
+
+@media (min-width: 760px) {
   .ph-hero-inner {
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-areas:
+      "copy copy"
+      "va   form";
+    align-items: start;
+  }
+}
+
+@media (min-width: 1160px) {
+  .ph-hero-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr) minmax(0, 0.9fr);
+    grid-template-areas: "copy va form";
+    align-items: stretch;
   }
 
   .ph-hero-inner .gate-card {
-    max-width: 30rem;
+    max-width: 29rem;
     justify-self: end;
   }
+
+  /* Let the VA run the full height of the row so she carries the hero. */
+  .ph-hero .va-card img {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 27rem;
+  }
+}
+
+.ph-hero .va-card-tag i {
+  background: #ffab6b;
+  box-shadow: 0 0 0 3px rgba(255, 171, 107, 0.24);
 }
 
 .ph-hero-inner .gate-card {
@@ -173,10 +215,10 @@
   margin: 0 0 1rem;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--step-h1);
-  line-height: 1.03;
-  letter-spacing: -0.032em;
-  max-width: 14ch;
+  font-size: clamp(2.15rem, 2.7vw + 0.9rem, 3.15rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  max-width: 18ch;
 }
 
 .ph-lead {
@@ -229,44 +271,34 @@
   color: var(--mute);
 }
 
-.ph-faces {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.6rem;
-  max-width: 34rem;
+/* — Benefit band: sell the offer to applicants — */
+.ph-sell {
+  padding: clamp(2.25rem, 4.5vw, 3.5rem) var(--shell);
+  background: linear-gradient(180deg, #10263e, #14304e);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-@media (max-width: 520px) {
-  .ph-faces {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.ph-sell-inner {
+  max-width: 84rem;
+  margin: 0 auto;
 }
 
-.ph-faces figure {
+.ph-sell-head {
+  margin-bottom: clamp(1.15rem, 2.5vw, 1.75rem);
+}
+
+.ph-sell-head h2 {
   margin: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 0 0 1px rgba(51, 222, 216, 0.22),
-    0 10px 24px rgba(4, 14, 26, 0.3);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  max-width: 34ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-h2);
+  letter-spacing: -0.028em;
+  line-height: 1.12;
 }
 
-.ph-faces figure:hover {
-  transform: translateY(-3px);
-}
-
-.ph-faces img {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-}
-
-.ph-faces figcaption {
-  padding: 0.5rem 0.6rem 0.6rem;
-  font-size: 0.68rem;
-  line-height: 1.3;
-  color: #b6c8d8;
-  letter-spacing: 0.01em;
+.ph-sell .sell-card em {
+  color: #ffab6b;
 }
 
 /* — Tight tracks band — */
@@ -320,19 +352,20 @@
   }
 }
 
+/* Flat modern card — no coloured top-bar accent. */
 .ph-track {
-  padding: 1.1rem 1.15rem 1.25rem;
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.045);
-  border-top: 3px solid var(--orange);
+  padding: 1.15rem 1.2rem 1.3rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: background 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.ph-track:nth-child(2) {
-  border-top-color: var(--gold);
-}
-
-.ph-track:nth-child(3) {
-  border-top-color: var(--cyan);
+.ph-track:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
 .ph-track span {
@@ -341,22 +374,31 @@
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--mute);
+  color: #ffab6b;
 }
 
 .ph-track strong {
   display: block;
   margin-bottom: 0.35rem;
   font-family: var(--font-display);
-  font-size: 1rem;
-  letter-spacing: -0.015em;
+  font-size: 1.06rem;
+  letter-spacing: -0.018em;
 }
 
 .ph-track p {
   margin: 0;
-  font-size: 0.87rem;
-  color: #9db1c4;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  color: #a8bbcd;
+  line-height: 1.55;
+}
+
+@media (max-width: 759px) {
+  .ph .sticky-cta-go {
+    color: #fff;
+    background: linear-gradient(180deg, #ff8438 0%, #f7630c 55%, #dd5407 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 8px 18px rgba(247, 99, 12, 0.32);
+  }
 }
 
 .ph-footer {

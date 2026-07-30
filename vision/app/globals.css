@@ -99,90 +99,304 @@ button {
   object-position: 50% 22%;
 }
 
-.face-img-high {
-  object-fit: cover;
-  object-position: 50% 12%;
+/* ═══════ Trust row: the real badges the business actually holds ═══════
+   Dark surface by default; .trust-row-light for the AU daylight page. */
+.trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.5rem;
 }
 
-.cutout-img {
-  object-fit: contain;
-  object-position: 50% 100%;
-}
-
-/* ——— Sweetened trust badge ——— */
-.trust {
+.trust-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.9rem;
-  padding: 0.6rem 1.15rem 0.6rem 0.7rem;
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 14px 38px rgba(8, 20, 34, 0.26),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  gap: 0.65rem;
+  padding: 0.5rem 0.9rem 0.5rem 0.6rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.11);
 }
 
-.trust-light {
-  background: #fff;
-  box-shadow: 0 12px 30px rgba(33, 72, 115, 0.11),
-    inset 0 0 0 1px rgba(33, 72, 115, 0.07);
-}
-
-.trust img {
-  height: 58px;
+.trust-chip img {
+  height: 40px;
   width: auto;
   flex: none;
 }
 
-.trust-rule {
-  width: 1px;
-  align-self: stretch;
-  margin: 0.3rem 0;
+.trust-chip b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.83rem;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  color: #f2f7fb;
+  white-space: nowrap;
+}
+
+.trust-chip span {
+  display: block;
+  margin-top: 0.16rem;
+  font-size: 0.63rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #93a8bd;
+  white-space: nowrap;
+}
+
+/* Number-led chip for claims with no badge artwork (e.g. "since 2011") */
+.trust-chip-stat {
+  padding-left: 0.95rem;
+}
+
+.trust-chip-stat em {
+  font-style: normal;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.32rem;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--vc-cyan);
+}
+
+.trust-row-light .trust-chip {
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(23, 51, 79, 0.09),
+    inset 0 0 0 1px rgba(33, 72, 115, 0.09);
+}
+
+.trust-row-light .trust-chip b {
+  color: #143252;
+}
+
+.trust-row-light .trust-chip span {
+  color: #7b8fa3;
+}
+
+.trust-row-light .trust-chip-stat em {
+  color: #128f8b;
+}
+
+/* ═══════ Featured VA card — the person, never covered by a form ═══════ */
+.va-card {
+  position: relative;
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  isolation: isolate;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 26px 60px rgba(4, 14, 26, 0.34),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.va-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 14%;
+}
+
+@media (min-width: 760px) {
+  .va-card img {
+    aspect-ratio: 3 / 4;
+    object-position: 50% 16%;
+  }
+}
+
+.va-card-tag {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.34rem 0.72rem;
+  border-radius: 999px;
+  background: rgba(8, 20, 34, 0.62);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  font-size: 0.64rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #eaf3fb;
+}
+
+.va-card-tag i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ee6c8;
+  box-shadow: 0 0 0 3px rgba(78, 230, 200, 0.25);
+}
+
+.va-card figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 3rem 1rem 0.95rem;
   background: linear-gradient(
-    180deg,
-    transparent,
-    rgba(33, 72, 115, 0.18) 22%,
-    rgba(33, 72, 115, 0.18) 78%,
+    to top,
+    rgba(5, 15, 27, 0.94) 12%,
+    rgba(5, 15, 27, 0.6) 55%,
     transparent
   );
 }
 
-.trust-copy strong {
+.va-card figcaption b {
   display: block;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.88rem;
-  line-height: 1.25;
-  color: #163254;
-  letter-spacing: -0.005em;
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+  color: #fff;
 }
 
-.trust-copy span {
+.va-card figcaption span {
   display: block;
-  margin-top: 0.22rem;
+  margin-top: 0.18rem;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: #bdd0e0;
+}
+
+/* ——— Small VA line-up used in the proof bands ——— */
+.va-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.va-row figure {
+  margin: 0;
+  width: clamp(72px, 8vw, 92px);
+}
+
+.va-row img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  object-fit: cover;
+  object-position: 50% 18%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 10px 24px rgba(4, 14, 26, 0.26);
+}
+
+.va-row figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.68rem;
+  line-height: 1.3;
+  color: #97acc0;
+}
+
+.va-row-light img {
+  box-shadow: inset 0 0 0 1px rgba(33, 72, 115, 0.12),
+    0 10px 24px rgba(23, 51, 79, 0.12);
+}
+
+.va-row-light figcaption {
+  color: #6a7f93;
+}
+
+/* ═══════ Benefit / sell cards — flat modern surfaces, no accent bars ═══════ */
+.sell-grid {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 660px) {
+  .sell-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1060px) {
+  .sell-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.sell-card {
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: background 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sell-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.sell-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.06rem;
+  line-height: 1.2;
+  letter-spacing: -0.022em;
+  color: #fff;
+}
+
+.sell-card em {
+  display: block;
+  margin-bottom: 0.55rem;
+  font-style: normal;
   font-size: 0.64rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #8496a8;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--vc-cyan);
 }
 
-.trust-stars {
-  color: var(--vc-gold);
-  letter-spacing: 0.08em;
-  font-size: 0.78rem;
-  margin-top: 0.18rem;
+.sell-card p {
+  margin: 0.45rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #a9bdd0;
+}
+
+/* Light-page variant */
+.sell-grid-light .sell-card {
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(23, 51, 79, 0.07),
+    inset 0 0 0 1px rgba(33, 72, 115, 0.09);
+}
+
+.sell-grid-light .sell-card:hover {
+  box-shadow: 0 18px 40px rgba(23, 51, 79, 0.11),
+    inset 0 0 0 1px rgba(18, 143, 139, 0.3);
+}
+
+.sell-grid-light .sell-card strong {
+  color: #16324f;
+}
+
+.sell-grid-light .sell-card em {
+  color: #128f8b;
+}
+
+.sell-grid-light .sell-card p {
+  color: #55697c;
 }
 
 /* ——— Shared vision banner ——— */
 .vision-banner {
   margin: 0;
   text-align: center;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   padding: 0.5rem 1rem;
   background: rgba(0, 0, 0, 0.55);
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .vision-banner a {
@@ -576,6 +790,67 @@ a.gate-call:hover {
   text-align: left;
 }
 
+/* ═══════ Mobile sticky conversion bar ═══════ */
+.sticky-cta {
+  display: none;
+}
+
+@media (max-width: 759px) {
+  .sticky-cta {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem calc(0.6rem + env(safe-area-inset-bottom));
+    background: rgba(9, 21, 36, 0.86);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .sticky-cta-call {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: none;
+    padding: 0.8rem 0.95rem;
+    border-radius: 12px;
+    color: #eaf3fb;
+    box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.24);
+  }
+
+  .sticky-cta-call b {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+  }
+
+  .sticky-cta-go {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    text-align: center;
+    border-radius: 12px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.98rem;
+    letter-spacing: -0.014em;
+    color: #1b3a5c;
+    background: linear-gradient(180deg, #ffd57f 0%, #fac056 52%, #f0ae38 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      0 8px 18px rgba(240, 174, 56, 0.3);
+  }
+
+  /* Keep the footer clear of the fixed bar. */
+  .us-footer,
+  .au-footer,
+  .ph-footer {
+    padding-bottom: 6rem;
+  }
+}
+
 /* ——— Motion (restrained) ——— */
 @keyframes rise {
   from {
@@ -624,11 +899,11 @@ a.gate-call:hover {
 
 /* ═══════════════════ HUB ═══════════════════ */
 .hub {
-  --ink: #f2f6fa;
-  --mute: #90a2b6;
-  --line: rgba(255, 255, 255, 0.1);
+  --ink: #f4f8fc;
+  --mute: #a7bacd;
+  --line: rgba(255, 255, 255, 0.13);
   min-height: 100vh;
-  background: #0b1727;
+  background: #17304f;
   color: var(--ink);
   font-family: var(--font-body);
   overflow-x: hidden;
@@ -661,42 +936,81 @@ a.gate-call:hover {
   isolation: isolate;
 }
 
-.hub-hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-}
-
-.hub-hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 70% 26%;
-  opacity: 0.3;
-}
-
 .hub-hero-veil {
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(
-      100deg,
-      #0b1727 0%,
-      rgba(11, 23, 39, 0.95) 42%,
-      rgba(15, 34, 56, 0.72) 72%,
-      rgba(20, 48, 78, 0.55) 100%
-    ),
     radial-gradient(
-      ellipse 55% 60% at 88% 15%,
+      ellipse 58% 68% at 84% 8%,
       rgba(51, 222, 216, 0.2),
-      transparent 60%
+      transparent 62%
     ),
     radial-gradient(
-      ellipse 40% 50% at 5% 90%,
-      rgba(250, 192, 86, 0.12),
+      ellipse 45% 55% at 3% 94%,
+      rgba(250, 192, 86, 0.14),
       transparent 60%
-    );
+    ),
+    linear-gradient(118deg, #12263f 0%, #1a3554 55%, #204066 100%);
+}
+
+.hub-hero-grid {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+@media (min-width: 1040px) {
+  .hub-hero-grid {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  }
+}
+
+/* Preview of the three doors — the VAs each market leads with. */
+.hub-trio {
+  display: none;
+}
+
+@media (min-width: 1040px) {
+  .hub-trio {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+    align-items: start;
+    max-width: 31rem;
+    justify-self: end;
+  }
+
+  .hub-trio figure {
+    margin: 0;
+  }
+
+  .hub-trio figure:nth-child(1) {
+    padding-top: 1.6rem;
+  }
+
+  .hub-trio figure:nth-child(3) {
+    padding-top: 3.2rem;
+  }
+
+  .hub-trio img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: 50% 14%;
+    border-radius: 14px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+      0 18px 40px rgba(4, 14, 26, 0.36);
+  }
+
+  .hub-trio figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #9db1c5;
+  }
 }
 
 .hub-kicker {
@@ -741,9 +1055,9 @@ a.gate-call:hover {
 .hub-hero-lead {
   margin: 0;
   max-width: 46ch;
-  font-size: clamp(1.05rem, 1.3vw + 0.7rem, 1.32rem);
-  line-height: 1.5;
-  color: #bccbdb;
+  font-size: clamp(1.12rem, 1.35vw + 0.74rem, 1.4rem);
+  line-height: 1.52;
+  color: #d2e0ee;
 }
 
 .hub-hero-lead b {
@@ -779,9 +1093,9 @@ a.gate-call:hover {
 
 .hub-frame p {
   margin: 0;
-  font-size: 0.98rem;
-  line-height: 1.55;
-  color: #a9bbcd;
+  font-size: 1.06rem;
+  line-height: 1.6;
+  color: #bfd0e1;
 }
 
 .hub-frame strong {
@@ -794,7 +1108,7 @@ a.gate-call:hover {
 }
 
 .hub-frame-no strong {
-  color: #7d8fa2;
+  color: #94a8bc;
 }
 
 .hub-frame-yes strong {
@@ -802,7 +1116,7 @@ a.gate-call:hover {
 }
 
 .hub-frame-yes p {
-  color: #dce7f1;
+  color: #e9f2f9;
 }
 
 /* — Market cards — */
@@ -824,7 +1138,7 @@ a.gate-call:hover {
 }
 
 .hub-section-head span {
-  font-size: 0.82rem;
+  font-size: 0.94rem;
   color: var(--mute);
 }
 
@@ -883,10 +1197,10 @@ a.gate-call:hover {
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(8, 18, 31, 0.96) 4%,
-    rgba(8, 18, 31, 0.82) 30%,
-    rgba(8, 18, 31, 0.25) 62%,
-    rgba(8, 18, 31, 0.1) 100%
+    rgba(10, 24, 41, 0.95) 4%,
+    rgba(11, 27, 46, 0.8) 34%,
+    rgba(13, 31, 52, 0.22) 66%,
+    rgba(13, 31, 52, 0.04) 100%
   );
 }
 
@@ -900,17 +1214,17 @@ a.gate-call:hover {
   background: rgba(8, 18, 31, 0.6);
   backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.16);
-  font-size: 0.66rem;
+  font-size: 0.7rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 600;
-  color: #dbe6f1;
+  color: #e4edf6;
 }
 
 .hub-card-label {
   margin: 0 0 0.4rem;
-  font-size: 0.66rem;
-  letter-spacing: 0.2em;
+  font-size: 0.71rem;
+  letter-spacing: 0.19em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--vc-cyan);
@@ -931,9 +1245,9 @@ a.gate-call:hover {
 
 .hub-card-meta {
   margin: 0 0 1.15rem;
-  font-size: 0.93rem;
-  line-height: 1.5;
-  color: #c3d2e0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #d5e2ee;
   max-width: 30ch;
 }
 
@@ -941,7 +1255,7 @@ a.gate-call:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.85rem;
+  font-size: 0.93rem;
   font-weight: 600;
   color: var(--vc-gold);
 }
@@ -980,9 +1294,9 @@ a.gate-call:hover {
 
 .hub-build-intro p {
   margin: 0;
-  font-size: 0.98rem;
-  line-height: 1.6;
-  color: #a9bbcd;
+  font-size: 1.07rem;
+  line-height: 1.62;
+  color: #bfd0e1;
   max-width: 36ch;
 }
 
@@ -1007,21 +1321,21 @@ a.gate-call:hover {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.98rem;
-  letter-spacing: -0.01em;
+  font-size: 1.06rem;
+  letter-spacing: -0.012em;
 }
 
 .hub-stack dd {
   grid-column: 2;
-  margin: 0.18rem 0 0;
-  font-size: 0.87rem;
-  line-height: 1.5;
-  color: #93a6ba;
+  margin: 0.22rem 0 0;
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: #aec1d3;
 }
 
 .hub-stack span {
   grid-row: span 2;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--vc-cyan);
@@ -1032,13 +1346,13 @@ a.gate-call:hover {
   padding: clamp(2rem, 4vw, 3rem) var(--shell) 3rem;
   margin-top: 1.5rem;
   border-top: 1px solid var(--line);
-  color: #8496a8;
-  font-size: 0.82rem;
-  line-height: 1.6;
+  color: #a6b9cb;
+  font-size: 0.93rem;
+  line-height: 1.62;
   max-width: 58rem;
 }
 
 .hub-foot b {
-  color: #d5e1ec;
+  color: #e2ebf4;
   font-weight: 600;
 }

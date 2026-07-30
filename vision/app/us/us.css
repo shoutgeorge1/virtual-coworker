@@ -92,54 +92,77 @@
   isolation: isolate;
 }
 
-.us-hero-media {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-}
-
-.us-hero-media img {
-  width: 100%;
-  height: 100%;
-  object-position: 74% 20%;
-  opacity: 0.55;
-}
-
 .us-hero-bg {
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(
-      100deg,
-      rgba(12, 24, 38, 0.97) 0%,
-      rgba(15, 32, 53, 0.93) 40%,
-      rgba(20, 42, 72, 0.72) 70%,
-      rgba(23, 48, 79, 0.55) 100%
+    radial-gradient(
+      ellipse 60% 70% at 88% 6%,
+      rgba(51, 222, 216, 0.17),
+      transparent 62%
     ),
     radial-gradient(
-      ellipse 50% 55% at 92% 12%,
-      rgba(51, 222, 216, 0.2),
+      ellipse 45% 55% at 4% 96%,
+      rgba(250, 192, 86, 0.09),
       transparent 60%
-    );
+    ),
+    linear-gradient(120deg, #0b1726 0%, #142c49 52%, #17304f 100%);
 }
 
+/* Three zones on desktop: copy · the VA · the form. The VA gets her own
+   column so no card ever lands on top of a face. */
 .us-hero-inner {
   display: grid;
-  gap: clamp(1.75rem, 3.5vw, 3rem);
-  align-items: center;
-  max-width: 82rem;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  max-width: 84rem;
   margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "copy"
+    "va"
+    "form";
 }
 
-@media (min-width: 1000px) {
+.us-hero-copy {
+  grid-area: copy;
+}
+
+.us-hero .va-card {
+  grid-area: va;
+}
+
+.us-hero-inner .gate-card {
+  grid-area: form;
+}
+
+@media (min-width: 760px) {
   .us-hero-inner {
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-areas:
+      "copy copy"
+      "va   form";
+    align-items: start;
+  }
+}
+
+@media (min-width: 1160px) {
+  .us-hero-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr) minmax(0, 0.9fr);
+    grid-template-areas: "copy va form";
+    align-items: stretch;
   }
 
   .us-hero-inner .gate-card {
-    max-width: 30rem;
+    max-width: 29rem;
     justify-self: end;
+  }
+
+  /* Let the VA run the full height of the row so she carries the hero. */
+  .us-hero .va-card img {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 27rem;
   }
 }
 
@@ -156,10 +179,15 @@
   margin: 0 0 1rem;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--step-h1);
-  line-height: 1.02;
-  letter-spacing: -0.033em;
-  max-width: 13ch;
+  font-size: clamp(2.15rem, 2.7vw + 0.9rem, 3.15rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  max-width: 18ch;
+}
+
+.us-hero h1 em {
+  font-style: normal;
+  color: var(--cyan);
 }
 
 .us-lead {
@@ -200,6 +228,32 @@
   color: var(--cyan);
   font-size: 0.66rem;
   font-weight: 700;
+}
+
+/* — Benefit band: sell the offer without a wall of text — */
+.us-sell {
+  padding: clamp(2.25rem, 4.5vw, 3.5rem) var(--shell);
+  border-top: 1px solid var(--line);
+  background: linear-gradient(180deg, #0e1e33, #122741);
+}
+
+.us-sell-inner {
+  max-width: 84rem;
+  margin: 0 auto;
+}
+
+.us-sell-head {
+  margin-bottom: clamp(1.15rem, 2.5vw, 1.75rem);
+}
+
+.us-sell-head h2 {
+  margin: 0;
+  max-width: 34ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-h2);
+  letter-spacing: -0.028em;
+  line-height: 1.12;
 }
 
 /* — Tight proof band — */
@@ -265,16 +319,25 @@
   color: var(--mute);
 }
 
-.us-proof-visual {
-  border-radius: var(--radius);
-  background: linear-gradient(180deg, #f4f8fb, #dfe9f1);
-  padding: 0.75rem 0.75rem 0;
-  overflow: hidden;
+.us-lineup {
+  align-self: start;
 }
 
-.us-proof-visual img {
-  width: 100%;
-  height: clamp(200px, 24vw, 270px);
+.us-lineup-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--mute);
+}
+
+.us-lineup-note {
+  margin: 1rem 0 0;
+  max-width: 34ch;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #a4b8cb;
 }
 
 /* — Slim closing call bar — */

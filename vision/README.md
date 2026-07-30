@@ -15,13 +15,34 @@ Interview vision demo: **three market evolutions of the same brand family**, plu
 
 Buyer sites (`/us`, `/au`) gate **hire vs job** on entry. Job seekers are sent to `/ph`. The PH site is talent-only and points buyers to US/AU.
 
+## Page composition (all three markets)
+
+Each market hero is a **three-zone PPC layout** at ≥1160px — `copy · the VA · the form`:
+
+- The VA gets her own grid column, so **no card ever lands on a face**. Below
+  1160px the zones stack (`copy` / `va` / `form`) and the portrait switches to a
+  4:3 crop biased to the upper body.
+- Trust badges sit in the copy column, above the fold.
+- A benefit band ("what you actually get") sells the offer in four short cards.
+- Mobile gets a sticky bottom bar: phone + jump-to-form.
+
+## Imagery rule
+
+**Feature the VA, never the buyer.** Heroes and cards lead with attractive,
+professional Filipino virtual assistants — they are what's being sold. Business-owner
+stock is deliberately gone. Every crop keeps the head fully in frame with headroom.
+
 ## Brand source
 
 Pulled from live Kadence sites (`virtualcoworker.com` / `.com.au` / `.com.ph`):
 
 - Palette: `#214873` navy · `#33DED8` cyan · `#FAC056` gold · `#0071C9` blue · `#F7630C` orange
 - Fonts: **Poppins** (body) + **Century Gothic Paneuropean** (display/nav, from their theme)
-- Assets: logo-vc, Clutch badges, how-it-works, role photos, PH talent portraits
+- Real trust badges: **Clutch** (Top VA Company, US 2026 / Australia), **Google
+  5-Star Reviews**, **Forbes Business Council 2026**, plus "placing staff since 2011"
+- Real offer facts used in the benefit cards: top 1% of applicants; hourly rates
+  from `$7 USD` / `$8 AUD` with the fee inside the rate; recruitment, screening and
+  payroll handled; time tracker with daily activity reports and 10-minute screenshots
 
 ## Local
 

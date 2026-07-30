@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import LeadGate, { type GateCopy } from "../components/LeadGate";
+import StickyCta from "../components/StickyCta";
 import "./ph.css";
 
-/* Modern portraits lead; the headset/desk shots stay as supporting texture.
-   Every position is tuned so no head is ever clipped. */
+/* Real Virtual Coworker talent photos. Positions are tuned so no head is
+   ever clipped by the crop. */
 const faces = [
-  { src: "/brand/talent-john.jpeg", pos: "50% 14%", cap: "John · Ops & admin" },
-  { src: "/brand/talent-arvin.jpg", pos: "50% 12%", cap: "Arvin · Client support" },
-  { src: "/brand/support.jpg", pos: "50% 15%", cap: "Support desk" },
-  { src: "/brand/marketing.webp", pos: "68% 24%", cap: "Marketing support" },
+  { src: "/brand/talent-arvin.jpg", pos: "50% 10%", cap: "Arvin · Client support" },
+  { src: "/brand/ea.jpg", pos: "50% 12%", cap: "Marie · Executive assistant" },
+  { src: "/brand/support.jpg", pos: "50% 14%", cap: "Support desk" },
 ];
 
 const copy = {
@@ -27,6 +27,33 @@ const copy = {
       "No placement fees, ever",
     ],
     facesLabel: "People already doing it",
+    vaTag: "Now hiring",
+    vaRole: "Admin & operations VA",
+    vaMeta: "Work from home · long-term client · full-time hours",
+    sellLabel: "Why VAs stay",
+    sellH2: "A career, not a gig.",
+    sell: [
+      {
+        k: "Cost",
+        t: "No placement fees, ever",
+        d: "You never pay us to get placed. The client pays us — we pay you.",
+      },
+      {
+        k: "Stability",
+        t: "One long-term client",
+        d: "Ongoing roles with the same business, not one-off tasks that vanish.",
+      },
+      {
+        k: "Support",
+        t: "A team behind you",
+        d: "Recruitment, onboarding and a support contact you can actually reach.",
+      },
+      {
+        k: "Track record",
+        t: "Placing talent since 2011",
+        d: "Over a decade matching Filipino professionals with US and AU businesses.",
+      },
+    ],
     tracksLabel: "Where you could land",
     tracksH2: "Pick the track you're strongest at.",
     tracks: [
@@ -80,6 +107,33 @@ const copy = {
       "Walang placement fee, kailanman",
     ],
     facesLabel: "Mga kasama na ngayon",
+    vaTag: "Kumukuha ngayon",
+    vaRole: "Admin & operations VA",
+    vaMeta: "Work from home · long-term client · full-time hours",
+    sellLabel: "Bakit nananatili ang mga VA",
+    sellH2: "Career ito, hindi gig.",
+    sell: [
+      {
+        k: "Gastos",
+        t: "Walang placement fee",
+        d: "Hindi ka magbabayad sa amin. Ang client ang bumabayad sa amin — kami ang bumabayad sa iyo.",
+      },
+      {
+        k: "Katatagan",
+        t: "Isang long-term client",
+        d: "Tuloy-tuloy na role sa parehong business, hindi paisa-isang task na nawawala.",
+      },
+      {
+        k: "Suporta",
+        t: "May team sa likod mo",
+        d: "Recruitment, onboarding at support contact na talagang naaabot mo.",
+      },
+      {
+        k: "Track record",
+        t: "Nag-place ng talent since 2011",
+        d: "Mahigit isang dekada nang tumutugma ng Pinoy professionals sa US at AU business.",
+      },
+    ],
     tracksLabel: "Saan ka pwedeng mapunta",
     tracksH2: "Piliin ang track na pinakamalakas mo.",
     tracks: [
@@ -182,23 +236,49 @@ export default function PHHome() {
             </ul>
 
             <p className="ph-faces-label">{t.facesLabel}</p>
-            <div className="ph-faces anim-rise-d2">
+            <div className="va-row anim-rise-d2">
               {faces.map((f) => (
                 <figure key={f.src}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={f.src}
-                    alt=""
-                    className="face-img"
-                    style={{ objectPosition: f.pos }}
-                  />
+                  <img src={f.src} alt="" style={{ objectPosition: f.pos }} />
                   <figcaption>{f.cap}</figcaption>
                 </figure>
               ))}
             </div>
           </div>
 
+          <figure className="va-card ph-va anim-rise-d1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/va-ph.jpg" alt="A Virtual Coworker VA working from home" />
+            <span className="va-card-tag">
+              <i />
+              {t.vaTag}
+            </span>
+            <figcaption>
+              <b>{t.vaRole}</b>
+              <span>{t.vaMeta}</span>
+            </figcaption>
+          </figure>
+
           <LeadGate copy={t.gate} />
+        </div>
+      </section>
+
+      <section className="ph-sell">
+        <div className="ph-sell-inner">
+          <div className="ph-sell-head">
+            <p className="ph-proof-label">{t.sellLabel}</p>
+            <h2>{t.sellH2}</h2>
+          </div>
+          <div className="sell-grid">
+            {t.sell.map((s) => (
+              <div className="sell-card" key={s.k}>
+                <em>{s.k}</em>
+                <strong>{s.t}</strong>
+                <p>{s.d}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -224,6 +304,8 @@ export default function PHHome() {
         <span>{t.foot}</span>
         <Link href="/us">{t.footLink}</Link>
       </footer>
+
+      <StickyCta href="#gate" label={t.gate.submit.replace(" →", "")} />
     </main>
   );
 }

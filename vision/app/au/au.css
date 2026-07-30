@@ -94,55 +94,83 @@
   background: var(--foam);
 }
 
-.au-hero-media {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-}
-
-.au-hero-media img {
-  width: 100%;
-  height: 100%;
-  object-position: 72% 12%;
-  filter: saturate(1.04) contrast(1.04);
-}
-
 .au-hero-veil {
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(
-      100deg,
-      rgba(247, 251, 251, 0.97) 0%,
-      rgba(244, 250, 250, 0.92) 34%,
-      rgba(238, 248, 247, 0.52) 58%,
-      rgba(238, 248, 247, 0.08) 100%
+    radial-gradient(
+      ellipse 55% 50% at 6% 94%,
+      rgba(51, 222, 216, 0.24),
+      transparent 60%
     ),
     radial-gradient(
-      ellipse 55% 45% at 8% 92%,
-      rgba(51, 222, 216, 0.22),
-      transparent 58%
-    );
+      ellipse 50% 55% at 92% 4%,
+      rgba(250, 192, 86, 0.16),
+      transparent 62%
+    ),
+    linear-gradient(120deg, #ffffff 0%, #f2fbfa 48%, #e6f5f4 100%);
 }
 
+/* Three zones on desktop: copy · the VA · the form. The VA gets her own
+   column so no card ever lands on top of a face. */
 .au-hero-inner {
   display: grid;
-  gap: clamp(1.75rem, 3.5vw, 3rem);
-  align-items: center;
-  max-width: 82rem;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  max-width: 84rem;
   margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "copy"
+    "va"
+    "form";
 }
 
-@media (min-width: 1000px) {
+.au-hero-copy {
+  grid-area: copy;
+}
+
+.au-hero .va-card {
+  grid-area: va;
+}
+
+.au-hero-inner .gate-card {
+  grid-area: form;
+}
+
+@media (min-width: 760px) {
   .au-hero-inner {
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-areas:
+      "copy copy"
+      "va   form";
+    align-items: start;
+  }
+}
+
+@media (min-width: 1160px) {
+  .au-hero-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr) minmax(0, 0.9fr);
+    grid-template-areas: "copy va form";
+    align-items: stretch;
   }
 
   .au-hero-inner .gate-card {
-    max-width: 30rem;
+    max-width: 29rem;
     justify-self: end;
   }
+
+  /* Let the VA run the full height of the row so he carries the hero. */
+  .au-hero .va-card img {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 27rem;
+  }
+}
+
+.au-hero .va-card {
+  box-shadow: 0 26px 60px rgba(23, 51, 79, 0.18),
+    inset 0 0 0 1px rgba(33, 72, 115, 0.1);
 }
 
 .au-hero-inner .gate-card {
@@ -166,11 +194,16 @@
   margin: 0 0 1rem;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--step-h1);
-  line-height: 1.04;
-  letter-spacing: -0.032em;
-  max-width: 13ch;
+  font-size: clamp(2.15rem, 2.7vw + 0.9rem, 3.15rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  max-width: 18ch;
   color: var(--ocean);
+}
+
+.au-hero h1 em {
+  font-style: normal;
+  color: var(--sea);
 }
 
 .au-lead {
@@ -211,6 +244,42 @@
   color: var(--sea);
   font-size: 0.66rem;
   font-weight: 700;
+}
+
+/* — Benefit band: sell the offer without a wall of text — */
+.au-sell {
+  padding: clamp(2.25rem, 4.5vw, 3.5rem) var(--shell);
+  background: linear-gradient(180deg, #f7fbfb, #eaf6f5);
+  border-top: 1px solid rgba(33, 72, 115, 0.09);
+}
+
+.au-sell-inner {
+  max-width: 84rem;
+  margin: 0 auto;
+}
+
+.au-sell-head {
+  margin-bottom: clamp(1.15rem, 2.5vw, 1.75rem);
+}
+
+.au-sell-label {
+  margin: 0 0 0.6rem;
+  font-size: var(--step-eyebrow);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sea);
+  font-weight: 600;
+}
+
+.au-sell-head h2 {
+  margin: 0;
+  max-width: 34ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-h2);
+  letter-spacing: -0.028em;
+  line-height: 1.12;
+  color: var(--ocean);
 }
 
 /* — Tight proof band — */
@@ -276,26 +345,44 @@
   color: rgba(238, 248, 247, 0.72);
 }
 
+.au-lineup {
+  align-self: start;
+}
+
+.au-lineup-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(238, 248, 247, 0.62);
+}
+
+.au-lineup .va-row figcaption {
+  color: rgba(238, 248, 247, 0.66);
+}
+
+/* Modern flat quote card — no coloured edge accent. */
 .au-quote {
-  margin: 0;
-  padding: 1.5rem 1.6rem;
-  border-radius: var(--radius);
+  margin: 1.35rem 0 0;
+  padding: 1.25rem 1.35rem 1.15rem;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.07);
-  border-left: 3px solid var(--gold);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.13);
 }
 
 .au-quote blockquote {
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.7rem;
   font-family: var(--font-display);
-  font-size: 1.18rem;
-  line-height: 1.4;
+  font-size: 1.08rem;
+  line-height: 1.42;
   letter-spacing: -0.015em;
 }
 
 .au-quote figcaption {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   letter-spacing: 0.06em;
-  color: rgba(238, 248, 247, 0.62);
+  color: rgba(238, 248, 247, 0.6);
 }
 
 /* — Slim closing call bar — */

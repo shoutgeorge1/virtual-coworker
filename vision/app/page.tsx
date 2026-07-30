@@ -8,8 +8,8 @@ const markets = [
     label: "Market 01 · virtualcoworker.com",
     name: "United States",
     meta: "US companies hiring VAs. Its own portal so paid search can run a hire-first message — and A/B the headline, gate and form — without touching the main site.",
-    img: "/brand/hero-us-2026.jpg",
-    pos: "72% 24%",
+    img: "/brand/va-us.jpg",
+    pos: "50% 14%",
     anim: "anim-rise",
   },
   {
@@ -19,8 +19,8 @@ const markets = [
     label: "Market 02 · virtualcoworker.com.au",
     name: "Australia",
     meta: "Australian companies hiring VAs. Own daylight, own plain-talking copy, own 1300 number and its own tests — not the US page with the spelling swapped.",
-    img: "/brand/hero-au-2026.jpg",
-    pos: "70% 26%",
+    img: "/brand/va-au.jpg",
+    pos: "50% 14%",
     anim: "anim-rise-d1",
   },
   {
@@ -30,8 +30,8 @@ const markets = [
     label: "Market 03 · virtualcoworker.com.ph",
     name: "Philippines",
     meta: "Filipino talent and opportunities. A separate door with EN/TL and real VA faces, so career ads get tested on their own and applicants never pollute the hire funnel.",
-    img: "/brand/talent-john.jpeg",
-    pos: "50% 18%",
+    img: "/brand/va-ph.jpg",
+    pos: "50% 14%",
     anim: "anim-rise-d2",
   },
 ];
@@ -83,24 +83,34 @@ export default function HubPage() {
       </div>
 
       <header className="hub-hero">
-        <div className="hub-hero-bg" aria-hidden>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/hero-us-2026.jpg" alt="" />
-        </div>
         <div className="hub-hero-veil" aria-hidden />
 
-        <p className="hub-kicker anim-rise">
-          <i />
-          Creative refresh · ad &amp; PPC portal layer
-        </p>
-        <h1 className="anim-rise-d1">
-          I don&apos;t want to run paid traffic into <em>WordPress</em>.
-        </h1>
-        <p className="hub-hero-lead anim-rise-d2">
-          So this is a <b>creative refresh that lives where the ads land</b> —
-          three market portals built for paid, on a stack where I can change the
-          page the same day I change the campaign.
-        </p>
+        <div className="hub-hero-grid">
+          <div>
+            <p className="hub-kicker anim-rise">
+              <i />
+              Creative refresh · ad &amp; PPC portal layer
+            </p>
+            <h1 className="anim-rise-d1">
+              I don&apos;t want to run paid traffic into <em>WordPress</em>.
+            </h1>
+            <p className="hub-hero-lead anim-rise-d2">
+              So this is a <b>creative refresh that lives where the ads land</b>{" "}
+              — three market portals built for paid, on a stack where I can
+              change the page the same day I change the campaign.
+            </p>
+          </div>
+
+          <div className="hub-trio anim-fade" aria-hidden>
+            {markets.map((m) => (
+              <figure key={m.href}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={m.img} alt="" />
+                <figcaption>{m.name}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
 
         <div className="hub-frame anim-fade">
           <div className="hub-frame-no">
