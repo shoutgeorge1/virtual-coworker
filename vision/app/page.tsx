@@ -92,12 +92,13 @@ export default function HubPage() {
               Creative refresh · ad &amp; PPC portal layer
             </p>
             <h1 className="anim-rise-d1">
-              I don&apos;t want to run paid traffic into <em>WordPress</em>.
+              Audience-specific landing experiences for{" "}
+              <em>paid acquisition</em>.
             </h1>
             <p className="hub-hero-lead anim-rise-d2">
               So this is a <b>creative refresh that lives where the ads land</b>{" "}
-              — three market portals built for paid, on a stack where I can
-              change the page the same day I change the campaign.
+              — three market portals for paid, on a stack where I can change the
+              page the same day I change the campaign.
             </p>
           </div>
 
@@ -136,6 +137,10 @@ export default function HubPage() {
         <h2>Three doors, three audiences.</h2>
         <span>Same brand family · different job to do</span>
       </div>
+      <p className="hub-gate-note anim-fade">
+        Job seekers who land on a US/AU door get routed to the Philippines
+        careers portal — they never submit on a hire form.
+      </p>
 
       <div className="hub-grid">
         {markets.map((m) => (
