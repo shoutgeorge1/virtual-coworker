@@ -1,0 +1,6 @@
+.DS_Store
+raw/*.html
+raw/*.js
+raw/*.xml
+raw/*.txt
+raw/*.json
