@@ -79,8 +79,8 @@ const stack = [
 
 function resolveHero(raw: string | string[] | undefined): HeroKey {
   const v = Array.isArray(raw) ? raw[0] : raw;
-  if (v === "b" || v === "c") return v;
-  return "a";
+  if (v === "a" || v === "c") return v;
+  return "b";
 }
 
 export default async function HubPage({
@@ -106,7 +106,7 @@ export default async function HubPage({
             {(["a", "b", "c"] as const).map((key) => (
               <Link
                 key={key}
-                href={key === "a" ? "/" : `/?hero=${key}`}
+                href={key === "b" ? "/" : `/?hero=${key}`}
                 className={hero === key ? "is-active" : undefined}
                 prefetch={false}
               >
@@ -119,11 +119,10 @@ export default async function HubPage({
       </div>
 
       <header className="hub-hero">
-        <div
-          className="hub-hero-map"
-          style={{ backgroundImage: `url(${heroSrc})` }}
-          aria-hidden
-        />
+        <div className="hub-hero-map" aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={heroSrc} alt="" />
+        </div>
         <div className="hub-hero-veil" aria-hidden />
 
         <div className="hub-hero-copy">
