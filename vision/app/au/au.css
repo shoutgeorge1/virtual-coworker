@@ -138,6 +138,14 @@
   grid-area: form;
 }
 
+/* AU portrait has more headroom above the face — bias the crop down a touch
+   so the head isn't pinned to the bottom of the mobile frame. */
+@media (max-width: 759px) {
+  .au-hero .va-card img {
+    object-position: 50% 28%;
+  }
+}
+
 @media (min-width: 760px) {
   .au-hero-inner {
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
