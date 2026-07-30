@@ -996,7 +996,7 @@ a.gate-call:hover {
   z-index: -2;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   background: #12263f;
   /* Soft edge fades — light enough that US / AU / PH stay visible */
   -webkit-mask-image:
@@ -1013,7 +1013,8 @@ a.gate-call:hover {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: center;
+  /* Pin map to the right so the US landmass stays visible beside left copy */
+  object-position: right center;
   display: block;
 }
 
