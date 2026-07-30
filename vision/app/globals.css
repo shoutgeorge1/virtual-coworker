@@ -917,6 +917,16 @@ a.gate-call:hover {
   flex-wrap: wrap;
   padding: 1.1rem var(--shell);
   border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 2;
+}
+
+.hub-top-right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem 1.25rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .hub-eyebrow {
@@ -928,12 +938,72 @@ a.gate-call:hover {
   font-weight: 600;
 }
 
-/* — Hero — */
+.hub-hero-pick {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border-radius: 8px;
+  background: rgba(8, 22, 40, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hub-hero-pick a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.4rem;
+  padding: 0.32rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--mute);
+  text-decoration: none;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.hub-hero-pick a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.hub-hero-pick a.is-active {
+  color: #0b1c2e;
+  background: var(--vc-cyan);
+}
+
+/* — Hero — half-page map background — */
 .hub-hero {
   position: relative;
-  padding: clamp(3rem, 7vw, 6rem) var(--shell) clamp(2.5rem, 5vw, 4rem);
+  min-height: clamp(28rem, 52vh, 38rem);
+  padding: clamp(3.5rem, 8vw, 7rem) var(--shell) clamp(2.5rem, 5vw, 4rem);
   overflow: hidden;
   isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: clamp(2rem, 4vw, 3.25rem);
+}
+
+.hub-hero-map {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-color: #12263f;
+  background-size: cover;
+  background-position: 58% 42%;
+  background-repeat: no-repeat;
+  /* Soft edge fades so map composites cleanly behind copy */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 78%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 78%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  opacity: 0.92;
 }
 
 .hub-hero-veil {
@@ -941,54 +1011,31 @@ a.gate-call:hover {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(
-      ellipse 58% 68% at 84% 8%,
-      rgba(51, 222, 216, 0.2),
-      transparent 62%
+    linear-gradient(
+      105deg,
+      rgba(18, 38, 63, 0.92) 0%,
+      rgba(18, 38, 63, 0.72) 38%,
+      rgba(18, 38, 63, 0.35) 68%,
+      rgba(18, 38, 63, 0.55) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(23, 48, 79, 0.35) 0%,
+      transparent 28%,
+      transparent 62%,
+      rgba(23, 48, 79, 0.88) 100%
     ),
     radial-gradient(
-      ellipse 45% 55% at 3% 94%,
-      rgba(250, 192, 86, 0.14),
-      transparent 60%
-    ),
-    linear-gradient(118deg, #12263f 0%, #1a3554 55%, #204066 100%);
+      ellipse 50% 60% at 18% 40%,
+      rgba(18, 38, 63, 0.55),
+      transparent 70%
+    );
 }
 
-.hub-hero-grid {
-  display: grid;
-  gap: clamp(1.75rem, 4vw, 3.5rem);
-  align-items: center;
-}
-
-@media (min-width: 1040px) {
-  .hub-hero-grid {
-    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
-  }
-}
-
-/* Generic brand atmosphere — no faces. */
-.hub-hero-visual {
-  display: none;
-  margin: 0;
-}
-
-@media (min-width: 1040px) {
-  .hub-hero-visual {
-    display: block;
-    max-width: 31rem;
-    justify-self: end;
-    width: 100%;
-  }
-
-  .hub-hero-visual img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    object-position: 55% 45%;
-    border-radius: 16px;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16),
-      0 18px 40px rgba(4, 14, 26, 0.36);
-  }
+.hub-hero-copy {
+  position: relative;
+  max-width: 40rem;
+  z-index: 1;
 }
 
 .hub-kicker {

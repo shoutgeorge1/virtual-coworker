@@ -1,5 +1,13 @@
 import Link from "next/link";
 
+const HERO_MAPS = {
+  a: "/brand/hero-hub-map-a.jpg",
+  b: "/brand/hero-hub-map-b.jpg",
+  c: "/brand/hero-hub-map-c.jpg",
+} as const;
+
+type HeroKey = keyof typeof HERO_MAPS;
+
 const markets = [
   {
     href: "/us",
@@ -69,7 +77,21 @@ const stack = [
   },
 ];
 
-export default function HubPage() {
+function resolveHero(raw: string | string[] | undefined): HeroKey {
+  const v = Array.isArray(raw) ? raw[0] : raw;
+  if (v === "b" || v === "c") return v;
+  return "a";
+}
+
+export default async function HubPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ hero?: string | string[] }>;
+}) {
+  const params = await searchParams;
+  const hero = resolveHero(params.hero);
+  const heroSrc = HERO_MAPS[hero];
+
   return (
     <main className="hub">
       <div className="hub-top anim-fade">
@@ -79,33 +101,45 @@ export default function HubPage() {
           alt="Virtual Coworker"
           className="logo-img logo-img-on-dark"
         />
-        <p className="hub-eyebrow">Vision demo · not live product</p>
+        <div className="hub-top-right">
+          <nav className="hub-hero-pick" aria-label="Hero map option">
+            {(["a", "b", "c"] as const).map((key) => (
+              <Link
+                key={key}
+                href={key === "a" ? "/" : `/?hero=${key}`}
+                className={hero === key ? "is-active" : undefined}
+                prefetch={false}
+              >
+                Map {key.toUpperCase()}
+              </Link>
+            ))}
+          </nav>
+          <p className="hub-eyebrow">Vision demo · not live product</p>
+        </div>
       </div>
 
       <header className="hub-hero">
+        <div
+          className="hub-hero-map"
+          style={{ backgroundImage: `url(${heroSrc})` }}
+          aria-hidden
+        />
         <div className="hub-hero-veil" aria-hidden />
 
-        <div className="hub-hero-grid">
-          <div>
-            <p className="hub-kicker anim-rise">
-              <i />
-              Creative refresh · ad &amp; PPC portal layer
-            </p>
-            <h1 className="anim-rise-d1">
-              Audience-specific landing experiences for{" "}
-              <em>paid acquisition</em>.
-            </h1>
-            <p className="hub-hero-lead anim-rise-d2">
-              So this is a <b>creative refresh that lives where the ads land</b>{" "}
-              — three market portals for paid, on a stack where I can change the
-              page the same day I change the campaign.
-            </p>
-          </div>
-
-          <figure className="hub-hero-visual anim-fade" aria-hidden>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/hero-hub-2026.jpg" alt="" />
-          </figure>
+        <div className="hub-hero-copy">
+          <p className="hub-kicker anim-rise">
+            <i />
+            Creative refresh · ad &amp; PPC portal layer
+          </p>
+          <h1 className="anim-rise-d1">
+            Audience-specific landing experiences for{" "}
+            <em>paid acquisition</em>.
+          </h1>
+          <p className="hub-hero-lead anim-rise-d2">
+            So this is a <b>creative refresh that lives where the ads land</b>{" "}
+            — three market portals for paid, on a stack where I can change the
+            page the same day I change the campaign.
+          </p>
         </div>
 
         <div className="hub-frame anim-fade">
