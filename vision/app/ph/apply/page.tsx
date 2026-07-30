@@ -32,11 +32,11 @@ export default function PHApply() {
         <p className="anim-rise-d1">
           For people building a virtual assistant career. Business owners hiring
           a VA: please use the{" "}
-          <Link href="/us" style={{ color: "var(--mint)" }}>
+          <Link href="/us" style={{ color: "var(--cyan)" }}>
             US
           </Link>{" "}
           or{" "}
-          <Link href="/au" style={{ color: "var(--mint)" }}>
+          <Link href="/au" style={{ color: "var(--cyan)" }}>
             AU
           </Link>{" "}
           buyer sites.

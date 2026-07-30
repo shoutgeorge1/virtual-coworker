@@ -30,7 +30,7 @@ export default function USConsult() {
         <p className="anim-rise-d1">
           For US businesses hiring a virtual assistant. Job seekers: please use
           the{" "}
-          <Link href="/ph" style={{ color: "var(--teal)" }}>
+          <Link href="/ph" style={{ color: "var(--cyan)" }}>
             PH talent site
           </Link>
           .
