@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="h-100">
+  <head>
+    <title>Login :: Virtual Coworker</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="IgEENeR2VkxR1XvPZ5-Y8_j4Zi7gGhBSVsQSczjZhpXtSTXm23KzUoCPRq4Qd9nC9M-YgOYsKQ0jsggLgzmd2g" />
+    
+
+    <script src="/packs/js/runtime-9c54ef34143f5bf4a22e.js" data-turbolinks-track="reload" defer="defer"></script>
+<script src="/packs/js/367-55a0af11906e37e8725e.js" data-turbolinks-track="reload" defer="defer"></script>
+<script src="/packs/js/268-f17e68e37373c0a46d55.js" data-turbolinks-track="reload" defer="defer"></script>
+<script src="/packs/js/application-d7544ef071ba57b71290.js" data-turbolinks-track="reload" defer="defer"></script>
+    <link rel="stylesheet" href="/packs/css/653-1fc58407.css" media="all" data-turbolinks-track="reload" />
+<link rel="stylesheet" href="/packs/css/application-92c50f2d.css" media="all" data-turbolinks-track="reload" />
+  </head>
+
+  <style>
+    .col-xl-3 { width: 30%; }
+  </style>
+
+  <body id="app" data-controller="sessions" data-action="new">
+    <div class="loading" id="spinner">
+  <div class="preloader-wrapper active -custom-centered" id="spinnerCircle">
+    <div class="circles-container">
+      <div class="circles">
+        <div class="circle">
+          <div class="inner-circle">
+            <div class="part-cicle"></div>
+          </div>
+        </div>
+        <div class="circle">
+          <div class="inner-circle">
+            <div class="part-cicle"></div>
+          </div>
+        </div>
+        <div class="circle">
+          <div class="inner-circle">
+            <div class="part-cicle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <main>
+        <div class="container-fluid vh-100" style="background: linear-gradient(140deg, rgba(2,0,36,1) 0%, rgb(8 8 123) 50%, rgba(16,68,166,1) 50%, rgba(8,154,184,1) 100%);">
+          <div class="version-number"> v2.1.15 </div>
+          <div class="row justify-content-center align-items-center h-100">
+              <div class="col col-md-6 col-lg-6 mx-4 col-xl-3" style="padding: 22px; background-color: white; border-radius: 12px; box-shadow: 15px 15px 25px rgb(0 0 0 / 60%);">
+                
+<div>
+  <div data-controller="login-form">
+    <div class="page-header text-center">
+      <div class="mx-auto">
+        <img class="img" style="width: 40%" src="/packs/static/logo_email-e29d3766c3aac99f2cfe.png" />
+      </div>
+    </div>
+    <h4 class="mb-4">Login</h4>
+
+
+    <form data-turbo="false" class="new_user" id="new_user" action="/users/sign_in" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" autocomplete="off" /><input type="hidden" name="authenticity_token" value="WCCnyy7FKtjqwhCMNpwpJTFFRCvRzoTLlXRa1AIvWqmXaJYYEcHPxjuYLe1BdGgUPXK6hdf4vZTgAkCsuc9B5g" autocomplete="off" />
+      <div class="mb-3"><label class="form-label required" for="user_email">Email</label><div class="input-group"><span class="input-group-text"><i class="fas fa-user"></i></span><input autocomplete="username" autofocus="autofocus" class="form-control" type="email" name="user[email]" id="user_email" /></div></div>
+      <div class="mb-3">
+        <label class="form-label required" for="user_password">Password</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input class="form-control" type="password" name="user[password]" data-login-form-target="password" id="user_password" autocomplete="current-password">
+
+          <span
+            class="input-group-text"
+            style="background-color: white; cursor: pointer"
+            data-login-form-target="toggler"
+            data-action="click->login-form#showHidePassword"
+            >
+            <i class="far fa-eye"></i>
+          </span>
+        </div>
+      </div>
+
+      <input type="submit" name="commit" value="Login" class="btn btn-primary" style="width: 100%" />
+</form>
+
+
+    <ul class="list-unstyled mt-4 text-center">
+  
+  
+    <li><a style="color: gray" href="/users/password/new">Forgot your password?</a></li>
+  
+  
+    <li><a style="color: gray" href="/users/unlock/new">Didn’t receive unlock email?</a></li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+  // Check if coming from timeout (now using flash/session)
+  const timeoutNotice = document.getElementById('timeout-notice');
+  if (timeoutNotice) {
+    if (typeof(Storage) !== "undefined") {
+      sessionStorage.clear();
+    }
+
+    window.location.href = window.location.href;
+
+    // // Refresh CSRF token for clean login attempt
+    // fetch('/csrf_token', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Cache-Control': 'no-cache, no-stosre, must-revalidate',
+    //     'Pragma': 'no-cache',
+    //     'Expires': '0'
+    //   },
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   // Update CSRF token in forms
+    //   const csrfInputs = document.querySelectorAll('input[name="authenticity_token"]');
+    //   csrfInputs.forEach(input => {
+    //     input.value = data.csrf_token;
+    //   });
+
+    //   const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+    //   if (csrfMeta) {
+    //     csrfMeta.setAttribute('content', data.csrf_token);
+    //   }
+
+    // })
+    // .catch(error => {
+    //   window.location.reload();
+    // });
+  }
+
+  const fromAdmin = document.referrer.includes('/admin/')
+  const fromContractor = document.referrer.includes('/contractor/')
+  const fromClient = document.referrer.includes('/client/')
+
+  if (fromAdmin || fromContractor || fromClient) {
+    // When a session came from a timeout, Reload the Sign in Page
+    window.location.href = window.location.href
+  }
+
+  const alertElement = document.getElementsByClassName('custom-alert-danger')[0]
+
+  if (!!alertElement && alertElement.innerHTML.includes("Invalid Email or password.")) {
+    // Workaround for weird session error occuring when trying to login
+    // From an old browser tab that was previously signed out from a
+    // session timeout
+    window.location.href = window.location.href
+  }
+</script>
+              </div>
+          </div>
+        </div>
+    </main>
+  </body>
+</html>
