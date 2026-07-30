@@ -8,8 +8,8 @@ const markets = [
     label: "Market 01 · virtualcoworker.com",
     name: "United States",
     meta: "US companies hiring VAs. Its own portal so paid search can run a hire-first message — and A/B the headline, gate and form — without touching the main site.",
-    img: "/brand/va-us.jpg",
-    pos: "50% 14%",
+    img: "/brand/hero-us-2026.jpg",
+    pos: "72% 24%",
     anim: "anim-rise",
   },
   {
@@ -19,8 +19,8 @@ const markets = [
     label: "Market 02 · virtualcoworker.com.au",
     name: "Australia",
     meta: "Australian companies hiring VAs. Own daylight, own plain-talking copy, own 1300 number and its own tests — not the US page with the spelling swapped.",
-    img: "/brand/va-au.jpg",
-    pos: "50% 14%",
+    img: "/brand/hero-au-2026.jpg",
+    pos: "70% 26%",
     anim: "anim-rise-d1",
   },
   {
@@ -30,8 +30,8 @@ const markets = [
     label: "Market 03 · virtualcoworker.com.ph",
     name: "Philippines",
     meta: "Filipino talent and opportunities. A separate door with EN/TL and real VA faces, so career ads get tested on their own and applicants never pollute the hire funnel.",
-    img: "/brand/va-ph.jpg",
-    pos: "50% 14%",
+    img: "/brand/talent-john.jpeg",
+    pos: "50% 18%",
     anim: "anim-rise-d2",
   },
 ];
