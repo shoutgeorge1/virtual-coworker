@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Google Ads Workspace · Virtual Coworker Paid Acquisition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+</head>
+<body data-page="ads.html" data-foot="No account data connected<br />Modules fill in after access">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">Channel</p>
+        <h1>Google Ads Workspace</h1>
+        <p>
+          Every module I'd run for US employer search, with an honest state on each. Anything
+          that needs the live account says so instead of showing a made-up number.
+        </p>
+      </header>
+
+      <div class="notice">
+        <p>
+          <strong>No Google Ads account is connected to this dashboard.</strong>
+          Nothing here is pulled from a live account, and no spend, click, or conversion figures
+          are estimated. The two account IDs below are the only Ads facts confirmed so far, and
+          they came from the public page source of the existing websites.
+        </p>
+      </div>
+
+      <section class="panel" id="known">
+        <div class="panel-hd">
+          <p class="kicker">Confirmed from public HTML</p>
+          <h2>What we already know exists</h2>
+          <span class="st st-verified">Verified</span>
+        </div>
+        <div class="panel-bd tbl-wrap">
+          <table class="tbl-tight">
+            <thead>
+              <tr>
+                <th>Signal</th>
+                <th>Value</th>
+                <th>Where it was seen</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Google Ads conversion tag — US</td>
+                <td><span class="mono">AW-962672995</span></td>
+                <td>US site page source</td>
+                <td>A US Ads account exists and is tagged</td>
+              </tr>
+              <tr>
+                <td>Google Ads conversion tag — AU</td>
+                <td><span class="mono">AW-1010248779</span></td>
+                <td>AU site page source</td>
+                <td>A separate AU account — correct for a separate market</td>
+              </tr>
+              <tr>
+                <td>Tag delivery</td>
+                <td>Via Google Tag Manager</td>
+                <td>US and AU containers</td>
+                <td>Changes go through GTM, not the theme</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="proof-key muted">
+            <strong>Not known:</strong> spend, campaign structure, which conversion actions are
+            counted, match types, negative lists, or performance of any kind. Full existing tag
+            inventory is on <a href="tracking.html">Tracking inventory</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel" id="modules">
+        <div class="panel-hd">
+          <p class="kicker">Workspace</p>
+          <h2>Account modules</h2>
+          <span class="badge badge-info">Phase 1 · US only</span>
+        </div>
+        <div class="panel-bd">
+          <div class="mod-grid">
+
+            <article class="mod" id="m-access">
+              <div class="mod-hd">
+                <h3>Account access &amp; structure</h3>
+                <span class="st st-access">Needs access</span>
+              </div>
+              <p>Review how the US account is organised today before proposing any change.</p>
+              <div class="empty">
+                <strong>Requires Google Ads access.</strong>
+                Needed: admin invite to the US account. Read-only is enough to start the audit.
+              </div>
+            </article>
+
+            <article class="mod" id="m-conversions">
+              <div class="mod-hd">
+                <h3>Conversion actions</h3>
+                <span class="st st-access">Needs access</span>
+              </div>
+              <p>
+                The first thing I check. Duplicate, stale, or overly generous conversion actions
+                quietly distort every decision the account makes.
+              </p>
+              <ul>
+                <li>Which actions are set to primary</li>
+                <li>Whether one lead can count more than once</li>
+                <li>Attribution window and model</li>
+              </ul>
+              <div class="empty">
+                <strong>Requires Google Ads access.</strong>
+                Pairs with GA4 access to confirm both sides tell the same story.
+              </div>
+            </article>
+
+            <article class="mod" id="m-campaigns">
+              <div class="mod-hd">
+                <h3>Campaign inventory</h3>
+                <span class="st st-access">Needs access</span>
+              </div>
+              <p>Live campaigns, budgets, bid strategies, and what each is actually for.</p>
+              <div class="empty">
+                <strong>Requires Google Ads access.</strong>
+                No campaign names, budgets, or metrics are shown here because none have been seen.
+              </div>
+            </article>
+
+            <article class="mod" id="m-searchterms">
+              <div class="mod-hd">
+                <h3>Search terms &amp; waste</h3>
+                <span class="st st-access">Needs access</span>
+              </div>
+              <p>
+                Usually the fastest saving available in any employer-side account: paid clicks from
+                people looking for a job rather than looking to hire.
+              </p>
+              <div class="empty">
+                <strong>Requires Google Ads access.</strong>
+                A 90-day search terms export is the single most useful first file.
+              </div>
+            </article>
+
+            <article class="mod" id="m-negatives">
+              <div class="mod-hd">
+                <h3>Negative keyword strategy</h3>
+                <span class="st st-ready">Ready</span>
+              </div>
+              <p>
+                This one does not need access. Virtual Coworker sells to employers <em>and</em>
+                recruits talent, so employer campaigns need job-seeker language excluded before
+                launch — not after the first invoice.
+              </p>
+              <ul>
+                <li>Job-seeker intent: <span class="mono">jobs</span>, <span class="mono">hiring near me</span>, <span class="mono">apply</span>, <span class="mono">salary</span>, <span class="mono">work from home jobs</span></li>
+                <li>Career and training intent: <span class="mono">how to become a VA</span>, <span class="mono">VA course</span></li>
+                <li>Free and DIY intent, unless deliberately targeted</li>
+                <li>Competitor terms handled as a separate deliberate decision, not by accident</li>
+              </ul>
+              <div class="empty empty-quiet">
+                <strong>Drafted, not applied.</strong>
+                Becomes a real list once search terms confirm which of these are actually costing money.
+              </div>
+            </article>
+
+            <article class="mod" id="m-geo">
+              <div class="mod-hd">
+                <h3>Geo, language &amp; schedule</h3>
+                <span class="st st-ready">Ready</span>
+              </div>
+              <p>Phase 1 settings I would apply on day one, and would defend:</p>
+              <ul>
+                <li>United States only, set to <em>presence</em> rather than presence-or-interest</li>
+                <li>Excludes traffic from people merely searching about the US from elsewhere</li>
+                <li>Ad schedule aligned to when someone can actually answer the phone</li>
+                <li>AU stays in its own account and is not part of Phase 1</li>
+              </ul>
+            </article>
+
+            <article class="mod" id="m-budget">
+              <div class="mod-hd">
+                <h3>Budget &amp; bidding</h3>
+                <span class="st st-blocked">Blocked</span>
+              </div>
+              <p>
+                Bidding strategy depends on the qualified-opportunity definition and on how much
+                conversion history the account has. Both are open questions.
+              </p>
+              <ul>
+                <li>Start conservative while conversion data is thin</li>
+                <li>Move to automated bidding only when the data supports it</li>
+                <li>Optimise toward qualified opportunities, not raw form fills</li>
+              </ul>
+              <div class="empty">
+                <strong>Needs a decision from VC:</strong> monthly budget, and what counts as
+                qualified. See <a href="action.html#decisions">Decisions</a>.
+              </div>
+            </article>
+
+            <article class="mod" id="m-lp">
+              <div class="mod-hd">
+                <h3>Landing page mapping</h3>
+                <span class="st st-progress">In progress</span>
+              </div>
+              <p>
+                Each ad group points at a page built for that intent, on the paid layer rather than
+                the WordPress site.
+              </p>
+              <div class="empty empty-quiet">
+                <strong>Concept stage.</strong>
+                Page inventory and current status live on
+                <a href="microsite.html">Paid Microsite &amp; LPs</a>.
+              </div>
+            </article>
+
+            <article class="mod" id="m-assets">
+              <div class="mod-hd">
+                <h3>Ad copy &amp; assets</h3>
+                <span class="st st-notstarted">Not started</span>
+              </div>
+              <p>
+                Written after the landing page, so the ad and the page make the same promise.
+                Needs one named approver for claims and tone.
+              </p>
+              <div class="empty empty-quiet">
+                <strong>Waiting on:</strong> landing page sign-off and a brand approver.
+              </div>
+            </article>
+
+            <article class="mod" id="m-tracking">
+              <div class="mod-hd">
+                <h3>Conversion tracking on the paid layer</h3>
+                <span class="st st-notstarted">Not started</span>
+              </div>
+              <p>
+                New pages get their own clean conversion setup, tested with real submissions before
+                a single click is bought.
+              </p>
+              <ul>
+                <li>Distinct events for form submit, call click, and booking</li>
+                <li>Campaign, keyword, and page recorded with every lead</li>
+                <li>Verified end to end, not assumed</li>
+              </ul>
+            </article>
+
+            <article class="mod" id="m-reporting">
+              <div class="mod-hd">
+                <h3>Reporting cadence</h3>
+                <span class="st st-ready">Ready</span>
+              </div>
+              <p>Agreed before launch so nobody is waiting on a surprise report:</p>
+              <ul>
+                <li>Daily eyes on search terms and spend for the first two weeks</li>
+                <li>Weekly one-page summary during month one</li>
+                <li>Monthly review against cost per qualified opportunity</li>
+              </ul>
+              <div class="empty empty-quiet">
+                <strong>Metric definitions</strong> are on <a href="measurement.html">Measurement</a>.
+              </div>
+            </article>
+
+            <article class="mod" id="m-other">
+              <div class="mod-hd">
+                <h3>Performance Max, Display &amp; Demand Gen</h3>
+                <span class="st st-deferred">Deferred</span>
+              </div>
+              <p>
+                Deliberately not in Phase 1. These campaign types work best with conversion history
+                and clean signals — both of which we are trying to build first.
+              </p>
+              <div class="empty empty-quiet">
+                <strong>Revisit</strong> at day 90 with data. See
+                <a href="future.html">Future Expansion</a>.
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <p class="limits-note">
+        <strong>Why so many empty states:</strong> an outside view of public web pages cannot show
+        campaign structure, spend, or performance. Filling those boxes with plausible-looking
+        numbers would be the fastest way to make every other number on this dashboard untrustworthy.
+      </p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="microsite.html">Paid Microsite &amp; LPs</a>
+        <a class="btn" href="measurement.html">Measurement</a>
+        <a class="btn" href="action.html">Decisions &amp; Actions</a>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+</body>
+</html>

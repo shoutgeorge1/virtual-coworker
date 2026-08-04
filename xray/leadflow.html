@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Lead Flow &amp; Zoho · Virtual Coworker Paid Acquisition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+</head>
+<body data-page="leadflow.html" data-foot="Proposed, not confirmed<br />Nothing changed in their CRM">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">After the form</p>
+        <h1>Lead Flow &amp; Zoho</h1>
+        <p>
+          What should happen between someone submitting a paid enquiry and a salesperson picking
+          it up. Everything on this page is a proposal until VC confirms how their Zoho actually
+          works today.
+        </p>
+      </header>
+
+      <div class="notice">
+        <p>
+          <strong>Current state: unconfirmed.</strong>
+          From the outside it is possible to see that Virtual Coworker uses Zoho Recruit for
+          candidates. What is not visible — and must not be guessed — is which Zoho product holds
+          <em>employer</em> enquiries, who administers it, or where website form submissions land
+          today.
+        </p>
+      </div>
+
+      <section class="panel" id="known">
+        <div class="panel-hd">
+          <p class="kicker">Evidence</p>
+          <h2>Confirmed vs assumed</h2>
+          <span class="st st-validate">Needs validation</span>
+        </div>
+        <div class="panel-bd tbl-wrap">
+          <table class="tbl-tight">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>State</th>
+                <th>Basis</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Zoho Recruit is used for candidates</td>
+                <td><span class="st st-verified">Verified</span></td>
+                <td>Public careers portal on the PH site</td>
+              </tr>
+              <tr>
+                <td>A separate admin system exists for clients and timesheets</td>
+                <td><span class="st st-verified">Verified</span></td>
+                <td>Public login page on the admin subdomain</td>
+              </tr>
+              <tr>
+                <td>Website enquiry forms exist on US and AU sites</td>
+                <td><span class="st st-verified">Verified</span></td>
+                <td>Public contact and consultation pages</td>
+              </tr>
+              <tr>
+                <td>Where employer enquiries are stored</td>
+                <td><span class="st st-validate">Needs validation</span></td>
+                <td>Not visible from outside</td>
+              </tr>
+              <tr>
+                <td>Whether forms already push into a CRM automatically</td>
+                <td><span class="st st-validate">Needs validation</span></td>
+                <td>Not visible from outside</td>
+              </tr>
+              <tr>
+                <td>Who owns and administers Zoho</td>
+                <td><span class="st st-validate">Needs validation</span></td>
+                <td>Not visible from outside</td>
+              </tr>
+              <tr>
+                <td>Whether qualified status can be sent back to Google Ads</td>
+                <td><span class="st st-validate">Needs validation</span></td>
+                <td>Depends on the Zoho product and edition in use</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="proposed">
+        <div class="panel-hd">
+          <p class="kicker">Proposed</p>
+          <h2>How a paid lead should travel</h2>
+          <span class="badge badge-info">Proposal</span>
+        </div>
+        <div class="panel-bd">
+          <ol class="flow">
+            <li><strong>Submit</strong>Employer completes the short form on a paid page</li>
+            <li><strong>Capture</strong>Lead saved with campaign, keyword, and page</li>
+            <li><strong>Notify</strong>Owner alerted immediately, not on a nightly batch</li>
+            <li><strong>Create</strong>Record created in Zoho, tagged as paid</li>
+            <li><strong>Contact</strong>First human contact inside an agreed window</li>
+            <li><strong>Mark</strong>Sales marks qualified or not, with a reason</li>
+            <li><strong>Return</strong>That status flows back to bidding</li>
+          </ol>
+          <p class="muted" style="margin-top:1.1rem;font-size:0.92rem">
+            Steps one to three sit inside the paid layer and are entirely mine to build. Steps four
+            to seven touch VC's systems and people, which is why they need agreement rather than
+            assumption.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel" id="questions">
+        <div class="panel-hd">
+          <p class="kicker">Validation</p>
+          <h2>Questions to answer before anything is wired</h2>
+          <span class="st st-validate">Needs validation</span>
+        </div>
+        <div class="panel-bd">
+          <div class="mod-grid">
+            <article class="mod">
+              <div class="mod-hd"><h3>The system</h3></div>
+              <ul>
+                <li>Which Zoho product holds employer enquiries — CRM, Bigin, or something else?</li>
+                <li>Which edition? It determines what integration is even possible.</li>
+                <li>Is Zoho the source of truth, or does a spreadsheet or inbox do the real work?</li>
+                <li>Who administers it, and can they make field changes?</li>
+              </ul>
+            </article>
+
+            <article class="mod">
+              <div class="mod-hd"><h3>Today's flow</h3></div>
+              <ul>
+                <li>When someone submits a website form now, where does it go?</li>
+                <li>Email only, or an automatic CRM record?</li>
+                <li>Who is notified, and how fast is first contact in practice?</li>
+                <li>What happens to enquiries that arrive by phone or chat?</li>
+              </ul>
+            </article>
+
+            <article class="mod">
+              <div class="mod-hd"><h3>Data shape</h3></div>
+              <ul>
+                <li>Can we add a field for lead source, campaign, and keyword?</li>
+                <li>Is there already a paid-versus-organic tag, and is it trusted?</li>
+                <li>How are duplicates handled when someone enquires twice?</li>
+                <li>Are candidate and employer records properly separated?</li>
+              </ul>
+            </article>
+
+            <article class="mod">
+              <div class="mod-hd"><h3>Quality loop</h3></div>
+              <ul>
+                <li>Will sales mark each paid lead qualified or not?</li>
+                <li>What stage counts as a real opportunity?</li>
+                <li>Can that status be exported or sent back to Google Ads?</li>
+                <li>Who owns that habit, and what happens when they are on leave?</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="fallback">
+        <div class="panel-hd">
+          <p class="kicker">If integration takes time</p>
+          <h2>A launch does not have to wait for perfect plumbing</h2>
+          <span class="st st-ready">Ready</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li><strong>Day one minimum:</strong> lead captured on the paid layer with full campaign
+              data, emailed instantly to a named person, and logged where I can report on it.</li>
+            <li><strong>Next:</strong> automatic record creation in Zoho with the same fields.</li>
+            <li><strong>Then:</strong> qualified status flowing back to Google Ads so bidding
+              optimises for buyers rather than form fills.</li>
+          </ul>
+          <p class="muted" style="margin-top:0.85rem;font-size:0.92rem">
+            Each step is useful on its own. Nothing here requires a CRM migration, a new platform,
+            or changes to how the existing website forms behave.
+          </p>
+        </div>
+      </section>
+
+      <p class="limits-note">
+        <strong>Deliberately not claimed:</strong> that the current CRM setup is broken, slow, or
+        badly configured. None of that is visible from outside, and the honest answer is that the
+        existing arrangement may already work well for the leads it receives today.
+      </p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="measurement.html">Measurement</a>
+        <a class="btn" href="microsite.html">Paid Microsite &amp; LPs</a>
+        <a class="btn" href="package.html">Discovery questions</a>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+</body>
+</html>
