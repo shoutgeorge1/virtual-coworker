@@ -3,17 +3,16 @@
    Each page sets <body data-page="index.html" data-foot="..."> */
 (function () {
   var ITEMS = [
-    { label: "Paid command center" },
-    { href: "index.html", text: "Executive Overview" },
+    { href: "index.html", text: "Overview" },
     { href: "action.html", text: "Action Plan" },
     { href: "landing-pages.html", text: "Landing Pages" },
-    { href: "ads.html", text: "Google Ads" },
-    { href: "leadflow.html", text: "Zoho / Lead Flow" },
+    { href: "ads.html", text: "Google Ads", quiet: true },
+    { href: "leadflow.html", text: "Zoho", quiet: true },
     { label: "Reference" },
-    { href: "findings.html", text: "Findings Archive", quiet: true },
+    { href: "findings.html", text: "Findings", quiet: true },
     { href: "future.html", text: "Later ideas", quiet: true },
-    { href: "tracking.html", text: "Tracking inventory", quiet: true },
-    { href: "evidence.html", text: "Source files", quiet: true }
+    { href: "tracking.html", text: "Tracking", quiet: true },
+    { href: "evidence.html", text: "Sources", quiet: true }
   ];
 
   var host = document.querySelector("[data-nav]");
@@ -25,13 +24,13 @@
     (location.pathname.split("/").pop() || "index.html");
   var foot =
     body.getAttribute("data-foot") ||
-    "Paid layer · call-ready<br />Virtual Coworker command center";
+    "US + AU · job orders<br />Virtual Coworker";
 
   var html =
     '<div class="brand">' +
     '<img class="brand-mark" src="assets/logo-vc.png" width="168" height="52" alt="Virtual Coworker" />' +
-    '<p class="name">Paid Acquisition</p>' +
-    '<p class="sub">Command center</p>' +
+    '<p class="name">Paid acquisition</p>' +
+    '<p class="sub">US + AU employers</p>' +
     "</div>" +
     '<nav class="nav" aria-label="Primary">';
 

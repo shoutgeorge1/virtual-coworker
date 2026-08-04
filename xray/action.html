@@ -16,18 +16,33 @@
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">The queue</p>
+        <p class="kicker">Checklist</p>
         <h1>Action Plan</h1>
         <p>
-          Same plan as the Overview — as a checklist. Tick items as they land
-          (saved on this machine).
+          Tick as items land (saved on this browser). Overview has the story;
+          this page is the queue.
         </p>
       </header>
 
+      <section class="panel" id="how">
+        <div class="panel-hd">
+          <p class="kicker">Day to day</p>
+          <h2>How George runs it</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li><strong>Long-tail keywords</strong> — specific intent, not only broad head terms</li>
+            <li><strong>Many landing pages, A/B tested</strong> — keep shipping variants; don’t stop at one</li>
+            <li><strong>Weekly rhythm</strong> — search terms, waste, quality vs job orders; short updates to VC</li>
+            <li><strong>Scale with evidence</strong> — budget follows what produces orders</li>
+          </ul>
+        </div>
+      </section>
+
       <section class="panel" id="vc-setup">
         <div class="panel-hd">
-          <p class="kicker">Virtual Coworker provides</p>
-          <h2>Client-side setup (unblocks everything)</h2>
+          <p class="kicker">Virtual Coworker</p>
+          <h2>Your setup (unblocks everything)</h2>
           <span class="st st-access">Needs VC</span>
         </div>
         <div class="panel-bd">
@@ -35,53 +50,51 @@
             <li>
               <input type="checkbox" id="v1" data-todo="v1" />
               <label for="v1">
-                <strong>Set up company email for George and add him to accounts</strong>
-                <span class="todo-hint">Email + invites into Ads, analytics, Zoho. This is the main day-one ask.</span>
+                <strong>Company email for George + add him to accounts</strong>
+                <span class="todo-hint">Main day-one ask — email and invites into Ads, analytics, Zoho.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="v2" data-todo="v2" />
               <label for="v2">
                 <strong>Google Ads admin — US and Australia</strong>
-                <span class="todo-hint">Read-only is enough to start the audit.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="v3" data-todo="v3" />
               <label for="v3">
-                <strong>GA4 + GTM access — US and AU</strong>
+                <strong>GA4 + GTM — US and AU</strong>
               </label>
             </li>
             <li>
               <input type="checkbox" id="v4" data-todo="v4" />
               <label for="v4">
                 <strong>Zoho access</strong>
-                <span class="todo-hint">Read first; integration user when wiring leads.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="v5" data-todo="v5" />
               <label for="v5">
-                <strong>Share historical Ads + lead / job-order / placement data</strong>
+                <strong>Historical Ads + lead / job-order / placement data</strong>
               </label>
             </li>
             <li>
               <input type="checkbox" id="v6" data-todo="v6" />
               <label for="v6">
-                <strong>Approve monthly ad budget for the first 90 days</strong>
+                <strong>Approve monthly ad budget (first 90 days)</strong>
               </label>
             </li>
             <li>
               <input type="checkbox" id="v7" data-todo="v7" />
               <label for="v7">
-                <strong>Define job order and placement in Zoho</strong>
-                <span class="todo-hint">Primary north star = job order. Placement is secondary / aspirational early.</span>
+                <strong>Define job order (+ placement) in Zoho</strong>
+                <span class="todo-hint">Primary north star = job order. Placement secondary if signal exists.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="v8" data-todo="v8" />
               <label for="v8">
-                <strong>Name who owns paid leads + response-time commitment</strong>
+                <strong>Name lead owner + response-time commitment</strong>
               </label>
             </li>
             <li>
@@ -96,7 +109,7 @@
 
       <section class="panel" id="george">
         <div class="panel-hd">
-          <p class="kicker">George does</p>
+          <p class="kicker">George</p>
           <h2>Once unblocked</h2>
           <span class="st st-ready">Ready</span>
         </div>
@@ -106,33 +119,37 @@
               <input type="checkbox" id="g1" data-todo="g1" />
               <label for="g1">
                 <strong>Review existing Google Ads + lead flow (US + AU)</strong>
-                <span class="todo-hint">Structure, conversions, search terms, waste — read before changing.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="g2" data-todo="g2" />
               <label for="g2">
-                <strong>Confirm US + AU services and customers to prioritize</strong>
+                <strong>Confirm US + AU services / customers to prioritize</strong>
               </label>
             </li>
             <li>
               <input type="checkbox" id="g3" data-todo="g3" />
               <label for="g3">
-                <strong>Build first paid landing pages</strong>
-                <span class="todo-hint">Employer-only. Concepts on <a href="landing-pages.html">Landing Pages</a>.</span>
+                <strong>Build first paid LPs, then keep A/B testing more</strong>
+                <span class="todo-hint">Concepts: <a href="landing-pages.html">Landing Pages</a>.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="g4" data-todo="g4" />
               <label for="g4">
-                <strong>Connect leads to Zoho with attribution</strong>
+                <strong>Build long-tail keyword sets + job-seeker negatives</strong>
               </label>
             </li>
             <li>
               <input type="checkbox" id="g5" data-todo="g5" />
               <label for="g5">
-                <strong>Launch, measure vs job orders, improve</strong>
-                <span class="todo-hint">Optimize to orders — not form fills alone.</span>
+                <strong>Connect leads to Zoho with attribution</strong>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="g6" data-todo="g6" />
+              <label for="g6">
+                <strong>Launch → measure vs job orders → improve on a loop</strong>
               </label>
             </li>
           </ul>
@@ -141,28 +158,22 @@
 
       <section class="panel" id="out">
         <div class="panel-hd">
-          <p class="kicker">Out of scope</p>
+          <p class="kicker">Boundaries</p>
           <h2>Not on this roadmap</h2>
-          <span class="st st-handoff">Handed off</span>
         </div>
         <div class="panel-bd">
           <ul class="glance-bullets">
-            <li>WordPress rebuild or repair</li>
-            <li>SEO / organic content ownership</li>
-            <li>Replacing systems that already work</li>
-            <li>Filipino / PH talent recruiting ads</li>
+            <li>WordPress rebuild or repair · SEO ownership · replacing working systems · PH talent ads</li>
           </ul>
-          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
-            Site issues from the earlier review stay in the
-            <a href="findings.html">Findings Archive</a> for whoever maintains WordPress.
+          <p class="muted" style="margin:0.6rem 0 0;font-size:0.88rem">
+            Earlier site notes: <a href="findings.html">Findings Archive</a>.
           </p>
         </div>
       </section>
 
       <div class="actions">
-        <a class="btn btn-primary" href="index.html">Executive Overview</a>
+        <a class="btn btn-primary" href="index.html">Overview</a>
         <a class="btn" href="landing-pages.html">Landing Pages</a>
-        <a class="btn" href="ads.html">Google Ads</a>
       </div>
     </main>
   </div>
