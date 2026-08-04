@@ -5,21 +5,15 @@
   var ITEMS = [
     { label: "Paid command center" },
     { href: "index.html", text: "Executive Overview" },
-    { href: "roadmap.html", text: "30 / 60 / 90 Days" },
+    { href: "action.html", text: "Action Plan" },
     { href: "landing-pages.html", text: "Landing Pages" },
-    { href: "ads.html", text: "Google Ads Workspace" },
-    { href: "leadflow.html", text: "Lead Flow &amp; Zoho" },
-    { href: "measurement.html", text: "Measurement" },
-    { href: "action.html", text: "Decisions &amp; Actions" },
-    { href: "scope.html", text: "Scope &amp; Ownership", quiet: true },
-    { href: "microsite.html", text: "LP detail", quiet: true },
-    { label: "Reference &amp; handoff" },
-    { href: "findings.html", text: "Findings Archive" },
-    { href: "future.html", text: "Future Expansion" },
+    { href: "ads.html", text: "Google Ads" },
+    { href: "leadflow.html", text: "Zoho / Lead Flow" },
+    { label: "Reference" },
+    { href: "findings.html", text: "Findings Archive", quiet: true },
+    { href: "future.html", text: "Later ideas", quiet: true },
     { href: "tracking.html", text: "Tracking inventory", quiet: true },
-    { href: "evidence.html", text: "Source files", quiet: true },
-    { href: "package.html", text: "Discovery questions", quiet: true },
-    { href: "report.html", text: "Long write-up", quiet: true }
+    { href: "evidence.html", text: "Source files", quiet: true }
   ];
 
   var host = document.querySelector("[data-nav]");
@@ -35,8 +29,9 @@
 
   var html =
     '<div class="brand">' +
-    '<p class="name">Virtual Coworker</p>' +
-    '<p class="sub">Paid Acquisition</p>' +
+    '<img class="brand-mark" src="assets/logo-vc.png" width="168" height="52" alt="Virtual Coworker" />' +
+    '<p class="name">Paid Acquisition</p>' +
+    '<p class="sub">Command center</p>' +
     "</div>" +
     '<nav class="nav" aria-label="Primary">';
 

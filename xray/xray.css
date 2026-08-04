@@ -80,24 +80,34 @@ a:hover { text-decoration: underline; }
 }
 
 .brand {
-  padding: 1rem 0.95rem;
+  padding: 0.9rem 0.95rem;
   border-bottom: 1px solid var(--shell-edge);
 }
 
+.brand-mark {
+  display: block;
+  width: auto;
+  height: 36px;
+  max-width: 168px;
+  object-fit: contain;
+  object-position: left center;
+}
+
 .brand .name {
-  margin: 0;
-  font-size: 1.08rem;
-  font-weight: 700;
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
   color: var(--accent);
   letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 
 .brand .sub {
-  margin: 0.3rem 0 0;
-  font-size: 0.7rem;
+  margin: 0.15rem 0 0;
+  font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   color: var(--dim);
 }
 
