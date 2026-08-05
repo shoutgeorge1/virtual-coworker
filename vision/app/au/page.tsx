@@ -5,9 +5,10 @@ import StickyCta from "../components/StickyCta";
 import "./au.css";
 
 export const metadata: Metadata = {
-  title: "Virtual Coworker · AU — Hire a VA",
+  title: "Hire a Virtual Assistant | Virtual Coworker Australia",
   description:
-    "Vision demo: Australian businesses hiring dedicated virtual assistants.",
+    "Screened Philippines-based VAs for Australian businesses. Employers only — get matched fast.",
+  robots: { index: false, follow: false },
 };
 
 const gate: GateCopy = {
@@ -17,9 +18,9 @@ const gate: GateCopy = {
   intentPrimary: "I want to hire a VA",
   intentSecondary: "I'm after a job",
   divertHref: "/ph",
-  divertTitle: "Looking for work, not hiring.",
+  divertTitle: "Looking for a VA role?",
   divertBody:
-    "All our VA roles run through the Philippines careers site. We'll take you straight there rather than making you fill this in.",
+    "All our VA roles run through the Philippines careers site. We'll take you straight there rather than making you fill this hire form in.",
   divertCta: "Go to VA careers →",
   q1Label: "What needs doing?",
   q1: ["Admin & inbox", "Customer service", "Sales / CRM", "Marketing", "Bookkeeping"],
@@ -33,13 +34,13 @@ const gate: GateCopy = {
   phonePlaceholder: "Phone — for a quicker call back",
   submit: "Find my VA →",
   reassure:
-    "No lock-in contracts. We'll come back to you within one business day. Demo only — nothing is submitted.",
+    "No lock-in contracts. We'll come back to you within one business day. By submitting you agree to our privacy notice.",
   callLabel: "Call tracking · AU line",
   phoneDisplay: "1300 886 740",
   phoneHref: "tel:+611300886740",
   doneTitle: "Beauty — that's all we need.",
   doneBody:
-    "In the real build this fires the conversion event, routes to the AU team, and the keyword that drove the click follows the lead into the CRM.",
+    "Your request was received. We'll follow up using the details you provided.",
 };
 
 const benefits = [
@@ -175,7 +176,7 @@ export default function AUHome() {
             </figcaption>
           </figure>
 
-          <LeadGate copy={gate} />
+          <LeadGate copy={gate} market="au" />
         </div>
       </section>
 

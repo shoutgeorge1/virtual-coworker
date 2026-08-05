@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 
+const noindex = process.env.NEXT_PUBLIC_PILOT_NOINDEX !== "false";
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+
 export const metadata: Metadata = {
-  title: "Virtual Coworker · Vision Demo",
+  title: "Virtual Coworker · Paid Search Pilot",
   description:
-    "Interview vision demo: three market-specific brand experiences for Virtual Coworker.",
+    "Independent Google Search pilot microsite for US and Australian employer leads.",
   icons: { icon: "/brand/favicon.png" },
+  robots: noindex
+    ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+    : { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -27,7 +34,22 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {gtmId ? (
+          <>
+            <Script id="gtm-init" strategy="afterInteractive">{`
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+            `}</Script>
+            <Script
+              id="gtm"
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`}
+            />
+          </>
+        ) : null}
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,5 +1,5 @@
 {
-  "cleanUrls": false,
+  "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
     {
@@ -8,5 +8,12 @@
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     }
+  ],
+  "redirects": [
+    { "source": "/checklist", "destination": "/launch-checklist", "permanent": true },
+    { "source": "/checklist.html", "destination": "/launch-checklist", "permanent": true },
+    { "source": "/keywords", "destination": "/keyword-strategy", "permanent": true },
+    { "source": "/keywords.html", "destination": "/keyword-strategy", "permanent": true },
+    { "source": "/action.html", "destination": "/launch-checklist", "permanent": true }
   ]
 }

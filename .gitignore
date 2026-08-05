@@ -1,7 +1,12 @@
 .DS_Store
+.env
+.env.local
+.env.*.local
 vision/node_modules
 vision/.next
 vision/.vercel
 vision/*.log
+vision/.env
+vision/.env.local
 xray/.serve-logs/
 xray/.vercel/

@@ -1,18 +1,23 @@
-/* Shared sidebar for the VC paid command center.
+/* Shared sidebar for the VC paid-search pilot command center.
    One source of truth so nav can never drift between pages.
-   Each page sets <body data-page="index.html" data-foot="..."> */
+   Each page sets <body data-page="index.html" data-foot="...">
+   Archive pages set data-root="../" so links resolve from archive/. */
 (function () {
+  var root = document.body.getAttribute("data-root") || "";
   var ITEMS = [
-    { href: "index.html", text: "Overview" },
-    { href: "action.html", text: "Action Plan" },
+    { href: "index.html", text: "Pilot Overview" },
+    { href: "launch-checklist", text: "Launch Checklist" },
+    { href: "keyword-strategy", text: "Keyword Strategy" },
+    { href: "project-status", text: "Project Status" },
+    { href: "us.html", text: "US Campaign" },
+    { href: "au.html", text: "Australia Campaign" },
     { href: "landing-pages.html", text: "Landing Pages" },
-    { href: "ads.html", text: "Google Ads", quiet: true },
-    { href: "leadflow.html", text: "Zoho", quiet: true },
-    { label: "Reference" },
-    { href: "findings.html", text: "Findings", quiet: true },
-    { href: "future.html", text: "Later ideas", quiet: true },
-    { href: "tracking.html", text: "Tracking", quiet: true },
-    { href: "evidence.html", text: "Sources", quiet: true }
+    { href: "tracking.html", text: "Tracking" },
+    { href: "lead-routing.html", text: "Lead Routing" },
+    { href: "results.html", text: "Results" },
+    { href: "later.html", text: "Later Phases" },
+    { label: "Archive" },
+    { href: "archive/findings.html", text: "Site notes", quiet: true }
   ];
 
   var host = document.querySelector("[data-nav]");
@@ -24,13 +29,45 @@
     (location.pathname.split("/").pop() || "index.html");
   var foot =
     body.getAttribute("data-foot") ||
-    "US + AU · job orders<br />Virtual Coworker";
+    "$3,000 Google Search pilot<br />US + Australia employers";
+
+  function pageOf(href) {
+    var base = (href || "").split("#")[0].split("/").pop();
+    return base.replace(/\.html$/, "");
+  }
+
+  function resolve(href) {
+    if (!root) return href;
+    if (href.indexOf("archive/") === 0) return href.replace(/^archive\//, "");
+    return root + href;
+  }
+
+  function linkHtml(item) {
+    var cls = [];
+    if (item.quiet) cls.push("nav-quiet");
+    var itemPage = pageOf(item.href);
+    var curPage = pageOf(current);
+    if (itemPage === curPage || item.href === current) cls.push("active");
+    return (
+      '<a class="' +
+      cls.join(" ") +
+      '" href="' +
+      resolve(item.href) +
+      '">' +
+      item.text +
+      "</a>"
+    );
+  }
+
+  var logoSrc = root ? root + "assets/logo-vc.png" : "assets/logo-vc.png";
 
   var html =
     '<div class="brand">' +
-    '<img class="brand-mark" src="assets/logo-vc.png" width="168" height="52" alt="Virtual Coworker" />' +
-    '<p class="name">Paid acquisition</p>' +
-    '<p class="sub">US + AU employers</p>' +
+    '<img class="brand-mark" src="' +
+    logoSrc +
+    '" width="168" height="52" alt="Virtual Coworker" />' +
+    '<p class="name">Search pilot</p>' +
+    '<p class="sub">US + AU · $3,000 PoC</p>' +
     "</div>" +
     '<nav class="nav" aria-label="Primary">';
 
@@ -39,13 +76,7 @@
       html += '<p class="nav-label">' + item.label + "</p>";
       return;
     }
-    var cls = [];
-    if (item.quiet) cls.push("nav-quiet");
-    if (item.href === current) cls.push("active");
-    html +=
-      '<a class="' + cls.join(" ") + '" href="' + item.href + '">' +
-      item.text +
-      "</a>";
+    html += linkHtml(item);
   });
 
   html += "</nav>" + '<div class="side-foot">' + foot + "</div>";

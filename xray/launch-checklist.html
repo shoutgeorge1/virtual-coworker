@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Launch Checklist · Virtual Coworker Search Pilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+</head>
+<body data-page="launch-checklist.html" data-foot="What VC gives · what George does<br />Tick boxes save in this browser">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">Onboarding</p>
+        <h1>Launch Checklist</h1>
+        <p>
+          Short list. Give George these, and he starts the paid Search pilot.
+          He’ll follow up by email with anything specific.
+        </p>
+      </header>
+
+      <div class="notice">
+        <p>
+          <strong>US + Australia employer Search is the agreed focus.</strong>
+          George builds an independent microsite (his domain / Vercel) —
+          not a rebuild of your WordPress sites.
+        </p>
+      </div>
+
+      <section class="panel" id="from-you">
+        <div class="panel-hd">
+          <p class="kicker">Virtual Coworker</p>
+          <h2>Please provide</h2>
+          <span class="st st-access">From you</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="todo-list" data-todo-group="from-vc">
+            <li>
+              <input type="checkbox" id="v1" data-todo="v1" />
+              <label for="v1">
+                <strong>Pay the $3,000 pilot invoice</strong>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="v2" data-todo="v2" />
+              <label for="v2">
+                <strong>Google Ads — Admin access</strong>
+                <span class="todo-hint">George will connect via his MCC. Admin, not Standard.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="v3" data-todo="v3" />
+              <label for="v3">
+                <strong>Who pays the ad spend</strong>
+                <span class="todo-hint">One sentence: your card on the Ads account, or another arrangement.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="v4" data-todo="v4" />
+              <label for="v4">
+                <strong>Email addresses for new leads</strong>
+                <span class="todo-hint">Where US and AU employer leads should land. [US_LEAD_EMAIL] · [AU_LEAD_EMAIL]</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="v5" data-todo="v5" />
+              <label for="v5">
+                <strong>Phone numbers if you want calls tracked</strong>
+                <span class="todo-hint">Skip if forms only. [US_PHONE] · [AU_PHONE]</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="v6" data-todo="v6" />
+              <label for="v6">
+                <strong>What counts as a good lead</strong>
+                <span class="todo-hint">One short definition so we can cut junk weekly.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="v7" data-todo="v7" />
+              <label for="v7">
+                <strong>Who George talks to day to day</strong>
+                <span class="todo-hint">While Caitlin is on leave — Braden / owner as you decide.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="v8" data-todo="v8" />
+              <label for="v8">
+                <strong>Zoho access so George can push leads in (API)</strong>
+                <span class="todo-hint">Write path / API credentials — not a CRM takeover.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="v9" data-todo="v9" />
+              <label for="v9">
+                <strong>OK to use your brand on the pilot pages</strong>
+                <span class="todo-hint">Logo, name, approved claims / pricing you already use.</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="george-does">
+        <div class="panel-hd">
+          <p class="kicker">George</p>
+          <h2>What George handles</h2>
+          <span class="st st-ready">His side</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>MCC + Google Ads Editor on his side (you grant Admin; he runs the tools)</li>
+            <li>Independent microsite on a domain he buys + Vercel</li>
+            <li>His own temporary GTM, GA4, and Search Console for the pilot</li>
+            <li>Exact-match employer Search for US + AU · job-seeker negatives</li>
+            <li>Lead form → email + Zoho when connected</li>
+            <li>Weekly search-term and lead-quality cleanup · emails when something needs you</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="not-needed">
+        <div class="panel-hd">
+          <p class="kicker">Leave alone</p>
+          <h2>You do not need to give</h2>
+          <span class="st st-deferred">Not required</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>WordPress / hosting / Shopify</li>
+            <li>Your existing GTM, GA4, or Search Console</li>
+            <li>Social media or SEO tool logins</li>
+            <li>Permission to rebuild the corporate website (he’s not touching it)</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="keyword-strategy">Keywords</a>
+        <a class="btn" href="index.html">Pilot Overview</a>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+  <script>
+    (function () {
+      var KEY = "vc-pilot-checklist-v3";
+      var store = {};
+      try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { store = {}; }
+      function save() {
+        try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {}
+      }
+      document.querySelectorAll(".todo-list input[type=checkbox][data-todo]").forEach(function (box) {
+        var id = box.getAttribute("data-todo");
+        var li = box.closest("li");
+        if (store[id]) {
+          box.checked = true;
+          if (li) li.classList.add("is-done");
+        }
+        box.addEventListener("change", function () {
+          store[id] = !!box.checked;
+          if (li) li.classList.toggle("is-done", box.checked);
+          save();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

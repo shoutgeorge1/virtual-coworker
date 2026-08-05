@@ -5,9 +5,10 @@ import StickyCta from "../components/StickyCta";
 import "./us.css";
 
 export const metadata: Metadata = {
-  title: "Virtual Coworker · US — Hire a VA",
+  title: "Hire a Virtual Assistant | Virtual Coworker US",
   description:
-    "Vision demo: US businesses hiring dedicated virtual assistants.",
+    "Screened Philippines-based VAs for US businesses. Match to a dedicated assistant — employers only.",
+  robots: { index: false, follow: false },
 };
 
 const gate: GateCopy = {
@@ -17,9 +18,9 @@ const gate: GateCopy = {
   intentPrimary: "I'm hiring a VA",
   intentSecondary: "I'm looking for a job",
   divertHref: "/ph",
-  divertTitle: "You're after work, not a hire.",
+  divertTitle: "Looking for a VA role?",
   divertBody:
-    "Every Virtual Coworker VA role is run from the Philippines careers site. We'll send you straight there — no forms in between.",
+    "Every Virtual Coworker VA role is run from the Philippines careers site. We'll send you straight there — no hire forms in between.",
   divertCta: "Go to VA careers →",
   q1Label: "What do you need off your plate?",
   q1: ["Admin & inbox", "Customer support", "Sales / CRM", "Marketing", "Bookkeeping"],
@@ -33,13 +34,13 @@ const gate: GateCopy = {
   phonePlaceholder: "Phone — for a faster callback",
   submit: "Get my VA match →",
   reassure:
-    "No fee to start. We reply within one business day. Demo only — nothing is submitted.",
+    "No fee to start. We reply within one business day. By submitting you agree to our privacy notice.",
   callLabel: "Call tracking · US line",
   phoneDisplay: "888 964 8644",
   phoneHref: "tel:+18889648644",
   doneTitle: "That's all we needed.",
   doneBody:
-    "In the real build this fires the conversion event, routes to the US pod, and carries the source keyword into the CRM with the lead.",
+    "Your request was received. We'll follow up using the details you provided.",
 };
 
 const benefits = [
@@ -175,7 +176,7 @@ export default function USHome() {
             </figcaption>
           </figure>
 
-          <LeadGate copy={gate} />
+          <LeadGate copy={gate} market="us" />
         </div>
       </section>
 
