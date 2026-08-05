@@ -191,6 +191,46 @@
       font-size: 0.9rem;
       color: var(--body);
     }
+    .todo-done {
+      margin-top: 0.85rem;
+      border-top: 1px solid var(--edge-soft);
+      padding-top: 0.55rem;
+    }
+    .todo-done[hidden] { display: none; }
+    .todo-done > summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+      user-select: none;
+      padding: 0.35rem 0.15rem;
+    }
+    .todo-done > summary::-webkit-details-marker { display: none; }
+    .todo-done > summary::before {
+      content: "▸";
+      font-size: 0.75rem;
+      color: var(--dim);
+      transition: transform 0.12s ease;
+    }
+    .todo-done[open] > summary::before { transform: rotate(90deg); }
+    .todo-done > summary .todo-done-count {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--dim);
+    }
+    .todo-done .todo-list { margin-top: 0.15rem; }
+    .todo-done .todo-list li.is-done {
+      opacity: 0.65;
+      background: transparent;
+      margin: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
   </style>
 </head>
 <body data-page="launch-control.html" data-foot="This is the checklist<br />Paused import until gates green">
@@ -209,8 +249,8 @@
       </header>
 
       <p class="lc-start">
-        <strong>Do step 5 below.</strong>
-        Steps 1–4 are done (Aug 5 — from what you pasted in chat). Tick boxes as you go — they save in this browser.
+        <strong>Next: step 5 — Editor download.</strong>
+        Finished steps tuck under <strong>Done</strong> at the bottom (collapsed). Tick as you go — saves in this browser.
       </p>
 
       <section class="panel" id="ads-launch-checklist">
@@ -220,71 +260,71 @@
           <span class="st st-progress">Work here</span>
         </div>
         <div class="panel-bd">
-          <ul class="todo-list" data-todo-group="ads-launch">
-            <li>
+          <ul class="todo-list" id="todo-active" data-todo-group="ads-launch">
+            <li data-order="1">
               <input type="checkbox" id="ads1" data-todo="ads1" checked />
               <label for="ads1">
                 <strong>1. Tick this — Ads access is already set</strong>
                 <span class="todo-hint">Done. Standard access through the MCC over USA <code>496-715-1855</code> and Australia <code>573-539-1940</code>. Enough for Stage 1.</span>
               </label>
             </li>
-            <li>
+            <li data-order="2">
               <input type="checkbox" id="ads2" data-todo="ads2" checked />
               <label for="ads2">
                 <strong>2. Open Google Ads and open the USA account</strong>
                 <span class="todo-hint">Done Aug 5. You opened USA <code>496-715-1855</code> and pasted the screen into the Cursor chat.</span>
               </label>
             </li>
-            <li>
+            <li data-order="3">
               <input type="checkbox" id="ads3" data-todo="ads3" checked />
               <label for="ads3">
                 <strong>3. Copy the USA campaign list (or screenshot) and paste it into the Cursor chat</strong>
                 <span class="todo-hint">Done Aug 5 — from your paste: only live/spending is <code>PM_US_RSA_Brand</code> (Search, Maximize conversions, $100/day, Enabled). Recent: about $39 cost, <strong>0 conversions</strong>. Everything else in view is paused old stuff (~50 campaigns). Ignore Google’s “Add broad match” nag for Stage 1.</span>
               </label>
             </li>
-            <li>
+            <li data-order="4">
               <input type="checkbox" id="ads4" data-todo="ads4" checked />
               <label for="ads4">
                 <strong>4. Same for Australia — copy the campaign list (or screenshot) and paste it into the Cursor chat</strong>
                 <span class="todo-hint">Done Aug 5 — from your paste: only live is <code>PM_AU_RSA_Brand</code> (Search, Maximize conversions, $30/day, Eligible / Limited). Recent: about A$3 cost, <strong>0 conversions</strong>. Rest of the list is paused old stuff. Ignore Display→Demand Gen / ad blocker / passkey nags.</span>
               </label>
             </li>
-            <li>
+            <li data-order="5">
               <input type="checkbox" id="ads5" data-todo="ads5" />
               <label for="ads5">
                 <strong>5. Open Google Ads Editor on your Mac and download both accounts</strong>
                 <span class="todo-hint"><strong>← You are here.</strong> Sign in as ShoutGeorge. Download USA <code>496-715-1855</code> and Australia <code>573-539-1940</code> so Editor has a fresh copy before you import anything. Optional: if you want the old Brand bleed stopped first, pause <code>PM_US_RSA_Brand</code> and <code>PM_AU_RSA_Brand</code> in the Ads website (you click — not from this page).</span>
               </label>
             </li>
-            <li>
+            <li data-order="6">
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
                 <strong>6. Import the paused CSV — leave everything Paused</strong>
                 <span class="todo-hint">In Editor, import <code>ads-launch/google-ads-editor-import.csv</code>. Do not turn anything on. Everything stays <strong>Paused</strong>.</span>
               </label>
             </li>
-            <li>
+            <li data-order="7">
               <input type="checkbox" id="ads7" data-todo="ads7" />
               <label for="ads7">
                 <strong>7. Buy the website domain on Vercel (~$10)</strong>
                 <span class="todo-hint">In Vercel, buy the domain for the paid landing pages (~$10) and attach it to the vision project. Until then you can preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>.</span>
               </label>
             </li>
-            <li>
+            <li data-order="8">
               <input type="checkbox" id="ads8" data-todo="ads8" />
               <label for="ads8">
                 <strong>8. Point Ads Final URLs at that domain</strong>
                 <span class="todo-hint">After the domain is attached, set Ads Final URLs to that host’s <code>/us</code> and <code>/au</code> pages — not WordPress.</span>
               </label>
             </li>
-            <li>
+            <li data-order="9">
               <input type="checkbox" id="ads9" data-todo="ads9" />
               <label for="ads9">
                 <strong>9. Set daily budgets and Max CPC (after you approve the dollar caps)</strong>
                 <span class="todo-hint">Replace the <code>[APPROVAL_*]</code> placeholders only after you pick the ceilings. Post the changes while still <strong>Paused</strong>. Spot-check in the Ads website.</span>
               </label>
             </li>
-            <li>
+            <li data-order="10">
               <input type="checkbox" id="ads10" data-todo="ads10" />
               <label for="ads10">
                 <strong>10. Turn on US Brand, then US CORE — only after gates below are green</strong>
@@ -292,6 +332,13 @@
               </label>
             </li>
           </ul>
+          <details class="todo-done" id="todo-done-wrap">
+            <summary>
+              Done
+              <span class="todo-done-count" id="todo-done-count"></span>
+            </summary>
+            <ul class="todo-list" id="todo-done" data-todo-group="ads-launch-done"></ul>
+          </details>
         </div>
       </section>
 
@@ -543,26 +590,56 @@
         store.ads3 = true;
         store.ads4 = true;
       }
+      var activeList = document.getElementById("todo-active");
+      var doneList = document.getElementById("todo-done");
+      var doneWrap = document.getElementById("todo-done-wrap");
+      var doneCount = document.getElementById("todo-done-count");
+
       function save() {
         try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {}
       }
+
+      function sortList(ul) {
+        if (!ul) return;
+        Array.prototype.slice.call(ul.children).sort(function (a, b) {
+          return (Number(a.getAttribute("data-order")) || 0) - (Number(b.getAttribute("data-order")) || 0);
+        }).forEach(function (li) { ul.appendChild(li); });
+      }
+
+      function refreshDoneChrome() {
+        if (!doneWrap || !doneList || !doneCount) return;
+        var n = doneList.children.length;
+        doneCount.textContent = n ? "(" + n + ")" : "";
+        doneWrap.hidden = n === 0;
+      }
+
+      function placeItem(li, checked) {
+        if (!li || !activeList || !doneList) return;
+        li.classList.toggle("is-done", checked);
+        if (checked) doneList.appendChild(li);
+        else activeList.appendChild(li);
+        sortList(activeList);
+        sortList(doneList);
+        refreshDoneChrome();
+      }
+
       save();
-      document.querySelectorAll(".todo-list input[type=checkbox][data-todo]").forEach(function (box) {
+      var boxes = Array.prototype.slice.call(
+        document.querySelectorAll("#ads-launch-checklist input[type=checkbox][data-todo]")
+      );
+      boxes.forEach(function (box) {
         var id = box.getAttribute("data-todo");
         var li = box.closest("li");
-        if (store[id]) {
-          box.checked = true;
-          if (li) li.classList.add("is-done");
-        } else {
-          box.checked = false;
-          if (li) li.classList.remove("is-done");
-        }
+        var checked = !!store[id];
+        box.checked = checked;
+        placeItem(li, checked);
         box.addEventListener("change", function () {
           store[id] = !!box.checked;
-          if (li) li.classList.toggle("is-done", box.checked);
+          placeItem(li, box.checked);
           save();
         });
       });
+      refreshDoneChrome();
     })();
   </script>
 </body>
