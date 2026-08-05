@@ -12,36 +12,18 @@
   <style>
     .page-head { margin-bottom: 0.95rem; padding-bottom: 0.8rem; }
     .page-head h1 { font-size: 1.45rem; }
-    .page-head p { font-size: 0.94rem; }
-    .lc-next {
+    .page-head p { font-size: 0.94rem; overflow-wrap: anywhere; }
+    .lc-start {
       margin: 0 0 0.9rem;
-      padding: 0.85rem 1rem 1rem;
+      padding: 0.65rem 0.95rem;
       border-radius: 8px;
-      border: 1px solid var(--tint-rose-edge);
-      background: var(--tint-rose);
-    }
-    .lc-next .lbl {
-      margin: 0 0 0.25rem;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #9f2d2d;
-    }
-    .lc-next p {
-      margin: 0;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--ink);
+      border: 1px solid var(--edge);
+      background: var(--panel-inset);
+      font-size: 0.92rem;
+      color: var(--body);
       line-height: 1.4;
-      overflow-wrap: anywhere;
     }
-    .lc-next .sub {
-      margin: 0.35rem 0 0;
-      font-size: 0.88rem;
-      font-weight: 400;
-      color: var(--muted);
-    }
+    .lc-start strong { color: var(--ink); }
     .lc-board {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -200,7 +182,6 @@
       margin: 0 0 0.4rem;
       font-size: 0.95rem;
     }
-    .page-head p { overflow-wrap: anywhere; }
     .tech-link {
       margin-top: 1.25rem;
       padding: 0.75rem 1rem;
@@ -221,23 +202,20 @@
         <p class="kicker">Stage 1 · USA + Australia · your work list</p>
         <h1>Checklist</h1>
         <p>
-          One screen: next action → Ads steps → ready / blocking / who waits → five gates.
-          Paid Search → microsite (WordPress is not the Final URL).
+          Numbered steps below — do them in order. Tick each box as you finish.
+          Ads stay paused until the gates are clear. Ads go to the microsite, not WordPress.
         </p>
       </header>
 
-      <div class="lc-next" id="next-action">
-        <p class="lbl">Exact next action</p>
-        <p>
-          Open USA <code>496-715-1855</code> + AU <code>573-539-1940</code> → live remnant check → download into clean Editor (steps 2–3). Approve budgets/CPC + buy Final URL domain before any enable.
-        </p>
-        <p class="sub">Ads Standard via MCC is confirmed — enough for Stage 1. Tick boxes save in this browser. Do not enable spend until gates + Final URL host are locked.</p>
-      </div>
+      <p class="lc-start">
+        <strong>Do step 1 below.</strong>
+        Tick boxes as you go — they save in this browser. Ads Standard access is already fine.
+      </p>
 
       <section class="panel" id="ads-launch-checklist">
         <div class="panel-hd">
           <p class="kicker">George · do these in order</p>
-          <h2>Google Ads launch checklist</h2>
+          <h2>Do this now</h2>
           <span class="st st-progress">Work here</span>
         </div>
         <div class="panel-bd">
@@ -245,50 +223,71 @@
             <li>
               <input type="checkbox" id="ads1" data-todo="ads1" />
               <label for="ads1">
-                <strong>1. Ads access confirmed (Standard via MCC)</strong>
-                <span class="todo-hint">MCC over USA <code>496-715-1855</code> + AU <code>573-539-1940</code> at <strong>Standard</strong> — enough to import/edit/enable Search for Stage 1. Admin not available now; nice-to-have later (ask Braden when convenient — users/billing/deep settings).</span>
+                <strong>1. Tick this — Ads access is already set</strong>
+                <span class="todo-hint">You already have Standard access through the MCC over USA <code>496-715-1855</code> and Australia <code>573-539-1940</code>. That’s enough for Stage 1. Tick the box and move on.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="ads2" data-todo="ads2" />
               <label for="ads2">
-                <strong>2. Live remnant check</strong>
-                <span class="todo-hint">Open each account and see what’s actually spending / paused today. Note legacy <code>PM_*</code> Search.</span>
+                <strong>2. Open Google Ads and open the USA account</strong>
+                <span class="todo-hint">Go to <a href="https://ads.google.com" target="_blank" rel="noopener">ads.google.com</a>. Open account <code>496-715-1855</code>.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="ads3" data-todo="ads3" />
               <label for="ads3">
-                <strong>3. Download into Google Ads Editor</strong>
-                <span class="todo-hint">Fresh download of USA + AU into a clean Editor instance before any import.</span>
+                <strong>3. Look at Campaigns in the USA account</strong>
+                <span class="todo-hint">Click <strong>Campaigns</strong>. Write down anything that says <strong>Enabled</strong> or is spending money. That’s old leftover stuff (often named like <code>PM_*</code>).</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="ads4" data-todo="ads4" />
               <label for="ads4">
-                <strong>4. Import paused CSV</strong>
-                <span class="todo-hint">Import <code>ads-launch/google-ads-editor-import.csv</code> — leave everything <strong>Paused</strong>. No enable yet.</span>
+                <strong>4. Do the same for Australia</strong>
+                <span class="todo-hint">Open account <code>573-539-1940</code>. Click <strong>Campaigns</strong>. Write down anything Enabled or spending.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="ads5" data-todo="ads5" />
               <label for="ads5">
-                <strong>5. Set budgets + Max CPC</strong>
-                <span class="todo-hint">Replace <code>[APPROVAL_*]</code> placeholders only after you approve ceilings. Post Paused changes; spot-check in Ads UI.</span>
+                <strong>5. Open Google Ads Editor on your Mac and download both accounts</strong>
+                <span class="todo-hint">Sign in as ShoutGeorge. Download USA <code>496-715-1855</code> and Australia <code>573-539-1940</code> so Editor has a fresh copy before you import anything.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
-                <strong>6. Lock microsite Final URLs</strong>
-                <span class="todo-hint">Buy domain(s) on Vercel (~$10) → attach to vision → set Ads Final URLs to that host <code>/us</code> · <code>/au</code> (not WordPress). Preview OK until then: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>.</span>
+                <strong>6. Import the paused CSV — leave everything Paused</strong>
+                <span class="todo-hint">In Editor, import <code>ads-launch/google-ads-editor-import.csv</code>. Do not turn anything on. Everything stays <strong>Paused</strong>.</span>
               </label>
             </li>
             <li>
               <input type="checkbox" id="ads7" data-todo="ads7" />
               <label for="ads7">
-                <strong>7. Enable US Brand, then CORE</strong>
-                <span class="todo-hint">Only after gates are green. Enable <code>VC_US_S_BRAND</code> first, then <code>VC_US_S_CORE_hire_va</code>. Keep AU throttled until US is sane. Still no Ads enable from this page — you click enable in Ads/Editor.</span>
+                <strong>7. Buy the website domain on Vercel (~$10)</strong>
+                <span class="todo-hint">In Vercel, buy the domain for the paid landing pages (~$10) and attach it to the vision project. Until then you can preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="ads8" data-todo="ads8" />
+              <label for="ads8">
+                <strong>8. Point Ads Final URLs at that domain</strong>
+                <span class="todo-hint">After the domain is attached, set Ads Final URLs to that host’s <code>/us</code> and <code>/au</code> pages — not WordPress.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="ads9" data-todo="ads9" />
+              <label for="ads9">
+                <strong>9. Set daily budgets and Max CPC (after you approve the dollar caps)</strong>
+                <span class="todo-hint">Replace the <code>[APPROVAL_*]</code> placeholders only after you pick the ceilings. Post the changes while still <strong>Paused</strong>. Spot-check in the Ads website.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="ads10" data-todo="ads10" />
+              <label for="ads10">
+                <strong>10. Turn on US Brand, then US CORE — only after gates below are green</strong>
+                <span class="todo-hint">Enable <code>VC_US_S_BRAND</code> first, then <code>VC_US_S_CORE_hire_va</code>. Keep Australia quiet until the US looks sane. You click Enable in Ads or Editor — not from this page. Do not enable spend early.</span>
               </label>
             </li>
           </ul>
@@ -302,12 +301,12 @@
             <span class="st st-ready">Done</span>
           </div>
           <ul>
-            <li><strong>MCC Accept</strong> — linked under Shout George</li>
-            <li><strong>Ads access</strong> — Standard via MCC on USA + AU (Stage 1 ready; Admin optional later)</li>
-            <li><strong>US / AU LPs</strong> — vision preview built</li>
-            <li><strong>Editor CSV</strong> — paused import package ready</li>
-            <li><strong>Path</strong> — Ads → microsite (WP not destination)</li>
-            <li><strong>NA phone dest</strong> — <code>310-426-8776</code> (Raffie/Raffy; do not port)</li>
+            <li><strong>MCC linked</strong> — under Shout George</li>
+            <li><strong>Ads access</strong> — Standard on USA + AU (enough for Stage 1)</li>
+            <li><strong>US / AU landing pages</strong> — preview built</li>
+            <li><strong>Editor CSV</strong> — paused import file ready</li>
+            <li><strong>Path</strong> — Ads → microsite (not WordPress)</li>
+            <li><strong>US/NA phone</strong> — <code>310-426-8776</code> (do not port)</li>
           </ul>
         </section>
 
@@ -317,10 +316,10 @@
             <span class="st st-blocked">Blocked</span>
           </div>
           <ul>
-            <li><strong>AU phone + lead delivery</strong> — NA dest confirmed; AU + inbox open</li>
-            <li><strong>Budgets + Max CPC</strong> — not approved</li>
-            <li><strong>Domain + Final host</strong> — buy on Vercel (~$10), then lock Final URLs + LP QA</li>
-            <li><strong>Editor import</strong> — stays paused until human approval</li>
+            <li><strong>AU phone + where leads go</strong> — still open</li>
+            <li><strong>Budgets + Max CPC</strong> — not approved yet</li>
+            <li><strong>Domain (~$10 on Vercel)</strong> — buy, then lock Final URLs</li>
+            <li><strong>Editor import</strong> — stays paused until you say go</li>
           </ul>
         </section>
 
@@ -330,13 +329,13 @@
             <span class="st st-access">George</span>
           </div>
           <ul>
-            <li>Live remnant check + download USA/AU into clean Editor</li>
+            <li>Steps 2–5 above (check what’s live in Ads, then download into Editor)</li>
             <li>Approve budgets + Max CPC ceilings</li>
-            <li><strong>Buy paid microsite domain(s) on Vercel (~$10)</strong> — pending; needed for Final URL host (not the preview <code>*.vercel.app</code> URL)</li>
-            <li>Confirm paid host Final URL after domain attaches</li>
-            <li>Confirm payment-cleared date when bank shows it</li>
-            <li>Decide legacy <code>PM_*</code> disposition</li>
-            <li>Review paused Editor import before any enable</li>
+            <li><strong>Buy domain on Vercel (~$10)</strong> — needed for the real Final URL (not the preview URL)</li>
+            <li>Confirm Final URLs after the domain is attached</li>
+            <li>Confirm payment-cleared date when the bank shows it</li>
+            <li>Decide what to do with old leftover campaigns</li>
+            <li>Review the paused Editor import before any enable</li>
           </ul>
         </section>
 
@@ -350,7 +349,6 @@
             <li>Lead inbox / webhook per market (email OK for Stage 1)</li>
             <li><strong>Pilot payment — IN TRANSIT</strong> (not unpaid; not cleared)</li>
             <li>Chat platform + George invite · lead-quality feedback path</li>
-            <li>Live remnant spend visibility (Standard access OK)</li>
           </ul>
         </section>
       </div>
@@ -366,14 +364,14 @@
               <span class="st st-ready">Ready</span>
               <div class="gate-body">
                 <strong>Ads access confirmed (Standard via MCC)</strong>
-                <span>MCC over USA <code>496-715-1855</code> + AU <code>573-539-1940</code> at Standard — enough for Stage 1 import/edit/enable. Admin = optional later (ask Braden when convenient; not a launch gate).</span>
+                <span>MCC over USA <code>496-715-1855</code> + AU <code>573-539-1940</code> at Standard — enough for Stage 1. Admin is optional later (ask Braden when convenient; not a launch gate).</span>
               </div>
             </li>
             <li>
               <span class="st st-blocked">Open</span>
               <div class="gate-body">
                 <strong>Phones + lead delivery filled</strong>
-                <span>NA dest <code>310-426-8776</code> confirmed (Raffie/Raffy; do not port). Still need AU official number + lead email/webhook. Stage 1 conversions = employer forms + qualified calls — not job orders. Zoho / CallRail / offline values = later. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
+                <span>NA dest <code>310-426-8776</code> confirmed (do not port). Still need AU official number + lead email/webhook. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
               </div>
             </li>
             <li>
@@ -386,15 +384,15 @@
             <li>
               <span class="st st-access">Open</span>
               <div class="gate-body">
-                <strong>LPs + forms validated on final host</strong>
-                <span>Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. <strong>George: buy domain(s) on Vercel (~$10)</strong> for the paid Final URL host, attach to the vision project, then lock Final URL + employer gate / thank-you / dedupe QA.</span>
+                <strong>Landing pages live on the real domain</strong>
+                <span>Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. <strong>Buy domain(s) on Vercel (~$10)</strong>, attach to vision, then lock Final URLs and check the forms.</span>
               </div>
             </li>
             <li>
               <span class="st st-access">Paused</span>
               <div class="gate-body">
                 <strong>Paused Editor import reviewed</strong>
-                <span>CSV ready in <code>ads-launch/</code>. Import and enable only after human approval — stays paused until then.</span>
+                <span>CSV ready in <code>ads-launch/</code>. Import and enable only after you approve — stays paused until then.</span>
               </div>
             </li>
           </ol>
@@ -415,7 +413,7 @@
             <li><strong>Domain purchase on Vercel (~$10) — pending George</strong></li>
             <li>Final host → lock Ads Final URLs</li>
             <li>Payment-cleared date</li>
-            <li>Legacy PM_* disposition</li>
+            <li>What to do with old leftover campaigns</li>
           </ul>
           <details class="lc-fold" style="margin-top:1rem">
             <summary>Later (not Stage 1 blockers) <span class="hint">Admin · Zoho · CallRail · offline $ · SLAs</span></summary>
@@ -475,8 +473,9 @@
             <li>Confirm USA + AU visible under MCC at Standard (done). Admin optional later — ask Braden when convenient.</li>
             <li>Set vision env: phones, lead delivery, careers URL; redeploy vision.</li>
             <li>Run George LP validation (gate / job seeker / thank-you / dedupe).</li>
-            <li>Download USA + AU into clean Google Ads Editor.</li>
-            <li>Decide: pause legacy <code>PM_*</code> museum Search before v1 enable (recommended).</li>
+            <li>Open Google Ads → write down Enabled/spending campaigns in USA + AU.</li>
+            <li>Download USA + AU into Google Ads Editor.</li>
+            <li>Decide what to do with old leftover Search campaigns before v1 enable (pause recommended).</li>
             <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused).</li>
             <li>Replace budget / Max CPC placeholders per market.</li>
             <li>Confirm Final URLs = Stage 1 LPs; no WP sitelinks.</li>
@@ -485,8 +484,7 @@
             <li>Post Paused changes; spot-check in Ads UI.</li>
             <li>Enable US Brand + CORE only (AU throttle until US sane).</li>
             <li>Fire test clicks / search preview; verify LP attribution params.</li>
-            <li>Watch 72h: search terms, reject logs, form accepts, CPC.</li>
-            <li>Stop conditions → pause CORE first, then Brand if needed.</li>
+            <li>Watch 72h: search terms, reject logs, form accepts, CPC. Stop → pause CORE first, then Brand if needed.</li>
           </ol>
         </div>
       </details>
@@ -531,7 +529,7 @@
   <script src="nav.js"></script>
   <script>
     (function () {
-      var KEY = "vc-launch-control-todos-v1";
+      var KEY = "vc-launch-control-todos-v2";
       var store = {};
       try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { store = {}; }
       function save() {

@@ -28,7 +28,7 @@ Landing page concepts: https://vision-three-alpha.vercel.app/us · [/au](https:/
 
 | Page | Job |
 |------|-----|
-| **Checklist** (`/launch-control`) | **THE work list** — next action, Ads steps, gates, domain buy |
+| **Checklist** (`/launch-control`) | **THE work list** — numbered do-this-now steps, gates, domain buy |
 | LP previews | Microsite URLs |
 | Lead Routing | Email/webhook Stage 1 |
 | Tracking | Minimal events |
