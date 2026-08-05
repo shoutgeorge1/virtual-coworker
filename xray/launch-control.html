@@ -415,7 +415,7 @@
             <li><strong>Domain purchase on Vercel (~$10) — pending George</strong></li>
             <li>Final host → lock Ads Final URLs</li>
             <li>Payment-cleared date</li>
-            <li>Pause old Brand campaigns? (recommend yes — George approves)</li>
+            <li>Pause old Brand campaigns in Ads? (recommend yes — you click)</li>
           </ul>
           <details class="lc-fold" style="margin-top:1rem">
             <summary>Later (not Stage 1 blockers) <span class="hint">Admin · Zoho · CallRail · offline $ · SLAs</span></summary>
@@ -475,9 +475,9 @@
             <li>Confirm USA + AU visible under MCC at Standard (done). Admin optional later — ask Braden when convenient.</li>
             <li>Set vision env: phones, lead delivery, careers URL; redeploy vision.</li>
             <li>Run George LP validation (gate / job seeker / thank-you / dedupe).</li>
-            <li>Open Google Ads → write down Enabled/spending campaigns in USA + AU. (Done Aug 5: US Brand live; AU Brand live/limited; museums paused.)</li>
+            <li>Open Google Ads → copy the campaign list (or screenshot) for USA + AU and paste into the Cursor chat. (Done Aug 5: US Brand live; AU Brand live/limited; rest paused.)</li>
             <li>Download USA + AU into Google Ads Editor. ← next</li>
-            <li>Decide what to do with old Brand campaigns before/with import (pause recommended; George approves).</li>
+            <li>Optional: pause old Brand campaigns in Ads if you want bleed stopped (you click; recommended before/with import).</li>
             <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused).</li>
             <li>Replace budget / Max CPC placeholders per market.</li>
             <li>Confirm Final URLs = Stage 1 LPs; no WP sitelinks.</li>
@@ -537,7 +537,7 @@
       try { store = JSON.parse(localStorage.getItem(KEY) || "null") || null; } catch (e) { store = null; }
       if (!store) {
         try { store = JSON.parse(localStorage.getItem(PREV) || "{}") || {}; } catch (e) { store = {}; }
-        /* Aug 5 remnant look-through: steps 1–4 done */
+        /* Aug 5 paste-from-Ads look-through: steps 1–4 done */
         store.ads1 = true;
         store.ads2 = true;
         store.ads3 = true;
