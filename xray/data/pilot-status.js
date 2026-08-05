@@ -95,6 +95,12 @@ window.PILOT_STATUS = {
 
   confirmedComplete: [
     { id: "mcc_link", label: "Google Ads MCC connections accepted (US + AU)", status: "complete" },
+    {
+      id: "ads_access_standard",
+      label:
+        "Ads access confirmed — Standard via MCC on USA 496-715-1855 + AU 573-539-1940 (enough for Stage 1; Admin optional later)",
+      status: "complete"
+    },
     { id: "gusto", label: "Gusto setup", status: "complete" },
     { id: "nda", label: "NDA", status: "complete" },
     {
@@ -109,11 +115,6 @@ window.PILOT_STATUS = {
     }
   ],
   verifyNow: [
-    {
-      id: "ads_admin_verify",
-      label: "Verify Google Ads Admin inside each US + AU account",
-      status: "verify"
-    },
     {
       id: "gtm_publish_verify",
       label: "Verify GTM publish permission (still audit-only)",
@@ -170,6 +171,7 @@ window.PILOT_STATUS = {
     }
   ],
   optionalNotBlockers: [
+    "Ads Admin — nice-to-have later (ask Braden when convenient; Standard is enough for Stage 1)",
     "WordPress / hosting / Shopify — stays as-is; not paid destination",
     "WordPress rebuild / SEO / remarketing",
     "Gravity Forms — existing WP process only; paid LPs must not depend on WP/GF",
@@ -177,7 +179,7 @@ window.PILOT_STATUS = {
     "Social media or SEO tool logins"
   ],
   georgeHandles: [
-    "MCC + Google Ads Editor (verify Admin per US + AU account)",
+    "MCC + Google Ads Editor (Standard access confirmed on US + AU — Stage 1 OK)",
     "Independent microsite Stage 1 LPs (vision) — not WordPress",
     "Paused Clean Search import (Brand + CORE hire)",
     "Temporary GTM map later — no production GTM publish required for LP QA",
@@ -191,7 +193,7 @@ window.PILOT_STATUS = {
     "Pilot payment clearing (on its way — not yet confirmed received)"
   ],
   nextThree: [
-    "Verify Admin inside each US + AU account (MCC Accept already done)",
+    "Live remnant check + download USA/AU into clean Editor (Ads Standard via MCC confirmed)",
     "Approve budgets/CPC + AU phone + lead inbox/webhook",
     "Import paused Stage 1 CSV → enable US Brand + CORE after LP validation"
   ],
