@@ -2,83 +2,56 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import LeadGate, { type GateCopy } from "../components/LeadGate";
 import StickyCta from "../components/StickyCta";
+import { MARKETS, resolveCareersUrl, resolvePhone } from "../../config/markets";
 import "./us.css";
 
 export const metadata: Metadata = {
-  title: "Hire a Virtual Assistant | Virtual Coworker US",
+  title: "Hire Offshore Staff | Virtual Coworker US",
   description:
-    "Screened Philippines-based VAs for US businesses. Match to a dedicated assistant — employers only.",
+    "Employer landing page for US businesses hiring dedicated Philippines-based staff through Virtual Coworker.",
   robots: { index: false, follow: false },
 };
 
-const gate: GateCopy = {
-  eyebrow: "Free consultation · takes 60 seconds",
-  title: "Get matched with a dedicated VA",
-  intentLabel: "First — who are you?",
-  intentPrimary: "I'm hiring a VA",
-  intentSecondary: "I'm looking for a job",
-  divertHref: "/ph",
-  divertTitle: "Looking for a VA role?",
-  divertBody:
-    "Every Virtual Coworker VA role is run from the Philippines careers site. We'll send you straight there — no hire forms in between.",
-  divertCta: "Go to VA careers →",
-  q1Label: "What do you need off your plate?",
-  q1: ["Admin & inbox", "Customer support", "Sales / CRM", "Marketing", "Bookkeeping"],
-  q2Label: "How many hours a week?",
-  q2: ["10–20", "20–40", "Full time", "Not sure yet"],
-  detailsLabel: "Where do we send your match?",
-  namePlaceholder: "Full name",
-  emailLabel: "Work email",
-  emailPlaceholder: "Work email",
-  phoneLabel: "Phone",
-  phonePlaceholder: "Phone — for a faster callback",
-  submit: "Get my VA match →",
-  reassure:
-    "No fee to start. We reply within one business day. By submitting you agree to our privacy notice.",
-  callLabel: "Call tracking · US line",
-  phoneDisplay: "888 964 8644",
-  phoneHref: "tel:+18889648644",
-  doneTitle: "That's all we needed.",
-  doneBody:
-    "Your request was received. We'll follow up using the details you provided.",
-};
-
-const benefits = [
-  {
-    k: "Talent",
-    t: "The top 1% of applicants",
-    d: "Screened for skills, reliability and English before a single CV reaches you.",
-  },
-  {
-    k: "Price",
-    t: "From $7/hr, all in",
-    d: "Our fee sits inside the hourly rate. No recruitment fee, no lock-in contract.",
-  },
-  {
-    k: "Effort",
-    t: "You interview. We do the rest.",
-    d: "Recruitment, screening and payroll are ours. A success manager runs onboarding.",
-  },
-  {
-    k: "Control",
-    t: "Pay for verified hours only",
-    d: "Daily activity reports and desktop screenshots every 10 minutes, in your dashboard.",
-  },
-];
-
-const lineup = [
-  { src: "/brand/va-face-1.jpg", cap: "Executive assistant" },
-  { src: "/brand/va-face-2.jpg", cap: "Customer support" },
-  { src: "/brand/va-face-3.jpg", cap: "Bookkeeping & marketing" },
-];
+const market = MARKETS.us;
 
 export default function USHome() {
+  const phone = resolvePhone("us");
+  const careers = resolveCareersUrl();
+
+  const gate: GateCopy = {
+    eyebrow: "Employers only · about 60 seconds",
+    title: "Request a hiring consult",
+    intentLabel: "First — who are you?",
+    intentPrimary: "I’m hiring staff for a business.",
+    intentSecondary: "I’m looking for a job.",
+    divertTitle: "Looking for work?",
+    divertBody:
+      "This page is for businesses hiring staff. Job applications go to the careers destination — not our employer sales form.",
+    divertCta: "Go to careers →",
+    careersHref: careers,
+    roleLabel: "What do you need help with?",
+    roles: market.servicesProposed,
+    detailsLabel: "Your business details",
+    nameLabel: "Full name",
+    namePlaceholder: "Full name",
+    emailLabel: "Work email",
+    emailPlaceholder: "Work email",
+    phoneLabel: "Business phone",
+    phonePlaceholder: "Business phone",
+    companyLabel: "Company",
+    companyPlaceholder: "Company name",
+    submit: "Request consult →",
+    reassure:
+      "Employers only. We’ll reply using the details you provide. By submitting you agree to our privacy notice.",
+    callLabel: phone.configured ? "Call · US business line" : "US business phone · set in config",
+    phoneDisplay: phone.display,
+    phoneHref: phone.href,
+    doneTitle: "Request received.",
+    doneBody: "Thanks — a teammate will follow up using the details you provided.",
+  };
+
   return (
     <main className="us">
-      <p className="vision-banner us-banner">
-        Vision demo · <Link href="/">back to hub</Link> · not live product
-      </p>
-
       <nav className="us-nav">
         <Link href="/us" className="us-brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -89,12 +62,19 @@ export default function USHome() {
           />
         </Link>
         <div className="us-nav-right">
-          <Link href="/" className="us-nav-link">
-            All markets
-          </Link>
-          <a href="tel:+18889648644" className="us-navcall">
-            <span aria-hidden>☎</span> 888 964 8644
-          </a>
+          {phone.href ? (
+            <a
+              href={phone.href}
+              className="us-navcall"
+              data-track="phone_click"
+            >
+              <span aria-hidden>☎</span> {phone.display}
+            </a>
+          ) : (
+            <span className="us-navcall" aria-label="US business phone placeholder">
+              <span aria-hidden>☎</span> {phone.display}
+            </span>
+          )}
         </div>
       </nav>
 
@@ -103,58 +83,49 @@ export default function USHome() {
 
         <div className="us-hero-inner">
           <div className="us-hero-copy">
-            <p className="us-kicker anim-rise">US · Dedicated virtual assistants</p>
-            <h1 className="anim-rise">
-              Hire the <em>top 1%</em> of Filipino virtual assistants.
-            </h1>
-            <p className="us-lead anim-rise-d1">
-              One dedicated assistant for your US business — matched to your
-              workflow, working your hours, accountable from week one.
-            </p>
+            <p className="us-kicker anim-rise">United States · Employers</p>
+            <h1 className="anim-rise">{market.headline}</h1>
+            <p className="us-lead anim-rise-d1">{market.prop}</p>
 
             <ul className="us-ticks anim-rise-d1">
-              <li>One dedicated VA, not a shared pool</li>
-              <li>Works your US business hours</li>
-              <li>No upfront hiring fee, no lock-in</li>
+              <li>Staffing partner — not a freelance marketplace</li>
+              <li>You interview and choose who to hire</li>
+              <li>Clear employer path from inquiry to placement ops</li>
             </ul>
+
+            <p className="us-lead anim-rise-d2" style={{ marginTop: "0.75rem" }}>
+              {market.staffingExplain}
+            </p>
 
             <div className="trust-row anim-rise-d2">
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/brand/clutch-us.webp"
-                  alt="Top Clutch Virtual Assistant Company, United States 2026"
+                  alt="Clutch recognition badge"
                 />
                 <span>
-                  <b>Top VA company</b>
-                  <span>Clutch · US 2026</span>
+                  <b>Clutch</b>
+                  <span>Recognition badge</span>
                 </span>
               </span>
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/brand/badge-google-5star.webp" alt="Google 5-star reviews" />
+                <img src="/brand/badge-google-5star.webp" alt="Google reviews badge" />
                 <span>
-                  <b>5-star reviews</b>
-                  <span>Google · verified</span>
+                  <b>Google</b>
+                  <span>Reviews badge</span>
                 </span>
               </span>
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/brand/badge-forbes-white.webp"
-                  alt="Forbes Business Council 2026 official member"
+                  alt="Forbes Business Council badge"
                 />
                 <span>
-                  <b>Business Council</b>
-                  <span>Forbes · member 2026</span>
-                </span>
-              </span>
-              <span className="trust-chip trust-chip-stat">
-                <span>
-                  <b>
-                    <em>2011</em>
-                  </b>
-                  <span>Placing staff since</span>
+                  <b>Forbes</b>
+                  <span>Business Council badge</span>
                 </span>
               </span>
             </div>
@@ -164,15 +135,15 @@ export default function USHome() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/brand/va-us.jpg"
-              alt="A Virtual Coworker executive assistant at her desk"
+              alt="Virtual Coworker team member at a desk"
             />
             <span className="va-card-tag">
               <i />
-              Your dedicated VA
+              Dedicated hire
             </span>
             <figcaption>
-              <b>Executive assistant</b>
-              <span>Inbox, calendar and CRM · works 9–5 your time</span>
+              <b>Matched to your role</b>
+              <span>Employer consult · US business hours</span>
             </figcaption>
           </figure>
 
@@ -183,11 +154,27 @@ export default function USHome() {
       <section className="us-sell">
         <div className="us-sell-inner">
           <div className="us-sell-head">
-            <p className="us-proof-label">What you actually get</p>
-            <h2>A vetted assistant, a flat hourly rate, and proof of the hours.</h2>
+            <p className="us-proof-label">How staffing works here</p>
+            <h2>One primary path: tell us the role, interview shortlisted talent, hire with support.</h2>
           </div>
           <div className="sell-grid">
-            {benefits.map((b) => (
+            {[
+              {
+                k: "Recruit",
+                t: "We source and screen",
+                d: "Role brief in → shortlist of candidates aligned to your workflow.",
+              },
+              {
+                k: "Choose",
+                t: "You interview",
+                d: "You decide who joins your business. No mystery matching.",
+              },
+              {
+                k: "Operate",
+                t: "We support the hire",
+                d: "Account management and employment ops so you stay focused on the work.",
+              },
+            ].map((b) => (
               <div className="sell-card" key={b.k}>
                 <em>{b.k}</em>
                 <strong>{b.t}</strong>
@@ -198,67 +185,35 @@ export default function USHome() {
         </div>
       </section>
 
-      <section className="us-proof" id="proof">
-        <div className="us-proof-inner">
-          <div>
-            <p className="us-proof-label">Why US teams stay</p>
-            <h2>One assistant. Clear ownership. No freelancer roulette.</h2>
-            <div className="us-stats">
-              <div>
-                <strong>1:1</strong>
-                <span>Dedicated match</span>
-              </div>
-              <div>
-                <strong>$7</strong>
-                <span>Starting hourly rate</span>
-              </div>
-              <div>
-                <strong>$0</strong>
-                <span>Upfront hiring fee</span>
-              </div>
-            </div>
-          </div>
-          <div className="us-lineup">
-            <p className="us-lineup-label">Who you&apos;d be working with</p>
-            <div className="va-row">
-              {lineup.map((p) => (
-                <figure key={p.src}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.src} alt="" />
-                  <figcaption>{p.cap}</figcaption>
-                </figure>
-              ))}
-            </div>
-            <p className="us-lineup-note">
-              Career VAs in the Philippines — not gig-site freelancers. You
-              interview the shortlist and pick your own.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section className="us-cta-bar">
-        <p>Rather just talk it through?</p>
+        <p>Prefer to talk?</p>
         <div className="us-cta-bar-actions">
-          <a href="tel:+18889648644" className="us-btn us-btn-primary">
-            ☎ 888 964 8644
-          </a>
-          <Link href="/us#gate" className="us-btn us-btn-ghost">
+          {phone.href ? (
+            <a href={phone.href} className="us-btn us-btn-primary">
+              ☎ {phone.display}
+            </a>
+          ) : (
+            <span className="us-btn us-btn-primary" aria-disabled="true">
+              ☎ {phone.display}
+            </span>
+          )}
+          <a href="#gate" className="us-btn us-btn-ghost">
             Back to the form
-          </Link>
+          </a>
         </div>
       </section>
 
       <footer className="us-footer">
-        <span>US buyers vision · Virtual Coworker</span>
-        <Link href="/au">See the AU door →</Link>
+        <span>US employer paid LP · Virtual Coworker</span>
+        <Link href="/privacy">Privacy</Link>
       </footer>
 
       <StickyCta
         href="#gate"
-        label="Get my VA match"
-        phoneDisplay="888 964 8644"
-        phoneHref="tel:+18889648644"
+        label="Request consult"
+        market="us"
+        phoneDisplay={phone.display}
+        phoneHref={phone.href}
       />
     </main>
   );

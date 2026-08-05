@@ -2,83 +2,56 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import LeadGate, { type GateCopy } from "../components/LeadGate";
 import StickyCta from "../components/StickyCta";
+import { MARKETS, resolveCareersUrl, resolvePhone } from "../../config/markets";
 import "./au.css";
 
 export const metadata: Metadata = {
-  title: "Hire a Virtual Assistant | Virtual Coworker Australia",
+  title: "Hire Offshore Staff | Virtual Coworker Australia",
   description:
-    "Screened Philippines-based VAs for Australian businesses. Employers only — get matched fast.",
+    "Employer landing page for Australian businesses hiring dedicated Philippines-based staff through Virtual Coworker.",
   robots: { index: false, follow: false },
 };
 
-const gate: GateCopy = {
-  eyebrow: "Free chat · takes 60 seconds",
-  title: "Find your VA match",
-  intentLabel: "First up — who are you?",
-  intentPrimary: "I want to hire a VA",
-  intentSecondary: "I'm after a job",
-  divertHref: "/ph",
-  divertTitle: "Looking for a VA role?",
-  divertBody:
-    "All our VA roles run through the Philippines careers site. We'll take you straight there rather than making you fill this hire form in.",
-  divertCta: "Go to VA careers →",
-  q1Label: "What needs doing?",
-  q1: ["Admin & inbox", "Customer service", "Sales / CRM", "Marketing", "Bookkeeping"],
-  q2Label: "How many hours a week?",
-  q2: ["10–20", "20–40", "Full time", "Not sure yet"],
-  detailsLabel: "Where do we send it?",
-  namePlaceholder: "Full name",
-  emailLabel: "Email",
-  emailPlaceholder: "Email",
-  phoneLabel: "Phone",
-  phonePlaceholder: "Phone — for a quicker call back",
-  submit: "Find my VA →",
-  reassure:
-    "No lock-in contracts. We'll come back to you within one business day. By submitting you agree to our privacy notice.",
-  callLabel: "Call tracking · AU line",
-  phoneDisplay: "1300 886 740",
-  phoneHref: "tel:+611300886740",
-  doneTitle: "Beauty — that's all we need.",
-  doneBody:
-    "Your request was received. We'll follow up using the details you provided.",
-};
-
-const benefits = [
-  {
-    k: "Talent",
-    t: "The top 1% of applicants",
-    d: "Screened for skills, reliability and English before a single CV reaches you.",
-  },
-  {
-    k: "Price",
-    t: "From $8/hr AUD, all in",
-    d: "Our fee sits inside the hourly rate. No recruitment fee, no lock-in contract.",
-  },
-  {
-    k: "Hours",
-    t: "On your clock, not overnight",
-    d: "Your VA works the Australian business day, so nothing sits until tomorrow.",
-  },
-  {
-    k: "Control",
-    t: "Pay for verified hours only",
-    d: "Daily activity reports and desktop screenshots every 10 minutes, in your dashboard.",
-  },
-];
-
-const lineup = [
-  { src: "/brand/va-face-1.jpg", cap: "Executive assistant" },
-  { src: "/brand/va-face-2.jpg", cap: "Customer service" },
-  { src: "/brand/va-face-3.jpg", cap: "Bookkeeping & marketing" },
-];
+const market = MARKETS.au;
 
 export default function AUHome() {
+  const phone = resolvePhone("au");
+  const careers = resolveCareersUrl();
+
+  const gate: GateCopy = {
+    eyebrow: "Employers only · about 60 seconds",
+    title: "Request a hiring consult",
+    intentLabel: "First — who are you?",
+    intentPrimary: "I’m hiring staff for a business.",
+    intentSecondary: "I’m looking for a job.",
+    divertTitle: "Looking for work?",
+    divertBody:
+      "This page is for businesses hiring staff. Job applications go to the careers destination — not our employer sales form.",
+    divertCta: "Go to careers →",
+    careersHref: careers,
+    roleLabel: "What do you need help with?",
+    roles: market.servicesProposed,
+    detailsLabel: "Your business details",
+    nameLabel: "Full name",
+    namePlaceholder: "Full name",
+    emailLabel: "Work email",
+    emailPlaceholder: "Work email",
+    phoneLabel: "Business phone",
+    phonePlaceholder: "Business phone",
+    companyLabel: "Company",
+    companyPlaceholder: "Company name",
+    submit: "Request consult →",
+    reassure:
+      "Employers only. We’ll reply using the details you provide. By submitting you agree to our privacy notice.",
+    callLabel: phone.configured ? "Call · AU business line" : "AU business phone · set in config",
+    phoneDisplay: phone.display,
+    phoneHref: phone.href,
+    doneTitle: "Request received.",
+    doneBody: "Thanks — a teammate will follow up using the details you provided.",
+  };
+
   return (
     <main className="au">
-      <p className="vision-banner au-banner">
-        Vision demo · <Link href="/">back to hub</Link> · not live product
-      </p>
-
       <nav className="au-nav">
         <Link href="/au" className="au-brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -89,12 +62,15 @@ export default function AUHome() {
           />
         </Link>
         <div className="au-nav-right">
-          <Link href="/" className="au-nav-link">
-            All markets
-          </Link>
-          <a href="tel:+611300886740" className="au-navcall">
-            <span aria-hidden>☎</span> 1300 886 740
-          </a>
+          {phone.href ? (
+            <a href={phone.href} className="au-navcall" data-track="phone_click">
+              <span aria-hidden>☎</span> {phone.display}
+            </a>
+          ) : (
+            <span className="au-navcall" aria-label="AU business phone placeholder">
+              <span aria-hidden>☎</span> {phone.display}
+            </span>
+          )}
         </div>
       </nav>
 
@@ -103,58 +79,49 @@ export default function AUHome() {
 
         <div className="au-hero-inner">
           <div className="au-hero-copy">
-            <p className="au-kicker anim-rise">AU · Dedicated virtual assistants</p>
-            <h1 className="anim-rise">
-              A <em>top 1%</em> Filipino VA for your Australian business.
-            </h1>
-            <p className="au-lead anim-rise-d1">
-              Clear hourly pricing, hours that line up with yours, and someone
-              who actually sticks around — not another platform to manage.
-            </p>
+            <p className="au-kicker anim-rise">Australia · Employers</p>
+            <h1 className="anim-rise">{market.headline}</h1>
+            <p className="au-lead anim-rise-d1">{market.prop}</p>
 
             <ul className="au-ticks anim-rise-d1">
-              <li>Works inside your time zone, not overnight</li>
-              <li>Flat hourly rate, no lock-in contracts</li>
-              <li>One dedicated assistant, matched to your business</li>
+              <li>Built for Australian employers hiring offshore staff</li>
+              <li>You interview — we recruit and support the ops</li>
+              <li>Separate from the careers / job-seeker path</li>
             </ul>
+
+            <p className="au-lead anim-rise-d2" style={{ marginTop: "0.75rem" }}>
+              {market.staffingExplain}
+            </p>
 
             <div className="trust-row trust-row-light anim-rise-d2">
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/brand/badge-clutch-au.webp"
-                  alt="Top Clutch Virtual Assistant Company, Australia"
+                  alt="Clutch Australia recognition badge"
                 />
                 <span>
-                  <b>Top VA company</b>
-                  <span>Clutch · Australia</span>
+                  <b>Clutch</b>
+                  <span>Australia badge</span>
                 </span>
               </span>
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/brand/badge-google-5star.webp" alt="Google 5-star reviews" />
+                <img src="/brand/badge-google-5star.webp" alt="Google reviews badge" />
                 <span>
-                  <b>5-star reviews</b>
-                  <span>Google · verified</span>
+                  <b>Google</b>
+                  <span>Reviews badge</span>
                 </span>
               </span>
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/brand/badge-forbes-navy.webp"
-                  alt="Forbes Business Council 2026 official member"
+                  alt="Forbes Business Council badge"
                 />
                 <span>
-                  <b>Business Council</b>
-                  <span>Forbes · member 2026</span>
-                </span>
-              </span>
-              <span className="trust-chip trust-chip-stat">
-                <span>
-                  <b>
-                    <em>2011</em>
-                  </b>
-                  <span>Placing staff since</span>
+                  <b>Forbes</b>
+                  <span>Business Council badge</span>
                 </span>
               </span>
             </div>
@@ -164,15 +131,15 @@ export default function AUHome() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/brand/va-au.jpg"
-              alt="A Virtual Coworker assistant at his desk"
+              alt="Virtual Coworker team member at a desk"
             />
             <span className="va-card-tag">
               <i />
-              Your dedicated VA
+              Dedicated hire
             </span>
             <figcaption>
-              <b>Admin &amp; operations</b>
-              <span>Inbox, quotes and scheduling · on your AEST day</span>
+              <b>Matched to your role</b>
+              <span>Employer consult · Australian business day</span>
             </figcaption>
           </figure>
 
@@ -183,11 +150,27 @@ export default function AUHome() {
       <section className="au-sell">
         <div className="au-sell-inner">
           <div className="au-sell-head">
-            <p className="au-sell-label">What you actually get</p>
-            <h2>A vetted assistant, a flat hourly rate, and proof of the hours.</h2>
+            <p className="au-sell-label">How staffing works here</p>
+            <h2>One primary path: brief the role, interview shortlisted talent, hire with support.</h2>
           </div>
           <div className="sell-grid sell-grid-light">
-            {benefits.map((b) => (
+            {[
+              {
+                k: "Recruit",
+                t: "We source and screen",
+                d: "Role brief in → shortlist aligned to how your business actually works.",
+              },
+              {
+                k: "Choose",
+                t: "You interview",
+                d: "You decide who joins. Clear ownership stays with your business.",
+              },
+              {
+                k: "Operate",
+                t: "We support the hire",
+                d: "Account management and employment ops after you hire.",
+              },
+            ].map((b) => (
               <div className="sell-card" key={b.k}>
                 <em>{b.k}</em>
                 <strong>{b.t}</strong>
@@ -198,70 +181,35 @@ export default function AUHome() {
         </div>
       </section>
 
-      <section className="au-proof" id="proof">
-        <div className="au-proof-inner">
-          <div>
-            <p className="au-proof-label">Built for Aussie operators</p>
-            <h2>Same company as the US site. Different door, on purpose.</h2>
-            <div className="au-stats">
-              <div>
-                <strong>AEST</strong>
-                <span>Hours that match yours</span>
-              </div>
-              <div>
-                <strong>$8</strong>
-                <span>Starting hourly rate</span>
-              </div>
-              <div>
-                <strong>$0</strong>
-                <span>Upfront hiring fee</span>
-              </div>
-            </div>
-          </div>
-          <div className="au-lineup">
-            <p className="au-lineup-label">Who you&apos;d be working with</p>
-            <div className="va-row">
-              {lineup.map((p) => (
-                <figure key={p.src}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.src} alt="" />
-                  <figcaption>{p.cap}</figcaption>
-                </figure>
-              ))}
-            </div>
-            <figure className="au-quote">
-              <blockquote>
-                “We needed someone who&apos;d just get on with it — not another
-                platform to manage.”
-              </blockquote>
-              <figcaption>Sample AU owner voice · vision copy</figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-
       <section className="au-cta-bar">
-        <p>Rather have a quick chat?</p>
+        <p>Prefer a quick chat?</p>
         <div className="au-cta-bar-actions">
-          <a href="tel:+611300886740" className="au-btn au-btn-primary">
-            ☎ 1300 886 740
-          </a>
-          <Link href="/au#gate" className="au-btn au-btn-ghost">
+          {phone.href ? (
+            <a href={phone.href} className="au-btn au-btn-primary">
+              ☎ {phone.display}
+            </a>
+          ) : (
+            <span className="au-btn au-btn-primary" aria-disabled="true">
+              ☎ {phone.display}
+            </span>
+          )}
+          <a href="#gate" className="au-btn au-btn-ghost">
             Back to the form
-          </Link>
+          </a>
         </div>
       </section>
 
       <footer className="au-footer">
-        <span>AU buyers vision · Virtual Coworker</span>
-        <Link href="/ph">See the PH talent door →</Link>
+        <span>AU employer paid LP · Virtual Coworker</span>
+        <Link href="/privacy">Privacy</Link>
       </footer>
 
       <StickyCta
         href="#gate"
-        label="Find my VA"
-        phoneDisplay="1300 886 740"
-        phoneHref="tel:+611300886740"
+        label="Request consult"
+        market="au"
+        phoneDisplay={phone.display}
+        phoneHref={phone.href}
       />
     </main>
   );

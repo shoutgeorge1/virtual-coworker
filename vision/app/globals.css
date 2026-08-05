@@ -597,6 +597,32 @@ button {
   gap: 0.5rem;
 }
 
+.gate-fields label {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.gate-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--g-mute);
+}
+
+.gate-field-error {
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+  color: #9f2d2d;
+}
+
+.gate-hp {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
 .gate-fields input {
   font: inherit;
   font-size: 0.92rem;
@@ -607,6 +633,10 @@ button {
   color: var(--g-ink);
   background: #fdfefe;
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.gate-fields input[aria-invalid="true"] {
+  border-color: #c24141;
 }
 
 .gate-fields input::placeholder {

@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
 </head>
-<body data-page="launch-checklist.html" data-foot="What VC gives · what George does<br />Tick boxes save in this browser">
+<body data-page="launch-checklist.html" data-foot="Statuses as of Aug 5<br />Tick boxes save in this browser">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
@@ -19,8 +19,8 @@
         <p class="kicker">Onboarding</p>
         <h1>Launch Checklist</h1>
         <p>
-          Short list. Give George these, and he starts the paid Search pilot.
-          He’ll follow up by email with anything specific.
+          Live status for the US + Australia employer Search pilot.
+          Confirmed items stay listed so nothing gets lost; blocked items need Virtual Coworker.
         </p>
       </header>
 
@@ -28,78 +28,140 @@
         <p>
           <strong>US + Australia employer Search is the agreed focus.</strong>
           George builds an independent microsite (his domain / Vercel) —
-          not a rebuild of your WordPress sites.
+          not a rebuild of your WordPress sites. Existing GTM access is approved for
+          audit only — no existing tags changed or published yet.
         </p>
       </div>
 
-      <section class="panel" id="from-you">
+      <section class="panel" id="confirmed">
         <div class="panel-hd">
-          <p class="kicker">Virtual Coworker</p>
-          <h2>Please provide</h2>
-          <span class="st st-access">From you</span>
+          <p class="kicker">Done</p>
+          <h2>Confirmed / Complete</h2>
+          <span class="st st-ready">Complete</span>
         </div>
         <div class="panel-bd">
-          <ul class="todo-list" data-todo-group="from-vc">
+          <ul class="glance-bullets">
             <li>
-              <input type="checkbox" id="v1" data-todo="v1" />
-              <label for="v1">
-                <strong>Pay the $3,000 pilot invoice</strong>
+              <strong>Google Ads MCC connections accepted</strong> —
+              US and Australia accounts are linked under George’s MCC.
+            </li>
+            <li><strong>Gusto setup</strong> — complete.</li>
+            <li><strong>NDA</strong> — complete.</li>
+            <li>
+              <strong>Existing GTM access approved</strong> —
+              audit only. Do not change or publish existing tags yet.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="verify-now">
+        <div class="panel-hd">
+          <p class="kicker">George</p>
+          <h2>Verify Now</h2>
+          <span class="st st-progress">Check</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="todo-list" data-todo-group="verify">
+            <li>
+              <input type="checkbox" id="vn1" data-todo="vn1" />
+              <label for="vn1">
+                <strong>Google Ads Admin permission</strong>
+                <span class="todo-hint">Confirm Admin (not just Standard) inside each US and Australia account.</span>
               </label>
             </li>
             <li>
-              <input type="checkbox" id="v2" data-todo="v2" />
-              <label for="v2">
-                <strong>Google Ads — Admin access</strong>
-                <span class="todo-hint">George will connect via his MCC. Admin, not Standard.</span>
+              <input type="checkbox" id="vn2" data-todo="vn2" />
+              <label for="vn2">
+                <strong>GTM publish permission</strong>
+                <span class="todo-hint">Access is approved; verify whether George can publish. Still audit-only — no tag changes yet.</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="waiting">
+        <div class="panel-hd">
+          <p class="kicker">Virtual Coworker</p>
+          <h2>Waiting on Virtual Coworker</h2>
+          <span class="st st-access">Waiting</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="todo-list" data-todo-group="waiting">
+            <li>
+              <input type="checkbox" id="w1" data-todo="w1" />
+              <label for="w1">
+                <strong>$3,000 pilot payment</strong>
+                <span class="todo-hint">On its way to George’s bank — in transit (not yet confirmed cleared).</span>
               </label>
             </li>
             <li>
-              <input type="checkbox" id="v3" data-todo="v3" />
-              <label for="v3">
-                <strong>Who pays the ad spend</strong>
-                <span class="todo-hint">One sentence: your card on the Ads account, or another arrangement.</span>
+              <input type="checkbox" id="w2" data-todo="w2" />
+              <label for="w2">
+                <strong>Who pays Google Ads spend</strong>
+                <span class="todo-hint">One sentence: card on the Ads account, or another arrangement.</span>
               </label>
             </li>
             <li>
-              <input type="checkbox" id="v4" data-todo="v4" />
-              <label for="v4">
-                <strong>Email addresses for new leads</strong>
-                <span class="todo-hint">Where US and AU employer leads should land. [US_LEAD_EMAIL] · [AU_LEAD_EMAIL]</span>
+              <input type="checkbox" id="w3" data-todo="w3" />
+              <label for="w3">
+                <strong>US and Australia lead-routing email addresses</strong>
+                <span class="todo-hint">Where employer leads should land. [US_LEAD_EMAIL] · [AU_LEAD_EMAIL]</span>
               </label>
             </li>
             <li>
-              <input type="checkbox" id="v5" data-todo="v5" />
-              <label for="v5">
-                <strong>Phone numbers if you want calls tracked</strong>
+              <input type="checkbox" id="w4" data-todo="w4" />
+              <label for="w4">
+                <strong>Call-tracking phone numbers, if calls are included</strong>
                 <span class="todo-hint">Skip if forms only. [US_PHONE] · [AU_PHONE]</span>
               </label>
             </li>
             <li>
-              <input type="checkbox" id="v6" data-todo="v6" />
-              <label for="v6">
-                <strong>What counts as a good lead</strong>
-                <span class="todo-hint">One short definition so we can cut junk weekly.</span>
+              <input type="checkbox" id="w5" data-todo="w5" />
+              <label for="w5">
+                <strong>Definition of a qualified lead</strong>
+                <span class="todo-hint">One short definition so junk can be cut weekly.</span>
               </label>
             </li>
             <li>
-              <input type="checkbox" id="v7" data-todo="v7" />
-              <label for="v7">
-                <strong>Who George talks to day to day</strong>
-                <span class="todo-hint">While Caitlin is on leave — Braden / owner as you decide.</span>
+              <input type="checkbox" id="w6" data-todo="w6" />
+              <label for="w6">
+                <strong>Day-to-day contact while Caitlin is unavailable</strong>
+                <span class="todo-hint">Braden / owner as you decide.</span>
               </label>
             </li>
             <li>
-              <input type="checkbox" id="v8" data-todo="v8" />
-              <label for="v8">
-                <strong>Zoho access so George can push leads in (API)</strong>
-                <span class="todo-hint">Write path / API credentials — not a CRM takeover.</span>
+              <input type="checkbox" id="w7" data-todo="w7" />
+              <label for="w7">
+                <strong>Brand and messaging approval</strong>
+                <span class="todo-hint">Logo, name, approved claims / pricing for pilot pages.</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="blocked">
+        <div class="panel-hd">
+          <p class="kicker">Later</p>
+          <h2>Optional CRM (does not block Stage 1)</h2>
+          <span class="st st-progress">Later</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="todo-list" data-todo-group="blocked">
+            <li>
+              <input type="checkbox" id="b1" data-todo="b1" />
+              <label for="b1">
+                <strong>Zoho login — optional later</strong>
+                <span class="todo-hint">Not required for Stage 1. Email/webhook lead delivery is enough to launch. Raffie reset pending if CRM push is wanted later.</span>
               </label>
             </li>
             <li>
-              <input type="checkbox" id="v9" data-todo="v9" />
-              <label for="v9">
-                <strong>OK to use your brand on the pilot pages</strong>
-                <span class="todo-hint">Logo, name, approved claims / pricing you already use.</span>
+              <input type="checkbox" id="b2" data-todo="b2" />
+              <label for="b2">
+                <strong>Zoho API integration — optional later</strong>
+                <span class="todo-hint">Do not block Clean Search launch on CRM wiring.</span>
               </label>
             </li>
           </ul>
@@ -109,33 +171,18 @@
       <section class="panel" id="george-does">
         <div class="panel-hd">
           <p class="kicker">George</p>
-          <h2>What George handles</h2>
+          <h2>George’s Build Tasks</h2>
           <span class="st st-ready">His side</span>
         </div>
         <div class="panel-bd">
           <ul class="glance-bullets">
-            <li>MCC + Google Ads Editor on his side (you grant Admin; he runs the tools)</li>
-            <li>Independent microsite on a domain he buys + Vercel</li>
-            <li>His own temporary GTM, GA4, and Search Console for the pilot</li>
-            <li>Exact-match employer Search for US + AU · job-seeker negatives</li>
-            <li>Lead form → email + Zoho when connected</li>
+            <li>MCC + Google Ads Editor on his side (MCC link accepted; verify Admin inside each account)</li>
+            <li>Independent microsite Stage 1 LPs (vision / Vercel) — WordPress stays as-is</li>
+            <li>Temporary GTM / GA4 / Search Console for the pilot if needed</li>
+            <li>Existing GTM: audit only — do not change or publish existing tags yet</li>
+            <li>Paused Clean Search Editor import ready (Brand + CORE hire) — enable only after Launch Control checklist</li>
+            <li>Lead form → email/webhook; Zoho optional later (does not block Stage 1)</li>
             <li>Weekly search-term and lead-quality cleanup · emails when something needs you</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="panel" id="not-needed">
-        <div class="panel-hd">
-          <p class="kicker">Leave alone</p>
-          <h2>You do not need to give</h2>
-          <span class="st st-deferred">Not required</span>
-        </div>
-        <div class="panel-bd">
-          <ul class="glance-bullets">
-            <li>WordPress / hosting / Shopify</li>
-            <li>Your existing GTM, GA4, or Search Console</li>
-            <li>Social media or SEO tool logins</li>
-            <li>Permission to rebuild the corporate website (he’s not touching it)</li>
           </ul>
         </div>
       </section>
@@ -149,7 +196,7 @@
   <script src="nav.js"></script>
   <script>
     (function () {
-      var KEY = "vc-pilot-checklist-v3";
+      var KEY = "vc-pilot-checklist-v4";
       var store = {};
       try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { store = {}; }
       function save() {

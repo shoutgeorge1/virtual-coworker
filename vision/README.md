@@ -29,8 +29,22 @@ npm run dev   # http://localhost:4321
 
 ```bash
 npm run typecheck
+npm run test
 npm run build
 ```
+
+## Stage 1 events (dataLayer)
+
+| Event | Role |
+|-------|------|
+| `employer_gate_pass` | Diagnostic |
+| `job_seeker_redirect` | Diagnostic — never Ads primary |
+| `employer_form_start` | Diagnostic |
+| `employer_form_valid_submit` | Form-path primary-eligible — only after server accept |
+| `phone_click` | Diagnostic / secondary |
+| `spam_or_applicant_rejected` | Diagnostic |
+
+Quiz / modal gate variants are **not** implemented (inline baseline only).
 
 ## Tracking safety
 

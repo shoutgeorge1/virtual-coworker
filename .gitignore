@@ -10,3 +10,6 @@ vision/.env
 vision/.env.local
 xray/.serve-logs/
 xray/.vercel/
+
+# Google Ads audit exports (may contain customer/PII)
+audit-data/

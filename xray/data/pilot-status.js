@@ -10,10 +10,10 @@ window.PILOT_STATUS = {
   previousContact: "Caitlin",
   handoffNote:
     "Caitlin is preparing for maternity leave. Braden is the primary contact for the pilot.",
-  commercialStatus: "ready_upon_payment_and_access",
-  commercialLabel: "READY TO BEGIN UPON PAYMENT AND ACCESS",
+  commercialStatus: "stage1_built_payment_in_transit",
+  commercialLabel: "STAGE 1 BUILT — PAYMENT IN TRANSIT · APPROVALS STILL NEEDED",
   objective:
-    "Can Google Search generate qualified US and Australian employer leads at an acceptable cost?",
+    "Can Google Search → independent microsite generate qualified USA and Australia employer leads at an acceptable cost? WordPress stays as-is.",
   landingPages: {
     us: "https://vision-three-alpha.vercel.app/us",
     au: "https://vision-three-alpha.vercel.app/au"
@@ -29,42 +29,79 @@ window.PILOT_STATUS = {
       3: "Expansion"
     }
   },
-  /* Reduced onboarding — launch blockers only */
+  confirmedComplete: [
+    { id: "mcc_link", label: "Google Ads MCC connections accepted (US + AU)", status: "complete" },
+    { id: "gusto", label: "Gusto setup", status: "complete" },
+    { id: "nda", label: "NDA", status: "complete" },
+    {
+      id: "gtm_access",
+      label: "Existing GTM access approved (audit only — no tag changes/publish yet)",
+      status: "complete"
+    }
+  ],
+  verifyNow: [
+    {
+      id: "ads_admin_verify",
+      label: "Verify Google Ads Admin inside each US + AU account",
+      status: "verify"
+    },
+    {
+      id: "gtm_publish_verify",
+      label: "Verify GTM publish permission (still audit-only)",
+      status: "verify"
+    }
+  ],
+  /* Reduced onboarding — still waiting on VC */
   waitingOnVc: [
-    { id: "payment", label: "Pay $3,000 pilot invoice", status: "waiting" },
-    { id: "ads_admin", label: "Google Ads Admin access (George MCC)", status: "waiting" },
-    { id: "ad_spend_payer", label: "Who pays ad spend", status: "waiting" },
-    { id: "lead_emails", label: "Lead recipient emails (US + AU)", status: "waiting" },
-    { id: "phone_routing", label: "Phones if calls tracked", status: "waiting" },
-    { id: "qualified_def", label: "What counts as a good lead", status: "waiting" },
-    { id: "day_contact", label: "Day-to-day contact during Caitlin leave", status: "waiting" },
-    { id: "zoho_api", label: "Zoho API / write access for lead push", status: "waiting" },
-    { id: "brand_ok", label: "OK to use brand on pilot pages", status: "waiting" }
+    {
+      id: "payment",
+      label: "$3,000 pilot payment (on its way to George’s bank — in transit)",
+      status: "in_transit"
+    },
+    { id: "ad_spend_payer", label: "Who pays Google Ads spend", status: "waiting" },
+    { id: "lead_emails", label: "Lead-routing emails (US + AU)", status: "waiting" },
+    { id: "phone_routing", label: "Call-tracking phones, if calls included", status: "waiting" },
+    { id: "qualified_def", label: "Definition of a qualified lead", status: "waiting" },
+    { id: "day_contact", label: "Day-to-day contact while Caitlin unavailable", status: "waiting" },
+    { id: "brand_ok", label: "Brand and messaging approval", status: "waiting" }
+  ],
+  blocked: [
+    {
+      id: "zoho_login",
+      label:
+        "Zoho login — Raffie reset webmaster@virtualcoworker.com but sent no password/reset link; George emailed, waiting",
+      status: "blocked"
+    },
+    {
+      id: "zoho_api",
+      label: "Zoho API integration — blocked until login/access exists",
+      status: "blocked"
+    }
   ],
   optionalNotBlockers: [
-    "WordPress / hosting / Shopify",
-    "Their existing GTM, GA4, or Search Console",
-    "Social media or SEO tool logins",
-    "Permission to rebuild the corporate website"
+    "WordPress / hosting / Shopify — stays as-is; not paid destination",
+    "WordPress rebuild / SEO / remarketing",
+    "Zoho / CallRail / offline conversions (do not block Stage 1)",
+    "Social media or SEO tool logins"
   ],
   georgeHandles: [
-    "MCC + Google Ads Editor",
-    "Independent microsite + domain purchase",
-    "Temporary GTM, GA4, Search Console",
-    "Exact-match employer Search US + AU",
-    "Lead form → email + Zoho",
-    "Weekly cleanup and follow-up emails"
+    "MCC + Google Ads Editor (verify Admin per US + AU account)",
+    "Independent microsite Stage 1 LPs (vision) — not WordPress",
+    "Paused Clean Search import (Brand + CORE hire)",
+    "Temporary GTM map later — no production GTM publish required for LP QA",
+    "Lead form → email/webhook; Zoho optional later"
   ],
+  /* Injected into Overview + Project Status blocker lists */
   majorBlockers: [
-    "Pilot invoice payment",
-    "Google Ads Admin access",
-    "Lead emails",
-    "Zoho API write path"
+    "Budget / Max CPC approval placeholders",
+    "Business phones + lead-routing emails (US + AU)",
+    "Confirm paid host Final URL (microsite, not WordPress)",
+    "Pilot payment clearing (on its way — not yet confirmed received)"
   ],
   nextThree: [
-    "Pay the $3,000 pilot invoice",
-    "Grant Google Ads Admin so George can link his MCC",
-    "Send lead emails + Zoho API write access"
+    "Verify Admin inside each US + AU account (MCC Accept already done)",
+    "Approve budgets/CPC + phones + lead inbox",
+    "Import paused Stage 1 CSV → enable US Brand + CORE after LP validation"
   ],
   placeholders: {
     usLeadEmail: "[US_LEAD_EMAIL]",

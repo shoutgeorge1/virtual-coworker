@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import {
   captureAttribution,
   readAttribution,
   trackEvent,
-  trackPrimaryConversion,
+  trackValidEmployerSubmit,
 } from "../../lib/tracking";
 import type { MarketId } from "../../config/markets";
 
@@ -17,30 +16,39 @@ export type GateCopy = {
   intentLabel: string;
   intentPrimary: string;
   intentSecondary: string;
-  divertHref: string;
   divertTitle: string;
   divertBody: string;
   divertCta: string;
-  q1Label: string;
-  q1: string[];
-  q2Label: string;
-  q2: string[];
+  careersHref: string;
+  roleLabel: string;
+  roles: string[];
   detailsLabel: string;
+  nameLabel: string;
   namePlaceholder: string;
   emailLabel: string;
   emailPlaceholder: string;
   phoneLabel: string;
   phonePlaceholder: string;
+  companyLabel: string;
+  companyPlaceholder: string;
   submit: string;
   reassure: string;
   callLabel: string;
   phoneDisplay: string;
-  phoneHref: string;
+  phoneHref: string | null;
   doneTitle: string;
   doneBody: string;
 };
 
-function CallBlock({ copy, solo }: { copy: GateCopy; solo?: boolean }) {
+function CallBlock({
+  copy,
+  market,
+  solo,
+}: {
+  copy: GateCopy;
+  market: MarketId;
+  solo?: boolean;
+}) {
   const cls = `gate-call${solo ? " gate-call-solo" : ""}`;
   const inner = (
     <>
@@ -61,7 +69,7 @@ function CallBlock({ copy, solo }: { copy: GateCopy; solo?: boolean }) {
     <a
       className={cls}
       href={copy.phoneHref}
-      onClick={() => trackEvent("phone_click", { market: copy.phoneDisplay })}
+      onClick={() => trackEvent("phone_click", { market })}
     >
       {inner}
     </a>
@@ -73,52 +81,77 @@ export default function LeadGate({
   market,
 }: {
   copy: GateCopy;
-  /** Employer markets post to /api/lead. Omit or use "ph" for demo-only. */
-  market?: MarketId | "ph";
+  market: MarketId;
 }) {
   const router = useRouter();
-  const [intent, setIntent] = useState<"primary" | "secondary">("primary");
-  const [q1, setQ1] = useState<string | null>(null);
-  const [q2, setQ2] = useState<string | null>(null);
+  const [intent, setIntent] = useState<"employer" | "job_seeker" | null>(null);
+  const [role, setRole] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [started, setStarted] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [startedAt, setStartedAt] = useState<number | null>(null);
+  const startedRef = useRef(false);
 
   useEffect(() => {
-    captureAttribution();
-  }, []);
-
-  const steps = [true, q1 !== null, q2 !== null, done];
-  const progress = (steps.filter(Boolean).length / steps.length) * 100;
+    captureAttribution(market);
+  }, [market]);
 
   function markStart() {
-    if (started) return;
-    setStarted(true);
-    trackEvent("form_start", { market: market || "unknown" });
+    if (startedRef.current) return;
+    startedRef.current = true;
+    const t = Date.now();
+    setStartedAt(t);
+    trackEvent("employer_form_start", { market, gate_variant: "inline" });
+  }
+
+  function onEmployerGate() {
+    setIntent("employer");
+    setError(null);
+    trackEvent("employer_gate_pass", { market, gate_variant: "inline" });
+    markStart();
+  }
+
+  function onJobSeekerGate() {
+    setIntent("job_seeker");
+    setError(null);
+    trackEvent("job_seeker_redirect", { market, gate_variant: "inline" });
+    // No employer form, no employer-lead conversion, no sales pipeline.
+  }
+
+  function validateClient(fd: FormData): Record<string, string> {
+    const errs: Record<string, string> = {};
+    if (!String(fd.get("name") || "").trim()) errs.name = "Enter your name.";
+    if (!String(fd.get("email") || "").trim()) errs.email = "Enter your work email.";
+    if (!String(fd.get("phone") || "").trim()) errs.phone = "Enter a business phone.";
+    if (!String(fd.get("company") || "").trim()) errs.company = "Enter your company name.";
+    if (!role) errs.role = "Select what you need help with.";
+    return errs;
   }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
-
-    // PH / demo-only gates stay local — not part of the employer pilot API.
-    if (market !== "us" && market !== "au") {
-      setDone(true);
-      return;
-    }
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const errs = validateClient(fd);
+    setFieldErrors(errs);
+    if (Object.keys(errs).length) return;
 
     setSubmitting(true);
-    const fd = new FormData(e.currentTarget);
-    const attr = readAttribution();
+    const attr = readAttribution(market);
     const payload = {
+      ...attr,
       name: String(fd.get("name") || ""),
       email: String(fd.get("email") || ""),
       phone: String(fd.get("phone") || ""),
-      role: q1 || "",
-      timeline: q2 || "",
+      company: String(fd.get("company") || ""),
+      role: role || "",
+      intent: "employer",
+      website: String(fd.get("website") || ""), // honeypot
+      form_started_at: startedAt || Date.now(),
       market,
-      ...attr,
+      lp_version: attr.lp_version || "stage1-v1",
       submitted_at: new Date().toISOString(),
     };
 
@@ -131,10 +164,18 @@ export default function LeadGate({
       const data = (await res.json().catch(() => ({}))) as {
         ok?: boolean;
         error?: string;
+        code?: string;
+        submission_id?: string;
+        duplicate?: boolean;
       };
 
-      if (!res.ok || !data.ok) {
-        // Graceful failure: show inline error; do not fake a conversion.
+      if (!res.ok || !data.ok || !data.submission_id) {
+        if (data.code === "job_seeker" || data.code === "honeypot" || data.code === "too_fast") {
+          trackEvent("spam_or_applicant_rejected", {
+            market,
+            code: data.code || "rejected",
+          });
+        }
         setError(
           data.error ||
             "We could not deliver your request just now. Please try again, or call us.",
@@ -143,10 +184,15 @@ export default function LeadGate({
         return;
       }
 
-      trackPrimaryConversion("form_submit");
+      // Primary only after server accept; deduped by submission_id.
+      trackValidEmployerSubmit({
+        market,
+        submissionId: data.submission_id,
+        role: role || "",
+      });
       setDone(true);
       setSubmitting(false);
-      router.push(`/thank-you?market=${market}`);
+      router.push(`/thank-you?market=${market}&sid=${encodeURIComponent(data.submission_id)}`);
     } catch {
       setError(
         "Network error — your request was not sent. Please try again, or call us.",
@@ -160,9 +206,6 @@ export default function LeadGate({
       <div className="gate-card-head">
         <p className="gate-card-eyebrow">{copy.eyebrow}</p>
         <h2>{copy.title}</h2>
-        <div className="gate-progress" aria-hidden>
-          <span style={{ width: `${done ? 100 : progress}%` }} />
-        </div>
       </div>
 
       {done ? (
@@ -172,7 +215,7 @@ export default function LeadGate({
           </p>
           <h3>{copy.doneTitle}</h3>
           <p>{copy.doneBody}</p>
-          <CallBlock copy={copy} solo />
+          <CallBlock copy={copy} market={market} solo />
         </div>
       ) : (
         <div className="gate-card-body">
@@ -180,52 +223,51 @@ export default function LeadGate({
             <legend>
               <b>1</b> {copy.intentLabel}
             </legend>
-            <div className="gate-intent">
+            <div className="gate-intent" role="group" aria-label={copy.intentLabel}>
               <button
                 type="button"
-                className={intent === "primary" ? "on" : ""}
-                aria-pressed={intent === "primary"}
-                onClick={() => {
-                  setIntent("primary");
-                  markStart();
-                }}
+                className={intent === "employer" ? "on" : ""}
+                aria-pressed={intent === "employer"}
+                onClick={onEmployerGate}
               >
                 {copy.intentPrimary}
               </button>
               <button
                 type="button"
-                className={intent === "secondary" ? "on" : ""}
-                aria-pressed={intent === "secondary"}
-                onClick={() => setIntent("secondary")}
+                className={intent === "job_seeker" ? "on" : ""}
+                aria-pressed={intent === "job_seeker"}
+                onClick={onJobSeekerGate}
               >
                 {copy.intentSecondary}
               </button>
             </div>
           </fieldset>
 
-          {intent === "secondary" ? (
+          {intent === "job_seeker" ? (
             <div className="gate-divert">
               <strong>{copy.divertTitle}</strong>
               <p>{copy.divertBody}</p>
-              <Link href={copy.divertHref} className="gate-submit">
+              <a href={copy.careersHref} className="gate-submit">
                 {copy.divertCta}
-              </Link>
+              </a>
             </div>
-          ) : (
-            <form onSubmit={onSubmit} onFocus={markStart}>
+          ) : null}
+
+          {intent === "employer" ? (
+            <form onSubmit={onSubmit} noValidate>
               <fieldset className="gate-step">
                 <legend>
-                  <b>2</b> {copy.q1Label}
+                  <b>2</b> {copy.roleLabel}
                 </legend>
-                <div className="gate-chips">
-                  {copy.q1.map((o) => (
+                <div className="gate-chips" role="group" aria-label={copy.roleLabel}>
+                  {copy.roles.map((o) => (
                     <button
                       type="button"
                       key={o}
-                      className={q1 === o ? "on" : ""}
-                      aria-pressed={q1 === o}
+                      className={role === o ? "on" : ""}
+                      aria-pressed={role === o}
                       onClick={() => {
-                        setQ1(o);
+                        setRole(o);
                         markStart();
                       }}
                     >
@@ -233,52 +275,94 @@ export default function LeadGate({
                     </button>
                   ))}
                 </div>
+                {fieldErrors.role ? (
+                  <p className="gate-field-error" role="alert">
+                    {fieldErrors.role}
+                  </p>
+                ) : null}
               </fieldset>
 
               <fieldset className="gate-step">
                 <legend>
-                  <b>3</b> {copy.q2Label}
+                  <b>3</b> {copy.detailsLabel}
                 </legend>
-                <div className="gate-chips">
-                  {copy.q2.map((o) => (
-                    <button
-                      type="button"
-                      key={o}
-                      className={q2 === o ? "on" : ""}
-                      aria-pressed={q2 === o}
-                      onClick={() => setQ2(o)}
-                    >
-                      {o}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
-
-              <fieldset className="gate-step">
-                <legend>
-                  <b>4</b> {copy.detailsLabel}
-                </legend>
-                <div className="gate-fields">
+                {/* Honeypot — hidden from humans */}
+                <label className="gate-hp" aria-hidden="true">
+                  Website
                   <input
                     type="text"
-                    name="name"
-                    required
-                    placeholder={copy.namePlaceholder}
-                    aria-label={copy.detailsLabel}
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    defaultValue=""
                   />
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder={copy.emailPlaceholder}
-                    aria-label={copy.emailLabel}
-                  />
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder={copy.phonePlaceholder}
-                    aria-label={copy.phoneLabel}
-                  />
+                </label>
+                <div className="gate-fields">
+                  <label>
+                    <span className="gate-label">{copy.nameLabel}</span>
+                    <input
+                      type="text"
+                      name="name"
+                      autoComplete="name"
+                      placeholder={copy.namePlaceholder}
+                      aria-invalid={Boolean(fieldErrors.name)}
+                      aria-describedby={fieldErrors.name ? "err-name" : undefined}
+                      onFocus={markStart}
+                    />
+                    {fieldErrors.name ? (
+                      <span id="err-name" className="gate-field-error" role="alert">
+                        {fieldErrors.name}
+                      </span>
+                    ) : null}
+                  </label>
+                  <label>
+                    <span className="gate-label">{copy.emailLabel}</span>
+                    <input
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      placeholder={copy.emailPlaceholder}
+                      aria-invalid={Boolean(fieldErrors.email)}
+                      aria-describedby={fieldErrors.email ? "err-email" : undefined}
+                    />
+                    {fieldErrors.email ? (
+                      <span id="err-email" className="gate-field-error" role="alert">
+                        {fieldErrors.email}
+                      </span>
+                    ) : null}
+                  </label>
+                  <label>
+                    <span className="gate-label">{copy.phoneLabel}</span>
+                    <input
+                      type="tel"
+                      name="phone"
+                      autoComplete="tel"
+                      placeholder={copy.phonePlaceholder}
+                      aria-invalid={Boolean(fieldErrors.phone)}
+                      aria-describedby={fieldErrors.phone ? "err-phone" : undefined}
+                    />
+                    {fieldErrors.phone ? (
+                      <span id="err-phone" className="gate-field-error" role="alert">
+                        {fieldErrors.phone}
+                      </span>
+                    ) : null}
+                  </label>
+                  <label>
+                    <span className="gate-label">{copy.companyLabel}</span>
+                    <input
+                      type="text"
+                      name="company"
+                      autoComplete="organization"
+                      placeholder={copy.companyPlaceholder}
+                      aria-invalid={Boolean(fieldErrors.company)}
+                      aria-describedby={fieldErrors.company ? "err-company" : undefined}
+                    />
+                    {fieldErrors.company ? (
+                      <span id="err-company" className="gate-field-error" role="alert">
+                        {fieldErrors.company}
+                      </span>
+                    ) : null}
+                  </label>
                 </div>
               </fieldset>
 
@@ -293,13 +377,17 @@ export default function LeadGate({
               </button>
               <p className="gate-reassure">{copy.reassure}</p>
             </form>
-          )}
+          ) : null}
+
+          {intent === null ? (
+            <p className="gate-reassure">Choose one option to continue.</p>
+          ) : null}
 
           <div className="gate-or">
             <span>or</span>
           </div>
 
-          <CallBlock copy={copy} />
+          <CallBlock copy={copy} market={market} />
         </div>
       )}
     </aside>

@@ -10,20 +10,36 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
 </head>
-<body data-page="index.html" data-foot="$3,000 Google Search pilot<br />Ready upon payment + access">
+<body data-page="index.html" data-foot="USA + Australia employers<br />Google Ads → independent microsite">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Phase 1 · Paid Search Validation</p>
+        <p class="kicker">Stage 1 · Clean Search</p>
         <h1>Pilot Overview</h1>
         <p>
-          Paid acquisition for <strong>US first</strong> (Australia second) —
-          Google Ads into an independent microsite. Existing WordPress stays as it is.
-          Leads first (form + phone); job orders and placements come next.
+          Paid acquisition for <strong>USA and Australia only</strong> —
+          Google Ads into an <strong>independent microsite</strong>.
+          Existing WordPress stays as-is (not the paid destination; no WP rebuild).
         </p>
       </header>
+
+      <section class="panel" id="framing">
+        <div class="panel-hd">
+          <p class="kicker">Keep it simple</p>
+          <h2>What this pilot is</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li><strong>Markets:</strong> USA and Australia employers only</li>
+            <li><strong>Channel:</strong> Google Search (Clean Search Stage 1) — Brand + high-intent hire</li>
+            <li><strong>Destination:</strong> Independent microsite LPs — not WordPress</li>
+            <li><strong>WordPress:</strong> Leaves alone. No rebuild. Not used as the paid Final URL</li>
+            <li><strong>Goal:</strong> Buy relevant employer impressions/clicks and capture validated employer inquiries</li>
+          </ul>
+        </div>
+      </section>
 
       <section class="panel" id="start-here">
         <div class="panel-hd">
@@ -33,16 +49,12 @@
         <div class="panel-bd">
           <ul class="glance-bullets">
             <li>
-              <a href="launch-checklist"><strong>Launch Checklist</strong></a>
-              — What Virtual Coworker needs to provide so work can start.
+              <a href="launch-control.html"><strong>Launch Control</strong></a>
+              — Ready/blocked, approvals, and the exact sequence to first controlled impressions.
             </li>
             <li>
-              <a href="keyword-strategy"><strong>Keyword Strategy</strong></a>
-              — Which employer searches we target, and how we keep job seekers out.
-            </li>
-            <li>
-              <a href="project-status"><strong>Project Status</strong></a>
-              — Where the pilot stands, blockers, and next steps.
+              <a href="clean-rebuild.html"><strong>Technical documentation</strong></a>
+              — Reference only. Do not expand for launch.
             </li>
           </ul>
         </div>
@@ -50,13 +62,12 @@
 
       <div class="notice" id="commercial">
         <p>
-          <strong>PILOT STATUS: READY TO BEGIN UPON PAYMENT AND ACCESS</strong>
+          <strong>STAGE 1 MACHINE: BUILT — MCC ACCEPTED · PAYMENT IN TRANSIT · APPROVALS STILL NEEDED</strong>
         </p>
         <p>
-          Preliminary concepts already exist. Further implementation starts after the
-          <strong>$3,000</strong> pilot payment. Website rebuilds, SEO, remarketing,
-          CRM redevelopment, and broader platform work are outside this pilot and need
-          a separate scope.
+          US/AU employer LPs, inline employer gate, and a paused Google Ads Editor import
+          are ready. WordPress stays as-is (not the paid destination). Zoho / CallRail are
+          optional later — they do not block Stage 1.
         </p>
       </div>
 
@@ -93,9 +104,9 @@
             Can Google Search generate qualified US and Australian employer leads at an acceptable cost?
           </p>
           <ul class="glance-bullets">
-            <li><strong>Path:</strong> Google Search Ads → Next.js microsite → form or tracked call → lead delivery → weekly quality feedback</li>
-            <li><strong>Not required:</strong> WordPress edits, existing GTM/GA4, Search Console, full CRM rebuild</li>
-            <li><strong>Keywords:</strong> Exact-match employer clusters → <a href="keyword-strategy">Keyword Strategy</a></li>
+            <li><strong>Path:</strong> Google Search Ads → independent microsite → employer form or phone → lead delivery</li>
+            <li><strong>Not in scope:</strong> WordPress edits/rebuild, PMax/Display/DSA, quiz/modal gate experiments, full CRM rebuild</li>
+            <li><strong>Ads package:</strong> paused import in <code>ads-launch/</code> — Brand + CORE hire per market</li>
           </ul>
         </div>
       </section>
@@ -109,8 +120,8 @@
           <ul class="glance-bullets">
             <li><strong>Main contact:</strong> Braden</li>
             <li><strong>Handoff:</strong> Caitlin is preparing for maternity leave. Braden owns day-to-day pilot decisions.</li>
-            <li><strong>Markets:</strong> United States and Australia</li>
-            <li><strong>Channel:</strong> Google Search only in Phase 1</li>
+            <li><strong>Markets:</strong> United States and Australia only</li>
+            <li><strong>Channel:</strong> Google Search only (Stage 1)</li>
           </ul>
         </div>
       </section>
@@ -133,7 +144,8 @@
             </li>
           </ul>
           <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
-            Early concepts only. Final copy and claims need Virtual Coworker approval.
+            Stage 1 paid destinations on the independent microsite. WordPress is not the Final URL.
+            Phones and claims use config placeholders until VC approves.
           </p>
         </div>
       </section>
@@ -146,10 +158,10 @@
         </div>
         <div class="panel-bd">
           <ul class="glance-bullets" id="blocker-list">
-            <li>Pilot invoice payment</li>
-            <li>Google Ads access</li>
-            <li>Lead destination emails</li>
-            <li>Offer / messaging / geo approval</li>
+            <li>Budget / Max CPC approval placeholders</li>
+            <li>Business phones + lead-routing emails (US + AU)</li>
+            <li>Confirm paid host Final URL (microsite, not WordPress)</li>
+            <li>Pilot payment clearing (on its way — not yet confirmed received)</li>
           </ul>
         </div>
       </section>
@@ -162,16 +174,16 @@
         <div class="panel-bd">
           <ol class="next-five" id="next-three">
             <li>
-              <strong>Send or confirm the $3,000 pilot invoice and payment</strong>
-              <span>Work continues after payment clears.</span>
+              <strong>Verify Admin inside each US + AU account</strong>
+              <span>MCC Accept is done. Confirm Admin in-account, then download into clean Editor.</span>
             </li>
             <li>
-              <strong>Grant Google Ads Standard or Admin access; confirm billing owner</strong>
-              <span>No need to fix legacy WordPress first.</span>
+              <strong>Approve budgets/CPC + business phones + lead inbox</strong>
+              <span>Placeholders must become real before enable. Payment is in transit.</span>
             </li>
             <li>
-              <strong>Confirm lead emails, responders, and qualified-lead definition</strong>
-              <span>So weekly quality feedback has a clear target.</span>
+              <strong>Import paused Stage 1 CSV → validate LPs → enable US Brand + CORE</strong>
+              <span>Follow <a href="launch-control.html">Launch Control</a> sequence. WordPress stays as-is.</span>
             </li>
           </ol>
         </div>
@@ -184,18 +196,18 @@
         </div>
         <div class="panel-bd">
           <p style="margin-top:0">
-            Launch needs payment, Ads access, approved messaging, a lead destination,
-            and a simple quality-feedback loop. Legacy analytics, WordPress, and full
-            Zoho admin are optional. Details:
-            <a href="launch-checklist">What we need</a> ·
-            <a href="docs/access-requirements.md">access-requirements.md</a>
+            MCC link is accepted — still verify Admin inside each account.
+            Launch still needs budget/CPC approval, phones, and a lead destination.
+            WordPress, legacy GTM, Zoho, and CallRail are <strong>not</strong> required to start Stage 1.
+            Details: <a href="launch-control.html">Launch Control</a>
           </p>
         </div>
       </section>
 
       <div class="actions">
-        <a class="btn btn-primary" href="launch-checklist">What we need</a>
-        <a class="btn" href="landing-pages.html">Landing Pages</a>
+        <a class="btn btn-primary" href="launch-control.html">Launch Control</a>
+        <a class="btn" href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">US LP</a>
+        <a class="btn" href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">AU LP</a>
       </div>
     </main>
   </div>

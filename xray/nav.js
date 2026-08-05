@@ -1,23 +1,22 @@
-/* Shared sidebar for the VC paid-search pilot command center.
-   One source of truth so nav can never drift between pages.
-   Each page sets <body data-page="index.html" data-foot="...">
-   Archive pages set data-root="../" so links resolve from archive/. */
+/* Shared sidebar — Stage 1 launch control first; technical docs secondary. */
 (function () {
   var root = document.body.getAttribute("data-root") || "";
   var ITEMS = [
+    { href: "launch-control.html", text: "Launch Control" },
     { href: "index.html", text: "Pilot Overview" },
-    { href: "launch-checklist", text: "Launch Checklist" },
-    { href: "keyword-strategy", text: "Keyword Strategy" },
-    { href: "project-status", text: "Project Status" },
-    { href: "us.html", text: "US Campaign" },
-    { href: "au.html", text: "Australia Campaign" },
-    { href: "landing-pages.html", text: "Landing Pages" },
-    { href: "tracking.html", text: "Tracking" },
-    { href: "lead-routing.html", text: "Lead Routing" },
-    { href: "results.html", text: "Results" },
-    { href: "later.html", text: "Later Phases" },
-    { label: "Archive" },
-    { href: "archive/findings.html", text: "Site notes", quiet: true }
+    { label: "Technical documentation" },
+    { href: "clean-rebuild.html", text: "Clean Rebuild", quiet: true },
+    { href: "launch-checklist", text: "Launch Checklist", quiet: true },
+    { href: "keyword-strategy", text: "Keyword Strategy", quiet: true },
+    { href: "project-status", text: "Project Status", quiet: true },
+    { href: "us.html", text: "US Campaign", quiet: true },
+    { href: "au.html", text: "Australia Campaign", quiet: true },
+    { href: "landing-pages.html", text: "Landing Pages", quiet: true },
+    { href: "tracking.html", text: "Tracking", quiet: true },
+    { href: "lead-routing.html", text: "Lead Routing", quiet: true },
+    { href: "results.html", text: "Results", quiet: true },
+    { href: "later.html", text: "Later Phases", quiet: true },
+    { href: "archive/findings.html", text: "Archive notes", quiet: true }
   ];
 
   var host = document.querySelector("[data-nav]");
@@ -26,10 +25,10 @@
   var body = document.body;
   var current =
     body.getAttribute("data-page") ||
-    (location.pathname.split("/").pop() || "index.html");
+    (location.pathname.split("/").pop() || "launch-control.html");
   var foot =
     body.getAttribute("data-foot") ||
-    "$3,000 Google Search pilot<br />US + Australia employers";
+    "Stage 1 · US + AU employers<br />Paused until checklist green";
 
   function pageOf(href) {
     var base = (href || "").split("#")[0].split("/").pop();
@@ -66,8 +65,8 @@
     '<img class="brand-mark" src="' +
     logoSrc +
     '" width="168" height="52" alt="Virtual Coworker" />' +
-    '<p class="name">Search pilot</p>' +
-    '<p class="sub">US + AU · $3,000 PoC</p>' +
+    '<p class="name">Stage 1 launch</p>' +
+    '<p class="sub">US + AU · employer Search</p>' +
     "</div>" +
     '<nav class="nav" aria-label="Primary">';
 
