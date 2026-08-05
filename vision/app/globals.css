@@ -681,6 +681,28 @@ button {
     0 6px 14px rgba(240, 174, 56, 0.3);
 }
 
+/* Secondary / alternate path — must stay high-contrast (never white-on-pale). */
+.gate-submit-secondary {
+  color: #10283f;
+  background: #e8eef4;
+  box-shadow: inset 0 0 0 1.5px rgba(18, 40, 63, 0.16),
+    0 2px 5px rgba(12, 24, 38, 0.08);
+  filter: none;
+}
+
+.gate-submit-secondary:hover {
+  color: #0a1c2e;
+  background: #dce6f0;
+  filter: none;
+  box-shadow: inset 0 0 0 1.5px rgba(18, 40, 63, 0.22),
+    0 8px 18px rgba(12, 24, 38, 0.12);
+}
+
+.gate-submit-secondary:active {
+  box-shadow: inset 0 0 0 1.5px rgba(18, 40, 63, 0.2),
+    0 2px 4px rgba(12, 24, 38, 0.1);
+}
+
 .gate-reassure {
   margin: 0.75rem 0 0;
   font-size: 0.73rem;

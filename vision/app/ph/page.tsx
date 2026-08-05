@@ -147,7 +147,7 @@ export default function PHHome() {
               <div className="gate-or">
                 <span>or</span>
               </div>
-              <Link href="/us" className="gate-submit" style={{ background: "#e8eef4" }}>
+              <Link href="/us" className="gate-submit gate-submit-secondary">
                 {t.ctaHire}
               </Link>
             </div>

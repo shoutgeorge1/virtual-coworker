@@ -194,15 +194,30 @@
   --g-sel-bg: rgba(247, 99, 12, 0.12);
 }
 
-.ph-hero-inner .gate-submit {
+.ph-hero-inner .gate-submit:not(.gate-submit-secondary) {
   background: linear-gradient(180deg, #ff8438 0%, #f7630c 55%, #dd5407 100%);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
     0 10px 22px rgba(247, 99, 12, 0.34), 0 2px 5px rgba(12, 24, 38, 0.16);
 }
 
-.ph-hero-inner .gate-submit:hover {
+.ph-hero-inner .gate-submit:not(.gate-submit-secondary):hover {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
     0 16px 32px rgba(247, 99, 12, 0.42), 0 3px 7px rgba(12, 24, 38, 0.18);
+}
+
+.ph-hero-inner .gate-submit-secondary {
+  color: #10283f;
+  background: #e8eef4;
+  box-shadow: inset 0 0 0 1.5px rgba(18, 40, 63, 0.18),
+    0 2px 5px rgba(12, 24, 38, 0.1);
+}
+
+.ph-hero-inner .gate-submit-secondary:hover {
+  color: #0a1c2e;
+  background: #dce6f0;
+  filter: none;
+  box-shadow: inset 0 0 0 1.5px rgba(18, 40, 63, 0.24),
+    0 8px 18px rgba(12, 24, 38, 0.14);
 }
 
 .ph-hero-inner .gate-done-mark {

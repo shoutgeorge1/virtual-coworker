@@ -11,10 +11,14 @@
   ],
   "redirects": [
     { "source": "/", "destination": "/launch-control", "permanent": false },
-    { "source": "/checklist", "destination": "/launch-checklist", "permanent": true },
-    { "source": "/checklist.html", "destination": "/launch-checklist", "permanent": true },
+    { "source": "/checklist", "destination": "/launch-control", "permanent": true },
+    { "source": "/checklist.html", "destination": "/launch-control", "permanent": true },
+    { "source": "/launch-checklist", "destination": "/launch-control", "permanent": true },
+    { "source": "/launch-checklist.html", "destination": "/launch-control", "permanent": true },
+    { "source": "/action", "destination": "/launch-control", "permanent": true },
+    { "source": "/action.html", "destination": "/launch-control", "permanent": true },
+    { "source": "/index.html", "destination": "/launch-control", "permanent": false },
     { "source": "/keywords", "destination": "/keyword-strategy", "permanent": true },
-    { "source": "/keywords.html", "destination": "/keyword-strategy", "permanent": true },
-    { "source": "/action.html", "destination": "/launch-control", "permanent": true }
+    { "source": "/keywords.html", "destination": "/keyword-strategy", "permanent": true }
   ]
 }

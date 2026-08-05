@@ -1264,12 +1264,34 @@ a.chip:hover { border-color: var(--accent-hot); color: var(--ink); text-decorati
   .main { padding: 1.1rem 1.05rem 2rem; }
 }
 
+/* Desktop: Archive stays collapsed (do not flatten into primary nav). */
 @media (min-width: 821px) {
   .nav-docs {
-    display: contents;
+    width: 100%;
+    margin: 0.55rem 0 0;
+    border: 1px solid var(--edge-soft);
+    border-radius: 8px;
+    background: rgba(232, 235, 240, 0.55);
   }
-  .nav-docs > summary { display: none; }
-  .nav-docs-body { display: contents; }
+  .nav-docs > summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dim);
+  }
+  .nav-docs > summary::-webkit-details-marker { display: none; }
+  .nav-docs .nav-label { display: none; }
+  .nav-docs-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0 0.35rem 0.45rem;
+  }
+  .nav-docs:not([open]) .nav-docs-body { display: none; }
 }
 
 /* ==========================================================================

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>Launch Control · Virtual Coworker Stage 1</title>
+  <title>Checklist · Launch Control · Virtual Coworker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -212,27 +212,88 @@
     }
   </style>
 </head>
-<body data-page="launch-control.html" data-foot="Stage 1 · smallest safe paid machine<br />Paused import until checklist green">
+<body data-page="launch-control.html" data-foot="This is the checklist<br />Paused import until gates green">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Stage 1 · USA + Australia only</p>
-        <h1>Launch Control</h1>
+        <p class="kicker">Stage 1 · USA + Australia · your work list</p>
+        <h1>Checklist</h1>
         <p>
-          Paid Search → independent microsite. WordPress unchanged (not the Final URL).
-          Command screen for ready / blocked / who waits / next action.
+          One screen: next action → Ads steps → ready / blocking / who waits → five gates.
+          Paid Search → microsite (WordPress is not the Final URL).
         </p>
       </header>
 
       <div class="lc-next" id="next-action">
         <p class="lbl">Exact next action</p>
         <p>
-          Verify Admin inside USA <code>496-715-1855</code> and AU <code>573-539-1940</code>
+          Verify Admin inside USA <code>496-715-1855</code> and AU <code>573-539-1940</code>, then tick step 1 below.
         </p>
-        <p class="sub">MCC Accept is done. Admin in each account is still required before Editor download / enable.</p>
+        <p class="sub">Tick boxes save in this browser. Do not enable spend until gates + Final URL host are locked.</p>
       </div>
+
+      <section class="panel" id="ads-launch-checklist">
+        <div class="panel-hd">
+          <p class="kicker">George · do these in order</p>
+          <h2>Google Ads launch checklist</h2>
+          <span class="st st-progress">Work here</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="todo-list" data-todo-group="ads-launch">
+            <li>
+              <input type="checkbox" id="ads1" data-todo="ads1" />
+              <label for="ads1">
+                <strong>1. Verify Admin</strong>
+                <span class="todo-hint">Inside USA <code>496-715-1855</code> and AU <code>573-539-1940</code> (Admin, not just Standard). MCC Accept alone is not enough.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="ads2" data-todo="ads2" />
+              <label for="ads2">
+                <strong>2. Live remnant check</strong>
+                <span class="todo-hint">After Admin: open each account and see what’s actually spending / paused today. Note legacy <code>PM_*</code> Search.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="ads3" data-todo="ads3" />
+              <label for="ads3">
+                <strong>3. Download into Google Ads Editor</strong>
+                <span class="todo-hint">Fresh download of USA + AU into a clean Editor instance before any import.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="ads4" data-todo="ads4" />
+              <label for="ads4">
+                <strong>4. Import paused CSV</strong>
+                <span class="todo-hint">Import <code>ads-launch/google-ads-editor-import.csv</code> — leave everything <strong>Paused</strong>. No enable yet.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="ads5" data-todo="ads5" />
+              <label for="ads5">
+                <strong>5. Set budgets + Max CPC</strong>
+                <span class="todo-hint">Replace <code>[APPROVAL_*]</code> placeholders only after you approve ceilings. Post Paused changes; spot-check in Ads UI.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="ads6" data-todo="ads6" />
+              <label for="ads6">
+                <strong>6. Lock microsite Final URLs</strong>
+                <span class="todo-hint">Buy domain(s) on Vercel (~$10) → attach to vision → set Ads Final URLs to that host <code>/us</code> · <code>/au</code> (not WordPress). Preview OK until then: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="ads7" data-todo="ads7" />
+              <label for="ads7">
+                <strong>7. Enable US Brand, then CORE</strong>
+                <span class="todo-hint">Only after gates are green. Enable <code>VC_US_S_BRAND</code> first, then <code>VC_US_S_CORE_hire_va</code>. Keep AU throttled until US is sane. Still no Ads enable from this page — you click enable in Ads/Editor.</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </section>
 
       <div class="lc-board" id="status-board">
         <section class="lc-bucket ok" aria-labelledby="ready-hd">
@@ -258,7 +319,7 @@
             <li><strong>Ads Admin</strong> — verify in USA + AU accounts</li>
             <li><strong>AU phone + lead delivery</strong> — NA dest confirmed; AU + inbox open</li>
             <li><strong>Budgets + Max CPC</strong> — not approved</li>
-            <li><strong>Final host + LP QA</strong> — host + forms not locked</li>
+            <li><strong>Domain + Final host</strong> — buy on Vercel (~$10), then lock Final URLs + LP QA</li>
             <li><strong>Editor import</strong> — stays paused until human approval</li>
           </ul>
         </section>
@@ -271,7 +332,8 @@
           <ul>
             <li>Verify Admin in USA + AU</li>
             <li>Approve budgets + Max CPC ceilings</li>
-            <li>Confirm paid host Final URL</li>
+            <li><strong>Buy paid microsite domain(s) on Vercel (~$10)</strong> — pending; needed for Final URL host (not the preview <code>*.vercel.app</code> URL)</li>
+            <li>Confirm paid host Final URL after domain attaches</li>
             <li>Confirm payment-cleared date when bank shows it</li>
             <li>Decide legacy <code>PM_*</code> disposition</li>
             <li>Review paused Editor import before any enable</li>
@@ -325,7 +387,7 @@
               <span class="st st-access">Open</span>
               <div class="gate-body">
                 <strong>LPs + forms validated on final host</strong>
-                <span>Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. Lock Final URL host, then employer gate / thank-you / dedupe QA.</span>
+                <span>Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. <strong>George: buy domain(s) on Vercel (~$10)</strong> for the paid Final URL host, attach to the vision project, then lock Final URL + employer gate / thank-you / dedupe QA.</span>
               </div>
             </li>
             <li>
@@ -341,25 +403,34 @@
 
       <section class="panel" id="open-items">
         <div class="panel-hd">
-          <p class="kicker">Still open</p>
+          <p class="kicker">Still open · Stage 1</p>
           <h2>Decisions + inputs</h2>
         </div>
         <div class="panel-bd">
           <ul class="lc-open">
+            <li>Ads Admin verify</li>
             <li>Budgets</li>
             <li>Max CPC</li>
             <li>AU phone</li>
             <li>Lead inbox/webhook</li>
-            <li>Final host</li>
+            <li><strong>Domain purchase on Vercel (~$10) — pending George</strong></li>
+            <li>Final host → lock Ads Final URLs</li>
             <li>Payment-cleared date</li>
             <li>Legacy PM_* disposition</li>
-            <li>Zoho access</li>
-            <li>Lead owner / SLA</li>
-            <li>Qual definitions</li>
-            <li>Chat platform</li>
-            <li>CallRail ownership</li>
-            <li>Offline $ values</li>
           </ul>
+          <details class="lc-fold" style="margin-top:1rem">
+            <summary>Later (not Stage 1 blockers) <span class="hint">Zoho · CallRail · offline $ · SLAs</span></summary>
+            <div class="fold-bd">
+              <ul class="lc-open">
+                <li>Zoho access</li>
+                <li>Lead owner / SLA</li>
+                <li>Qual definitions</li>
+                <li>Chat platform</li>
+                <li>CallRail ownership</li>
+                <li>Offline $ values</li>
+              </ul>
+            </div>
+          </details>
         </div>
       </section>
 
@@ -396,8 +467,8 @@
 
       <details class="lc-fold" id="sequence">
         <summary>
-          Launch sequence (15)
-          <span class="hint">Collapsed — expand when executing</span>
+          Full launch sequence (15) — detail
+          <span class="hint">Backup detail; use checklist above as the work list</span>
         </summary>
         <div class="fold-bd">
           <ol class="lc-seq">
@@ -458,5 +529,28 @@
     </main>
   </div>
   <script src="nav.js"></script>
+  <script>
+    (function () {
+      var KEY = "vc-launch-control-todos-v1";
+      var store = {};
+      try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { store = {}; }
+      function save() {
+        try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {}
+      }
+      document.querySelectorAll(".todo-list input[type=checkbox][data-todo]").forEach(function (box) {
+        var id = box.getAttribute("data-todo");
+        var li = box.closest("li");
+        if (store[id]) {
+          box.checked = true;
+          if (li) li.classList.add("is-done");
+        }
+        box.addEventListener("change", function () {
+          store[id] = !!box.checked;
+          if (li) li.classList.toggle("is-done", box.checked);
+          save();
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

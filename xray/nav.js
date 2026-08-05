@@ -1,19 +1,18 @@
-/* Shared sidebar — Stage 1 launch control first; technical docs secondary. */
+/* Stage 1 shell — Checklist is the front door; everything else is Archive. */
 (function () {
   var root = document.body.getAttribute("data-root") || "";
   var ITEMS = [
-    { href: "launch-control.html", text: "Launch Control" },
-    { href: "index.html", text: "Pilot Overview" },
-    { label: "Technical documentation" },
-    { href: "clean-rebuild.html", text: "Clean Rebuild", quiet: true },
-    { href: "launch-checklist", text: "Launch Checklist", quiet: true },
-    { href: "keyword-strategy", text: "Keyword Strategy", quiet: true },
-    { href: "project-status", text: "Project Status", quiet: true },
+    { href: "launch-control.html", text: "Checklist" },
+    { href: "landing-pages.html", text: "LP previews" },
+    { href: "lead-routing.html", text: "Lead Routing" },
+    { href: "tracking.html", text: "Tracking" },
+    { label: "Archive" },
+    { href: "index.html", text: "Pilot Overview", quiet: true },
+    { href: "project-status.html", text: "Project Status", quiet: true },
     { href: "us.html", text: "US Campaign", quiet: true },
     { href: "au.html", text: "Australia Campaign", quiet: true },
-    { href: "landing-pages.html", text: "Landing Pages", quiet: true },
-    { href: "tracking.html", text: "Tracking", quiet: true },
-    { href: "lead-routing.html", text: "Lead Routing", quiet: true },
+    { href: "keyword-strategy.html", text: "Keyword Strategy", quiet: true },
+    { href: "clean-rebuild.html", text: "Clean Rebuild docs", quiet: true },
     { href: "results.html", text: "Results", quiet: true },
     { href: "later.html", text: "Later Phases", quiet: true },
     { href: "archive/findings.html", text: "Archive notes", quiet: true }
@@ -28,7 +27,7 @@
     (location.pathname.split("/").pop() || "launch-control.html");
   var foot =
     body.getAttribute("data-foot") ||
-    "Stage 1 · US + AU employers<br />Paused until checklist green";
+    "Stage 1 · US + AU employers<br />Work the Checklist";
 
   function pageOf(href) {
     var base = (href || "").split("#")[0].split("/").pop();
@@ -47,6 +46,13 @@
     var itemPage = pageOf(item.href);
     var curPage = pageOf(current);
     if (itemPage === curPage || item.href === current) cls.push("active");
+    /* Treat old checklist aliases as Checklist active state */
+    if (
+      itemPage === "launch-control" &&
+      (curPage === "launch-checklist" || curPage === "checklist" || curPage === "action")
+    ) {
+      cls.push("active");
+    }
     return (
       '<a class="' +
       cls.join(" ") +
@@ -65,22 +71,17 @@
     '<img class="brand-mark" src="' +
     logoSrc +
     '" width="168" height="52" alt="Virtual Coworker" />' +
-    '<p class="name">Stage 1 launch</p>' +
+    '<p class="name">Stage 1 checklist</p>' +
     '<p class="sub">US + AU · employer Search</p>' +
     "</div>" +
     '<nav class="nav" aria-label="Primary">';
 
-  var inDocs = false;
-  var docsOpen =
-    typeof window.matchMedia === "function" &&
-    window.matchMedia("(min-width: 821px)").matches;
+  var inArchive = false;
   ITEMS.forEach(function (item) {
     if (item.label) {
-      if (inDocs) html += "</div></details>";
+      if (inArchive) html += "</div></details>";
       html +=
-        '<details class="nav-docs"' +
-        (docsOpen ? " open" : "") +
-        ">" +
+        '<details class="nav-docs">' +
         "<summary>" +
         item.label +
         "</summary>" +
@@ -88,12 +89,12 @@
         '<p class="nav-label">' +
         item.label +
         "</p>";
-      inDocs = true;
+      inArchive = true;
       return;
     }
     html += linkHtml(item);
   });
-  if (inDocs) html += "</div></details>";
+  if (inArchive) html += "</div></details>";
 
   html += "</nav>" + '<div class="side-foot">' + foot + "</div>";
   host.innerHTML = html;

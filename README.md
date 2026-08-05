@@ -18,27 +18,23 @@ Local (port **8766**):
 open -a "Google Chrome" http://127.0.0.1:8766/
 ```
 
-Deployed: https://vc-xray.vercel.app
+Deployed: **https://vc-xray.vercel.app** → opens the **Checklist** (Launch Control).
 
 Landing page concepts: https://vision-three-alpha.vercel.app/us · [/au](https://vision-three-alpha.vercel.app/au)
 
 ---
 
-## Navigation
+## Navigation (Stage 1)
 
 | Page | Job |
 |------|-----|
-| Pilot Overview | Objective, status, contacts, blockers, next three actions |
-| Launch Checklist | Reduced onboarding — launch blockers only |
-| US / Australia Campaign | Smallest credible Search structure |
-| Landing Pages | Microsite URLs in scope for the pilot |
-| Keywords | Strategy · page map · job-seeker negatives |
-| Tracking | Minimal events + temp GTM/GA4 |
-| Lead Routing | Email-first fallback; Zoho optional |
-| Results | Honest empty KPIs until live |
-| Later Phases | Phase 2/3 + after-validation access |
+| **Checklist** (`/launch-control`) | **THE work list** — next action, Ads steps, gates, domain buy |
+| LP previews | Microsite URLs |
+| Lead Routing | Email/webhook Stage 1 |
+| Tracking | Minimal events |
+| Archive (collapsed) | Overview, campaign pages, keywords, rebuild docs, later |
 
-Archive (site research for VC’s web team): `xray/archive/`
+Old checklist / overview URLs redirect to `/launch-control`.
 
 ---
 
