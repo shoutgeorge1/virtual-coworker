@@ -10,59 +10,164 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
 </head>
-<body data-page="lead-routing.html" data-foot="Email first<br />Zoho later">
+<body data-page="lead-routing.html" data-foot="Stage 1 · email/webhook<br />Zoho when access confirmed">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">After someone fills the form</p>
+        <p class="kicker">After someone fills the form or calls</p>
         <h1>Lead Routing</h1>
         <p>
-          Employer fills the form (or calls) → the lead reaches the right US or AU team. Zoho can be added after launch.
+          Employer form or qualified call → secure delivery → your team works it.
+          Paid pages do <strong>not</strong> depend on WordPress / Gravity Forms.
         </p>
       </header>
 
       <div class="notice">
         <p>
-          Stage 1 needs a confirmed <strong>US and AU lead inbox or webhook</strong>.
-          Zoho API access is optional later for job-order and placement feedback — it does not block launch.
+          <strong>Stage 1 primary conversions:</strong> employer form submissions + qualified phone calls.
+          Do not initially optimize Ads around job orders/placements — need clean lead data first.
+          Later: Zoho → Ads so campaigns learn which leads produce business.
+          Zoho does not block Stage 1 email/webhook launch.
         </p>
       </div>
+
+      <section class="panel" id="prior-problems">
+        <div class="panel-hd">
+          <p class="kicker">Why Stage 1 is strict</p>
+          <h2>Previous lead-quality problems</h2>
+        </div>
+        <div class="panel-bd">
+          <p style="margin-top:0;font-size:0.92rem">
+            Prior agency traffic produced poor leads. Percentages may overlap — not mutually exclusive:
+          </p>
+          <ul class="glance-bullets">
+            <li>Unsuitable / new businesses with no relevant staffing need</li>
+            <li>~20% job seekers (including PH applicants)</li>
+            <li>~10–15% spam</li>
+          </ul>
+          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
+            Diagnosis: optimizing easy form submits vs downstream outcomes.
+            Stage 1 needs employer-only messaging, strong job-seeker exclusions, spam protection,
+            business qualification fields (recommended — see checklist), search-term monitoring,
+            and sales lead-quality feedback.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel" id="phones">
+        <div class="panel-hd">
+          <p class="kicker">Confirmed · unresolved</p>
+          <h2>Phone routing</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>
+              <strong>NA destination (confirmed):</strong>
+              <code>310-426-8776</code> — Raffie/Raffy (PH) manages/answers.
+              Do not replace or port this number.
+            </li>
+            <li>
+              <strong>AU (unresolved):</strong>
+              No new paid-media AU number confirmed. Use only the official approved number
+              already on the AU website. Final AU number = open launch item.
+            </li>
+            <li>
+              <strong>CallRail:</strong>
+              Later — tracking numbers forward to existing destinations; AU local tracking eventually.
+              Not fake-operational now. Approval/ownership still open.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="form-crm">
+        <div class="panel-hd">
+          <p class="kicker">Forms + CRM</p>
+          <h2>How paid leads should travel</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>
+              <strong>WordPress + Gravity Forms</strong> = existing site process only.
+              Paid microsite pages must not depend on WP/GF.
+            </li>
+            <li>
+              <strong>Preferred (when Zoho access confirmed):</strong>
+              new LP form → secure server-side → direct Zoho CRM + success/fail +
+              backup notify/webhook if Zoho is down. No browser credentials.
+            </li>
+            <li>
+              <strong>Do not build final Zoho</strong> until access, modules, fields,
+              mappings, ownership, and API are confirmed.
+            </li>
+            <li>
+              <strong>Stage 1 launch fallback:</strong>
+              email and/or webhook is acceptable. Capture GCLID / GBRAID / WBRAID /
+              UTMs / LP URL / timestamp on every lead.
+            </li>
+          </ul>
+        </div>
+      </section>
 
       <section class="panel" id="flow">
         <div class="panel-hd">
           <p class="kicker">Path</p>
-          <h2>What happens</h2>
+          <h2>What happens (Stage 1)</h2>
         </div>
         <div class="panel-bd">
           <ol class="next-five">
             <li>
-              <strong>They submit the form</strong>
-              <span>Or click to call.</span>
+              <strong>They submit the employer form or call</strong>
+              <span>Job-seeker path must not count as an Ads conversion.</span>
             </li>
             <li>
-              <strong>Lead goes to the US or AU team</strong>
-              <span>Use a market-specific inbox or webhook at launch; Zoho can be added later.</span>
+              <strong>Secure server accepts the lead</strong>
+              <span>Then email/webhook (Stage 1). Zoho push later when access is real.</span>
             </li>
             <li>
-              <strong>Source info travels with it</strong>
-              <span>Which ad / keyword / page — so we know what worked.</span>
+              <strong>Attribution travels with it</strong>
+              <span>GCLID / GBRAID / WBRAID · UTMs · LP · timestamp — so offline import can work later.</span>
             </li>
             <li>
               <strong>Your team responds</strong>
-              <span>Weekly: tell George which leads were good or junk.</span>
+              <span>Owner + SLA still unresolved. Lead-quality: Caitlin, Cheyenne (LA), Pauly.</span>
             </li>
             <li>
-              <strong>Later: job order &amp; placement</strong>
-              <span>When those stages are marked in Zoho, we can optimize Ads to them.</span>
+              <strong>Later: job order &amp; placement → Ads</strong>
+              <span>Estimate ranges only until approved: order ~$200–$400 · placement ~$500–$800.</span>
             </li>
           </ol>
         </div>
       </section>
 
+      <section class="panel" id="people">
+        <div class="panel-hd">
+          <p class="kicker">People</p>
+          <h2>Routing &amp; quality contacts</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li><strong>Caitlin</strong> — ops + lead-quality; may start maternity leave anytime</li>
+            <li><strong>Braden</strong> — expected day-to-day takeover while Caitlin is out</li>
+            <li><strong>Raffie/Raffy</strong> — PH · Zoho + NA phone</li>
+            <li><strong>Cheyenne</strong> — lead-quality (Los Angeles)</li>
+            <li><strong>Pauly</strong> — lead-quality</li>
+            <li><strong>Essa</strong> — AI and internship initiatives</li>
+            <li><strong>Dev team</strong> — contact + hours still needed</li>
+          </ul>
+          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
+            Communication: overseas team, email delayed by TZ, prefers chat.
+            Identify official chat platform, invite George, confirm notifications.
+            Open items list: <a href="launch-checklist">Launch Checklist</a>.
+          </p>
+        </div>
+      </section>
+
       <div class="actions">
-        <a class="btn btn-primary" href="launch-checklist">What we need</a>
+        <a class="btn btn-primary" href="launch-checklist">Launch Checklist</a>
+        <a class="btn" href="tracking.html">Tracking</a>
         <a class="btn" href="results.html">Results</a>
       </div>
     </main>

@@ -10,20 +10,206 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
   <style>
-    .lc-status { display:flex; flex-wrap:wrap; gap:0.75rem; margin:1rem 0 1.5rem; }
-    .lc-pill { display:inline-flex; align-items:center; gap:0.4rem; padding:0.35rem 0.75rem; border-radius:999px; font-size:0.85rem; font-weight:600; border:1px solid var(--edge); background:var(--panel); }
-    .lc-pill.ok { background:var(--tint-green); border-color:var(--tint-green-edge); color:var(--ok); }
-    .lc-pill.blocked { background:var(--tint-rose); border-color:var(--tint-rose-edge); color:var(--bad); }
-    .lc-pill.warn { background:var(--tint-amber); border-color:var(--tint-amber-edge); color:var(--warn); }
-    .lc-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-    @media (max-width:860px){ .lc-grid{ grid-template-columns:1fr; } }
-    .lc-seq { counter-reset: step; list-style:none; padding:0; margin:0; }
-    .lc-seq li { counter-increment: step; display:grid; grid-template-columns:2rem 1fr; gap:0.75rem; padding:0.65rem 0; border-bottom:1px solid var(--edge-soft); }
-    .lc-seq li::before { content: counter(step); font-family:var(--mono); font-size:0.8rem; font-weight:600; color:var(--muted); }
-    .approval-fields { display:grid; gap:0.6rem; }
-    .approval-fields label { display:grid; gap:0.25rem; font-size:0.85rem; color:var(--muted); }
-    .approval-fields input { font:inherit; padding:0.55rem 0.7rem; border:1px solid var(--edge); border-radius:8px; background:var(--panel); }
-    .tech-link { margin-top:2rem; padding:1rem; background:var(--tint-cool); border:1px solid var(--tint-cool-edge); border-radius:10px; }
+    .page-head { margin-bottom: 0.95rem; padding-bottom: 0.8rem; }
+    .page-head h1 { font-size: 1.45rem; }
+    .page-head p { font-size: 0.94rem; }
+    .lc-next {
+      margin: 0 0 0.9rem;
+      padding: 0.85rem 1rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--tint-rose-edge);
+      background: var(--tint-rose);
+    }
+    .lc-next .lbl {
+      margin: 0 0 0.25rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9f2d2d;
+    }
+    .lc-next p {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+    .lc-next .sub {
+      margin: 0.35rem 0 0;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .lc-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 0 0 1.15rem;
+    }
+    @media (max-width: 760px) {
+      .lc-board { grid-template-columns: 1fr; }
+    }
+    .lc-bucket {
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      overflow: hidden;
+      min-width: 0;
+    }
+    .lc-bucket-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.55rem 0.85rem;
+      border-bottom: 1px solid var(--edge-soft);
+    }
+    .lc-bucket-hd h2 {
+      margin: 0;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+    .lc-bucket.ok .lc-bucket-hd { background: var(--tint-green-hd); border-color: var(--tint-green-edge); }
+    .lc-bucket.block .lc-bucket-hd { background: var(--tint-rose-hd); border-color: var(--tint-rose-edge); }
+    .lc-bucket.george .lc-bucket-hd { background: var(--tint-amber-hd); border-color: var(--tint-amber-edge); }
+    .lc-bucket.vc .lc-bucket-hd { background: var(--tint-cool-hd); border-color: var(--tint-cool-edge); }
+    .lc-bucket ul {
+      list-style: none;
+      margin: 0;
+      padding: 0.35rem 0.85rem 0.7rem;
+    }
+    .lc-bucket li {
+      padding: 0.42rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--body);
+      overflow-wrap: anywhere;
+    }
+    .lc-bucket li:last-child { border-bottom: none; }
+    .lc-bucket li strong { color: var(--ink); }
+    .lc-gates { margin: 0; padding: 0; list-style: none; }
+    .lc-gates li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.45rem 0.7rem;
+      align-items: start;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+    }
+    .lc-gates li:last-child { border-bottom: none; }
+    .lc-gates .gate-body { min-width: 0; }
+    .lc-gates .gate-body strong {
+      display: block;
+      font-size: 0.96rem;
+      color: var(--ink);
+    }
+    .lc-gates .gate-body span {
+      display: block;
+      margin-top: 0.15rem;
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+    .lc-open {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .lc-open li {
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .lc-fold {
+      margin-top: 0.85rem;
+      border: 1px solid var(--edge);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .lc-fold > summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem 0.75rem;
+      padding: 0.7rem 1rem;
+      background: var(--panel-inset);
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .lc-fold > summary::-webkit-details-marker { display: none; }
+    .lc-fold > summary::after {
+      content: "+";
+      font-family: var(--mono);
+      font-size: 1rem;
+      color: var(--dim);
+    }
+    .lc-fold[open] > summary::after { content: "−"; }
+    .lc-fold > summary .hint {
+      font-weight: 400;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .lc-fold .fold-bd {
+      padding: 0.75rem 1rem 1rem;
+      border-top: 1px solid var(--edge-soft);
+    }
+    .lc-seq { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+    .lc-seq li {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 1.6rem 1fr;
+      gap: 0.55rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--body);
+    }
+    .lc-seq li:last-child { border-bottom: none; }
+    .lc-seq li::before {
+      content: counter(step);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .lc-markets {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    @media (max-width: 760px) {
+      .lc-markets { grid-template-columns: 1fr; }
+    }
+    .lc-markets h3 {
+      margin: 0 0 0.4rem;
+      font-size: 0.95rem;
+    }
+    .page-head p { overflow-wrap: anywhere; }
+    .tech-link {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: var(--tint-cool);
+      border: 1px solid var(--tint-cool-edge);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--body);
+    }
   </style>
 </head>
 <body data-page="launch-control.html" data-foot="Stage 1 · smallest safe paid machine<br />Paused import until checklist green">
@@ -35,125 +221,189 @@
         <p class="kicker">Stage 1 · USA + Australia only</p>
         <h1>Launch Control</h1>
         <p>
-          Google Ads → independent microsite. WordPress stays as-is (not the paid destination).
-          One place for ready/blocked, approvals, and the sequence to first controlled employer impressions.
+          Paid Search → independent microsite. WordPress unchanged (not the Final URL).
+          Command screen for ready / blocked / who waits / next action.
         </p>
       </header>
 
-      <div class="lc-status" id="status-pills">
-        <span class="lc-pill ok">MCC link — accepted (verify Admin in-account)</span>
-        <span class="lc-pill ok">US/AU LPs — built (vision)</span>
-        <span class="lc-pill ok">Editor CSV — paused import ready</span>
-        <span class="lc-pill warn">Pilot payment — in transit to George</span>
-        <span class="lc-pill warn">Budgets/CPC — approval placeholders</span>
-        <span class="lc-pill warn">Phones / lead delivery — config required</span>
+      <div class="lc-next" id="next-action">
+        <p class="lbl">Exact next action</p>
+        <p>
+          Verify Admin inside USA <code>496-715-1855</code> and AU <code>573-539-1940</code>
+        </p>
+        <p class="sub">MCC Accept is done. Admin in each account is still required before Editor download / enable.</p>
       </div>
 
-      <section class="panel">
+      <div class="lc-board" id="status-board">
+        <section class="lc-bucket ok" aria-labelledby="ready-hd">
+          <div class="lc-bucket-hd">
+            <h2 id="ready-hd">Ready now</h2>
+            <span class="st st-ready">Done</span>
+          </div>
+          <ul>
+            <li><strong>MCC Accept</strong> — linked under Shout George</li>
+            <li><strong>US / AU LPs</strong> — vision preview built</li>
+            <li><strong>Editor CSV</strong> — paused import package ready</li>
+            <li><strong>Path</strong> — Ads → microsite (WP not destination)</li>
+            <li><strong>NA phone dest</strong> — <code>310-426-8776</code> (Raffie/Raffy; do not port)</li>
+          </ul>
+        </section>
+
+        <section class="lc-bucket block" aria-labelledby="block-hd">
+          <div class="lc-bucket-hd">
+            <h2 id="block-hd">Blocking launch</h2>
+            <span class="st st-blocked">Blocked</span>
+          </div>
+          <ul>
+            <li><strong>Ads Admin</strong> — verify in USA + AU accounts</li>
+            <li><strong>AU phone + lead delivery</strong> — NA dest confirmed; AU + inbox open</li>
+            <li><strong>Budgets + Max CPC</strong> — not approved</li>
+            <li><strong>Final host + LP QA</strong> — host + forms not locked</li>
+            <li><strong>Editor import</strong> — stays paused until human approval</li>
+          </ul>
+        </section>
+
+        <section class="lc-bucket george" aria-labelledby="george-hd">
+          <div class="lc-bucket-hd">
+            <h2 id="george-hd">Waiting for George</h2>
+            <span class="st st-access">George</span>
+          </div>
+          <ul>
+            <li>Verify Admin in USA + AU</li>
+            <li>Approve budgets + Max CPC ceilings</li>
+            <li>Confirm paid host Final URL</li>
+            <li>Confirm payment-cleared date when bank shows it</li>
+            <li>Decide legacy <code>PM_*</code> disposition</li>
+            <li>Review paused Editor import before any enable</li>
+          </ul>
+        </section>
+
+        <section class="lc-bucket vc" aria-labelledby="vc-hd">
+          <div class="lc-bucket-hd">
+            <h2 id="vc-hd">Waiting for Virtual Coworker</h2>
+            <span class="st st-progress">VC</span>
+          </div>
+          <ul>
+            <li>AU phone (official AU-site number) — NA dest <code>310-426-8776</code> confirmed</li>
+            <li>Lead inbox / webhook per market (email OK for Stage 1)</li>
+            <li><strong>Pilot payment — IN TRANSIT</strong> (not unpaid; not cleared)</li>
+            <li>Chat platform + George invite · lead-quality feedback path</li>
+            <li>Live remnant spend visibility (after Admin)</li>
+          </ul>
+        </section>
+      </div>
+
+      <section class="panel" id="gates">
         <div class="panel-hd">
-          <p class="kicker">Markets</p>
-          <h2>US + AU config</h2>
+          <p class="kicker">Five gates</p>
+          <h2>Must clear before spend</h2>
         </div>
-        <div class="panel-bd lc-grid">
+        <div class="panel-bd">
+          <ol class="lc-gates">
+            <li>
+              <span class="st st-blocked">Open</span>
+              <div class="gate-body">
+                <strong>Ads Admin verified</strong>
+                <span>Confirm Admin inside USA <code>496-715-1855</code> + AU <code>573-539-1940</code> (separate from MCC Accept).</span>
+              </div>
+            </li>
+            <li>
+              <span class="st st-blocked">Open</span>
+              <div class="gate-body">
+                <strong>Phones + lead delivery filled</strong>
+                <span>NA dest <code>310-426-8776</code> confirmed (Raffie/Raffy; do not port). Still need AU official number + lead email/webhook. Stage 1 conversions = employer forms + qualified calls — not job orders. Zoho / CallRail / offline values = later. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
+              </div>
+            </li>
+            <li>
+              <span class="st st-blocked">Open</span>
+              <div class="gate-body">
+                <strong>Budgets + CPC ceilings approved</strong>
+                <span>Placeholders only until George signs off: <code>[APPROVAL_DAILY_BUDGET_USD]</code> · <code>[APPROVAL_DAILY_BUDGET_AUD]</code> · <code>[APPROVAL_MAX_CPC]</code>.</span>
+              </div>
+            </li>
+            <li>
+              <span class="st st-access">Open</span>
+              <div class="gate-body">
+                <strong>LPs + forms validated on final host</strong>
+                <span>Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. Lock Final URL host, then employer gate / thank-you / dedupe QA.</span>
+              </div>
+            </li>
+            <li>
+              <span class="st st-access">Paused</span>
+              <div class="gate-body">
+                <strong>Paused Editor import reviewed</strong>
+                <span>CSV ready in <code>ads-launch/</code>. Import and enable only after human approval — stays paused until then.</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="panel" id="open-items">
+        <div class="panel-hd">
+          <p class="kicker">Still open</p>
+          <h2>Decisions + inputs</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="lc-open">
+            <li>Budgets</li>
+            <li>Max CPC</li>
+            <li>AU phone</li>
+            <li>Lead inbox/webhook</li>
+            <li>Final host</li>
+            <li>Payment-cleared date</li>
+            <li>Legacy PM_* disposition</li>
+            <li>Zoho access</li>
+            <li>Lead owner / SLA</li>
+            <li>Qual definitions</li>
+            <li>Chat platform</li>
+            <li>CallRail ownership</li>
+            <li>Offline $ values</li>
+          </ul>
+        </div>
+      </section>
+
+      <details class="lc-fold" id="markets">
+        <summary>
+          Markets · US + AU
+          <span class="hint">Accounts · campaigns · preview LPs</span>
+        </summary>
+        <div class="fold-bd lc-markets">
           <div>
-            <h3 style="margin-top:0">United States</h3>
+            <h3>United States</h3>
             <ul class="glance-bullets">
               <li>Account <code>496-715-1855</code></li>
               <li>Campaigns: <code>VC_US_S_BRAND</code> · <code>VC_US_S_CORE_hire_va</code></li>
               <li>Role campaigns: held for evidence</li>
               <li>LP: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us preview</a></li>
-              <li>Phone env: <code>NEXT_PUBLIC_US_PHONE</code> → <code>[US_BUSINESS_PHONE]</code></li>
-              <li>Lead env: <code>LEAD_EMAIL_US</code> or webhook</li>
+              <li>Phone dest: <code>310-426-8776</code> (confirmed; Raffie/Raffy PH — CallRail later)</li>
+              <li>Lead: <code>LEAD_EMAIL_US</code> or webhook (Stage 1); Zoho when access confirmed</li>
             </ul>
           </div>
           <div>
-            <h3 style="margin-top:0">Australia</h3>
+            <h3>Australia</h3>
             <ul class="glance-bullets">
               <li>Account <code>573-539-1940</code></li>
               <li>Campaigns: <code>VC_AU_S_BRAND</code> · <code>VC_AU_S_CORE_hire_va</code></li>
               <li>Role campaigns: held for evidence</li>
               <li>LP: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au preview</a></li>
-              <li>Phone env: <code>NEXT_PUBLIC_AU_PHONE</code> → <code>[AU_BUSINESS_PHONE]</code></li>
-              <li>Lead env: <code>LEAD_EMAIL_AU</code> or webhook</li>
+              <li>Phone: official AU-site number only — <code>[AU_BUSINESS_PHONE]</code> unresolved</li>
+              <li>Lead: <code>LEAD_EMAIL_AU</code> or webhook (Stage 1)</li>
             </ul>
           </div>
         </div>
-      </section>
+      </details>
 
-      <section class="panel">
-        <div class="panel-hd">
-          <p class="kicker">Validation</p>
-          <h2>Tracking + form routing</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="glance-bullets">
-            <li><strong>Gate:</strong> “I’m hiring staff for a business.” → form · “I’m looking for a job.” → careers (no employer conversion)</li>
-            <li><strong>Primary-eligible event:</strong> <code>employer_form_valid_submit</code> only after server accept · deduped by submission id</li>
-            <li><strong>Diagnostics:</strong> <code>employer_gate_pass</code> · <code>job_seeker_redirect</code> · <code>employer_form_start</code> · <code>phone_click</code> · <code>spam_or_applicant_rejected</code></li>
-            <li><strong>Attribution preserved:</strong> gclid · gbraid · wbraid · UTMs · lp_version · market · referrer</li>
-            <li><strong>Do not block launch on:</strong> Zoho · CallRail · offline conversions</li>
-            <li><strong>No production GTM publish required</strong> for LP QA — dataLayer only until George maps events</li>
-          </ul>
-          <p class="lede"><strong>George validation (5 min):</strong> open LP with test UTMs + fake gclid → choose employer → fill form slowly → confirm thank-you + <code>employer_form_valid_submit</code> once → refresh thank-you (no second primary) → choose job seeker (careers, no primary).</p>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-hd">
-          <p class="kicker">Ads</p>
-          <h2>Settings + approval fields</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="glance-bullets">
-            <li>Search only · Max Clicks · Exact (+ limited Phrase on CORE) · Presence geo · partners/Display off</li>
-            <li>Final URLs → Stage 1 LPs (not WP) · no WP sitelink sprawl in package</li>
-            <li>Import: <code>ads-launch/google-ads-editor-import.csv</code> · sheet: <code>ads-launch/LAUNCH-SHEET.md</code></li>
-            <li><strong>Fact:</strong> current Enabled brand RSAs in Editor exports → WP, not try.* (try.* paused / AU disapproved)</li>
-          </ul>
-          <div class="approval-fields" style="margin-top:1rem">
-            <label>US daily budget (approval)
-              <input type="text" placeholder="[APPROVAL_DAILY_BUDGET_USD]" readonly />
-            </label>
-            <label>AU daily budget (approval)
-              <input type="text" placeholder="[APPROVAL_DAILY_BUDGET_AUD]" readonly />
-            </label>
-            <label>Max CPC limit (approval)
-              <input type="text" placeholder="[APPROVAL_MAX_CPC]" readonly />
-            </label>
-            <label>Paid host Final URL (approval)
-              <input type="text" value="https://vision-three-alpha.vercel.app/{us|au}" readonly />
-            </label>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-hd">
-          <p class="kicker">Access required</p>
-          <h2>Before spend</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="glance-bullets">
-            <li>MCC link accepted (Shout George <code>119-318-9031</code>) — verify Admin inside USA + AU accounts</li>
-            <li>George Editor download of USA + AU only</li>
-            <li>VC: business phones, lead inbox/webhook, careers URL if not <code>/ph</code></li>
-            <li>George: budget/CPC approval + confirm paid host</li>
-            <li>Pilot payment in transit (confirm when cleared)</li>
-            <li>Optional later: Turnstile keys · GTM map · CallRail · Zoho</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-hd">
-          <p class="kicker">Go sequence</p>
-          <h2>Exact launch sequence (15)</h2>
-        </div>
-        <div class="panel-bd">
+      <details class="lc-fold" id="sequence">
+        <summary>
+          Launch sequence (15)
+          <span class="hint">Collapsed — expand when executing</span>
+        </summary>
+        <div class="fold-bd">
           <ol class="lc-seq">
             <li>Confirm USA + AU visible under MCC; verify Admin inside each account.</li>
             <li>Set vision env: phones, lead delivery, careers URL; redeploy vision.</li>
-            <li>Run George LP validation procedure (gate / job / thank-you / dedupe).</li>
+            <li>Run George LP validation (gate / job seeker / thank-you / dedupe).</li>
             <li>Download USA + AU into clean Google Ads Editor.</li>
             <li>Decide: pause legacy <code>PM_*</code> museum Search before v1 enable (recommended).</li>
             <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused).</li>
@@ -168,43 +418,42 @@
             <li>Stop conditions → pause CORE first, then Brand if needed.</li>
           </ol>
         </div>
-      </section>
+      </details>
 
-      <section class="panel">
-        <div class="panel-hd">
-          <p class="kicker">Operate</p>
-          <h2>72h monitoring + stop conditions</h2>
-        </div>
-        <div class="panel-bd lc-grid">
+      <details class="lc-fold" id="operate">
+        <summary>
+          72h watch + stop conditions
+          <span class="hint">After enable</span>
+        </summary>
+        <div class="fold-bd lc-markets">
           <div>
-            <h3 style="margin-top:0">Watch</h3>
+            <h3>Watch</h3>
             <ul class="glance-bullets">
               <li>Search terms → add negatives fast</li>
               <li>Job-seeker / spam reject rate</li>
-              <li>Valid employer submits (server ok)</li>
+              <li>Valid employer submits + qualified calls (Stage 1 primaries)</li>
               <li>CPC vs approval max</li>
               <li>LP Final URL matches Stage 1 only</li>
+              <li>Sales lead-quality feedback (Caitlin / Cheyenne / Pauly)</li>
             </ul>
           </div>
           <div>
-            <h3 style="margin-top:0">Stop / pause if</h3>
+            <h3>Stop / pause if</h3>
             <ul class="glance-bullets">
               <li>Majority clicks are job/career queries</li>
               <li>Form path fires without server accept</li>
-              <li>Spend without any employer inquiries + no fixable query issue</li>
+              <li>Spend without employer inquiries + no fixable query issue</li>
               <li>Wrong Final URL / WP spray reappears</li>
               <li>Approval budget overrun without George OK</li>
             </ul>
           </div>
         </div>
-      </section>
+      </details>
 
       <div class="tech-link">
-        <strong>Technical documentation</strong> (secondary) —
-        <a href="clean-rebuild.html">Clean Rebuild package</a> ·
-        <a href="docs/rebuild/README.md">rebuild docs</a> ·
-        <a href="docs/ads-launch/LAUNCH-SHEET.md">Ads launch sheet</a> ·
-        <a href="docs/ads-launch/IMPLEMENTATION-REPORT.md">Implementation report</a>
+        <strong>Technical documentation</strong> —
+        <a href="clean-rebuild.html">Clean Rebuild package</a>
+        <span class="muted"> (secondary; rebuild docs, launch sheet, implementation notes)</span>
       </div>
     </main>
   </div>

@@ -70,13 +70,30 @@
     "</div>" +
     '<nav class="nav" aria-label="Primary">';
 
+  var inDocs = false;
+  var docsOpen =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(min-width: 821px)").matches;
   ITEMS.forEach(function (item) {
     if (item.label) {
-      html += '<p class="nav-label">' + item.label + "</p>";
+      if (inDocs) html += "</div></details>";
+      html +=
+        '<details class="nav-docs"' +
+        (docsOpen ? " open" : "") +
+        ">" +
+        "<summary>" +
+        item.label +
+        "</summary>" +
+        '<div class="nav-docs-body">' +
+        '<p class="nav-label">' +
+        item.label +
+        "</p>";
+      inDocs = true;
       return;
     }
     html += linkHtml(item);
   });
+  if (inDocs) html += "</div></details>";
 
   html += "</nav>" + '<div class="side-foot">' + foot + "</div>";
   host.innerHTML = html;

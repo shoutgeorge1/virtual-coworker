@@ -9,21 +9,25 @@ Answer one question: **Can Google Search generate qualified US and Australian em
 - Google Search Ads for US and Australia employers
 - Independently hosted Next.js microsite (Vercel)
 - US and AU landing pages, form, thank-you, privacy
-- UTM + GCLID capture
+- Stage 1 primary conversions: employer form submissions + qualified phone calls
+- UTM + GCLID / GBRAID / WBRAID capture
 - Temporary GTM + GA4 (George-controlled)
-- Email-first lead delivery with optional spreadsheet backup
+- Email/webhook-first lead delivery with optional spreadsheet backup
 - Weekly lead-quality feedback loop
 - Basic Search optimization after launch
+- PH remote staffing themes (marketing, admin, finance, CS, HR, recruitment, sales)
 
 ## Out of scope (Phase 1)
 
-- Repairing or rebuilding Virtual Coworker WordPress sites
+- Repairing or rebuilding Virtual Coworker WordPress sites / Gravity Forms dependency for paid LPs
 - Existing GTM / GA4 / Search Console as launch dependencies
-- Full Zoho / CRM rebuild
+- Full Zoho / CRM rebuild (Zoho push only after access confirmed)
+- Medical staffing · Technology staffing · Spanish-language campaigns/claims
+- Optimizing Ads to job orders/placements before clean lead data exists
 - SEO expansion, blog, industry page farms
-- Remarketing, Customer Match, offline conversions (unless Phase 2)
+- Remarketing, Customer Match, offline conversions (unless later phase + approved values)
 - Custom client dashboards before traffic launches
-- PH recruiting campaigns unless they are part of paid Search
+- PH recruiting / job-seeker campaigns
 
 ## Commercial boundary
 
