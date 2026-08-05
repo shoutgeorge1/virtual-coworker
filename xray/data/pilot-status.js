@@ -193,7 +193,7 @@ window.PILOT_STATUS = {
     "Pilot payment clearing (on its way — not yet confirmed received)"
   ],
   nextThree: [
-    "Download USA/AU into Google Ads Editor (campaign list already pasted in chat Aug 5; Ads Standard via MCC confirmed)",
+    "Download USA/AU into Google Ads Editor (campaign view confirmed Aug 5; Ads Standard via MCC confirmed)",
     "Approve budgets/CPC + AU phone + lead inbox/webhook",
     "Import paused Stage 1 CSV → enable US Brand + CORE after LP validation"
   ],

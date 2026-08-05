@@ -243,7 +243,7 @@
         <h1>Checklist</h1>
         <p>
           Numbered steps below — do them in order. Tick each box as you finish.
-          When Ads asks you to show what’s live: copy the campaign list (or screenshot) and paste it into the Cursor chat — we update this checklist from that.
+          When we need a live Ads read, drop the campaign view in this thread — we update the board from that.
           Ads stay paused until the gates are clear. Ads go to the microsite, not WordPress.
         </p>
       </header>
@@ -272,21 +272,21 @@
               <input type="checkbox" id="ads2" data-todo="ads2" checked />
               <label for="ads2">
                 <strong>2. Open Google Ads and open the USA account</strong>
-                <span class="todo-hint">Done Aug 5. You opened USA <code>496-715-1855</code> and pasted the screen into the Cursor chat.</span>
+                <span class="todo-hint">Done Aug 5. USA <code>496-715-1855</code> confirmed in this thread.</span>
               </label>
             </li>
             <li data-order="3">
               <input type="checkbox" id="ads3" data-todo="ads3" checked />
               <label for="ads3">
-                <strong>3. Copy the USA campaign list (or screenshot) and paste it into the Cursor chat</strong>
-                <span class="todo-hint">Done Aug 5 — from your paste: only live/spending is <code>PM_US_RSA_Brand</code> (Search, Maximize conversions, $100/day, Enabled). Recent: about $39 cost, <strong>0 conversions</strong>. Everything else in view is paused old stuff (~50 campaigns). Ignore Google’s “Add broad match” nag for Stage 1.</span>
+                <strong>3. Share the USA campaign list in this thread</strong>
+                <span class="todo-hint">Done Aug 5 — from that view: only live/spending is <code>PM_US_RSA_Brand</code> (Search, Maximize conversions, $100/day, Enabled). Recent: about $39 cost, <strong>0 conversions</strong>. Everything else in view is paused old stuff (~50 campaigns). Ignore Google’s “Add broad match” nag for Stage 1.</span>
               </label>
             </li>
             <li data-order="4">
               <input type="checkbox" id="ads4" data-todo="ads4" checked />
               <label for="ads4">
-                <strong>4. Same for Australia — copy the campaign list (or screenshot) and paste it into the Cursor chat</strong>
-                <span class="todo-hint">Done Aug 5 — from your paste: only live is <code>PM_AU_RSA_Brand</code> (Search, Maximize conversions, $30/day, Eligible / Limited). Recent: about A$3 cost, <strong>0 conversions</strong>. Rest of the list is paused old stuff. Ignore Display→Demand Gen / ad blocker / passkey nags.</span>
+                <strong>4. Share the Australia campaign list in this thread</strong>
+                <span class="todo-hint">Done Aug 5 — from that view: only live is <code>PM_AU_RSA_Brand</code> (Search, Maximize conversions, $30/day, Eligible / Limited). Recent: about A$3 cost, <strong>0 conversions</strong>. Rest of the list is paused old stuff. Ignore Display→Demand Gen / ad blocker / passkey nags.</span>
               </label>
             </li>
             <li data-order="5">
@@ -368,7 +368,7 @@
             <li><strong>Budgets + Max CPC</strong> — not approved yet</li>
             <li><strong>Domain (~$10 on Vercel)</strong> — buy, then lock Final URLs</li>
             <li><strong>Editor import</strong> — stays paused until you say go</li>
-            <li><strong>Old Brand still spending</strong> — from your Aug 5 paste: <code>PM_US_RSA_Brand</code> (~$39) and <code>PM_AU_RSA_Brand</code> (A$3), Maximize conversions, 0 conversions. Recommend pause before or with the new import — you click pause in Ads; not from this page.</li>
+            <li><strong>Old Brand still spending</strong> — Aug 5 campaign view: <code>PM_US_RSA_Brand</code> (~$39) and <code>PM_AU_RSA_Brand</code> (A$3), Maximize conversions, 0 conversions. Recommend pause before or with the new import — you click pause in Ads; not from this page.</li>
           </ul>
         </section>
 
@@ -492,7 +492,7 @@
             <ul class="glance-bullets">
               <li>Account <code>496-715-1855</code></li>
               <li>Stage 1 campaigns (paused import): <code>VC_US_S_BRAND</code> · <code>VC_US_S_CORE_hire_va</code></li>
-              <li><strong>Still live (from your Aug 5 paste):</strong> <code>PM_US_RSA_Brand</code> — $100/day Max Conv, Enabled; ~$39 / 0 conv. Rest of list = paused (~50 in view).</li>
+              <li><strong>Still live (Aug 5 read):</strong> <code>PM_US_RSA_Brand</code> — $100/day Max Conv, Enabled; ~$39 / 0 conv. Rest of list = paused (~50 in view).</li>
               <li>LP: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us preview</a></li>
               <li>Phone dest: <code>310-426-8776</code> (confirmed; Raffie/Raffy PH — CallRail later)</li>
               <li>Lead: <code>LEAD_EMAIL_US</code> or webhook (Stage 1); Zoho when access confirmed</li>
@@ -503,7 +503,7 @@
             <ul class="glance-bullets">
               <li>Account <code>573-539-1940</code></li>
               <li>Stage 1 campaigns (paused import): <code>VC_AU_S_BRAND</code> · <code>VC_AU_S_CORE_hire_va</code></li>
-              <li><strong>Still live (from your Aug 5 paste):</strong> <code>PM_AU_RSA_Brand</code> — $30/day Max Conv, Eligible (Limited); A$3 / 0 conv. Rest of list = paused (~62 total).</li>
+              <li><strong>Still live (Aug 5 read):</strong> <code>PM_AU_RSA_Brand</code> — $30/day Max Conv, Eligible (Limited); A$3 / 0 conv. Rest of list = paused (~62 total).</li>
               <li>LP: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au preview</a></li>
               <li>Phone: official AU-site number only — <code>[AU_BUSINESS_PHONE]</code> unresolved</li>
               <li>Lead: <code>LEAD_EMAIL_AU</code> or webhook (Stage 1)</li>
@@ -522,7 +522,7 @@
             <li>Confirm USA + AU visible under MCC at Standard (done). Admin optional later — ask Braden when convenient.</li>
             <li>Set vision env: phones, lead delivery, careers URL; redeploy vision.</li>
             <li>Run George LP validation (gate / job seeker / thank-you / dedupe).</li>
-            <li>Open Google Ads → copy the campaign list (or screenshot) for USA + AU and paste into the Cursor chat. (Done Aug 5: US Brand live; AU Brand live/limited; rest paused.)</li>
+            <li>Confirm live campaigns for USA + AU in this thread. (Done Aug 5: US Brand live; AU Brand live/limited; rest paused.)</li>
             <li>Download USA + AU into Google Ads Editor. ← next</li>
             <li>Optional: pause old Brand campaigns in Ads if you want bleed stopped (you click; recommended before/with import).</li>
             <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused).</li>
