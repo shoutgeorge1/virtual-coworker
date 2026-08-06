@@ -45,8 +45,10 @@ export default async function ServicesPage({
           <img
             src="/brand/hero-hub-map-b.jpg"
             alt=""
-            width={1536}
-            height={1024}
+            width={3072}
+            height={2048}
+            decoding="async"
+            fetchPriority="high"
           />
         </div>
         <div className="micro-hero-veil" aria-hidden />

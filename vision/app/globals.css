@@ -2115,7 +2115,8 @@ a.gate-call:hover {
 .micro-hero--map {
   position: relative;
   max-width: none;
-  min-height: clamp(18rem, 42vw, 24rem);
+  /* Mid-size: between prior zoom-crop cover and tiny contain */
+  min-height: clamp(20.5rem, 50vw, 30rem);
   padding: clamp(2.75rem, 7vw, 5rem) var(--shell) clamp(2rem, 4vw, 3rem);
   overflow: hidden;
   isolation: isolate;
@@ -2132,16 +2133,40 @@ a.gate-call:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Soft edge vignette — keeps map present, eases into page chrome */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 5%, #000 90%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 5%, #000 90%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 
-/* Full map in frame — contain, no zoom-crop of continents */
+/* Gentle cover: fills stage without extreme continent crop */
 .micro-hero-map img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center center;
+  width: 108%;
+  height: 108%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center 48%;
   display: block;
   opacity: 1;
+  /* Crisp compositing — no blur filters / soft stacks */
+  image-rendering: high-quality;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Mild market framing — halfway from center vs prior hard crops */
+.micro-hero--us .micro-hero-map img {
+  object-position: 36% 48%;
+}
+
+.micro-hero--au .micro-hero-map img {
+  object-position: 64% 52%;
 }
 
 .micro-hero-veil {
@@ -2152,17 +2177,17 @@ a.gate-call:hover {
   background:
     linear-gradient(
       105deg,
-      rgba(12, 24, 38, 0.72) 0%,
-      rgba(12, 24, 38, 0.42) 32%,
-      rgba(12, 24, 38, 0.18) 58%,
-      rgba(12, 24, 38, 0.32) 100%
+      rgba(12, 24, 38, 0.78) 0%,
+      rgba(12, 24, 38, 0.45) 32%,
+      rgba(12, 24, 38, 0.16) 58%,
+      rgba(12, 24, 38, 0.3) 100%
     ),
     linear-gradient(
       to bottom,
-      rgba(12, 24, 38, 0.22) 0%,
+      rgba(12, 24, 38, 0.24) 0%,
       transparent 30%,
       transparent 58%,
-      rgba(12, 24, 38, 0.62) 100%
+      rgba(12, 24, 38, 0.64) 100%
     );
 }
 
@@ -2171,17 +2196,17 @@ a.gate-call:hover {
   background:
     linear-gradient(
       255deg,
-      rgba(12, 24, 38, 0.7) 0%,
-      rgba(12, 24, 38, 0.4) 34%,
-      rgba(12, 24, 38, 0.18) 58%,
-      rgba(12, 24, 38, 0.34) 100%
+      rgba(12, 24, 38, 0.76) 0%,
+      rgba(12, 24, 38, 0.42) 34%,
+      rgba(12, 24, 38, 0.16) 58%,
+      rgba(12, 24, 38, 0.32) 100%
     ),
     linear-gradient(
       to bottom,
-      rgba(12, 24, 38, 0.24) 0%,
+      rgba(12, 24, 38, 0.26) 0%,
       transparent 30%,
       transparent 58%,
-      rgba(12, 24, 38, 0.64) 100%
+      rgba(12, 24, 38, 0.66) 100%
     );
 }
 
@@ -2227,7 +2252,20 @@ a.gate-call:hover {
 
 @media (max-width: 700px) {
   .micro-hero--map {
-    min-height: clamp(15.5rem, 72vw, 20rem);
+    min-height: clamp(17.5rem, 76vw, 23rem);
+  }
+
+  .micro-hero-map img {
+    width: 112%;
+    height: 112%;
+  }
+
+  .micro-hero--us .micro-hero-map img {
+    object-position: 34% 46%;
+  }
+
+  .micro-hero--au .micro-hero-map img {
+    object-position: 66% 50%;
   }
 
   .micro-hero-veil,
@@ -2235,16 +2273,16 @@ a.gate-call:hover {
     background:
       linear-gradient(
         180deg,
-        rgba(12, 24, 38, 0.48) 0%,
-        rgba(12, 24, 38, 0.28) 36%,
-        rgba(12, 24, 38, 0.5) 68%,
-        rgba(12, 24, 38, 0.72) 100%
+        rgba(12, 24, 38, 0.55) 0%,
+        rgba(12, 24, 38, 0.32) 36%,
+        rgba(12, 24, 38, 0.55) 68%,
+        rgba(12, 24, 38, 0.78) 100%
       ),
       linear-gradient(
         105deg,
-        rgba(12, 24, 38, 0.58) 0%,
-        rgba(12, 24, 38, 0.28) 55%,
-        rgba(12, 24, 38, 0.42) 100%
+        rgba(12, 24, 38, 0.62) 0%,
+        rgba(12, 24, 38, 0.3) 55%,
+        rgba(12, 24, 38, 0.45) 100%
       );
   }
 }
