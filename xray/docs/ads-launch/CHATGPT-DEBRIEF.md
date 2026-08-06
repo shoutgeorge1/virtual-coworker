@@ -6,7 +6,7 @@
 |-------|-------|
 | Generated | 2026-08-06 (sequencing lock addendum) |
 | Branch | `vision-demo` |
-| Commit SHA | *(see `git rev-parse HEAD` after commit)* |
+| Commit SHA | `a52417b9d6d498f782051a5e5446d8cff72a0bec` |
 | Prior isolation SHA | `7b703c5` · Editor P0 `9cd37d0` |
 | Repo | `/Users/george/Developer/virtual-coworker` |
 | Package | `lp_version=stage1-v7` · Editor hygiene + isolation + Phase 1 manifests |
