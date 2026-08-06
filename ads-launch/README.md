@@ -25,4 +25,5 @@ Short index: [`FULL-BUILD-REPORT.md`](./FULL-BUILD-REPORT.md)
 | 12 | [12-blocker-decision-list.md](./12-blocker-decision-list.md) |
 
 Rebuild CSV: `python3 ads-launch/build_stage1_editor_package.py`  
+X-ray Ads package page only: `python3 ads-launch/build_xray_ads_overview.py` → `xray/ads-package.html`  
 Re-audit history: `python3 ads-launch/analyze_historical_performance.py`

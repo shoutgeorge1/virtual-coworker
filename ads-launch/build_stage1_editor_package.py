@@ -4588,6 +4588,10 @@ def main() -> None:
     shutil.copy2(OUT_MANIFEST_US, MIRROR.parent / OUT_MANIFEST_US.name)
     shutil.copy2(OUT_MANIFEST_AU, MIRROR.parent / OUT_MANIFEST_AU.name)
     mirror_docs()
+    # Keep Launch Control Ads package page honest after CSV regen
+    from build_xray_ads_overview import main as build_xray_ads_overview
+
+    build_xray_ads_overview()
     print(f"Wrote {OUT} ({len(rows)} rows)")
     print(f"Wrote {OUT_US} / {OUT_AU} / {OUT_MULTI}")
     print(f"Wrote {OUT_MANIFEST_US} ({us_n}) / {OUT_MANIFEST_AU} ({au_n})")

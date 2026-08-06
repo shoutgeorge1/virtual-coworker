@@ -1,0 +1,1174 @@
+#!/usr/bin/env python3
+"""Build xray Ads package overview from Stage 1 Editor CSVs.
+
+Reads:
+  ads-launch/google-ads-editor-import-us.csv
+  ads-launch/google-ads-editor-import-au.csv
+  ads-launch/phase1-enable-manifest-us.csv / -au.csv (tier counts)
+  NEGATIVE_REVIEW_HOLDOUT from build_stage1_editor_package.py
+
+Writes:
+  xray/data/ads-package.json
+  xray/ads-package.html
+
+Run standalone, or via build_stage1_editor_package.main() after CSV regen.
+"""
+
+from __future__ import annotations
+
+import csv
+import html
+import json
+import sys
+from collections import Counter, defaultdict
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+ADS = ROOT / "ads-launch"
+XRAY = ROOT / "xray"
+OUT_JSON = XRAY / "data" / "ads-package.json"
+OUT_HTML = XRAY / "ads-package.html"
+
+US_CSV = ADS / "google-ads-editor-import-us.csv"
+AU_CSV = ADS / "google-ads-editor-import-au.csv"
+MANIFEST_US = ADS / "phase1-enable-manifest-us.csv"
+MANIFEST_AU = ADS / "phase1-enable-manifest-au.csv"
+
+ACCOUNT_LABELS = {
+    "496-715-1855": "US",
+    "573-539-1940": "AU",
+}
+
+
+def _load_holdouts() -> list[str]:
+    sys.path.insert(0, str(ADS))
+    from build_stage1_editor_package import NEGATIVE_REVIEW_HOLDOUT  # type: ignore
+
+    return list(NEGATIVE_REVIEW_HOLDOUT)
+
+
+def _read_csv(path: Path) -> list[dict[str, str]]:
+    with path.open(encoding="utf-8", newline="") as f:
+        return list(csv.DictReader(f))
+
+
+def _nonempty(row: dict[str, str], *keys: str) -> list[str]:
+    out = []
+    for k in keys:
+        v = (row.get(k) or "").strip()
+        if v:
+            out.append(v)
+    return out
+
+
+def _headlines(row: dict[str, str]) -> list[str]:
+    return _nonempty(row, *[f"Headline {i}" for i in range(1, 16)])
+
+
+def _descriptions(row: dict[str, str]) -> list[str]:
+    return _nonempty(row, *[f"Description {i}" for i in range(1, 5)])
+
+
+def _url_pattern(urls: list[str]) -> str:
+    if not urls:
+        return "—"
+    hosts = sorted({u.split("?")[0].rstrip("/") for u in urls if u})
+    if len(hosts) == 1:
+        return hosts[0]
+    # Collapse shared prefix
+    markets = sorted({u.split("/")[3] if len(u.split("/")) > 3 else u for u in hosts})
+    bases = sorted({"/".join(u.split("/")[:4]) for u in hosts})
+    if len(bases) == 1:
+        return bases[0] + "/*"
+    if len(set(m for m in markets if m in ("us", "au"))) == 1:
+        m = markets[0]
+        return f"https://vision-three-alpha.vercel.app/{m}/…"
+    return f"{len(hosts)} Final URLs"
+
+
+def _tier_counts(path: Path) -> dict[str, int]:
+    if not path.exists():
+        return {}
+    rows = _read_csv(path)
+    # Column name may vary slightly
+    key = None
+    if rows:
+        for c in rows[0]:
+            if c.lower().replace(" ", "") in ("enabletier", "tier"):
+                key = c
+                break
+        if key is None:
+            for c in rows[0]:
+                if "tier" in c.lower():
+                    key = c
+                    break
+    if not key:
+        return {}
+    c = Counter((r.get(key) or "").strip() for r in rows)
+    return dict(sorted(c.items(), key=lambda kv: kv[0]))
+
+
+def parse_market(rows: list[dict[str, str]], market: str) -> dict:
+    by_type: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for r in rows:
+        by_type[r.get("Row Type") or ""].append(r)
+
+    campaigns = []
+    for r in by_type["Campaign"]:
+        cname = r["Campaign"]
+        ads = [a for a in by_type["Ad"] if a["Campaign"] == cname]
+        urls = [a["Final URL"] for a in ads if a.get("Final URL")]
+        ags = [a for a in by_type["Ad group"] if a["Campaign"] == cname]
+        kws = [k for k in by_type["Keyword"] if k["Campaign"] == cname]
+        negs = [n for n in by_type["Campaign negative keyword"] if n["Campaign"] == cname]
+        campaigns.append(
+            {
+                "name": cname,
+                "account": market,
+                "account_id": r.get("Account") or "",
+                "budget": r.get("Budget") or "",
+                "budget_type": r.get("Budget type") or "Daily",
+                "bid_strategy": r.get("Bid Strategy Type") or "",
+                "max_cpc": r.get("Maximum CPC bid limit") or "",
+                "status": r.get("Campaign Status") or "",
+                "networks": r.get("Networks") or "",
+                "location": r.get("Location") or "",
+                "tracking_template": r.get("Tracking template") or "",
+                "final_url_suffix": r.get("Final URL suffix") or "",
+                "final_url_pattern": _url_pattern(urls),
+                "ad_group_count": len(ags),
+                "keyword_count": len(kws),
+                "rsa_count": len(ads),
+                "negative_count": len(negs),
+                "comment": (r.get("Comment") or "").strip(),
+            }
+        )
+
+    ad_groups = []
+    for r in by_type["Ad group"]:
+        cname, ag = r["Campaign"], r["Ad Group"]
+        kws = [
+            k
+            for k in by_type["Keyword"]
+            if k["Campaign"] == cname and k["Ad Group"] == ag
+        ]
+        ads = [
+            a for a in by_type["Ad"] if a["Campaign"] == cname and a["Ad Group"] == ag
+        ]
+        urls = [a["Final URL"] for a in ads if a.get("Final URL")]
+        match = Counter((k.get("Criterion Type") or "") for k in kws)
+        ad_groups.append(
+            {
+                "campaign": cname,
+                "name": ag,
+                "status": r.get("Ad Group Status") or "",
+                "keyword_count": len(kws),
+                "exact": match.get("Exact", 0),
+                "phrase": match.get("Phrase", 0),
+                "rsa_count": len(ads),
+                "final_url": urls[0] if urls else "",
+                "final_urls": sorted(set(urls)),
+            }
+        )
+
+    keywords = []
+    for r in by_type["Keyword"]:
+        keywords.append(
+            {
+                "campaign": r["Campaign"],
+                "ad_group": r["Ad Group"],
+                "keyword": r.get("Keyword") or "",
+                "match": r.get("Criterion Type") or "",
+                "status": r.get("Keyword Status") or "",
+            }
+        )
+
+    rsas = []
+    for r in by_type["Ad"]:
+        hs, ds = _headlines(r), _descriptions(r)
+        rsas.append(
+            {
+                "campaign": r["Campaign"],
+                "ad_group": r["Ad Group"],
+                "status": r.get("Ad Status") or "",
+                "ad_type": r.get("Ad type") or "",
+                "final_url": r.get("Final URL") or "",
+                "path1": r.get("Path 1") or "",
+                "path2": r.get("Path 2") or "",
+                "headlines": hs,
+                "descriptions": ds,
+                "headline_count": len(hs),
+                "description_count": len(ds),
+            }
+        )
+
+    negatives = sorted(
+        {
+            (r.get("Keyword") or "").strip()
+            for r in by_type["Campaign negative keyword"]
+            if (r.get("Keyword") or "").strip()
+        }
+    )
+    neg_match = Counter(
+        (r.get("Criterion Type") or "") for r in by_type["Campaign negative keyword"]
+    )
+
+    sitelinks = []
+    for r in by_type["Sitelink"]:
+        sitelinks.append(
+            {
+                "campaign": r["Campaign"],
+                "link_text": r.get("Link Text") or "",
+                "final_url": r.get("Final URL") or "",
+                "desc1": r.get("Description Line 1") or "",
+                "desc2": r.get("Description Line 2") or "",
+            }
+        )
+
+    callouts = []
+    for r in by_type["Callout"]:
+        callouts.append(
+            {
+                "campaign": r["Campaign"],
+                "text": r.get("Callout text") or "",
+            }
+        )
+
+    snippets = []
+    for r in by_type["Structured snippet"]:
+        snippets.append(
+            {
+                "campaign": r["Campaign"],
+                "header": r.get("Header") or "",
+                "values": r.get("Snippet Values") or "",
+            }
+        )
+
+    # Deduplicate assets (same asset repeated per campaign)
+    uniq_sitelinks = []
+    seen_sl = set()
+    for s in sitelinks:
+        key = (s["link_text"], s["final_url"])
+        if key in seen_sl:
+            continue
+        seen_sl.add(key)
+        uniq_sitelinks.append(s)
+
+    uniq_callouts = []
+    seen_co = set()
+    for c in callouts:
+        if c["text"] in seen_co:
+            continue
+        seen_co.add(c["text"])
+        uniq_callouts.append(c)
+
+    uniq_snippets = []
+    seen_sn = set()
+    for s in snippets:
+        key = (s["header"], s["values"])
+        if key in seen_sn:
+            continue
+        seen_sn.add(key)
+        uniq_snippets.append(s)
+
+    camp0 = by_type["Campaign"][0] if by_type["Campaign"] else {}
+    return {
+        "market": market,
+        "account_id": camp0.get("Account") or "",
+        "campaigns": campaigns,
+        "ad_groups": ad_groups,
+        "keywords": keywords,
+        "rsas": rsas,
+        "negatives": negatives,
+        "negative_row_count": len(by_type["Campaign negative keyword"]),
+        "negative_match_types": dict(neg_match),
+        "sitelinks": uniq_sitelinks,
+        "sitelink_row_count": len(sitelinks),
+        "callouts": uniq_callouts,
+        "callout_row_count": len(callouts),
+        "structured_snippets": uniq_snippets,
+        "snippet_row_count": len(snippets),
+        "tracking_template": camp0.get("Tracking template") or "",
+        "final_url_suffix": camp0.get("Final URL suffix") or "",
+        "counts": {
+            "campaigns": len(campaigns),
+            "ad_groups": len(ad_groups),
+            "keywords": len(keywords),
+            "rsas": len(rsas),
+            "unique_negatives": len(negatives),
+            "negative_rows": len(by_type["Campaign negative keyword"]),
+        },
+    }
+
+
+def build_package() -> dict:
+    holdouts = _load_holdouts()
+    us = parse_market(_read_csv(US_CSV), "US")
+    au = parse_market(_read_csv(AU_CSV), "AU")
+    tiers_us = _tier_counts(MANIFEST_US)
+    tiers_au = _tier_counts(MANIFEST_AU)
+
+    return {
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        "source_files": [
+            str(US_CSV.relative_to(ROOT)),
+            str(AU_CSV.relative_to(ROOT)),
+        ],
+        "safety": {
+            "status": "Paused",
+            "banner": "Paused · SAFE TO IMPORT FOR REVIEW · NOT SAFE FOR PAID TRAFFIC",
+            "note": "Import ≠ Post ≠ Enable. Package ships Paused. Do not Enable until TRAFFIC READY + explicit approval.",
+        },
+        "holdouts": {
+            "label": "Commercial / employer-research holdouts (NOT in import CSVs)",
+            "terms": holdouts,
+            "count": len(holdouts),
+            "why": "Held out so cost/review/comparison/rate employer research is not blocked pre-launch. Competitor-named review terms stay in active negatives.",
+        },
+        "phase1_tiers": {
+            "us": tiers_us,
+            "au": tiers_au,
+            "docs": [
+                {"label": "PHASE1-REVIEW.md", "href": "docs/ads-launch/PHASE1-REVIEW.md"},
+                {
+                    "label": "PHASED-ACTIVATION.md",
+                    "href": "docs/ads-launch/PHASED-ACTIVATION.md",
+                },
+                {
+                    "label": "phase1-enable-manifest-us.csv",
+                    "href": "docs/ads-launch/phase1-enable-manifest-us.csv",
+                },
+                {
+                    "label": "phase1-enable-manifest-au.csv",
+                    "href": "docs/ads-launch/phase1-enable-manifest-au.csv",
+                },
+            ],
+        },
+        "markets": {"US": us, "AU": au},
+        "totals": {
+            "campaigns": us["counts"]["campaigns"] + au["counts"]["campaigns"],
+            "ad_groups": us["counts"]["ad_groups"] + au["counts"]["ad_groups"],
+            "keywords": us["counts"]["keywords"] + au["counts"]["keywords"],
+            "rsas": us["counts"]["rsas"] + au["counts"]["rsas"],
+            "unique_negatives_per_market": us["counts"]["unique_negatives"],
+            "negative_rows_total": us["counts"]["negative_rows"]
+            + au["counts"]["negative_rows"],
+            "holdouts": len(holdouts),
+        },
+    }
+
+
+def _esc(s: object) -> str:
+    return html.escape("" if s is None else str(s), quote=True)
+
+
+def render_html(pkg: dict) -> str:
+    data_json = json.dumps(pkg, ensure_ascii=False, separators=(",", ":"))
+    t = pkg["totals"]
+    us, au = pkg["markets"]["US"], pkg["markets"]["AU"]
+    holdouts = pkg["holdouts"]["terms"]
+    tiers_us = pkg["phase1_tiers"]["us"]
+    tiers_au = pkg["phase1_tiers"]["au"]
+
+    # Campaign rows (static table — small)
+    camp_rows = []
+    for mkt in ("US", "AU"):
+        for c in pkg["markets"][mkt]["campaigns"]:
+            camp_rows.append(
+                "<tr>"
+                f"<td><code>{_esc(c['name'])}</code></td>"
+                f"<td>{_esc(c['account'])}<br /><span class='dim'>{_esc(c['account_id'])}</span></td>"
+                f"<td>${_esc(c['budget'])} {_esc(c['budget_type']).lower()}</td>"
+                f"<td>{_esc(c['bid_strategy'])}</td>"
+                f"<td>${_esc(c['max_cpc'])}</td>"
+                f"<td><span class='badge badge-high'>Paused</span></td>"
+                f"<td><code class='url'>{_esc(c['final_url_pattern'])}</code></td>"
+                f"<td class='num'>{c['ad_group_count']}</td>"
+                f"<td class='num'>{c['keyword_count']}</td>"
+                f"<td class='num'>{c['rsa_count']}</td>"
+                "</tr>"
+            )
+
+    holdout_lis = "".join(f"<li><code>{_esc(t)}</code></li>" for t in holdouts)
+    neg_lis = "".join(f"<li><code>{_esc(t)}</code></li>" for t in us["negatives"])
+
+    # Assets from US (same creative shape; URLs differ by market — show both)
+    sl_rows = []
+    for mkt in ("US", "AU"):
+        for s in pkg["markets"][mkt]["sitelinks"]:
+            sl_rows.append(
+                f"<tr><td>{_esc(mkt)}</td><td>{_esc(s['link_text'])}</td>"
+                f"<td><code class='url'>{_esc(s['final_url'])}</code></td>"
+                f"<td>{_esc(s['desc1'])} · {_esc(s['desc2'])}</td></tr>"
+            )
+    # Deduplicate display by link_text+url
+    # Actually show unique across markets
+    seen = set()
+    sl_html = []
+    for row_html, key in zip(
+        sl_rows,
+        [
+            (m, s["link_text"], s["final_url"])
+            for m in ("US", "AU")
+            for s in pkg["markets"][m]["sitelinks"]
+        ],
+    ):
+        if key in seen:
+            continue
+        seen.add(key)
+        sl_html.append(row_html)
+
+    callout_items = []
+    seen_c = set()
+    for mkt in ("US", "AU"):
+        for c in pkg["markets"][mkt]["callouts"]:
+            if c["text"] in seen_c:
+                continue
+            seen_c.add(c["text"])
+            callout_items.append(f"<li>{_esc(c['text'])}</li>")
+
+    snippet_items = []
+    seen_s = set()
+    for mkt in ("US", "AU"):
+        for s in pkg["markets"][mkt]["structured_snippets"]:
+            key = (s["header"], s["values"])
+            if key in seen_s:
+                continue
+            seen_s.add(key)
+            snippet_items.append(
+                f"<li><strong>{_esc(s['header'])}</strong> — {_esc(s['values'])}</li>"
+            )
+
+    tier_rows = []
+    all_tiers = sorted(set(tiers_us) | set(tiers_au))
+    for tier in all_tiers:
+        tier_rows.append(
+            f"<tr><td><strong>{_esc(tier)}</strong></td>"
+            f"<td class='num'>{tiers_us.get(tier, 0)}</td>"
+            f"<td class='num'>{tiers_au.get(tier, 0)}</td></tr>"
+        )
+
+    tracking = us.get("tracking_template") or "{lpurl}"
+    suffix = us.get("final_url_suffix") or ""
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Ads package · Virtual Coworker Search Pilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    .safety-banner {{
+      margin-top: 0.85rem;
+      padding: 0.85rem 1.05rem;
+      border-radius: 8px;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
+      color: var(--ink);
+    }}
+    .safety-banner strong {{
+      display: block;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.25rem;
+    }}
+    .safety-banner p {{ margin: 0; font-size: 0.88rem; color: var(--body); }}
+    .pkg-toolbar {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.65rem;
+      align-items: center;
+      margin: 0 0 0.75rem;
+    }}
+    .pkg-toolbar label {{
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }}
+    .pkg-toolbar select,
+    .pkg-toolbar input[type="search"] {{
+      font: inherit;
+      font-size: 0.88rem;
+      padding: 0.35rem 0.5rem;
+      border: 1px solid var(--edge);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--ink);
+      min-width: 10rem;
+    }}
+    .pkg-toolbar input[type="search"] {{ min-width: 14rem; flex: 1; }}
+    .tab-row {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0 0 0.75rem;
+    }}
+    .tab-row button {{
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      border: 1px solid var(--edge);
+      background: var(--panel);
+      color: var(--body);
+      cursor: pointer;
+    }}
+    .tab-row button[aria-pressed="true"] {{
+      background: var(--tint-teal-hd);
+      border-color: var(--tint-teal-edge);
+      color: var(--ink);
+    }}
+    .data-table {{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }}
+    .data-table th,
+    .data-table td {{
+      text-align: left;
+      padding: 0.45rem 0.5rem;
+      border-bottom: 1px solid var(--edge-soft);
+      vertical-align: top;
+    }}
+    .data-table th {{
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--dim);
+      font-weight: 700;
+      background: var(--panel-inset);
+      position: sticky;
+      top: 0;
+    }}
+    .data-table td.num {{ text-align: right; font-variant-numeric: tabular-nums; }}
+    .data-table code.url {{
+      font-size: 0.72rem;
+      word-break: break-all;
+    }}
+    .dim {{ color: var(--dim); font-size: 0.75rem; }}
+    .scroll-box {{
+      max-height: 22rem;
+      overflow: auto;
+      border: 1px solid var(--edge-soft);
+      border-radius: 6px;
+      background: var(--panel);
+    }}
+    .scroll-box.tall {{ max-height: 28rem; }}
+    .neg-grid {{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }}
+    @media (max-width: 860px) {{
+      .neg-grid {{ grid-template-columns: 1fr; }}
+    }}
+    .chip-list {{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }}
+    .chip-list li {{
+      margin: 0;
+      padding: 0.2rem 0.45rem;
+      border: 1px solid var(--edge-soft);
+      border-radius: 4px;
+      background: var(--panel);
+      font-size: 0.8rem;
+    }}
+    .chip-list.holdout li {{
+      border-color: var(--tint-amber-edge);
+      background: var(--tint-amber);
+    }}
+    .ag-block {{
+      border: 1px solid var(--edge-soft);
+      border-radius: 6px;
+      background: var(--panel);
+      margin: 0 0 0.5rem;
+    }}
+    .ag-block summary {{
+      cursor: pointer;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      align-items: baseline;
+    }}
+    .ag-block summary::-webkit-details-marker {{ display: none; }}
+    .ag-block summary .meta {{
+      font-weight: 500;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }}
+    .ag-block .ag-bd {{
+      padding: 0 0.75rem 0.75rem;
+      border-top: 1px solid var(--edge-soft);
+    }}
+    .rsa-grid {{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-top: 0.55rem;
+    }}
+    @media (max-width: 760px) {{
+      .rsa-grid {{ grid-template-columns: 1fr; }}
+    }}
+    .rsa-card {{
+      border: 1px solid var(--edge-soft);
+      border-radius: 6px;
+      padding: 0.55rem 0.65rem;
+      background: var(--panel-inset);
+      font-size: 0.82rem;
+    }}
+    .rsa-card h4 {{
+      margin: 0 0 0.35rem;
+      font-size: 0.8rem;
+      color: var(--ink);
+    }}
+    .rsa-card ol {{
+      margin: 0;
+      padding-left: 1.1rem;
+    }}
+    .rsa-card li {{ margin: 0.1rem 0; }}
+    .count-note {{
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin: 0 0 0.55rem;
+    }}
+    .empty-msg {{
+      padding: 0.75rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }}
+  </style>
+</head>
+<body data-page="ads-package.html" data-foot="Stage 1 Editor package<br />Paused · review only">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">Stage 1 · Editor CSV snapshot · {_esc(pkg['generated_at'])}</p>
+        <h1>Ads package</h1>
+        <p>
+          Campaigns, ad groups, keywords, RSAs, negatives, and assets from the current
+          Paused Editor import — so you can review without opening Google Ads.
+          Regenerated from <code>google-ads-editor-import-us.csv</code> + <code>-au.csv</code>.
+        </p>
+      </header>
+
+      <div class="safety-banner" role="status">
+        <strong>{_esc(pkg['safety']['banner'])}</strong>
+        <p>{_esc(pkg['safety']['note'])}</p>
+      </div>
+
+      <div class="stats stats-4" style="margin-top:1rem;border:1px solid var(--tint-teal-edge);border-radius:8px;overflow:hidden">
+        <div class="stat">
+          <p class="lbl">Campaigns</p>
+          <p class="val">{t['campaigns']}</p>
+          <p class="sub">US + AU · all Paused</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Keywords</p>
+          <p class="val">{t['keywords']}</p>
+          <p class="sub">{us['counts']['keywords']} per market</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">RSAs</p>
+          <p class="val">{t['rsas']}</p>
+          <p class="sub">15H / 4D target</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Negatives</p>
+          <p class="val">{t['unique_negatives_per_market']}</p>
+          <p class="sub">+ {t['holdouts']} holdouts out</p>
+        </div>
+      </div>
+
+      <section class="panel" id="campaigns">
+        <div class="panel-hd">
+          <p class="kicker">Structure</p>
+          <h2>Campaigns</h2>
+          <span class="badge badge-high">Paused</span>
+        </div>
+        <div class="panel-bd">
+          <div class="scroll-box">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Campaign</th>
+                  <th>Account</th>
+                  <th>Budget</th>
+                  <th>Bid</th>
+                  <th>Max CPC</th>
+                  <th>Status</th>
+                  <th>Final URL pattern</th>
+                  <th>AGs</th>
+                  <th>KWs</th>
+                  <th>RSAs</th>
+                </tr>
+              </thead>
+              <tbody>
+                {''.join(camp_rows)}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="ad-groups">
+        <div class="panel-hd">
+          <p class="kicker">Under each campaign</p>
+          <h2>Ad groups</h2>
+          <span class="badge badge-info">{t['ad_groups']} total</span>
+        </div>
+        <div class="panel-bd">
+          <div class="pkg-toolbar">
+            <label for="ag-market">Market</label>
+            <select id="ag-market">
+              <option value="US">US</option>
+              <option value="AU">AU</option>
+            </select>
+            <label for="ag-campaign">Campaign</label>
+            <select id="ag-campaign"></select>
+          </div>
+          <div id="ag-list"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="keywords">
+        <div class="panel-hd">
+          <p class="kicker">Browsable · not a wall</p>
+          <h2>Keywords</h2>
+          <span class="badge badge-info" id="kw-count-badge">—</span>
+        </div>
+        <div class="panel-bd">
+          <div class="tab-row" id="kw-market-tabs" role="tablist">
+            <button type="button" data-market="US" aria-pressed="true">US ({us['counts']['keywords']})</button>
+            <button type="button" data-market="AU" aria-pressed="false">AU ({au['counts']['keywords']})</button>
+          </div>
+          <div class="pkg-toolbar">
+            <label for="kw-campaign">Campaign</label>
+            <select id="kw-campaign"></select>
+            <label for="kw-ag">Ad group</label>
+            <select id="kw-ag"></select>
+            <label for="kw-match">Match</label>
+            <select id="kw-match">
+              <option value="">All</option>
+              <option value="Exact">Exact</option>
+              <option value="Phrase">Phrase</option>
+            </select>
+            <input type="search" id="kw-search" placeholder="Filter keywords…" autocomplete="off" />
+          </div>
+          <p class="count-note" id="kw-filter-note"></p>
+          <div class="scroll-box tall">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Keyword</th>
+                  <th>Match</th>
+                  <th>Ad group</th>
+                  <th>Campaign</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="kw-tbody"></tbody>
+            </table>
+            <p class="empty-msg" id="kw-empty" hidden>No keywords match this filter.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="rsas">
+        <div class="panel-hd">
+          <p class="kicker">Responsive search ads</p>
+          <h2>RSAs</h2>
+          <span class="badge badge-info">15 headlines · 4 descriptions</span>
+        </div>
+        <div class="panel-bd">
+          <p class="muted" style="margin:0 0 0.75rem;font-size:0.88rem">
+            Each ad group has RSAs built to the 15H / 4D Editor target. Expand an ad group to read copy.
+          </p>
+          <div class="pkg-toolbar">
+            <label for="rsa-market">Market</label>
+            <select id="rsa-market">
+              <option value="US">US</option>
+              <option value="AU">AU</option>
+            </select>
+            <label for="rsa-campaign">Campaign</label>
+            <select id="rsa-campaign"></select>
+            <input type="search" id="rsa-search" placeholder="Filter ad group…" autocomplete="off" />
+          </div>
+          <div id="rsa-list"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="negatives">
+        <div class="panel-hd">
+          <p class="kicker">VC-only curated · not shared mega lists</p>
+          <h2>Negatives</h2>
+          <span class="badge badge-high">{us['counts']['unique_negatives']} unique · campaign-level Broad</span>
+        </div>
+        <div class="panel-bd">
+          <p class="muted" style="margin:0 0 0.75rem;font-size:0.88rem">
+            Same {us['counts']['unique_negatives']} terms attached to every <code>VC_*</code> campaign
+            ({us['counts']['negative_rows']} rows per market × 2 campaigns).
+            Not account shared / PM_* mega lists.
+          </p>
+          <div class="neg-grid">
+            <div>
+              <h3 style="margin:0 0 0.45rem;font-size:0.92rem">In import (active)</h3>
+              <div class="scroll-box tall">
+                <ul class="chip-list" style="padding:0.55rem">{neg_lis}</ul>
+              </div>
+            </div>
+            <div>
+              <h3 style="margin:0 0 0.45rem;font-size:0.92rem">Holdouts (not imported)</h3>
+              <p class="muted" style="margin:0 0 0.45rem;font-size:0.82rem">{_esc(pkg['holdouts']['why'])}</p>
+              <ul class="chip-list holdout">{holdout_lis}</ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="assets">
+        <div class="panel-hd">
+          <p class="kicker">Extensions</p>
+          <h2>Assets</h2>
+        </div>
+        <div class="panel-bd">
+          <h3 style="margin:0 0 0.4rem;font-size:0.92rem">Sitelinks</h3>
+          <div class="scroll-box" style="margin-bottom:1rem">
+            <table class="data-table">
+              <thead>
+                <tr><th>Mkt</th><th>Link text</th><th>Final URL</th><th>Descriptions</th></tr>
+              </thead>
+              <tbody>{''.join(sl_html)}</tbody>
+            </table>
+          </div>
+          <div class="neg-grid">
+            <div>
+              <h3 style="margin:0 0 0.4rem;font-size:0.92rem">Callouts</h3>
+              <ul class="chip-list">{''.join(callout_items)}</ul>
+            </div>
+            <div>
+              <h3 style="margin:0 0 0.4rem;font-size:0.92rem">Structured snippets</h3>
+              <ul style="margin:0;padding-left:1.1rem;font-size:0.88rem">{''.join(snippet_items)}</ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="tracking">
+        <div class="panel-hd">
+          <p class="kicker">UTM · Final URL suffix</p>
+          <h2>Tracking template</h2>
+        </div>
+        <div class="panel-bd">
+          <p style="margin:0 0 0.5rem"><strong>Template:</strong> <code>{_esc(tracking)}</code></p>
+          <p style="margin:0 0 0.5rem"><strong>Final URL suffix:</strong></p>
+          <p style="margin:0"><code style="font-size:0.78rem;word-break:break-all">{_esc(suffix)}</code></p>
+          <p class="muted" style="margin:0.65rem 0 0;font-size:0.86rem">
+            Same suffix on all four campaigns. <code>lp_version=stage1-v7</code> stamps package generation.
+            No third-party click trackers in the Editor CSV.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel" id="phase1">
+        <div class="panel-hd">
+          <p class="kicker">Review ladder · still Paused</p>
+          <h2>Phase 1 manifests / tiers</h2>
+        </div>
+        <div class="panel-bd">
+          <p class="muted" style="margin:0 0 0.65rem;font-size:0.88rem">
+            Enable order for later — these are <strong>not</strong> Enabled import files.
+            Review 1A → 1B; Enable only after TRAFFIC READY + explicit approval.
+          </p>
+          <div class="scroll-box" style="margin-bottom:0.75rem;max-height:14rem">
+            <table class="data-table">
+              <thead><tr><th>Tier</th><th>US</th><th>AU</th></tr></thead>
+              <tbody>{''.join(tier_rows)}</tbody>
+            </table>
+          </div>
+          <p style="margin:0;font-size:0.88rem">
+            <a href="docs/ads-launch/PHASE1-REVIEW.md">PHASE1-REVIEW.md</a> ·
+            <a href="docs/ads-launch/PHASED-ACTIVATION.md">PHASED-ACTIVATION.md</a> ·
+            <a href="docs/ads-launch/phase1-enable-manifest-us.csv">manifest US</a> ·
+            <a href="docs/ads-launch/phase1-enable-manifest-au.csv">manifest AU</a> ·
+            <a href="docs/ads-launch/EDITOR-PREFLIGHT-REPORT.md">Editor preflight</a>
+          </p>
+        </div>
+      </section>
+
+      <div class="notice notice-quiet" style="margin-top:1.15rem">
+        <p>
+          <strong>Regenerate:</strong>
+          <code>python3 ads-launch/build_xray_ads_overview.py</code>
+          (also runs at the end of
+          <code>python3 ads-launch/build_stage1_editor_package.py</code>).
+        </p>
+      </div>
+    </main>
+  </div>
+
+  <script type="application/json" id="ads-package-data">{data_json}</script>
+  <script src="nav.js"></script>
+  <script>
+  (function () {{
+    var pkg = JSON.parse(document.getElementById("ads-package-data").textContent);
+    var markets = pkg.markets;
+
+    function el(id) {{ return document.getElementById(id); }}
+    function clear(node) {{ while (node.firstChild) node.removeChild(node.firstChild); }}
+
+    function fillSelect(select, values, allLabel) {{
+      clear(select);
+      if (allLabel) {{
+        var o = document.createElement("option");
+        o.value = "";
+        o.textContent = allLabel;
+        select.appendChild(o);
+      }}
+      values.forEach(function (v) {{
+        var o = document.createElement("option");
+        o.value = v;
+        o.textContent = v;
+        select.appendChild(o);
+      }});
+    }}
+
+    function campaignNames(mkt) {{
+      return markets[mkt].campaigns.map(function (c) {{ return c.name; }});
+    }}
+
+    function agNames(mkt, campaign) {{
+      return markets[mkt].ad_groups
+        .filter(function (a) {{ return !campaign || a.campaign === campaign; }})
+        .map(function (a) {{ return a.name; }});
+    }}
+
+    /* —— Ad groups —— */
+    var agMarket = el("ag-market");
+    var agCampaign = el("ag-campaign");
+    var agList = el("ag-list");
+
+    function renderAGs() {{
+      var mkt = agMarket.value;
+      var camp = agCampaign.value;
+      var rows = markets[mkt].ad_groups.filter(function (a) {{
+        return !camp || a.campaign === camp;
+      }});
+      clear(agList);
+      rows.forEach(function (a) {{
+        var d = document.createElement("details");
+        d.className = "ag-block";
+        var s = document.createElement("summary");
+        s.innerHTML =
+          "<code>" + a.name + "</code>" +
+          "<span class='meta'>" + a.campaign + "</span>" +
+          "<span class='meta'>" + a.keyword_count + " KW · " +
+          a.exact + " Exact · " + a.phrase + " Phrase · " +
+          a.rsa_count + " RSA</span>" +
+          "<span class='meta'>" + (a.final_url || "—") + "</span>";
+        d.appendChild(s);
+        var bd = document.createElement("div");
+        bd.className = "ag-bd";
+        bd.innerHTML =
+          "<p class='muted' style='margin:0.55rem 0 0;font-size:0.84rem'>Status: <strong>" +
+          a.status + "</strong>" +
+          (a.final_urls && a.final_urls.length > 1
+            ? " · Final URLs: " + a.final_urls.map(function (u) {{ return "<code>" + u + "</code>"; }}).join(" · ")
+            : "") +
+          "</p>";
+        d.appendChild(bd);
+        agList.appendChild(d);
+      }});
+    }}
+
+    function syncAgCampaign() {{
+      fillSelect(agCampaign, campaignNames(agMarket.value), "All campaigns");
+      renderAGs();
+    }}
+    agMarket.addEventListener("change", syncAgCampaign);
+    agCampaign.addEventListener("change", renderAGs);
+    syncAgCampaign();
+
+    /* —— Keywords —— */
+    var kwMarket = "US";
+    var kwCampaign = el("kw-campaign");
+    var kwAg = el("kw-ag");
+    var kwMatch = el("kw-match");
+    var kwSearch = el("kw-search");
+    var kwTbody = el("kw-tbody");
+    var kwEmpty = el("kw-empty");
+    var kwNote = el("kw-filter-note");
+    var kwBadge = el("kw-count-badge");
+
+    function syncKwFilters() {{
+      fillSelect(kwCampaign, campaignNames(kwMarket), "All campaigns");
+      fillSelect(kwAg, agNames(kwMarket, kwCampaign.value), "All ad groups");
+      renderKeywords();
+    }}
+
+    function renderKeywords() {{
+      var camp = kwCampaign.value;
+      var ag = kwAg.value;
+      var match = kwMatch.value;
+      var q = (kwSearch.value || "").trim().toLowerCase();
+      var rows = markets[kwMarket].keywords.filter(function (k) {{
+        if (camp && k.campaign !== camp) return false;
+        if (ag && k.ad_group !== ag) return false;
+        if (match && k.match !== match) return false;
+        if (q && k.keyword.toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      }});
+      clear(kwTbody);
+      var MAX = 400;
+      var show = rows.slice(0, MAX);
+      show.forEach(function (k) {{
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+          "<td><code>" + k.keyword + "</code></td>" +
+          "<td>" + k.match + "</td>" +
+          "<td>" + k.ad_group + "</td>" +
+          "<td><code>" + k.campaign + "</code></td>" +
+          "<td><span class='badge badge-high'>" + k.status + "</span></td>";
+        kwTbody.appendChild(tr);
+      }});
+      kwEmpty.hidden = rows.length > 0;
+      kwBadge.textContent = rows.length + " shown";
+      kwNote.textContent =
+        rows.length + " keyword" + (rows.length === 1 ? "" : "s") +
+        " · " + kwMarket +
+        (rows.length > MAX ? " (showing first " + MAX + " — narrow filter)" : "");
+    }}
+
+    document.getElementById("kw-market-tabs").addEventListener("click", function (e) {{
+      var btn = e.target.closest("button[data-market]");
+      if (!btn) return;
+      kwMarket = btn.getAttribute("data-market");
+      Array.prototype.forEach.call(
+        document.querySelectorAll("#kw-market-tabs button"),
+        function (b) {{ b.setAttribute("aria-pressed", b === btn ? "true" : "false"); }}
+      );
+      syncKwFilters();
+    }});
+    kwCampaign.addEventListener("change", function () {{
+      fillSelect(kwAg, agNames(kwMarket, kwCampaign.value), "All ad groups");
+      renderKeywords();
+    }});
+    kwAg.addEventListener("change", renderKeywords);
+    kwMatch.addEventListener("change", renderKeywords);
+    kwSearch.addEventListener("input", renderKeywords);
+    syncKwFilters();
+
+    /* —— RSAs —— */
+    var rsaMarket = el("rsa-market");
+    var rsaCampaign = el("rsa-campaign");
+    var rsaSearch = el("rsa-search");
+    var rsaList = el("rsa-list");
+
+    function renderRSAs() {{
+      var mkt = rsaMarket.value;
+      var camp = rsaCampaign.value;
+      var q = (rsaSearch.value || "").trim().toLowerCase();
+      var byAg = {{}};
+      markets[mkt].rsas.forEach(function (ad) {{
+        if (camp && ad.campaign !== camp) return;
+        if (q && ad.ad_group.toLowerCase().indexOf(q) === -1) return;
+        var key = ad.campaign + "||" + ad.ad_group;
+        if (!byAg[key]) byAg[key] = [];
+        byAg[key].push(ad);
+      }});
+      clear(rsaList);
+      Object.keys(byAg).sort().forEach(function (key) {{
+        var parts = key.split("||");
+        var ads = byAg[key];
+        var d = document.createElement("details");
+        d.className = "ag-block";
+        var first = ads[0];
+        var s = document.createElement("summary");
+        s.innerHTML =
+          "<code>" + parts[1] + "</code>" +
+          "<span class='meta'>" + parts[0] + "</span>" +
+          "<span class='meta'>" + ads.length + " RSA · " +
+          first.headline_count + "H / " + first.description_count + "D</span>" +
+          "<span class='meta'>" + (first.final_url || "") + "</span>";
+        d.appendChild(s);
+        var bd = document.createElement("div");
+        bd.className = "ag-bd";
+        var grid = document.createElement("div");
+        grid.className = "rsa-grid";
+        ads.forEach(function (ad, idx) {{
+          var card = document.createElement("div");
+          card.className = "rsa-card";
+          var hHtml = ad.headlines.map(function (h) {{ return "<li>" + h + "</li>"; }}).join("");
+          var dHtml = ad.descriptions.map(function (x) {{ return "<li>" + x + "</li>"; }}).join("");
+          card.innerHTML =
+            "<h4>RSA " + (idx + 1) + " · " + ad.headline_count + "H / " + ad.description_count + "D · " + ad.status + "</h4>" +
+            "<p class='dim' style='margin:0 0 0.35rem'>Paths: " +
+            (ad.path1 || "—") + " / " + (ad.path2 || "—") + "</p>" +
+            "<strong>Headlines</strong><ol>" + hHtml + "</ol>" +
+            "<strong style='display:block;margin-top:0.4rem'>Descriptions</strong><ol>" + dHtml + "</ol>";
+          grid.appendChild(card);
+        }});
+        bd.appendChild(grid);
+        d.appendChild(bd);
+        rsaList.appendChild(d);
+      }});
+      if (!rsaList.firstChild) {{
+        rsaList.innerHTML = "<p class='empty-msg'>No RSAs match.</p>";
+      }}
+    }}
+
+    function syncRsaCampaign() {{
+      fillSelect(rsaCampaign, campaignNames(rsaMarket.value), "All campaigns");
+      renderRSAs();
+    }}
+    rsaMarket.addEventListener("change", syncRsaCampaign);
+    rsaCampaign.addEventListener("change", renderRSAs);
+    rsaSearch.addEventListener("input", renderRSAs);
+    syncRsaCampaign();
+  }})();
+  </script>
+</body>
+</html>
+"""
+
+
+def main() -> None:
+    if not US_CSV.exists() or not AU_CSV.exists():
+        raise SystemExit(f"Missing Editor CSVs under {ADS}")
+    pkg = build_package()
+    OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
+    OUT_JSON.write_text(
+        json.dumps(pkg, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    OUT_HTML.write_text(render_html(pkg), encoding="utf-8")
+    t = pkg["totals"]
+    print(f"Wrote {OUT_JSON.relative_to(ROOT)}")
+    print(f"Wrote {OUT_HTML.relative_to(ROOT)}")
+    print(
+        f"Totals: {t['campaigns']} campaigns · {t['ad_groups']} AGs · "
+        f"{t['keywords']} keywords · {t['rsas']} RSAs · "
+        f"{t['unique_negatives_per_market']} unique negs · "
+        f"{t['holdouts']} holdouts"
+    )
+
+
+if __name__ == "__main__":
+    main()
