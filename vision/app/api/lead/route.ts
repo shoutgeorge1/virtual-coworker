@@ -10,16 +10,17 @@ import {
   rateLimitAllow,
   rememberSubmission,
 } from "../../../lib/rate-limit";
+import {
+  allowLogOnlyLeads,
+  configuredChannels,
+  deliveryBlockerMessage,
+} from "../../../lib/lead-delivery";
 
 function splitName(name: string): { firstName: string; lastName: string } {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   if (parts.length === 0) return { firstName: "", lastName: "" };
   if (parts.length === 1) return { firstName: parts[0], lastName: "" };
   return { firstName: parts[0], lastName: parts.slice(1).join(" ") };
-}
-
-function destinationFor(market: "us" | "au"): string | undefined {
-  return market === "au" ? process.env.LEAD_EMAIL_AU : process.env.LEAD_EMAIL_US;
 }
 
 function clientKey(req: NextRequest, email: string): string {
@@ -51,7 +52,7 @@ function turnstileConfigured(): boolean {
 
 async function verifyTurnstile(token: string | undefined, ip: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) return true; // env boundary — do not block baseline when missing
+  if (!secret) return true;
   if (!token) return false;
   try {
     const body = new URLSearchParams();
@@ -79,7 +80,14 @@ export async function POST(req: NextRequest) {
 
   const validation = validateEmployerLead(body);
   if (!validation.ok) {
-    console.info("[lead-reject]", JSON.stringify(rejectLogPayload(validation.code, String(body.market || ""), { reason: validation.reason })));
+    console.info(
+      "[lead-reject]",
+      JSON.stringify(
+        rejectLogPayload(validation.code, String(body.market || ""), {
+          reason: validation.reason,
+        }),
+      ),
+    );
     const status =
       validation.code === "job_seeker" || validation.code === "honeypot" ? 403 : 400;
     return NextResponse.json(
@@ -105,7 +113,6 @@ export async function POST(req: NextRequest) {
   const dupKey = duplicateKey(email, market);
   const dup = checkDuplicate(dupKey);
   if (dup.duplicate) {
-    // Same employer within window — acknowledge without re-firing pipeline/primary.
     return NextResponse.json({
       ok: true,
       stored: true,
@@ -129,6 +136,7 @@ export async function POST(req: NextRequest) {
   const names = splitName(name);
   const submittedAt = body.submitted_at || new Date().toISOString();
   const submissionId = `vc_${market}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+  const cfg = configuredChannels();
 
   const record = {
     submission_id: submissionId,
@@ -138,6 +146,8 @@ export async function POST(req: NextRequest) {
     phone: String(body.phone || "").trim(),
     company: String(body.company || "").trim(),
     role: String(body.role || "").trim(),
+    category: String(body.category || "").trim(),
+    variant: String(body.variant || "").trim(),
     timeline: String(body.timeline || "").trim(),
     message: String(body.message || "").trim(),
     market,
@@ -153,10 +163,14 @@ export async function POST(req: NextRequest) {
     landing_page_url: body.landing_page_url || "",
     referrer: body.referrer || "",
     lp_version: body.lp_version || "",
+    captured_at: body.captured_at || "",
     submitted_at: submittedAt,
+    // Honesty: never imply CRM/job-order success
+    is_job_order: false,
+    is_placement: false,
+    zoho_synced: false,
   };
 
-  // Redacted server log after validation (attribution kept; email masked).
   console.info(
     "[lead]",
     JSON.stringify({
@@ -167,38 +181,36 @@ export async function POST(req: NextRequest) {
     }),
   );
 
-  const to = destinationFor(market);
-  const webhook = process.env.LEAD_WEBHOOK_URL;
-  const sheet = process.env.LEAD_SHEET_WEBHOOK_URL;
-  const zoho = process.env.ZOHO_WEBHOOK_URL;
-
   const deliveries: { channel: string; ok: boolean; detail: string }[] = [];
 
-  if (webhook) {
-    deliveries.push({ channel: "webhook", ...(await postJson(webhook, record)) });
+  if (cfg.webhook) {
+    deliveries.push({ channel: "webhook", ...(await postJson(cfg.webhook, record)) });
   }
-  if (sheet) {
-    deliveries.push({ channel: "sheet", ...(await postJson(sheet, record)) });
+  if (cfg.sheet) {
+    deliveries.push({ channel: "sheet", ...(await postJson(cfg.sheet, record)) });
   }
-  // Zoho is optional — do not block launch if missing.
-  if (zoho) {
-    deliveries.push({ channel: "zoho", ...(await postJson(zoho, record)) });
+  // Zoho optional — never fake success if missing
+  if (cfg.zoho) {
+    const z = await postJson(cfg.zoho, record);
+    deliveries.push({ channel: "zoho", ...z });
+    if (z.ok) {
+      (record as { zoho_synced: boolean }).zoho_synced = true;
+    }
   }
 
-  const resendKey = process.env.RESEND_API_KEY;
-  const from = process.env.LEAD_FROM_EMAIL;
-  if (to && resendKey && from) {
+  const to = market === "au" ? cfg.emailToAu : cfg.emailToUs;
+  if (to && cfg.resend && cfg.from) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${resendKey}`,
+          Authorization: `Bearer ${cfg.resend}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from,
+          from: cfg.from,
           to: [to],
-          subject: `[VC Pilot] ${market.toUpperCase()} employer lead — ${names.firstName}`.trim(),
+          subject: `[VC Pilot] ${market.toUpperCase()} employer inquiry — ${names.firstName}`.trim(),
           text: JSON.stringify(record, null, 2),
         }),
       });
@@ -217,20 +229,32 @@ export async function POST(req: NextRequest) {
   }
 
   const anyOk = deliveries.some((d) => d.ok);
-  const anyConfigured = Boolean(to || webhook || sheet || zoho);
+  const anyConfigured = cfg.channels.length > 0;
 
-  // Dev / pre-delivery: accept validated employer leads into logs so LP QA can proceed.
-  // Production should configure at least one delivery channel before paid traffic.
   if (!anyConfigured) {
-    console.warn("[lead] no delivery channel configured — accepting validated lead to logs only");
-    rememberSubmission(dupKey, submissionId);
-    return NextResponse.json({
-      ok: true,
-      stored: true,
-      submission_id: submissionId,
-      delivery: "log_only",
-      deliveries,
-    });
+    if (allowLogOnlyLeads()) {
+      console.warn("[lead] ALLOW_LOG_ONLY_LEADS=true — accepting to logs only (not production-ready)");
+      rememberSubmission(dupKey, submissionId);
+      return NextResponse.json({
+        ok: true,
+        stored: true,
+        submission_id: submissionId,
+        delivery: "log_only",
+        deliveries,
+        warning: "log_only — not a live lead delivery channel",
+      });
+    }
+    console.error("[lead] BLOCKER: no delivery channel configured");
+    return NextResponse.json(
+      {
+        ok: false,
+        stored: false,
+        error: deliveryBlockerMessage(),
+        code: "delivery_not_configured",
+        deliveries,
+      },
+      { status: 503 },
+    );
   }
 
   if (!anyOk) {
@@ -240,6 +264,7 @@ export async function POST(req: NextRequest) {
         ok: false,
         stored: true,
         error: "Lead stored in logs but external delivery failed. Check server logs.",
+        code: "delivery_failed",
         deliveries,
       },
       { status: 502 },
@@ -252,5 +277,6 @@ export async function POST(req: NextRequest) {
     stored: true,
     submission_id: submissionId,
     deliveries,
+    zoho_synced: Boolean((record as { zoho_synced?: boolean }).zoho_synced),
   });
 }

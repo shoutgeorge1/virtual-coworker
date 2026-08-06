@@ -11,6 +11,8 @@ export type LeadInput = {
   phone?: string;
   company?: string;
   role?: string;
+  category?: string;
+  variant?: string;
   timeline?: string;
   message?: string;
   market?: string;
@@ -31,6 +33,7 @@ export type LeadInput = {
   landing_page_url?: string;
   referrer?: string;
   lp_version?: string;
+  captured_at?: string;
 };
 
 export type ValidationResult =

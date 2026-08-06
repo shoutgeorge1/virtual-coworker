@@ -2,6 +2,7 @@
 
 import { trackEvent } from "../../lib/tracking";
 import type { MarketId } from "../../config/markets";
+import type { AbVariant } from "../../config/categories";
 
 /* Mobile conversion bar — form + phone only. */
 export default function StickyCta({
@@ -10,12 +11,16 @@ export default function StickyCta({
   phoneDisplay,
   phoneHref,
   market,
+  category,
+  variant,
 }: {
   href: string;
   label: string;
   phoneDisplay?: string;
   phoneHref?: string | null;
   market: MarketId;
+  category?: string;
+  variant?: AbVariant;
 }) {
   return (
     <div className="sticky-cta">
@@ -23,16 +28,18 @@ export default function StickyCta({
         <a
           className="sticky-cta-call"
           href={phoneHref}
-          onClick={() => trackEvent("phone_click", { market })}
+          onClick={() =>
+            trackEvent("phone_cta_clicked", {
+              market,
+              category: category || "",
+              variant: variant || "",
+              is_qualified_call: false,
+            })
+          }
         >
           <span aria-hidden>☎</span>
           <b>{phoneDisplay}</b>
         </a>
-      ) : phoneDisplay ? (
-        <span className="sticky-cta-call" aria-label="Business phone placeholder">
-          <span aria-hidden>☎</span>
-          <b>{phoneDisplay}</b>
-        </span>
       ) : null}
       <a className="sticky-cta-go" href={href}>
         {label}

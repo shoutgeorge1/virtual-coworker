@@ -87,7 +87,7 @@ describe("duplicate + rate limit", () => {
 
 describe("attribution + reject logging", () => {
   it("exposes lp version constant", () => {
-    expect(LP_VERSION).toBe("stage1-v1");
+    expect(LP_VERSION).toBe("stage1-v5");
   });
 
   it("reject logs omit sensitive body content", () => {

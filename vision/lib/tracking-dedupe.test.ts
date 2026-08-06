@@ -36,15 +36,27 @@ describe("trackValidEmployerSubmit dedupe", () => {
     vi.stubGlobal("document", { referrer: "" });
   });
 
-  it("fires employer_form_valid_submit once per submission id", async () => {
+  it("fires employer_inquiry_submitted once per submission id", async () => {
     const { trackValidEmployerSubmit } = await import("./tracking");
-    trackValidEmployerSubmit({ market: "us", submissionId: "sid_abc", role: "Admin" });
-    trackValidEmployerSubmit({ market: "us", submissionId: "sid_abc", role: "Admin" });
+    trackValidEmployerSubmit({
+      market: "us",
+      submissionId: "sid_abc",
+      role: "Admin",
+      category: "administrative-support",
+      variant: "a",
+    });
+    trackValidEmployerSubmit({
+      market: "us",
+      submissionId: "sid_abc",
+      role: "Admin",
+      category: "administrative-support",
+      variant: "a",
+    });
 
     const events = ((window as unknown as { dataLayer: Array<{ event: string }> }).dataLayer || []).map(
       (e) => e.event,
     );
-    expect(events.filter((e) => e === "employer_form_valid_submit")).toHaveLength(1);
-    expect(events).toContain("employer_form_valid_submit_deduped");
+    expect(events.filter((e) => e === "employer_inquiry_submitted")).toHaveLength(1);
+    expect(events).toContain("employer_inquiry_submitted_deduped");
   });
 });

@@ -9,6 +9,8 @@ import {
   trackValidEmployerSubmit,
 } from "../../lib/tracking";
 import type { MarketId } from "../../config/markets";
+import type { AbVariant, CategorySlug } from "../../config/categories";
+import { formLabelForSlug } from "../../config/categories";
 
 export type GateCopy = {
   eyebrow: string;
@@ -38,17 +40,26 @@ export type GateCopy = {
   phoneHref: string | null;
   doneTitle: string;
   doneBody: string;
+  /** When false, hide phone block entirely (AU form-primary). */
+  showPhone?: boolean;
 };
 
 function CallBlock({
   copy,
   market,
   solo,
+  category,
+  variant,
 }: {
   copy: GateCopy;
   market: MarketId;
   solo?: boolean;
+  category?: string;
+  variant?: string;
 }) {
+  if (copy.showPhone === false || (!copy.phoneHref && !copy.phoneDisplay)) {
+    return null;
+  }
   const cls = `gate-call${solo ? " gate-call-solo" : ""}`;
   const inner = (
     <>
@@ -63,13 +74,20 @@ function CallBlock({
   );
 
   if (!copy.phoneHref) {
-    return <div className={`${cls} gate-call-static`}>{inner}</div>;
+    return null;
   }
   return (
     <a
       className={cls}
       href={copy.phoneHref}
-      onClick={() => trackEvent("phone_click", { market })}
+      onClick={() =>
+        trackEvent("phone_cta_clicked", {
+          market,
+          category: category || "",
+          variant: variant || "",
+          is_qualified_call: false,
+        })
+      }
     >
       {inner}
     </a>
@@ -79,13 +97,22 @@ function CallBlock({
 export default function LeadGate({
   copy,
   market,
+  category,
+  variant,
+  preselectedRole,
 }: {
   copy: GateCopy;
   market: MarketId;
+  category?: CategorySlug | null;
+  variant?: AbVariant;
+  preselectedRole?: string | null;
 }) {
   const router = useRouter();
+  const initialRole =
+    preselectedRole ||
+    (category ? formLabelForSlug(category) : null);
   const [intent, setIntent] = useState<"employer" | "job_seeker" | null>(null);
-  const [role, setRole] = useState<string | null>(null);
+  const [role, setRole] = useState<string | null>(initialRole);
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -94,28 +121,52 @@ export default function LeadGate({
   const startedRef = useRef(false);
 
   useEffect(() => {
-    captureAttribution(market);
-  }, [market]);
+    captureAttribution(market, {
+      category: category || "",
+      variant: variant || "",
+    });
+  }, [market, category, variant]);
+
+  useEffect(() => {
+    if (initialRole) setRole(initialRole);
+  }, [initialRole]);
 
   function markStart() {
     if (startedRef.current) return;
     startedRef.current = true;
     const t = Date.now();
     setStartedAt(t);
-    trackEvent("employer_form_start", { market, gate_variant: "inline" });
+    trackEvent("employer_form_started", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      gate_variant: "inline",
+    });
   }
 
   function onEmployerGate() {
     setIntent("employer");
     setError(null);
-    trackEvent("employer_gate_pass", { market, gate_variant: "inline" });
+    trackEvent("employer_gate_selected", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      gate_variant: "inline",
+      intent: "employer",
+    });
     markStart();
   }
 
   function onJobSeekerGate() {
     setIntent("job_seeker");
     setError(null);
-    trackEvent("job_seeker_redirect", { market, gate_variant: "inline" });
+    trackEvent("job_seeker_diverted", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      gate_variant: "inline",
+      intent: "job_seeker",
+    });
     // No employer form, no employer-lead conversion, no sales pipeline.
   }
 
@@ -139,7 +190,10 @@ export default function LeadGate({
     if (Object.keys(errs).length) return;
 
     setSubmitting(true);
-    const attr = readAttribution(market);
+    const attr = readAttribution(market, {
+      category: category || "",
+      variant: variant || "",
+    });
     const payload = {
       ...attr,
       name: String(fd.get("name") || ""),
@@ -147,11 +201,13 @@ export default function LeadGate({
       phone: String(fd.get("phone") || ""),
       company: String(fd.get("company") || ""),
       role: role || "",
+      category: category || "",
+      variant: variant || "",
       intent: "employer",
-      website: String(fd.get("website") || ""), // honeypot
+      website: String(fd.get("website") || ""),
       form_started_at: startedAt || Date.now(),
       market,
-      lp_version: attr.lp_version || "stage1-v1",
+      lp_version: attr.lp_version || "stage1-v5",
       submitted_at: new Date().toISOString(),
     };
 
@@ -167,6 +223,7 @@ export default function LeadGate({
         code?: string;
         submission_id?: string;
         duplicate?: boolean;
+        delivery?: string;
       };
 
       if (!res.ok || !data.ok || !data.submission_id) {
@@ -178,24 +235,33 @@ export default function LeadGate({
         }
         setError(
           data.error ||
-            "We could not deliver your request just now. Please try again, or call us.",
+            "We could not deliver your request just now. Please try again" +
+              (copy.phoneHref ? ", or call us." : "."),
         );
         setSubmitting(false);
         return;
       }
 
-      // Primary only after server accept; deduped by submission_id.
       trackValidEmployerSubmit({
         market,
         submissionId: data.submission_id,
         role: role || "",
+        category: category || "",
+        variant: variant || "",
       });
       setDone(true);
       setSubmitting(false);
-      router.push(`/thank-you?market=${market}&sid=${encodeURIComponent(data.submission_id)}`);
+      const q = new URLSearchParams({
+        market,
+        sid: data.submission_id,
+      });
+      if (category) q.set("category", category);
+      if (variant) q.set("variant", variant);
+      router.push(`/thank-you?${q.toString()}`);
     } catch {
       setError(
-        "Network error — your request was not sent. Please try again, or call us.",
+        "Network error — your request was not sent. Please try again" +
+          (copy.phoneHref ? ", or call us." : "."),
       );
       setSubmitting(false);
     }
@@ -215,7 +281,13 @@ export default function LeadGate({
           </p>
           <h3>{copy.doneTitle}</h3>
           <p>{copy.doneBody}</p>
-          <CallBlock copy={copy} market={market} solo />
+          <CallBlock
+            copy={copy}
+            market={market}
+            solo
+            category={category || undefined}
+            variant={variant}
+          />
         </div>
       ) : (
         <div className="gate-card-body">
@@ -286,7 +358,6 @@ export default function LeadGate({
                 <legend>
                   <b>3</b> {copy.detailsLabel}
                 </legend>
-                {/* Honeypot — hidden from humans */}
                 <label className="gate-hp" aria-hidden="true">
                   Website
                   <input
@@ -383,11 +454,19 @@ export default function LeadGate({
             <p className="gate-reassure">Choose one option to continue.</p>
           ) : null}
 
-          <div className="gate-or">
-            <span>or</span>
-          </div>
-
-          <CallBlock copy={copy} market={market} />
+          {copy.showPhone !== false && copy.phoneHref ? (
+            <>
+              <div className="gate-or">
+                <span>or</span>
+              </div>
+              <CallBlock
+                copy={copy}
+                market={market}
+                category={category || undefined}
+                variant={variant}
+              />
+            </>
+          ) : null}
         </div>
       )}
     </aside>

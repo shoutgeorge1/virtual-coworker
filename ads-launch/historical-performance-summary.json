@@ -1,0 +1,2102 @@
+{
+  "window": "Editor export ~2024-08-01 to 2026-08-04 (files dated 2026-08-05)",
+  "honesty": {
+    "conversions_vs_all": "Conversions \u2260 All conversions \u2260 job orders/placements",
+    "st_vs_campaign": "Search-term cost totals are typically < campaign totals (not every click has an ST row; PMax/DSA mix).",
+    "no_fabricated_metrics": true
+  },
+  "dedupe_method": "Group by casefold+whitespace-normalized Search term; drop rows with identical (impressions,clicks,cost,conversions,all_conv) + same Campaign + Ad group + normalized Keyword. Close-variant / Exact duplicates from Editor often share these fields.",
+  "usa": {
+    "search_terms": {
+      "raw_rows": 66869,
+      "deduped_rows": 66465,
+      "dropped_identical_metric_dupes": 404,
+      "unique_normalized_terms": 39106,
+      "method": "Group by casefold+whitespace-normalized Search term; drop rows with identical (impressions,clicks,cost,conversions,all_conv) + same Campaign + Ad group + normalized Keyword. Close-variant / Exact duplicates from Editor often share these fields."
+    },
+    "campaign_totals": {
+      "cost": 723838.59,
+      "clicks": 87060.0,
+      "conversions": 2597.32,
+      "all_conversions": 4629.39
+    },
+    "prior_benchmark_check": {
+      "cost": {
+        "actual": 723838.59,
+        "prior_cite": 724000,
+        "delta": "0.0% vs prior cite"
+      },
+      "clicks": {
+        "actual": 87060.0,
+        "prior_cite": 87000,
+        "delta": "0.1% vs prior cite"
+      },
+      "conversions": {
+        "actual": 2597.32,
+        "prior_cite": 2597,
+        "delta": "0.0% vs prior cite"
+      },
+      "st_raw_rows": {
+        "actual": 66869,
+        "prior_cite": 66900,
+        "delta": "0.0% vs prior cite"
+      }
+    },
+    "top_employer_terms": [
+      {
+        "search_term": "virtual assistant philippines",
+        "clicks": 446.0,
+        "cost": 17668.739999999998,
+        "conversions": 34.5,
+        "all_conversions": 60.5,
+        "impressions": 4209.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "philippines virtual assistant",
+        "clicks": 164.0,
+        "cost": 6992.2,
+        "conversions": 9.0,
+        "all_conversions": 17.0,
+        "impressions": 1849.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "how to hire a virtual assistant",
+        "clicks": 35.0,
+        "cost": 610.1,
+        "conversions": 8.5,
+        "all_conversions": 10.5,
+        "impressions": 637.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "filipino virtual assistant",
+        "clicks": 88.0,
+        "cost": 3378.31,
+        "conversions": 8.0,
+        "all_conversions": 16.0,
+        "impressions": 826.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistants philippines",
+        "clicks": 104.0,
+        "cost": 5337.46,
+        "conversions": 7.33,
+        "all_conversions": 12.67,
+        "impressions": 855.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistants for hire",
+        "clicks": 50.0,
+        "cost": 1547.64,
+        "conversions": 6.0,
+        "all_conversions": 9.0,
+        "impressions": 578.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire a virtual assistant",
+        "clicks": 42.0,
+        "cost": 1585.9999999999998,
+        "conversions": 5.0,
+        "all_conversions": 13.0,
+        "impressions": 1029.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire virtual assistant",
+        "clicks": 76.0,
+        "cost": 2411.71,
+        "conversions": 4.0,
+        "all_conversions": 6.0,
+        "impressions": 1272.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "how to hire a virtual assistant philippines",
+        "clicks": 14.0,
+        "cost": 372.13,
+        "conversions": 4.0,
+        "all_conversions": 4.0,
+        "impressions": 217.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant in philippines",
+        "clicks": 42.0,
+        "cost": 1699.9,
+        "conversions": 3.0,
+        "all_conversions": 8.0,
+        "impressions": 350.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "social media manager philippines",
+        "clicks": 44.0,
+        "cost": 1155.25,
+        "conversions": 3.0,
+        "all_conversions": 8.0,
+        "impressions": 221.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "hire virtual assistant from philippines",
+        "clicks": 13.0,
+        "cost": 647.9499999999999,
+        "conversions": 3.0,
+        "all_conversions": 7.0,
+        "impressions": 119.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire filipino virtual assistants",
+        "clicks": 11.0,
+        "cost": 628.87,
+        "conversions": 3.0,
+        "all_conversions": 3.0,
+        "impressions": 145.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "filipino vas",
+        "clicks": 14.0,
+        "cost": 447.64000000000004,
+        "conversions": 3.0,
+        "all_conversions": 3.0,
+        "impressions": 261.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant for hire",
+        "clicks": 29.0,
+        "cost": 946.75,
+        "conversions": 2.0,
+        "all_conversions": 2.0,
+        "impressions": 415.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant from the philippines",
+        "clicks": 16.0,
+        "cost": 906.2299999999999,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "impressions": 143.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "philippines bookkeeper",
+        "clicks": 8.0,
+        "cost": 778.61,
+        "conversions": 2.0,
+        "all_conversions": 7.0,
+        "impressions": 60.0,
+        "class": "employer_intent_keep",
+        "category_hint": "bookkeeping"
+      },
+      {
+        "search_term": "virtual assistants in the philippines",
+        "clicks": 18.0,
+        "cost": 771.3800000000001,
+        "conversions": 2.0,
+        "all_conversions": 4.0,
+        "impressions": 168.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistants in philippines",
+        "clicks": 8.0,
+        "cost": 661.3,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "impressions": 79.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant hire",
+        "clicks": 13.0,
+        "cost": 421.62999999999994,
+        "conversions": 2.0,
+        "all_conversions": 5.0,
+        "impressions": 195.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "how to find a virtual assistant in the philippines",
+        "clicks": 12.0,
+        "cost": 379.62,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "impressions": 117.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "where to hire virtual assistant philippines",
+        "clicks": 5.0,
+        "cost": 321.19,
+        "conversions": 2.0,
+        "all_conversions": 6.0,
+        "impressions": 48.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "best virtual assistant philippines",
+        "clicks": 8.0,
+        "cost": 261.08,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "impressions": 61.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire philippines virtual assistant",
+        "clicks": 39.0,
+        "cost": 1714.16,
+        "conversions": 1.0,
+        "all_conversions": 6.0,
+        "impressions": 430.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "filipino va",
+        "clicks": 28.0,
+        "cost": 1262.6999999999998,
+        "conversions": 1.0,
+        "all_conversions": 4.0,
+        "impressions": 683.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire a virtual assistant philippines",
+        "clicks": 27.0,
+        "cost": 1088.0,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 171.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant in the philippines",
+        "clicks": 24.0,
+        "cost": 989.7399999999999,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 219.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "philippines virtual assistant agency",
+        "clicks": 16.0,
+        "cost": 949.83,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 108.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "bookkeeper philippines",
+        "clicks": 11.0,
+        "cost": 613.77,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 45.0,
+        "class": "employer_intent_keep",
+        "category_hint": "bookkeeping"
+      },
+      {
+        "search_term": "hiring a virtual assistant",
+        "clicks": 21.0,
+        "cost": 551.97,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 504.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "filipino social media manager",
+        "clicks": 17.0,
+        "cost": 547.13,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 66.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "bookkeeping philippines",
+        "clicks": 10.0,
+        "cost": 519.89,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 68.0,
+        "class": "employer_intent_keep",
+        "category_hint": "bookkeeping"
+      },
+      {
+        "search_term": "virtual assistant hiring",
+        "clicks": 31.0,
+        "cost": 512.65,
+        "conversions": 1.0,
+        "all_conversions": 4.0,
+        "impressions": 433.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "philippines bookkeeping outsourcing",
+        "clicks": 7.0,
+        "cost": 446.06000000000006,
+        "conversions": 1.0,
+        "all_conversions": 5.0,
+        "impressions": 46.0,
+        "class": "employer_intent_keep",
+        "category_hint": "bookkeeping"
+      },
+      {
+        "search_term": "digital marketing philippines",
+        "clicks": 10.0,
+        "cost": 409.63,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 91.0,
+        "class": "employer_intent_keep",
+        "category_hint": "digital-marketing"
+      },
+      {
+        "search_term": "cheap virtual assistant philippines",
+        "clicks": 14.0,
+        "cost": 374.96999999999997,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 82.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "social media manager for hire",
+        "clicks": 14.0,
+        "cost": 334.84999999999997,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 250.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "hire a social media manager",
+        "clicks": 7.0,
+        "cost": 325.83,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 86.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "part time virtual assistant philippines",
+        "clicks": 6.0,
+        "cost": 304.3,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 38.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "bookkeepers philippines",
+        "clicks": 5.0,
+        "cost": 303.27000000000004,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 21.0,
+        "class": "employer_intent_keep",
+        "category_hint": "bookkeeping"
+      }
+    ],
+    "top_waste_terms": [
+      {
+        "search_term": "onlinejobs ph",
+        "clicks": 2069.0,
+        "cost": 27797.75,
+        "conversions": 77.0,
+        "all_conversions": 263.0,
+        "impressions": 32425.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "bruntwork",
+        "clicks": 126.0,
+        "cost": 3128.56,
+        "conversions": 7.0,
+        "all_conversions": 7.0,
+        "impressions": 4107.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "myoutdesk",
+        "clicks": 115.0,
+        "cost": 2403.45,
+        "conversions": 5.0,
+        "all_conversions": 8.0,
+        "impressions": 2298.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "onlinejobsph",
+        "clicks": 159.0,
+        "cost": 2281.8999999999996,
+        "conversions": 5.0,
+        "all_conversions": 18.0,
+        "impressions": 4216.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "onlinejobs ph pricing",
+        "clicks": 126.0,
+        "cost": 1957.77,
+        "conversions": 4.0,
+        "all_conversions": 17.0,
+        "impressions": 1164.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual coworker reviews",
+        "clicks": 30.0,
+        "cost": 831.2399999999999,
+        "conversions": 3.0,
+        "all_conversions": 4.96,
+        "impressions": 240.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "philippines virtual assistant cost",
+        "clicks": 20.0,
+        "cost": 649.7000000000002,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "impressions": 109.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "work from home receptionist",
+        "clicks": 275.0,
+        "cost": 328.73,
+        "conversions": 2.0,
+        "all_conversions": 2.0,
+        "impressions": 519.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "us online jobs for foreigners",
+        "clicks": 3.0,
+        "cost": 7.29,
+        "conversions": 2.0,
+        "all_conversions": 2.0,
+        "impressions": 4.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual assistant in philippines salary",
+        "clicks": 2.0,
+        "cost": 6.29,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "impressions": 12.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "how much does a virtual assistant charge",
+        "clicks": 1.0,
+        "cost": 3.4,
+        "conversions": 2.0,
+        "all_conversions": 2.0,
+        "impressions": 3.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtualstaff ph reviews",
+        "clicks": 15.0,
+        "cost": 445.71,
+        "conversions": 1.5,
+        "all_conversions": 6.5,
+        "impressions": 186.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "bruntwork reviews",
+        "clicks": 44.0,
+        "cost": 1357.7,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 863.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual assistant philippines cost",
+        "clicks": 23.0,
+        "cost": 668.3800000000001,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 86.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "upwork",
+        "clicks": 34.0,
+        "cost": 659.07,
+        "conversions": 1.0,
+        "all_conversions": 9.0,
+        "impressions": 1376.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "work from home",
+        "clicks": 90.0,
+        "cost": 388.63,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 8854.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "upwork social media manager",
+        "clicks": 6.0,
+        "cost": 202.36,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 88.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "low cost virtual assistant",
+        "clicks": 4.0,
+        "cost": 124.07,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 30.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "companies like bruntwork",
+        "clicks": 2.0,
+        "cost": 93.5,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 15.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "fiverr virtual assistant",
+        "clicks": 5.0,
+        "cost": 78.94,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 120.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "remote jobs",
+        "clicks": 6.0,
+        "cost": 72.19,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 208.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "getmagic reviews",
+        "clicks": 1.0,
+        "cost": 54.43,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 13.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "bookkeeper philippines salary",
+        "clicks": 1.0,
+        "cost": 53.36,
+        "conversions": 1.0,
+        "all_conversions": 4.0,
+        "impressions": 1.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "bookkeeping"
+      },
+      {
+        "search_term": "colony brands work from home",
+        "clicks": 1.0,
+        "cost": 29.38,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 2.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual gurus pricing",
+        "clicks": 1.0,
+        "cost": 22.32,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 3.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "email marketing jobs online",
+        "clicks": 7.0,
+        "cost": 22.23,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 12.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual coworker salary philippines",
+        "clicks": 1.0,
+        "cost": 20.56,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 2.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "brickwork virtual assistant cost",
+        "clicks": 1.0,
+        "cost": 16.1,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 5.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "upwork asistente virtual",
+        "clicks": 2.0,
+        "cost": 14.88,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 5.0,
+        "class": "spanish_latam",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "remote job usa",
+        "clicks": 4.0,
+        "cost": 11.98,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 16.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "freelance jobs",
+        "clicks": 3.0,
+        "cost": 11.29,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 7.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "apply work from home",
+        "clicks": 3.0,
+        "cost": 11.08,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 12.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "how much is a virtual assistant per hour",
+        "clicks": 1.0,
+        "cost": 7.82,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 13.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "online jobs in usa for foreigners",
+        "clicks": 5.0,
+        "cost": 7.76,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 11.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "how much does it cost to hire a social media manager",
+        "clicks": 1.0,
+        "cost": 5.2,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 10.0,
+        "class": "research_pricing",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "remote jobs no experience",
+        "clicks": 2.0,
+        "cost": 4.97,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 13.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual assistant jobs online",
+        "clicks": 1.0,
+        "cost": 4.24,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 4.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "us company work from home",
+        "clicks": 1.0,
+        "cost": 2.26,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 3.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "remote coworker reviews",
+        "clicks": 14.0,
+        "cost": 850.27,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 203.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "onlinejobs",
+        "clicks": 55.0,
+        "cost": 737.87,
+        "conversions": 0.0,
+        "all_conversions": 6.0,
+        "impressions": 1618.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      }
+    ],
+    "class_counts": {
+      "other": 23882,
+      "possible_employer_generic": 9679,
+      "job_seeker_or_wfh": 2687,
+      "employer_intent_keep": 909,
+      "research_pricing": 833,
+      "spanish_latam": 456,
+      "marketplace_or_competitor": 317,
+      "excluded_vertical": 312,
+      "brand": 31
+    },
+    "worst_campaigns_by_cpa": [
+      {
+        "campaign": "PM_US_RSA_Competitors",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 8200.1,
+        "clicks": 337.0,
+        "conversions": 0.5,
+        "all_conversions": 16.88,
+        "cpa": 16400.2,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_US_RSA_Generic_Core Category",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 12828.33,
+        "clicks": 287.0,
+        "conversions": 4.0,
+        "all_conversions": 32.2,
+        "cpa": 3207.0825,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_US_RSA_Generic_Pain-point Intent",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 13069.7,
+        "clicks": 290.0,
+        "conversions": 4.63,
+        "all_conversions": 33.26,
+        "cpa": 2822.829373650108,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_US_RSA_Generic_Role-Specific",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 18704.94,
+        "clicks": 521.0,
+        "conversions": 7.5,
+        "all_conversions": 76.25,
+        "cpa": 2493.9919999999997,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_US_RSA_Generic_Premium & Quality Intent",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 1390.59,
+        "clicks": 40.0,
+        "conversions": 1.0,
+        "all_conversions": 6.0,
+        "cpa": 1390.59,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_US_DSA_Generic_Catch-all",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 89583.6,
+        "clicks": 4403.0,
+        "conversions": 68.37,
+        "all_conversions": 542.57,
+        "cpa": 1310.2764370337868,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "[Original] NA - Search - Virtual Assistant - Philippines",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 4040.43,
+        "clicks": 173.0,
+        "conversions": 5.0,
+        "all_conversions": 17.0,
+        "cpa": 808.086,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_US_RSA_Brand",
+        "campaign_type": "Search",
+        "status": "Enabled",
+        "cost": 12845.43,
+        "clicks": 1134.0,
+        "conversions": 16.0,
+        "all_conversions": 133.72,
+        "cpa": 802.839375,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "[Original] NA - Search - Virtual Assistant - Exact",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 4901.26,
+        "clicks": 184.0,
+        "conversions": 7.0,
+        "all_conversions": 21.0,
+        "cpa": 700.1800000000001,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "LK - US | Competitor | Search | Exact",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 14244.41,
+        "clicks": 585.0,
+        "conversions": 32.0,
+        "all_conversions": 42.0,
+        "cpa": 445.1378125,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "LK - Generic VA",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 150185.89,
+        "clicks": 4574.0,
+        "conversions": 343.0,
+        "all_conversions": 544.25,
+        "cpa": 437.8597376093295,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "[Original] NA - Search - Virtual Assistant - Core",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 7420.86,
+        "clicks": 475.0,
+        "conversions": 18.0,
+        "all_conversions": 62.04,
+        "cpa": 412.27,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "[Original] NA - Performance Max",
+        "campaign_type": "Performance Max",
+        "status": "Paused",
+        "cost": 145863.23,
+        "clicks": 34122.0,
+        "conversions": 400.49,
+        "all_conversions": 1077.73,
+        "cpa": 364.2119154036306,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "LK - Specific Services",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 80584.43,
+        "clicks": 2638.0,
+        "conversions": 225.5,
+        "all_conversions": 365.79,
+        "cpa": 357.35889135254985,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "US | DSA",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 11302.05,
+        "clicks": 1500.0,
+        "conversions": 35.0,
+        "all_conversions": 49.0,
+        "cpa": 322.9157142857143,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "US | Search Campaign",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 76496.94,
+        "clicks": 4418.0,
+        "conversions": 250.0,
+        "all_conversions": 281.0,
+        "cpa": 305.98776000000004,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "NA - Search - Virtual Assistant - Exact - A/B Test",
+        "campaign_type": "Search",
+        "status": "Ended",
+        "cost": 3558.42,
+        "clicks": 157.0,
+        "conversions": 12.0,
+        "all_conversions": 15.0,
+        "cpa": 296.535,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "LK - SKAG - [Virtual Assistant]",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 47702.12,
+        "clicks": 2207.0,
+        "conversions": 175.5,
+        "all_conversions": 221.9,
+        "cpa": 271.80695156695157,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "[Original] NA - Search - Brand",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 9357.05,
+        "clicks": 1966.0,
+        "conversions": 92.83,
+        "all_conversions": 113.8,
+        "cpa": 100.7976947107616,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "NA - Search - Virtual Assistant - Core - A/B Test",
+        "campaign_type": "Search",
+        "status": "Ended",
+        "cost": 1570.53,
+        "clicks": 141.0,
+        "conversions": 27.0,
+        "all_conversions": 27.0,
+        "cpa": 58.16777777777778,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      }
+    ]
+  },
+  "au": {
+    "search_terms": {
+      "raw_rows": 26211,
+      "deduped_rows": 26132,
+      "dropped_identical_metric_dupes": 79,
+      "unique_normalized_terms": 16931,
+      "method": "Group by casefold+whitespace-normalized Search term; drop rows with identical (impressions,clicks,cost,conversions,all_conv) + same Campaign + Ad group + normalized Keyword. Close-variant / Exact duplicates from Editor often share these fields."
+    },
+    "campaign_totals": {
+      "cost": 457489.46,
+      "clicks": 49457.0,
+      "conversions": 1412.66,
+      "all_conversions": 3505.46
+    },
+    "prior_benchmark_check": {
+      "cost": {
+        "actual": 457489.46,
+        "prior_cite": 457000,
+        "delta": "0.1% vs prior cite"
+      },
+      "clicks": {
+        "actual": 49457.0,
+        "prior_cite": 49000,
+        "delta": "0.9% vs prior cite"
+      },
+      "conversions": {
+        "actual": 1412.66,
+        "prior_cite": 1413,
+        "delta": "0.0% vs prior cite"
+      },
+      "st_raw_rows": {
+        "actual": 26211,
+        "prior_cite": 26200,
+        "delta": "0.0% vs prior cite"
+      }
+    },
+    "top_employer_terms": [
+      {
+        "search_term": "virtual assistant philippines",
+        "clicks": 319.0,
+        "cost": 14687.3,
+        "conversions": 37.0,
+        "all_conversions": 86.67,
+        "impressions": 2549.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "philippines virtual assistant",
+        "clicks": 101.0,
+        "cost": 6334.369999999999,
+        "conversions": 15.78,
+        "all_conversions": 31.94,
+        "impressions": 770.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire virtual assistant",
+        "clicks": 44.0,
+        "cost": 1557.83,
+        "conversions": 7.48,
+        "all_conversions": 10.48,
+        "impressions": 464.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant hire",
+        "clicks": 31.0,
+        "cost": 1204.1100000000001,
+        "conversions": 6.0,
+        "all_conversions": 9.0,
+        "impressions": 237.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistants philippines",
+        "clicks": 40.0,
+        "cost": 2397.41,
+        "conversions": 3.0,
+        "all_conversions": 8.0,
+        "impressions": 369.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "social media manager philippines",
+        "clicks": 37.0,
+        "cost": 1295.31,
+        "conversions": 3.0,
+        "all_conversions": 6.0,
+        "impressions": 230.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "hire a virtual assistant",
+        "clicks": 31.0,
+        "cost": 1086.07,
+        "conversions": 2.92,
+        "all_conversions": 6.85,
+        "impressions": 435.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire virtual assistant from philippines",
+        "clicks": 11.0,
+        "cost": 582.64,
+        "conversions": 2.0,
+        "all_conversions": 2.0,
+        "impressions": 47.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "offshore virtual assistants",
+        "clicks": 25.0,
+        "cost": 565.77,
+        "conversions": 2.0,
+        "all_conversions": 8.0,
+        "impressions": 334.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire virtual assistant philippines",
+        "clicks": 9.0,
+        "cost": 423.25,
+        "conversions": 2.0,
+        "all_conversions": 4.0,
+        "impressions": 47.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "recruitment agency philippines to australia",
+        "clicks": 4.0,
+        "cost": 115.08,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "impressions": 49.0,
+        "class": "employer_intent_keep",
+        "category_hint": "recruitment"
+      },
+      {
+        "search_term": "filipino social media manager",
+        "clicks": 2.0,
+        "cost": 84.09,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "impressions": 30.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "outsource virtual assistant philippines",
+        "clicks": 1.0,
+        "cost": 79.24,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "impressions": 28.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "outsource customer service",
+        "clicks": 2.0,
+        "cost": 48.11,
+        "conversions": 2.0,
+        "all_conversions": 2.0,
+        "impressions": 19.0,
+        "class": "employer_intent_keep",
+        "category_hint": "customer-service"
+      },
+      {
+        "search_term": "freelance virtual assistant philippines",
+        "clicks": 1.0,
+        "cost": 14.95,
+        "conversions": 2.0,
+        "all_conversions": 3.87,
+        "impressions": 9.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire philippines virtual assistant",
+        "clicks": 26.0,
+        "cost": 1553.06,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 249.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "filipino virtual assistant",
+        "clicks": 25.0,
+        "cost": 1346.96,
+        "conversions": 1.0,
+        "all_conversions": 5.0,
+        "impressions": 315.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "filipino va",
+        "clicks": 24.0,
+        "cost": 1241.91,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 347.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire a virtual assistant philippines",
+        "clicks": 13.0,
+        "cost": 657.77,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 81.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "offshore va",
+        "clicks": 19.0,
+        "cost": 563.62,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 124.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant australia philippines",
+        "clicks": 10.0,
+        "cost": 384.46000000000004,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 84.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "social media management philippines",
+        "clicks": 10.0,
+        "cost": 378.48,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 75.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "cheap virtual assistant philippines",
+        "clicks": 2.0,
+        "cost": 369.62,
+        "conversions": 1.0,
+        "all_conversions": 4.0,
+        "impressions": 28.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire philippines social media manager",
+        "clicks": 4.0,
+        "cost": 220.25,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 24.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "philippines virtual assistants",
+        "clicks": 4.0,
+        "cost": 180.47,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 39.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "offshore virtual assistant",
+        "clicks": 9.0,
+        "cost": 166.07,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 75.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant hiring",
+        "clicks": 4.0,
+        "cost": 164.39,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 93.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "social media services philippines",
+        "clicks": 2.0,
+        "cost": 162.76000000000002,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 7.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "digital marketing philippines",
+        "clicks": 4.0,
+        "cost": 144.42000000000002,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 63.0,
+        "class": "employer_intent_keep",
+        "category_hint": "digital-marketing"
+      },
+      {
+        "search_term": "virtual assistants in philippines",
+        "clicks": 2.0,
+        "cost": 121.9,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 14.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "where to hire a virtual assistant",
+        "clicks": 2.0,
+        "cost": 81.78999999999999,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 15.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "i want to hire a virtual assistant",
+        "clicks": 1.0,
+        "cost": 69.62,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 8.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant philippines reddit",
+        "clicks": 1.0,
+        "cost": 68.0,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 19.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hiring virtual assistant",
+        "clicks": 3.0,
+        "cost": 66.0,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 44.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire a virtual assistant in the philippines",
+        "clicks": 2.0,
+        "cost": 62.62,
+        "conversions": 1.0,
+        "all_conversions": 2.93,
+        "impressions": 29.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "hire social media content creator",
+        "clicks": 4.0,
+        "cost": 57.52,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 40.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "hire social media manager for small business",
+        "clicks": 2.0,
+        "cost": 36.95,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 31.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "hiring a social media manager",
+        "clicks": 2.0,
+        "cost": 36.93,
+        "conversions": 1.0,
+        "all_conversions": 2.32,
+        "impressions": 13.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "hire offshore virtual assistant",
+        "clicks": 1.0,
+        "cost": 34.08,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 5.0,
+        "class": "employer_intent_keep",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "philippines social media marketing",
+        "clicks": 1.0,
+        "cost": 26.37,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 5.0,
+        "class": "employer_intent_keep",
+        "category_hint": "social-media"
+      }
+    ],
+    "top_waste_terms": [
+      {
+        "search_term": "onlinejobs ph",
+        "clicks": 238.0,
+        "cost": 4309.87,
+        "conversions": 10.0,
+        "all_conversions": 43.67,
+        "impressions": 10904.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "bruntwork",
+        "clicks": 144.0,
+        "cost": 2666.9,
+        "conversions": 7.0,
+        "all_conversions": 21.0,
+        "impressions": 5616.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual assistant jobs",
+        "clicks": 161.0,
+        "cost": 667.71,
+        "conversions": 4.0,
+        "all_conversions": 8.0,
+        "impressions": 1382.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant jobs australia",
+        "clicks": 92.0,
+        "cost": 426.15000000000003,
+        "conversions": 3.0,
+        "all_conversions": 7.0,
+        "impressions": 661.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "bruntwork australia",
+        "clicks": 9.0,
+        "cost": 210.45,
+        "conversions": 2.0,
+        "all_conversions": 2.0,
+        "impressions": 246.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "ph jobs online",
+        "clicks": 6.0,
+        "cost": 104.56,
+        "conversions": 2.0,
+        "all_conversions": 2.0,
+        "impressions": 54.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "myoutdesk",
+        "clicks": 2.0,
+        "cost": 21.53,
+        "conversions": 2.0,
+        "all_conversions": 2.0,
+        "impressions": 8.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual coworker review",
+        "clicks": 4.0,
+        "cost": 19.43,
+        "conversions": 1.99,
+        "all_conversions": 1.99,
+        "impressions": 13.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual coworker reviews",
+        "clicks": 13.0,
+        "cost": 508.69,
+        "conversions": 1.0,
+        "all_conversions": 4.45,
+        "impressions": 99.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "how much does a va cost",
+        "clicks": 24.0,
+        "cost": 191.84,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 119.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "how much does a virtual assistant cost",
+        "clicks": 20.0,
+        "cost": 154.85999999999999,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 171.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "how much is a virtual assistant",
+        "clicks": 13.0,
+        "cost": 146.70000000000002,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 103.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant salary",
+        "clicks": 12.0,
+        "cost": 98.0,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 105.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "upwork va",
+        "clicks": 5.0,
+        "cost": 95.91,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 77.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual assistant jobs remote",
+        "clicks": 10.0,
+        "cost": 59.83,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 62.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "ph onlinejobs",
+        "clicks": 2.0,
+        "cost": 35.08,
+        "conversions": 1.0,
+        "all_conversions": 4.0,
+        "impressions": 136.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "top 10 marketing companies in the philippines",
+        "clicks": 1.0,
+        "cost": 17.39,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 4.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "fiverr philippines",
+        "clicks": 2.0,
+        "cost": 13.96,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 21.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "philippines call center agent salary",
+        "clicks": 1.0,
+        "cost": 9.04,
+        "conversions": 1.0,
+        "all_conversions": 1.0,
+        "impressions": 1.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "hiring virtual assistant work from home",
+        "clicks": 2.0,
+        "cost": 7.220000000000001,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 10.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "social media virtual assistant jobs",
+        "clicks": 2.0,
+        "cost": 6.92,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 3.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "online virtual assistant jobs",
+        "clicks": 2.0,
+        "cost": 5.99,
+        "conversions": 1.0,
+        "all_conversions": 2.0,
+        "impressions": 12.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "how much to pay for social media posts",
+        "clicks": 1.0,
+        "cost": 2.99,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 2.0,
+        "class": "research_pricing",
+        "category_hint": "social-media"
+      },
+      {
+        "search_term": "virtual assistant jobs overseas",
+        "clicks": 1.0,
+        "cost": 1.41,
+        "conversions": 1.0,
+        "all_conversions": 3.0,
+        "impressions": 2.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "bruntwork reviews",
+        "clicks": 17.0,
+        "cost": 826.15,
+        "conversions": 0.0,
+        "all_conversions": 3.0,
+        "impressions": 200.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "onlinejobsph",
+        "clicks": 24.0,
+        "cost": 503.82,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 1243.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "upwork virtual assistant",
+        "clicks": 13.0,
+        "cost": 243.23,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 127.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant cost",
+        "clicks": 16.0,
+        "cost": 169.86,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 191.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "onlinejobs",
+        "clicks": 13.0,
+        "cost": 154.27,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 748.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "virtual assistant reviews",
+        "clicks": 5.0,
+        "cost": 146.88,
+        "conversions": 0.0,
+        "all_conversions": 0.5,
+        "impressions": 39.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant costs",
+        "clicks": 5.0,
+        "cost": 131.29,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 52.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "online jobs ph",
+        "clicks": 14.0,
+        "cost": 123.12,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 531.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "bruntworks",
+        "clicks": 8.0,
+        "cost": 116.51,
+        "conversions": 0.0,
+        "all_conversions": 1.0,
+        "impressions": 108.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "philippines virtual assistant cost",
+        "clicks": 5.0,
+        "cost": 106.06,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 63.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant philippines salary",
+        "clicks": 13.0,
+        "cost": 104.48,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 98.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "virtual assistant philippines cost",
+        "clicks": 5.0,
+        "cost": 102.77000000000001,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 33.0,
+        "class": "research_pricing",
+        "category_hint": "administrative-support"
+      },
+      {
+        "search_term": "bruntwork review",
+        "clicks": 2.0,
+        "cost": 91.73,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 25.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "remote co worker review",
+        "clicks": 1.0,
+        "cost": 90.11,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 1.0,
+        "class": "research_pricing",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "onlinejobs philippines",
+        "clicks": 7.0,
+        "cost": 86.51,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 232.0,
+        "class": "job_seeker_or_wfh",
+        "category_hint": "unmapped"
+      },
+      {
+        "search_term": "is bruntwork legit",
+        "clicks": 1.0,
+        "cost": 84.5,
+        "conversions": 0.0,
+        "all_conversions": 0.0,
+        "impressions": 14.0,
+        "class": "marketplace_or_competitor",
+        "category_hint": "unmapped"
+      }
+    ],
+    "class_counts": {
+      "other": 8277,
+      "possible_employer_generic": 5395,
+      "job_seeker_or_wfh": 1597,
+      "employer_intent_keep": 672,
+      "research_pricing": 463,
+      "excluded_vertical": 240,
+      "marketplace_or_competitor": 222,
+      "spanish_latam": 33,
+      "brand": 32
+    },
+    "worst_campaigns_by_cpa": [
+      {
+        "campaign": "PM_AU_RSA_Generic_Pain-Point Intent",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 13970.23,
+        "clicks": 196.0,
+        "conversions": 2.67,
+        "all_conversions": 47.83,
+        "cpa": 5232.295880149813,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_AU_RSA_Generic_Role Specific",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 18444.72,
+        "clicks": 284.0,
+        "conversions": 4.0,
+        "all_conversions": 51.38,
+        "cpa": 4611.18,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_AU_RSA_Generic_Core category",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 14962.21,
+        "clicks": 165.0,
+        "conversions": 4.0,
+        "all_conversions": 50.0,
+        "cpa": 3740.5525,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "[Original] APAC - Search - Virtual Assistant - Philippines",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 4615.05,
+        "clicks": 126.0,
+        "conversions": 2.0,
+        "all_conversions": 3.0,
+        "cpa": 2307.525,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_AU_DSA_Generic_Catch-all",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 48737.14,
+        "clicks": 1606.0,
+        "conversions": 21.5,
+        "all_conversions": 246.71,
+        "cpa": 2266.8437209302324,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "[Original] APAC - Search - Virtual Assistant - Core",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 8140.78,
+        "clicks": 349.0,
+        "conversions": 9.0,
+        "all_conversions": 9.0,
+        "cpa": 904.531111111111,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "LK - Specific Services",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 15220.14,
+        "clicks": 343.0,
+        "conversions": 21.0,
+        "all_conversions": 36.0,
+        "cpa": 724.7685714285714,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "LK - Executive/Personal Assistant",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 2076.3,
+        "clicks": 369.0,
+        "conversions": 4.0,
+        "all_conversions": 7.0,
+        "cpa": 519.075,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "PM_AU_RSA_Brand",
+        "campaign_type": "Search",
+        "status": "Enabled",
+        "cost": 8315.6,
+        "clicks": 555.0,
+        "conversions": 18.83,
+        "all_conversions": 180.05,
+        "cpa": 441.61444503451946,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "LK - Generic VA",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 140358.81,
+        "clicks": 4892.0,
+        "conversions": 447.79,
+        "all_conversions": 991.04,
+        "cpa": 313.4478438553786,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "[Original] APAC - Search - Brand",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 8110.62,
+        "clicks": 296.0,
+        "conversions": 35.5,
+        "all_conversions": 77.43,
+        "cpa": 228.4681690140845,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "LK - AUS | Search | Competitor",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 16917.97,
+        "clicks": 896.0,
+        "conversions": 75.0,
+        "all_conversions": 133.31,
+        "cpa": 225.57293333333334,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "[Original] APAC - Performance Max",
+        "campaign_type": "Performance Max",
+        "status": "Paused",
+        "cost": 144536.6,
+        "clicks": 37993.0,
+        "conversions": 715.0,
+        "all_conversions": 1495.38,
+        "cpa": 202.14909090909092,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "LK - Remarketing Campaign",
+        "campaign_type": "Display",
+        "status": "Paused",
+        "cost": 176.17,
+        "clicks": 21.0,
+        "conversions": 1.0,
+        "all_conversions": 9.0,
+        "cpa": 176.17,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      },
+      {
+        "campaign": "DSA",
+        "campaign_type": "Search",
+        "status": "Paused",
+        "cost": 7311.85,
+        "clicks": 739.0,
+        "conversions": 51.37,
+        "all_conversions": 136.37,
+        "cpa": 142.33696710142107,
+        "note": "Conversions \u2260 All conversions \u2260 job orders"
+      }
+    ]
+  }
+}

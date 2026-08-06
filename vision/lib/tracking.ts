@@ -2,9 +2,16 @@
  * Client-side attribution + Stage 1 dataLayer helpers.
  * No hard-coded Ads conversion IDs. Primary fires only after server accept,
  * once per submission id (refresh-safe).
+ *
+ * Event names (Stage 1 contract):
+ * - employer_gate_selected
+ * - employer_form_started
+ * - employer_inquiry_submitted  (primary candidate — not a job order)
+ * - phone_cta_clicked          (not a qualified call)
+ * - job_seeker_diverted
  */
 
-export const LP_VERSION = "stage1-v1";
+export const LP_VERSION = "stage1-v5";
 
 export type Attribution = {
   utm_source: string;
@@ -19,6 +26,9 @@ export type Attribution = {
   referrer: string;
   lp_version: string;
   market: string;
+  category: string;
+  variant: string;
+  captured_at: string;
 };
 
 const ATTR_KEY = "vc_pilot_attribution";
@@ -43,10 +53,16 @@ function emptyAttr(market = ""): Attribution {
     referrer: "",
     lp_version: LP_VERSION,
     market,
+    category: "",
+    variant: "",
+    captured_at: "",
   };
 }
 
-export function captureAttribution(market = ""): Attribution {
+export function captureAttribution(
+  market = "",
+  extras: { category?: string; variant?: string } = {},
+): Attribution {
   if (typeof window === "undefined") return emptyAttr(market);
 
   const next: Attribution = {
@@ -62,6 +78,9 @@ export function captureAttribution(market = ""): Attribution {
     referrer: document.referrer || "",
     lp_version: LP_VERSION,
     market: market || param("market") || "",
+    category: extras.category || param("category") || "",
+    variant: extras.variant || param("variant") || "",
+    captured_at: new Date().toISOString(),
   };
 
   try {
@@ -79,6 +98,9 @@ export function captureAttribution(market = ""): Attribution {
       referrer: next.referrer || prev.referrer || "",
       lp_version: LP_VERSION,
       market: next.market || prev.market || market || "",
+      category: next.category || prev.category || "",
+      variant: next.variant || prev.variant || "",
+      captured_at: prev.captured_at || next.captured_at,
     };
     sessionStorage.setItem(ATTR_KEY, JSON.stringify(merged));
     return merged;
@@ -87,18 +109,28 @@ export function captureAttribution(market = ""): Attribution {
   }
 }
 
-export function readAttribution(market = ""): Attribution {
-  if (typeof window === "undefined") return captureAttribution(market);
+export function readAttribution(
+  market = "",
+  extras: { category?: string; variant?: string } = {},
+): Attribution {
+  if (typeof window === "undefined") return captureAttribution(market, extras);
   try {
     const raw = sessionStorage.getItem(ATTR_KEY);
     if (raw) {
       const prev = JSON.parse(raw) as Partial<Attribution>;
-      return { ...emptyAttr(market), ...prev, ...captureAttribution(market || prev.market || "") };
+      return {
+        ...emptyAttr(market),
+        ...prev,
+        ...captureAttribution(market || prev.market || "", {
+          category: extras.category || prev.category,
+          variant: extras.variant || prev.variant,
+        }),
+      };
     }
   } catch {
     /* ignore */
   }
-  return captureAttribution(market);
+  return captureAttribution(market, extras);
 }
 
 type DataLayerEvent = {
@@ -146,27 +178,34 @@ function markPrimaryFired(submissionId: string) {
 }
 
 /**
- * Form-path primary conversion candidate.
- * Fires employer_form_valid_submit only once per server submission id.
- * Never hard-codes Ads send_to IDs — GTM maps the event when configured.
+ * Primary conversion candidate after server accept.
+ * Name: employer_inquiry_submitted — NOT job_order / placement / qualified_call.
  */
 export function trackValidEmployerSubmit(opts: {
   market: string;
   submissionId: string;
   role?: string;
+  category?: string;
+  variant?: string;
 }) {
   if (!opts.submissionId || alreadyFiredPrimary(opts.submissionId)) {
-    trackEvent("employer_form_valid_submit_deduped", {
+    trackEvent("employer_inquiry_submitted_deduped", {
       market: opts.market,
       submission_id: opts.submissionId,
     });
     return;
   }
   markPrimaryFired(opts.submissionId);
-  trackEvent("employer_form_valid_submit", {
+  trackEvent("employer_inquiry_submitted", {
     market: opts.market,
     submission_id: opts.submissionId,
     role: opts.role || "",
+    category: opts.category || "",
+    variant: opts.variant || "",
     primary_eligible: true,
+    // Honesty flags for GTM mapping
+    is_job_order: false,
+    is_placement: false,
+    is_qualified_call: false,
   });
 }

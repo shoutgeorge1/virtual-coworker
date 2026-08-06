@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Build Stage 1 Google Ads Editor import — role Search only (brand deferred).
+"""Build Stage 1 Google Ads Editor import — Brand + Core + Role Search.
 
-v4 (2026-08-05 evening): fold real ~2y Editor search-term + campaign metrics from
-audit-data/performance/* into keywords + negatives. Keep high-intent employer
-queries; kill job-seeker / Spanish-LATAM / WFH fluff / review-pricing / DSA
-catch-alls. Do not clone DSA or thin PM_*_RSA farms. No Ads API. All Paused.
+v5 (2026-08-05): category Final URLs (/us|au/{slug}), Brand + Core VA/offshore,
+single UTM path (Final URL suffix only), employer CTAs (no consult/demo language).
+Retains v4 ST evidence keywords/negatives. Exact+Phrase only. No Ads API. All Paused.
 
 Outputs:
   - ads-launch/google-ads-editor-import.csv
@@ -26,13 +25,23 @@ MIRROR = ROOT / "xray" / "docs" / "ads-launch" / "google-ads-editor-import.csv"
 HL_MAX = 30
 DESC_MAX = 90
 PATH_MAX = 15
-LP_VERSION = "stage1-v4"
+LP_VERSION = "stage1-v5"
 
+# George-decidable Stage 1 defaults (see ads-launch/DECISIONS.md).
+# Conservative placeholders so Editor Post is not blocked by [APPROVAL_*] tokens.
+# Change anytime; campaigns ship Paused — not an enable approval.
+BUDGET_DAILY = {
+    "US": {"brand": "40", "core": "60", "role": "25"},  # USD
+    "AU": {"brand": "40", "core": "40", "role": "20"},  # AUD
+}
+MAX_CPC = {"US": "8", "AU": "6"}  # USD / AUD
+
+# Final URL suffix only — do NOT also put UTMs on Tracking template (double-UTM bug).
 SUFFIX = (
     "utm_source=google&utm_medium=cpc&utm_campaign={_campaign}"
     f"&utm_content={{_adgroup}}&utm_term={{keyword}}&lp_version={LP_VERSION}"
 )
-TRACK = "{lpurl}?" + SUFFIX
+TRACK = "{lpurl}"
 
 FIELDS = [
     "Row Type",
@@ -317,6 +326,19 @@ ROLE_LABEL = {
     "hr": "Human Resources",
     "recruitment": "Recruitment",
     "sales": "Sales",
+}
+
+# Canonical category LP slugs (vision microsite /{market}/{slug})
+ROLE_CATEGORY_SLUG = {
+    "digital_marketing": "digital-marketing",
+    "social_media": "social-media",
+    "accounting": "accounting",
+    "bookkeeping": "bookkeeping",
+    "administration": "administrative-support",
+    "customer_service": "customer-service",
+    "hr": "hr",
+    "recruitment": "recruitment",
+    "sales": "sales",
 }
 
 # ---------------------------------------------------------------------------
@@ -1326,12 +1348,12 @@ def _rsa_catalog() -> dict:
                     "Dedicated Not Freelance",
                     "SEO & Content VA Hire",
                     "Remote Campaign Manager",
-                    "Employer Consult Path",
+                    "Employer Hiring Path",
                     "Marketing Ops Assistant",
                     "Staffing Partner Model",
                     f"Built for {m['sme']}",
                     "Ongoing Marketing Capacity",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire a dedicated Filipino digital marketing VA through a staffing partner.",
@@ -1359,7 +1381,7 @@ def _rsa_catalog() -> dict:
                     "Remote Marketing Specialist",
                     "Partner-Managed Placement",
                     "No Marketplace Guesswork",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Fill digital marketing roles with vetted Philippines specialists.",
@@ -1389,7 +1411,7 @@ def _rsa_catalog() -> dict:
                     "Clear Outsourcing Process",
                     f"For {m['sme']}",
                     "Ongoing Not Project-Only",
-                    "Start With a Consult",
+                    "Start Hiring Request",
                 ),
                 lambda m: D(
                     "Outsource digital marketing support to dedicated Philippines staff.",
@@ -1417,7 +1439,7 @@ def _rsa_catalog() -> dict:
                     "Philippines Growth Support",
                     "Partner-Led Outsourcing",
                     "Interview Before Placement",
-                    "Book Outsourcing Consult",
+                    "Outsource This Role PH",
                 ),
                 lambda m: D(
                     "Add Philippines marketing capacity for SEO, content, and paid support.",
@@ -1451,7 +1473,7 @@ def _rsa_catalog() -> dict:
                     "Not Gig Marketplace",
                     f"Made for {m['sme']}",
                     "Ongoing Social Capacity",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire a dedicated Filipino social media manager through a staffing partner.",
@@ -1479,7 +1501,7 @@ def _rsa_catalog() -> dict:
                     "Partner-Managed Hire",
                     "Remote Social Specialist",
                     "Clear Employer Process",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Fill social media roles with vetted Philippines specialists.",
@@ -1509,7 +1531,7 @@ def _rsa_catalog() -> dict:
                     "Predictable Social Coverage",
                     f"For {m['sme']}",
                     "Ongoing Channel Support",
-                    "Start With a Consult",
+                    "Start Hiring Request",
                 ),
                 lambda m: D(
                     "Outsource social media management to dedicated Philippines staff.",
@@ -1537,7 +1559,7 @@ def _rsa_catalog() -> dict:
                     "Offshore Brand Voice Ops",
                     "Partner-Led SMM Ops",
                     "Interview Then Place",
-                    "Book Outsourcing Consult",
+                    "Outsource This Role PH",
                 ),
                 lambda m: D(
                     "Add Philippines social capacity for posting, engagement, and content ops.",
@@ -1571,7 +1593,7 @@ def _rsa_catalog() -> dict:
                     "Not Task Marketplace",
                     f"Built for {m['sme']}",
                     "Ongoing Finance Capacity",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire dedicated Filipino accounting staff through a staffing partner.",
@@ -1599,7 +1621,7 @@ def _rsa_catalog() -> dict:
                     "Partner-Managed Placement",
                     "Interview-Ready Accountants",
                     "Clear Employer Process",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Fill accounting roles with vetted Philippines specialists.",
@@ -1629,7 +1651,7 @@ def _rsa_catalog() -> dict:
                     "Predictable Close Support",
                     f"For {m['sme']}",
                     "Ongoing Ledger Capacity",
-                    "Start With a Consult",
+                    "Start Hiring Request",
                 ),
                 lambda m: D(
                     "Outsource accounting support to dedicated Philippines specialists.",
@@ -1657,7 +1679,7 @@ def _rsa_catalog() -> dict:
                     "Offshore Finance Ops",
                     "Partner-Led Accounting",
                     "Interview Then Place",
-                    "Book Outsourcing Consult",
+                    "Outsource This Role PH",
                 ),
                 lambda m: D(
                     "Add Philippines accounting capacity for AP, AR, and ledger support.",
@@ -1691,7 +1713,7 @@ def _rsa_catalog() -> dict:
                     "Not Marketplace Gigs",
                     f"Built for {m['sme']}",
                     "Weekly Books Capacity",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire a dedicated Filipino bookkeeper through a staffing partner.",
@@ -1719,7 +1741,7 @@ def _rsa_catalog() -> dict:
                     "Interview-Ready Bookkeepers",
                     "Clear Employer Process",
                     "Tools You Already Use",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Fill bookkeeping roles with vetted Philippines specialists.",
@@ -1751,7 +1773,7 @@ def _rsa_catalog() -> dict:
                     "Predictable Books Coverage",
                     f"For {m['sme']}",
                     "Ongoing Reconciliation",
-                    "Start With a Consult",
+                    "Start Hiring Request",
                 ),
                 lambda m: D(
                     "Outsource bookkeeping to dedicated Philippines specialists.",
@@ -1779,7 +1801,7 @@ def _rsa_catalog() -> dict:
                     "Offshore Books Management",
                     "Partner-Led Books Ops",
                     "Interview Then Place",
-                    "Book Outsourcing Consult",
+                    "Outsource This Role PH",
                 ),
                 lambda m: D(
                     "Add Philippines bookkeeping capacity for weekly and month-end work.",
@@ -1813,7 +1835,7 @@ def _rsa_catalog() -> dict:
                     "Not a Gig Marketplace",
                     f"Built for {m['sme']}",
                     "Dedicated Remote VA Seat",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire Filipino virtual assistants with a clear employer staffing path.",
@@ -1841,7 +1863,7 @@ def _rsa_catalog() -> dict:
                     "Overseas VA Staffing",
                     "Remote Admin Specialist",
                     "Philippines Staffing Hire",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Match converting hire-VA searches to vetted Philippines talent.",
@@ -1871,7 +1893,7 @@ def _rsa_catalog() -> dict:
                     "Not Freelance EA Gigs",
                     f"Made for {m['sme']}",
                     "Executive Ops Capacity",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire a dedicated Filipino executive assistant through a staffing partner.",
@@ -1899,7 +1921,7 @@ def _rsa_catalog() -> dict:
                     "Clear Employer Process",
                     "Office Admin Philippines",
                     "Virtual Admin Specialist",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Fill executive assistant roles with vetted Philippines specialists.",
@@ -1933,7 +1955,7 @@ def _rsa_catalog() -> dict:
                     "Not Freelance Support",
                     f"Built for {m['sme']}",
                     "Ongoing Support Capacity",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire dedicated Filipino customer service staff through a staffing partner.",
@@ -1961,7 +1983,7 @@ def _rsa_catalog() -> dict:
                     "Interview-Ready Agents",
                     "Clear Employer Process",
                     "Remote Customer Care",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Fill customer service roles with vetted Philippines specialists.",
@@ -1991,7 +2013,7 @@ def _rsa_catalog() -> dict:
                     "Predictable Coverage",
                     f"For {m['sme']}",
                     "Ongoing Ticket Capacity",
-                    "Start With a Consult",
+                    "Start Hiring Request",
                 ),
                 lambda m: D(
                     "Outsource customer service to dedicated Philippines specialists.",
@@ -2019,7 +2041,7 @@ def _rsa_catalog() -> dict:
                     "Offshore Customer Care",
                     "Partner-Led Support Ops",
                     "Interview Then Place",
-                    "Book Outsourcing Consult",
+                    "Outsource This Role PH",
                 ),
                 lambda m: D(
                     "Add Philippines support capacity for chat, email, and ticket workflows.",
@@ -2053,7 +2075,7 @@ def _rsa_catalog() -> dict:
                     "Not Marketplace HR Gigs",
                     f"Built for {m['sme']}",
                     "Ongoing HR Capacity",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire dedicated Filipino HR support through a staffing partner.",
@@ -2081,7 +2103,7 @@ def _rsa_catalog() -> dict:
                     "Interview-Ready HR Staff",
                     "Clear Employer Process",
                     "Remote Payroll Support",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Fill HR assistant roles with vetted Philippines specialists.",
@@ -2111,7 +2133,7 @@ def _rsa_catalog() -> dict:
                     "Predictable HR Coverage",
                     f"For {m['sme']}",
                     "Ongoing People Ops",
-                    "Start With a Consult",
+                    "Start Hiring Request",
                 ),
                 lambda m: D(
                     "Outsource HR administration to dedicated Philippines specialists.",
@@ -2139,7 +2161,7 @@ def _rsa_catalog() -> dict:
                     "Offshore People Ops",
                     "Partner-Led HR Ops",
                     "Interview Then Place",
-                    "Book Outsourcing Consult",
+                    "Outsource This Role PH",
                 ),
                 lambda m: D(
                     "Add Philippines HR capacity for admin, onboarding, and payroll support.",
@@ -2173,7 +2195,7 @@ def _rsa_catalog() -> dict:
                     "Not Freelance Recruiters",
                     f"Built for {m['sme']}",
                     "Ongoing TA Capacity",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire dedicated Filipino recruitment support through a staffing partner.",
@@ -2201,7 +2223,7 @@ def _rsa_catalog() -> dict:
                     "Interview-Ready Recruiters",
                     "Clear Employer Process",
                     "Remote Recruiting Support",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Fill recruitment assistant roles with vetted Philippines specialists.",
@@ -2231,7 +2253,7 @@ def _rsa_catalog() -> dict:
                     "Predictable Pipeline Help",
                     f"For {m['sme']}",
                     "Ongoing Screening Capacity",
-                    "Start With a Consult",
+                    "Start Hiring Request",
                 ),
                 lambda m: D(
                     "Outsource recruitment support to dedicated Philippines specialists.",
@@ -2259,7 +2281,7 @@ def _rsa_catalog() -> dict:
                     "Offshore Recruiting Ops",
                     "Partner-Led TA Ops",
                     "Interview Then Place",
-                    "Book Outsourcing Consult",
+                    "Outsource This Role PH",
                 ),
                 lambda m: D(
                     "Add Philippines recruiting capacity for sourcing and screening support.",
@@ -2293,7 +2315,7 @@ def _rsa_catalog() -> dict:
                     "Not Freelance Lead Gigs",
                     f"Built for {m['sme']}",
                     "Ongoing Lead Capacity",
-                    "Book a Hiring Consult",
+                    "Tell Us Who You Need",
                 ),
                 lambda m: D(
                     "Hire dedicated Filipino sales support through a staffing partner.",
@@ -2321,7 +2343,7 @@ def _rsa_catalog() -> dict:
                     "Interview-Ready Setters",
                     "Clear Employer Process",
                     "Remote Sales Support",
-                    "Request Employer Consult",
+                    "Request Hiring Shortlist",
                 ),
                 lambda m: D(
                     "Fill sales support roles with vetted Philippines specialists.",
@@ -2351,7 +2373,7 @@ def _rsa_catalog() -> dict:
                     "Predictable Outbound Help",
                     f"For {m['sme']}",
                     "Ongoing Prospecting Ops",
-                    "Start With a Consult",
+                    "Start Hiring Request",
                 ),
                 lambda m: D(
                     "Outsource lead generation support to dedicated Philippines specialists.",
@@ -2379,7 +2401,7 @@ def _rsa_catalog() -> dict:
                     "Offshore SDR Support",
                     "Partner-Led Sales Ops",
                     "Interview Then Place",
-                    "Book Outsourcing Consult",
+                    "Outsource This Role PH",
                 ),
                 lambda m: D(
                     "Add Philippines sales capacity for prospecting and appointment setting.",
@@ -2417,7 +2439,7 @@ def city_rsa(mkt: str) -> tuple[list[str], list[str], str, str]:
             "Clear Employer Path",
             "Remote Admin Capacity",
             "Partner-Led VA Hiring",
-            "Request a Hiring Consult",
+            "Hire PH Role Staff",
         ]
         descs = [
             "Hire dedicated Philippines virtual assistants for your US business operations.",
@@ -2441,7 +2463,7 @@ def city_rsa(mkt: str) -> tuple[list[str], list[str], str, str]:
             "Clear Employer Path",
             "Remote Admin Capacity",
             "Partner-Led VA Hiring",
-            "Request a Hiring Consult",
+            "Hire PH Role Staff",
         ]
         descs = [
             "Hire dedicated Philippines virtual assistants for your Australian business.",
@@ -2465,6 +2487,588 @@ def iter_role_ags(role: str) -> list[str]:
     return list(EXACT_BY_AG[role].keys())
 
 
+def append_campaign_shell(
+    rows: list[dict[str, str]],
+    *,
+    cname: str,
+    loc: str,
+    budget_ph: str,
+    comment: str,
+) -> None:
+    r = blank_row()
+    r.update(
+        {
+            "Row Type": "Campaign",
+            "Campaign": cname,
+            "Campaign Type": "Search",
+            "Campaign Status": "Paused",
+            "Budget": budget_ph,
+            "Budget type": "Daily",
+            "Bid Strategy Type": "Maximize Clicks",
+            "Networks": "Google Search",
+            "Languages": "en",
+            "Location": loc,
+            "Location options": "Presence",
+            "Tracking template": TRACK,
+            "Final URL suffix": SUFFIX,
+            "Max CPC": "[APPROVAL_MAX_CPC]",
+            "Comment": comment,
+        }
+    )
+    rows.append(r)
+
+
+def append_negatives_assets(
+    rows: list[dict[str, str]],
+    *,
+    cname: str,
+    sitelinks: list[tuple[str, str, str, str]],
+) -> None:
+    for neg in NEGATIVES:
+        r = blank_row()
+        r.update(
+            {
+                "Row Type": "Campaign negative keyword",
+                "Campaign": cname,
+                "Campaign Type": "Search",
+                "Campaign Status": "Paused",
+                "Budget type": "Daily",
+                "Bid Strategy Type": "Maximize Clicks",
+                "Networks": "Google Search",
+                "Languages": "en",
+                "Location options": "Presence",
+                "Tracking template": TRACK,
+                "Final URL suffix": SUFFIX,
+                "Max CPC": "[APPROVAL_MAX_CPC]",
+                "Keyword": neg,
+                "Criterion Type": "Broad",
+                "Negative": "True",
+                "Comment": "v5 curated + ST waste; repeated per campaign (Editor requirement)",
+            }
+        )
+        rows.append(r)
+
+    for callout in [
+        "Vetted Filipino Talent",
+        "Employer Hiring Only",
+        "Recruit Vet & Manage",
+        "Dedicated Remote Staff",
+        "Interview Your Shortlist",
+        "Not a Gig Marketplace",
+    ]:
+        r = blank_row()
+        r.update(
+            {
+                "Row Type": "Callout",
+                "Campaign": cname,
+                "Campaign Type": "Search",
+                "Campaign Status": "Paused",
+                "Budget type": "Daily",
+                "Bid Strategy Type": "Maximize Clicks",
+                "Networks": "Google Search",
+                "Languages": "en",
+                "Location options": "Presence",
+                "Callout text": callout,
+                "Comment": "Employer-focused callout",
+            }
+        )
+        rows.append(r)
+
+    r = blank_row()
+    r.update(
+        {
+            "Row Type": "Structured snippet",
+            "Campaign": cname,
+            "Campaign Type": "Search",
+            "Campaign Status": "Paused",
+            "Budget type": "Daily",
+            "Bid Strategy Type": "Maximize Clicks",
+            "Networks": "Google Search",
+            "Languages": "en",
+            "Location options": "Presence",
+            "Header": "Types",
+            "Snippet Values": (
+                "Virtual Assistants;Bookkeepers;Accountants;"
+                "Social Media Managers;Customer Support;Recruiters"
+            ),
+            "Comment": "Employer role types — no WP sprawl",
+        }
+    )
+    rows.append(r)
+
+    for link_text, d1, d2, url in sitelinks:
+        r = blank_row()
+        r.update(
+            {
+                "Row Type": "Sitelink",
+                "Campaign": cname,
+                "Campaign Type": "Search",
+                "Campaign Status": "Paused",
+                "Budget type": "Daily",
+                "Bid Strategy Type": "Maximize Clicks",
+                "Networks": "Google Search",
+                "Languages": "en",
+                "Location options": "Presence",
+                "Final URL": url,
+                "Link Text": link_text,
+                "Description Line 1": d1,
+                "Description Line 2": d2,
+                "Comment": "Microsite sitelink only — no WP",
+            }
+        )
+        rows.append(r)
+
+
+def append_kw_rows(
+    rows: list[dict[str, str]],
+    *,
+    cname: str,
+    ag: str,
+    exact: list[str],
+    phrase: list[str],
+) -> None:
+    seen_exact: set[str] = set()
+    for kw in exact:
+        key = kw.strip().lower()
+        if key in seen_exact:
+            continue
+        seen_exact.add(key)
+        r = blank_row()
+        r.update(
+            {
+                "Row Type": "Keyword",
+                "Campaign": cname,
+                "Campaign Type": "Search",
+                "Campaign Status": "Paused",
+                "Budget type": "Daily",
+                "Bid Strategy Type": "Maximize Clicks",
+                "Networks": "Google Search",
+                "Languages": "en",
+                "Location options": "Presence",
+                "Tracking template": TRACK,
+                "Final URL suffix": SUFFIX,
+                "Ad Group": ag,
+                "Ad Group Status": "Paused",
+                "Max CPC": "[APPROVAL_MAX_CPC]",
+                "Keyword": kw,
+                "Criterion Type": "Exact",
+                "Keyword Status": "Paused",
+                "Comment": "v5 Exact — ST evidence + employer long-tail",
+            }
+        )
+        rows.append(r)
+
+    seen_phrase: set[str] = set()
+    for kw in phrase:
+        key = kw.strip().lower()
+        if key in seen_phrase:
+            continue
+        seen_phrase.add(key)
+        r = blank_row()
+        r.update(
+            {
+                "Row Type": "Keyword",
+                "Campaign": cname,
+                "Campaign Type": "Search",
+                "Campaign Status": "Paused",
+                "Budget type": "Daily",
+                "Bid Strategy Type": "Maximize Clicks",
+                "Networks": "Google Search",
+                "Languages": "en",
+                "Location options": "Presence",
+                "Tracking template": TRACK,
+                "Final URL suffix": SUFFIX,
+                "Ad Group": ag,
+                "Ad Group Status": "Paused",
+                "Max CPC": "[APPROVAL_MAX_CPC]",
+                "Keyword": kw,
+                "Criterion Type": "Phrase",
+                "Keyword Status": "Paused",
+                "Comment": "v5 Phrase — discovery from converting ST clusters",
+            }
+        )
+        rows.append(r)
+
+
+def brand_rsa(mkt: str) -> tuple[list[str], list[str], str, str]:
+    m = market_bits(mkt)
+    headlines = [
+        "Virtual Coworker Official",
+        f"Virtual Coworker {m['tag']}",
+        "Hire Offshore Staff",
+        "Philippines Staffing Partner",
+        "Recruit Vet & Manage",
+        "Employer Hiring Path",
+        "Dedicated Remote Staff",
+        "Not a Gig Marketplace",
+        "Interview Your Shortlist",
+        "Clear Employer Path",
+        "Filipino VA Staffing",
+        "Remote Team Partner",
+        "Brand Employer Inquiry",
+        "Staffing Not Freelance",
+        "{KeyWord:Virtual Coworker}",
+    ]
+    descs = [
+        f"Official Virtual Coworker for {m['employers']} hiring Philippines staff.",
+        "We recruit, vet, and support dedicated remote teammates — you interview and decide.",
+        "Employer hiring only. Not a job board. Not a freelance marketplace.",
+        "Tell us who you need. We shortlist vetted talent for your business.",
+    ]
+    validate_rsa(headlines, descs, f"{mkt}/brand")
+    return headlines, descs, "hire", m["tag"].lower()[:15]
+
+
+def brand_nav_rsa(mkt: str) -> tuple[list[str], list[str], str, str]:
+    m = market_bits(mkt)
+    headlines = [
+        f"VC {m['tag']} Official Site",
+        "Virtual Coworker Staffing",
+        "Employer Brand Landing",
+        "Hire With Virtual Coworker",
+        "PH Staffing Partner Brand",
+        "Known-Intent Brand Search",
+        "Official Employer Page",
+        "Remote Staffing Brand",
+        "Vetted Filipino Staffing",
+        "Partner-Led VA Hiring",
+        "Not a Job Marketplace",
+        "Business Hiring Only",
+        "Dedicated Hire Partner",
+        "Inquire About Staffing",
+        "{KeyWord:Virtual Coworker}",
+    ]
+    descs = [
+        f"Navigate to Virtual Coworker for {m['employers']} seeking Philippines staff.",
+        "Brand search destination — employer inquiry form, not careers applications.",
+        "Recruit, vet, and manage path. You interview before anyone joins.",
+        "No SaaS demo language. This is staffing for established businesses.",
+    ]
+    validate_rsa(headlines, descs, f"{mkt}/brand_nav")
+    return headlines, descs, "brand", "hire"
+
+
+def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
+    m = market_bits(mkt)
+    if angle == "hire":
+        headlines = [
+            "Hire Virtual Assistant PH",
+            "Hire Filipino VA",
+            f"{m['tag']} Employer VA Hire",
+            "Philippines VA Staffing",
+            "Dedicated Remote VA",
+            "Vetted VA Shortlist",
+            "Interview Before Hire",
+            "Not Gig Platform VA",
+            "Offshore VA Partner",
+            "Core VA Employer Path",
+            "Hire PH Role Staff",
+            "Remote Admin Capacity",
+            "Clear Employer Path",
+            "Staffing Partner Hire",
+            "{KeyWord:Hire Virtual Assistant}",
+        ]
+        descs = [
+            f"Hire dedicated Philippines VAs for your {m['business']}.",
+            "Tell us who you need. We recruit and screen — you interview the shortlist.",
+            "Employer path only. Form inquiry is not a job order or placement.",
+            "Staffing partner for established businesses — not DIY training or job ads.",
+        ]
+        p1, p2 = "hire", "va"
+    else:
+        headlines = [
+            "Offshore VA Philippines",
+            "Philippines Remote Staff",
+            "Outsource VA to PH",
+            f"{m['tag']} Offshore Staffing",
+            "Dedicated Offshore Seat",
+            "Not Freelance Offshore",
+            "Vetted PH Remote Team",
+            "Hire Offshore Capacity",
+            "Philippines Staff Partner",
+            "Core Offshore Hire Path",
+            "Remote Ops From PH",
+            "Employer Offshore Path",
+            "Interview PH Shortlist",
+            "Staff Not Marketplace",
+            "{KeyWord:Offshore Virtual Assistant}",
+        ]
+        descs = [
+            f"Philippines offshore staffing for {m['employers']} needing dedicated seats.",
+            "Outsource the role to a vetted Philippines teammate — you keep hire authority.",
+            "Exact/Phrase employer intent only. No PMax, DSA, or broad positives.",
+            "Tell us the role. We shortlist. You decide who joins your business.",
+        ]
+        p1, p2 = "offshore", "ph"
+    validate_rsa(headlines, descs, f"{mkt}/core/{angle}")
+    return headlines, descs, p1, p2
+
+
+def build_brand_and_core(
+    rows: list[dict[str, str]],
+    *,
+    mkt: str,
+    loc: str,
+    budget_ph: str,
+    base_url: str,
+) -> None:
+    """Brand + Core VA + PH/offshore — Exact/Phrase only, category/generic Final URLs."""
+    admin_final = f"{base_url}/administrative-support"
+
+    # --- Brand ---
+    cname = f"VC_{mkt}_S_BRAND"
+    append_campaign_shell(
+        rows,
+        cname=cname,
+        loc=loc,
+        budget_ph=budget_ph,
+        comment="Stage1 v5 Brand Search; Max Clicks; Search only; Paused pending approval",
+    )
+    ag = "Brand"
+    r = blank_row()
+    r.update(
+        {
+            "Row Type": "Ad group",
+            "Campaign": cname,
+            "Campaign Type": "Search",
+            "Campaign Status": "Paused",
+            "Budget type": "Daily",
+            "Bid Strategy Type": "Maximize Clicks",
+            "Networks": "Google Search",
+            "Languages": "en",
+            "Location options": "Presence",
+            "Tracking template": TRACK,
+            "Final URL suffix": SUFFIX,
+            "Ad Group": ag,
+            "Ad Group Status": "Paused",
+            "Max CPC": "[APPROVAL_MAX_CPC]",
+            "Comment": "Brand AG",
+        }
+    )
+    rows.append(r)
+    brand_exact = [
+        "virtual coworker",
+        "virtualcoworker",
+        "virtual coworker staffing",
+        f"virtual coworker {'usa' if mkt == 'US' else 'australia'}",
+        "virtual coworker reviews",
+    ]
+    brand_phrase = ["virtual coworker", "virtual coworker staffing"]
+    append_kw_rows(rows, cname=cname, ag=ag, exact=brand_exact, phrase=brand_phrase)
+    hs, ds, p1, p2 = brand_rsa(mkt)
+    r = blank_row()
+    r.update(
+        {
+            "Row Type": "Ad",
+            "Campaign": cname,
+            "Campaign Type": "Search",
+            "Campaign Status": "Paused",
+            "Budget type": "Daily",
+            "Bid Strategy Type": "Maximize Clicks",
+            "Networks": "Google Search",
+            "Languages": "en",
+            "Location options": "Presence",
+            "Tracking template": TRACK,
+            "Final URL suffix": SUFFIX,
+            "Ad Group": ag,
+            "Ad Group Status": "Paused",
+            "Max CPC": "[APPROVAL_MAX_CPC]",
+            "Ad Status": "Paused",
+            "Ad type": "Responsive search ad",
+            "Final URL": base_url,
+            "Path 1": p1,
+            "Path 2": p2,
+            "Comment": "Brand RSA; Final URL=generic market LP",
+        }
+    )
+    for i, h in enumerate(hs, 1):
+        r[f"Headline {i}"] = h
+    for i, d in enumerate(ds, 1):
+        r[f"Description {i}"] = d
+    rows.append(r)
+    ag2 = "Brand_Nav"
+    r = blank_row()
+    r.update(
+        {
+            "Row Type": "Ad group",
+            "Campaign": cname,
+            "Campaign Type": "Search",
+            "Campaign Status": "Paused",
+            "Budget type": "Daily",
+            "Bid Strategy Type": "Maximize Clicks",
+            "Networks": "Google Search",
+            "Languages": "en",
+            "Location options": "Presence",
+            "Tracking template": TRACK,
+            "Final URL suffix": SUFFIX,
+            "Ad Group": ag2,
+            "Ad Group Status": "Paused",
+            "Max CPC": "[APPROVAL_MAX_CPC]",
+            "Comment": "Brand navigation Exact",
+        }
+    )
+    rows.append(r)
+    append_kw_rows(
+        rows,
+        cname=cname,
+        ag=ag2,
+        exact=["virtual coworker official", "virtual coworker company"],
+        phrase=["virtual coworker official"],
+    )
+    hs2, ds2, p1b, p2b = brand_nav_rsa(mkt)
+    r = blank_row()
+    r.update(
+        {
+            "Row Type": "Ad",
+            "Campaign": cname,
+            "Campaign Type": "Search",
+            "Campaign Status": "Paused",
+            "Budget type": "Daily",
+            "Bid Strategy Type": "Maximize Clicks",
+            "Networks": "Google Search",
+            "Languages": "en",
+            "Location options": "Presence",
+            "Tracking template": TRACK,
+            "Final URL suffix": SUFFIX,
+            "Ad Group": ag2,
+            "Ad Group Status": "Paused",
+            "Max CPC": "[APPROVAL_MAX_CPC]",
+            "Ad Status": "Paused",
+            "Ad type": "Responsive search ad",
+            "Final URL": base_url,
+            "Path 1": p1b,
+            "Path 2": p2b,
+            "Comment": "Brand nav RSA",
+        }
+    )
+    for i, h in enumerate(hs2, 1):
+        r[f"Headline {i}"] = h
+    for i, d in enumerate(ds2, 1):
+        r[f"Description {i}"] = d
+    rows.append(r)
+    append_negatives_assets(
+        rows,
+        cname=cname,
+        sitelinks=[
+            ("Tell Us Who You Need", "Employer hiring path", "Form for businesses", f"{base_url}#gate"),
+            ("How Hiring Works", "Recruit, vet, shortlist", "You interview talent", base_url),
+            ("Admin Support Hire", "Philippines admin staff", "Category landing page", admin_final),
+            (f"{mkt} Employer Page", "Dedicated landing page", "Not WordPress homepage", base_url),
+        ],
+    )
+
+    # --- Core hire VA + offshore ---
+    cname = f"VC_{mkt}_S_CORE_hire_va"
+    append_campaign_shell(
+        rows,
+        cname=cname,
+        loc=loc,
+        budget_ph=budget_ph,
+        comment="Stage1 v5 Core VA + PH/offshore; Exact+Phrase; Paused",
+    )
+    for ag, angle, exact, phrase in (
+        (
+            "Hire_VA_PH",
+            "hire",
+            [
+                "hire virtual assistant",
+                "hire a virtual assistant",
+                "hire virtual assistant philippines",
+                "hire filipino virtual assistant",
+                "hire a va",
+                "virtual assistant hire",
+                "how to hire a virtual assistant",
+            ],
+            [
+                "hire virtual assistant",
+                "hire filipino virtual assistant",
+                "virtual assistant philippines",
+            ],
+        ),
+        (
+            "Offshore_VA_PH",
+            "offshore",
+            [
+                "offshore va",
+                "offshore virtual assistant",
+                "philippines virtual assistant",
+                "filipino virtual assistant",
+                "va philippines",
+                "philippine virtual assistant",
+            ],
+            [
+                "offshore virtual assistant",
+                "philippines virtual assistant",
+                "filipino virtual assistant",
+            ],
+        ),
+    ):
+        r = blank_row()
+        r.update(
+            {
+                "Row Type": "Ad group",
+                "Campaign": cname,
+                "Campaign Type": "Search",
+                "Campaign Status": "Paused",
+                "Budget type": "Daily",
+                "Bid Strategy Type": "Maximize Clicks",
+                "Networks": "Google Search",
+                "Languages": "en",
+                "Location options": "Presence",
+                "Tracking template": TRACK,
+                "Final URL suffix": SUFFIX,
+                "Ad Group": ag,
+                "Ad Group Status": "Paused",
+                "Max CPC": "[APPROVAL_MAX_CPC]",
+                "Comment": f"Core AG — {ag}",
+            }
+        )
+        rows.append(r)
+        append_kw_rows(rows, cname=cname, ag=ag, exact=exact, phrase=phrase)
+        hs, ds, p1, p2 = core_rsa(mkt, angle)
+        r = blank_row()
+        r.update(
+            {
+                "Row Type": "Ad",
+                "Campaign": cname,
+                "Campaign Type": "Search",
+                "Campaign Status": "Paused",
+                "Budget type": "Daily",
+                "Bid Strategy Type": "Maximize Clicks",
+                "Networks": "Google Search",
+                "Languages": "en",
+                "Location options": "Presence",
+                "Tracking template": TRACK,
+                "Final URL suffix": SUFFIX,
+                "Ad Group": ag,
+                "Ad Group Status": "Paused",
+                "Max CPC": "[APPROVAL_MAX_CPC]",
+                "Ad Status": "Paused",
+                "Ad type": "Responsive search ad",
+                "Final URL": admin_final,
+                "Path 1": p1,
+                "Path 2": p2,
+                "Comment": f"Core RSA {angle}; Final URL=administrative-support category",
+            }
+        )
+        for i, h in enumerate(hs, 1):
+            r[f"Headline {i}"] = h
+        for i, d in enumerate(ds, 1):
+            r[f"Description {i}"] = d
+        rows.append(r)
+
+    append_negatives_assets(
+        rows,
+        cname=cname,
+        sitelinks=[
+            ("Tell Us Who You Need", "Employer hiring path", "Form for businesses", f"{admin_final}#gate"),
+            ("How Hiring Works", "Recruit, vet, shortlist", "You interview talent", admin_final),
+            ("Hire PH VA", "Philippines VA staffing", "Category landing page", admin_final),
+            (f"{mkt} Employer Page", "Dedicated landing page", "Not WordPress homepage", base_url),
+        ],
+    )
+
+
 def build() -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
 
@@ -2474,37 +3078,29 @@ def build() -> list[dict[str, str]]:
     ):
         base_url = f"https://vision-three-alpha.vercel.app/{mkt.lower()}"
         mbits = market_bits(mkt)
+
+        build_brand_and_core(
+            rows, mkt=mkt, loc=loc, budget_ph=budget_ph, base_url=base_url
+        )
+
         for role in ROLES:
             cname = camp_name(mkt, role)
             comment = (
-                f"Stage1 v3 Max Clicks; Search partners OFF; Display OFF; "
-                f"brand deferred; role={ROLE_LABEL[role]}; theme-split AGs; "
+                f"Stage1 v5 Max Clicks; Search partners OFF; Display OFF; "
+                f"role={ROLE_LABEL[role]}; category Final URL; "
                 f"confirm networks in Editor"
             )
 
-            r = blank_row()
-            r.update(
-                {
-                    "Row Type": "Campaign",
-                    "Campaign": cname,
-                    "Campaign Type": "Search",
-                    "Campaign Status": "Paused",
-                    "Budget": budget_ph,
-                    "Budget type": "Daily",
-                    "Bid Strategy Type": "Maximize Clicks",
-                    "Networks": "Google Search",
-                    "Languages": "en",
-                    "Location": loc,
-                    "Location options": "Presence",
-                    "Tracking template": TRACK,
-                    "Final URL suffix": SUFFIX,
-                    "Max CPC": "[APPROVAL_MAX_CPC]",
-                    "Comment": comment,
-                }
+            append_campaign_shell(
+                rows,
+                cname=cname,
+                loc=loc,
+                budget_ph=budget_ph,
+                comment=comment,
             )
-            rows.append(r)
 
-            final = f"{base_url}?role={role}"
+            slug = ROLE_CATEGORY_SLUG[role]
+            final = f"{base_url}/{slug}"
 
             for ag in iter_role_ags(role):
                 r = blank_row()
@@ -2712,131 +3308,64 @@ def build() -> list[dict[str, str]]:
                     r[f"Description {i}"] = d
                 rows.append(r)
 
-            # Campaign negatives
-            for neg in NEGATIVES:
-                r = blank_row()
-                r.update(
-                    {
-                        "Row Type": "Campaign negative keyword",
-                        "Campaign": cname,
-                        "Campaign Type": "Search",
-                        "Campaign Status": "Paused",
-                        "Budget type": "Daily",
-                        "Bid Strategy Type": "Maximize Clicks",
-                        "Networks": "Google Search",
-                        "Languages": "en",
-                        "Location options": "Presence",
-                        "Tracking template": TRACK,
-                        "Final URL suffix": SUFFIX,
-                        "Max CPC": "[APPROVAL_MAX_CPC]",
-                        "Keyword": neg,
-                        "Criterion Type": "Broad",
-                        "Negative": "True",
-                        "Comment": "v4 curated + real ST waste (jobs/salary/LATAM/DSA/reviews)",
-                    }
-                )
-                rows.append(r)
-
-            # Callouts (campaign level) — filled, employer-focused
-            for callout in [
-                "Vetted Filipino Talent",
-                "Employer Hiring Only",
-                "Recruit Vet & Manage",
-                "Dedicated Remote Staff",
-                "Interview Your Shortlist",
-                "Not a Gig Marketplace",
-            ]:
-                r = blank_row()
-                r.update(
-                    {
-                        "Row Type": "Callout",
-                        "Campaign": cname,
-                        "Campaign Type": "Search",
-                        "Campaign Status": "Paused",
-                        "Budget type": "Daily",
-                        "Bid Strategy Type": "Maximize Clicks",
-                        "Networks": "Google Search",
-                        "Languages": "en",
-                        "Location options": "Presence",
-                        "Callout text": callout,
-                        "Comment": "Employer-focused callout",
-                    }
-                )
-                rows.append(r)
-
-            # Structured snippet
-            r = blank_row()
-            r.update(
-                {
-                    "Row Type": "Structured snippet",
-                    "Campaign": cname,
-                    "Campaign Type": "Search",
-                    "Campaign Status": "Paused",
-                    "Budget type": "Daily",
-                    "Bid Strategy Type": "Maximize Clicks",
-                    "Networks": "Google Search",
-                    "Languages": "en",
-                    "Location options": "Presence",
-                    "Header": "Types",
-                    "Snippet Values": (
-                        "Virtual Assistants;Bookkeepers;Accountants;"
-                        "Social Media Managers;Customer Support;Recruiters"
+            append_negatives_assets(
+                rows,
+                cname=cname,
+                sitelinks=[
+                    (
+                        "Tell Us Who You Need",
+                        "Employer hiring path",
+                        "Form for businesses",
+                        f"{final}#gate",
                     ),
-                    "Comment": "Employer role types — no WP sprawl",
-                }
+                    (
+                        "How Hiring Works",
+                        "Recruit, vet, shortlist",
+                        "You interview talent",
+                        final,
+                    ),
+                    (
+                        f"Hire {ROLE_LABEL[role]}"[:25],
+                        "Philippines remote staff",
+                        "Category landing page",
+                        final,
+                    ),
+                    (
+                        f"{mkt} Employer Page",
+                        "Dedicated landing page",
+                        "Not WordPress homepage",
+                        base_url,
+                    ),
+                ],
             )
-            rows.append(r)
 
-            # Sitelinks → microsite only (no WP)
-            sitelinks = [
-                (
-                    "Request a Consult",
-                    "Employer hiring path",
-                    "Talk with our team",
-                    f"{base_url}#gate",
-                ),
-                (
-                    "How Hiring Works",
-                    "Recruit, vet, shortlist",
-                    "You interview talent",
-                    base_url,
-                ),
-                (
-                    f"Hire {ROLE_LABEL[role]}",
-                    "Philippines remote staff",
-                    "Role-focused staffing",
-                    final,
-                ),
-                (
-                    f"{mkt} Employer Page",
-                    "Dedicated landing page",
-                    "Not WordPress homepage",
-                    base_url,
-                ),
-            ]
-            for link_text, d1, d2, url in sitelinks:
-                r = blank_row()
-                r.update(
-                    {
-                        "Row Type": "Sitelink",
-                        "Campaign": cname,
-                        "Campaign Type": "Search",
-                        "Campaign Status": "Paused",
-                        "Budget type": "Daily",
-                        "Bid Strategy Type": "Maximize Clicks",
-                        "Networks": "Google Search",
-                        "Languages": "en",
-                        "Location options": "Presence",
-                        "Final URL": url,
-                        "Link Text": link_text,
-                        "Description Line 1": d1,
-                        "Description Line 2": d2,
-                        "Comment": "Microsite sitelink only — no WP",
-                    }
-                )
-                rows.append(r)
-
+    apply_budget_cpc_defaults(rows)
     return rows
+
+
+def apply_budget_cpc_defaults(rows: list[dict[str, str]]) -> None:
+    """Fill Budget + Max CPC with DECISIONS.md defaults (no [APPROVAL_*] left)."""
+    for r in rows:
+        cname = r.get("Campaign") or ""
+        if "_US_" in cname:
+            mkt = "US"
+        elif "_AU_" in cname:
+            mkt = "AU"
+        else:
+            continue
+        if r.get("Max CPC") == "[APPROVAL_MAX_CPC]":
+            r["Max CPC"] = MAX_CPC[mkt]
+        if r.get("Row Type") != "Campaign":
+            continue
+        budgets = BUDGET_DAILY[mkt]
+        if "_S_BRAND" in cname:
+            r["Budget"] = budgets["brand"]
+        elif "_S_CORE_" in cname:
+            r["Budget"] = budgets["core"]
+        elif "_S_ROLE_" in cname:
+            r["Budget"] = budgets["role"]
+        elif r.get("Budget", "").startswith("[APPROVAL_"):
+            r["Budget"] = budgets["role"]
 
 
 def qa(rows: list[dict[str, str]]) -> None:
@@ -2846,6 +3375,21 @@ def qa(rows: list[dict[str, str]]) -> None:
     print("Campaigns:", len(camps))
     for c in camps:
         print(" ", c)
+
+    leftover = [
+        (r.get("Row Type"), r.get("Campaign"), r.get("Budget"), r.get("Max CPC"))
+        for r in rows
+        if "[APPROVAL_" in (r.get("Budget") or "") or "[APPROVAL_" in (r.get("Max CPC") or "")
+    ]
+    if leftover:
+        raise SystemExit(f"APPROVAL placeholders remain: {leftover[:5]}")
+    camp_budgets = {
+        r["Campaign"]: r["Budget"]
+        for r in rows
+        if r["Row Type"] == "Campaign"
+    }
+    print("Daily budgets (sample):", {k: camp_budgets[k] for k in sorted(camp_budgets)[:6]})
+    print("Max CPC US/AU:", MAX_CPC)
 
     ads = [r for r in rows if r["Row Type"] == "Ad"]
     for r in ads:
@@ -2872,7 +3416,8 @@ def qa(rows: list[dict[str, str]]) -> None:
     for s in hl_sets:
         for h in s:
             freq[h] += 1
-    spam = [(h, c) for h, c in freq.items() if c > 12]
+    # Employer CTAs may recur across role RSAs; flag only extreme clones (>20 ads).
+    spam = [(h, c) for h, c in freq.items() if c > 20]
     if spam:
         raise SystemExit(f"Boilerplate headline spam across RSAs: {spam[:8]}")
 
@@ -2902,8 +3447,12 @@ def qa(rows: list[dict[str, str]]) -> None:
     if bad.search(blob):
         raise SystemExit(f"Forbidden claim in RSA: {bad.search(blob).group(0)}")
 
-    if any("BRAND" in c for c in camps):
-        raise SystemExit("Brand campaign found — should be deferred/absent")
+    brand_camps = [c for c in camps if "_S_BRAND" in c]
+    core_camps = [c for c in camps if "_S_CORE_" in c]
+    if len(brand_camps) != 2:
+        raise SystemExit(f"Expected 2 Brand campaigns, got {brand_camps}")
+    if len(core_camps) != 2:
+        raise SystemExit(f"Expected 2 Core campaigns, got {core_camps}")
 
     mt = Counter(
         r["Criterion Type"]
@@ -2913,6 +3462,24 @@ def qa(rows: list[dict[str, str]]) -> None:
     print("Positive match types:", dict(mt))
     if mt.get("Broad"):
         raise SystemExit("Positive Broad keywords not allowed")
+
+    # Final URLs must be category routes (or generic market for Brand)
+    for r in ads:
+        fu = r.get("Final URL") or ""
+        if "?role=" in fu:
+            raise SystemExit(f"Legacy inert ?role= Final URL: {fu}")
+        if "virtualcoworker.com" in fu and "vision-three-alpha" not in fu:
+            raise SystemExit(f"WP Final URL leak: {fu}")
+        if r["Tracking template"] not in ("", "{lpurl}") and "utm_source" in r["Tracking template"]:
+            if r.get("Final URL suffix") and "utm_source" in r["Final URL suffix"]:
+                raise SystemExit(f"Double UTM on {r['Campaign']}/{r['Ad Group']}")
+
+    # All entity statuses Paused
+    for r in rows:
+        for col in ("Campaign Status", "Ad Group Status", "Keyword Status", "Ad Status"):
+            st = r.get(col) or ""
+            if st and st != "Paused":
+                raise SystemExit(f"Non-paused {col}={st} on {r['Row Type']} {r.get('Campaign')}")
 
     pos_blob = " ".join(
         r["Keyword"].lower()

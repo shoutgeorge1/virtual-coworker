@@ -1,0 +1,21 @@
+# Ads launch — Stage 1 v5 (local)
+
+Paused Editor package + LP engine deliverables. **No live Ads mutations.**
+
+| # | Deliverable |
+|---|-------------|
+| 1 | [01-current-state-audit.md](./01-current-state-audit.md) |
+| 2 | [02-historical-data-audit.md](./02-historical-data-audit.md) · [historical-performance-summary.json](./historical-performance-summary.json) |
+| 3 | [03-search-term-category-findings.md](./03-search-term-category-findings.md) |
+| 4 | [04-lp-matrix.md](./04-lp-matrix.md) |
+| 5 | [05-ab-matrix.md](./05-ab-matrix.md) |
+| 6 | [06-stage1-campaign-architecture.md](./06-stage1-campaign-architecture.md) |
+| 7 | [07-phased-activation-recommendation.md](./07-phased-activation-recommendation.md) |
+| 8 | [google-ads-editor-import.csv](./google-ads-editor-import.csv) |
+| 9 | [09-ads-human-review-matrix.md](./09-ads-human-review-matrix.md) |
+| 10 | [10-tracking-event-spec.md](./10-tracking-event-spec.md) |
+| 11 | [11-qa-report.md](./11-qa-report.md) |
+| 12 | [12-blocker-decision-list.md](./12-blocker-decision-list.md) |
+
+Rebuild CSV: `python3 ads-launch/build_stage1_editor_package.py`  
+Re-audit history: `python3 ads-launch/analyze_historical_performance.py`

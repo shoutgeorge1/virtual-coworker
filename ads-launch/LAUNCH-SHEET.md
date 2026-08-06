@@ -1,89 +1,46 @@
-# Stage 1 Google Ads launch sheet (paused import)
+# Launch sheet — Stage 1 v5 (Paused package)
 
-**Status:** Import-ready · all entities **Paused** · no live mutations.  
-**Package version:** stage1-v4 (search-term evidence fold)  
-**Accounts:** USA `496-715-1855` · AU `573-539-1940`.  
-**Import file:** `ads-launch/google-ads-editor-import.csv`  
-**Full audit report:** `ads-launch/FULL-BUILD-REPORT.md`  
-**Rebuild script:** `ads-launch/build_stage1_editor_package.py`  
-**Evidence:** `audit-data/performance/search_terms_*_2026-08-05.csv` + campaign metrics
+**Status:** Local package ready for review · **Not** launch-ready  
+**CSV:** `ads-launch/google-ads-editor-import.csv`  
+**LP:** vision microsite category routes · `lp_version=stage1-v5`
 
 ---
 
-## Strategy (locked for this package)
+## Quick facts
 
-| Decision | Spec |
-|----------|------|
-| Brand | **Deferred** — not in this CSV |
-| Intent | Employer hire / outsource / Filipino / Philippines / VA / offshore — **ranked from real ST** |
-| Roles only | Digital marketing · Social media · Accounting · Bookkeeping · Administration · Customer service · HR · Recruitment · Sales |
-| Themes | Each role: **Hire_PH** + **Outsource_PH** (Admin: Hire + EA + city test) |
-| Excludes | Medical staffing · Technology staffing · Spanish-language · DSA catch-alls · job-seeker / WFH fluff / review-pricing research |
-| Match | Exact + Phrase only · **no** Broad / PMax / DSA / Demand Gen |
-| Bid | Maximize Clicks · Max CPC = `[APPROVAL_MAX_CPC]` |
-| Networks | Google Search · partners OFF · Display expansion OFF (confirm in Editor) |
-| Destinations | `https://vision-three-alpha.vercel.app/{us\|au}?role=…` — **not** WordPress |
-| Creatives | Full RSA fill (15H / 4D) · role-unique angles · DKI on Hire/EA B · no invented pricing |
-
----
-
-## Campaigns in this package
-
-### United States — 9 role campaigns (all Paused)
-
-- `VC_US_S_ROLE_digital_marketing` — Hire_PH + Outsource_PH
-- `VC_US_S_ROLE_social_media`
-- `VC_US_S_ROLE_accounting`
-- `VC_US_S_ROLE_bookkeeping`
-- `VC_US_S_ROLE_administration` ← Hire_PH (general VA / ST-heavy) + EA_PH + Admin_City_Test
-- `VC_US_S_ROLE_customer_service`
-- `VC_US_S_ROLE_hr`
-- `VC_US_S_ROLE_recruitment`
-- `VC_US_S_ROLE_sales`
-
-### Australia — parallel 9 (all Paused)
-
-Same campaign names with `VC_AU_*`. AU creatives use Australian / SMEs / organisation / specialise where natural — not a US clone with country swap.
-
-**Not included:** `VC_*_S_BRAND` · old CORE-only shell · empty ROLE held stubs · DSA / PM_*_RSA farms.
+| Item | Value |
+|------|-------|
+| Campaigns | 22 (Paused) |
+| Ad groups | 46 |
+| Keywords (positive) | 1604 Exact+Phrase |
+| RSAs | 82 |
+| Unique negatives | 191 (×22 campaign rows) |
+| Final URLs | `/us\|au` + `/us\|au/{category}` |
+| US phone | 310-426-8776 (env override OK) |
+| AU phone | None — form primary (locked) |
+| Careers URL | `/ph` via `NEXT_PUBLIC_CAREERS_URL` (locked for Stage 1) |
+| Lead QA | `ALLOW_LOG_ONLY_LEADS=true` — TEMPORARY logs only; Zoho not live |
+| Budgets / CPC | Filled — see `DECISIONS.md` (George-decidable; still Paused) |
 
 ---
 
-## Placeholders you must fill before enable
+## Before any enable
 
-| Field | Placeholder |
-|-------|-------------|
-| US daily budget (each campaign) | `[APPROVAL_DAILY_BUDGET_USD]` |
-| AU daily budget (each campaign) | `[APPROVAL_DAILY_BUDGET_AUD]` |
-| Max CPC ceiling | `[APPROVAL_MAX_CPC]` |
-| Final URL host | vision-three-alpha until custom domain on Vercel |
-
----
-
-## Import steps (Editor)
-
-1. Download fresh USA + AU into Editor (ShoutGeorge).  
-2. Optional but recommended: pause live legacy `PM_US_RSA_Brand` / `PM_AU_RSA_Brand` in Ads UI (you click).  
-3. Import `google-ads-editor-import.csv` (filter to `VC_US_*` or `VC_AU_*` per account).  
-4. Replace `[APPROVAL_*]` budget/CPC values.  
-5. Confirm Search partners off · Display expansion off · Presence geo · English.  
-6. Confirm Final URLs = microsite (no WP sitelinks).  
-7. Post **Paused** → spot-check in UI.  
-8. Enable only after Launch Control gates are green — start US roles, keep AU quiet until US looks sane.
+- [ ] Lead delivery configured (**not** log-only)  
+- [x] Careers URL decided (`/ph` — Stage 1 default)  
+- [x] AU phone decision (form-primary)  
+- [x] Budgets + Max CPC filled (defaults; George can change)  
+- [ ] GTM maps `employer_inquiry_submitted` carefully  
+- [ ] Human review matrix (`09`) signed off  
+- [ ] Explicit George approval to enable  
 
 ---
 
-## Conversion note (Stage 1)
+## Enable order (after gates green)
 
-| Path | Treatment |
-|------|-----------|
-| `employer_form_valid_submit` (after server accept) | Observe / primary-eligible later — **do not** bid on contaminated legacy conversions |
-| `phone_click` | Diagnostic / secondary |
-| Job-seeker / spam rejects | Never primary |
-| Zoho / CallRail | Optional — do not block Stage 1 |
+1. US Brand + Core  
+2. US role campaigns (admin/books/social/digital first)  
+3. AU mirror (form-primary)  
+4. HR / recruitment last  
 
----
-
-## Counts (package v4)
-
-1546 positive keywords (Exact+Phrase) · 74 RSAs · 18 campaigns · 38 ad groups · 191 unique curated negatives per campaign · callouts + structured snippets + microsite sitelinks · `lp_version=stage1-v4`.
+Never: Broad, PMax, DSA, WP spray, fake Zoho success.
