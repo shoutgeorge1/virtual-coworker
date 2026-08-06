@@ -68,7 +68,7 @@ export default function MarketLanding({
 
   const gate: GateCopy = {
     eyebrow: "Employers only · about 60 seconds",
-    title: cat ? `Hire ${cat.label} support` : "Tell us who you need",
+    title: cat ? `Hire ${cat.label}` : "Tell us who you need",
     intentLabel: "First — who are you?",
     intentPrimary: "I’m hiring staff for a business.",
     intentSecondary: "I’m looking for a job.",
