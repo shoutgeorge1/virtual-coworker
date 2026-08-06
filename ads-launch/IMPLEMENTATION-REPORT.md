@@ -1,19 +1,15 @@
 # Stage 1 implementation report (short)
 
-Shipped the smallest safe paid machine: US/AU employer LPs with inline gate, server-validated leads, Stage 1 dataLayer events, paused Editor import, and one launch-control page.
+Role-first paused Editor package for US + AU employer Search (nine service lines). Brand deferred. Full audit: `FULL-BUILD-REPORT.md`.
 
-## Built
+## Built / rebuilt
 
-- `vision/` `/us` + `/au` employer LPs (inline gate, short form, thank-you after server accept)
-- `/api/lead` protections: honeypot, validation, min time, rate limit, duplicate window, reject logging
-- Attribution: GCLID/GBRAID/WBRAID/UTMs/LP version/market/referrer
-- `ads-launch/` paused Editor CSV + launch sheet
-- `xray/launch-control.html` single control center
-
-## Corrected facts
-
-Enabled brand ads in Editor exports point to **WordPress**, not try.* (try.* ads paused; AU try.* also disapproved on enabled campaign). Docs updated.
+- `vision/` `/us` + `/au` employer LPs (unchanged this pass)
+- `ads-launch/google-ads-editor-import.csv` — 18 role campaigns, full RSA fill, Exact+Phrase, curated negatives, microsite assets
+- `ads-launch/build_stage1_editor_package.py` — regenerator
+- `ads-launch/LAUNCH-SHEET.md` + `FULL-BUILD-REPORT.md`
+- Launch Control copy updated for role-first / brand deferred
 
 ## Not done (intentionally)
 
-No live Ads/GTM/Zoho/CallRail/DNS mutations · no PMax/broad/DSA · no quiz/modal gates · no role campaigns enabled · no invented phones/pricing.
+No live Ads enable · no Ads API · no brand campaigns · no Broad/PMax/DSA · no invented budgets/CPC/pricing claims · no WP sitelinks

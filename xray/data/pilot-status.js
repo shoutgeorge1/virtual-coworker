@@ -19,9 +19,20 @@ window.PILOT_STATUS = {
     us: "https://vision-three-alpha.vercel.app/us",
     au: "https://vision-three-alpha.vercel.app/au"
   },
-  keywordClustersPhase1: ["philippines_va_hire", "general_employer_va_hire"],
-  keywordClustersLater: ["philippines_bookkeeping", "general_bookkeeping"],
-  matchPolicy: "exact_first_no_broad",
+  keywordClustersPhase1: [
+    "digital_marketing",
+    "social_media",
+    "accounting",
+    "bookkeeping",
+    "administration_incl_va_hire",
+    "customer_service",
+    "hr",
+    "recruitment",
+    "sales"
+  ],
+  keywordClustersLater: ["brand_deferred", "competitors_deferred", "tech_medical_spanish_excluded"],
+  matchPolicy: "exact_and_phrase_no_broad",
+  brandPolicy: "deferred_not_in_stage1_import",
   phases: {
     current: 1,
     labels: {
@@ -181,7 +192,7 @@ window.PILOT_STATUS = {
   georgeHandles: [
     "MCC + Google Ads Editor (Standard access confirmed on US + AU — Stage 1 OK)",
     "Independent microsite Stage 1 LPs (vision) — not WordPress",
-    "Paused Clean Search import (Brand + CORE hire)",
+    "Paused Clean Search import (nine role campaigns US+AU; brand deferred)",
     "Temporary GTM map later — no production GTM publish required for LP QA",
     "Lead form → secure server-side → email/webhook Stage 1; Zoho when access confirmed",
     "Capture GCLID / GBRAID / WBRAID / UTMs / LP / timestamp"
@@ -195,7 +206,7 @@ window.PILOT_STATUS = {
   nextThree: [
     "Download USA/AU into Google Ads Editor (campaign view confirmed Aug 5; Ads Standard via MCC confirmed)",
     "Approve budgets/CPC + AU phone + lead inbox/webhook",
-    "Import paused Stage 1 CSV → enable US Brand + CORE after LP validation"
+    "Import paused Stage 1 CSV → enable US role campaigns after LP validation (brand deferred)"
   ],
   openItemsUnresolved: [
     "Zoho access",

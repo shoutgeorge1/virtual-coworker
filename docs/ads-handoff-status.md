@@ -40,7 +40,7 @@
 1. MCC Accept done → verify Admin in-account → USA + AU visible under MCC (browser)
 2. Stage 1 LP + server-validated employer form verified (Zoho/CallRail optional — do not block)
 3. Download USA + AU into clean Editor (ShoutGeorge login only)
-4. Import paused Stage 1 package from `ads-launch/` (Brand + CORE hire; role held for evidence)
+4. Import paused Stage 1 package from `ads-launch/` (nine role campaigns US+AU; brand deferred — see `FULL-BUILD-REPORT.md`)
 5. Confirm Final URLs = Stage 1 LPs (not WP) · enable only after launch-control checklist
 6. **Editor fact (structure):** Enabled brand RSAs currently point at WordPress, not try.* — try.* ads are paused (AU try.* also disapproved on enabled campaign). Live spend Unknown until Admin UI.
 

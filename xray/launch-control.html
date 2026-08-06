@@ -300,7 +300,7 @@
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
                 <strong>6. Import the paused CSV — leave everything Paused</strong>
-                <span class="todo-hint">In Editor, import <code>ads-launch/google-ads-editor-import.csv</code>. Do not turn anything on. Everything stays <strong>Paused</strong>.</span>
+                <span class="todo-hint">In Editor, import <code>ads-launch/google-ads-editor-import.csv</code>. You should see nine US role campaigns and nine AU role campaigns (<code>VC_US_S_ROLE_*</code> / <code>VC_AU_S_ROLE_*</code>) for digital marketing, social media, accounting, bookkeeping, administration, customer service, HR, recruitment, and sales. Brand is deferred — not in this file. Do not turn anything on. Everything stays <strong>Paused</strong>. Full report: <code>ads-launch/FULL-BUILD-REPORT.md</code>.</span>
               </label>
             </li>
             <li data-order="7">
@@ -327,8 +327,8 @@
             <li data-order="10">
               <input type="checkbox" id="ads10" data-todo="ads10" />
               <label for="ads10">
-                <strong>10. Turn on US Brand, then US CORE — only after gates below are green</strong>
-                <span class="todo-hint">Enable <code>VC_US_S_BRAND</code> first, then <code>VC_US_S_CORE_hire_va</code>. Keep Australia quiet until the US looks sane. You click Enable in Ads or Editor — not from this page. Do not enable spend early.</span>
+                <strong>10. Turn on US role campaigns — only after gates below are green</strong>
+                <span class="todo-hint">Brand stays deferred. Enable US role campaigns (<code>VC_US_S_ROLE_*</code>) after budgets/CPC/Final URLs are set — start with administration + one finance + one marketing role if you want a staged turn-on. Keep Australia quiet until the US looks sane. You click Enable in Ads or Editor — not from this page. Do not enable spend early.</span>
               </label>
             </li>
           </ul>
@@ -491,7 +491,7 @@
             <h3>United States</h3>
             <ul class="glance-bullets">
               <li>Account <code>496-715-1855</code></li>
-              <li>Stage 1 campaigns (paused import): <code>VC_US_S_BRAND</code> · <code>VC_US_S_CORE_hire_va</code></li>
+              <li>Stage 1 campaigns (paused import): nine <code>VC_US_S_ROLE_*</code> (digital marketing · social media · accounting · bookkeeping · administration · customer service · HR · recruitment · sales). Brand deferred.</li>
               <li><strong>Still live (Aug 5 read):</strong> <code>PM_US_RSA_Brand</code> — $100/day Max Conv, Enabled; ~$39 / 0 conv. Rest of list = paused (~50 in view).</li>
               <li>LP: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us preview</a></li>
               <li>Phone dest: <code>310-426-8776</code> (confirmed; Raffie/Raffy PH — CallRail later)</li>
@@ -502,7 +502,7 @@
             <h3>Australia</h3>
             <ul class="glance-bullets">
               <li>Account <code>573-539-1940</code></li>
-              <li>Stage 1 campaigns (paused import): <code>VC_AU_S_BRAND</code> · <code>VC_AU_S_CORE_hire_va</code></li>
+              <li>Stage 1 campaigns (paused import): nine <code>VC_AU_S_ROLE_*</code> (same nine roles as US). Brand deferred.</li>
               <li><strong>Still live (Aug 5 read):</strong> <code>PM_AU_RSA_Brand</code> — $30/day Max Conv, Eligible (Limited); A$3 / 0 conv. Rest of list = paused (~62 total).</li>
               <li>LP: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au preview</a></li>
               <li>Phone: official AU-site number only — <code>[AU_BUSINESS_PHONE]</code> unresolved</li>
@@ -531,9 +531,9 @@
             <li>Confirm Search partners off, Display expansion off, Presence geo.</li>
             <li>Confirm Stage 1 conversion goals observe-only (no legacy Max Conv poison).</li>
             <li>Post Paused changes; spot-check in Ads UI.</li>
-            <li>Enable US Brand + CORE only (AU throttle until US sane).</li>
+            <li>Enable US role campaigns only (brand deferred; AU throttle until US sane).</li>
             <li>Fire test clicks / search preview; verify LP attribution params.</li>
-            <li>Watch 72h: search terms, reject logs, form accepts, CPC. Stop → pause CORE first, then Brand if needed.</li>
+            <li>Watch 72h: search terms, reject logs, form accepts, CPC. Stop → pause the noisiest role campaign first.</li>
           </ol>
         </div>
       </details>

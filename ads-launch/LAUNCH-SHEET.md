@@ -1,70 +1,94 @@
 # Stage 1 Google Ads launch sheet (paused import)
 
-**Status:** Import-ready structure · all entities **Paused** · no live mutations performed.  
-**Accounts:** USA `496-715-1855` · AU `573-539-1940` (MCC Accept done — verify Admin in-account).  
-**Import file:** `google-ads-editor-import.csv`
+**Status:** Import-ready · all entities **Paused** · no live mutations.  
+**Accounts:** USA `496-715-1855` · AU `573-539-1940`.  
+**Import file:** `ads-launch/google-ads-editor-import.csv`  
+**Full audit report:** `ads-launch/FULL-BUILD-REPORT.md`  
+**Rebuild script:** `ads-launch/build_stage1_editor_package.py`
 
 ---
 
-## Factual note (Editor export — structure only)
+## Strategy (locked for this package)
 
-| Market | Enabled remnant campaign | **Enabled ad Final URL** | try.* ad |
-|--------|--------------------------|--------------------------|----------|
-| USA | `PM_US_RSA_Brand` | `https://virtualcoworker.com/` (WP) | `try…/us` exists but **Paused** (Approved) |
-| AU | `PM_AU_RSA_Brand` | `https://virtualcoworker.com.au/` (WP) | `try…/apac` **Paused + Disapproved**; separate Custom LP campaign **Paused** (try ad Approved) |
-
-**Unknown until Admin UI:** whether remnant campaigns are spending. Do not infer delivery from Editor structure alone.
+| Decision | Spec |
+|----------|------|
+| Brand | **Deferred** — not in this CSV |
+| Intent | Long-tail employer hire / outsource / Filipino / Philippines / VA / offshore |
+| Roles only | Digital marketing · Social media · Accounting · Bookkeeping · Administration · Customer service · HR · Recruitment · Sales |
+| Excludes | Medical staffing · Technology staffing · Spanish-language |
+| Match | Exact + Phrase only · **no** Broad / PMax / DSA / Demand Gen |
+| Bid | Maximize Clicks · Max CPC = `[APPROVAL_MAX_CPC]` |
+| Networks | Google Search · partners OFF · Display expansion OFF (confirm in Editor) |
+| Destinations | `https://vision-three-alpha.vercel.app/{us\|au}?role=…` — **not** WordPress |
+| Creatives | Full RSA fill (15H / 4D) · 2 angles per primary AG · no invented pricing / top 1% / $/hr |
 
 ---
 
-## Campaigns in this package (per market)
+## Campaigns in this package
 
-| Campaign | Purpose | Launch |
-|----------|---------|--------|
-| `VC_{US\|AU}_S_BRAND` | Brand protect | Yes (paused until checklist) |
-| `VC_{US\|AU}_S_CORE_hire_va` | High-intent employer hire | Yes (paused until checklist) |
-| `VC_{US\|AU}_S_ROLE_held_for_evidence` | Role themes | **Held** — comment only; no keywords/ads |
+### United States — 9 role campaigns (all Paused)
 
-Settings (confirm in Editor after import):
+- `VC_US_S_ROLE_digital_marketing`
+- `VC_US_S_ROLE_social_media`
+- `VC_US_S_ROLE_accounting`
+- `VC_US_S_ROLE_bookkeeping`
+- `VC_US_S_ROLE_administration` ← includes general hire-VA Exact set + light `Admin_City_Test`
+- `VC_US_S_ROLE_customer_service`
+- `VC_US_S_ROLE_hr`
+- `VC_US_S_ROLE_recruitment`
+- `VC_US_S_ROLE_sales`
 
-- Search only · Search partners **OFF** · Display expansion **OFF**
-- Presence geo (US / AU) · English
-- Bid: Maximize Clicks · Max CPC = `[APPROVAL_MAX_CPC]`
-- Daily budget = `[APPROVAL_DAILY_BUDGET_USD|AUD]`
-- Final URL: provisional `https://vision-three-alpha.vercel.app/{us|au}` until custom paid host approved
-- Final URL suffix: UTMs + `lp_version=stage1-v1`
-- One RSA / one ad group · Exact (+ limited Phrase on CORE hire terms)
-- Sitelinks: **none to WP** in this package — add LP-section sitelinks only after LP anchors confirmed
-- Conversion goals: Stage 1 observe `employer_form_valid_submit` only after server accept — **do not** optimize bidding to contaminated legacy conversions
+### Australia — parallel 9 (all Paused)
 
-Negatives: curated jobseeker/info set in CSV — **not** a wholesale historical import.
+- `VC_AU_S_ROLE_digital_marketing`
+- `VC_AU_S_ROLE_social_media`
+- `VC_AU_S_ROLE_accounting`
+- `VC_AU_S_ROLE_bookkeeping`
+- `VC_AU_S_ROLE_administration` ← city test uses AU cities
+- `VC_AU_S_ROLE_customer_service`
+- `VC_AU_S_ROLE_hr`
+- `VC_AU_S_ROLE_recruitment`
+- `VC_AU_S_ROLE_sales`
+
+**Not included:** `VC_*_S_BRAND` · old CORE-only shell · empty ROLE held stubs.
+
+---
+
+## Placeholders you must fill before enable
+
+| Field | Placeholder |
+|-------|-------------|
+| US daily budget (each campaign) | `[APPROVAL_DAILY_BUDGET_USD]` |
+| AU daily budget (each campaign) | `[APPROVAL_DAILY_BUDGET_AUD]` |
+| Max CPC ceiling | `[APPROVAL_MAX_CPC]` |
+| Final URL host | vision-three-alpha until custom domain on Vercel |
 
 ---
 
 ## Import steps (Editor)
 
-1. Confirm USA + AU visible under MCC; verify Admin inside each account.
-2. Download USA + AU into clean Editor (ShoutGeorge login).
-3. **Recommendation:** pause legacy `PM_*` / museum Search before enabling v1 (George decision).
-4. Import `google-ads-editor-import.csv` into each account (split by `VC_US_*` / `VC_AU_*` or import then delete other market’s rows).
-5. Replace `[APPROVAL_*]` budget/CPC placeholders.
-6. Confirm Final URL host (vision deploy vs custom domain).
-7. Confirm networks/geo/presence.
-8. Post **Paused** → review in UI → enable only after launch-control checklist green.
+1. Download fresh USA + AU into Editor (ShoutGeorge).  
+2. Optional but recommended: pause live legacy `PM_US_RSA_Brand` / `PM_AU_RSA_Brand` in Ads UI (you click).  
+3. Import `google-ads-editor-import.csv` (filter to `VC_US_*` or `VC_AU_*` per account).  
+4. Replace `[APPROVAL_*]` budget/CPC values.  
+5. Confirm Search partners off · Display expansion off · Presence geo · English.  
+6. Confirm Final URLs = microsite (no WP sitelinks).  
+7. Post **Paused** → spot-check in UI.  
+8. Enable only after Launch Control gates are green — start US roles, keep AU quiet until US looks sane.
 
 ---
 
-## Campaign-specific conversion goal note
+## Conversion note (Stage 1)
 
-| Path | Ads treatment Stage 1 |
-|------|------------------------|
-| `employer_form_valid_submit` (after server accept) | Observe / primary-eligible form path — wire in GTM later; **no hard-coded AW labels in repo** |
+| Path | Treatment |
+|------|-----------|
+| `employer_form_valid_submit` (after server accept) | Observe / primary-eligible later — **do not** bid on contaminated legacy conversions |
 | `phone_click` | Diagnostic / secondary |
-| Gate / job-seeker / spam rejects | Diagnostic only — never primary |
-| Zoho / CallRail / offline | Optional later — **do not block** Stage 1 |
+| Job-seeker / spam rejects | Never primary |
+| Zoho / CallRail | Optional — do not block Stage 1 |
 
 ---
 
-## Experiments (docs note only)
+## Counts (package)
 
-Quiz + modal gate variants are **not** implemented. Baseline = inline gate on LP. Revisit after Stage 1 diagnostics.
+496 positive keywords (Exact+Phrase) · 38 RSAs · 18 campaigns · 20 ad groups · curated negatives on every campaign · callouts + structured snippets + microsite sitelinks.
