@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
+import HubMapHero from "../components/HubMapHero";
 import { ServiceIcon } from "../components/MicroIcons";
 import { CATEGORY_SLUGS, CATEGORIES } from "../../config/categories";
 import type { MarketId } from "../../config/markets";
@@ -39,46 +40,32 @@ export default async function ServicesPage({
       <MarketGtm surface={surface} />
       <SiteNav tone="dark" market={surface} active="services" />
 
-      <header className={`micro-hero micro-hero--map micro-hero--${market}`}>
-        <div className="micro-hero-map" aria-hidden>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/hero-hub-map-b.jpg"
-            alt=""
-            width={3072}
-            height={2048}
-            decoding="async"
-            fetchPriority="high"
-          />
+      <HubMapHero market={market}>
+        <p className="micro-kicker">
+          Roles · {market === "au" ? "Australia" : "United States"} · Businesses
+        </p>
+        <h1>
+          {market === "au"
+            ? "Roles Australian businesses hire through us."
+            : "Roles US businesses hire through us."}
+        </h1>
+        <p className="micro-lead">
+          Pick the seat you need filled. Every page is for{" "}
+          {market === "au" ? "Australian" : "US"} businesses hiring dedicated
+          Philippines staff — job seekers are pointed to careers instead.
+        </p>
+        <div className="micro-actions">
+          <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
+            Start hiring
+          </Link>
+          <Link
+            href={`/how-it-works?market=${market}`}
+            className="micro-btn micro-btn-ghost"
+          >
+            How it works
+          </Link>
         </div>
-        <div className="micro-hero-veil" aria-hidden />
-        <div className="micro-hero-copy">
-          <p className="micro-kicker">
-            Roles · {market === "au" ? "Australia" : "United States"} · Businesses
-          </p>
-          <h1>
-            {market === "au"
-              ? "Roles Australian businesses hire through us."
-              : "Roles US businesses hire through us."}
-          </h1>
-          <p className="micro-lead">
-            Pick the seat you need filled. Every page is for{" "}
-            {market === "au" ? "Australian" : "US"} businesses hiring dedicated
-            Philippines staff — job seekers are pointed to careers instead.
-          </p>
-          <div className="micro-actions">
-            <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-              Start hiring
-            </Link>
-            <Link
-              href={`/how-it-works?market=${market}`}
-              className="micro-btn micro-btn-ghost"
-            >
-              How it works
-            </Link>
-          </div>
-        </div>
-      </header>
+      </HubMapHero>
 
       <section className="micro-section">
         <div className="services-grid">

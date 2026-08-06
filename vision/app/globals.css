@@ -2115,8 +2115,8 @@ a.gate-call:hover {
 .micro-hero--map {
   position: relative;
   max-width: none;
-  /* Mid-size: between prior zoom-crop cover and tiny contain */
-  min-height: clamp(20.5rem, 50vw, 30rem);
+  /* Slightly taller stage + ~102% cover = a touch more map, less crop */
+  min-height: clamp(21.5rem, 52vw, 32rem);
   padding: clamp(2.75rem, 7vw, 5rem) var(--shell) clamp(2rem, 4vw, 3rem);
   overflow: hidden;
   isolation: isolate;
@@ -2144,10 +2144,10 @@ a.gate-call:hover {
   mask-composite: intersect;
 }
 
-/* Gentle cover: fills stage without extreme continent crop */
+/* Near-full cover — zoomed out from prior 108% mid-crop */
 .micro-hero-map img {
-  width: 108%;
-  height: 108%;
+  width: 102%;
+  height: 102%;
   max-width: none;
   object-fit: cover;
   object-position: center 48%;
@@ -2158,6 +2158,7 @@ a.gate-call:hover {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transform: translateZ(0);
+  filter: none;
 }
 
 /* Mild market framing — halfway from center vs prior hard crops */
@@ -2252,12 +2253,12 @@ a.gate-call:hover {
 
 @media (max-width: 700px) {
   .micro-hero--map {
-    min-height: clamp(17.5rem, 76vw, 23rem);
+    min-height: clamp(18.5rem, 78vw, 24rem);
   }
 
   .micro-hero-map img {
-    width: 112%;
-    height: 112%;
+    width: 104%;
+    height: 104%;
   }
 
   .micro-hero--us .micro-hero-map img {
