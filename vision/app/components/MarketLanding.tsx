@@ -1,6 +1,7 @@
 import Link from "next/link";
 import LeadGate, { type GateCopy } from "./LeadGate";
 import StickyCta from "./StickyCta";
+import ExitIntent from "./ExitIntent";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
 import TrustQuotes from "./TrustQuotes";
@@ -214,7 +215,9 @@ export default function MarketLanding({
             </h2>
             <p className={`${shell}-sell-sub`}>
               Built for employers who want ownership of the hire — not gig-platform churn.{" "}
-              <Link href="/how-it-works">See the full process →</Link>
+              <Link href={`/how-it-works?market=${market}`}>
+                See the full process →
+              </Link>
             </p>
           </div>
           <div className={`sell-grid sell-grid-3${light ? " sell-grid-light" : ""}`}>
@@ -285,7 +288,8 @@ export default function MarketLanding({
       />
 
       <p className="sr-only">
-        Legal: {SITE.copyright}. Addresses published on virtualcoworker.com/contact/.
+        Legal: {SITE.copyright}. Office addresses on this microsite match the
+        published Virtual Coworker contact details.
       </p>
 
       <StickyCta
@@ -294,6 +298,13 @@ export default function MarketLanding({
         market={market}
         phoneDisplay={showPhone ? phone.display : undefined}
         phoneHref={showPhone ? phone.href : null}
+        category={category || undefined}
+        variant={variant}
+      />
+
+      <ExitIntent
+        market={market}
+        gateHref="#gate"
         category={category || undefined}
         variant={variant}
       />

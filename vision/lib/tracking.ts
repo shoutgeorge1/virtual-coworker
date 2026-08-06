@@ -151,7 +151,14 @@ export function trackEvent(
 ) {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: name, ...payload, lp_version: LP_VERSION });
+  const market = String(payload.market || "");
+  window.dataLayer.push({
+    event: name,
+    ...payload,
+    market,
+    site_surface: market || undefined,
+    lp_version: LP_VERSION,
+  });
 }
 
 function alreadyFiredPrimary(submissionId: string): boolean {

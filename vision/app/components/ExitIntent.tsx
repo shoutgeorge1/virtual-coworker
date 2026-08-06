@@ -1,0 +1,112 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { trackEvent } from "../../lib/tracking";
+import type { MarketId } from "../../config/markets";
+import type { AbVariant } from "../../config/categories";
+
+const SESSION_KEY = "vc_exit_intent_seen";
+
+/**
+ * Soft employer conversion overlay — exit-intent OR one timed nudge.
+ * Employer microsites only. Never mount on /ph.
+ */
+export default function ExitIntent({
+  market,
+  gateHref = "#gate",
+  category,
+  variant,
+}: {
+  market: MarketId;
+  gateHref?: string;
+  category?: string;
+  variant?: AbVariant;
+}) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      if (sessionStorage.getItem(SESSION_KEY) === "1") return;
+    } catch {
+      /* ignore */
+    }
+
+    let shown = false;
+    const show = (reason: string) => {
+      if (shown) return;
+      shown = true;
+      try {
+        sessionStorage.setItem(SESSION_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+      setOpen(true);
+      trackEvent("exit_intent_shown", {
+        market,
+        category: category || "",
+        variant: variant || "",
+        reason,
+      });
+    };
+
+    const onLeave = (e: MouseEvent) => {
+      if (e.clientY <= 8) show("exit_intent");
+    };
+
+    const timer = window.setTimeout(() => show("timed_45s"), 45_000);
+    document.addEventListener("mouseout", onLeave);
+
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener("mouseout", onLeave);
+    };
+  }, [market, category, variant]);
+
+  if (!open) return null;
+
+  const dismiss = () => setOpen(false);
+
+  return (
+    <div
+      className="exit-intent"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="exit-intent-title"
+    >
+      <button
+        type="button"
+        className="exit-intent-scrim"
+        aria-label="Close"
+        onClick={dismiss}
+      />
+      <div className="exit-intent-card">
+        <p className="exit-intent-eyebrow">Employers · ~60 seconds</p>
+        <h2 id="exit-intent-title">Start your hiring request</h2>
+        <p>
+          Tell us the role you need filled. Job seekers: use the careers path in
+          the footer — this form is for businesses only.
+        </p>
+        <div className="exit-intent-actions">
+          <a
+            href={gateHref}
+            className="exit-intent-primary"
+            onClick={() => {
+              trackEvent("exit_intent_accepted", {
+                market,
+                category: category || "",
+                variant: variant || "",
+              });
+              dismiss();
+            }}
+          >
+            Continue to form →
+          </a>
+          <button type="button" className="exit-intent-ghost" onClick={dismiss}>
+            Not now
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

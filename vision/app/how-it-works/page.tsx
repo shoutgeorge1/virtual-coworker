@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
+import MarketGtm from "../components/MarketGtm";
+import type { MarketId } from "../../config/markets";
+import type { SiteSurface } from "../../config/site";
 
 export const metadata: Metadata = {
   title: "How it works · Virtual Coworker Hiring",
   description:
-    "How Virtual Coworker recruits, shortlists, and supports Philippines staff for US and Australian employers.",
+    "How Virtual Coworker recruits, shortlists, and supports Philippines staff for employers.",
   robots: { index: false, follow: false },
 };
 
@@ -43,25 +46,47 @@ const STEPS = [
   },
 ] as const;
 
-export default function HowItWorksPage() {
+function resolveMarket(raw: string | string[] | undefined): MarketId {
+  const v = Array.isArray(raw) ? raw[0] : raw;
+  return v === "au" ? "au" : "us";
+}
+
+export default async function HowItWorksPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ market?: string | string[] }>;
+}) {
+  const params = await searchParams;
+  const market = resolveMarket(params.market);
+  const surface: SiteSurface = market;
+  const home = market === "au" ? "/au" : "/us";
+  const marketLabel = market === "au" ? "Australian" : "US";
+
   return (
     <main className="micro">
-      <SiteNav tone="dark" active="how" />
+      <MarketGtm surface={surface} />
+      <SiteNav tone="dark" market={surface} active="how" />
 
       <header className="micro-hero">
-        <p className="micro-kicker">Employers · Philippines talent</p>
+        <p className="micro-kicker">
+          Employers · {market === "au" ? "Australia" : "United States"} ·
+          Philippines talent
+        </p>
         <h1>How hiring works with Virtual Coworker.</h1>
         <p className="micro-lead">
           Three steps. You keep ownership of who joins your team. We recruit,
-          screen, and support dedicated Philippines staff for US and Australian
+          screen, and support dedicated Philippines staff for {marketLabel}{" "}
           businesses.
         </p>
         <div className="micro-actions">
-          <Link href="/us#gate" className="micro-btn micro-btn-primary">
-            Start hiring · US
+          <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
+            Start hiring
           </Link>
-          <Link href="/au#gate" className="micro-btn micro-btn-ghost">
-            Start hiring · AU
+          <Link
+            href={`/services?market=${market}`}
+            className="micro-btn micro-btn-ghost"
+          >
+            Browse services
           </Link>
         </div>
       </header>
@@ -86,20 +111,17 @@ export default function HowItWorksPage() {
       <section className="micro-cta">
         <h2>Ready to brief a role?</h2>
         <p>
-          Tell us who you need. Job seekers should use the{" "}
-          <Link href="/ph">Philippines careers path</Link> instead.
+          Tell us who you need. Job seekers should use the Philippines careers
+          path instead — linked quietly in the footer.
         </p>
         <div className="micro-actions">
-          <Link href="/services" className="micro-btn micro-btn-ghost">
-            Browse services
-          </Link>
-          <Link href="/us#gate" className="micro-btn micro-btn-primary">
+          <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
             Tell us who you need
           </Link>
         </div>
       </section>
 
-      <SiteFooter tone="dark" />
+      <SiteFooter tone="dark" market={surface} />
     </main>
   );
 }

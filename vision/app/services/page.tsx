@@ -2,34 +2,62 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
+import MarketGtm from "../components/MarketGtm";
 import { CATEGORY_SLUGS, CATEGORIES } from "../../config/categories";
+import type { MarketId } from "../../config/markets";
+import type { SiteSurface } from "../../config/site";
 
 export const metadata: Metadata = {
   title: "Services · Virtual Coworker Hiring",
   description:
-    "Employer service lines for hiring dedicated Philippines staff — US and Australia.",
+    "Employer service lines for hiring dedicated Philippines staff.",
   robots: { index: false, follow: false },
 };
 
-export default function ServicesPage() {
+function resolveMarket(
+  raw: string | string[] | undefined
+): MarketId {
+  const v = Array.isArray(raw) ? raw[0] : raw;
+  return v === "au" ? "au" : "us";
+}
+
+export default async function ServicesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ market?: string | string[] }>;
+}) {
+  const params = await searchParams;
+  const market = resolveMarket(params.market);
+  const surface: SiteSurface = market;
+  const home = market === "au" ? "/au" : "/us";
+  const other: MarketId = market === "au" ? "us" : "au";
+  const otherLabel = other === "au" ? "Australia" : "United States";
+
   return (
     <main className="micro">
-      <SiteNav tone="dark" active="services" />
+      <MarketGtm surface={surface} />
+      <SiteNav tone="dark" market={surface} active="services" />
 
       <header className="micro-hero">
-        <p className="micro-kicker">Services · Employers</p>
+        <p className="micro-kicker">
+          Services · {market === "au" ? "Australia" : "United States"} · Employers
+        </p>
         <h1>Nine roles. One employer hiring path.</h1>
         <p className="micro-lead">
-          Pick the seat you need filled. Each page is built for US or Australian
-          employers hiring dedicated Philippines staff — with an employer gate so
-          job seekers don’t land in the form.
+          Pick the seat you need filled. Each page is for{" "}
+          {market === "au" ? "Australian" : "US"} employers hiring dedicated
+          Philippines staff — with an employer gate so job seekers don’t land in
+          the form.
         </p>
         <div className="micro-actions">
-          <Link href="/us" className="micro-btn micro-btn-primary">
-            US hiring hub
+          <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
+            Start hiring
           </Link>
-          <Link href="/au" className="micro-btn micro-btn-ghost">
-            Australia hiring hub
+          <Link
+            href={`/how-it-works?market=${market}`}
+            className="micro-btn micro-btn-ghost"
+          >
+            How it works
           </Link>
         </div>
       </header>
@@ -42,10 +70,9 @@ export default function ServicesPage() {
               <article className="services-card" key={slug}>
                 <em>{c.shortLabel}</em>
                 <h2>{c.label}</h2>
-                <p>{c.description.us}</p>
+                <p>{c.description[market]}</p>
                 <div className="services-card-links">
-                  <Link href={`/us/${slug}`}>US →</Link>
-                  <Link href={`/au/${slug}`}>AU →</Link>
+                  <Link href={`/${market}/${slug}`}>Open →</Link>
                 </div>
               </article>
             );
@@ -56,20 +83,23 @@ export default function ServicesPage() {
       <section className="micro-cta">
         <h2>Not sure which label fits?</h2>
         <p>
-          Start on the market hub and pick the closest role in the form — or call
-          the US business line from any US page.
+          Start on the hiring page and pick the closest role in the form
+          {market === "us"
+            ? " — or call the US business line from any US page."
+            : "."}
         </p>
         <div className="micro-actions">
-          <Link href="/how-it-works" className="micro-btn micro-btn-ghost">
-            How it works
-          </Link>
-          <Link href="/us#gate" className="micro-btn micro-btn-primary">
+          <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
             Start hiring
           </Link>
         </div>
+        <p className="micro-cross">
+          Looking for {otherLabel}?{" "}
+          <Link href={`/services?market=${other}`}>{otherLabel} services</Link>
+        </p>
       </section>
 
-      <SiteFooter tone="dark" />
+      <SiteFooter tone="dark" market={surface} />
     </main>
   );
 }

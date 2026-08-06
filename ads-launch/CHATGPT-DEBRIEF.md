@@ -45,16 +45,22 @@ Historical Ads “Conversions” in exports are **not** proof of placements. Sta
 
 ---
 
-## 2. Architecture: paid microsite vs WordPress
+## 2. Architecture: three micro-sites (not a hub + WP)
 
 | Surface | Role |
 |---------|------|
-| **Paid microsite** (`vision/` → Vercel `vision-three-alpha`) | Only Final URL host for Stage 1 Search |
-| **WordPress** virtualcoworker.com / .com.au | **Untouched** — marketing site stays; **paid traffic must not use WP Final URLs** |
+| **US employer** `/us` + `/us/*` | Primary PPC micro-site |
+| **AU employer** `/au` + `/au/*` | Separate AU employer micro-site |
+| **PH talent** `/ph` (+ `/ph/apply`) | Separate careers micro-site — **never** employer conversion |
+| **Root `/`** | **Redirects → `/us`** (no multi-market “choose your adventure” hub) |
+| **WordPress** virtualcoworker.com / .com.au | **Untouched** — **zero egress** from microsite nav/footer/CTAs |
 | **Launch Control** vc-xray | Operator dashboard / X-ray / launch checklist |
-| **Careers** `/ph` on microsite | Job-seeker divert — **never** employer conversion |
 
-Microsite is an **independent paid hiring path** with employer gate, category LPs, A/B variants, honest events, and pilot `noindex`.
+**Hard rule — no WordPress egress:** Privacy/Terms are local `/privacy` and `/terms` only. Soft cross-links stay inside US ↔ AU ↔ PH microsite routes. PPC traffic must not leak to WP.
+
+**Tracking separation:** three identities — `NEXT_PUBLIC_GTM_US` / `_AU` / `_PH` (+ GA4 twins). dataLayer always carries `market` / `site_surface` (`us` \| `au` \| `ph`). Do **not** assume one shared GTM for everything. Legacy `NEXT_PUBLIC_GTM_ID` is US-only fallback.
+
+Microsite is an **independent paid hiring path** with employer gate, category LPs, A/B variants, exit-intent + sticky CTA (employer only), honest events, and pilot `noindex`.
 
 ---
 
@@ -65,21 +71,22 @@ Microsite is an **independent paid hiring path** with employer gate, category LP
 | Page | URL |
 |------|-----|
 | Launch Control | https://vc-xray.vercel.app/launch-control |
-| Microsite home | https://vision-three-alpha.vercel.app/ |
-| Services index | https://vision-three-alpha.vercel.app/services |
-| How it works | https://vision-three-alpha.vercel.app/how-it-works |
+| Root (→ US) | https://vision-three-alpha.vercel.app/ → `/us` |
+| Services (market-scoped) | https://vision-three-alpha.vercel.app/services?market=us |
+| How it works (market-scoped) | https://vision-three-alpha.vercel.app/how-it-works?market=us |
 | Privacy (microsite) | https://vision-three-alpha.vercel.app/privacy |
 | Terms (microsite) | https://vision-three-alpha.vercel.app/terms |
 | Thank you | https://vision-three-alpha.vercel.app/thank-you |
 | Careers (PH) | https://vision-three-alpha.vercel.app/ph |
 | Careers apply | https://vision-three-alpha.vercel.app/ph/apply |
 
-### Market hubs
+### Market homes (three sites)
 
-| Market | Hub | Gate deep-link |
-|--------|-----|----------------|
+| Market | Home | Gate deep-link |
+|--------|------|----------------|
 | US | https://vision-three-alpha.vercel.app/us | https://vision-three-alpha.vercel.app/us#gate |
 | AU | https://vision-three-alpha.vercel.app/au | https://vision-three-alpha.vercel.app/au#gate |
+| PH | https://vision-three-alpha.vercel.app/ph | https://vision-three-alpha.vercel.app/ph/apply |
 
 ### Category LPs (9 × 2 markets) — Ads Final URLs use these paths
 
@@ -130,16 +137,23 @@ Final URL suffix (once): UTMs + `lp_version=stage1-v6`. **No double UTM.**
 - Plastic / white-HR stock heroes **killed**.
 - Category A/B heroes pull from `/brand/*` (va-ph, talent-john, support, face series, etc.).
 
-### Nav / footer (polish landed on `vision-demo`)
+### Nav / footer / IA (corrected — three micro-sites)
 
-Shared `SiteNav` + `SiteFooter` (`vision/config/site.ts`):
+- **`/` → `/us`** (primary paid market). No corporate hub.
+- **Market-scoped nav:** US pages = Services · How it works · Start hiring (US only). AU same for AU. PH = Careers · Apply. **Not** “US · AU · Careers” as peer equals.
+- **Footer:** market address/phone · local Privacy/Terms · soft cross-links only (US↔AU↔PH). **Zero WP links. Zero dead links.**
+- Trust quotes: published client wording as text — **no WP deep-links**
+- Shared content routes: `/services?market=us|au`, `/how-it-works?market=us|au`, `/privacy`, `/terms`
 
-- Nav: **Services · How it works · US · AU · Start hiring · Careers**
-- Footer: corporate addresses from live WP contact page, privacy/terms links, copyright
-- Trust quotes: public client quotes from virtualcoworker.com homepage (not invented)
-- New routes: `/services`, `/how-it-works` (plus privacy/terms)
+### Conversion tools (employer microsites only)
 
-If something still feels mid-flight in UI polish, **do not block Ads package review** — Ads CSV is complete and Paused.
+| Tool | Spec |
+|------|------|
+| Gate + form | Employer vs job seeker → `/ph` divert |
+| Phone CTA | US only (`310-426-8776`) |
+| Sticky mobile CTA | Form (+ phone on US) |
+| Exit-intent / timed soft offer | One overlay → `#gate`; once/session; **never on `/ph`** |
+| Events | `exit_intent_shown`, `exit_intent_accepted` (+ existing employer events) |
 
 ### Gate / form / phone
 
@@ -153,6 +167,7 @@ If something still feels mid-flight in UI polish, **do not block Ads package rev
 | Zoho | **Not live** — do not pretend sync |
 | Ads conversions | `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false` |
 | Pilot SEO | `NEXT_PUBLIC_PILOT_NOINDEX=true` |
+| Tracking | Separate GTM/GA4 env placeholders per `us` / `au` / `ph` |
 
 ### Events (dataLayer / GTM-ready; Ads firing off)
 

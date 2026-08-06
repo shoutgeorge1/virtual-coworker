@@ -1,23 +1,36 @@
 import Link from "next/link";
-import { NAV, SITE, type NavId } from "../../config/site";
+import {
+  SITE,
+  homeForSurface,
+  navForSurface,
+  type NavId,
+  type SiteSurface,
+} from "../../config/site";
 import { resolvePhone, type MarketId } from "../../config/markets";
 
 export default function SiteNav({
   tone = "dark",
-  market,
+  market = "us",
   active,
 }: {
   tone?: "dark" | "light";
-  market?: MarketId | null;
+  /** Employer market or PH talent surface — scopes logo + nav. */
+  market?: SiteSurface;
   active?: NavId | null;
 }) {
-  const phone = market ? resolvePhone(market) : resolvePhone("us");
-  const showPhone = phone.configured && Boolean(phone.href);
-  const hireHref = market === "au" ? "/au#gate" : "/us#gate";
+  const surface: SiteSurface = market ?? "us";
+  const items = navForSurface(surface);
+  const home = homeForSurface(surface);
+  const employerMarket: MarketId | null =
+    surface === "us" || surface === "au" ? surface : null;
+  const phone = employerMarket ? resolvePhone(employerMarket) : null;
+  const showPhone = Boolean(phone?.configured && phone.href);
+  const hireHref =
+    surface === "au" ? "/au#gate" : surface === "ph" ? "/ph/apply" : "/us#gate";
 
   return (
     <nav className={`site-nav site-nav-${tone}`} aria-label="Primary">
-      <Link href="/" className="site-nav-brand">
+      <Link href={home} className="site-nav-brand">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/brand/logo-vc.png"
@@ -27,18 +40,14 @@ export default function SiteNav({
       </Link>
 
       <div className="site-nav-links">
-        {NAV.map((item) => {
-          const href = item.id === "hire" ? hireHref : item.href;
-          const isActive =
-            active === item.id ||
-            (item.id === "us" && market === "us") ||
-            (item.id === "au" && market === "au");
+        {items.map((item) => {
+          const isActive = active === item.id;
           return (
             <Link
               key={item.id}
-              href={href}
+              href={item.href}
               className={`site-nav-link${
-                "primary" in item && item.primary ? " site-nav-link-primary" : ""
+                item.primary ? " site-nav-link-primary" : ""
               }${isActive ? " is-active" : ""}`}
             >
               {item.label}
@@ -48,14 +57,18 @@ export default function SiteNav({
       </div>
 
       <div className="site-nav-right">
-        {showPhone ? (
+        {showPhone && phone?.href ? (
           <a
-            href={phone.href!}
+            href={phone.href}
             className="site-nav-call"
             data-track="phone_cta_clicked"
           >
             <span aria-hidden>☎</span> {phone.display}
           </a>
+        ) : surface === "ph" ? (
+          <Link href="/ph/apply" className="site-nav-call">
+            Apply
+          </Link>
         ) : (
           <a href={hireHref} className="site-nav-call">
             Start hiring

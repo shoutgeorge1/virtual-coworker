@@ -1,15 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import SiteFooter from "../../components/SiteFooter";
 import "../ph.css";
 
 export default function PHApply() {
   return (
     <main className="ph">
-      <p className="vision-banner ph-banner">
-        Vision demo · <Link href="/">back to hub</Link> · talent path only
-      </p>
-
       <nav className="ph-nav">
         <Link href="/ph" className="ph-brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -21,25 +18,18 @@ export default function PHApply() {
           <span className="ph-brand-tag">Careers</span>
         </Link>
         <div className="ph-nav-right">
-          <div className="ph-nav-links">
-            <Link href="/ph">← PH home</Link>
-          </div>
+          <Link href="/ph" className="ph-nav-link">
+            ← Careers home
+          </Link>
         </div>
       </nav>
 
       <div className="ph-apply">
         <h1 className="anim-rise">Apply for VA opportunities</h1>
         <p className="anim-rise-d1">
-          For people building a virtual assistant career. Business owners hiring
-          a VA: please use the{" "}
-          <Link href="/us" style={{ color: "var(--cyan)" }}>
-            US
-          </Link>{" "}
-          or{" "}
-          <Link href="/au" style={{ color: "var(--cyan)" }}>
-            AU
-          </Link>{" "}
-          buyer sites.
+          For people building a virtual assistant career. Businesses hiring
+          staff: use the employer microsites linked in the footer — not this
+          form.
         </p>
 
         <p className="ph-gate-note" style={{ marginBottom: "2rem" }}>
@@ -92,10 +82,18 @@ export default function PHApply() {
             Submit application
           </button>
         </form>
-        <p style={{ marginTop: "1.5rem", fontSize: "0.8rem", color: "var(--mute)" }}>
+        <p
+          style={{
+            marginTop: "1.5rem",
+            fontSize: "0.8rem",
+            color: "var(--mute)",
+          }}
+        >
           Demo only — form does not submit.
         </p>
       </div>
+
+      <SiteFooter tone="dark" market="ph" />
     </main>
   );
 }

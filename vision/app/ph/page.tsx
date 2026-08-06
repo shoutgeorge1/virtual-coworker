@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import SiteFooter from "../components/SiteFooter";
 import "./ph.css";
 
 /* Careers destination for job-seeker gate redirects. Not a paid employer LP. */
@@ -14,7 +15,6 @@ const faces = [
 const copy = {
   en: {
     brandTag: "Careers",
-    navHub: "Employers: US",
     kicker: "PH · Build a VA career",
     h1: "Your next chapter starts here.",
     lead: "Real VA roles with real clients — training, support and a path. Not another gig post that disappears in a week.",
@@ -28,14 +28,12 @@ const copy = {
     vaRole: "Admin & operations VA",
     vaMeta: "Work from home · long-term client · full-time hours",
     ctaTitle: "Start your application",
-    ctaBody: "This door is for talent only. Businesses hiring staff use the US or Australia employer pages.",
+    ctaBody:
+      "This door is for talent only. Businesses hiring staff use the employer microsites — linked quietly in the footer.",
     ctaApply: "Go to application →",
-    ctaHire: "I’m hiring staff →",
-    foot: "PH careers · Virtual Coworker",
   },
   tl: {
     brandTag: "Careers",
-    navHub: "Employers: US",
     kicker: "PH · Magtayo ng VA career",
     h1: "Dito nagsisimula ang susunod mong chapter.",
     lead: "Totoong VA roles, totoong clients — may training, support at malinaw na daan.",
@@ -49,10 +47,9 @@ const copy = {
     vaRole: "Admin & operations VA",
     vaMeta: "Work from home · long-term client · full-time hours",
     ctaTitle: "Simulan ang application mo",
-    ctaBody: "Para sa talent lang ang pintong ito. Ang mga business na nagha-hire ay sa US o Australia employer pages.",
+    ctaBody:
+      "Para sa talent lang ang pintong ito. Ang mga business ay sa employer microsites — naka-link sa footer.",
     ctaApply: "Pumunta sa application →",
-    ctaHire: "Nagha-hire ako →",
-    foot: "PH careers · Virtual Coworker",
   },
 };
 
@@ -73,8 +70,8 @@ export default function PHHome() {
           <span className="ph-brand-tag">{t.brandTag}</span>
         </Link>
         <div className="ph-nav-right">
-          <Link href="/us" className="ph-nav-link">
-            {t.navHub}
+          <Link href="/ph/apply" className="ph-nav-link ph-nav-link-primary">
+            Apply
           </Link>
           <div className="ph-lang" role="group" aria-label="Language">
             <button
@@ -121,7 +118,10 @@ export default function PHHome() {
 
           <figure className="va-card ph-va anim-rise-d1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/va-ph.jpg" alt="A Virtual Coworker VA working from home" />
+            <img
+              src="/brand/va-ph.jpg"
+              alt="A Virtual Coworker VA working from home"
+            />
             <span className="va-card-tag">
               <i />
               {t.vaTag}
@@ -138,33 +138,21 @@ export default function PHHome() {
               <h2>{t.ctaTitle}</h2>
             </div>
             <div className="gate-card-body">
-              <p className="gate-reassure" style={{ textAlign: "left", marginTop: 0 }}>
+              <p
+                className="gate-reassure"
+                style={{ textAlign: "left", marginTop: 0 }}
+              >
                 {t.ctaBody}
               </p>
               <Link href="/ph/apply" className="gate-submit">
                 {t.ctaApply}
-              </Link>
-              <div className="gate-or">
-                <span>or</span>
-              </div>
-              <Link href="/us" className="gate-submit gate-submit-secondary">
-                {t.ctaHire}
               </Link>
             </div>
           </aside>
         </div>
       </section>
 
-      <footer className="ph-footer">
-        <span>{t.foot}</span>
-        <span>
-          <Link href="/us">US employers</Link>
-          {" · "}
-          <Link href="/privacy">Privacy</Link>
-          {" · "}
-          <Link href="/terms">Terms</Link>
-        </span>
-      </footer>
+      <SiteFooter tone="dark" market="ph" />
     </main>
   );
 }

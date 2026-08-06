@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 
 const noindex = process.env.NEXT_PUBLIC_PILOT_NOINDEX !== "false";
-const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
 export const metadata: Metadata = {
   title: "Virtual Coworker · Paid Search Pilot",
@@ -15,6 +13,10 @@ export const metadata: Metadata = {
     : { index: true, follow: true },
 };
 
+/**
+ * Root shell — no shared GTM.
+ * US / AU / PH each load their own container via market layouts.
+ */
 export default function RootLayout({
   children,
 }: {
@@ -34,22 +36,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>
-        {gtmId ? (
-          <>
-            <Script id="gtm-init" strategy="afterInteractive">{`
-              window.dataLayer = window.dataLayer || [];
-              window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-            `}</Script>
-            <Script
-              id="gtm"
-              strategy="afterInteractive"
-              src={`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`}
-            />
-          </>
-        ) : null}
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
