@@ -2111,6 +2111,90 @@ a.gate-call:hover {
   max-width: 48rem;
 }
 
+/* Hub Map B atmosphere on Services / How it works (not gate / Start hiring) */
+.micro-hero--map {
+  position: relative;
+  max-width: none;
+  min-height: clamp(17.5rem, 46vw, 26rem);
+  padding: clamp(2.75rem, 7vw, 5rem) var(--shell) clamp(2rem, 4vw, 3rem);
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.micro-hero-map {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: #0c1826;
+}
+
+.micro-hero-map img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 42% 45%;
+  display: block;
+  opacity: 0.92;
+}
+
+/* Market framing: keep US cluster vs AU/PH cluster more present */
+.micro-hero--us .micro-hero-map img {
+  object-position: 22% 42%;
+}
+
+.micro-hero--au .micro-hero-map img {
+  object-position: 78% 52%;
+}
+
+.micro-hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      105deg,
+      rgba(12, 24, 38, 0.92) 0%,
+      rgba(12, 24, 38, 0.72) 34%,
+      rgba(12, 24, 38, 0.38) 58%,
+      rgba(12, 24, 38, 0.55) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(12, 24, 38, 0.35) 0%,
+      transparent 28%,
+      transparent 62%,
+      rgba(12, 24, 38, 0.82) 100%
+    );
+}
+
+.micro-hero--au .micro-hero-veil {
+  background:
+    linear-gradient(
+      255deg,
+      rgba(12, 24, 38, 0.9) 0%,
+      rgba(12, 24, 38, 0.68) 36%,
+      rgba(12, 24, 38, 0.4) 60%,
+      rgba(12, 24, 38, 0.58) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(12, 24, 38, 0.38) 0%,
+      transparent 28%,
+      transparent 62%,
+      rgba(12, 24, 38, 0.84) 100%
+    );
+}
+
+.micro-hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 48rem;
+}
+
 .micro-kicker {
   margin: 0 0 0.85rem;
   font-size: var(--step-eyebrow);
@@ -2133,12 +2217,52 @@ a.gate-call:hover {
   line-height: 1.08;
 }
 
+.micro-hero--map h1 {
+  text-shadow: 0 1px 18px rgba(12, 24, 38, 0.45);
+}
+
 .micro-lead {
   margin: 0 0 1.5rem;
   font-size: var(--step-lead);
   line-height: 1.6;
   color: #c2d3e4;
   max-width: 46ch;
+}
+
+@media (max-width: 700px) {
+  .micro-hero--map {
+    min-height: clamp(16rem, 78vw, 22rem);
+  }
+
+  .micro-hero-map img {
+    opacity: 0.78;
+  }
+
+  .micro-hero--us .micro-hero-map img {
+    object-position: 28% 40%;
+  }
+
+  .micro-hero--au .micro-hero-map img {
+    object-position: 72% 48%;
+  }
+
+  .micro-hero-veil,
+  .micro-hero--au .micro-hero-veil {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(12, 24, 38, 0.72) 0%,
+        rgba(12, 24, 38, 0.55) 38%,
+        rgba(12, 24, 38, 0.78) 72%,
+        rgba(12, 24, 38, 0.92) 100%
+      ),
+      linear-gradient(
+        105deg,
+        rgba(12, 24, 38, 0.88) 0%,
+        rgba(12, 24, 38, 0.55) 55%,
+        rgba(12, 24, 38, 0.7) 100%
+      );
+  }
 }
 
 .micro-actions {

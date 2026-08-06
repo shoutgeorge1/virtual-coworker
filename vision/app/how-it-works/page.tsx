@@ -120,30 +120,42 @@ export default async function HowItWorksPage({
       <MarketGtm surface={surface} />
       <SiteNav tone="dark" market={surface} active="how" />
 
-      <header className="micro-hero">
-        <p className="micro-kicker">
-          {isAu ? "Australia" : "United States"} · Businesses · Philippines talent
-        </p>
-        <h1>
-          {isAu
-            ? "How hiring works for Australian businesses."
-            : "How hiring works with Virtual Coworker."}
-        </h1>
-        <p className="micro-lead">
-          {isAu
-            ? "Four steps. You keep ownership of who joins your team. We recruit, screen, and support dedicated Philippines staff who can work Australian business hours."
-            : "Four steps. You keep ownership of who joins your team. We recruit, screen, and support dedicated Philippines staff for US businesses."}
-        </p>
-        <div className="micro-actions">
-          <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-            Start hiring
-          </Link>
-          <Link
-            href={`/services?market=${market}`}
-            className="micro-btn micro-btn-ghost"
-          >
-            Browse roles
-          </Link>
+      <header className={`micro-hero micro-hero--map micro-hero--${market}`}>
+        <div className="micro-hero-map" aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/hero-hub-map-b.jpg"
+            alt=""
+            width={1600}
+            height={900}
+          />
+        </div>
+        <div className="micro-hero-veil" aria-hidden />
+        <div className="micro-hero-copy">
+          <p className="micro-kicker">
+            {isAu ? "Australia" : "United States"} · Businesses · Philippines talent
+          </p>
+          <h1>
+            {isAu
+              ? "How hiring works for Australian businesses."
+              : "How hiring works with Virtual Coworker."}
+          </h1>
+          <p className="micro-lead">
+            {isAu
+              ? "Four steps. You keep ownership of who joins your team. We recruit, screen, and support dedicated Philippines staff who can work Australian business hours."
+              : "Four steps. You keep ownership of who joins your team. We recruit, screen, and support dedicated Philippines staff for US businesses."}
+          </p>
+          <div className="micro-actions">
+            <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
+              Start hiring
+            </Link>
+            <Link
+              href={`/services?market=${market}`}
+              className="micro-btn micro-btn-ghost"
+            >
+              Browse roles
+            </Link>
+          </div>
         </div>
       </header>
 
