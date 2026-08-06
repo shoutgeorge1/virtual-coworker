@@ -26,6 +26,8 @@ Outputs:
   - ads-launch/google-ads-editor-import-us.csv (US only — preferred import path)
   - ads-launch/google-ads-editor-import-au.csv (AU only — preferred import path)
   - ads-launch/google-ads-editor-import-multi-account.csv (same as combined)
+  - ads-launch/phase1-enable-manifest-us.csv / -au.csv (review tiers; all Paused)
+  - ads-launch/PHASE1-REVIEW.md
   - ads-launch/EDITOR-PREFLIGHT-REPORT.md
   - mirrors into xray/docs/ads-launch/
 """
@@ -33,6 +35,7 @@ Outputs:
 from __future__ import annotations
 
 import csv
+import json
 import re
 import shutil
 from collections import Counter
@@ -92,6 +95,8 @@ TRACK = "{lpurl}"
 
 # Commercial / research negatives held out of import — judge from live ST + lead quality.
 # Still reported in EDITOR-PREFLIGHT-REPORT.md. Competitor-named review terms stay active.
+# Broad negs block any query containing all tokens — pay/hourly rate + generic VA
+# reviews suppress employer research, so they stay out of import until ST proves waste.
 NEGATIVE_REVIEW_HOLDOUT = (
     "review",
     "reviews",
@@ -109,6 +114,26 @@ NEGATIVE_REVIEW_HOLDOUT = (
     "cheap",
     "cheapest",
     "filipina va",
+    # Employer-research Broad risks (moved from active NEGATIVES)
+    "pay rate",
+    "hourly rate",
+    "virtual assistant reviews",
+)
+
+# Employer-research queries that must remain reachable under campaign Broad negatives.
+# qa() fails if any active Broad negative would block these (token containment).
+EMPLOYER_RESEARCH_CANARIES = (
+    "virtual assistant pay rate for us employers",
+    "filipino virtual assistant hourly rate",
+    "virtual assistant reviews for small business",
+    "best virtual assistant reviews comparison",
+    "virtual assistant pricing philippines",
+    "how much does a virtual assistant cost",
+    "cost of a virtual assistant for small business",
+    "virtual assistant philippines cost",
+    "cheap virtual assistant philippines for hire",
+    "top 10 virtual assistant companies for agencies",
+    "filipina va for bookkeeping hire",
 )
 
 FIELDS = [
@@ -181,8 +206,7 @@ NEGATIVES = [
     "salaries",
     "wage",
     "wages",
-    "pay rate",
-    "hourly rate",
+    # pay rate / hourly rate → NEGATIVE_REVIEW_HOLDOUT (employer research)
     "career",
     "careers",
     "hiring me",
@@ -277,7 +301,7 @@ NEGATIVES = [
     "athena assistant pricing",
     "athena ea reviews",
     "virtualstaff ph reviews",
-    "virtual assistant reviews",
+    # virtual assistant reviews → NEGATIVE_REVIEW_HOLDOUT (employer research)
     # DSA / marketplace catch-alls (ST: online ph $1.9k, onlinejobs*, wing, hellorache)
     "online ph",
     "onlineph",
@@ -1444,7 +1468,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Need a marketing hire? We recruit and screen Philippines talent into a shortlist.",
                     "You interview finalists — we handle sourcing and vetting for digital roles.",
-                    "Speed comes from a staffing pipeline, not invented placement guarantees.",
+                    "Speed comes from a staffing pipeline — placement timing set in follow-up.",
                     "Tell us the marketing seat. We return interview-ready candidates.",
                 ),
             'shortlist',
@@ -1473,7 +1497,7 @@ def _third_rsa_angles() -> dict:
                     "Outsource marketing with a dedicated Philippines seat — not freelancer rotation.",
                     "Continuity is the proof: one vetted marketer you interview before placement.",
                     f"Built for {m['employers']} who want accountable offshore marketing capacity.",
-                    "Partner-led seat. You keep hire authority. No invented savings claims.",
+                    "Partner-led seat. You keep hire authority — savings are not promised in ads.",
                 ),
             'dedicated',
             'mkt',
@@ -1503,7 +1527,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Need a social media hire? We recruit and screen Philippines SMM talent first.",
                     "Shortlist-first path: you interview; we source and vet community managers.",
-                    "No fake response-time claims — speed means a ready staffing pipeline.",
+                    "Speed means a ready staffing pipeline — not a response-time promise.",
                     "Tell us the social seat. Review vetted finalists before you hire.",
                 ),
             'shortlist',
@@ -1532,7 +1556,7 @@ def _third_rsa_angles() -> dict:
                     "Outsource social with a dedicated Philippines seat — not rotating freelancers.",
                     "Proof is continuity: one vetted SMM you interview before placement support.",
                     f"Built for {m['employers']} needing accountable offshore social capacity.",
-                    "Partner-led seat model. No invented engagement or follower guarantees.",
+                    "Partner-led seat model. Engagement and follower goals set after we talk.",
                 ),
             'dedicated',
             'smm',
@@ -1562,7 +1586,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Need an accounting hire? We recruit and screen Philippines finance talent first.",
                     "Shortlist-first: you interview AP/AR and accounting finalists we vet.",
-                    "No invented credential or close-time guarantees on this creative.",
+                    "Credentials and close timing are confirmed in follow-up, not ad promises.",
                     "Tell us the finance seat. Review vetted candidates before you hire.",
                 ),
             'shortlist',
@@ -1591,7 +1615,7 @@ def _third_rsa_angles() -> dict:
                     "Outsource accounting with a dedicated Philippines seat — not task gigs.",
                     "Proof is continuity: one vetted finance seat you interview first.",
                     f"Built for {m['employers']} who need accountable offshore accounting capacity.",
-                    "Partner-led model. No invented $/hr rates or savings percentages.",
+                    "Partner-led model. Rates and terms discussed after we understand the seat.",
                 ),
             'dedicated',
             'acct',
@@ -1621,7 +1645,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Need a bookkeeper? We recruit and screen Philippines books talent first.",
                     "Shortlist-first hiring: you interview; we source and vet bookkeepers.",
-                    "No fake turnaround promises — speed means a ready staffing pipeline.",
+                    "Speed means a ready staffing pipeline — not a turnaround promise.",
                     "Tell us the books seat. Review vetted finalists before you hire.",
                 ),
             'shortlist',
@@ -1650,7 +1674,7 @@ def _third_rsa_angles() -> dict:
                     "Outsource bookkeeping with a dedicated Philippines seat — not task bundles.",
                     "Proof is continuity: one vetted bookkeeper you interview before placement.",
                     f"Built for {m['employers']} who need accountable offshore books capacity.",
-                    "Partner-led seat. Tool fit confirmed in follow-up — not invented here.",
+                    "Partner-led seat. Tool fit is confirmed in follow-up, not in the ad.",
                 ),
             'dedicated',
             'books',
@@ -1680,7 +1704,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Need an executive assistant? We recruit and screen Philippines EA talent first.",
                     "Shortlist-first: you interview; we source and vet remote EA finalists.",
-                    "No invented availability guarantees — speed means a staffing pipeline.",
+                    "Speed means a staffing pipeline — availability confirmed in follow-up.",
                     "Tell us the EA seat. Review vetted candidates before you hire.",
                 ),
             'shortlist',
@@ -1711,7 +1735,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Need customer service staff? We recruit and screen Philippines support talent.",
                     "Shortlist-first hiring: you interview; we source and vet CS finalists.",
-                    "No fake SLA claims — speed means a ready staffing pipeline.",
+                    "Speed means a ready staffing pipeline — not an SLA promise.",
                     "Tell us the support seat. Review vetted agents before you hire.",
                 ),
             'shortlist',
@@ -1740,7 +1764,7 @@ def _third_rsa_angles() -> dict:
                     "Outsource support with a dedicated Philippines seat — not rotating agents.",
                     "Proof is continuity: one vetted support seat you interview first.",
                     f"Built for {m['employers']} who need accountable offshore customer care.",
-                    "Partner-led model. No invented response-time or CSAT guarantees.",
+                    "Partner-led model. Response-time and CSAT goals set after we talk.",
                 ),
             'dedicated',
             'cs',
@@ -1770,7 +1794,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Need HR support? We recruit and screen Philippines people-ops talent first.",
                     "Shortlist-first: you interview; we source and vet HR admin finalists.",
-                    "Thin historical ST volume acknowledged — still a clear employer hire path.",
+                    "A clear employer hire path for HR support — you interview the shortlist.",
                     "Tell us the HR seat. Review vetted candidates before you hire.",
                 ),
             'shortlist',
@@ -1799,7 +1823,7 @@ def _third_rsa_angles() -> dict:
                     "Outsource HR admin with a dedicated Philippines seat — not task gigs.",
                     "Proof is continuity: one vetted HR seat you interview before placement.",
                     f"Built for {m['employers']} needing accountable offshore people-ops capacity.",
-                    "Partner-led model. Policy control stays with you — no invented claims.",
+                    "Partner-led model. Policy control stays with you — terms set in follow-up.",
                 ),
             'dedicated',
             'hr',
@@ -1829,7 +1853,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Need recruiting support? We recruit and screen Philippines TA talent first.",
                     "Shortlist-first: you interview; we source and vet recruiting ops finalists.",
-                    "Near-zero historical ST — curated Stage 1 keywords only, still employer-only.",
+                    "Employer-only path for recruiting ops — you interview vetted finalists.",
                     "Tell us the TA seat. Review vetted candidates before you hire.",
                 ),
             'shortlist',
@@ -1858,7 +1882,7 @@ def _third_rsa_angles() -> dict:
                     "Outsource recruiting ops with a dedicated Philippines seat — not gig apps.",
                     "Proof is continuity: one vetted TA seat you interview before placement.",
                     f"Built for {m['employers']} needing accountable offshore recruiting capacity.",
-                    "Partner-led model. You keep hiring decisions — no invented fill rates.",
+                    "Partner-led model. You keep hiring decisions — fill targets set in follow-up.",
                 ),
             'dedicated',
             'ta',
@@ -1888,7 +1912,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Need sales support? We recruit and screen Philippines lead-gen talent first.",
                     "Shortlist-first: you interview; we source and vet setters and sales VAs.",
-                    "No invented pipeline or meeting-volume guarantees on this creative.",
+                    "Pipeline and meeting volume are confirmed in follow-up, not ad promises.",
                     "Tell us the sales seat. Review vetted finalists before you hire.",
                 ),
             'shortlist',
@@ -1917,7 +1941,7 @@ def _third_rsa_angles() -> dict:
                     "Outsource lead gen with a dedicated Philippines seat — not gig list work.",
                     "Proof is continuity: one vetted sales seat you interview before placement.",
                     f"Built for {m['employers']} who need accountable offshore outbound capacity.",
-                    "Partner-led model. No invented appointment or revenue guarantees.",
+                    "Partner-led model. Appointment and revenue goals set after we talk.",
                 ),
             'dedicated',
             'sales',
@@ -1996,7 +2020,7 @@ def _rsa_catalog() -> dict:
                     "Fill digital marketing roles with vetted Philippines specialists.",
                     f"Support campaigns, content ops, and reporting for your {m['business']}.",
                     "Staffing partner workflow: shortlist, interview, then dedicated hire support.",
-                    f"We {m['specialize']} in employer-intent remote marketing hires.",
+                    f"We {m['specialize']} in remote marketing hires for employers.",
                 ),
                 "digital",
                 "va",
@@ -2116,7 +2140,7 @@ def _rsa_catalog() -> dict:
                     "Fill social media roles with vetted Philippines specialists.",
                     "Coverage for scheduling, community replies, and content workflows.",
                     f"Staffing support for {m['business']} social channels that need consistency.",
-                    f"We {m['specialize']} in employer-intent remote SMM hires.",
+                    f"We {m['specialize']} in remote social media hires for employers.",
                 ),
                 "social",
                 "va",
@@ -2236,7 +2260,7 @@ def _rsa_catalog() -> dict:
                     "Fill accounting roles with vetted Philippines specialists.",
                     "Day-to-day AP/AR workflows and accounting ops with dedicated seats.",
                     f"Staffing support shaped for your {m['business']} finance stack.",
-                    f"We {m['specialize']} in employer-intent remote accounting hires.",
+                    f"We {m['specialize']} in remote accounting hires for employers.",
                 ),
                 "finance",
                 "va",
@@ -2358,7 +2382,7 @@ def _rsa_catalog() -> dict:
                     if m["tag"] == "AU"
                     else "Support for categorization, reconciliations, and weekly books rhythm.",
                     f"Staffing support shaped for your {m['business']} books stack.",
-                    f"We {m['specialize']} in employer-intent remote bookkeeping hires.",
+                    f"We {m['specialize']} in remote bookkeeping hires for employers.",
                 ),
                 "books",
                 "va",
@@ -2478,7 +2502,7 @@ def _rsa_catalog() -> dict:
                     "Fill executive assistant roles with vetted Philippines specialists.",
                     "Support for calendar control, coordination, and executive follow-through.",
                     f"Staffing support shaped for leaders in your {m['business']}.",
-                    f"We {m['specialize']} in employer-intent remote EA hires.",
+                    f"We {m['specialize']} in remote EA hires for employers.",
                 ),
                 "ea",
                 "ph",
@@ -2540,7 +2564,7 @@ def _rsa_catalog() -> dict:
                     "Fill customer service roles with vetted Philippines specialists.",
                     "Coverage for inbox, chat, and customer care workflows.",
                     f"Staffing support shaped for your {m['business']} support queue.",
-                    f"We {m['specialize']} in employer-intent remote support hires.",
+                    f"We {m['specialize']} in remote support hires for employers.",
                 ),
                 "support",
                 "va",
@@ -2568,7 +2592,7 @@ def _rsa_catalog() -> dict:
                 ),
                 lambda m: D(
                     "Outsource customer service to dedicated Philippines specialists.",
-                    "Keep QA control while we recruit, vet, and support the seat.",
+                    "Keep quality standards while we recruit, vet, and support the seat.",
                     f"Built for {m['employers']} scaling support without local headcount drag.",
                     "Partner-led outsourcing with interview-before-placement discipline.",
                 ),
@@ -2660,7 +2684,7 @@ def _rsa_catalog() -> dict:
                     "Fill HR assistant roles with vetted Philippines specialists.",
                     "Support for coordination, documentation, onboarding, and payroll admin.",
                     f"Staffing support shaped for your {m['business']} people ops.",
-                    f"We {m['specialize']} in employer-intent remote HR hires.",
+                    f"We {m['specialize']} in remote HR hires for employers.",
                 ),
                 "hr",
                 "va",
@@ -2780,7 +2804,7 @@ def _rsa_catalog() -> dict:
                     "Fill recruitment assistant roles with vetted Philippines specialists.",
                     "Support for sourcing coordination, screening support, and TA ops.",
                     f"Staffing support shaped for your {m['business']} hiring pipeline.",
-                    f"We {m['specialize']} in employer-intent remote recruiting hires.",
+                    f"We {m['specialize']} in remote recruiting hires for employers.",
                 ),
                 "recruit",
                 "va",
@@ -2900,7 +2924,7 @@ def _rsa_catalog() -> dict:
                     "Fill sales support roles with vetted Philippines specialists.",
                     "Coverage for prospecting support, list work, and appointment setting.",
                     f"Staffing support shaped for your {m['business']} pipeline.",
-                    f"We {m['specialize']} in employer-intent remote sales hires.",
+                    f"We {m['specialize']} in remote sales hires for employers.",
                 ),
                 "sales",
                 "va",
@@ -3382,7 +3406,7 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
         descs = [
             f"Match hire-VA searches to vetted Philippines talent for {m['employers']}.",
             "We shortlist. You interview. Dedicated seat — not marketplace task work.",
-            "Exact/Phrase employer intent. No Broad, PMax, or DSA in this package.",
+            "Employer hire path for dedicated VA seats — not marketplace task work.",
             "Tell us the role. We recruit and vet. You decide who joins.",
         ]
         return headlines, descs, "va", "hire"
@@ -3407,7 +3431,7 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
         descs = [
             f"Need a VA for your {m['business']}? We recruit and screen — you interview.",
             "Shortlist-first hiring: tell us the role, review vetted Philippines finalists.",
-            "No invented timelines. Speed comes from a staffing pipeline, not guarantees.",
+                    "Speed comes from a staffing pipeline — timelines confirmed in follow-up.",
             "Employer path only. Inquiry accepted is not a job order or placement.",
         ]
         return headlines, descs, "shortlist", "va"
@@ -3433,7 +3457,7 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
         descs = [
             f"Philippines offshore staffing for {m['employers']} needing dedicated seats.",
             "Outsource the role to a vetted Philippines teammate — you keep hire authority.",
-            "Exact/Phrase employer intent only. No PMax, DSA, or broad positives.",
+            "Employer hire path for dedicated offshore seats — not freelance gigs.",
             "Tell us the role. We shortlist. You decide who joins your business.",
         ]
         return headlines, descs, "offshore", "ph"
@@ -3484,7 +3508,7 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
             f"Philippines offshore seats for {m['employers']} who want one dedicated teammate.",
             "Proof is continuity: a vetted seat you interview — not marketplace rotation.",
             "We recruit and support. You keep hire authority before placement.",
-            "Exact/Phrase employer intent. No Broad, PMax, or DSA in this package.",
+            "Employer hire path for one dedicated teammate — not marketplace rotation.",
         ]
         return headlines, descs, "dedicated", "ph"
 
@@ -3771,6 +3795,82 @@ def apply_budget_cpc_defaults(rows: list[dict[str, str]]) -> None:
             r["Budget"] = budgets["roles"]
 
 
+def _tokens(text: str) -> list[str]:
+    return re.findall(r"[a-z0-9]+", text.lower())
+
+
+def broad_negative_blocks(query: str, negative: str) -> bool:
+    """Google Broad negative: query blocked if it contains every negative token."""
+    q = set(_tokens(query))
+    n = _tokens(negative)
+    return bool(n) and all(t in q for t in n)
+
+
+def assert_employer_research_canaries(active_broad_negs: set[str]) -> None:
+    """Fail if campaign Broad negatives would suppress employer research queries."""
+    for query in EMPLOYER_RESEARCH_CANARIES:
+        blockers = sorted(
+            neg for neg in active_broad_negs if broad_negative_blocks(query, neg)
+        )
+        if blockers:
+            raise SystemExit(
+                f"Employer-research canary blocked by active Broad negative(s) "
+                f"{blockers}: {query!r}"
+            )
+
+
+# Enable-order tiers (review manifests only — CSV Status stays Paused).
+# 1A = Exact + PH geo + hire/VA/outsource strength (not bare "philippines" heads)
+# 1B = PH-shaped Phrase, or PH Exact without hire/VA/outsource strength
+# 2  = Roles category Exact/Phrase without PH geo
+# 3  = generic Core heads (no PH geo)
+_PH_GEO_RE = re.compile(
+    r"\b(philippines|philippine|filipino|filipina|offshore|overseas)\b|\bph\b",
+    re.I,
+)
+_STRONG_PH_INTENT_RE = re.compile(
+    r"\b("
+    r"hire|hiring|"
+    r"outsource|outsourcing|"
+    r"virtual assistants?|virtual staff(?:ing)?|"
+    r"vas?|"
+    r"staffing"
+    r")\b",
+    re.I,
+)
+
+
+def classify_enable_tier(keyword: str, match_type: str, campaign: str) -> str:
+    kw = keyword.strip()
+    mt = (match_type or "").strip()
+    ph = bool(_PH_GEO_RE.search(kw))
+    strong = bool(_STRONG_PH_INTENT_RE.search(kw))
+    is_core = campaign.endswith("_S_CORE")
+    if ph and mt == "Exact" and strong:
+        return "1A"
+    if ph:
+        return "1B"
+    if is_core:
+        return "3"
+    return "2"
+
+
+MANIFEST_FIELDS = [
+    "Account",
+    "Campaign",
+    "Ad Group",
+    "Keyword",
+    "Match Type",
+    "Tier",
+    "Final URL",
+    "Status",
+]
+
+OUT_MANIFEST_US = ROOT / "ads-launch" / "phase1-enable-manifest-us.csv"
+OUT_MANIFEST_AU = ROOT / "ads-launch" / "phase1-enable-manifest-au.csv"
+PHASE1_REVIEW = ROOT / "ads-launch" / "PHASE1-REVIEW.md"
+
+
 def qa(rows: list[dict[str, str]]) -> None:
     kinds = Counter(r["Row Type"] for r in rows)
     print("Row types:", dict(kinds))
@@ -3820,6 +3920,30 @@ def qa(rows: list[dict[str, str]]) -> None:
         ):
             raise SystemExit(f"Holdout negative still in import: {term}")
     print("Negative holdouts (not imported):", len(NEGATIVE_REVIEW_HOLDOUT))
+
+    active_broad_negs = {
+        r["Keyword"].lower()
+        for r in rows
+        if r["Row Type"] == "Campaign negative keyword"
+        and (r.get("Criterion Type") or "") == "Broad"
+    }
+    # Holdout terms must never appear in import CSVs (any row Keyword).
+    import_keywords = {
+        (r.get("Keyword") or "").lower()
+        for r in rows
+        if (r.get("Keyword") or "").strip()
+    }
+    for term in NEGATIVE_REVIEW_HOLDOUT:
+        if term.lower() in import_keywords:
+            raise SystemExit(f"Holdout term leaked into import Keyword column: {term}")
+    assert_employer_research_canaries(active_broad_negs)
+    print(
+        "Employer-research canaries OK:",
+        len(EMPLOYER_RESEARCH_CANARIES),
+        "queries vs",
+        len(active_broad_negs),
+        "unique Broad negs",
+    )
 
     ads = [r for r in rows if r["Row Type"] == "Ad"]
     for r in ads:
@@ -3911,6 +4035,20 @@ def qa(rows: list[dict[str, str]]) -> None:
         raise SystemExit(f"Forbidden claim in RSA: {bad.search(blob).group(0)}")
     if re.search(r"\bconsult\b|book a demo|schedule a demo", blob, re.I):
         raise SystemExit("Consult/demo language leaked into RSA")
+
+    # Public-copy lint: RSA Headline/Description fields only (not Editor comments).
+    # Banned list shared with vision/lib/public-copy-lint.test.ts
+    banned_path = Path(__file__).resolve().parent.parent / "vision" / "lib" / "public-copy-banned.json"
+    if banned_path.is_file():
+        banned_phrases = json.loads(banned_path.read_text(encoding="utf-8")).get("phrases") or []
+        blob_l = blob.lower()
+        for phrase in banned_phrases:
+            if phrase and phrase.lower() in blob_l:
+                raise SystemExit(
+                    f"Banned public-copy phrase in RSA Headline/Description: {phrase!r}"
+                )
+    else:
+        raise SystemExit(f"Missing public-copy banned list: {banned_path}")
 
     mt = Counter(
         r["Criterion Type"]
@@ -4104,6 +4242,157 @@ def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
         w.writerows(rows)
 
 
+def _final_url_by_ag(rows: list[dict[str, str]]) -> dict[tuple[str, str], str]:
+    out: dict[tuple[str, str], str] = {}
+    for r in rows:
+        if r["Row Type"] != "Ad":
+            continue
+        key = (r["Campaign"], r["Ad Group"])
+        fu = (r.get("Final URL") or "").strip()
+        if fu and key not in out:
+            out[key] = fu
+    return out
+
+
+def build_enable_manifest_rows(rows: list[dict[str, str]], market: str) -> list[dict[str, str]]:
+    """Review-only enable ladder rows (all Status=Paused)."""
+    acct = ACCOUNT_IDS[market]
+    finals = _final_url_by_ag(rows)
+    manifest: list[dict[str, str]] = []
+    for r in rows:
+        if r["Row Type"] != "Keyword" or r.get("Negative") == "True":
+            continue
+        if r.get("Account") != acct:
+            continue
+        camp = r["Campaign"]
+        ag = r["Ad Group"]
+        kw = r["Keyword"]
+        mt = r.get("Criterion Type") or ""
+        tier = classify_enable_tier(kw, mt, camp)
+        # Guard: bare philippines service heads must not land in 1A
+        if tier == "1A" and not _STRONG_PH_INTENT_RE.search(kw):
+            raise SystemExit(f"Tier 1A without strong intent: {kw!r}")
+        manifest.append(
+            {
+                "Account": acct,
+                "Campaign": camp,
+                "Ad Group": ag,
+                "Keyword": kw,
+                "Match Type": mt,
+                "Tier": tier,
+                "Final URL": finals.get((camp, ag), ""),
+                "Status": "Paused",
+            }
+        )
+    # Stable review order: tier → campaign → AG → match → keyword
+    tier_rank = {"1A": 0, "1B": 1, "2": 2, "3": 3}
+    manifest.sort(
+        key=lambda m: (
+            tier_rank.get(m["Tier"], 9),
+            m["Campaign"],
+            m["Ad Group"],
+            0 if m["Match Type"] == "Exact" else 1,
+            m["Keyword"].lower(),
+        )
+    )
+    return manifest
+
+
+def write_manifest_csv(path: Path, rows: list[dict[str, str]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=MANIFEST_FIELDS, extrasaction="ignore")
+        w.writeheader()
+        w.writerows(rows)
+
+
+def write_phase1_review(
+    us_rows: list[dict[str, str]],
+    au_rows: list[dict[str, str]],
+) -> None:
+    from datetime import datetime, timezone
+
+    def tier_counts(rows: list[dict[str, str]]) -> Counter[str]:
+        return Counter(r["Tier"] for r in rows)
+
+    us_c = tier_counts(us_rows)
+    au_c = tier_counts(au_rows)
+    lines = [
+        "# Phase 1 enable review manifests",
+        "",
+        f"- Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
+        "- Purpose: **review-only** enable ladder — not an Enabled import file",
+        "- Every keyword Status = **Paused** (do not enable from these CSVs)",
+        "- Source of enable order: `PHASED-ACTIVATION.md`",
+        "",
+        "## Tier definitions",
+        "",
+        "| Tier | Meaning |",
+        "|------|---------|",
+        "| **1A** | Strongest PH/Filipino/offshore long-tail **Exact** "
+        "(hire / VA / outsource + PH geo). "
+        "Not bare `philippines` service heads. |",
+        "| **1B** | PH-shaped **Phrase**, or slightly broader PH **Exact** "
+        "(geo + role/service without hire/VA/outsource strength). |",
+        "| **2** | Broader category Exact/Phrase **without** PH geo (Roles). |",
+        "| **3** | Generic Core heads later (no PH geo). |",
+        "",
+        "## Files",
+        "",
+        f"- `phase1-enable-manifest-us.csv` — {len(us_rows)} keywords "
+        f"(Account `{ACCOUNT_IDS['US']}`)",
+        f"- `phase1-enable-manifest-au.csv` — {len(au_rows)} keywords "
+        f"(Account `{ACCOUNT_IDS['AU']}`)",
+        "",
+        "## Counts",
+        "",
+        "| Tier | US | AU |",
+        "|------|----|----|",
+    ]
+    for tier in ("1A", "1B", "2", "3"):
+        lines.append(f"| {tier} | {us_c.get(tier, 0)} | {au_c.get(tier, 0)} |")
+    lines += [
+        f"| **Total** | **{len(us_rows)}** | **{len(au_rows)}** |",
+        "",
+        "## Operator notes",
+        "",
+        "1. Review 1A first (US before AU), then 1B — still leave Status=Paused "
+        "until TRAFFIC READY + explicit George Enable approval "
+        "(Zoho/CRM is parallel, not a traffic gate).",
+        "2. Bare Core heads are Tier **3** — later, not first.",
+        "3. Generic `philippines` + service heads without hire/VA/outsource are "
+        "**1B**, not 1A.",
+        "4. Import/Post of the Editor package is separate; these manifests do not "
+        "replace Editor import CSVs.",
+        "",
+    ]
+    PHASE1_REVIEW.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def write_phase1_manifests(rows: list[dict[str, str]]) -> tuple[int, int]:
+    us_m = build_enable_manifest_rows(rows, "US")
+    au_m = build_enable_manifest_rows(rows, "AU")
+    if any(r["Status"] != "Paused" for r in us_m + au_m):
+        raise SystemExit("Phase1 manifest must keep Status=Paused")
+    # Sanity: no Tier 1A that is only bare philippines + service (no strong intent)
+    for r in us_m + au_m:
+        if r["Tier"] == "1A" and r["Match Type"] != "Exact":
+            raise SystemExit(f"Tier 1A must be Exact: {r}")
+        if r["Final URL"] == "":
+            raise SystemExit(
+                f"Manifest missing Final URL for {r['Campaign']}/{r['Ad Group']}"
+            )
+    write_manifest_csv(OUT_MANIFEST_US, us_m)
+    write_manifest_csv(OUT_MANIFEST_AU, au_m)
+    write_phase1_review(us_m, au_m)
+    print(
+        "Phase1 manifests:",
+        f"US {len(us_m)} (1A={sum(1 for r in us_m if r['Tier']=='1A')})",
+        f"AU {len(au_m)} (1A={sum(1 for r in au_m if r['Tier']=='1A')})",
+    )
+    return len(us_m), len(au_m)
+
+
 def write_preflight(rows: list[dict[str, str]]) -> None:
     from datetime import datetime, timezone
 
@@ -4144,7 +4433,8 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "- **SAFE TO IMPORT FOR REVIEW** (local QA passed)",
         "- **IMPORT/POST/ENABLE NOT PERFORMED**",
         "- Import = draft on your computer. Post = upload to Google (still Paused).",
-        "- Enable is a separate explicit decision after launch gates are green.",
+        "- Enable is a separate explicit decision after TRAFFIC READY + George approval "
+        "(CRM READY / OPTIMIZATION READY are parallel — not traffic gates).",
         "",
         "## Files",
         "",
@@ -4153,6 +4443,8 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         f"| `google-ads-editor-import-us.csv` ({len(us_rows)} rows) | **Preferred** — import into USA `{ACCOUNT_IDS['US']}` only |",
         f"| `google-ads-editor-import-au.csv` ({len(au_rows)} rows) | **Preferred** — import into AU `{ACCOUNT_IDS['AU']}` only |",
         f"| `google-ads-editor-import.csv` / `-multi-account.csv` ({len(rows)} rows) | Manager multi-account only — every row has Account |",
+        f"| `phase1-enable-manifest-us.csv` / `-au.csv` | **Review-only** enable ladder (tiers 1A/1B/2/3; all Paused) |",
+        f"| `PHASE1-REVIEW.md` | Tier definitions + per-market counts |",
         "",
         "## Counts",
         "",
@@ -4162,7 +4454,11 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         f"- RSAs: {kinds.get('Ad', 0)}",
         f"- Active campaign negatives: {len(negs)} rows "
         f"({unique_negs} unique × 4 campaigns) — VC-only curated, not shared mega lists",
-        f"- Commercial holdouts (not imported): {len(NEGATIVE_REVIEW_HOLDOUT)}",
+        f"- Commercial holdouts (not imported): {len(NEGATIVE_REVIEW_HOLDOUT)} "
+        f"(includes pay rate / hourly rate / virtual assistant reviews + cost/pricing/"
+        f"review research terms)",
+        f"- Employer-research Broad canaries: {len(EMPLOYER_RESEARCH_CANARIES)} "
+        f"(QA fails if active Broad negs would block them)",
         f"- Shared-list / audience / PM_* rows: **none** (isolation QA)",
         "",
         "## Budgets + bid caps (campaign only)",
@@ -4221,12 +4517,24 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "",
         "## Negative holdouts (not in CSV)",
         "",
-        "Held out so cost/review/comparison employer research is not blocked pre-launch:",
+        f"Held out so cost/review/comparison/rate employer research is not blocked "
+        f"pre-launch (**{len(NEGATIVE_REVIEW_HOLDOUT)}** terms; not in import CSVs):",
         "",
     ]
     for t in NEGATIVE_REVIEW_HOLDOUT:
         lines.append(f"- `{t}`")
     lines += [
+        "",
+        "Competitor-named review/pricing terms (e.g. `bruntwork reviews`) stay active.",
+        "Job-seeker / medical / Spanish / platform negatives stay active.",
+        "",
+        "## Phase 1 review manifests",
+        "",
+        "- `phase1-enable-manifest-us.csv` / `phase1-enable-manifest-au.csv` — "
+        "keyword enable ladder with tiers **1A / 1B / 2 / 3** (all **Paused**).",
+        "- `PHASE1-REVIEW.md` — tier definitions + counts.",
+        "- These are **not** Enabled import files. Enable order follows "
+        "`PHASED-ACTIVATION.md` after TRAFFIC READY + explicit George approval.",
         "",
         "## Operator path",
         "",
@@ -4236,8 +4544,9 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "4. Import **AU split** into AU → Check changes → leave **Paused**.",
         "5. Confirm `VC_*` negatives are campaign-level curated only — "
         "**do not** attach shared mega lists.",
-        "6. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
-        "7. Enable is a separate explicit decision — never from Import/Post alone.",
+        "6. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.",
+        "7. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
+        "8. Enable is a separate explicit decision — never from Import/Post alone.",
         "",
     ]
     PREFLIGHT.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -4245,6 +4554,7 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
 
 DOC_MIRRORS = (
     "EDITOR-PREFLIGHT-REPORT.md",
+    "PHASE1-REVIEW.md",
     "DECISIONS.md",
     "PHASED-ACTIVATION.md",
     "10-tracking-event-spec.md",
@@ -4269,14 +4579,19 @@ def main() -> None:
     write_csv(OUT_MULTI, rows)
     write_csv(OUT_US, [r for r in rows if r["Account"] == ACCOUNT_IDS["US"]])
     write_csv(OUT_AU, [r for r in rows if r["Account"] == ACCOUNT_IDS["AU"]])
+    us_n, au_n = write_phase1_manifests(rows)
     write_preflight(rows)
     MIRROR.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(OUT, MIRROR)
     shutil.copy2(OUT_US, MIRROR.parent / OUT_US.name)
     shutil.copy2(OUT_AU, MIRROR.parent / OUT_AU.name)
+    shutil.copy2(OUT_MANIFEST_US, MIRROR.parent / OUT_MANIFEST_US.name)
+    shutil.copy2(OUT_MANIFEST_AU, MIRROR.parent / OUT_MANIFEST_AU.name)
     mirror_docs()
     print(f"Wrote {OUT} ({len(rows)} rows)")
     print(f"Wrote {OUT_US} / {OUT_AU} / {OUT_MULTI}")
+    print(f"Wrote {OUT_MANIFEST_US} ({us_n}) / {OUT_MANIFEST_AU} ({au_n})")
+    print(f"Wrote {PHASE1_REVIEW}")
     print(f"Wrote {PREFLIGHT}")
     print(f"Mirrored CSV + docs → {MIRROR.parent}")
 

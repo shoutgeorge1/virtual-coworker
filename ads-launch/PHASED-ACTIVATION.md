@@ -27,14 +27,16 @@ Companion checklist: `07-phased-activation-recommendation.md` · Launch Control 
 
 ## Phase order (plain English)
 
-### Phase 0 — Ops readiness (before any Enable)
+### Phase 0 — TRAFFIC READY (before any Enable)
 
-Same hard gates as always: durable lead delivery (not log-only), LP/gate QA, phones locked, Final URLs = Core→market home · Roles→category, budgets/CPC confirmed, **explicit George approval**.  
-See `12-blocker-decision-list.md` and Launch Control checklist.
+**TRAFFIC READY** hard gates: durable lead delivery (email/webhook/sheet — not log-only), live-format test arrives, named responder, LP/gate QA, phones locked, Final URLs = Core→market home · Roles→category, budgets/CPC confirmed, campaigns still Paused, **explicit George Enable approval**.  
+See `DECISIONS.md` (sequencing lock), `12-blocker-decision-list.md`, Launch Control.
+
+**Not required for Enable:** Zoho CRM record, Zoho OAuth, native Zoho↔Ads connector, offline conversions, working Google Ads conversion action, Ads API. Those are **CRM READY** / **OPTIMIZATION READY** parallel tracks.
 
 **Editor reminder:** Import = local draft only; Post = live upload (still Paused until Enable). CSV stamps **Account** Customer IDs (USA `496-715-1855` · AU `573-539-1940`). New `VC_*` add alongside `PM_*` — do not wipe account settings or delete old campaigns.
 
-**Zoho / offline (not Phase 0 blockers):** George has some Zoho access (level unknown) — audit modules/fields/ownership. Access ≠ integration. Plan offline job-order / job-placement conversion actions later (values TBD; Stage 1 primary = employer inquiry + qualified call).
+**Zoho / offline (parallel):** Audit modules/fields/ownership when ready. Access ≠ CRM READY. Plan offline job-order / job-placement later (values TBD).
 
 ### Phase 1 — PH / Filipino / offshore long-tail (Exact + tight Phrase)
 
@@ -62,7 +64,7 @@ See `12-blocker-decision-list.md` and Launch Control checklist.
 
 ### Never in Stage 1
 
-- Broad positives · PMax · DSA · competitor farms · WP Final URLs · Brand until scoped · Max Conversions on unverified conversion defs · treating log-only as paid-ready.
+- Broad positives · PMax · DSA · competitor farms · WP Final URLs · Brand until scoped · Max Conversions on unverified conversion defs · treating log-only as TRAFFIC READY · treating Zoho/CRM as a traffic gate.
 
 ---
 

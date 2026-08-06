@@ -1,13 +1,28 @@
 /**
  * Honest lead delivery adapter.
- * Never claim Zoho/CRM success when no endpoint is configured.
  *
- * Note: channel "zoho" today means ZOHO_WEBHOOK_URL (generic webhook POST).
- * That is NOT a verified direct Zoho CRM API integration. Keep the name for
- * env compatibility; do not treat webhook success as CRM sync proof.
+ * Channels:
+ * - email / webhook / sheet — durable delivery for TRAFFIC READY (not CRM sync)
+ * - zoho_webhook — generic ZOHO_WEBHOOK_URL POST (env name kept for compatibility).
+ *   HTTP 200 ≠ Zoho CRM sync. Never set zoho_synced from this channel.
+ * - zoho_crm — direct Zoho CRM V8 adapter (feature-flagged). zoho_synced only
+ *   when response includes a CRM record id.
+ *
+ * TRAFFIC READY (Launch Control) ≠ CRM READY ≠ OPTIMIZATION READY.
+ * API must not claim "paid_ready" as a launch verdict — use lead_delivery_succeeded.
  */
 
-export type DeliveryChannel = "email" | "webhook" | "sheet" | "zoho";
+import { zohoCrmConfigured } from "./zoho/config";
+
+export type DeliveryChannel =
+  | "email"
+  | "webhook"
+  | "sheet"
+  | "zoho_webhook"
+  | "zoho_crm";
+
+/** @deprecated Use zoho_webhook — kept only for reading old test expectations */
+export type LegacyZohoChannel = "zoho";
 
 export type DeliveryAttempt = {
   channel: DeliveryChannel;
@@ -23,7 +38,9 @@ export function configuredChannels(env: NodeJS.ProcessEnv = process.env): {
   resend?: string;
   webhook?: string;
   sheet?: string;
-  zoho?: string;
+  /** Generic webhook URL (ZOHO_WEBHOOK_URL) — not CRM API */
+  zohoWebhook?: string;
+  zohoCrm: boolean;
 } {
   const emailToUs = (env.LEAD_EMAIL_US || "").trim() || undefined;
   const emailToAu = (env.LEAD_EMAIL_AU || "").trim() || undefined;
@@ -31,21 +48,45 @@ export function configuredChannels(env: NodeJS.ProcessEnv = process.env): {
   const resend = (env.RESEND_API_KEY || "").trim() || undefined;
   const webhook = (env.LEAD_WEBHOOK_URL || "").trim() || undefined;
   const sheet = (env.LEAD_SHEET_WEBHOOK_URL || "").trim() || undefined;
-  const zoho = (env.ZOHO_WEBHOOK_URL || "").trim() || undefined;
+  const zohoWebhook = (env.ZOHO_WEBHOOK_URL || "").trim() || undefined;
+  const zohoCrm = zohoCrmConfigured(env);
 
   const channels: DeliveryChannel[] = [];
   if ((emailToUs || emailToAu) && from && resend) channels.push("email");
   if (webhook) channels.push("webhook");
   if (sheet) channels.push("sheet");
-  if (zoho) channels.push("zoho");
+  if (zohoWebhook) channels.push("zoho_webhook");
+  if (zohoCrm) channels.push("zoho_crm");
 
-  return { channels, emailToUs, emailToAu, from, resend, webhook, sheet, zoho };
+  return {
+    channels,
+    emailToUs,
+    emailToAu,
+    from,
+    resend,
+    webhook,
+    sheet,
+    zohoWebhook,
+    zohoCrm,
+  };
+}
+
+/**
+ * Durable channels that satisfy the TRAFFIC READY delivery gate.
+ * Zoho CRM alone does not count — CRM READY is a separate Launch Control status.
+ * Generic zoho_webhook counts as a monitored webhook destination.
+ */
+export function durableTrafficChannels(
+  env: NodeJS.ProcessEnv = process.env,
+): DeliveryChannel[] {
+  return configuredChannels(env).channels.filter((c) =>
+    c === "email" || c === "webhook" || c === "sheet" || c === "zoho_webhook",
+  );
 }
 
 /**
  * Explicit opt-in for local/QA log-only blocked mode.
- * Never default-on. Never conversion-eligible. Never paid-ready.
- * Production paid traffic requires a real email/webhook/sheet channel.
+ * Never default-on. Never conversion-eligible. Never TRAFFIC READY.
  */
 export function allowLogOnlyLeads(env: NodeJS.ProcessEnv = process.env): boolean {
   return (env.ALLOW_LOG_ONLY_LEADS || "").trim() === "true";

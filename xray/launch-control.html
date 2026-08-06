@@ -276,7 +276,7 @@
     }
   </style>
 </head>
-<body data-page="launch-control.html" data-foot="Your Ads checklist<br />Ads stay paused until leads have a real inbox">
+<body data-page="launch-control.html" data-foot="Your Ads checklist<br />TRAFFIC READY ≠ CRM READY ≠ OPTIMIZATION READY">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
@@ -285,9 +285,9 @@
         <p class="kicker">Stage 1 · USA + Australia</p>
         <h1>Checklist</h1>
         <p>
-          Account review first (Brand, conversions, Zapier, assets, negatives, auto-apply).
-          Editor import comes after. Tick boxes as you finish — finished items tuck under Done.
-          Ads stay off until leads have a real place they actually arrive.
+          Three readiness statuses (locked): <strong>TRAFFIC READY</strong> · <strong>CRM READY</strong> · <strong>OPTIMIZATION READY</strong>.
+          First Maximize Clicks Enable needs TRAFFIC READY + your explicit OK — not finished Zoho, not Ads API, not offline conversions.
+          Tick boxes as you finish — finished items tuck under Done.
         </p>
       </header>
 
@@ -298,8 +298,29 @@
 
       <p class="lc-logic">
         <strong>Setup in one line:</strong>
-        Three microsites (US · AU · PH) · no WordPress for ads · turn on PH long-tail first when we enable · ads stay off until leads have a real inbox.
+        Three microsites (US · AU · PH) · no WordPress for ads · Max Clicks Exact+Phrase · Tier 1A then 1B · ads stay Paused until TRAFFIC READY + your Enable.
       </p>
+
+      <section class="panel" id="readiness-statuses">
+        <div class="panel-hd">
+          <p class="kicker">Locked sequencing</p>
+          <h2>Three readiness statuses</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="lc-open">
+            <li>
+              <strong>TRAFFIC READY</strong> — durable email/webhook/sheet (not log-only) + live test lead arrives + named responder + form keeps market/UTMs/click IDs/submission id + US/AU routing + campaigns still Paused until you Enable.
+              <em>Zoho CRM record is NOT required.</em>
+            </li>
+            <li>
+              <strong>CRM READY</strong> — direct Zoho record + verified field mapping (parallel workstream). Does not block Max Clicks launch.
+            </li>
+            <li>
+              <strong>OPTIMIZATION READY</strong> — new GTM → new Ads conversion actions, campaign-specific goals on each VC_*, downstream CRM feedback. Switch off Max Clicks only after this is real.
+            </li>
+          </ul>
+        </div>
+      </section>
 
       <section class="panel" id="ads-launch-checklist">
         <div class="panel-hd">
@@ -347,36 +368,36 @@
             <li data-order="6">
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
-                <strong>6. Audit every conversion action (USA + AU)</strong>
-                <span class="todo-hint">Tools → Conversions. List name, Primary/Secondary, what fires it. Flag junk that could train Max Conversions. Share the list here.</span>
+                <strong>6. Note old conversion actions (museum — do not rewrite)</strong>
+                <span class="todo-hint"><strong>OPTIMIZATION READY later.</strong> Tools → Conversions: list names + Primary/Secondary for awareness. Do <em>not</em> delete/replace old Zoho/Zapier actions tonight. New VC_* will get <em>new</em> actions via new GTM after Post — not required before Max Clicks Enable.</span>
               </label>
             </li>
             <li data-order="7">
               <input type="checkbox" id="ads7" data-todo="ads7" />
               <label for="ads7">
-                <strong>7. Check account + campaign conversion goals</strong>
-                <span class="todo-hint">Make sure new campaigns won’t inherit garbage goals. Stage 1 wants form fills that arrive + solid phone calls — not junk micros.</span>
+                <strong>7. Plan campaign-specific goals (after Post — not a traffic gate)</strong>
+                <span class="todo-hint"><strong>OPTIMIZATION READY.</strong> After Post: each VC_* → Goals → campaign-specific → only <em>new</em> employer-inquiry actions when ready. Keep Maximize Clicks until those are verified. Do not treat account-default goals as a reason to delay TRAFFIC READY.</span>
               </label>
             </li>
             <li data-order="8">
               <input type="checkbox" id="ads8" data-todo="ads8" />
               <label for="ads8">
-                <strong>8. Audit Zapier / where leads get emailed</strong>
-                <span class="todo-hint">Map what happens when a form submits — email? Zoho? Ads conversion? Broken/duplicate? Document. Don’t rip it until you know.</span>
+                <strong>8. Confirm durable lead destination (TRAFFIC READY)</strong>
+                <span class="todo-hint">Real email, webhook, or sheet — not log-only. Send a live-format test; confirm it arrives; name who answers. Zapier map is documentation only — don’t rip. Zoho CRM sync is <em>CRM READY</em>, not this gate.</span>
               </label>
             </li>
             <li data-order="9">
               <input type="checkbox" id="ads9" data-todo="ads9" />
               <label for="ads9">
-                <strong>9. Review account-level Assets</strong>
-                <span class="todo-hint">Sitelinks, callouts, etc. Flag anything pointing at WordPress — those stick onto new campaigns.</span>
+                <strong>9. Spot-check account Assets for WordPress bleed</strong>
+                <span class="todo-hint">Sitelinks/callouts that point at WordPress can stick onto new campaigns. Flag only — do not binge-rewrite the museum.</span>
               </label>
             </li>
             <li data-order="10">
               <input type="checkbox" id="ads10" data-todo="ads10" />
               <label for="ads10">
-                <strong>10. Review shared negative keyword lists</strong>
-                <span class="todo-hint">Keep job-seeker / career negatives. Make sure they don’t block employer terms (philippines / hire / VA).</span>
+                <strong>10. Confirm VC_* use curated campaign negatives only</strong>
+                <span class="todo-hint"><strong>Do NOT attach</strong> old shared / PM_* mega negative lists to VC_*. Package already ships ~172 curated campaign negs + commercial holdouts. Review shared lists only so you know what <em>not</em> to inherit.</span>
               </label>
             </li>
             <li data-order="11">
@@ -445,8 +466,8 @@
             <li data-order="20">
               <input type="checkbox" id="ads20" data-todo="ads20" />
               <label for="ads20">
-                <strong>20. Enable PH long-tail first — only after gates are clear</strong>
-                <span class="todo-hint">Philippines / Filipino / offshore Exact first. Keep AU quiet until US looks sane. Needs your explicit OK. You Enable in Ads — not from this page.</span>
+                <strong>20. Enable Tier 1A then 1B — only when TRAFFIC READY + your OK</strong>
+                <span class="todo-hint">Exact hire/outsource/staffing PH long-tail first (1A), then reviewed 1B for volume. Keep Max Clicks. Keep AU quiet until US looks sane. Zoho/CRM/GTM optimization are parallel — not this gate. You Enable in Ads — not from this page.</span>
               </label>
             </li>
           </ul>
@@ -478,15 +499,14 @@
 
         <section class="lc-bucket block" aria-labelledby="block-hd">
           <div class="lc-bucket-hd">
-            <h2 id="block-hd">Must finish before ads go live</h2>
+            <h2 id="block-hd">TRAFFIC READY — before Enable</h2>
             <span class="st st-blocked">Blocked</span>
           </div>
           <ul>
-            <li><strong>Where leads get emailed</strong> — need a real place leads actually arrive (QA log-only is temporary)</li>
-            <li><strong>US + AU domains</strong> — buy separately (~$10 each), attach, swap Final URL hosts</li>
-            <li><strong>Separate US + AU tracking</strong> — each market its own GTM / GA4 / Search Console / Ads conversions</li>
-            <li><strong>Editor import</strong> — stays paused until you say go</li>
-            <li><strong>Conversion + Zapier audit</strong> — still open (seeing Ads Conversions ≠ Zapier checked)</li>
+            <li><strong>Durable lead channel</strong> — real email / webhook / sheet (log-only is temporary; not TRAFFIC READY)</li>
+            <li><strong>Live-format test lead</strong> — reaches that destination</li>
+            <li><strong>Named responder</strong> — who answers + practical process</li>
+            <li><strong>Editor import / Post</strong> — still Paused until you Enable</li>
             <li><strong>Old Brand still spending</strong> — recommend pause before/with new import (you click pause in Ads)</li>
           </ul>
         </section>
@@ -498,14 +518,12 @@
           </div>
           <ul>
             <li><strong>Next:</strong> review live Brand campaigns</li>
-            <li><strong>Then:</strong> conversion audit · goal baskets · Zapier / lead map</li>
-            <li><strong>Then:</strong> Assets · negatives · Auto-apply off</li>
-            <li>Then Editor download + paused CSV import</li>
-            <li>Buy US + AU domains on Vercel</li>
-            <li>Stand up separate US + AU tracking</li>
-            <li><strong>Email for Zoho access:</strong> <code>george@shoutgeorge.com</code> (domain bought for Zoho One). Team still often writes <code>shoutgeorge1@gmail.com</code> — move them to the new address.</li>
+            <li><strong>Then:</strong> durable inbox test (TRAFFIC READY) · Assets spot-check · do not attach shared mega negs</li>
+            <li>Editor download + paused split CSV import (US then AU)</li>
+            <li>Buy US + AU domains when ready (nice-to-have for launch; preview host OK for TRAFFIC READY)</li>
+            <li><strong>Parallel CRM READY:</strong> <code>npm run zoho:bootstrap</code> / inventory — not a traffic gate. Email for Zoho: <code>george@shoutgeorge.com</code></li>
+            <li><strong>OPTIMIZATION READY later:</strong> separate US/AU GTM + new conversion actions + campaign-specific goals</li>
             <li>Confirm payment-cleared date when the bank shows it</li>
-            <li>Audit what Zoho access you actually have (access ≠ CRM wired)</li>
           </ul>
         </section>
 
@@ -574,8 +592,8 @@
 
       <section class="panel" id="gates">
         <div class="panel-hd">
-          <p class="kicker">Five gates</p>
-          <h2>Must clear before spend</h2>
+          <p class="kicker">TRAFFIC READY gates</p>
+          <h2>Must clear before Enable (Max Clicks)</h2>
         </div>
         <div class="panel-bd">
           <ol class="lc-gates">
@@ -583,35 +601,35 @@
               <span class="st st-ready">Done</span>
               <div class="gate-body">
                 <strong>Ads access confirmed</strong>
-                <span>Standard via MCC on USA + AU. Enough for Stage 1.</span>
+                <span>Standard via MCC on USA + AU. Enough for Stage 1 Editor import/review.</span>
               </div>
             </li>
             <li>
               <span class="st st-blocked">Open</span>
               <div class="gate-body">
-                <strong>Where leads get emailed (phones decided)</strong>
-                <span>NA phone <code>310-426-8776</code> confirmed. AU = form-primary. Still need a real place leads actually arrive before paid. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
+                <strong>Durable lead delivery + responder</strong>
+                <span>Real email/webhook/sheet + live test arrives + named human. NA phone <code>310-426-8776</code>; AU form-primary. Zoho CRM not required. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
               </div>
             </li>
             <li>
               <span class="st st-blocked">Open</span>
               <div class="gate-body">
                 <strong>Budgets + Max CPC confirmed</strong>
-                <span>Defaults filled in CSV. You can change before enable. Still needs your OK to go live.</span>
+                <span>Defaults in CSV (US $8 / AU A$6 Max Clicks). Change before Enable if you want. Still needs your OK.</span>
               </div>
             </li>
             <li>
-              <span class="st st-access">Open</span>
+              <span class="st st-access">Parallel</span>
               <div class="gate-body">
-                <strong>US + AU live on real domains + separate tracking</strong>
-                <span>Buy US + AU domains (~$10 each). Each market gets its own GTM / GA4 / Search Console / Ads conversions. PH domain can wait.</span>
+                <strong>OPTIMIZATION READY (not a traffic gate)</strong>
+                <span>Custom domains + separate US/AU GTM/GA4 + new Ads conversion actions + campaign-specific goals. Do later; keep Max Clicks until verified.</span>
               </div>
             </li>
             <li>
               <span class="st st-access">Paused</span>
               <div class="gate-body">
                 <strong>Paused Editor import reviewed</strong>
-                <span><strong>Import = draft on your computer. Post = sends to Google (still paused).</strong> Enable only after you approve.</span>
+                <span><strong>Import = draft on your computer. Post = sends to Google (still paused).</strong> Enable only after TRAFFIC READY + you approve.</span>
               </div>
             </li>
           </ol>
@@ -625,26 +643,21 @@
         </div>
         <div class="panel-bd">
           <ul class="lc-open">
-            <li>Real lead inbox (replace TEMP log-only)</li>
-            <li>US domain + AU domain on Vercel</li>
-            <li>Swap Final URL hosts after domains attach</li>
-            <li>Separate US + AU tracking stacks</li>
+            <li><strong>TRAFFIC READY:</strong> real lead inbox + live test + named responder (replace TEMP log-only)</li>
             <li>Optional: revise budget / Max CPC</li>
             <li>Payment-cleared date</li>
             <li>Pause old Brand? (recommend yes)</li>
-            <li>Conversion action audit (USA + AU)</li>
-            <li>Zapier / lead map — document, don’t rip blind</li>
-            <li>Zoho access audit</li>
             <li>Move team email → george@shoutgeorge.com</li>
           </ul>
           <details class="lc-fold" style="margin-top:1rem">
-            <summary>Later (not Stage 1 blockers) <span class="hint">Admin · Zoho offline $ · CallRail</span></summary>
+            <summary>CRM READY + OPTIMIZATION READY (parallel — not traffic blockers) <span class="hint">Zoho · GTM · CallRail</span></summary>
             <div class="fold-bd">
               <ul class="lc-open">
-                <li>Ads Admin (ask Braden when convenient)</li>
-                <li>Job order + placement offline from Zoho (values TBD — not approved)</li>
-                <li>Stage 1 primary stays form fill that arrives + phone call (~60s)</li>
-                <li>Lead owner / SLA · chat platform · CallRail</li>
+                <li><strong>CRM READY:</strong> Zoho bootstrap/inventory · verified field map · direct CRM test (await George approval before live write)</li>
+                <li>Native Zoho↔Ads audit checklist — observe only; do not authorize from here</li>
+                <li><strong>OPTIMIZATION READY:</strong> US+AU domains · separate GTM/GA4 · new conversion actions · campaign-specific goals</li>
+                <li>Job order + placement offline values TBD — not approved; never second Primary for same inquiry</li>
+                <li>CallRail / qualified call · Ads Admin when convenient</li>
               </ul>
             </div>
           </details>
@@ -690,13 +703,12 @@
             <li>Ads access confirmed (done).</li>
             <li>Confirm live campaigns in thread (done Aug 5).</li>
             <li>Review live Brand — next.</li>
-            <li>Audit conversions · goals · Zapier / lead path.</li>
-            <li>Assets · negatives · Auto-apply off.</li>
+            <li>Confirm TRAFFIC READY durable inbox + test lead + responder.</li>
+            <li>Assets spot-check · do not attach shared mega negs · Auto-apply off.</li>
             <li>Download accounts into Editor.</li>
-            <li>Import paused CSV. Import = local draft. Post = upload (still Paused).</li>
+            <li>Import paused split CSVs. Import = local draft. Post = upload (still Paused).</li>
             <li>Confirm budgets / Max CPC · Final URLs · Search partners off.</li>
-            <li>Buy US + AU domains · separate tracking.</li>
-            <li>Enable PH long-tail first after gates green + your OK.</li>
+            <li>Enable Tier 1A then 1B after TRAFFIC READY + your OK (CRM/GTM parallel).</li>
           </ol>
         </div>
       </details>

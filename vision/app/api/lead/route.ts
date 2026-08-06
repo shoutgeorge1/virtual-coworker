@@ -14,7 +14,10 @@ import {
   allowLogOnlyLeads,
   configuredChannels,
   deliveryBlockerMessage,
+  durableTrafficChannels,
 } from "../../../lib/lead-delivery";
+import { upsertEmployerLead } from "../../../lib/zoho/client";
+import { leadLogSafe } from "../../../lib/zoho/redact";
 
 function splitName(name: string): { firstName: string; lastName: string } {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -38,7 +41,7 @@ async function postJson(url: string, body: unknown): Promise<{ ok: boolean; deta
     });
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      return { ok: false, detail: `HTTP ${res.status} ${text.slice(0, 200)}` };
+      return { ok: false, detail: `HTTP ${res.status}` };
     }
     return { ok: true, detail: "ok" };
   } catch (err) {
@@ -113,8 +116,9 @@ export async function POST(req: NextRequest) {
   const dupKey = duplicateKey(email, market);
   const dup = checkDuplicate(dupKey);
   if (dup.duplicate) {
-    // Only conversion-eligible if a durable channel exists (log-only never is).
-    const durable = configuredChannels().channels.length > 0;
+    // Conversion-eligible if a durable traffic channel exists (log-only never is).
+    // Zoho CRM alone is not the traffic gate.
+    const durable = durableTrafficChannels().length > 0;
     return NextResponse.json({
       ok: true,
       stored: true,
@@ -122,7 +126,7 @@ export async function POST(req: NextRequest) {
       submission_id: dup.submissionId,
       delivery: durable ? "durable" : "log_only",
       conversion_eligible: durable,
-      paid_ready: durable,
+      lead_delivery_succeeded: durable,
     });
   }
 
@@ -176,35 +180,83 @@ export async function POST(req: NextRequest) {
     zoho_synced: false,
   };
 
-  console.info(
-    "[lead]",
-    JSON.stringify({
-      ...record,
-      email: email.replace(/(^.).*(@.*$)/, "$1***$2"),
-      phone: record.phone ? "[set]" : "",
-      message: record.message ? "[set]" : "",
-    }),
-  );
-
   const deliveries: { channel: string; ok: boolean; detail: string }[] = [];
+  let zohoSynced = false;
 
   if (cfg.webhook) {
-    deliveries.push({ channel: "webhook", ...(await postJson(cfg.webhook, record)) });
+    const t0 = Date.now();
+    const r = await postJson(cfg.webhook, record);
+    deliveries.push({ channel: "webhook", ...r });
+    console.info(
+      "[lead]",
+      JSON.stringify(
+        leadLogSafe({
+          submission_id: submissionId,
+          market,
+          channel: "webhook",
+          ok: r.ok,
+          error: r.ok ? undefined : r.detail,
+          duration_ms: Date.now() - t0,
+        }),
+      ),
+    );
   }
   if (cfg.sheet) {
-    deliveries.push({ channel: "sheet", ...(await postJson(cfg.sheet, record)) });
+    const t0 = Date.now();
+    const r = await postJson(cfg.sheet, record);
+    deliveries.push({ channel: "sheet", ...r });
+    console.info(
+      "[lead]",
+      JSON.stringify(
+        leadLogSafe({
+          submission_id: submissionId,
+          market,
+          channel: "sheet",
+          ok: r.ok,
+          error: r.ok ? undefined : r.detail,
+          duration_ms: Date.now() - t0,
+        }),
+      ),
+    );
   }
-  // Zoho optional — never fake success if missing
-  if (cfg.zoho) {
-    const z = await postJson(cfg.zoho, record);
-    deliveries.push({ channel: "zoho", ...z });
-    if (z.ok) {
-      (record as { zoho_synced: boolean }).zoho_synced = true;
+
+  // Generic ZOHO_WEBHOOK_URL — NOT CRM API. Success does not set zoho_synced.
+  if (cfg.zohoWebhook) {
+    const t0 = Date.now();
+    const z = await postJson(cfg.zohoWebhook, record);
+    deliveries.push({ channel: "zoho_webhook", ...z });
+    console.info(
+      "[lead]",
+      JSON.stringify(
+        leadLogSafe({
+          submission_id: submissionId,
+          market,
+          channel: "zoho_webhook",
+          ok: z.ok,
+          error: z.ok ? undefined : z.detail,
+          duration_ms: Date.now() - t0,
+        }),
+      ),
+    );
+  }
+
+  // Direct Zoho CRM — separate channel; zoho_synced only with CRM record id.
+  // CRM READY is Launch Control status; not required for TRAFFIC READY.
+  if (cfg.zohoCrm) {
+    const z = await upsertEmployerLead(record);
+    deliveries.push({
+      channel: "zoho_crm",
+      ok: z.ok,
+      detail: z.detail,
+    });
+    if (z.zoho_synced && z.recordId) {
+      zohoSynced = true;
     }
   }
 
   const to = market === "au" ? cfg.emailToAu : cfg.emailToUs;
   if (to && cfg.resend && cfg.from) {
+    const t0 = Date.now();
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -219,29 +271,64 @@ export async function POST(req: NextRequest) {
           text: JSON.stringify(record, null, 2),
         }),
       });
+      const ok = res.ok;
       deliveries.push({
         channel: "email",
-        ok: res.ok,
-        detail: res.ok ? "sent" : `HTTP ${res.status}`,
+        ok,
+        detail: ok ? "sent" : `HTTP ${res.status}`,
       });
+      console.info(
+        "[lead]",
+        JSON.stringify(
+          leadLogSafe({
+            submission_id: submissionId,
+            market,
+            channel: "email",
+            ok,
+            error: ok ? undefined : `HTTP ${res.status}`,
+            duration_ms: Date.now() - t0,
+          }),
+        ),
+      );
     } catch (err) {
       deliveries.push({
         channel: "email",
         ok: false,
         detail: err instanceof Error ? err.message : "email error",
       });
+      console.info(
+        "[lead]",
+        JSON.stringify(
+          leadLogSafe({
+            submission_id: submissionId,
+            market,
+            channel: "email",
+            ok: false,
+            error: err instanceof Error ? err.message : "email error",
+            duration_ms: Date.now() - t0,
+          }),
+        ),
+      );
     }
   }
 
-  const anyOk = deliveries.some((d) => d.ok);
-  const anyConfigured = cfg.channels.length > 0;
+  const trafficOk = deliveries.some(
+    (d) =>
+      d.ok &&
+      (d.channel === "email" ||
+        d.channel === "webhook" ||
+        d.channel === "sheet" ||
+        d.channel === "zoho_webhook"),
+  );
+  const anyTrafficConfigured = durableTrafficChannels().length > 0;
+  // CRM-only config without email/webhook/sheet is NOT enough for conversion / traffic
+  const crmOnlyConfigured =
+    !anyTrafficConfigured && cfg.channels.includes("zoho_crm");
 
-  if (!anyConfigured) {
+  if (!anyTrafficConfigured && !crmOnlyConfigured) {
     if (allowLogOnlyLeads()) {
-      // Explicit blocked mode for local/QA — NOT paid-ready.
-      // Do not treat as conversion_eligible; client must not fire primary.
       console.warn(
-        "[lead] ALLOW_LOG_ONLY_LEADS=true — log-only blocked mode (not paid-ready, not conversion-eligible)",
+        "[lead] ALLOW_LOG_ONLY_LEADS=true — log-only blocked mode (not TRAFFIC READY, not conversion-eligible)",
       );
       rememberSubmission(dupKey, submissionId);
       return NextResponse.json({
@@ -250,12 +337,13 @@ export async function POST(req: NextRequest) {
         submission_id: submissionId,
         delivery: "log_only",
         conversion_eligible: false,
-        paid_ready: false,
+        lead_delivery_succeeded: false,
+        zoho_synced: false,
         deliveries,
         warning: "log_only — not a live lead delivery channel; not conversion-eligible",
       });
     }
-    console.error("[lead] BLOCKER: no delivery channel configured");
+    console.error("[lead] BLOCKER: no durable traffic delivery channel configured");
     return NextResponse.json(
       {
         ok: false,
@@ -263,15 +351,34 @@ export async function POST(req: NextRequest) {
         error: deliveryBlockerMessage(),
         code: "delivery_not_configured",
         conversion_eligible: false,
-        paid_ready: false,
+        lead_delivery_succeeded: false,
+        zoho_synced: false,
         deliveries,
       },
       { status: 503 },
     );
   }
 
-  if (!anyOk) {
-    console.error("[lead] all deliveries failed", deliveries);
+  if (crmOnlyConfigured && !trafficOk) {
+    // CRM attempted but traffic channel missing — do not claim conversion-eligible.
+    const crmOk = deliveries.some((d) => d.channel === "zoho_crm" && d.ok);
+    rememberSubmission(dupKey, submissionId);
+    return NextResponse.json({
+      ok: crmOk,
+      stored: crmOk,
+      submission_id: submissionId,
+      delivery: crmOk ? "crm_only" : "failed",
+      conversion_eligible: false,
+      lead_delivery_succeeded: false,
+      zoho_synced: zohoSynced,
+      deliveries,
+      warning:
+        "zoho_crm without email/webhook/sheet — CRM READY path only; not TRAFFIC READY",
+    });
+  }
+
+  if (!trafficOk) {
+    console.error("[lead] all traffic deliveries failed");
     return NextResponse.json(
       {
         ok: false,
@@ -279,7 +386,8 @@ export async function POST(req: NextRequest) {
         error: "We could not deliver your request to the team. Please try again shortly.",
         code: "delivery_failed",
         conversion_eligible: false,
-        paid_ready: false,
+        lead_delivery_succeeded: false,
+        zoho_synced: zohoSynced,
         deliveries,
       },
       { status: 502 },
@@ -293,8 +401,9 @@ export async function POST(req: NextRequest) {
     submission_id: submissionId,
     delivery: "durable",
     conversion_eligible: true,
-    paid_ready: true,
+    lead_delivery_succeeded: true,
+    // Paid/traffic readiness is a Launch Control verdict — not this API field.
+    zoho_synced: zohoSynced,
     deliveries,
-    zoho_synced: Boolean((record as { zoho_synced?: boolean }).zoho_synced),
   });
 }

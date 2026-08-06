@@ -1,6 +1,6 @@
 # Editor preflight report
 
-- Generated: 2026-08-06 13:06 UTC
+- Generated: 2026-08-06 13:25 UTC
 - LP version (suffix): `stage1-v7` (unchanged)
 - Package hygiene: Editor ValueTrack + campaign CPC cap + US/AU split
 
@@ -9,7 +9,7 @@
 **Old account = historical archive. New `VC_*` = isolated clean system.**
 
 - Leave old `PM_*` campaigns, shared mega negative lists, old Zoho/Zapier conversion actions, and historical reporting alone.
-- This package attaches **only** curated campaign-level negatives (~175 unique, cap 220) — **not** account shared / `PM_*` 3000+ dumps.
+- This package attaches **only** curated campaign-level negatives (~172 unique, cap 220) — **not** account shared / `PM_*` 3000+ dumps.
 - Do **not** attach account shared negative lists to `VC_*` after Import/Post.
 - Do **not** use audiences to restrict targeting for initial Search launch (Observation later; ignore customer-lifecycle warnings until Zoho/first-party data).
 - Import ≠ live. Every campaign stays **Paused**. No Enable from this package.
@@ -19,15 +19,17 @@
 - **SAFE TO IMPORT FOR REVIEW** (local QA passed)
 - **IMPORT/POST/ENABLE NOT PERFORMED**
 - Import = draft on your computer. Post = upload to Google (still Paused).
-- Enable is a separate explicit decision after launch gates are green.
+- Enable is a separate explicit decision after TRAFFIC READY + George approval (CRM READY / OPTIMIZATION READY are parallel — not traffic gates).
 
 ## Files
 
 | File | Use |
 |------|-----|
-| `google-ads-editor-import-us.csv` (1236 rows) | **Preferred** — import into USA `496-715-1855` only |
-| `google-ads-editor-import-au.csv` (1236 rows) | **Preferred** — import into AU `573-539-1940` only |
-| `google-ads-editor-import.csv` / `-multi-account.csv` (2472 rows) | Manager multi-account only — every row has Account |
+| `google-ads-editor-import-us.csv` (1230 rows) | **Preferred** — import into USA `496-715-1855` only |
+| `google-ads-editor-import-au.csv` (1230 rows) | **Preferred** — import into AU `573-539-1940` only |
+| `google-ads-editor-import.csv` / `-multi-account.csv` (2460 rows) | Manager multi-account only — every row has Account |
+| `phase1-enable-manifest-us.csv` / `-au.csv` | **Review-only** enable ladder (tiers 1A/1B/2/3; all Paused) |
+| `PHASE1-REVIEW.md` | Tier definitions + per-market counts |
 
 ## Counts
 
@@ -35,8 +37,9 @@
 - Ad groups: 40
 - Positive keywords: 1568
 - RSAs: 116
-- Active campaign negatives: 700 rows (175 unique × 4 campaigns) — VC-only curated, not shared mega lists
-- Commercial holdouts (not imported): 16
+- Active campaign negatives: 688 rows (172 unique × 4 campaigns) — VC-only curated, not shared mega lists
+- Commercial holdouts (not imported): 19 (includes pay rate / hourly rate / virtual assistant reviews + cost/pricing/review research terms)
+- Employer-research Broad canaries: 11 (QA fails if active Broad negs would block them)
 - Shared-list / audience / PM_* rows: **none** (isolation QA)
 
 ## Budgets + bid caps (campaign only)
@@ -82,7 +85,7 @@ Launch Control checklist encodes the same steps in plain English.
 
 ## Negative holdouts (not in CSV)
 
-Held out so cost/review/comparison employer research is not blocked pre-launch:
+Held out so cost/review/comparison/rate employer research is not blocked pre-launch (**19** terms; not in import CSVs):
 
 - `review`
 - `reviews`
@@ -100,6 +103,18 @@ Held out so cost/review/comparison employer research is not blocked pre-launch:
 - `cheap`
 - `cheapest`
 - `filipina va`
+- `pay rate`
+- `hourly rate`
+- `virtual assistant reviews`
+
+Competitor-named review/pricing terms (e.g. `bruntwork reviews`) stay active.
+Job-seeker / medical / Spanish / platform negatives stay active.
+
+## Phase 1 review manifests
+
+- `phase1-enable-manifest-us.csv` / `phase1-enable-manifest-au.csv` — keyword enable ladder with tiers **1A / 1B / 2 / 3** (all **Paused**).
+- `PHASE1-REVIEW.md` — tier definitions + counts.
+- These are **not** Enabled import files. Enable order follows `PHASED-ACTIVATION.md` after TRAFFIC READY + explicit George approval.
 
 ## Operator path
 
@@ -108,6 +123,7 @@ Held out so cost/review/comparison employer research is not blocked pre-launch:
 3. Import **US split** into USA → Check changes → leave **Paused**.
 4. Import **AU split** into AU → Check changes → leave **Paused**.
 5. Confirm `VC_*` negatives are campaign-level curated only — **do not** attach shared mega lists.
-6. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.
-7. Enable is a separate explicit decision — never from Import/Post alone.
+6. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.
+7. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.
+8. Enable is a separate explicit decision — never from Import/Post alone.
 

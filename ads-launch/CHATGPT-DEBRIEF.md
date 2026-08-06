@@ -4,17 +4,18 @@
 
 | Field | Value |
 |-------|-------|
-| Generated | 2026-08-06 ~13:06 UTC |
+| Generated | 2026-08-06 (sequencing lock addendum) |
 | Branch | `vision-demo` |
-| Commit SHA | `7b703c5ad53e2078eaf75e892f6ea1571e1c0777` |
-| Prior SHA (Editor P0 hygiene) | `9cd37d0372c53f23cbcc5d52e7e8667953aa7e70` |
+| Commit SHA | *(see `git rev-parse HEAD` after commit)* |
+| Prior isolation SHA | `7b703c5` · Editor P0 `9cd37d0` |
 | Repo | `/Users/george/Developer/virtual-coworker` |
-| Package | `lp_version=stage1-v7` · Editor hygiene + isolation locks |
+| Package | `lp_version=stage1-v7` · Editor hygiene + isolation + Phase 1 manifests |
 | Builder | `ads-launch/build_stage1_editor_package.py` |
 | Preferred imports | `google-ads-editor-import-us.csv` · `google-ads-editor-import-au.csv` |
 | Preflight | `ads-launch/EDITOR-PREFLIGHT-REPORT.md` |
 | Decisions | `ads-launch/DECISIONS.md` |
-| Activation | `ads-launch/PHASED-ACTIVATION.md` |
+| Activation | `ads-launch/PHASED-ACTIVATION.md` · `PHASE1-REVIEW.md` |
+| Zoho docs | `ads-launch/zoho/` |
 | Mega prompt source | `ads-launch/VC-CURSOR-MEGA-PROMPT-EDITOR-ZOHO.md` |
 | LP host (preview) | **https://vision-three-alpha.vercel.app** |
 | Launch Control | **https://vc-xray.vercel.app/launch-control** |
@@ -22,8 +23,24 @@
 | MCC | `119-318-9031` (Shout George) |
 | Child accounts | USA `496-715-1855` · AU `573-539-1940` |
 | Ads enable | **NOT approved** — all CSV entities **Paused** |
-| Paid status | **NOT READY FOR PAID TRAFFIC** |
-| Verdict | **SAFE TO REVIEW · NOT SAFE FOR PAID TRAFFIC** |
+| TRAFFIC READY | **Not yet** — need durable email/webhook/sheet + responder + live test |
+| CRM READY | **Not yet** — adapter code ready; credentials/inventory pending |
+| OPTIMIZATION READY | **Not yet** — GTM/new Ads actions/goals parallel |
+| Verdict | **SAFE TO IMPORT INTO EDITOR FOR REVIEW · NOT SAFE FOR PAID TRAFFIC** |
+
+---
+
+## 0. Launch sequencing (LOCKED addendum)
+
+**Zoho CRM / native Ads connector / offline conversions / Ads API are NOT prerequisites for initial Maximize Clicks Enable.**
+
+| Status | Gate |
+|--------|------|
+| **TRAFFIC READY** | Durable monitored email/webhook/sheet (not log-only) + live test arrives + named responder + form retains market/UTMs/click IDs/submission id + US/AU routing + still Paused until George Enable |
+| **CRM READY** | Direct Zoho record + verified field mapping — **parallel** |
+| **OPTIMIZATION READY** | GTM → new Ads conversions, campaign-specific goals, downstream CRM feedback — **parallel** |
+
+Keep Max Clicks · Exact+Phrase · Tier 1A then 1B · no Broad+/PMax/DSA/Max Conv until optimization is real.
 
 ---
 
@@ -62,7 +79,7 @@ Sources: `DECISIONS.md` · `EDITOR-PREFLIGHT-REPORT.md` · builder isolation QA.
 | Phone AU | **None** — form-primary (no fake AU number) |
 | Legacy live spenders (outside this CSV) | `PM_US_RSA_Brand` · `PM_AU_RSA_Brand` may still spend — pause decision separate; **do not rewrite old account tonight** |
 
-**ADS REMAIN OFF.** Not paid-ready until durable lead delivery exists (real email/webhook/sheet — not log-only).
+**ADS REMAIN OFF.** Not **TRAFFIC READY** until durable lead delivery exists (real email/webhook/sheet — not log-only) + named responder + live test. Zoho CRM is **not** this gate.
 
 ---
 
@@ -78,7 +95,7 @@ Sources: `DECISIONS.md` · `EDITOR-PREFLIGHT-REPORT.md` · builder isolation QA.
 | `VC_AU_S_ROLES` | 573-539-1940 | A$50 | A$6 | → `/au/{category}` |
 
 - Search · **Exact + Phrase only** · Brand **deferred** · all entities **Paused**
-- Package counts (current): **4** campaigns · **40** AGs · **1,568** positives (Exact 1,182 · Phrase 386) · **116** RSAs · **700** campaign-neg rows (**175** unique × 4) · **16** commercial holdouts not imported · **0** shared-list / audience / `PM_*` rows
+- Package counts (current): **4** campaigns · **40** AGs · **1,568** positives (Exact 1,182 · Phrase 386) · **116** RSAs · **688** campaign-neg rows (**172** unique × 4) · **19** commercial holdouts not imported · Phase 1 manifests 784 kw/market · **0** shared-list / audience / `PM_*` rows
 - RSA rule: **3 unique full RSAs (15H/4D) per main AG**; city-test **1**
 - Tracking template: `{lpurl}` · Final URL suffix once with ValueTrack UTMs + `lp_version=stage1-v7`
 
@@ -158,13 +175,14 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 
 | Item | Status |
 |------|--------|
-| Full Zoho CRM API adapter (`vision/lib/zoho/*`) | **Skipped** — needs live schema, OAuth, verified API names |
-| Zoho CRM backup inventory scripts + `ads-launch/zoho/*` worksheets | **Skipped** — waiting on George backup/export |
-| Native Zoho ↔ Google Ads integration audit (live) | **Skipped** — UI/login required |
-| Offline conversion uploader / Data Manager path | **Skipped / planned later** — values TBD, not approved |
-| Phase 1 keyword review manifests as separate CSVs | **Skipped** — not generated; Phase 1 filterable in Editor |
+| Full Zoho CRM API adapter (`vision/lib/zoho/*`) | **Code ready** — feature-flagged; credentials/schema pending; no live write |
+| Zoho OAuth bootstrap + inventory (`npm run zoho:*`) | **Code ready** — awaiting George Self Client grant; raw under `.local/zoho/` |
+| Native Zoho ↔ Google Ads audit doc | **Checklist shipped** — do not authorize connector from repo |
+| Offline conversion uploader / Data Manager path | **Skipped / planned later** — values TBD, not approved; not TRAFFIC READY |
+| Phase 1 keyword review manifests | **Shipped** — `phase1-enable-manifest-{us,au}.csv` + `PHASE1-REVIEW.md` |
+| Public-copy lint + commercial neg holdouts (pay/hourly rate, VA reviews) | **Shipped** |
 | Standalone `validate_editor_package.py` | **Skipped** — QA lives inside builder `qa()` |
-| Live OAuth / Ads API / Post / Enable / deploy | **Forbidden** — not done |
+| Live OAuth / Ads API / Post / Enable / deploy / live Zoho write | **Forbidden** — not done |
 
 ---
 
@@ -188,7 +206,7 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 
 | Item | Status |
 |------|--------|
-| Launch Control checklist language fully rewritten for isolation | **Partial** — step 13 has split-file Import≠Post; steps 6–10 still say “audit conversions / review shared negatives / Zapier” in museum-audit voice. Preflight/DECISIONS are the lock; LC copy should be tightened so step 10 cannot be read as “attach old mega lists to VC_*.” |
+| Launch Control checklist language for isolation + sequencing | **Updated** — steps 6–10 museum-safe; three statuses TRAFFIC/CRM/OPTIMIZATION READY; step 10 = do not attach shared mega lists |
 | Campaign-specific goals in live Ads UI | **Operator after Post** — CSV cannot express; documented in preflight |
 | New GTM → new Ads conversion actions | **Not built live** — plan only; firing flag false |
 | Pause legacy `PM_*` Brand | **George decision in Ads UI** — outside CSV; do not binge-rewrite museum tonight |
@@ -222,16 +240,16 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 
 | # | Blocker | Notes |
 |---|---------|-------|
-| 1 | **No durable production lead path** | Hard gate. `ALLOW_LOG_ONLY_LEADS=true` = blocked mode (`conversion_eligible: false`). Not paid-ready. |
-| 2 | **Zoho access ≠ integration** | George has some access (level unknown). Audit modules/fields/ownership later. Webhook ≠ CRM API. |
-| 3 | **Zapier weird** | Audit/document where leads email; **don’t rip blind tonight**. |
-| 4 | **Job order / placement offline values** | Ranges discussed ($200–$400 order · $500–$800 placement) — **TBD, not approved**. Not Stage 1 primary. |
-| 5 | Response-time SLA / who answers | Open |
-| 6 | CallRail / qualified-call | Later; phone click ≠ qualified |
-| 7 | GTM → Ads mapping tested | New containers + new actions; firing still off |
-| 8 | US + AU custom paid domains | Preview host until bought/attached |
-| 9 | Explicit George Enable approval | Required |
-| 10 | Legacy Brand bleed | `PM_*` Brand may still spend — separate UI decision |
+| 1 | **No durable production lead path** | **TRAFFIC READY** hard gate. `ALLOW_LOG_ONLY_LEADS=true` = blocked (`conversion_eligible: false`). |
+| 2 | **Named responder + live test lead** | **TRAFFIC READY** — who answers + proof a test arrives |
+| 3 | **Explicit George Enable approval** | Required even when TRAFFIC READY |
+| 4 | **Legacy Brand bleed** | `PM_*` Brand may still spend — separate UI decision |
+| 5 | **Zoho access ≠ CRM READY** | Parallel. Webhook ≠ CRM API. Not a traffic blocker. |
+| 6 | **Zapier weird** | Document; don’t rip blind. Not a traffic blocker if durable email/webhook exists. |
+| 7 | **Job order / placement offline values** | TBD, not approved. OPTIMIZATION / CRM later. |
+| 8 | CallRail / qualified-call | Later; phone click ≠ qualified |
+| 9 | GTM → Ads mapping tested | OPTIMIZATION READY; firing still off |
+| 10 | US + AU custom paid domains | Nice-to-have; preview host OK for TRAFFIC READY |
 
 ---
 
@@ -348,14 +366,16 @@ b741d6c Add account hygiene and Zapier audits to Launch Control.
 ## 13. Verdict
 
 ```
-SAFE TO REVIEW
-NOT SAFE FOR PAID TRAFFIC
+SAFE TO IMPORT INTO EDITOR FOR REVIEW
+SAFE TO POST WHILE PAUSED (after Editor review — still Paused)
+NOT SAFE FOR PAID TRAFFIC (TRAFFIC READY incomplete)
 ADS REMAIN OFF
 OLD ACCOUNT = ARCHIVE (do not rewrite tonight)
 NEW VC_* = ISOLATED CLEAN SYSTEM (Paused)
+CRM READY / OPTIMIZATION READY = PARALLEL (not traffic gates)
 ```
 
-Operator next: Import split CSVs → review Paused → Post Paused → set campaign-specific goals → **do not Enable** until durable lead delivery + explicit George approval.
+Operator next: Import split CSVs → review Paused → Post Paused → clear **TRAFFIC READY** (durable channel + test + responder) → Enable Tier 1A/1B only with explicit George OK. Campaign-specific goals + Zoho = parallel.
 
 ---
 

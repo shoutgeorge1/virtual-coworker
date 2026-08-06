@@ -58,8 +58,8 @@ export default function MarketLanding({
       a: "English-proficient professionals who work your hours. We recruit and screen; you interview and decide.",
     },
     {
-      q: "Does a phone click equal a qualified call?",
-      a: "No. Phone CTA click is tracked separately until CallRail + human qualification exist.",
+      q: "Does calling mean the role is filled?",
+      a: "No. A call connects you with our team. Role fit and next steps are confirmed in conversation.",
     },
   ];
 

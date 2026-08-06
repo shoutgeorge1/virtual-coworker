@@ -1,7 +1,7 @@
 /**
- * Data-driven category LP config for Stage 1 paid Search.
+ * Data-driven category LP config for paid Search.
  * Nine employer service lines only — no medical/tech/job-seeker verticals.
- * Do not invent pricing, testimonials, or conversion values here.
+ * Do not hard-code pricing, testimonials, or Ads goal values here.
  */
 
 import type { MarketId } from "./markets";
@@ -139,8 +139,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
         a: "You submit an employer hiring inquiry. That is not a confirmed job order or placement. A teammate follows up using the details you provide.",
       },
       {
-        q: "Do you invent pricing on this page?",
-        a: "No. Pricing and placement terms are discussed after we understand the role — nothing here claims a $/hr rate or guaranteed savings.",
+        q: "Do you list pricing on this page?",
+        a: "No. Pricing and placement terms are discussed after we understand the role — nothing here claims a $/hr rate or savings percentage.",
       },
     ],
   },
@@ -249,7 +249,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
     benefits: [
       "Accounting-role hiring path (not DIY coursework)",
       "You keep hiring authority",
-      "Inquiry → discussion → possible job order — never assumed from a form click",
+      "Inquiry → discussion → possible job order — never assumed from a form submit alone",
     ],
     faq: [
       {
@@ -258,7 +258,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       },
       {
         q: "Do you guarantee credentials?",
-        a: "We do not invent credentials or licenses on this page. Role fit is confirmed in the hiring conversation.",
+        a: "We do not list credentials or licenses on this page. Role fit is confirmed in the hiring conversation.",
       },
       {
         q: "Job seekers?",
@@ -310,12 +310,12 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
     benefits: [
       "Bookkeeping-focused employer brief",
       "Interview before hire",
-      "No fake $/hr claims on this page",
+      "No $/hr rates listed here — pricing comes after we understand the role",
     ],
     faq: [
       {
         q: "QuickBooks or Xero?",
-        a: "Mention the tools you use in your inquiry. Tool fit is confirmed in follow-up — not invented here.",
+        a: "Mention the tools you use in your inquiry. Tool fit is confirmed in follow-up.",
       },
       {
         q: "Is submit a job order?",
@@ -376,11 +376,11 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
     faq: [
       {
         q: "VA vs executive assistant?",
-        a: "Describe the seat in the form. Both sit under administrative support for Stage 1 routing.",
+        a: "Describe the seat in the form. Both sit under administrative support on this page.",
       },
       {
-        q: "Phone click = qualified call?",
-        a: "No. A phone click is a phone CTA click only — not a qualified call until CallRail + human qualification exist.",
+        q: "Does calling mean the role is filled?",
+        a: "No. A call connects you with our team. Role fit and next steps are confirmed in conversation.",
       },
       {
         q: "Job seeker?",
@@ -437,15 +437,15 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
     faq: [
       {
         q: "Chat, email, or phone support?",
-        a: "Specify channels in your inquiry. We do not invent coverage promises on this page.",
+        a: "Specify channels in your inquiry. Coverage details are confirmed in follow-up.",
       },
       {
         q: "Is this medical support?",
-        a: "No. Medical roles are out of scope for this Stage 1 category set.",
+        a: "No. Medical roles are out of scope for this category.",
       },
       {
         q: "Job seekers?",
-        a: "Careers only — not employer conversion.",
+        a: "Careers only — not this employer hiring form.",
       },
     ],
   },
@@ -469,8 +469,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Hire Philippines HR support for your Australian business.",
         },
         subhead: {
-          us: "Tell us the HR seat you need. Controlled lower-volume category — still employer-only.",
-          au: "Tell us the HR seat you need. Controlled lower-volume category — still employer-only.",
+          us: "Tell us the HR seat you need. Employer hiring path only — not for job seekers.",
+          au: "Tell us the HR seat you need. Employer hiring path only — not for job seekers.",
         },
         primaryCta: "Tell us who you need →",
         heroImage: { us: "/brand/va-face-1.jpg", au: "/brand/va-face-1.jpg" },
@@ -492,8 +492,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
     },
     benefits: [
       "HR support hiring inquiry path",
-      "Lower historical search volume — still Exact/Phrase controlled in Ads",
-      "No job-seeker conversion on this page",
+      "Focused employer hiring path — not a job board",
+      "Job seekers use careers — not this form",
     ],
     faq: [
       {
@@ -506,7 +506,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       },
       {
         q: "Looking for a job?",
-        a: "Careers destination — blocked from employer conversion events.",
+        a: "Careers destination — not this employer hiring form.",
       },
     ],
   },
@@ -543,8 +543,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Dedicated recruitment capacity from the Philippines.",
         },
         subhead: {
-          us: "Controlled category for US employers — staffing partner, not a job board.",
-          au: "Controlled category for Australian employers — staffing partner, not a job board.",
+          us: "For US employers — staffing partner, not a job board.",
+          au: "For Australian employers — staffing partner, not a job board.",
         },
         primaryCta: "Request a hiring shortlist →",
         heroImage: { us: "/brand/talent-john.jpeg", au: "/brand/talent-john.jpeg" },
@@ -553,7 +553,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
     },
     benefits: [
       "Recruitment-ops employer brief",
-      "Thin historical ST volume acknowledged — curated keywords only",
+      "Focused recruiting-ops hiring path for employers",
       "Separate from applicants seeking jobs",
     ],
     faq: [
@@ -628,7 +628,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       },
       {
         q: "Job seekers?",
-        a: "Careers path — blocked from employer conversion.",
+        a: "Careers path — not this employer hiring form.",
       },
     ],
   },

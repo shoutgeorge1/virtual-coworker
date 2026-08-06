@@ -1,0 +1,11 @@
+{
+  "name": "virtual-coworker",
+  "private": true,
+  "description": "Repo root scripts for ads-launch / Zoho tooling. App lives in vision/.",
+  "scripts": {
+    "zoho:bootstrap": "python3 ads-launch/zoho/bootstrap.py",
+    "zoho:inventory": "python3 ads-launch/zoho/inventory.py",
+    "test:vision": "npm --prefix vision test",
+    "typecheck:vision": "npm --prefix vision run typecheck"
+  }
+}
