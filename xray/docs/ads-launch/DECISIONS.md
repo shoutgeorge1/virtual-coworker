@@ -55,7 +55,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | Decision | Locked value | Notes |
 |----------|--------------|-------|
 | **Architecture** | **2 campaigns × 2 markets** | `VC_{US\|AU}_S_CORE` (~60%) + `VC_{US\|AU}_S_ROLES` (~40%). Brand **deferred**. |
-| **Domain model** | **One host + path markets** | `/us` · `/au` · `/ph` on the same domain (preview host OK). **Not** two country domains for Stage 1. Optional one paid domain later = polish, **not** TRAFFIC READY. When attached, same paths transfer — no AU subdomain. |
+| **Domain model** | **One host + path markets** | `/us` · `/au` · `/ph` on the same domain. **Not** two country domains. Preview host OK for TRAFFIC READY lead tests + paused Import structure review. **Strongly prefer one custom domain attached before Enable** so Final URLs are not a throwaway `*.vercel.app` host — regenerate once with `ADS_FINAL_URL_HOST` (or rewrite Final URLs in Editor before Enable). Domain ≠ durable leads; domain **is** preferred URL stability before paid clicks. Same paths transfer — no AU subdomain. |
 | **Core Final URL** | `…/us` · `…/au` | Generic VA/hire/offshore → market employer home. **Not** administrative-support. |
 | **Roles Final URL** | Matching category slug | Admin AG → `/administrative-support`; HR → `/hr` (alias `/human-resources` → `/hr`). |
 | **Measurement** | **Separate GTM + GA4 per market** | `GTM_US` / `GTM_AU` (+ `GTM_PH` if needed) even on one host — audiences/conversions must not contaminate. |
@@ -101,9 +101,13 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 - Named responder + practical response process per market
 - Explicit George approval to Enable any Search campaign
 
+### Strongly prefer before Enable (not a TRAFFIC READY substitute)
+
+- **One custom domain** on the paid host (path markets stay) — buy → attach Vercel → confirm `/us` `/au` `/ph` LPs → set Ads Final URLs to that host **before Enable**. Acceptable: Import/review on preview while Paused, then **must rewrite Final URLs** before Enable. Does **not** replace durable lead delivery.
+
 ### Parallel / later (not traffic blockers)
 
-- Optional **one** custom domain (path markets stay) + per-market GTM/GA4/GSC (`GTM_US` + `GTM_AU`) → **OPTIMIZATION READY** — domains are polish; separate containers are the measurement requirement
+- Per-market GTM/GA4/GSC (`GTM_US` + `GTM_AU`) → **OPTIMIZATION READY** — separate containers are the measurement requirement
 - **Zoho platform discovery** (product + API path) → then inventory / OAuth / adapter / field mapping → **CRM READY** — **deferred**; access ≠ integration complete; no Leads assumption
 - Native Zoho↔Ads audit (observe only; separate from Ads developer token; do not authorize from repo work)
 - **Offline conversion actions** (plan later — **not** Stage 1 primary / not TRAFFIC READY):

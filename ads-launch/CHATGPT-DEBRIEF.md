@@ -131,7 +131,7 @@ Source: `PHASED-ACTIVATION.md`
 | Root `/` | Redirects → `/us` |
 | WordPress | **Untouched** — zero egress from microsite nav/footer/CTAs |
 
-- **Domain model (locked):** one host with `/us` `/au` `/ph` — **not** two paid country domains for Stage 1. Preview host OK for TRAFFIC READY. Optional one custom domain later = polish; same paths transfer (no AU subdomain).
+- **Domain model (locked):** one host with `/us` `/au` `/ph` — **not** two paid country domains for Stage 1. Preview host OK for TRAFFIC READY lead tests + paused Import structure review. **Strongly prefer one custom domain before Enable** so Final URLs are not `*.vercel.app` — regen with `ADS_FINAL_URL_HOST` or rewrite Final URLs in Editor before Enable. Domain ≠ durable leads; domain = URL stability before paid clicks. Same paths transfer (no AU subdomain).
 - Preview: https://vision-three-alpha.vercel.app  
 - Launch Control: https://vc-xray.vercel.app/launch-control  
 - Hire-vs-job gate intentional: employer → form; job seeker → `/ph`  
@@ -247,7 +247,8 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 12. **After Post (Ads UI):** each `VC_*` → Goals → **campaign-specific** → only **new** actions (employer inquiry delivered + qualified phone ~60s when ready). Leave old Zoho/Zapier actions untouched for archive.  
 13. Keep Maximize Clicks. Do **not** switch to Max Conversions until new actions verified.  
 14. Audiences off. Ignore customer-lifecycle warnings.  
-15. Enable only per `PHASED-ACTIVATION.md` after durable leads + explicit approval.
+15. **Prefer domain live first:** set `ADS_FINAL_URL_HOST=yourdomain.com` → regenerate package → Import with final host. **Acceptable:** Import/review on preview while Paused, then **rewrite every Final URL** to the custom domain before Enable.  
+16. Enable only per `PHASED-ACTIVATION.md` after durable leads + Final URLs on preferred host + explicit approval.
 
 ---
 
@@ -264,7 +265,7 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 | 7 | **Job order / placement offline values** | TBD, not approved. OPTIMIZATION / CRM later. |
 | 8 | CallRail / qualified-call | Later; phone click ≠ qualified |
 | 9 | GTM → Ads mapping tested | OPTIMIZATION READY; firing still off |
-| 10 | Optional one custom domain | Polish only — one host + `/us` `/au` paths locked; preview OK for TRAFFIC READY; no dual-domain buy |
+| 10 | One custom domain before Enable | **Strongly prefer before Enable / Final URL freeze** — not a TRAFFIC READY substitute. One host + `/us` `/au` `/ph`; preview OK for paused review; rewrite Final URLs before Enable if imported on preview; no dual-domain buy |
 
 ---
 
@@ -396,7 +397,7 @@ CRM READY / OPTIMIZATION READY = PARALLEL (not traffic gates)
 ZOHO PLATFORM DISCOVERY + LIVE INVENTORY/API = DEFERRED
 ```
 
-Operator next: Import split CSVs → review Paused → Post Paused → clear **TRAFFIC READY** (durable channel + test + responder) → Enable Tier 1A/1B only with explicit George OK. Campaign-specific goals + Zoho discovery = parallel later.
+Operator next: **money step** = buy one clean .com (Porkbun; pick from domain walkthrough — you checkout) → attach Vercel `vision-three-alpha` → regen Final URL host. **Parallel Enable gate:** clear **TRAFFIC READY** (durable channel + test + responder). Then Import split CSVs → review Paused → Post Paused → Enable Tier 1A/1B only with explicit George OK (if imported on preview, rewrite Final URLs before Enable). Campaign-specific goals + Zoho discovery = parallel later.
 
 ---
 

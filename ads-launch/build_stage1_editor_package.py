@@ -36,6 +36,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import re
 import shutil
 from collections import Counter
@@ -49,6 +50,26 @@ HL_MAX = 30
 DESC_MAX = 90
 PATH_MAX = 15
 LP_VERSION = "stage1-v7"
+
+# Final URL host for all market paths. Default = preview.
+# When George buys a domain: ADS_FINAL_URL_HOST=yourdomain.com python3 ads-launch/build_stage1_editor_package.py
+# (FINAL_URL_HOST accepted as alias.) Paths stay /us /au /ph — one host, not two country domains.
+DEFAULT_FINAL_URL_HOST = "vision-three-alpha.vercel.app"
+
+
+def final_url_host() -> str:
+    raw = (
+        os.environ.get("ADS_FINAL_URL_HOST")
+        or os.environ.get("FINAL_URL_HOST")
+        or DEFAULT_FINAL_URL_HOST
+    ).strip()
+    host = raw.removeprefix("https://").removeprefix("http://").strip().strip("/")
+    if not host or "/" in host:
+        raise SystemExit(
+            "ADS_FINAL_URL_HOST must be a bare hostname "
+            f"(got {raw!r}). Example: hire.example.com"
+        )
+    return host
 
 # George-decidable Stage 1 defaults (see ads-launch/DECISIONS.md).
 # 2-campaign model: Core ~60% / Roles ~40% of Stage 1 daily spend.
@@ -3734,12 +3755,13 @@ def build_roles(
 
 def build() -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
+    host = final_url_host()
 
     for mkt, loc, budget_ph in (
         ("US", "United States", "[APPROVAL_DAILY_BUDGET_USD]"),
         ("AU", "Australia", "[APPROVAL_DAILY_BUDGET_AUD]"),
     ):
-        base_url = f"https://vision-three-alpha.vercel.app/{mkt.lower()}"
+        base_url = f"https://{host}/{mkt.lower()}"
         build_core(
             rows, mkt=mkt, loc=loc, budget_ph=budget_ph, base_url=base_url
         )
@@ -4477,6 +4499,13 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         f"- Tracking template (campaign): `{TRACK}`",
         f"- Final URL suffix (campaign): `{SUFFIX}`",
         "- No `{_campaign}` / `{_adgroup}` custom params",
+        f"- **Final URL host:** `{final_url_host()}` with path markets "
+        "(`/us`, `/au`, category pages). One host — not two country domains. "
+        "**Strongly prefer custom domain before Enable** (URL stability before paid clicks). "
+        "Preview host OK for paused Import structure review; if imported on preview, "
+        "**rewrite Final URLs before Enable**. Regen once: "
+        "`ADS_FINAL_URL_HOST=yourdomain.com python3 ads-launch/build_stage1_editor_package.py`. "
+        "Domain ≠ TRAFFIC READY substitute.",
         "",
         "## Conversion actions + campaign goals (after Post — Ads UI)",
         "",
@@ -4539,14 +4568,20 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "## Operator path",
         "",
         "1. Leave old account machinery alone (no dig/delete/rewrite/pause binge tonight).",
-        "2. Download fresh USA + AU accounts into Editor (read-only sync).",
-        "3. Import **US split** into USA → Check changes → leave **Paused**.",
-        "4. Import **AU split** into AU → Check changes → leave **Paused**.",
-        "5. Confirm `VC_*` negatives are campaign-level curated only — "
+        "2. Clear **TRAFFIC READY** (durable delivery + live test + named responder).",
+        "3. **Prefer:** buy/attach one custom domain → confirm `/us` `/au` `/ph` LPs → "
+        "regen with `ADS_FINAL_URL_HOST` before Import.",
+        "4. Download fresh USA + AU accounts into Editor (read-only sync).",
+        "5. Import **US split** into USA → Check changes → leave **Paused**.",
+        "6. Import **AU split** into AU → Check changes → leave **Paused**.",
+        "7. If imported on preview host: **rewrite every Final URL** to custom domain "
+        "before Enable.",
+        "8. Confirm `VC_*` negatives are campaign-level curated only — "
         "**do not** attach shared mega lists.",
-        "6. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.",
-        "7. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
-        "8. Enable is a separate explicit decision — never from Import/Post alone.",
+        "9. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.",
+        "10. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
+        "11. Enable is a separate explicit decision after TRAFFIC READY + preferred "
+        "Final URL host — never from Import/Post alone.",
         "",
     ]
     PREFLIGHT.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -4560,6 +4595,8 @@ DOC_MIRRORS = (
     "10-tracking-event-spec.md",
     "07-phased-activation-recommendation.md",
     "TONIGHT-HANDOFF.md",
+    "CHATGPT-DEBRIEF.md",
+    "12-blocker-decision-list.md",
 )
 
 

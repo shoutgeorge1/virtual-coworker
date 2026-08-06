@@ -54,7 +54,7 @@
 - Tracking template (campaign): `{lpurl}`
 - Final URL suffix (campaign): `utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}&utm_matchtype={matchtype}&utm_device={device}&lp_version=stage1-v7`
 - No `{_campaign}` / `{_adgroup}` custom params
-- **Final URL host:** preview `vision-three-alpha.vercel.app` with path markets (`/us`, `/au`, category pages). Optional one custom domain later — **same paths transfer**; no AU subdomain / dual-domain swap required. Not a CSV rebuild trigger.
+- **Final URL host:** preview `vision-three-alpha.vercel.app` with path markets (`/us`, `/au`, category pages). One host — not two country domains. **Strongly prefer custom domain before Enable** (URL stability before paid clicks). Preview OK for paused Import structure review; if imported on preview, **rewrite Final URLs before Enable**. Regen once when domain is live: `ADS_FINAL_URL_HOST=yourdomain.com python3 ads-launch/build_stage1_editor_package.py`. Domain ≠ TRAFFIC READY substitute.
 
 ## Conversion actions + campaign goals (after Post — Ads UI)
 
@@ -120,11 +120,14 @@ Job-seeker / medical / Spanish / platform negatives stay active.
 ## Operator path
 
 1. Leave old account machinery alone (no dig/delete/rewrite/pause binge tonight).
-2. Download fresh USA + AU accounts into Editor (read-only sync).
-3. Import **US split** into USA → Check changes → leave **Paused**.
-4. Import **AU split** into AU → Check changes → leave **Paused**.
-5. Confirm `VC_*` negatives are campaign-level curated only — **do not** attach shared mega lists.
-6. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.
-7. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.
-8. Enable is a separate explicit decision — never from Import/Post alone.
+2. Clear **TRAFFIC READY** (durable delivery + live test + named responder).
+3. **Prefer:** buy/attach one custom domain → confirm `/us` `/au` `/ph` LPs → regen with `ADS_FINAL_URL_HOST` before Import.
+4. Download fresh USA + AU accounts into Editor (read-only sync).
+5. Import **US split** into USA → Check changes → leave **Paused**.
+6. Import **AU split** into AU → Check changes → leave **Paused**.
+7. If imported on preview host: **rewrite every Final URL** to custom domain before Enable.
+8. Confirm `VC_*` negatives are campaign-level curated only — **do not** attach shared mega lists.
+9. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.
+10. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.
+11. Enable is a separate explicit decision after TRAFFIC READY + preferred Final URL host — never from Import/Post alone.
 

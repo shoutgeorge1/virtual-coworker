@@ -30,6 +30,8 @@ Companion checklist: `07-phased-activation-recommendation.md` · Launch Control 
 ### Phase 0 — TRAFFIC READY (before any Enable)
 
 **TRAFFIC READY** hard gates: durable lead delivery (email/webhook/sheet — not log-only), live-format test arrives, named responder, LP/gate QA, phones locked, Final URLs = Core→market home · Roles→category, budgets/CPC confirmed, campaigns still Paused, **explicit George Enable approval**.  
+**URL stability (strongly prefer before Enable):** one custom domain + Final URLs on that host (or rewrite off preview before Enable). Domain ≠ durable-leads substitute; one host + `/us` `/au` `/ph` paths — not two country domains. Regen: `ADS_FINAL_URL_HOST`.  
+
 See `DECISIONS.md` (sequencing lock), `12-blocker-decision-list.md`, Launch Control.
 
 **Not required for Enable:** Zoho CRM record, Zoho OAuth, native Zoho↔Ads connector, offline conversions, working Google Ads conversion action, Ads API. Those are **CRM READY** / **OPTIMIZATION READY** parallel tracks.

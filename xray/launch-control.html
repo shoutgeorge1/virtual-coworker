@@ -288,8 +288,10 @@
       </header>
 
       <p class="lc-start">
-        <strong>Do next:</strong> Open USA + AU Brand campaigns. Note status, spend, Final URL. Decide pause vs leave.
-        Then clear TRAFFIC READY (real inbox → test lead arrives → name who answers).
+        <strong>Do next (money):</strong> Buy <strong>one</strong> clean .com for paid LPs (~$10 at Porkbun) — pick from the domain walkthrough, <em>you</em> checkout.
+        Then: DNS → Vercel project <code>vision-three-alpha</code> → regenerate Ads Final URL host → Editor import.
+        <strong>Parallel (Enable gate):</strong> TRAFFIC READY = real inbox → test lead arrives → name who answers.
+        Prefer domain live + Final URLs on that host <em>before</em> Enable (avoid rewrite off <code>vision-three-alpha</code>).
       </p>
 
       <section class="panel" id="readiness-statuses">
@@ -436,36 +438,36 @@
             <li data-order="12">
               <input type="checkbox" id="ads12" data-todo="ads12" />
               <label for="ads12">
-                <strong>12. Editor — download both accounts</strong>
-                <span class="todo-hint">Fresh local copy of USA + AU before import.</span>
+                <strong>12. Buy + attach one custom domain (before Enable) ← money step</strong>
+                <span class="todo-hint"><strong>Operator money step now:</strong> you buy one .com (Porkbun ~at-cost; Cloudflare if you already have CF). Top pick shortlist: <code>hirewithvc.com</code> · <code>staffwithvc.com</code> · <code>hirevcstaff.com</code>. One host on Vercel <code>vision-three-alpha</code> — same paths <code>/us</code> · <code>/au</code> · <code>/ph</code> (<em>not</em> two country domains). Confirm LPs on <code>https://yourdomain.com/us/…</code>. Domain ≠ TRAFFIC READY — but avoid Ads on throwaway <code>vision-three-alpha.vercel.app</code>.</span>
               </label>
             </li>
             <li data-order="13">
               <input type="checkbox" id="ads13" data-todo="ads13" />
               <label for="ads13">
-                <strong>13. Import paused CSV — leave everything Paused</strong>
-                <span class="todo-hint"><strong>Import</strong> = draft on computer · <strong>Post</strong> = upload (still paused) · <strong>Enable</strong> = later. Split US/AU files. Review package without Ads UI: <a href="ads-package.html">Ads package</a>. Read <code>EDITOR-PREFLIGHT-REPORT.md</code>.</span>
+                <strong>13. Freeze Final URL host on that domain</strong>
+                <span class="todo-hint"><strong>Prefer:</strong> domain live → regenerate package with <code>ADS_FINAL_URL_HOST=yourdomain.com</code> → import with final host. Paths stay Core → <code>/us</code>/<code>/au</code> · Roles → category. No WordPress.</span>
               </label>
             </li>
             <li data-order="14">
               <input type="checkbox" id="ads14" data-todo="ads14" />
               <label for="ads14">
-                <strong>14. One host + path markets (locked)</strong>
-                <span class="todo-hint">Same domain for <code>/us</code> · <code>/au</code> · <code>/ph</code> — <em>not</em> two country domains. Preview OK for TRAFFIC READY: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. Custom domain = optional polish, not a gate.</span>
+                <strong>14. Editor — download both accounts</strong>
+                <span class="todo-hint">Fresh local copy of USA + AU before import.</span>
               </label>
             </li>
             <li data-order="15">
               <input type="checkbox" id="ads15" data-todo="ads15" />
               <label for="ads15">
-                <strong>15. Optional: attach one paid domain</strong>
-                <span class="todo-hint">Branding polish only. When attached, same paths transfer — no AU subdomain required. <strong>Not</strong> a TRAFFIC READY blocker.</span>
+                <strong>15. Import paused CSV — leave everything Paused</strong>
+                <span class="todo-hint"><strong>Prefer:</strong> import after domain + Final URL host are set. <strong>Acceptable:</strong> import/review on preview host while Paused for structure only — then you <strong>must</strong> rewrite every Final URL to the custom domain before Enable. <strong>Import</strong> = draft · <strong>Post</strong> = upload (still paused) · <strong>Enable</strong> = later. Split US/AU files. <a href="ads-package.html">Ads package</a> · <code>EDITOR-PREFLIGHT-REPORT.md</code>.</span>
               </label>
             </li>
             <li data-order="16">
               <input type="checkbox" id="ads16" data-todo="ads16" />
               <label for="ads16">
-                <strong>16. Confirm Final URLs stay path-based</strong>
-                <span class="todo-hint">Already on vision-three-alpha (Core → <code>/us</code> or <code>/au</code> · Roles → category pages). Host swap only if/when custom domain attaches — paths unchanged. No WordPress.</span>
+                <strong>16. Before Enable — Final URLs = custom domain</strong>
+                <span class="todo-hint">Hard stop if still on <code>*.vercel.app</code>. Confirm every Core/Roles Final URL uses the paid host + path markets. Preview host OK for TRAFFIC READY lead tests only.</span>
               </label>
             </li>
             <li data-order="17">
@@ -493,7 +495,7 @@
               <input type="checkbox" id="ads20" data-todo="ads20" />
               <label for="ads20">
                 <strong>20. Enable Tier 1A then 1B</strong>
-                <span class="todo-hint">Only when TRAFFIC READY + your OK. Keep Max Clicks. AU quiet until US looks sane. You Enable in Ads.</span>
+                <span class="todo-hint">Only when TRAFFIC READY + Final URLs on custom domain + your OK. Keep Max Clicks. AU quiet until US looks sane. You Enable in Ads.</span>
               </label>
             </li>
           </ul>
@@ -532,6 +534,7 @@
             <li><strong>Real inbox</strong> — form actually lands there</li>
             <li><strong>Test lead arrives</strong> — you see it</li>
             <li><strong>Named person who answers</strong> — <a href="lead-routing.html">Lead Routing</a></li>
+            <li><strong>Custom domain before Enable</strong> — Final URLs on paid host (not <code>*.vercel.app</code>)</li>
             <li><strong>Editor Import / Post</strong> — still Paused; Enable later</li>
             <li><strong>Old Brand still spending</strong> — recommend pause (you click in Ads)</li>
           </ul>
@@ -543,10 +546,11 @@
             <span class="st st-access">George</span>
           </div>
           <ul>
-            <li><strong>Next:</strong> review live Brand</li>
-            <li><strong>Then:</strong> inbox test · Assets spot-check · no mega negs</li>
-            <li>Editor download + paused split CSV (Import → Post → Enable later)</li>
-            <li>One host + <code>/us</code> <code>/au</code> paths; custom domain optional; separate GTM_US + GTM_AU</li>
+            <li><strong>Money next:</strong> buy <strong>one</strong> .com (Porkbun) → attach Vercel → confirm <code>/us</code> <code>/au</code> <code>/ph</code></li>
+            <li><strong>Enable gate (parallel):</strong> TRAFFIC READY (inbox · test · named responder) + review live Brand</li>
+            <li>Prefer: regenerate Final URLs → Editor import → Post paused → Enable</li>
+            <li>Or: import on preview while paused, <strong>rewrite Final URLs before Enable</strong></li>
+            <li>One host + paths (not two country domains) · separate GTM_US + GTM_AU</li>
             <li>Zoho: browse + note modules — <em>not</em> a traffic gate. Email: <code>george@shoutgeorge.com</code></li>
             <li>
               <strong>Calendly / booking:</strong> thank-you wired from live WP
@@ -700,13 +704,14 @@
           <ol class="lc-seq">
             <li>Ads access confirmed (done).</li>
             <li>Confirm live campaigns in thread (done Aug 5).</li>
-            <li>Review live Brand — next.</li>
-            <li>TRAFFIC READY: real inbox + test arrives + named person.</li>
+            <li>Review live Brand.</li>
+            <li><strong>TRAFFIC READY</strong> (paid-traffic blocker): real inbox + test arrives + named person.</li>
             <li>Assets spot-check · no shared mega negs · Auto-apply off.</li>
-            <li>Download accounts into Editor.</li>
-            <li>Import paused split CSVs. Import = draft. Post = upload paused. Enable = later.</li>
-            <li>Confirm budgets / Max CPC · Final URLs · Search partners off.</li>
-            <li>Enable Tier 1A then 1B after TRAFFIC READY + your OK.</li>
+            <li><strong>Custom domain</strong> (strongly before Enable): buy one → attach Vercel → confirm LPs on that host.</li>
+            <li>Freeze Final URL host (regen with <code>ADS_FINAL_URL_HOST</code>, or rewrite in Editor before Enable).</li>
+            <li>Download accounts → Import paused split CSVs → Post paused. Enable = later.</li>
+            <li>Confirm budgets / Max CPC · Final URLs = custom domain · Search partners off.</li>
+            <li>Enable Tier 1A then 1B after TRAFFIC READY + domain Final URLs + your OK.</li>
           </ol>
         </div>
       </details>
