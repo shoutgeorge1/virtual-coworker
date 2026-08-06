@@ -70,7 +70,7 @@ Historical Ads “Conversions” in exports are **not** proof of placements. Sta
 | **AU employer** | Buy on Vercel (~$10) — separate from US | Separate container | Separate property | Separate property on AU domain | Point at AU microsite events only |
 | **PH talent** | **Can wait** — no Stage 1 domain required | Optional later (`GTM_PH`) | Optional later | Optional later | Never employer conversions |
 
-**Implication:** three microsite identities ⇒ **do not share one GTM/GA4 across US+AU**. Wire env placeholders after containers exist. Launch Control checklist steps 7–11 cover buy domains + stand up measurement. Preview host until domains attach: `vision-three-alpha.vercel.app`.
+**Implication:** three microsite identities ⇒ **do not share one GTM/GA4 across US+AU**. Wire env placeholders after containers exist. Launch Control checklist steps 14–18 cover buy domains + stand up measurement. Preview host until domains attach: `vision-three-alpha.vercel.app`.
 
 Microsite is an **independent paid hiring path** with employer gate, category LPs, A/B variants, sticky CTA, optional exit-intent (flag), honest events, and pilot `noindex`.
 

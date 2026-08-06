@@ -2,7 +2,7 @@
 
 **Locked by George 2026-08-05.**  
 **CSV stays Paused. This is enable order only — not Ads enable approval.**  
-Companion checklist: `07-phased-activation-recommendation.md` · Launch Control step 13.
+Companion checklist: `07-phased-activation-recommendation.md` · Launch Control step 20.
 
 ---
 
@@ -107,7 +107,7 @@ Mined from `audit-data/performance/search_terms_usa_4967151855_2026-08-05.csv` (
 
 | Surface | Points here |
 |---------|-------------|
-| Launch Control step 13 | Enable copy → this file |
+| Launch Control step 20 | Enable copy → this file |
 | `07-phased-activation-recommendation.md` | Short checklist mirror |
 | `DECISIONS.md` | Activation priority row |
 | `CHATGPT-DEBRIEF.md` | Brief activation flip |

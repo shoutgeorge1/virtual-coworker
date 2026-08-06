@@ -249,7 +249,7 @@
       </header>
 
       <p class="lc-start">
-        <strong>Next: step 5 — Editor download.</strong>
+        <strong>Next: step 5 — Review live Brand campaigns.</strong>
         Finished steps tuck under <strong>Done</strong> at the bottom (collapsed). Tick as you go — saves in this browser.
       </p>
 
@@ -292,63 +292,112 @@
             <li data-order="5">
               <input type="checkbox" id="ads5" data-todo="ads5" />
               <label for="ads5">
-                <strong>5. Open Google Ads Editor on your Mac and download both accounts</strong>
-                <span class="todo-hint"><strong>← You are here.</strong> Sign in as ShoutGeorge. Download USA <code>496-715-1855</code> and Australia <code>573-539-1940</code> so Editor has a fresh copy before you import anything. Optional: if you want the old Brand bleed stopped first, pause <code>PM_US_RSA_Brand</code> and <code>PM_AU_RSA_Brand</code> in the Ads website (you click — not from this page).</span>
+                <strong>5. Review live Brand campaigns</strong>
+                <span class="todo-hint"><strong>← You are here.</strong> USA <code>PM_US_RSA_Brand</code> + AU <code>PM_AU_RSA_Brand</code> (small spend). Note status, spend, and Final URL for each. Decide pause vs leave until <code>VC_*</code> are live. You click pause in Ads if you want bleed stopped — not from this page. Share the screen in this thread if unsure.</span>
               </label>
             </li>
             <li data-order="6">
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
-                <strong>6. Import the paused CSV — leave everything Paused</strong>
-                <span class="todo-hint"><strong>Import ≠ live.</strong> Import only loads a local Editor draft; <strong>Post</strong> is what uploads to the live account (still Paused — do not Enable). CSV has an <strong>Account</strong> column (USA <code>496-715-1855</code> · AU <code>573-539-1940</code>) so USA+AU rows go to the right accounts. New <code>VC_*</code> names <strong>add alongside</strong> existing <code>PM_*</code> — they do not wipe conversions/billing/users or delete old campaigns. File: <code>ads-launch/google-ads-editor-import.csv</code> (<strong>stage1-v7</strong> · Core+Roles · Brand deferred · all Paused). Final URLs: Core → <code>/us|/au</code> · Roles → category. Budgets/Max CPC filled. Detail: <code>ads-launch/DECISIONS.md</code>.</span>
+                <strong>6. Audit conversion events end-to-end</strong>
+                <span class="todo-hint">Tools → Conversions in <strong>USA and AU</strong>. For each action list: name, Primary vs Secondary, source (website / import / call), counting, and what page or event fires it. Flag micro-conversions, duplicates, and anything that could train Max Conversions on junk. Stage 1 primary = employer inquiry (+ qualified call later). Job order / placement = offline later. <strong>Share the list in this thread.</strong> Seeing the Conversions screen ≠ the Zapier path audited (step 8).</span>
               </label>
             </li>
             <li data-order="7">
               <input type="checkbox" id="ads7" data-todo="ads7" />
               <label for="ads7">
-                <strong>7. Buy custom domain for US microsite (Vercel ~$10)</strong>
-                <span class="todo-hint">Three separate microsites: <strong>US · AU · PH</strong>. Buy a <strong>US</strong> domain in Vercel (~$10) and attach it to the vision project for the US employer site (<code>/us</code> + category LPs). Preview until then: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a>. <strong>PH careers can wait</strong> — no domain required for Stage 1.</span>
+                <strong>7. Review campaign / account conversion goals</strong>
+                <span class="todo-hint">Check account-default and campaign goal baskets so new <code>VC_*</code> campaigns will not inherit garbage goals. Prefer observe-only / clean Stage 1 goals (employer inquiry + qualified call) — no Max Conv on unverified junk defs.</span>
               </label>
             </li>
             <li data-order="8">
               <input type="checkbox" id="ads8" data-todo="ads8" />
               <label for="ads8">
-                <strong>8. Buy custom domain for AU microsite (Vercel ~$10)</strong>
-                <span class="todo-hint">Buy a <strong>separate AU</strong> domain in Vercel (~$10) and attach it to vision for the AU employer site (<code>/au</code> + category LPs). Do <strong>not</strong> share one domain/identity with US. Preview: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. PH still hangs — no Stage 1 domain needed.</span>
+                <strong>8. Audit Zapier / lead integration</strong>
+                <span class="todo-hint">They appear to have a weird Zapier (or similar) setup — George doesn’t know if it’s correct. <strong>Map what it does</strong> with form leads / Ads / Zoho: still WordPress / Gravity Forms? Does it fire Ads conversions? Create Zoho records? Broken or duplicate? Document in this thread. <strong>Do not break it blindly.</strong> Zoho direct is preferred later — don’t rip Zapier until we know what it does. <strong>Zapier ≠ fixed:</strong> Ads access or seeing conversion actions ≠ this integration audited.</span>
               </label>
             </li>
             <li data-order="9">
               <input type="checkbox" id="ads9" data-todo="ads9" />
               <label for="ads9">
-                <strong>9. Point Ads Final URLs at the US + AU domains</strong>
-                <span class="todo-hint">After both domains are attached, swap Final URL <em>hosts</em> per market — keep paths: Core → <code>/us|/au</code> (market home) and Roles → the nine <code>/{us|au}/{category}</code> routes. Do not use WordPress. Do not point Core at administrative-support. Root <code>/</code> on the microsite already redirects → <code>/us</code>.</span>
+                <strong>9. Review account-level Assets</strong>
+                <span class="todo-hint">Sitelinks, callouts, and other account assets. Flag anything pointing at WordPress — those can stick onto new campaigns. Microsite-only destinations for Stage 1.</span>
               </label>
             </li>
             <li data-order="10">
               <input type="checkbox" id="ads10" data-todo="ads10" />
               <label for="ads10">
-                <strong>10. US measurement stack (separate — not shared with AU)</strong>
-                <span class="todo-hint">For the <strong>US</strong> microsite only: create a <strong>separate</strong> GTM container, GA4 property, Search Console property (on the US custom domain), and Google Ads conversion actions pointed at US microsite events only. Wire env <code>NEXT_PUBLIC_GTM_US</code> / <code>NEXT_PUBLIC_GA4_US</code>. dataLayer already sends <code>market: us</code>. <strong>Do not</strong> reuse one GTM/GA4 for US+AU.</span>
+                <strong>10. Review shared negative keyword lists</strong>
+                <span class="todo-hint">Keep good job-seeker / career negatives. Check they do <strong>not</strong> block employer terms like philippines / hire / VA. Note list names + anything risky in this thread.</span>
               </label>
             </li>
             <li data-order="11">
               <input type="checkbox" id="ads11" data-todo="ads11" />
               <label for="ads11">
-                <strong>11. AU measurement stack (separate — not shared with US)</strong>
-                <span class="todo-hint">Same for <strong>AU</strong>: separate GTM, GA4, Search Console (AU custom domain), and Ads conversion actions for AU microsite only. Wire <code>NEXT_PUBLIC_GTM_AU</code> / <code>NEXT_PUBLIC_GA4_AU</code>. dataLayer sends <code>market: au</code>. PH talent tracking optional later (<code>NEXT_PUBLIC_GTM_PH</code>) — can hang for Stage 1.</span>
+                <strong>11. Check Recommendations / Auto-apply</strong>
+                <span class="todo-hint">Turn off auto-apply for broad match, Performance Max, and other junk if it’s on. Stage 1 stays Exact + Phrase Search only — no Broad, no PMax.</span>
               </label>
             </li>
             <li data-order="12">
               <input type="checkbox" id="ads12" data-todo="ads12" />
               <label for="ads12">
-                <strong>12. Confirm daily budgets and Max CPC (defaults already in CSV)</strong>
-                <span class="todo-hint">CSV already has Stage 1 v7 defaults (US Core $75 / Roles $50 · AU Core A$75 / Roles A$50 · Max CPC US $8 / AU A$6 — ~60/40; ≈ $3.8k + A$3.8k/mo inside $10–20k/account story). Change in Editor if you want different ceilings, then Post while still <strong>Paused</strong>. Spot-check in the Ads website. See <code>ads-launch/DECISIONS.md</code>.</span>
+                <strong>12. Open Google Ads Editor on your Mac and download both accounts</strong>
+                <span class="todo-hint">Sign in as ShoutGeorge. Download USA <code>496-715-1855</code> and Australia <code>573-539-1940</code> so Editor has a fresh copy before you import anything.</span>
               </label>
             </li>
             <li data-order="13">
               <input type="checkbox" id="ads13" data-todo="ads13" />
               <label for="ads13">
-                <strong>13. Enable PH long-tail first — only after gates below are green</strong>
+                <strong>13. Import the paused CSV — leave everything Paused</strong>
+                <span class="todo-hint"><strong>Import ≠ live.</strong> Import only loads a local Editor draft; <strong>Post</strong> is what uploads to the live account (still Paused — do not Enable). CSV has an <strong>Account</strong> column (USA <code>496-715-1855</code> · AU <code>573-539-1940</code>) so USA+AU rows go to the right accounts. New <code>VC_*</code> names <strong>add alongside</strong> existing <code>PM_*</code> — they do not wipe conversions/billing/users or delete old campaigns. File: <code>ads-launch/google-ads-editor-import.csv</code> (<strong>stage1-v7</strong> · Core+Roles · Brand deferred · all Paused). Final URLs: Core → <code>/us|/au</code> · Roles → category. Budgets/Max CPC filled. Detail: <code>ads-launch/DECISIONS.md</code>.</span>
+              </label>
+            </li>
+            <li data-order="14">
+              <input type="checkbox" id="ads14" data-todo="ads14" />
+              <label for="ads14">
+                <strong>14. Buy custom domain for US microsite (Vercel ~$10)</strong>
+                <span class="todo-hint">Three separate microsites: <strong>US · AU · PH</strong>. Buy a <strong>US</strong> domain in Vercel (~$10) and attach it to the vision project for the US employer site (<code>/us</code> + category LPs). Preview until then: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a>. <strong>PH careers can wait</strong> — no domain required for Stage 1.</span>
+              </label>
+            </li>
+            <li data-order="15">
+              <input type="checkbox" id="ads15" data-todo="ads15" />
+              <label for="ads15">
+                <strong>15. Buy custom domain for AU microsite (Vercel ~$10)</strong>
+                <span class="todo-hint">Buy a <strong>separate AU</strong> domain in Vercel (~$10) and attach it to vision for the AU employer site (<code>/au</code> + category LPs). Do <strong>not</strong> share one domain/identity with US. Preview: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. PH still hangs — no Stage 1 domain needed.</span>
+              </label>
+            </li>
+            <li data-order="16">
+              <input type="checkbox" id="ads16" data-todo="ads16" />
+              <label for="ads16">
+                <strong>16. Point Ads Final URLs at the US + AU domains</strong>
+                <span class="todo-hint">After both domains are attached, swap Final URL <em>hosts</em> per market — keep paths: Core → <code>/us|/au</code> (market home) and Roles → the nine <code>/{us|au}/{category}</code> routes. Do not use WordPress. Do not point Core at administrative-support. Root <code>/</code> on the microsite already redirects → <code>/us</code>.</span>
+              </label>
+            </li>
+            <li data-order="17">
+              <input type="checkbox" id="ads17" data-todo="ads17" />
+              <label for="ads17">
+                <strong>17. US measurement stack (separate — not shared with AU)</strong>
+                <span class="todo-hint">For the <strong>US</strong> microsite only: create a <strong>separate</strong> GTM container, GA4 property, Search Console property (on the US custom domain), and Google Ads conversion actions pointed at US microsite events only. Wire env <code>NEXT_PUBLIC_GTM_US</code> / <code>NEXT_PUBLIC_GA4_US</code>. dataLayer already sends <code>market: us</code>. <strong>Do not</strong> reuse one GTM/GA4 for US+AU.</span>
+              </label>
+            </li>
+            <li data-order="18">
+              <input type="checkbox" id="ads18" data-todo="ads18" />
+              <label for="ads18">
+                <strong>18. AU measurement stack (separate — not shared with US)</strong>
+                <span class="todo-hint">Same for <strong>AU</strong>: separate GTM, GA4, Search Console (AU custom domain), and Ads conversion actions for AU microsite only. Wire <code>NEXT_PUBLIC_GTM_AU</code> / <code>NEXT_PUBLIC_GA4_AU</code>. dataLayer sends <code>market: au</code>. PH talent tracking optional later (<code>NEXT_PUBLIC_GTM_PH</code>) — can hang for Stage 1.</span>
+              </label>
+            </li>
+            <li data-order="19">
+              <input type="checkbox" id="ads19" data-todo="ads19" />
+              <label for="ads19">
+                <strong>19. Confirm daily budgets and Max CPC (defaults already in CSV)</strong>
+                <span class="todo-hint">CSV already has Stage 1 v7 defaults (US Core $75 / Roles $50 · AU Core A$75 / Roles A$50 · Max CPC US $8 / AU A$6 — ~60/40; ≈ $3.8k + A$3.8k/mo inside $10–20k/account story). Change in Editor if you want different ceilings, then Post while still <strong>Paused</strong>. Spot-check in the Ads website. See <code>ads-launch/DECISIONS.md</code>.</span>
+              </label>
+            </li>
+            <li data-order="20">
+              <input type="checkbox" id="ads20" data-todo="ads20" />
+              <label for="ads20">
+                <strong>20. Enable PH long-tail first — only after gates below are green</strong>
                 <span class="todo-hint">Per <code>ads-launch/PHASED-ACTIVATION.md</code> (source of truth): <strong>Phase 1</strong> = Philippines / Filipino / offshore long-tail Exact (+ tight Phrase) across Core <em>and</em> Roles AGs that carry that intent — including bookkeeping/accounting when PH-shaped. <strong>Not</strong> “Core first then only Digital/Social/Admin.” <strong>Phase 2</strong> = broader category Exact/Phrase without PH geo. <strong>Phase 3</strong> = generic Core heads (bare virtual assistant / hire VA) later with tighter CPC. Keep Australia quiet until the US looks sane. Brand deferred. Review-ready ≠ paid-ready. You click Enable in Ads or Editor — not from this page. Explicit George approval required.</span>
               </label>
             </li>
@@ -389,6 +438,7 @@
             <li><strong>US + AU domains (~$10 each on Vercel)</strong> — buy separately, attach, then swap Final URL hosts (paths already set: Core market home · Roles category). PH domain can wait.</li>
             <li><strong>Separate measurement</strong> — US and AU each need their own GTM + GA4 + GSC + Ads conversions (don’t share one container)</li>
             <li><strong>Editor import</strong> — stays paused until you say go</li>
+            <li><strong>Conversion / Zapier hygiene</strong> — end-to-end conversion audit + Zapier/lead map still open (seeing Ads Conversions ≠ Zapier fixed)</li>
             <li><strong>Old Brand still spending</strong> — Aug 5 campaign view: <code>PM_US_RSA_Brand</code> (~$39) and <code>PM_AU_RSA_Brand</code> (A$3), Maximize conversions, 0 conversions. Recommend pause before or with the new import — you click pause in Ads; not from this page.</li>
           </ul>
         </section>
@@ -399,8 +449,10 @@
             <span class="st st-access">George</span>
           </div>
           <ul>
-            <li><strong>Next: step 5</strong> — open Google Ads Editor and download USA + AU</li>
-            <li>Optional: pause both old <code>PM_*</code> Brand campaigns in Ads if you want that small spend stopped — you click pause there, not here</li>
+            <li><strong>Next: step 5</strong> — review live Brand campaigns (status / spend / Final URL; pause vs leave)</li>
+            <li><strong>Steps 6–8</strong> — conversion events end-to-end · goal baskets · Zapier/lead map (document; don’t rip yet). Zapier ≠ fixed just because Ads access exists</li>
+            <li><strong>Steps 9–11</strong> — account Assets · shared negatives · Recommendations / Auto-apply off</li>
+            <li>Then Editor download + paused CSV import (steps 12–13)</li>
             <li>Optionally change budget / Max CPC defaults (already filled)</li>
             <li><strong>Buy US domain (~$10)</strong> + <strong>AU domain (~$10)</strong> on Vercel — two identities; PH can hang</li>
             <li>Confirm Final URL hosts after domains attach (keep Core→home · Roles→category paths)</li>
@@ -486,6 +538,8 @@
             <li>Optional: revise budget/CPC defaults</li>
             <li>Payment-cleared date</li>
             <li>Pause old Brand campaigns in Ads? (recommend yes — you click)</li>
+            <li><strong>Conversion events audit</strong> — Primary/Secondary, source, what fires each (USA + AU); share list in thread</li>
+            <li><strong>Zapier / lead integration map</strong> — WP/GF? Ads conversions? Zoho? Broken/dupe? Document; don’t rip blind. Zapier ≠ fixed</li>
             <li><strong>Zoho access audit</strong> — modules / fields / ownership (level unknown; download/export OK for later). Access ≠ integration.</li>
           </ul>
           <details class="lc-fold" style="margin-top:1rem">
@@ -545,7 +599,7 @@
 
       <details class="lc-fold" id="sequence">
         <summary>
-          Full launch sequence (15) — detail
+          Full launch sequence — detail
           <span class="hint">Backup detail; use checklist above as the work list</span>
         </summary>
         <div class="fold-bd">
@@ -554,8 +608,11 @@
             <li>Set vision env: phones, lead delivery, careers URL; redeploy vision.</li>
             <li>Run George LP validation (gate / job seeker / thank-you / dedupe).</li>
             <li>Confirm live campaigns for USA + AU in this thread. (Done Aug 5: US Brand live; AU Brand live/limited; rest paused.)</li>
-            <li>Download USA + AU into Google Ads Editor. ← next</li>
-            <li>Optional: pause old Brand campaigns in Ads if you want bleed stopped (you click; recommended before/with import).</li>
+            <li>Review live Brand (status/spend/Final URL); decide pause vs leave. ← next</li>
+            <li>Audit conversion events end-to-end (USA+AU); share list. Review goal baskets so VC_* don’t inherit junk.</li>
+            <li>Map Zapier / lead path (WP/GF? Ads? Zoho?). Document; don’t break. Zapier ≠ fixed.</li>
+            <li>Review account Assets (flag WP), shared negatives (don’t block PH/hire/VA), Recommendations / Auto-apply off.</li>
+            <li>Download USA + AU into Google Ads Editor.</li>
             <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused · stage1-v7 · 4 campaigns).</li>
             <li>Confirm budget / Max CPC defaults (or revise); no <code>[APPROVAL_*]</code> tokens left.</li>
             <li>Confirm Final URLs = Core market homes + Roles category LPs; no WP sitelinks; no inert <code>?role=</code>.</li>
@@ -610,22 +667,25 @@
   <script src="nav.js"></script>
   <script>
     (function () {
-      var KEY = "vc-launch-control-todos-v4";
-      var PREV = "vc-launch-control-todos-v3";
+      var KEY = "vc-launch-control-todos-v5";
+      var PREV = "vc-launch-control-todos-v4";
       var store = {};
       try { store = JSON.parse(localStorage.getItem(KEY) || "null") || null; } catch (e) { store = null; }
       if (!store) {
         try { store = JSON.parse(localStorage.getItem(PREV) || "{}") || {}; } catch (e) { store = {}; }
+        /* Remap pre-account-review ids: old 5–13 → new 12–20 */
+        var remap = { ads5: "ads12", ads6: "ads13", ads7: "ads14", ads8: "ads15", ads9: "ads16", ads10: "ads17", ads11: "ads18", ads12: "ads19", ads13: "ads20" };
+        Object.keys(remap).forEach(function (oldId) {
+          if (store[oldId]) store[remap[oldId]] = true;
+          delete store[oldId];
+        });
         /* Aug 5 paste-from-Ads look-through: steps 1–4 done */
         store.ads1 = true;
         store.ads2 = true;
         store.ads3 = true;
         store.ads4 = true;
-        /* v4 renumbered domain/measurement steps — clear stale 7–10 meanings */
-        delete store.ads7;
-        delete store.ads8;
-        delete store.ads9;
-        delete store.ads10;
+        /* New account-review steps 5–11 start unchecked */
+        ["ads5","ads6","ads7","ads8","ads9","ads10","ads11"].forEach(function (id) { delete store[id]; });
       }
       var activeList = document.getElementById("todo-active");
       var doneList = document.getElementById("todo-done");

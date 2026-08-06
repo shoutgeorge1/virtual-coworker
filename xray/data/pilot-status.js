@@ -231,11 +231,13 @@ window.PILOT_STATUS = {
     "Pilot payment clearing (on its way — not yet confirmed received)"
   ],
   nextThree: [
-    "Download USA/AU into Google Ads Editor (campaign view confirmed Aug 5; Ads Standard via MCC confirmed)",
-    "Buy US + AU domains; stand up separate measurement; lead inbox/webhook",
-    "Import paused Stage 1 CSV → enable US Core after LP validation (brand deferred)"
+    "Account hygiene in Ads: Brand review · conversion events end-to-end · goal baskets · Zapier/lead map (Zapier ≠ fixed) · Assets · shared negatives · Auto-apply off",
+    "Then Editor download + paused CSV import; buy US + AU domains; separate measurement; lead inbox/webhook",
+    "Enable PH long-tail first only after gates green (Launch Control step 20; brand deferred)"
   ],
   openItemsUnresolved: [
+    "Conversion events end-to-end audit (USA + AU Primary/Secondary / source / fire path)",
+    "Zapier / lead integration map (WP/GF? Ads conversions? Zoho?) — Zapier ≠ fixed",
     "Zoho access",
     "Zoho modules / field mappings",
     "Who owns / routes employer leads",
