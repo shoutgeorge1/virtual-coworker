@@ -45,9 +45,9 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: "/ph",
     headline: "Hire dedicated Philippines staff for your US business.",
-    prop: "Virtual Coworker is a staffing partner for US employers — we recruit and screen Philippines talent, you interview and choose, then we support the hire with payroll and account management.",
+    prop: "Need a virtual assistant, Filipino teammate, or dedicated offshore seat? We recruit and screen Philippines talent for US employers — you interview and choose who joins.",
     staffingExplain:
-      "Brief the seat you need filled. Get a shortlist of screened candidates. Interview on your terms. Hire with employment ops handled — so you stay the client, not a gig-platform customer.",
+      "Tell us the role. We follow up for a short hiring conversation, take your brief, and shortlist screened candidates. You interview before anyone starts. We handle payroll and account support after you hire.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",
@@ -80,10 +80,10 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     knownPhone: null,
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: "/ph",
-    headline: "Hire dedicated Philippines staff for your Australian business.",
-    prop: "Virtual Coworker is a staffing partner for Australian employers who want vetted Philippines teammates with clear ownership — not gig-platform churn.",
+    headline: "Hire dedicated Filipino staff for your Australian business.",
+    prop: "Virtual Coworker connects Australian businesses with vetted Philippines teammates who work Australian business hours — recruit, screen, and support included. Not a gig marketplace.",
     staffingExplain:
-      "Brief the role. We recruit and screen in the Philippines. You interview and choose. We manage employment ops so your business stays the client.",
+      "Send the role you need filled. Our team follows up for a hiring conversation, takes your brief, and shortlists screened candidates. You interview before anyone starts. We handle employment ops so you stay focused on the work.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",

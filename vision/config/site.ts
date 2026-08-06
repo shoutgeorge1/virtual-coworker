@@ -13,9 +13,8 @@ import type { MarketId } from "./markets";
 export const SITE = {
   name: "Virtual Coworker",
   legalEntity: "Virtual Coworker Inc.",
-  tagline: "Paid hiring microsite",
-  disclaimer:
-    "Independent paid hiring microsite. Separate from the main WordPress site.",
+  tagline: "Philippines staffing",
+  disclaimer: "Hire dedicated Philippines staff for your business.",
   /** Confirmed NA business line for this pilot (operator brief). */
   usPhoneDisplay: "310-426-8776",
   usPhoneHref: "tel:3104268776",
@@ -28,7 +27,7 @@ export const SITE = {
 export const PUBLIC_QUOTES = [
   {
     quote:
-      "The recruiting process was well organized, and I feel we were matched very well.",
+      "The recruiting process was well organised, and I feel we were matched very well.",
     name: "Kyrstin H.",
     role: "General Manager",
   },

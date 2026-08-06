@@ -32,50 +32,134 @@ export default function MarketLanding({
   const careers = resolveCareersUrl();
   const cat = category ? CATEGORIES[category] : null;
   const v = cat ? cat.variants[variant] : null;
+  const isAu = market === "au";
 
   const h1 = v ? v.h1[market] : cfg.headline;
   const sub = v ? v.subhead[market] : cfg.prop;
   const primaryCta = v?.primaryCta || "Tell us who you need →";
-  const heroSrc = v ? v.heroImage[market] : market === "us" ? "/brand/va-us.jpg" : "/brand/va-au.jpg";
+  const heroSrc = v
+    ? v.heroImage[market]
+    : market === "us"
+      ? "/brand/va-us.jpg"
+      : "/brand/va-au.jpg";
   const heroAlt = v?.heroAlt || "Virtual Coworker team member at a desk";
-  const benefits = cat?.benefits || [
-    "Staffing partner — not a freelance marketplace",
-    "Philippines-based talent matched to your role brief",
-    "You interview and choose who to hire",
-    "Payroll + account management after you hire",
-  ];
-  const faq = cat?.faq || [
-    {
-      q: "Is this for employers?",
-      a: "Yes. Job seekers use the careers destination — not this form.",
-    },
-    {
-      q: "Does a form submit equal a job order?",
-      a: "No. Submit is an employer inquiry. Job order and placement come later if you proceed.",
-    },
-    {
-      q: "Why Philippines staff?",
-      a: "English-proficient professionals who work your hours. We recruit and screen; you interview and decide.",
-    },
-    {
-      q: "Does calling mean the role is filled?",
-      a: "No. A call connects you with our team. Role fit and next steps are confirmed in conversation.",
-    },
-  ];
+
+  const benefits = cat?.benefits ||
+    (isAu
+      ? [
+          "Filipino talent matched to Australian business hours",
+          "You interview before anyone joins your team",
+          "We handle payroll and ongoing support after you hire",
+          "A staffing partner — not a freelance marketplace",
+        ]
+      : [
+          "Philippines talent matched to your US hours and tools",
+          "You interview before anyone joins your team",
+          "We handle payroll and account support after you hire",
+          "A staffing partner — not a freelance marketplace",
+        ]);
+
+  const faq = cat?.faq ||
+    (isAu
+      ? [
+          {
+            q: "Is this for businesses or job seekers?",
+            a: "Businesses only. If you’re looking for work, use the careers link in the footer.",
+          },
+          {
+            q: "What happens after I send my role?",
+            a: "Our team follows up for a short hiring conversation. From there we take your brief, shortlist screened candidates, and you interview before anyone starts.",
+          },
+          {
+            q: "Why hire from the Philippines?",
+            a: "English-proficient professionals who can work Australian business hours. We recruit and screen; you choose who to hire.",
+          },
+          {
+            q: "Do I have to hire someone from the shortlist?",
+            a: "No. You meet candidates on video and decide. There’s no pressure to hire if it isn’t the right fit.",
+          },
+        ]
+      : [
+          {
+            q: "Is this for businesses or job seekers?",
+            a: "Businesses only. If you’re looking for work, use the careers link in the footer.",
+          },
+          {
+            q: "What happens after I send my role?",
+            a: "Our team follows up for a short hiring conversation. From there we take your brief, shortlist screened candidates, and you interview before anyone starts.",
+          },
+          {
+            q: "Why hire from the Philippines?",
+            a: "English-proficient professionals who can work your hours. We recruit and screen; you choose who to hire.",
+          },
+          {
+            q: "Do I have to hire someone from the shortlist?",
+            a: "No. You meet candidates on video and decide. There’s no pressure to hire if it isn’t the right fit.",
+          },
+        ]);
+
+  const processSteps = isAu
+    ? [
+        {
+          k: "01",
+          t: "Hiring conversation",
+          d: "Tell us the role. We follow up to talk through what you need, hours, and tools — so we know it’s a fit before recruiting starts.",
+        },
+        {
+          k: "02",
+          t: "We recruit and screen",
+          d: "Share your brief. Our Philippines recruitment team sources and screens candidates against your must-haves — not a resume dump.",
+        },
+        {
+          k: "03",
+          t: "You interview and choose",
+          d: "Review a shortlist, meet people on video, and pick who joins. You stay in control of the hire.",
+        },
+        {
+          k: "04",
+          t: "Onboard with support",
+          d: "Once you hire, we help with onboarding, employment ops, and ongoing account support so you can focus on the work.",
+        },
+      ]
+    : [
+        {
+          k: "01",
+          t: "Hiring conversation",
+          d: "Tell us the role. We follow up to talk through what you need, hours, and tools — so we know it’s a fit before recruiting starts.",
+        },
+        {
+          k: "02",
+          t: "We recruit and screen",
+          d: "Share your brief. Our Philippines recruitment team sources and screens candidates against your must-haves — not a resume dump.",
+        },
+        {
+          k: "03",
+          t: "You interview and choose",
+          d: "Review a shortlist, meet people on video, and pick who joins. You stay in control of the hire.",
+        },
+        {
+          k: "04",
+          t: "Onboard with support",
+          d: "Once you hire, we help with onboarding, payroll, and ongoing account support so you can focus on the work.",
+        },
+      ];
 
   const showPhone = phone.configured && Boolean(phone.href);
   const shell = market === "us" ? "us" : "au";
   const light = market === "au";
 
   const gate: GateCopy = {
-    eyebrow: "Employers only · about 60 seconds",
+    eyebrow: isAu ? "Businesses only · about a minute" : "Employers only · about a minute",
     title: cat ? `Hire ${cat.label}` : "Tell us who you need",
     intentLabel: "First — who are you?",
-    intentPrimary: "I’m hiring staff for a business.",
+    intentPrimary: isAu
+      ? "I’m hiring staff for a business."
+      : "I’m hiring staff for a business.",
     intentSecondary: "I’m looking for a job.",
     divertTitle: "Looking for work?",
-    divertBody:
-      "This page is for businesses hiring staff. Job applications go to the careers destination — not our employer form.",
+    divertBody: isAu
+      ? "This page is for businesses hiring staff. Job applications go to careers — not this form."
+      : "This page is for businesses hiring staff. Job applications go to careers — not this form.",
     divertCta: "Go to careers →",
     careersHref: careers,
     roleLabel: "What do you need help with?",
@@ -90,19 +174,21 @@ export default function MarketLanding({
     companyLabel: "Company",
     companyPlaceholder: "Company name",
     submit: primaryCta,
-    reassure:
-      "Employers only. A submit is a hiring inquiry — not a job order or placement. By submitting you agree to our privacy notice.",
+    reassure: isAu
+      ? "Businesses only. This starts a conversation with our team — not an instant hire. By submitting you agree to our privacy notice."
+      : "Employers only. This starts a conversation with our team — not an instant hire. By submitting you agree to our privacy notice.",
     callLabel: showPhone
       ? market === "us"
-        ? "Call · US business line"
-        : "Call · AU business line"
+        ? "Prefer to call?"
+        : "Prefer to call?"
       : "",
     phoneDisplay: phone.display,
     phoneHref: phone.href,
     showPhone,
-    doneTitle: "Request received.",
-    doneBody:
-      "Thanks — a teammate will follow up using the details you provided. This is an inquiry, not a confirmed placement.",
+    doneTitle: "Got it — thanks.",
+    doneBody: isAu
+      ? "A teammate will follow up to talk through the role and next steps."
+      : "A teammate will follow up to talk through the role and next steps.",
   };
 
   return (
@@ -115,7 +201,7 @@ export default function MarketLanding({
         <div className={`${shell}-hero-inner`}>
           <div className={`${shell}-hero-copy`}>
             <p className={`${shell}-kicker anim-rise`}>
-              {cfg.label} · Employers
+              {cfg.label} · {isAu ? "Businesses" : "Employers"}
               {cat ? ` · ${cat.label}` : ""}
               {" · "}Philippines talent
             </p>
@@ -139,19 +225,19 @@ export default function MarketLanding({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={market === "us" ? "/brand/clutch-us.webp" : "/brand/badge-clutch-au.webp"}
-                  alt="Clutch recognition badge"
+                  alt="Clutch"
                 />
                 <span>
                   <b>Clutch</b>
-                  <span>Recognition badge</span>
+                  <span>Recognized</span>
                 </span>
               </span>
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/brand/badge-google-5star.webp" alt="Google 5-Star Reviews badge" />
+                <img src="/brand/badge-google-5star.webp" alt="Google Reviews" />
                 <span>
                   <b>Google</b>
-                  <span>Reviews badge</span>
+                  <span>Reviews</span>
                 </span>
               </span>
               <span className="trust-chip">
@@ -162,11 +248,11 @@ export default function MarketLanding({
                       ? "/brand/badge-forbes-white.webp"
                       : "/brand/badge-forbes-navy.webp"
                   }
-                  alt="Forbes Business Council badge"
+                  alt="Forbes Business Council"
                 />
                 <span>
                   <b>Forbes</b>
-                  <span>Business Council badge</span>
+                  <span>Business Council</span>
                 </span>
               </span>
               <span className="trust-chip trust-chip-stat">
@@ -187,9 +273,11 @@ export default function MarketLanding({
               {cat ? cat.shortLabel : "Dedicated hire"}
             </span>
             <figcaption>
-              <b>{cat ? `${cat.label} path` : "Matched to your role"}</b>
+              <b>{cat ? `${cat.label}` : "Matched to your role"}</b>
               <span>
-                Employer inquiry · {market === "us" ? "US business hours" : "AU business hours"} · Philippines talent
+                {isAu
+                  ? "Australian business hours · Philippines talent"
+                  : "US business hours · Philippines talent"}
               </span>
             </figcaption>
           </figure>
@@ -208,36 +296,24 @@ export default function MarketLanding({
         <div className={`${shell}-sell-inner`}>
           <div className={`${shell}-sell-head`}>
             <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
-              How staffing works here
+              How hiring works
             </p>
             <h2>
-              One clear path: brief the role, interview shortlisted Philippines talent, hire with support.
+              {isAu
+                ? "From first chat to a teammate on your hours — you stay in control."
+                : "From first conversation to a teammate on your hours — you stay in control."}
             </h2>
             <p className={`${shell}-sell-sub`}>
-              Built for employers who want ownership of the hire — not gig-platform churn.{" "}
+              {isAu
+                ? "Built for Australian businesses that want ownership of the hire — not gig-platform churn. "
+                : "Built for US employers that want ownership of the hire — not gig-platform churn. "}
               <Link href={`/how-it-works?market=${market}`}>
                 See the full process →
               </Link>
             </p>
           </div>
-          <div className={`sell-grid sell-grid-3${light ? " sell-grid-light" : ""}`}>
-            {[
-              {
-                k: "Recruit",
-                t: "We source and screen",
-                d: "You send a role brief. Our Philippines recruitment team sources and screens candidates aligned to your tools and workflow — not a resume dump.",
-              },
-              {
-                k: "Choose",
-                t: "You interview",
-                d: "You meet shortlisted talent on video, ask what matters to your business, and decide who joins. No mystery matching.",
-              },
-              {
-                k: "Operate",
-                t: "We support the hire",
-                d: "Once you hire, we handle employment ops and account management so you stay focused on the work — and remain the client.",
-              },
-            ].map((b) => (
+          <div className={`sell-grid sell-grid-4${light ? " sell-grid-light" : ""}`}>
+            {processSteps.map((b) => (
               <div className="sell-card" key={b.k}>
                 <em>{b.k}</em>
                 <strong>{b.t}</strong>
@@ -248,13 +324,19 @@ export default function MarketLanding({
         </div>
       </section>
 
-      <TrustQuotes light={light} />
+      <TrustQuotes light={light} market={market} />
 
       <section className={`${shell}-sell`} style={{ paddingTop: 0 }}>
         <div className={`${shell}-sell-inner`}>
           <div className={`${shell}-sell-head`}>
-            <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>FAQ</p>
-            <h2>Straight answers before you inquire.</h2>
+            <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
+              Questions
+            </p>
+            <h2>
+              {isAu
+                ? "Straight answers before you start."
+                : "Straight answers before you start."}
+            </h2>
           </div>
           <div className={`sell-grid${light ? " sell-grid-light" : ""}`}>
             {faq.map((item) => (
@@ -268,7 +350,13 @@ export default function MarketLanding({
       </section>
 
       <section className={`${shell}-cta-bar`}>
-        <p>{showPhone ? "Prefer to talk?" : "Ready to tell us who you need?"}</p>
+        <p>
+          {showPhone
+            ? "Ready to hire — or prefer to talk?"
+            : isAu
+              ? "Ready to hire Filipino staff for your business?"
+              : "Ready to hire Philippines staff for your business?"}
+        </p>
         <div className={`${shell}-cta-bar-actions`}>
           {showPhone ? (
             <a href={phone.href!} className={`${shell}-btn ${shell}-btn-primary`}>
@@ -288,8 +376,7 @@ export default function MarketLanding({
       />
 
       <p className="sr-only">
-        Legal: {SITE.copyright}. Office addresses on this microsite match the
-        published Virtual Coworker contact details.
+        {SITE.copyright}. Offices: {SITE.addressUs}; {SITE.addressAu}.
       </p>
 
       <StickyCta

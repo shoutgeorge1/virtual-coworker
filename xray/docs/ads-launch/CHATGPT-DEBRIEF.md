@@ -325,6 +325,10 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 digital-marketing · social-media · accounting · bookkeeping · administrative-support · customer-service · hr · recruitment · sales  
 HR alias: `/{us|au}/human-resources` → 308 `/{us|au}/hr`
 
+### Funnel next-step language (public LPs — 2026-08-06)
+
+Corporate US/AU how-it-works evidence: **free consultation → job brief → recruit/vet → employer interviews → onboard** (not a SaaS product demo; no Calendly invented on microsite). Public LP/thank-you/how-it-works copy uses **hiring conversation / talk through the role / we follow up** — then brief → shortlist → you interview → onboard. Kill operator/audit voice on buyer UI (inquire formalese, measurement asides, “not invented for ads”, job-order CRM speak). Public-copy lint expanded accordingly.
+
 ### Prior fuck-ups → fixed (compressed)
 
 Double UTM · inert `?role=` URLs · boilerplate RSAs · fake AU phone · consult/demo SaaS language · plastic heroes · silent log-only as conversion · Core→admin mismatch → Core→market home · 22-campaign sprawl → 2/account · Account column missing → stamped · undefined `{_custom}` UTMs → ValueTrack · Max CPC on every row → campaign-only bid limit · commercial research negs → holdouts · isolation: no mega-list inheritance.

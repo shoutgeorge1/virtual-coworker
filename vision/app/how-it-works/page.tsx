@@ -7,44 +7,11 @@ import type { MarketId } from "../../config/markets";
 import type { SiteSurface } from "../../config/site";
 
 export const metadata: Metadata = {
-  title: "How it works · Virtual Coworker Hiring",
+  title: "How it works · Virtual Coworker",
   description:
-    "How Virtual Coworker recruits, shortlists, and supports Philippines staff for employers.",
+    "How Virtual Coworker helps you hire dedicated Philippines staff — conversation, brief, interview, onboard.",
   robots: { index: false, follow: false },
 };
-
-const STEPS = [
-  {
-    k: "01 · Recruit",
-    t: "Tell us the role. We source and screen.",
-    d: "You share the seat you need filled — tools, hours, must-haves. Our recruitment team in the Philippines sources candidates and screens for fit before anyone reaches you.",
-    points: [
-      "Role brief, not a blank “send resumes” inbox",
-      "Screening against your workflow and language needs",
-      "Shortlist prepared for employer interviews",
-    ],
-  },
-  {
-    k: "02 · Choose",
-    t: "You interview. You decide.",
-    d: "You meet shortlisted talent on video. Ask culture and craft questions that matter to your business. Hire only when you’re ready — no forced match.",
-    points: [
-      "Video interviews on your schedule",
-      "You own the hiring decision",
-      "Clear path from shortlist to offer conversation",
-    ],
-  },
-  {
-    k: "03 · Operate",
-    t: "We support the hire after you say yes.",
-    d: "Once you hire, Virtual Coworker handles employment operations and ongoing account support so you stay focused on the work — and remain the client.",
-    points: [
-      "Payroll and employment ops after placement",
-      "Account management for the working relationship",
-      "A staffing partner model — not a freelance marketplace",
-    ],
-  },
-] as const;
 
 function resolveMarket(raw: string | string[] | undefined): MarketId {
   const v = Array.isArray(raw) ? raw[0] : raw;
@@ -60,7 +27,93 @@ export default async function HowItWorksPage({
   const market = resolveMarket(params.market);
   const surface: SiteSurface = market;
   const home = market === "au" ? "/au" : "/us";
-  const marketLabel = market === "au" ? "Australian" : "US";
+  const isAu = market === "au";
+
+  const steps = isAu
+    ? [
+        {
+          k: "01 · Talk",
+          t: "Hiring conversation",
+          d: "Tell us the role. We follow up to talk through what you need, Australian business hours, and the skills that matter — so we know it’s a fit before recruiting starts.",
+          points: [
+            "Short conversation about the seat you need",
+            "Clear next steps if we’re a good match",
+            "No software demo — this is staffing",
+          ],
+        },
+        {
+          k: "02 · Brief",
+          t: "We recruit and screen",
+          d: "Share your job brief. Our specialised Philippines recruitment team sources and screens candidates against your must-haves.",
+          points: [
+            "Role brief, not a blank inbox of resumes",
+            "Screened against your tools and workflow",
+            "Shortlist prepared for your interviews",
+          ],
+        },
+        {
+          k: "03 · Choose",
+          t: "You interview and decide",
+          d: "Review the shortlist, meet people on video, and run any testing you need. Hire only when you’re ready.",
+          points: [
+            "Video interviews on your schedule",
+            "You own the hire decision",
+            "Transparent rates discussed with the shortlist",
+          ],
+        },
+        {
+          k: "04 · Start",
+          t: "Onboard with support",
+          d: "Once you hire, we help with onboarding, employment ops, and ongoing check-ins so your new teammate settles in smoothly.",
+          points: [
+            "Onboarding support from day one",
+            "Employment ops handled for you",
+            "Ongoing account support while they work",
+          ],
+        },
+      ]
+    : [
+        {
+          k: "01 · Talk",
+          t: "Hiring conversation",
+          d: "Tell us the role. We follow up to talk through what you need, hours, and tools — so we know it’s a fit before recruiting starts.",
+          points: [
+            "Short conversation about the seat you need",
+            "Clear next steps if we’re a good match",
+            "No software demo — this is staffing",
+          ],
+        },
+        {
+          k: "02 · Brief",
+          t: "We recruit and screen",
+          d: "Share your job brief. Our Philippines recruitment team sources and screens candidates against your must-haves.",
+          points: [
+            "Role brief, not a blank inbox of resumes",
+            "Screened against your tools and workflow",
+            "Shortlist prepared for your interviews",
+          ],
+        },
+        {
+          k: "03 · Choose",
+          t: "You interview and decide",
+          d: "Review the shortlist, meet people on video, and run any testing you need. Hire only when you’re ready.",
+          points: [
+            "Video interviews on your schedule",
+            "You own the hire decision",
+            "Transparent rates discussed with the shortlist",
+          ],
+        },
+        {
+          k: "04 · Start",
+          t: "Onboard with support",
+          d: "Once you hire, we help with onboarding, payroll, and ongoing account support so your new teammate settles in smoothly.",
+          points: [
+            "Onboarding support from day one",
+            "Payroll and employment ops handled",
+            "Ongoing account support while they work",
+          ],
+        },
+      ];
 
   return (
     <main className="micro">
@@ -69,14 +122,17 @@ export default async function HowItWorksPage({
 
       <header className="micro-hero">
         <p className="micro-kicker">
-          Employers · {market === "au" ? "Australia" : "United States"} ·
-          Philippines talent
+          {isAu ? "Australia" : "United States"} · Businesses · Philippines talent
         </p>
-        <h1>How hiring works with Virtual Coworker.</h1>
+        <h1>
+          {isAu
+            ? "How hiring works for Australian businesses."
+            : "How hiring works with Virtual Coworker."}
+        </h1>
         <p className="micro-lead">
-          Three steps. You keep ownership of who joins your team. We recruit,
-          screen, and support dedicated Philippines staff for {marketLabel}{" "}
-          businesses.
+          {isAu
+            ? "Four steps. You keep ownership of who joins your team. We recruit, screen, and support dedicated Philippines staff who can work Australian business hours."
+            : "Four steps. You keep ownership of who joins your team. We recruit, screen, and support dedicated Philippines staff for US businesses."}
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
@@ -86,14 +142,14 @@ export default async function HowItWorksPage({
             href={`/services?market=${market}`}
             className="micro-btn micro-btn-ghost"
           >
-            Browse services
+            Browse roles
           </Link>
         </div>
       </header>
 
       <section className="micro-section">
         <div className="how-steps">
-          {STEPS.map((s) => (
+          {steps.map((s) => (
             <article className="how-step" key={s.k}>
               <em>{s.k}</em>
               <h2>{s.t}</h2>
@@ -109,10 +165,11 @@ export default async function HowItWorksPage({
       </section>
 
       <section className="micro-cta">
-        <h2>Ready to brief a role?</h2>
+        <h2>{isAu ? "Ready to send your role?" : "Ready to tell us who you need?"}</h2>
         <p>
-          Tell us who you need. Job seekers should use the Philippines careers
-          path instead — linked quietly in the footer.
+          {isAu
+            ? "Start a hiring request for your Australian business. Looking for work? Use the careers link in the footer."
+            : "Start a hiring request for your US business. Looking for work? Use the careers link in the footer."}
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">

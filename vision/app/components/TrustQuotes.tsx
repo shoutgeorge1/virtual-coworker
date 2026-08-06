@@ -1,15 +1,26 @@
 import { PUBLIC_QUOTES } from "../../config/site";
+import type { MarketId } from "../../config/markets";
 
-export default function TrustQuotes({ light = false }: { light?: boolean }) {
+export default function TrustQuotes({
+  light = false,
+  market = "us",
+}: {
+  light?: boolean;
+  market?: MarketId;
+}) {
+  const isAu = market === "au";
+
   return (
     <section className={`trust-quotes${light ? " trust-quotes-light" : ""}`}>
       <div className="trust-quotes-inner">
-        <p className="trust-quotes-label">What clients say</p>
-        <h2>Real client words — not invented for ads.</h2>
-        <p className="trust-quotes-note">
-          Short excerpts from published Virtual Coworker client stories. No star
-          ratings or client counts added here.
+        <p className="trust-quotes-label">
+          {isAu ? "From Australian & global clients" : "From clients"}
         </p>
+        <h2>
+          {isAu
+            ? "Businesses that hired through Virtual Coworker."
+            : "Businesses that hired through Virtual Coworker."}
+        </h2>
         <div className="trust-quotes-grid">
           {PUBLIC_QUOTES.map((q) => (
             <figure className="trust-quote-card" key={q.name}>

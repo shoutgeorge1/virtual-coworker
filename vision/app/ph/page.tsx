@@ -29,7 +29,7 @@ const copy = {
     vaMeta: "Work from home · long-term client · full-time hours",
     ctaTitle: "Start your application",
     ctaBody:
-      "This door is for talent only. Businesses hiring staff use the employer microsites — linked quietly in the footer.",
+      "This door is for talent only. Businesses hiring staff should use the US or Australia hiring pages — linked in the footer.",
     ctaApply: "Go to application →",
   },
   tl: {
@@ -48,7 +48,7 @@ const copy = {
     vaMeta: "Work from home · long-term client · full-time hours",
     ctaTitle: "Simulan ang application mo",
     ctaBody:
-      "Para sa talent lang ang pintong ito. Ang mga business ay sa employer microsites — naka-link sa footer.",
+      "Para sa talent lang ang pintong ito. Kung business ang hanap mo, gamitin ang US o Australia hiring pages sa footer.",
     ctaApply: "Pumunta sa application →",
   },
 };

@@ -64,7 +64,7 @@ export default function SiteFooter({
             <p className="site-footer-name">{SITE.name}</p>
             <p className="site-footer-meta">
               {isPh
-                ? "Talent careers path — not an employer hire form."
+                ? "Careers for talent — not a business hiring form."
                 : SITE.disclaimer}
               {categoryLabel ? ` · ${categoryLabel}` : ""}
             </p>
@@ -87,7 +87,7 @@ export default function SiteFooter({
             {isAu ? (
               <p className="site-footer-phone site-footer-phone-muted">
                 <span className="site-footer-label">Contact</span>
-                <span>Form-primary — no AU phone on this microsite.</span>
+                <span>Send your role above — we’ll follow up.</span>
               </p>
             ) : null}
           </div>

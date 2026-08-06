@@ -94,11 +94,11 @@ export default function ExitIntent({
         onClick={dismiss}
       />
       <div className="exit-intent-card">
-        <p className="exit-intent-eyebrow">Employers · ~60 seconds</p>
-        <h2 id="exit-intent-title">Start your hiring request</h2>
+        <p className="exit-intent-eyebrow">Businesses · about a minute</p>
+        <h2 id="exit-intent-title">Still need to hire someone?</h2>
         <p>
-          Tell us the role you need filled. Job seekers: use the careers path in
-          the footer — this form is for businesses only.
+          Tell us the role — we’ll follow up to talk through next steps. Looking
+          for work? Use careers in the footer.
         </p>
         <div className="exit-intent-actions">
           <a
@@ -119,7 +119,7 @@ export default function ExitIntent({
               dismiss();
             }}
           >
-            Continue to form →
+            Tell us who you need →
           </a>
           <button type="button" className="exit-intent-ghost" onClick={dismiss}>
             Not now

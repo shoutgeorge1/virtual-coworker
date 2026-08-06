@@ -8,9 +8,9 @@ import type { MarketId } from "../../config/markets";
 import type { SiteSurface } from "../../config/site";
 
 export const metadata: Metadata = {
-  title: "Services · Virtual Coworker Hiring",
+  title: "Roles · Virtual Coworker",
   description:
-    "Employer service lines for hiring dedicated Philippines staff.",
+    "Hire dedicated Philippines staff across marketing, admin, books, support, and more.",
   robots: { index: false, follow: false },
 };
 
@@ -40,14 +40,17 @@ export default async function ServicesPage({
 
       <header className="micro-hero">
         <p className="micro-kicker">
-          Services · {market === "au" ? "Australia" : "United States"} · Employers
+          Roles · {market === "au" ? "Australia" : "United States"} · Businesses
         </p>
-        <h1>Nine roles. One employer hiring path.</h1>
+        <h1>
+          {market === "au"
+            ? "Roles Australian businesses hire through us."
+            : "Roles US businesses hire through us."}
+        </h1>
         <p className="micro-lead">
-          Pick the seat you need filled. Each page is for{" "}
-          {market === "au" ? "Australian" : "US"} employers hiring dedicated
-          Philippines staff — with an employer gate so job seekers don’t land in
-          the form.
+          Pick the seat you need filled. Every page is for{" "}
+          {market === "au" ? "Australian" : "US"} businesses hiring dedicated
+          Philippines staff — job seekers are pointed to careers instead.
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
@@ -81,12 +84,12 @@ export default async function ServicesPage({
       </section>
 
       <section className="micro-cta">
-        <h2>Not sure which label fits?</h2>
+        <h2>Not sure which role fits?</h2>
         <p>
-          Start on the hiring page and pick the closest role in the form
+          Start on the hiring page and pick the closest option
           {market === "us"
-            ? " — or call the US business line from any US page."
-            : "."}
+            ? " — or call us if you’d rather talk it through."
+            : " — we’ll sort the details with you."}
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">

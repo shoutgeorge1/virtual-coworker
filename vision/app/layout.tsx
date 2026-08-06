@@ -4,9 +4,9 @@ import "./globals.css";
 const noindex = process.env.NEXT_PUBLIC_PILOT_NOINDEX !== "false";
 
 export const metadata: Metadata = {
-  title: "Virtual Coworker · Paid Search Pilot",
+  title: "Virtual Coworker · Hire Philippines Staff",
   description:
-    "Independent Google Search pilot microsite for US and Australian employer leads.",
+    "Hire dedicated Philippines staff for US and Australian businesses — recruit, screen, interview, and hire with Virtual Coworker.",
   icons: { icon: "/brand/favicon.png" },
   robots: noindex
     ? { index: false, follow: false, googleBot: { index: false, follow: false } }

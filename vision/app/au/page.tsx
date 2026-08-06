@@ -6,7 +6,7 @@ import "./au.css";
 export const metadata: Metadata = {
   title: "Hire Offshore Staff | Virtual Coworker Australia",
   description:
-    "Employer landing page for Australian businesses hiring dedicated Philippines-based staff through Virtual Coworker.",
+    "Hire dedicated Philippines staff for your Australian business — recruit, screen, interview, and hire with Virtual Coworker.",
   robots: { index: false, follow: false },
 };
 

@@ -28,7 +28,7 @@ export default function PHApply() {
         <h1 className="anim-rise">Apply for VA opportunities</h1>
         <p className="anim-rise-d1">
           For people building a virtual assistant career. Businesses hiring
-          staff: use the employer microsites linked in the footer — not this
+          staff: use the US or Australia hiring pages in the footer — not this
           form.
         </p>
 
