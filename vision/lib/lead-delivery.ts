@@ -1,6 +1,10 @@
 /**
  * Honest lead delivery adapter.
  * Never claim Zoho/CRM success when no endpoint is configured.
+ *
+ * Note: channel "zoho" today means ZOHO_WEBHOOK_URL (generic webhook POST).
+ * That is NOT a verified direct Zoho CRM API integration. Keep the name for
+ * env compatibility; do not treat webhook success as CRM sync proof.
  */
 
 export type DeliveryChannel = "email" | "webhook" | "sheet" | "zoho";

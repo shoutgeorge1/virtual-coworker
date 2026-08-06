@@ -15,7 +15,11 @@ Activation (docs only — CSV still all Paused; do not invent v8 for vibes):
   generic Core heads later. PRIMARY/CONTROLLED labels are structure, not enable order.
 
 Outputs:
-  - ads-launch/google-ads-editor-import.csv
+  - ads-launch/google-ads-editor-import.csv (= multi-account; Account on every row)
+  - ads-launch/google-ads-editor-import-us.csv (US only — preferred import path)
+  - ads-launch/google-ads-editor-import-au.csv (AU only — preferred import path)
+  - ads-launch/google-ads-editor-import-multi-account.csv (same as combined)
+  - ads-launch/EDITOR-PREFLIGHT-REPORT.md
   - mirrors into xray/docs/ads-launch/
 """
 
@@ -71,11 +75,34 @@ CONTROLLED_ROLE_KEYS = (
 )
 
 # Final URL suffix only — do NOT also put UTMs on Tracking template (double-UTM bug).
+# Use supported ValueTrack IDs — NOT undefined {_campaign}/{_adgroup} custom params.
 SUFFIX = (
-    "utm_source=google&utm_medium=cpc&utm_campaign={_campaign}"
-    f"&utm_content={{_adgroup}}&utm_term={{keyword}}&lp_version={LP_VERSION}"
+    "utm_source=google&utm_medium=cpc&utm_campaign={campaignid}"
+    f"&utm_content={{adgroupid}}&utm_term={{keyword}}&utm_matchtype={{matchtype}}"
+    f"&utm_device={{device}}&lp_version={LP_VERSION}"
 )
 TRACK = "{lpurl}"
+
+# Commercial / research negatives held out of import — judge from live ST + lead quality.
+# Still reported in EDITOR-PREFLIGHT-REPORT.md. Competitor-named review terms stay active.
+NEGATIVE_REVIEW_HOLDOUT = (
+    "review",
+    "reviews",
+    "pricing",
+    "virtual assistant cost",
+    "virtual assistant philippines cost",
+    "cost of a virtual assistant",
+    "cost of virtual assistant philippines",
+    "how much does a virtual assistant cost",
+    "how much is a virtual assistant",
+    "how much does a va cost",
+    "how much do virtual assistants cost",
+    "top 10 virtual assistant companies",
+    "top 10",
+    "cheap",
+    "cheapest",
+    "filipina va",
+)
 
 FIELDS = [
     "Account",  # Customer ID — required for USA+AU multi-account Editor import
@@ -94,7 +121,7 @@ FIELDS = [
     "Final URL suffix",
     "Ad Group",
     "Ad Group Status",
-    "Max CPC",
+    "Maximum CPC bid limit",  # Maximize Clicks campaign-level cap only
     "Keyword",
     "Criterion Type",
     "Keyword Status",
@@ -228,20 +255,8 @@ NEGATIVES = [
     "diy",
     "for beginners",
     "skills required",
-    # Review / pricing research (ST: reviews + cost clusters)
-    "reviews",
-    "review",
-    "pricing",
-    "virtual assistant cost",
-    "virtual assistant philippines cost",
-    "cost of a virtual assistant",
-    "cost of virtual assistant philippines",
-    "how much does a virtual assistant cost",
-    "how much is a virtual assistant",
-    "how much does a va cost",
-    "how much do virtual assistants cost",
-    "top 10 virtual assistant companies",
-    "top 10",
+# Review / pricing research — generic commercial holdouts moved to
+    # NEGATIVE_REVIEW_HOLDOUT (not imported). Keep competitor-named review terms.
     "bruntwork reviews",
     "brunt work reviews",
     "remote coworker reviews",
@@ -269,8 +284,7 @@ NEGATIVES = [
     # Junk / tire-kick
     "free",
     "free virtual assistant",
-    "cheap",
-    "cheapest",
+    # cheap / cheapest → NEGATIVE_REVIEW_HOLDOUT
     "torrent",
     "reddit",
     "youtube",
@@ -302,7 +316,7 @@ NEGATIVES = [
     "trabajo de asistente virtual",
     "asistente virtual en español",
     "asistente virtual trabajo",
-    "filipina va",
+    # filipina va → NEGATIVE_REVIEW_HOLDOUT (can be employer intent)
     "virtual assistant colombia",
     "virtual assistant in colombia",
     "argentina virtual assistant",
@@ -338,6 +352,10 @@ NEGATIVES = [
     "us based virtual assistant",
     "diploma in digital marketing",
 ]
+
+_HOLDOUT_SET = {t.lower() for t in NEGATIVE_REVIEW_HOLDOUT}
+NEGATIVES = [n for n in NEGATIVES if n.lower() not in _HOLDOUT_SET]
+assert not any(n.lower() in _HOLDOUT_SET for n in NEGATIVES)
 
 ROLES = [
     "digital_marketing",
@@ -3050,7 +3068,7 @@ def append_campaign_shell(
             "Location options": "Presence",
             "Tracking template": TRACK,
             "Final URL suffix": SUFFIX,
-            "Max CPC": "[APPROVAL_MAX_CPC]",
+            "Maximum CPC bid limit": "[APPROVAL_MAX_CPC]",
             "Comment": comment,
         }
     )
@@ -3078,7 +3096,6 @@ def append_negatives_assets(
                 "Location options": "Presence",
                 "Tracking template": TRACK,
                 "Final URL suffix": SUFFIX,
-                "Max CPC": "[APPROVAL_MAX_CPC]",
                 "Keyword": neg,
                 "Criterion Type": "Broad",
                 "Negative": "True",
@@ -3188,7 +3205,6 @@ def append_kw_rows(
                 "Final URL suffix": SUFFIX,
                 "Ad Group": ag,
                 "Ad Group Status": "Paused",
-                "Max CPC": "[APPROVAL_MAX_CPC]",
                 "Keyword": kw,
                 "Criterion Type": "Exact",
                 "Keyword Status": "Paused",
@@ -3219,7 +3235,6 @@ def append_kw_rows(
                 "Final URL suffix": SUFFIX,
                 "Ad Group": ag,
                 "Ad Group Status": "Paused",
-                "Max CPC": "[APPROVAL_MAX_CPC]",
                 "Keyword": kw,
                 "Criterion Type": "Phrase",
                 "Keyword Status": "Paused",
@@ -3252,7 +3267,6 @@ def append_ad_group(
             "Final URL suffix": SUFFIX,
             "Ad Group": ag,
             "Ad Group Status": "Paused",
-            "Max CPC": "[APPROVAL_MAX_CPC]",
             "Comment": comment,
         }
     )
@@ -3290,7 +3304,6 @@ def append_rsa(
             "Final URL suffix": SUFFIX,
             "Ad Group": ag,
             "Ad Group Status": "Paused",
-            "Max CPC": "[APPROVAL_MAX_CPC]",
             "Ad Status": "Paused",
             "Ad type": "Responsive search ad",
             "Final URL": final,
@@ -3722,16 +3735,19 @@ def stamp_account_ids(rows: list[dict[str, str]]) -> None:
 
 
 def apply_budget_cpc_defaults(rows: list[dict[str, str]]) -> None:
-    """Fill Budget + Max CPC with DECISIONS.md defaults (no [APPROVAL_*] left)."""
+    """Fill Budget + campaign-only Maximum CPC bid limit (Maximize Clicks)."""
     for r in rows:
         cname = r.get("Campaign") or ""
         mkt = market_from_campaign(cname)
         if not mkt:
             continue
-        if r.get("Max CPC") == "[APPROVAL_MAX_CPC]":
-            r["Max CPC"] = MAX_CPC[mkt]
         if r.get("Row Type") != "Campaign":
+            # Maximize Clicks bid limit + URL options live on campaign only.
+            r["Maximum CPC bid limit"] = ""
+            r["Tracking template"] = ""
+            r["Final URL suffix"] = ""
             continue
+        r["Maximum CPC bid limit"] = MAX_CPC[mkt]
         budgets = BUDGET_DAILY[mkt]
         if cname.endswith("_S_CORE"):
             r["Budget"] = budgets["core"]
@@ -3750,10 +3766,10 @@ def qa(rows: list[dict[str, str]]) -> None:
         print(" ", c)
 
     leftover = [
-        (r.get("Row Type"), r.get("Campaign"), r.get("Budget"), r.get("Max CPC"))
+        (r.get("Row Type"), r.get("Campaign"), r.get("Budget"), r.get("Maximum CPC bid limit"))
         for r in rows
         if "[APPROVAL_" in (r.get("Budget") or "")
-        or "[APPROVAL_" in (r.get("Max CPC") or "")
+        or "[APPROVAL_" in (r.get("Maximum CPC bid limit") or "")
     ]
     if leftover:
         raise SystemExit(f"APPROVAL placeholders remain: {leftover[:5]}")
@@ -3763,7 +3779,33 @@ def qa(rows: list[dict[str, str]]) -> None:
         if r["Row Type"] == "Campaign"
     }
     print("Daily budgets:", camp_budgets)
-    print("Max CPC US/AU:", MAX_CPC)
+    print("Maximum CPC bid limit US/AU:", MAX_CPC)
+
+    for r in rows:
+        cap = (r.get("Maximum CPC bid limit") or "").strip()
+        if r["Row Type"] == "Campaign":
+            mkt = market_from_campaign(r["Campaign"])
+            if not mkt or cap != MAX_CPC[mkt]:
+                raise SystemExit(
+                    f"Campaign {r['Campaign']} bad Maximum CPC bid limit={cap!r}"
+                )
+        elif cap:
+            raise SystemExit(
+                f"Non-campaign {r['Row Type']} has Maximum CPC bid limit={cap!r}"
+            )
+
+    if "{_campaign}" in SUFFIX or "{_adgroup}" in SUFFIX:
+        raise SystemExit("Undefined custom tracking params in SUFFIX")
+    if "{campaignid}" not in SUFFIX or "{adgroupid}" not in SUFFIX:
+        raise SystemExit("SUFFIX missing ValueTrack campaignid/adgroupid")
+    for term in NEGATIVE_REVIEW_HOLDOUT:
+        if any(
+            r.get("Keyword", "").lower() == term.lower()
+            and r.get("Row Type") == "Campaign negative keyword"
+            for r in rows
+        ):
+            raise SystemExit(f"Holdout negative still in import: {term}")
+    print("Negative holdouts (not imported):", len(NEGATIVE_REVIEW_HOLDOUT))
 
     ads = [r for r in rows if r["Row Type"] == "Ad"]
     for r in ads:
@@ -4000,17 +4042,115 @@ def qa(rows: list[dict[str, str]]) -> None:
     )
 
 
-def main() -> None:
-    rows = build()
-    qa(rows)
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    with OUT.open("w", newline="", encoding="utf-8") as f:
+OUT_US = ROOT / "ads-launch" / "google-ads-editor-import-us.csv"
+OUT_AU = ROOT / "ads-launch" / "google-ads-editor-import-au.csv"
+OUT_MULTI = ROOT / "ads-launch" / "google-ads-editor-import-multi-account.csv"
+PREFLIGHT = ROOT / "ads-launch" / "EDITOR-PREFLIGHT-REPORT.md"
+
+
+def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS, extrasaction="ignore")
         w.writeheader()
         w.writerows(rows)
+
+
+def write_preflight(rows: list[dict[str, str]]) -> None:
+    from datetime import datetime, timezone
+
+    kinds = Counter(r["Row Type"] for r in rows)
+    camps = [r for r in rows if r["Row Type"] == "Campaign"]
+    pos = [
+        r
+        for r in rows
+        if r["Row Type"] == "Keyword" and r.get("Negative") != "True"
+    ]
+    negs = [r for r in rows if r["Row Type"] == "Campaign negative keyword"]
+    us_rows = [r for r in rows if r["Account"] == ACCOUNT_IDS["US"]]
+    au_rows = [r for r in rows if r["Account"] == ACCOUNT_IDS["AU"]]
+    lines = [
+        "# Editor preflight report",
+        "",
+        f"- Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
+        f"- LP version (suffix): `{LP_VERSION}` (unchanged)",
+        f"- Package hygiene: Editor ValueTrack + campaign CPC cap + US/AU split",
+        "",
+        "## Verdict",
+        "",
+        "- **SAFE TO IMPORT FOR REVIEW** (local QA passed)",
+        "- **IMPORT/POST/ENABLE NOT PERFORMED**",
+        "- Import = draft on your computer. Post = upload to Google (still Paused).",
+        "- Enable is a separate explicit decision after launch gates are green.",
+        "",
+        "## Files",
+        "",
+        "| File | Use |",
+        "|------|-----|",
+        f"| `google-ads-editor-import-us.csv` ({len(us_rows)} rows) | **Preferred** — import into USA `{ACCOUNT_IDS['US']}` only |",
+        f"| `google-ads-editor-import-au.csv` ({len(au_rows)} rows) | **Preferred** — import into AU `{ACCOUNT_IDS['AU']}` only |",
+        f"| `google-ads-editor-import.csv` / `-multi-account.csv` ({len(rows)} rows) | Manager multi-account only — every row has Account |",
+        "",
+        "## Counts",
+        "",
+        f"- Campaigns: {kinds.get('Campaign', 0)} (all Paused)",
+        f"- Ad groups: {kinds.get('Ad group', 0)}",
+        f"- Positive keywords: {len(pos)}",
+        f"- RSAs: {kinds.get('Ad', 0)}",
+        f"- Active campaign negatives: {len(negs)} rows "
+        f"({len({r['Keyword'].lower() for r in negs})} unique × 4 campaigns)",
+        f"- Commercial holdouts (not imported): {len(NEGATIVE_REVIEW_HOLDOUT)}",
+        "",
+        "## Budgets + bid caps (campaign only)",
+        "",
+    ]
+    for c in camps:
+        lines.append(
+            f"- `{c['Campaign']}` · Account `{c['Account']}` · "
+            f"Budget {c['Budget']}/day · Maximum CPC bid limit {c['Maximum CPC bid limit']} · "
+            f"Maximize Clicks · Paused"
+        )
+    lines += [
+        "",
+        "## Tracking",
+        "",
+        f"- Tracking template (campaign): `{TRACK}`",
+        f"- Final URL suffix (campaign): `{SUFFIX}`",
+        "- No `{_campaign}` / `{_adgroup}` custom params",
+        "",
+        "## Negative holdouts (not in CSV)",
+        "",
+        "Held out so cost/review/comparison employer research is not blocked pre-launch:",
+        "",
+    ]
+    for t in NEGATIVE_REVIEW_HOLDOUT:
+        lines.append(f"- `{t}`")
+    lines += [
+        "",
+        "## Operator path",
+        "",
+        "1. Download fresh USA + AU accounts into Editor.",
+        "2. Import **US split** into USA → Check changes → leave Paused.",
+        "3. Import **AU split** into AU → Check changes → leave Paused.",
+        "4. Post only after review (still Paused). Enable is separate.",
+        "",
+    ]
+    PREFLIGHT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def main() -> None:
+    rows = build()
+    qa(rows)
+    write_csv(OUT, rows)
+    write_csv(OUT_MULTI, rows)
+    write_csv(OUT_US, [r for r in rows if r["Account"] == ACCOUNT_IDS["US"]])
+    write_csv(OUT_AU, [r for r in rows if r["Account"] == ACCOUNT_IDS["AU"]])
+    write_preflight(rows)
     MIRROR.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(OUT, MIRROR)
     print(f"Wrote {OUT} ({len(rows)} rows)")
+    print(f"Wrote {OUT_US} / {OUT_AU} / {OUT_MULTI}")
+    print(f"Wrote {PREFLIGHT}")
     print(f"Mirrored {MIRROR}")
 
 

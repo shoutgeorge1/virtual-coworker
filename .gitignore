@@ -13,3 +13,7 @@ xray/.vercel/
 
 # Google Ads audit exports (may contain customer/PII)
 audit-data/
+
+# Local Zoho CRM backups / extracts / tokens (never commit PII)
+.local/zoho/
+.local/zoho/**
