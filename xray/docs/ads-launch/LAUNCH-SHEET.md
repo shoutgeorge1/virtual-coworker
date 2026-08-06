@@ -1,6 +1,7 @@
 # Stage 1 Google Ads launch sheet (paused import)
 
 **Status:** Import-ready · all entities **Paused** · no live mutations.  
+**Package version:** stage1-v3 (remediated)  
 **Accounts:** USA `496-715-1855` · AU `573-539-1940`.  
 **Import file:** `ads-launch/google-ads-editor-import.csv`  
 **Full audit report:** `ads-launch/FULL-BUILD-REPORT.md`  
@@ -15,12 +16,13 @@
 | Brand | **Deferred** — not in this CSV |
 | Intent | Long-tail employer hire / outsource / Filipino / Philippines / VA / offshore |
 | Roles only | Digital marketing · Social media · Accounting · Bookkeeping · Administration · Customer service · HR · Recruitment · Sales |
+| Themes | Each role: **Hire_PH** + **Outsource_PH** (Admin: Hire + EA + city test) |
 | Excludes | Medical staffing · Technology staffing · Spanish-language |
 | Match | Exact + Phrase only · **no** Broad / PMax / DSA / Demand Gen |
 | Bid | Maximize Clicks · Max CPC = `[APPROVAL_MAX_CPC]` |
 | Networks | Google Search · partners OFF · Display expansion OFF (confirm in Editor) |
 | Destinations | `https://vision-three-alpha.vercel.app/{us\|au}?role=…` — **not** WordPress |
-| Creatives | Full RSA fill (15H / 4D) · 2 angles per primary AG · no invented pricing / top 1% / $/hr |
+| Creatives | Full RSA fill (15H / 4D) · role-unique angles · DKI on Hire/EA B · no invented pricing |
 
 ---
 
@@ -28,11 +30,11 @@
 
 ### United States — 9 role campaigns (all Paused)
 
-- `VC_US_S_ROLE_digital_marketing`
+- `VC_US_S_ROLE_digital_marketing` — Hire_PH + Outsource_PH
 - `VC_US_S_ROLE_social_media`
 - `VC_US_S_ROLE_accounting`
 - `VC_US_S_ROLE_bookkeeping`
-- `VC_US_S_ROLE_administration` ← includes general hire-VA Exact set + light `Admin_City_Test`
+- `VC_US_S_ROLE_administration` ← Hire_PH (general VA) + EA_PH + Admin_City_Test
 - `VC_US_S_ROLE_customer_service`
 - `VC_US_S_ROLE_hr`
 - `VC_US_S_ROLE_recruitment`
@@ -40,15 +42,7 @@
 
 ### Australia — parallel 9 (all Paused)
 
-- `VC_AU_S_ROLE_digital_marketing`
-- `VC_AU_S_ROLE_social_media`
-- `VC_AU_S_ROLE_accounting`
-- `VC_AU_S_ROLE_bookkeeping`
-- `VC_AU_S_ROLE_administration` ← city test uses AU cities
-- `VC_AU_S_ROLE_customer_service`
-- `VC_AU_S_ROLE_hr`
-- `VC_AU_S_ROLE_recruitment`
-- `VC_AU_S_ROLE_sales`
+Same campaign names with `VC_AU_*`. AU creatives use Australian / SMEs / organisation / specialise where natural — not a US clone with country swap.
 
 **Not included:** `VC_*_S_BRAND` · old CORE-only shell · empty ROLE held stubs.
 
@@ -89,6 +83,6 @@
 
 ---
 
-## Counts (package)
+## Counts (package v3)
 
-496 positive keywords (Exact+Phrase) · 38 RSAs · 18 campaigns · 20 ad groups · curated negatives on every campaign · callouts + structured snippets + microsite sitelinks.
+1186 positive keywords (Exact+Phrase) · 74 RSAs · 18 campaigns · 38 ad groups · 113 unique curated negatives per campaign · callouts + structured snippets + microsite sitelinks · `lp_version=stage1-v3`.
