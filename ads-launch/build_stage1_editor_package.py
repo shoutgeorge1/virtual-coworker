@@ -1426,7 +1426,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Outsource marketing with a dedicated Philippines seat — not freelancer rotation.",
                     "Continuity is the proof: one vetted marketer you interview before placement.",
-                    f"Built for {m["employers"]} who want accountable offshore marketing capacity.",
+                    f"Built for {m['employers']} who want accountable offshore marketing capacity.",
                     "Partner-led seat. You keep hire authority. No invented savings claims.",
                 ),
             'dedicated',
@@ -1485,7 +1485,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Outsource social with a dedicated Philippines seat — not rotating freelancers.",
                     "Proof is continuity: one vetted SMM you interview before placement support.",
-                    f"Built for {m["employers"]} needing accountable offshore social capacity.",
+                    f"Built for {m['employers']} needing accountable offshore social capacity.",
                     "Partner-led seat model. No invented engagement or follower guarantees.",
                 ),
             'dedicated',
@@ -1544,7 +1544,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Outsource accounting with a dedicated Philippines seat — not task gigs.",
                     "Proof is continuity: one vetted finance seat you interview first.",
-                    f"Built for {m["employers"]} who need accountable offshore accounting capacity.",
+                    f"Built for {m['employers']} who need accountable offshore accounting capacity.",
                     "Partner-led model. No invented $/hr rates or savings percentages.",
                 ),
             'dedicated',
@@ -1603,7 +1603,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Outsource bookkeeping with a dedicated Philippines seat — not task bundles.",
                     "Proof is continuity: one vetted bookkeeper you interview before placement.",
-                    f"Built for {m["employers"]} who need accountable offshore books capacity.",
+                    f"Built for {m['employers']} who need accountable offshore books capacity.",
                     "Partner-led seat. Tool fit confirmed in follow-up — not invented here.",
                 ),
             'dedicated',
@@ -1693,7 +1693,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Outsource support with a dedicated Philippines seat — not rotating agents.",
                     "Proof is continuity: one vetted support seat you interview first.",
-                    f"Built for {m["employers"]} who need accountable offshore customer care.",
+                    f"Built for {m['employers']} who need accountable offshore customer care.",
                     "Partner-led model. No invented response-time or CSAT guarantees.",
                 ),
             'dedicated',
@@ -1752,7 +1752,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Outsource HR admin with a dedicated Philippines seat — not task gigs.",
                     "Proof is continuity: one vetted HR seat you interview before placement.",
-                    f"Built for {m["employers"]} needing accountable offshore people-ops capacity.",
+                    f"Built for {m['employers']} needing accountable offshore people-ops capacity.",
                     "Partner-led model. Policy control stays with you — no invented claims.",
                 ),
             'dedicated',
@@ -1811,7 +1811,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Outsource recruiting ops with a dedicated Philippines seat — not gig apps.",
                     "Proof is continuity: one vetted TA seat you interview before placement.",
-                    f"Built for {m["employers"]} needing accountable offshore recruiting capacity.",
+                    f"Built for {m['employers']} needing accountable offshore recruiting capacity.",
                     "Partner-led model. You keep hiring decisions — no invented fill rates.",
                 ),
             'dedicated',
@@ -1870,7 +1870,7 @@ def _third_rsa_angles() -> dict:
                 lambda m: D(
                     "Outsource lead gen with a dedicated Philippines seat — not gig list work.",
                     "Proof is continuity: one vetted sales seat you interview before placement.",
-                    f"Built for {m["employers"]} who need accountable offshore outbound capacity.",
+                    f"Built for {m['employers']} who need accountable offshore outbound capacity.",
                     "Partner-led model. No invented appointment or revenue guarantees.",
                 ),
             'dedicated',
