@@ -29,7 +29,7 @@
     sans-serif;
   --font-body: Poppins, system-ui, sans-serif;
 
-  /* Fluid display scale — readability-first for paid LPs + microsite */
+  /* Fluid display scale — readability-first for paid LPs + site chrome */
   --step-eyebrow: 0.8rem;
   --step-lead: clamp(1.1rem, 1.2vw + 0.82rem, 1.32rem);
   --step-body: clamp(1.02rem, 0.6vw + 0.9rem, 1.12rem);
@@ -1684,7 +1684,7 @@ a.gate-call:hover {
   text-underline-offset: 2px;
 }
 
-/* ═══════ Shared microsite chrome ═══════ */
+/* ═══════ Shared site chrome (nav / footer) ═══════ */
 .site-nav {
   position: sticky;
   top: 0;
@@ -2004,7 +2004,7 @@ a.gate-call:hover {
   }
 }
 
-/* Exit-intent / timed soft offer — employer microsites only */
+/* Exit-intent / timed soft offer — employer hiring pages only */
 .exit-intent {
   position: fixed;
   inset: 0;
@@ -2239,7 +2239,7 @@ a.gate-call:hover {
   color: #3a5166;
 }
 
-/* Microsite utility pages */
+/* Utility pages (legal, how-it-works, services, thank-you) */
 .micro {
   min-height: 100vh;
   background: #0c1826;
@@ -2248,7 +2248,10 @@ a.gate-call:hover {
 }
 
 .micro-legal {
-  background: #f4f8fa;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(51, 222, 216, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 0%, rgba(250, 192, 86, 0.1), transparent 50%),
+    linear-gradient(180deg, #f7fafc 0%, #eef4f8 48%, #e8f0f5 100%);
   color: #24384c;
 }
 
@@ -2505,6 +2508,17 @@ a.gate-call:hover {
   color: #214873;
 }
 
+.legal-doc ul {
+  margin: 0.5rem 0 0;
+  padding: 0 0 0 1.2rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.legal-doc li {
+  padding-left: 0.15rem;
+}
+
 .legal-doc a {
   color: #0d7a76;
   text-decoration: underline;
@@ -2513,6 +2527,224 @@ a.gate-call:hover {
 
 .legal-back {
   margin-top: 2rem;
+}
+
+/* ═══════ Thank-you ═══════ */
+.thank-you {
+  position: relative;
+  overflow: hidden;
+}
+
+.thank-you-us {
+  background:
+    radial-gradient(ellipse 70% 55% at 85% -5%, rgba(51, 222, 216, 0.16), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 0% 30%, rgba(250, 192, 86, 0.1), transparent 50%),
+    linear-gradient(165deg, #0a1522 0%, #142a48 42%, #0c1826 100%);
+}
+
+.thank-you-au {
+  background:
+    radial-gradient(ellipse 70% 55% at 15% -5%, rgba(51, 222, 216, 0.14), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 100% 20%, rgba(0, 113, 201, 0.18), transparent 50%),
+    linear-gradient(195deg, #0b1a28 0%, #143552 45%, #0c1826 100%);
+}
+
+.thank-you-hero {
+  position: relative;
+  padding: clamp(2.75rem, 7vw, 4.75rem) var(--shell) clamp(1.75rem, 3vw, 2.5rem);
+  max-width: 44rem;
+}
+
+.thank-you-hero-glow {
+  position: absolute;
+  inset: -20% 20% auto -10%;
+  height: 14rem;
+  background: radial-gradient(ellipse at center, rgba(51, 222, 216, 0.12), transparent 70%);
+  pointer-events: none;
+  animation: thank-you-breathe 7s ease-in-out infinite;
+}
+
+@keyframes thank-you-breathe {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.thank-you-hero h1 {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 3.2vw + 1rem, 3.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: #f4f8fc;
+  animation: thank-you-rise 0.7s ease-out both;
+}
+
+.thank-you-lead {
+  animation: thank-you-rise 0.85s ease-out 0.08s both;
+}
+
+.thank-you-ref {
+  margin: 1.1rem 0 0;
+  font-size: 0.88rem;
+  color: #8aa0b5;
+  letter-spacing: 0.02em;
+}
+
+.thank-you-ref code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.84rem;
+  color: #c5d6e6;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+}
+
+@keyframes thank-you-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.thank-you-next {
+  padding-top: 0.25rem;
+}
+
+.thank-you-section-title {
+  margin: 0 0 1.15rem;
+  max-width: 84rem;
+  margin-inline: auto;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.2vw + 1rem, 1.55rem);
+  letter-spacing: -0.02em;
+  color: #eaf3fb;
+}
+
+.thank-you-steps {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+  max-width: 84rem;
+}
+
+@media (min-width: 800px) {
+  .thank-you-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .thank-you-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.thank-you-step {
+  padding: 1.35rem 1.3rem 1.45rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.11);
+  animation: thank-you-rise 0.75s ease-out both;
+}
+
+.thank-you-step:nth-child(1) {
+  animation-delay: 0.12s;
+}
+.thank-you-step:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.thank-you-step:nth-child(3) {
+  animation-delay: 0.28s;
+}
+.thank-you-step:nth-child(4) {
+  animation-delay: 0.36s;
+}
+
+.thank-you-step em {
+  display: block;
+  margin-bottom: 0.55rem;
+  font-style: normal;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--vc-cyan);
+}
+
+.thank-you-step h3 {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.thank-you-step p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #c2d3e4;
+}
+
+.thank-you-aside {
+  padding: clamp(1.75rem, 4vw, 2.75rem) var(--shell) clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.thank-you-aside-inner {
+  max-width: 42rem;
+  padding: 1.6rem 1.55rem 1.7rem;
+  border-radius: 18px;
+  background: linear-gradient(120deg, rgba(20, 42, 72, 0.9), rgba(29, 63, 104, 0.85));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.thank-you-aside h2 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.thank-you-aside p {
+  margin: 0 0 1.15rem;
+  font-size: var(--step-body);
+  line-height: 1.6;
+  color: #c8d8e8;
+  max-width: 48ch;
+}
+
+.thank-you-legal {
+  margin: 1.25rem 0 0 !important;
+  font-size: 0.9rem !important;
+}
+
+.thank-you-legal a {
+  color: var(--vc-cyan);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thank-you-hero-glow,
+  .thank-you-hero h1,
+  .thank-you-lead,
+  .thank-you-step {
+    animation: none;
+  }
 }
 
 .sr-only {
