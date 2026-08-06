@@ -60,6 +60,16 @@ Historical Ads “Conversions” in exports are **not** proof of placements. Sta
 
 **Tracking separation:** three identities — `NEXT_PUBLIC_GTM_US` / `_AU` / `_PH` (+ GA4 twins). dataLayer always carries `market` / `site_surface` (`us` \| `au` \| `ph`). Do **not** assume one shared GTM for everything. Legacy `NEXT_PUBLIC_GTM_ID` is US-only fallback.
 
+### Domains + measurement infra (ops implication)
+
+| Identity | Custom domain | GTM | GA4 | Search Console | Ads conversions |
+|----------|---------------|-----|-----|----------------|-----------------|
+| **US employer** | Buy on Vercel (~$10) — attach to vision US | Separate container | Separate property | Separate property on US domain | Point at US microsite events only |
+| **AU employer** | Buy on Vercel (~$10) — separate from US | Separate container | Separate property | Separate property on AU domain | Point at AU microsite events only |
+| **PH talent** | **Can wait** — no Stage 1 domain required | Optional later (`GTM_PH`) | Optional later | Optional later | Never employer conversions |
+
+**Implication:** three microsite identities ⇒ **do not share one GTM/GA4 across US+AU**. Wire env placeholders after containers exist. Launch Control checklist steps 7–11 cover buy domains + stand up measurement. Preview host until domains attach: `vision-three-alpha.vercel.app`.
+
 Microsite is an **independent paid hiring path** with employer gate, category LPs, A/B variants, exit-intent + sticky CTA (employer only), honest events, and pilot `noindex`.
 
 ---

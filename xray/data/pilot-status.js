@@ -14,10 +14,35 @@ window.PILOT_STATUS = {
   commercialStatus: "stage1_built_payment_in_transit",
   commercialLabel: "STAGE 1 BUILT — PAYMENT IN TRANSIT · APPROVALS STILL NEEDED",
   objective:
-    "Can Google Search → independent microsite generate qualified USA and Australia employer leads at an acceptable cost? WordPress stays as-is.",
+    "Can Google Search → independent US/AU employer microsites generate qualified leads at an acceptable cost? Three identities (US · AU · PH); WordPress stays as-is with zero paid egress.",
   landingPages: {
+    rootRedirectsTo: "https://vision-three-alpha.vercel.app/us",
     us: "https://vision-three-alpha.vercel.app/us",
-    au: "https://vision-three-alpha.vercel.app/au"
+    au: "https://vision-three-alpha.vercel.app/au",
+    ph: "https://vision-three-alpha.vercel.app/ph"
+  },
+  /** Domains + measurement — separate per employer market; PH can hang for Stage 1. */
+  micrositeInfra: {
+    model: "three_separate_microsites",
+    domains: {
+      us: { status: "buy_on_vercel", note: "~$10 Vercel — attach to vision for US employer site" },
+      au: { status: "buy_on_vercel", note: "~$10 Vercel — separate AU domain; do not share with US" },
+      ph: { status: "deferred", note: "No Stage 1 domain required — careers path can hang on preview host" }
+    },
+    measurement: {
+      rule: "Do not share one GTM/GA4 across US+AU",
+      us: ["GTM container", "GA4 property", "Search Console on US domain", "Ads conversions → US microsite only"],
+      au: ["GTM container", "GA4 property", "Search Console on AU domain", "Ads conversions → AU microsite only"],
+      ph: "optional_later",
+      envPlaceholders: [
+        "NEXT_PUBLIC_GTM_US",
+        "NEXT_PUBLIC_GTM_AU",
+        "NEXT_PUBLIC_GTM_PH",
+        "NEXT_PUBLIC_GA4_US",
+        "NEXT_PUBLIC_GA4_AU",
+        "NEXT_PUBLIC_GA4_PH"
+      ]
+    }
   },
   keywordClustersPhase1: [
     "digital_marketing",
@@ -191,22 +216,24 @@ window.PILOT_STATUS = {
   ],
   georgeHandles: [
     "MCC + Google Ads Editor (Standard access confirmed on US + AU — Stage 1 OK)",
-    "Independent microsite Stage 1 LPs (vision) — not WordPress",
-    "Paused Clean Search import (nine role campaigns US+AU; brand deferred)",
-    "Temporary GTM map later — no production GTM publish required for LP QA",
+    "Three microsites on vision (US · AU · PH) — not WordPress; / → /us",
+    "Buy US + AU domains on Vercel (~$10 each); PH domain can wait",
+    "Separate US + AU GTM/GA4/GSC/Ads conversions (never one shared bag)",
+    "Paused Clean Search import (Core + Roles US+AU; brand deferred)",
     "Lead form → secure server-side → email/webhook Stage 1; Zoho when access confirmed",
-    "Capture GCLID / GBRAID / WBRAID / UTMs / LP / timestamp"
+    "Capture GCLID / GBRAID / WBRAID / UTMs / LP / timestamp + market site_surface"
   ],
   majorBlockers: [
     "Budget / Max CPC approval placeholders",
     "AU phone + lead-routing email/webhook (NA dest phone confirmed)",
-    "Confirm paid host Final URL (microsite, not WordPress)",
+    "US + AU custom domains + Final URL host swap (PH can hang)",
+    "Separate US + AU measurement stacks (GTM/GA4/GSC/Ads conversions)",
     "Pilot payment clearing (on its way — not yet confirmed received)"
   ],
   nextThree: [
     "Download USA/AU into Google Ads Editor (campaign view confirmed Aug 5; Ads Standard via MCC confirmed)",
-    "Approve budgets/CPC + AU phone + lead inbox/webhook",
-    "Import paused Stage 1 CSV → enable US role campaigns after LP validation (brand deferred)"
+    "Buy US + AU domains; stand up separate measurement; lead inbox/webhook",
+    "Import paused Stage 1 CSV → enable US Core after LP validation (brand deferred)"
   ],
   openItemsUnresolved: [
     "Zoho access",
@@ -229,9 +256,13 @@ window.PILOT_STATUS = {
     auPhone: "[AU_BUSINESS_PHONE]",
     usBudget: "[US_MONTHLY_BUDGET]",
     auBudget: "[AU_MONTHLY_BUDGET]",
-    gtmId: "[TEMP_GTM_ID]",
-    ga4Id: "[TEMP_GA4_ID]",
-    adsConversionId: "[ADS_CONVERSION_ID]",
+    gtmUs: "[NEXT_PUBLIC_GTM_US]",
+    gtmAu: "[NEXT_PUBLIC_GTM_AU]",
+    gtmPh: "[NEXT_PUBLIC_GTM_PH — optional later]",
+    ga4Us: "[NEXT_PUBLIC_GA4_US]",
+    ga4Au: "[NEXT_PUBLIC_GA4_AU]",
+    adsConversionIdUs: "[ADS_CONVERSION_ID_US]",
+    adsConversionIdAu: "[ADS_CONVERSION_ID_AU]",
     qualifiedLeadDefinition: "[TO BE CONFIRMED WITH VIRTUAL COWORKER]"
   }
 };

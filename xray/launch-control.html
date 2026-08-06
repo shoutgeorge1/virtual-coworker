@@ -306,28 +306,49 @@
             <li data-order="7">
               <input type="checkbox" id="ads7" data-todo="ads7" />
               <label for="ads7">
-                <strong>7. Buy the website domain on Vercel (~$10)</strong>
-                <span class="todo-hint">In Vercel, buy the domain for the paid landing pages (~$10) and attach it to the vision project. Until then you can preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>.</span>
+                <strong>7. Buy custom domain for US microsite (Vercel ~$10)</strong>
+                <span class="todo-hint">Three separate microsites: <strong>US · AU · PH</strong>. Buy a <strong>US</strong> domain in Vercel (~$10) and attach it to the vision project for the US employer site (<code>/us</code> + category LPs). Preview until then: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a>. <strong>PH careers can wait</strong> — no domain required for Stage 1.</span>
               </label>
             </li>
             <li data-order="8">
               <input type="checkbox" id="ads8" data-todo="ads8" />
               <label for="ads8">
-                <strong>8. Point Ads Final URLs at that domain</strong>
-                <span class="todo-hint">After the domain is attached, swap the host on Final URLs only — keep paths: <code>/{us|au}</code>, <code>/{us|au}/administrative-support</code>, and the nine <code>/{us|au}/{category}</code> routes. Do not collapse everything to generic <code>/us</code>/<code>/au</code> and do not use WordPress.</span>
+                <strong>8. Buy custom domain for AU microsite (Vercel ~$10)</strong>
+                <span class="todo-hint">Buy a <strong>separate AU</strong> domain in Vercel (~$10) and attach it to vision for the AU employer site (<code>/au</code> + category LPs). Do <strong>not</strong> share one domain/identity with US. Preview: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. PH still hangs — no Stage 1 domain needed.</span>
               </label>
             </li>
             <li data-order="9">
               <input type="checkbox" id="ads9" data-todo="ads9" />
               <label for="ads9">
-                <strong>9. Confirm daily budgets and Max CPC (defaults already in CSV)</strong>
-                <span class="todo-hint">CSV already has Stage 1 v6 defaults (US Core $75 / Roles $50 · AU Core A$75 / Roles A$50 · Max CPC US $8 / AU A$6 — ~60/40; ≈ $3.8k + A$3.8k/mo inside $10–20k/account story). Change in Editor if you want different ceilings, then Post while still <strong>Paused</strong>. Spot-check in the Ads website. See <code>ads-launch/DECISIONS.md</code>.</span>
+                <strong>9. Point Ads Final URLs at the US + AU domains</strong>
+                <span class="todo-hint">After both domains are attached, swap Final URL <em>hosts</em> per market — keep paths: <code>/us|au/administrative-support</code> and the nine <code>/{us|au}/{category}</code> routes. Do not use WordPress. Do not collapse everything to generic hubs. Root <code>/</code> on the microsite already redirects → <code>/us</code>.</span>
               </label>
             </li>
             <li data-order="10">
               <input type="checkbox" id="ads10" data-todo="ads10" />
               <label for="ads10">
-                <strong>10. Turn on US Core first — only after gates below are green</strong>
+                <strong>10. US measurement stack (separate — not shared with AU)</strong>
+                <span class="todo-hint">For the <strong>US</strong> microsite only: create a <strong>separate</strong> GTM container, GA4 property, Search Console property (on the US custom domain), and Google Ads conversion actions pointed at US microsite events only. Wire env <code>NEXT_PUBLIC_GTM_US</code> / <code>NEXT_PUBLIC_GA4_US</code>. dataLayer already sends <code>market: us</code>. <strong>Do not</strong> reuse one GTM/GA4 for US+AU.</span>
+              </label>
+            </li>
+            <li data-order="11">
+              <input type="checkbox" id="ads11" data-todo="ads11" />
+              <label for="ads11">
+                <strong>11. AU measurement stack (separate — not shared with US)</strong>
+                <span class="todo-hint">Same for <strong>AU</strong>: separate GTM, GA4, Search Console (AU custom domain), and Ads conversion actions for AU microsite only. Wire <code>NEXT_PUBLIC_GTM_AU</code> / <code>NEXT_PUBLIC_GA4_AU</code>. dataLayer sends <code>market: au</code>. PH talent tracking optional later (<code>NEXT_PUBLIC_GTM_PH</code>) — can hang for Stage 1.</span>
+              </label>
+            </li>
+            <li data-order="12">
+              <input type="checkbox" id="ads12" data-todo="ads12" />
+              <label for="ads12">
+                <strong>12. Confirm daily budgets and Max CPC (defaults already in CSV)</strong>
+                <span class="todo-hint">CSV already has Stage 1 v6 defaults (US Core $75 / Roles $50 · AU Core A$75 / Roles A$50 · Max CPC US $8 / AU A$6 — ~60/40; ≈ $3.8k + A$3.8k/mo inside $10–20k/account story). Change in Editor if you want different ceilings, then Post while still <strong>Paused</strong>. Spot-check in the Ads website. See <code>ads-launch/DECISIONS.md</code>.</span>
+              </label>
+            </li>
+            <li data-order="13">
+              <input type="checkbox" id="ads13" data-todo="ads13" />
+              <label for="ads13">
+                <strong>13. Turn on US Core first — only after gates below are green</strong>
                 <span class="todo-hint">Per <code>07-phased-activation-recommendation.md</code>: enable <code>VC_US_S_CORE</code> first, then <code>VC_US_S_ROLES</code>. Keep Australia quiet until the US looks sane. Brand is deferred (not in this package). You click Enable in Ads or Editor — not from this page. Do not enable spend early. Explicit George approval required.</span>
               </label>
             </li>
@@ -351,9 +372,9 @@
           <ul>
             <li><strong>MCC linked</strong> — under Shout George</li>
             <li><strong>Ads access</strong> — Standard on USA + AU (enough for Stage 1)</li>
-            <li><strong>US / AU landing pages</strong> — preview built</li>
+            <li><strong>Three microsites</strong> — US · AU · PH (preview live; <code>/</code> → <code>/us</code>)</li>
             <li><strong>Editor CSV</strong> — paused import file ready</li>
-            <li><strong>Path</strong> — Ads → microsite (not WordPress)</li>
+            <li><strong>Path</strong> — Ads → microsite only (zero WP egress)</li>
             <li><strong>US/NA phone</strong> — <code>310-426-8776</code> (do not port)</li>
           </ul>
         </section>
@@ -365,7 +386,8 @@
           </div>
           <ul>
             <li><strong>Where leads go</strong> — real inbox/webhook still open (QA is TEMPORARY log-only on vision)</li>
-            <li><strong>Domain (~$10 on Vercel)</strong> — buy, then swap Final URL host (paths already category-correct)</li>
+            <li><strong>US + AU domains (~$10 each on Vercel)</strong> — buy separately, attach, then swap Final URL hosts (paths already category-correct). PH domain can wait.</li>
+            <li><strong>Separate measurement</strong> — US and AU each need their own GTM + GA4 + GSC + Ads conversions (don’t share one container)</li>
             <li><strong>Editor import</strong> — stays paused until you say go</li>
             <li><strong>Old Brand still spending</strong> — Aug 5 campaign view: <code>PM_US_RSA_Brand</code> (~$39) and <code>PM_AU_RSA_Brand</code> (A$3), Maximize conversions, 0 conversions. Recommend pause before or with the new import — you click pause in Ads; not from this page.</li>
           </ul>
@@ -380,8 +402,9 @@
             <li><strong>Next: step 5</strong> — open Google Ads Editor and download USA + AU</li>
             <li>Optional: pause both old <code>PM_*</code> Brand campaigns in Ads if you want that small spend stopped — you click pause there, not here</li>
             <li>Optionally change budget / Max CPC defaults (already filled)</li>
-            <li><strong>Buy domain on Vercel (~$10)</strong> — needed for the real Final URL host (not the preview URL)</li>
-            <li>Confirm Final URL host after the domain is attached (keep category paths)</li>
+            <li><strong>Buy US domain (~$10)</strong> + <strong>AU domain (~$10)</strong> on Vercel — two identities; PH can hang</li>
+            <li>Confirm Final URL hosts after domains attach (keep category paths)</li>
+            <li>Stand up separate US + AU GTM / GA4 / GSC / Ads conversion actions</li>
             <li>Confirm payment-cleared date when the bank shows it</li>
             <li>Review the paused Editor import before any enable</li>
           </ul>
@@ -432,8 +455,8 @@
             <li>
               <span class="st st-access">Open</span>
               <div class="gate-body">
-                <strong>Landing pages live on the real domain</strong>
-                <span>Preview host: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> · plus 9 category LPs each. <strong>Buy domain(s) on Vercel (~$10)</strong>, attach to vision, then swap Final URL host (keep category paths) and check the forms.</span>
+                <strong>US + AU microsites live on real domains + separate measurement</strong>
+                <span>Three identities: US employer · AU employer · PH talent (PH domain optional later). Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> · <a href="https://vision-three-alpha.vercel.app/ph" target="_blank" rel="noopener">/ph</a>. <strong>Buy US + AU domains on Vercel (~$10 each)</strong>, attach, swap Final URL hosts (keep category paths). Stand up <strong>separate</strong> GTM/GA4/GSC/Ads conversions per market — never one shared bag for US+AU.</span>
               </div>
             </li>
             <li>
@@ -455,8 +478,9 @@
         <div class="panel-bd">
           <ul class="lc-open">
             <li>Lead inbox/webhook (replace TEMP log-only)</li>
-            <li><strong>Domain purchase on Vercel (~$10) — pending George</strong></li>
-            <li>Final host → swap Ads Final URL host (paths already set)</li>
+            <li><strong>US domain (~$10) + AU domain (~$10) on Vercel — pending George</strong> (PH can wait)</li>
+            <li>Final hosts → swap Ads Final URL hosts per market (paths already set)</li>
+            <li><strong>Separate US + AU measurement</strong> — GTM · GA4 · GSC · Ads conversions each (PH optional later)</li>
             <li>Optional: revise budget/CPC defaults</li>
             <li>Payment-cleared date</li>
             <li>Pause old Brand campaigns in Ads? (recommend yes — you click)</li>
@@ -576,8 +600,8 @@
   <script src="nav.js"></script>
   <script>
     (function () {
-      var KEY = "vc-launch-control-todos-v3";
-      var PREV = "vc-launch-control-todos-v2";
+      var KEY = "vc-launch-control-todos-v4";
+      var PREV = "vc-launch-control-todos-v3";
       var store = {};
       try { store = JSON.parse(localStorage.getItem(KEY) || "null") || null; } catch (e) { store = null; }
       if (!store) {
@@ -587,6 +611,11 @@
         store.ads2 = true;
         store.ads3 = true;
         store.ads4 = true;
+        /* v4 renumbered domain/measurement steps — clear stale 7–10 meanings */
+        delete store.ads7;
+        delete store.ads8;
+        delete store.ads9;
+        delete store.ads10;
       }
       var activeList = document.getElementById("todo-active");
       var doneList = document.getElementById("todo-done");
