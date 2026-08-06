@@ -61,7 +61,7 @@ Brand **not** in launch package. RSA: **3 per main AG** (city-test 1).
 |---|------|
 | **DEBRIEF** | **`CHATGPT-DEBRIEF.md`** ← paste into ChatGPT (whole package) |
 | **MEGA** | **`CHATGPT-MEGA-AUDIT.md`** |
-| 0 | `DECISIONS.md` · `LAUNCH-SHEET.md` |
+| 0 | `DECISIONS.md` · `LAUNCH-SHEET.md` · **`PHASED-ACTIVATION.md`** (enable order: PH long-tail first) |
 | 1–12 | Audit docs `01`–`12` |
 | 8 | `google-ads-editor-import.csv` |
 

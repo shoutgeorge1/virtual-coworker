@@ -23,6 +23,8 @@ VC_{MKT}_S_ROLES         (~40% budget)
                          (Hire + Outsource AGs each → matching category Final URL)
 ```
 
+**Enable order ≠ AG structure labels.** “Controlled” is package taxonomy only. Activation priority is **PH/Filipino/offshore long-tail first** (see `PHASED-ACTIVATION.md`) — bookkeeping/accounting with PH long-tail can enable in Phase 1; bare Core heads later.
+
 **Why 2/account:** Budget control and ST density — Core captures the historically dense VA/hire/PH-offshore cluster; Roles isolates role intent without 9 separate campaign budgets. Brand deferred until microsite brand conversion is proven.
 
 ---

@@ -1,22 +1,37 @@
-# 07 — Phased activation recommendation (v7)
+# 07 — Phased activation recommendation
 
+**Source of truth:** [`PHASED-ACTIVATION.md`](./PHASED-ACTIVATION.md)  
 **Do not enable anything until blockers in `12-blocker-decision-list.md` are cleared.**  
 All CSV entities ship **Paused**. Brand is **deferred** (not in package).
 
 ---
 
-## Activation subset (recommend first)
+## Locked priority (George 2026-08-05)
 
-When George explicitly approves enable — **still after real lead delivery**:
+1. **Long-tail high intent first** — especially **Philippine / Philippines / Filipino** + role/hire language.  
+2. **Generic Core head terms later** (bare “virtual assistant”, hire-a-VA without geo).  
+3. Early learning goal = impressions / clicks / CTR; don’t thin-spread chaos — phase by **intent quality**.  
+4. Bookkeeping / accounting with strong PH long-tail = **Phase 1**, not automatically held.
 
-| Enable first | Why |
-|--------------|-----|
-| `VC_US_S_CORE` | Highest historical employer ST density → Final URL `/us` |
-| Inside `VC_US_S_ROLES`: **Digital · Social · Admin** AGs | Proven role intent + matching category LPs |
-| Hold paused longer | Accounting · Bookkeeping · CS · HR · Recruitment · Sales AGs (built, CSV-ready) |
-| AU | Same pattern after US diagnostics look sane — Core then Digital/Social/Admin |
+### Wrong → right
 
-Controlled-tier AGs stay **built but paused** until Core + primary Roles quality is trusted.
+| Wrong | Right |
+|-------|-------|
+| Core first, then Digital · Social · Admin; hold books/CS/HR/sales | **Phase 1:** PH/Filipino/offshore long-tail Exact (+ tight Phrase) across Core **and** Roles AGs that carry that intent |
+| Hold accounting/books because “lower volume” | Prioritize by **query shape**; PH books/accounting can enable with Phase 1 |
+
+---
+
+## Activation phases (summary)
+
+| Phase | Enable | Hold |
+|-------|--------|------|
+| **0** | Ops: durable leads, LP QA, budgets, explicit George approval | Any Ads enable |
+| **1** | PH / Filipino / offshore long-tail Exact (+ tight Phrase) in Core + Roles (incl. books/accounting when PH-shaped) | Bare Core heads; Broad |
+| **2** | Broader category Exact/Phrase **without** PH geo | Generic Core heads |
+| **3 / later** | Generic Core heads with tighter CPC/budget once CTR/quality known | Brand, Broad, PMax, DSA, WP |
+
+US first → AU after US looks sane (AU form-primary).
 
 ---
 
@@ -36,24 +51,22 @@ Controlled-tier AGs stay **built but paused** until Core + primary Roles quality
 3. Spot-check RSA uniqueness + no consult language.  
 4. Leave **Paused**.
 
-## Phase 2 — Enable Core only (one market first)
+## Phase 2 — Enable PH long-tail first (one market first)
 
-**Recommend US first.**
+**Recommend US first.** When George explicitly approves enable — **still after real lead delivery**:
 
 | Enable | Why |
 |--------|-----|
-| `VC_US_S_CORE` | Highest historical employer ST density (VA / hire / PH-offshore) → `/us` |
+| PH / Filipino / offshore Exact (+ tight Phrase) in `VC_US_S_CORE` | High-intent geo+hire ST density → `/us` |
+| Same intent shape in `VC_US_S_ROLES` AGs (Digital · Social · Admin · **Bookkeeping · Accounting** · others with PH long-tail) | Role + PH queries → matching category LPs |
 
-Watch 7–14 days: search terms, inquiry quality (human), CPA vs inquiry — **not** vs fake job-order ROI.
+Watch 7–14 days: search terms, CTR, inquiry quality (human), CPA vs inquiry — **not** vs fake job-order ROI.
 
-## Phase 3 — Roles expansion (controlled)
+## Phase 3 — Broader category, then generic Core
 
-Enable Digital · Social · Admin AGs in `VC_US_S_ROLES` when Core ST quality looks sane.
-
-Then optionally: Bookkeeping · accounting · sales · customer-service.  
-HR · recruitment **last** (thin ST).
-
-AU Core → AU Roles after US diagnostics look sane — still form-primary unless AU phone decided.
+1. Broader category Exact/Phrase without PH geo.  
+2. Later: generic Core head terms with tighter CPC/budget.  
+3. AU Core/Roles same pattern after US diagnostics look sane — still form-primary unless AU phone decided.
 
 ## Phase 4 — Never in Stage 1
 
@@ -70,3 +83,9 @@ AU Core → AU Roles after US diagnostics look sane — still form-primary unles
 ## Bidding note
 
 Stay on Maximize Clicks with CPC cap until inquiry quality is trusted. Do not jump to Maximize Conversions on unverified conversion definitions.
+
+---
+
+## Evidence pointer
+
+Real PH long-tail examples (incl. bookkeeping): see [`PHASED-ACTIVATION.md`](./PHASED-ACTIVATION.md). Source: `audit-data/performance/search_terms_usa_*.csv`.

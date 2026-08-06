@@ -230,7 +230,8 @@ Final URL suffix (once): UTMs + `lp_version=stage1-v7`. **No double UTM.**
 | `VC_{US\|AU}_S_CORE` | **~60%** | High-intent VA / hire / Philippines-offshore | **`/{us\|au}`** |
 | `VC_{US\|AU}_S_ROLES` | **~40%** | Digital · Social · Admin · Controlled roles | Matching category |
 
-**Controlled** under Roles = accounting, bookkeeping, customer service, HR, recruitment, sales.
+**Roles AGs** include Digital · Social · Admin · Accounting · Bookkeeping · CS · HR · Recruitment · Sales.  
+**Activation is not “Digital/Social/Admin first, hold books.”** See `PHASED-ACTIVATION.md`: enable by **PH/Filipino/offshore long-tail intent** first (books/accounting included when PH-shaped); generic Core heads later.
 
 ### Settings (all campaigns)
 
@@ -249,12 +250,14 @@ Search · **Exact + Phrase only** · **Maximize Clicks** · Max CPC US **$8** / 
 
 **ROLES (×2 markets):**
 
-| Tier | Ad groups | Activation |
-|------|-----------|------------|
-| Digital | `Digital_Marketing_*` | **Recommend first** with Core |
-| Social | `Social_Media_*` | **Recommend first** with Core |
-| Admin | `Administration_EA_PH` · `Admin_City_Test` | **Recommend first** with Core |
-| Controlled | Accounting / Bookkeeping / CS / HR / Recruitment / Sales | Built, **pause longer** |
+| Intent tier (enable order) | Ad groups | Activation |
+|----------------------------|-----------|------------|
+| **Phase 1 — PH long-tail** | Any Core/Roles AG with Philippines/Filipino/offshore + hire/role Exact (+ tight Phrase) | **Enable first** (incl. Bookkeeping/Accounting when PH-shaped) |
+| **Phase 2 — category w/o PH** | Broader role Exact/Phrase | After Phase 1 CTR/quality look sane |
+| **Phase 3 — generic Core heads** | Bare VA / hire-a-VA without geo | Later, tighter CPC/budget |
+| Built / structure labels | Digital · Social · Admin · Accounting · Books · CS · HR · Recruitment · Sales | Structure only — **not** the enable order |
+
+Source of truth: `ads-launch/PHASED-ACTIVATION.md`.
 
 ### RSA (locked)
 
@@ -317,6 +320,7 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 | **v7** | Log-only fired primary conversion | `conversion_eligible: false`; thank-you honest |
 | **v7** | No WP-link CI | `no-wp-links.test.ts` fails on WP hrefs |
 | **v7** | Exit-intent always on | Behind `NEXT_PUBLIC_ENABLE_EXIT_INTENT` |
+| **Activation flip** | Docs said Core first then Digital/Social/Admin; hold books | **PH/Filipino/offshore long-tail first** across Core+Roles; books/accounting OK in Phase 1 when PH-shaped (`PHASED-ACTIVATION.md`) |
 
 ---
 
@@ -340,7 +344,7 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 1. **Is Core → `/us`/`/au` correct** vs category admin for “hire VA”?  
 2. **Is log-only acceptable for any paid click?** (Our answer: **No.**)  
 3. **Are Max CPC $8 / A$6 and $75/$50 dailies sane** vs historical CPC / $10–20k monthly story?  
-4. **Controlled-tier thin ST (HR/recruitment)** — keep Paused longer / strip from Stage 1?  
+4. **Activation by intent quality** — is PH long-tail first (incl. books) correct vs old “Core + Digital/Social/Admin only”?  
 5. **RSA×3 angles** — sample three ads on one AG; any invented savings, “top 1%”, consult language, or clone-y noun swaps?  
 6. **Keyword hygiene** — job-seeker / medical / Spanish / competitor leaks? Bare `hire` negatived by mistake?  
 7. **Double UTM / WP Final URL** regressions in CSV.  
@@ -363,6 +367,7 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 | `ads-launch/google-ads-editor-import.csv` | Editor import (Paused · v7) |
 | `ads-launch/build_stage1_editor_package.py` | Builder + QA |
 | `ads-launch/DECISIONS.md` | Locked operator defaults |
+| `ads-launch/PHASED-ACTIVATION.md` | Enable order source of truth (PH long-tail first) |
 | `ads-launch/FULL-BUILD-REPORT.md` | Short index |
 | `ads-launch/CHATGPT-MEGA-AUDIT.md` | Deep companion |
 | `ads-launch/01`–`12` | Audit / LP / activation docs |
@@ -409,7 +414,7 @@ cd vision && npm test && npm run validate:routes && npm run typecheck && npm run
 2. Replace log-only with real lead delivery — **hard gate**.  
 3. Import CSV **Paused**; human review matrix `09`.  
 4. Pause legacy `PM_*` Brand if still bleeding.  
-5. Enable only per `07-phased-activation-recommendation.md` after **explicit** George approval — subset: **Core + Digital + Social + Admin** first.
+5. Enable only per `PHASED-ACTIVATION.md` after **explicit** George approval — **PH/Filipino/offshore long-tail first** (Core + Roles; books OK when PH-shaped), not generic Core heads first.
 
 **Ads remain Off.**  
 **Paid status: NOT READY FOR PAID TRAFFIC.**

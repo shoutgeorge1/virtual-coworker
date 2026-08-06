@@ -9,6 +9,11 @@ RSA: 3 unique full RSAs (15H/4D) per main AG — hire-intent / role-outcome or
 PH-offshore / proof-speed-of-staffing angles from ST evidence. City-test AGs
 stay 1 RSA. Exact+Phrase only. No Ads API. All Paused.
 
+Activation (docs only — CSV still all Paused; do not invent v8 for vibes):
+  See ads-launch/PHASED-ACTIVATION.md — enable PH/Filipino/offshore long-tail
+  Exact first across Core+Roles (books/accounting OK when PH-shaped);
+  generic Core heads later. PRIMARY/CONTROLLED labels are structure, not enable order.
+
 Outputs:
   - ads-launch/google-ads-editor-import.csv
   - mirrors into xray/docs/ads-launch/
@@ -41,7 +46,10 @@ BUDGET_DAILY = {
 }
 MAX_CPC = {"US": "8", "AU": "6"}  # USD / AUD
 
-# Roles campaign AG tiers (all under VC_*_S_ROLES).
+# Roles campaign AG structure labels (all under VC_*_S_ROLES).
+# NOTE: PRIMARY vs CONTROLLED is package structure only — NOT enable order.
+# Enable order = intent quality per ads-launch/PHASED-ACTIVATION.md
+# (PH/Filipino/offshore long-tail first; books/accounting can be Phase 1).
 PRIMARY_ROLE_KEYS = ("digital_marketing", "social_media")
 # Admin = EA/admin support (generic VA cluster lives in CORE, not here).
 ADMIN_ROLE_KEY = "administration"

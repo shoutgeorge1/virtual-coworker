@@ -41,9 +41,11 @@
 
 ## Enable order (after gates green)
 
-1. US Core only  
-2. US Roles (watch Controlled tier: HR / recruitment last)  
-3. AU Core (form-primary)  
-4. AU Roles  
+**Source of truth:** [`PHASED-ACTIVATION.md`](./PHASED-ACTIVATION.md)
 
-Never: Broad, PMax, DSA, WP spray, fake Zoho success, Brand until explicitly added.
+1. US — **PH / Filipino / offshore long-tail** Exact (+ tight Phrase) in Core **and** Roles (incl. bookkeeping/accounting when PH-shaped)  
+2. US — broader category Exact/Phrase without PH geo  
+3. US — generic Core head terms later (tighter CPC once CTR known)  
+4. AU — same pattern after US looks sane (form-primary)  
+
+Never: Broad, PMax, DSA, WP spray, fake Zoho success, Brand until explicitly added. Do **not** hold PH books just because “Controlled.”
