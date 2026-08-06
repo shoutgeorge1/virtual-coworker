@@ -61,6 +61,12 @@
           <strong>Rule:</strong> don’t bid on job order / placement until form + call data is clean.
           Zoho offline values = TBD (basic Zoho seat ≠ ready to optimize). See <a href="lead-routing.html">Lead Routing</a>.
         </p>
+        <p style="margin-top:0.65rem">
+          <strong>Domain model (locked):</strong> one host with path markets
+          (<code>/us</code> · <code>/au</code> · <code>/ph</code> — not two country domains.
+          Still run <strong>separate GTM + GA4 per market</strong> (GTM_US / GTM_AU; GTM_PH if needed)
+          so US hire vs AU hire audiences and conversions stay clean. Custom domain is optional polish, not a traffic gate.
+        </p>
       </div>
 
       <section class="panel" id="ladder">

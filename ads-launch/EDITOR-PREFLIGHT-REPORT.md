@@ -54,6 +54,7 @@
 - Tracking template (campaign): `{lpurl}`
 - Final URL suffix (campaign): `utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}&utm_matchtype={matchtype}&utm_device={device}&lp_version=stage1-v7`
 - No `{_campaign}` / `{_adgroup}` custom params
+- **Final URL host:** preview `vision-three-alpha.vercel.app` with path markets (`/us`, `/au`, category pages). Optional one custom domain later — **same paths transfer**; no AU subdomain / dual-domain swap required. Not a CSV rebuild trigger.
 
 ## Conversion actions + campaign goals (after Post — Ads UI)
 

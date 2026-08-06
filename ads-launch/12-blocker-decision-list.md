@@ -15,8 +15,8 @@ Sequencing lock: **TRAFFIC READY** ≠ **CRM READY** ≠ **OPTIMIZATION READY** 
 | 8 | **Proof / content** | Marketing | Badges OK as badges; no invented testimonials/pricing |
 | 9 | **CallRail timing** | George | OPTIMIZATION later — don’t treat phone clicks as qualified until live |
 | 10 | **Careers URL** | ~~open~~ | **Locked:** `/ph` microsite (never WP) |
-| 11 | **US + AU paid domains** | George | Nice-to-have for TRAFFIC READY; preview host OK. OPTIMIZATION path when bought |
-| 12 | **GTM / GA4 / GSC per market** | George | **OPTIMIZATION READY** — separate containers; map inquiry after durable delivery |
+| 11 | **Optional one paid domain** | George | **Not TRAFFIC READY.** One host + `/us` `/au` `/ph` locked; preview OK. Custom domain = polish; same paths transfer (no AU subdomain / dual-domain buy). |
+| 12 | **GTM / GA4 / GSC per market** | George | **OPTIMIZATION READY** — `GTM_US` + `GTM_AU` (+ `GTM_PH` if needed) even on one host; map inquiry after durable delivery |
 | 13 | **Legacy live brand / museum campaigns** | George | Pause/coexist decision outside this CSV |
 | 14 | **ENABLE anything** | George | Explicit approval only after TRAFFIC READY — package ships Paused |
 | 15 | **Brand Search** | George | Deferred — add later only with explicit scope |

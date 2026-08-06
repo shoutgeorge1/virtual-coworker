@@ -217,8 +217,8 @@ window.PILOT_STATUS = {
   georgeHandles: [
     "MCC + Google Ads Editor (Standard access confirmed on US + AU — Stage 1 OK)",
     "Three microsites on vision (US · AU · PH) — not WordPress; / → /us",
-    "Buy US + AU domains on Vercel (~$10 each); PH domain can wait",
-    "Separate US + AU GTM/GA4/GSC/Ads conversions (never one shared bag)",
+    "One host + /us /au /ph paths (optional one paid domain later — not TRAFFIC READY)",
+    "Separate GTM_US + GTM_AU (+ GTM_PH if needed) / GA4 / GSC / Ads conversions — same host OK",
     "Paused Clean Search import (Core + Roles US+AU; brand deferred)",
     "Lead form → secure server-side → email/webhook Stage 1; Zoho when access confirmed",
     "Capture GCLID / GBRAID / WBRAID / UTMs / LP / timestamp + market site_surface"
@@ -226,13 +226,13 @@ window.PILOT_STATUS = {
   majorBlockers: [
     "Budget / Max CPC approval placeholders",
     "AU phone + lead-routing email/webhook (NA dest phone confirmed)",
-    "US + AU custom domains + Final URL host swap (PH can hang)",
-    "Separate US + AU measurement stacks (GTM/GA4/GSC/Ads conversions)",
+    "Durable lead delivery (real inbox / webhook / sheet) — domains are not the gate",
+    "Separate GTM_US + GTM_AU measurement stacks (same host + path markets OK)",
     "Pilot payment clearing (on its way — not yet confirmed received)"
   ],
   nextThree: [
     "Account hygiene in Ads: Brand review · conversion events end-to-end · goal baskets · Zapier/lead map (Zapier ≠ fixed) · Assets · shared negatives · Auto-apply off",
-    "Then Editor download + paused CSV import; buy US + AU domains; separate measurement; lead inbox/webhook",
+    "Then Editor download + paused CSV import; keep path Final URLs; wire GTM_US + GTM_AU; lead inbox/webhook",
     "Enable PH long-tail first only after gates green (Launch Control step 20; brand deferred)"
   ],
   openItemsUnresolved: [

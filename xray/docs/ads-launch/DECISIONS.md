@@ -55,8 +55,10 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | Decision | Locked value | Notes |
 |----------|--------------|-------|
 | **Architecture** | **2 campaigns × 2 markets** | `VC_{US\|AU}_S_CORE` (~60%) + `VC_{US\|AU}_S_ROLES` (~40%). Brand **deferred**. |
+| **Domain model** | **One host + path markets** | `/us` · `/au` · `/ph` on the same domain (preview host OK). **Not** two country domains for Stage 1. Optional one paid domain later = polish, **not** TRAFFIC READY. When attached, same paths transfer — no AU subdomain. |
 | **Core Final URL** | `…/us` · `…/au` | Generic VA/hire/offshore → market employer home. **Not** administrative-support. |
 | **Roles Final URL** | Matching category slug | Admin AG → `/administrative-support`; HR → `/hr` (alias `/human-resources` → `/hr`). |
+| **Measurement** | **Separate GTM + GA4 per market** | `GTM_US` / `GTM_AU` (+ `GTM_PH` if needed) even on one host — audiences/conversions must not contaminate. |
 | **Activation priority** | **PH / Filipino / offshore long-tail first** | Source of truth: `PHASED-ACTIVATION.md`. Phase by **intent quality**, not “Core then Digital/Social/Admin.” Bookkeeping/accounting with strong PH long-tail = Phase 1. Generic Core heads = Phase 3 / later. |
 | **AU phone** | Form-primary only | No `NEXT_PUBLIC_AU_PHONE`. No fake AU number. |
 | **US phone** | `310-426-8776` via `NEXT_PUBLIC_US_PHONE` | Brief NA number. |
@@ -100,7 +102,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 
 ### Parallel / later (not traffic blockers)
 
-- US + AU custom domains + per-market GTM/GA4/GSC → **OPTIMIZATION READY**
+- Optional **one** custom domain (path markets stay) + per-market GTM/GA4/GSC (`GTM_US` + `GTM_AU`) → **OPTIMIZATION READY** — domains are polish; separate containers are the measurement requirement
 - **Zoho platform discovery** (product + API path) → then inventory / OAuth / adapter / field mapping → **CRM READY** — **deferred**; access ≠ integration complete; no Leads assumption
 - Native Zoho↔Ads audit (observe only; separate from Ads developer token; do not authorize from repo work)
 - **Offline conversion actions** (plan later — **not** Stage 1 primary / not TRAFFIC READY):

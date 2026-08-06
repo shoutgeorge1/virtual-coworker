@@ -121,20 +121,21 @@ Source: `PHASED-ACTIVATION.md`
 3. Generic Core heads later (tighter CPC)  
 4. US before AU · Brand deferred · never Broad/PMax/DSA/WP Final URLs
 
-### Microsite (three separate identities)
+### Microsite (one host · path markets · separate tracking)
 
 | Surface | Role |
 |---------|------|
 | US employer `/us` + `/us/*` | Primary PPC micro-site |
-| AU employer `/au` + `/au/*` | Separate AU employer micro-site |
+| AU employer `/au` + `/au/*` | AU employer path on **same host** (not a second country domain) |
 | PH talent `/ph` (+ `/ph/apply`) | Careers — **never** employer conversion |
 | Root `/` | Redirects → `/us` |
 | WordPress | **Untouched** — zero egress from microsite nav/footer/CTAs |
 
+- **Domain model (locked):** one host with `/us` `/au` `/ph` — **not** two paid country domains for Stage 1. Preview host OK for TRAFFIC READY. Optional one custom domain later = polish; same paths transfer (no AU subdomain).
 - Preview: https://vision-three-alpha.vercel.app  
 - Launch Control: https://vc-xray.vercel.app/launch-control  
 - Hire-vs-job gate intentional: employer → form; job seeker → `/ph`  
-- Tracking env placeholders: `NEXT_PUBLIC_GTM_US` / `_AU` / `_PH` (+ GA4 twins) — do **not** share one GTM across US+AU  
+- Tracking env placeholders: `NEXT_PUBLIC_GTM_US` / `_AU` / `_PH` (+ GA4 twins) — **separate containers per market** even on one host; do **not** share one GTM across US+AU  
 - Ads conversion firing: `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false`  
 - Pilot: `NEXT_PUBLIC_PILOT_NOINDEX=true`
 
@@ -263,7 +264,7 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 | 7 | **Job order / placement offline values** | TBD, not approved. OPTIMIZATION / CRM later. |
 | 8 | CallRail / qualified-call | Later; phone click ≠ qualified |
 | 9 | GTM → Ads mapping tested | OPTIMIZATION READY; firing still off |
-| 10 | US + AU custom paid domains | Nice-to-have; preview host OK for TRAFFIC READY |
+| 10 | Optional one custom domain | Polish only — one host + `/us` `/au` paths locked; preview OK for TRAFFIC READY; no dual-domain buy |
 
 ---
 
