@@ -107,8 +107,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Tell us the marketing role you need filled. We shortlist vetted talent — you interview and decide who to hire.",
         },
         primaryCta: "Tell us who you need →",
-        heroImage: { us: "/brand/marketing.webp", au: "/brand/marketing.webp" },
-        heroAlt: "Marketing specialist at work",
+        heroImage: { us: "/brand/va-au.jpg", au: "/brand/va-au.jpg" },
+        heroAlt: "Philippines digital marketing professional at a desk",
       },
       b: {
         h1: {
@@ -120,8 +120,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "A staffing partner path for Australian employers — not a freelance marketplace or gig board.",
         },
         primaryCta: "Start your hiring request →",
-        heroImage: { us: "/brand/va-us.jpg", au: "/brand/va-au.jpg" },
-        heroAlt: "Dedicated remote teammate at a desk",
+        heroImage: { us: "/brand/talent-john.jpeg", au: "/brand/talent-john.jpeg" },
+        heroAlt: "Dedicated Philippines hire — professional portrait",
       },
     },
     benefits: [
@@ -168,8 +168,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Tell us the social role you need. We recruit and screen — you choose who to hire.",
         },
         primaryCta: "Tell us who you need →",
-        heroImage: { us: "/brand/marketing.webp", au: "/brand/marketing.webp" },
-        heroAlt: "Social media work in progress",
+        heroImage: { us: "/brand/va-ph.jpg", au: "/brand/va-ph.jpg" },
+        heroAlt: "Philippines social media professional at work",
       },
       b: {
         h1: {
@@ -181,8 +181,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Built for Australian businesses that want a staffing partner, not a gig platform.",
         },
         primaryCta: "Request a hiring shortlist →",
-        heroImage: { us: "/brand/va-team.webp", au: "/brand/va-au.jpg" },
-        heroAlt: "Remote team collaboration",
+        heroImage: { us: "/brand/va-face-3.jpg", au: "/brand/va-face-3.jpg" },
+        heroAlt: "Dedicated Philippines social media teammate",
       },
     },
     benefits: [
@@ -229,8 +229,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Tell us the accounting seat you need filled. You interview the shortlist.",
         },
         primaryCta: "Tell us who you need →",
-        heroImage: { us: "/brand/support.jpg", au: "/brand/support.jpg" },
-        heroAlt: "Professional at a workstation",
+        heroImage: { us: "/brand/va-face-2.jpg", au: "/brand/va-face-2.jpg" },
+        heroAlt: "Philippines accounting professional",
       },
       b: {
         h1: {
@@ -242,8 +242,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "For established Australian businesses — recruit, vet, interview, then hire with support.",
         },
         primaryCta: "Start your hiring request →",
-        heroImage: { us: "/brand/va-us.jpg", au: "/brand/va-au.jpg" },
-        heroAlt: "Dedicated hire at desk",
+        heroImage: { us: "/brand/support.jpg", au: "/brand/support.jpg" },
+        heroAlt: "Dedicated Philippines hire at a workstation",
       },
     },
     benefits: [
@@ -290,8 +290,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Tell us the books role you need. We recruit and screen — you decide who to hire.",
         },
         primaryCta: "Tell us who you need →",
-        heroImage: { us: "/brand/support.jpg", au: "/brand/support.jpg" },
-        heroAlt: "Bookkeeping workstation",
+        heroImage: { us: "/brand/va-face-1.jpg", au: "/brand/va-face-1.jpg" },
+        heroAlt: "Philippines bookkeeping professional",
       },
       b: {
         h1: {
@@ -303,8 +303,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Employer staffing path for Australian teams that need reliable remote books support.",
         },
         primaryCta: "Request a hiring shortlist →",
-        heroImage: { us: "/brand/ea.jpg", au: "/brand/va-au.jpg" },
-        heroAlt: "Remote professional working",
+        heroImage: { us: "/brand/va-face-2.jpg", au: "/brand/va-face-2.jpg" },
+        heroAlt: "Dedicated remote books support professional",
       },
     },
     benefits: [
@@ -351,8 +351,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Virtual assistant and admin roles with a clear employer path — tell us who you need.",
         },
         primaryCta: "Tell us who you need →",
-        heroImage: { us: "/brand/va-us.jpg", au: "/brand/va-au.jpg" },
-        heroAlt: "Administrative professional at desk",
+        heroImage: { us: "/brand/va-ph.jpg", au: "/brand/va-ph.jpg" },
+        heroAlt: "Philippines administrative professional at desk",
       },
       b: {
         h1: {
@@ -364,8 +364,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Not a freelance marketplace. You interview. We recruit, vet, and support the hire.",
         },
         primaryCta: "Start your hiring request →",
-        heroImage: { us: "/brand/ea.jpg", au: "/brand/ea.jpg" },
-        heroAlt: "Executive admin support",
+        heroImage: { us: "/brand/va-face-1.jpg", au: "/brand/va-face-1.jpg" },
+        heroAlt: "Dedicated Philippines virtual assistant",
       },
     },
     benefits: [
@@ -413,7 +413,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
         },
         primaryCta: "Tell us who you need →",
         heroImage: { us: "/brand/support.jpg", au: "/brand/support.jpg" },
-        heroAlt: "Customer support professional",
+        heroAlt: "Philippines customer support professional",
       },
       b: {
         h1: {
@@ -425,8 +425,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Employer staffing for Australian teams that need reliable remote support seats.",
         },
         primaryCta: "Request a hiring shortlist →",
-        heroImage: { us: "/brand/va-team.webp", au: "/brand/va-au.jpg" },
-        heroAlt: "Support team member",
+        heroImage: { us: "/brand/va-face-2.jpg", au: "/brand/va-face-2.jpg" },
+        heroAlt: "Dedicated Philippines support teammate",
       },
     },
     benefits: [
@@ -473,8 +473,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Tell us the HR seat you need. Controlled lower-volume category — still employer-only.",
         },
         primaryCta: "Tell us who you need →",
-        heroImage: { us: "/brand/hire-talent.webp", au: "/brand/hire-talent.webp" },
-        heroAlt: "HR support professional",
+        heroImage: { us: "/brand/va-face-1.jpg", au: "/brand/va-face-1.jpg" },
+        heroAlt: "Philippines HR support professional",
       },
       b: {
         h1: {
@@ -486,8 +486,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "For Australian employers — inquire about the role; we recruit and you interview.",
         },
         primaryCta: "Start your hiring request →",
-        heroImage: { us: "/brand/va-us.jpg", au: "/brand/va-au.jpg" },
-        heroAlt: "Dedicated remote hire",
+        heroImage: { us: "/brand/va-face-3.jpg", au: "/brand/va-face-3.jpg" },
+        heroAlt: "Dedicated Philippines HR teammate",
       },
     },
     benefits: [
@@ -534,8 +534,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Tell us the recruiting ops role you need staffed. You keep final hire decisions.",
         },
         primaryCta: "Tell us who you need →",
-        heroImage: { us: "/brand/hire-talent.webp", au: "/brand/hire-talent.webp" },
-        heroAlt: "Recruitment support work",
+        heroImage: { us: "/brand/va-face-2.jpg", au: "/brand/va-face-2.jpg" },
+        heroAlt: "Philippines recruitment support professional",
       },
       b: {
         h1: {
@@ -547,8 +547,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Controlled category for Australian employers — staffing partner, not a job board.",
         },
         primaryCta: "Request a hiring shortlist →",
-        heroImage: { us: "/brand/va-team.webp", au: "/brand/va-au.jpg" },
-        heroAlt: "Team recruiting support",
+        heroImage: { us: "/brand/talent-john.jpeg", au: "/brand/talent-john.jpeg" },
+        heroAlt: "Dedicated Philippines recruiting ops teammate",
       },
     },
     benefits: [
@@ -595,8 +595,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Appointment setting, CRM ops, or sales VA — tell us the seat you need.",
         },
         primaryCta: "Tell us who you need →",
-        heroImage: { us: "/brand/marketing.webp", au: "/brand/marketing.webp" },
-        heroAlt: "Sales support professional",
+        heroImage: { us: "/brand/va-us.jpg", au: "/brand/va-us.jpg" },
+        heroAlt: "Philippines sales support professional",
       },
       b: {
         h1: {
@@ -608,8 +608,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "For Australian businesses that want vetted remote sales support, not gig churn.",
         },
         primaryCta: "Start your hiring request →",
-        heroImage: { us: "/brand/va-us.jpg", au: "/brand/va-au.jpg" },
-        heroAlt: "Remote sales teammate",
+        heroImage: { us: "/brand/va-face-1.jpg", au: "/brand/va-face-1.jpg" },
+        heroAlt: "Dedicated Philippines sales teammate",
       },
     },
     benefits: [
