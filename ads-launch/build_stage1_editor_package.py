@@ -46,6 +46,14 @@ BUDGET_DAILY = {
 }
 MAX_CPC = {"US": "8", "AU": "6"}  # USD / AUD
 
+# Editor multi-account import — Customer IDs in XXX-XXX-XXXX format.
+# Column name must be "Account" (Google Ads Editor). Required so USA+AU
+# rows do not land in the wrong client account when importing one CSV.
+ACCOUNT_IDS = {
+    "US": "496-715-1855",
+    "AU": "573-539-1940",
+}
+
 # Roles campaign AG structure labels (all under VC_*_S_ROLES).
 # NOTE: PRIMARY vs CONTROLLED is package structure only — NOT enable order.
 # Enable order = intent quality per ads-launch/PHASED-ACTIVATION.md
@@ -70,6 +78,7 @@ SUFFIX = (
 TRACK = "{lpurl}"
 
 FIELDS = [
+    "Account",  # Customer ID — required for USA+AU multi-account Editor import
     "Row Type",
     "Campaign",
     "Campaign Type",
@@ -3688,18 +3697,36 @@ def build() -> list[dict[str, str]]:
         )
 
     apply_budget_cpc_defaults(rows)
+    stamp_account_ids(rows)
     return rows
+
+
+def market_from_campaign(cname: str) -> str | None:
+    if "_US_" in cname:
+        return "US"
+    if "_AU_" in cname:
+        return "AU"
+    return None
+
+
+def stamp_account_ids(rows: list[dict[str, str]]) -> None:
+    """Stamp Editor Account (Customer ID) on every row from campaign market."""
+    for r in rows:
+        mkt = market_from_campaign(r.get("Campaign") or "")
+        if not mkt:
+            raise SystemExit(
+                f"Cannot stamp Account — unknown market for row: "
+                f"{r.get('Row Type')} / {r.get('Campaign')!r}"
+            )
+        r["Account"] = ACCOUNT_IDS[mkt]
 
 
 def apply_budget_cpc_defaults(rows: list[dict[str, str]]) -> None:
     """Fill Budget + Max CPC with DECISIONS.md defaults (no [APPROVAL_*] left)."""
     for r in rows:
         cname = r.get("Campaign") or ""
-        if "_US_" in cname:
-            mkt = "US"
-        elif "_AU_" in cname:
-            mkt = "AU"
-        else:
+        mkt = market_from_campaign(cname)
+        if not mkt:
             continue
         if r.get("Max CPC") == "[APPROVAL_MAX_CPC]":
             r["Max CPC"] = MAX_CPC[mkt]
@@ -3889,6 +3916,24 @@ def qa(rows: list[dict[str, str]]) -> None:
                 raise SystemExit(
                     f"Non-paused {col}={st} on {r['Row Type']} {r.get('Campaign')}"
                 )
+
+    # Account (Customer ID) required for USA+AU multi-account Editor import
+    acct_counts: Counter[str] = Counter()
+    for r in rows:
+        acct = (r.get("Account") or "").strip()
+        mkt = market_from_campaign(r.get("Campaign") or "")
+        if not mkt:
+            raise SystemExit(f"Row missing marketable Campaign: {r.get('Row Type')}")
+        expected = ACCOUNT_IDS[mkt]
+        if acct != expected:
+            raise SystemExit(
+                f"Bad Account={acct!r} for {r.get('Campaign')} "
+                f"(expected {expected})"
+            )
+        acct_counts[acct] += 1
+    if set(acct_counts) != set(ACCOUNT_IDS.values()):
+        raise SystemExit(f"Account IDs incomplete: {dict(acct_counts)}")
+    print("Account stamps:", dict(acct_counts))
 
     pos_blob = " ".join(
         r["Keyword"].lower()

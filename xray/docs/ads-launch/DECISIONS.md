@@ -21,13 +21,31 @@ George asked for decisive defaults so QA / deploy can proceed. These are **opera
 | **Max CPC** | US **$8** · AU **A$6** | Maximize Clicks cap. George-decidable. |
 | **RSA count** | **3 unique full RSAs (15H/4D) per main AG** | Distinct angles (hire-intent / role or PH-offshore / proof-speed). City-test AGs stay 1–2. No fake claims. |
 | **Google Ads Post / enable** | **Not approved** | Package ships Paused. No live campaign enable from this decision set. |
+| **Editor CSV Account column** | **Required** | Every row stamps Customer ID: USA `496-715-1855` · AU `573-539-1940`. Needed for USA+AU multi-account Editor import so rows don’t land in the wrong account. |
+
+### Import vs Post (plain English — do not confuse)
+
+| Step | What it does | Live Ads? |
+|------|--------------|-----------|
+| **Import** into Editor | Loads entities into a **local Editor draft** | **No** — does not change the live account |
+| **Post** from Editor | Uploads those draft entities to the **live** Google Ads account | **Yes** — creates/updates live entities (still Paused if Status=Paused) |
+
+- Our `VC_*` campaigns are **new names**. They **add alongside** existing `PM_*` museum campaigns. They do **not** wipe account-level settings (conversions, billing, users, linking).
+- They do **not** delete old campaigns unless we explicitly remove / post removals.
+- Account-level conversion actions are **separate** — the campaign CSV does not replace those.
+- Without the **Account** column, multi-account import can fail or apply to the wrong account — fixed in builder as of this decision.
 
 ## Still open (not faked)
 
 - Real lead email / webhook recipients (**hard blocker** — log-only ≠ paid)
 - Named responder + response-time SLA per market
 - US + AU custom domains + per-market GTM/GA4/GSC
-- Zoho CRM sync
+- **Zoho access audit** (George has some access now — level unknown): modules · fields · ownership · download/export OK for later review. **Access ≠ integration complete.**
+- **Offline conversion actions** (plan later — **not** Stage 1 primary):
+  - Job order — value TBD (range discussed **$200–$400**, **not approved**)
+  - Job placement — value TBD (range discussed **$500–$800**, **not approved**)
+  - Deduping: unique Zoho IDs as conversion IDs; don’t double-count order+placement on the same journey without rules; GCLID / offline import path
+- Stage 1 primary conversions remain **employer inquiry** + **qualified call** (when wired). Job order / placement = later offline.
 - CallRail / qualified-call tracking
 - GTM Ads conversion mapping (tested)
 - Explicit George approval to enable any Search campaign
@@ -36,5 +54,5 @@ George asked for decisive defaults so QA / deploy can proceed. These are **opera
 
 ## Where applied
 
-- Editor CSV budgets/CPC: `build_stage1_editor_package.py` → `google-ads-editor-import.csv`
+- Editor CSV budgets/CPC + Account stamps: `build_stage1_editor_package.py` → `google-ads-editor-import.csv`
 - Vision prod env: vision-three-alpha (`vision` Vercel project)

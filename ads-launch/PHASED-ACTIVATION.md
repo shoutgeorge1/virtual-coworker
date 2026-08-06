@@ -32,6 +32,10 @@ Companion checklist: `07-phased-activation-recommendation.md` · Launch Control 
 Same hard gates as always: durable lead delivery (not log-only), LP/gate QA, phones locked, Final URLs = Core→market home · Roles→category, budgets/CPC confirmed, **explicit George approval**.  
 See `12-blocker-decision-list.md` and Launch Control checklist.
 
+**Editor reminder:** Import = local draft only; Post = live upload (still Paused until Enable). CSV stamps **Account** Customer IDs (USA `496-715-1855` · AU `573-539-1940`). New `VC_*` add alongside `PM_*` — do not wipe account settings or delete old campaigns.
+
+**Zoho / offline (not Phase 0 blockers):** George has some Zoho access (level unknown) — audit modules/fields/ownership. Access ≠ integration. Plan offline job-order / job-placement conversion actions later (values TBD; Stage 1 primary = employer inquiry + qualified call).
+
 ### Phase 1 — PH / Filipino / offshore long-tail (Exact + tight Phrase)
 
 **Turn on first** (US recommended before AU):

@@ -300,7 +300,7 @@
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
                 <strong>6. Import the paused CSV — leave everything Paused</strong>
-                <span class="todo-hint">In Editor, import <code>ads-launch/google-ads-editor-import.csv</code> (<strong>stage1-v7</strong> — <strong>2 campaigns × 2 markets</strong>: <code>VC_{US|AU}_S_CORE</code> + <code>VC_{US|AU}_S_ROLES</code>, Brand deferred, all Paused). Final URLs: Core → market home <code>/us|/au</code> · Roles → <code>/us|/au/{category}</code> — not WordPress, not <code>?role=</code>, not Core→administrative-support. Budgets/Max CPC already filled (Core $75 / Roles $50 · AU A$75 / A$50 · Max CPC $8 / A$6). Paste audit: <code>ads-launch/CHATGPT-DEBRIEF.md</code>.</span>
+                <span class="todo-hint"><strong>Import ≠ live.</strong> Import only loads a local Editor draft; <strong>Post</strong> is what uploads to the live account (still Paused — do not Enable). CSV has an <strong>Account</strong> column (USA <code>496-715-1855</code> · AU <code>573-539-1940</code>) so USA+AU rows go to the right accounts. New <code>VC_*</code> names <strong>add alongside</strong> existing <code>PM_*</code> — they do not wipe conversions/billing/users or delete old campaigns. File: <code>ads-launch/google-ads-editor-import.csv</code> (<strong>stage1-v7</strong> · Core+Roles · Brand deferred · all Paused). Final URLs: Core → <code>/us|/au</code> · Roles → category. Budgets/Max CPC filled. Detail: <code>ads-launch/DECISIONS.md</code>.</span>
               </label>
             </li>
             <li data-order="7">
@@ -373,7 +373,7 @@
             <li><strong>MCC linked</strong> — under Shout George</li>
             <li><strong>Ads access</strong> — Standard on USA + AU (enough for Stage 1)</li>
             <li><strong>Three microsites</strong> — US · AU · PH (preview live; <code>/</code> → <code>/us</code>)</li>
-            <li><strong>Editor CSV</strong> — paused import file ready</li>
+            <li><strong>Editor CSV</strong> — paused import ready (Account column stamped for USA+AU)</li>
             <li><strong>Path</strong> — Ads → microsite only (zero WP egress)</li>
             <li><strong>US/NA phone</strong> — <code>310-426-8776</code> (do not port)</li>
           </ul>
@@ -407,6 +407,8 @@
             <li>Stand up separate US + AU GTM / GA4 / GSC / Ads conversion actions</li>
             <li>Confirm payment-cleared date when the bank shows it</li>
             <li>Review the paused Editor import before any enable</li>
+            <li><strong>Audit Zoho access</strong> — what modules/fields/ownership you actually have (download/export OK for later). Access ≠ CRM integration done.</li>
+            <li><strong>Later (not Stage 1 primary):</strong> plan offline conversion actions — job order (value TBD, range discussed $200–$400, not approved) · job placement (value TBD, $500–$800, not approved) · unique Zoho IDs · no double-count order+placement without rules · GCLID/offline import path</li>
           </ul>
         </section>
 
@@ -463,7 +465,7 @@
               <span class="st st-access">Paused</span>
               <div class="gate-body">
                 <strong>Paused Editor import reviewed</strong>
-                <span>CSV ready in <code>ads-launch/</code>. Import and enable only after you approve — stays paused until then.</span>
+                <span>CSV ready in <code>ads-launch/</code> with Account stamps. <strong>Import = local draft only; Post = live upload</strong> (still Paused). Enable only after you approve — not from this page.</span>
               </div>
             </li>
           </ol>
@@ -484,18 +486,26 @@
             <li>Optional: revise budget/CPC defaults</li>
             <li>Payment-cleared date</li>
             <li>Pause old Brand campaigns in Ads? (recommend yes — you click)</li>
+            <li><strong>Zoho access audit</strong> — modules / fields / ownership (level unknown; download/export OK for later). Access ≠ integration.</li>
           </ul>
           <details class="lc-fold" style="margin-top:1rem">
-            <summary>Later (not Stage 1 blockers) <span class="hint">Admin · Zoho · CallRail · offline $ · SLAs</span></summary>
+            <summary>Later (not Stage 1 blockers) <span class="hint">Admin · Zoho offline $ · CallRail · SLAs</span></summary>
             <div class="fold-bd">
               <ul class="lc-open">
                 <li>Ads Admin (ask Braden when convenient — users/billing/deep settings)</li>
-                <li>Zoho access</li>
+                <li><strong>Offline conversion actions (plan — not Stage 1 primary):</strong>
+                  <ul>
+                    <li>Job order — value TBD (range discussed $200–$400 — <strong>not approved</strong>)</li>
+                    <li>Job placement — value TBD (range discussed $500–$800 — <strong>not approved</strong>)</li>
+                    <li>Deduping: unique Zoho IDs as conversion IDs; don’t double-count order+placement on the same journey without rules</li>
+                    <li>GCLID + offline import path</li>
+                  </ul>
+                </li>
+                <li>Stage 1 primary stays <strong>employer inquiry</strong> + <strong>qualified call</strong> — job order/placement = later offline</li>
                 <li>Lead owner / SLA</li>
                 <li>Qual definitions</li>
                 <li>Chat platform</li>
                 <li>CallRail ownership</li>
-                <li>Offline $ values</li>
               </ul>
             </div>
           </details>
@@ -516,7 +526,7 @@
               <li><strong>Still live (Aug 5 read):</strong> <code>PM_US_RSA_Brand</code> — $100/day Max Conv, Enabled; ~$39 / 0 conv. Rest of list = paused (~50 in view).</li>
               <li>LP: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> + category routes e.g. <a href="https://vision-three-alpha.vercel.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
               <li>Phone dest: <code>310-426-8776</code> (confirmed; Raffie/Raffy PH — CallRail later)</li>
-              <li>Lead: <code>LEAD_EMAIL_US</code> or webhook (Stage 1). Zoho app access ≠ CRM integration — stay blocked until audited.</li>
+              <li>Lead: <code>LEAD_EMAIL_US</code> or webhook (Stage 1). Zoho access (level unknown) ≠ CRM integration — audit modules/fields before treating as wired.</li>
             </ul>
           </div>
           <div>

@@ -4,7 +4,7 @@
 
 | Field | Value |
 |-------|-------|
-| Date | 2026-08-05 |
+| Date | 2026-08-06 (Account column + Zoho checklist) |
 | Branch | `vision-demo` |
 | Repo | `/Users/george/Developer/virtual-coworker` |
 | Package | `ads-launch/google-ads-editor-import.csv` · `lp_version=stage1-v7` |
@@ -15,7 +15,7 @@
 | LP host (preview) | **https://vision-three-alpha.vercel.app** |
 | Launch Control | **https://vc-xray.vercel.app/launch-control** |
 | Corporate WP (untouched) | https://virtualcoworker.com · https://virtualcoworker.com.au |
-| Accounts | USA `496-715-1855` · AU `573-539-1940` |
+| Accounts | USA `496-715-1855` · AU `573-539-1940` — **stamped in CSV `Account` column** |
 | Ads enable | **NOT approved** — all CSV entities **Paused** |
 | Paid status | **NOT READY FOR PAID TRAFFIC** (no durable lead delivery) |
 | RSA rule (locked) | **3 unique full RSAs (15H/4D) per main AG**; city-test 1 |
@@ -175,7 +175,7 @@ Final URL suffix (once): UTMs + `lp_version=stage1-v7`. **No double UTM.**
 | US phone | **310-426-8776** (`NEXT_PUBLIC_US_PHONE`) |
 | AU phone | **None** — form-primary (no fake AU number) |
 | Lead delivery | **Hard blocker for paid.** `ALLOW_LOG_ONLY_LEADS=true` = explicit **blocked mode** (`conversion_eligible: false`). Real email/webhook/sheet required. |
-| Zoho | **Not live** — do not pretend sync |
+| Zoho | George has **some access** (level unknown) — audit modules/fields/ownership. Access ≠ integration. Offline job-order / placement conversion actions = later plan (values TBD, not Stage 1 primary). |
 | Ads conversions | `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false` |
 | Pilot SEO | `NEXT_PUBLIC_PILOT_NOINDEX=true` |
 | Tracking | Separate GTM/GA4 env placeholders per `us` / `au` / `ph` |
@@ -235,7 +235,9 @@ Final URL suffix (once): UTMs + `lp_version=stage1-v7`. **No double UTM.**
 
 ### Settings (all campaigns)
 
-Search · **Exact + Phrase only** · **Maximize Clicks** · Max CPC US **$8** / AU **A$6** · **Paused** · tracking `{lpurl}` · UTMs once on suffix · employer CTAs · curated ST negatives · extensions microsite-only.
+Search · **Exact + Phrase only** · **Maximize Clicks** · Max CPC US **$8** / AU **A$6** · **Paused** · tracking `{lpurl}` · UTMs once on suffix · employer CTAs · curated ST negatives · extensions microsite-only · **Account** Customer ID stamped per row for USA+AU multi-account Editor import.
+
+**Import vs Post:** Import → local Editor draft only (does not change live Ads). Post → uploads to live account (entities stay Paused). New `VC_*` **add alongside** existing `PM_*`; do not wipe account-level conversions/billing/users; do not delete old campaigns unless removals are posted.
 
 ### Budgets (placeholders — not enable approval)
 
@@ -294,7 +296,8 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 - **No Ads conversion firing**
 - **Brand Search** — deferred (not imported)
 - **WordPress** — untouched for paid Final URLs
-- **Zoho / CallRail / real inbox** — not launch-ready
+- **Zoho / CallRail / real inbox** — not launch-ready (Zoho access ≠ sync)
+- **Offline $ conversions** — job order / placement planned later (ranges discussed, **not approved**); Stage 1 primary = employer inquiry + qualified call
 - **Log-only** — explicit blocked mode; **not** paid-ready; **not** conversion-eligible
 - **Legacy outside CSV:** `PM_US_RSA_Brand` / `PM_AU_RSA_Brand` may still spend — pause in Ads UI separately
 - We are **not** claiming: launch-ready, Zoho sync, job-order ROI, or that historical conversions = placements
@@ -321,6 +324,7 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 | **v7** | No WP-link CI | `no-wp-links.test.ts` fails on WP hrefs |
 | **v7** | Exit-intent always on | Behind `NEXT_PUBLIC_ENABLE_EXIT_INTENT` |
 | **Activation flip** | Docs said Core first then Digital/Social/Admin; hold books | **PH/Filipino/offshore long-tail first** across Core+Roles; books/accounting OK in Phase 1 when PH-shaped (`PHASED-ACTIVATION.md`) |
+| **2026-08-06** | CSV missing Account / Customer ID for USA+AU import | Builder stamps `Account` = `496-715-1855` / `573-539-1940`; regen via builder |
 
 ---
 
@@ -329,7 +333,7 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 1. Real lead email / webhook recipients (**hard** — log-only ≠ paid-ready)  
 2. Response-time SLA / who answers  
 3. End-to-end delivery success + failure verified  
-4. Zoho (optional — must not fake)  
+4. **Zoho access audit** (George has access — level unknown): modules / fields / ownership; download/export OK for later. Access ≠ integration. Plan offline conversion actions later — job order (value TBD, range discussed $200–$400, not approved) · placement (value TBD, $500–$800, not approved) · unique Zoho IDs · no double-count without rules · GCLID/offline path. Stage 1 primary remains employer inquiry + qualified call.  
 5. CallRail / qualified-call tracking  
 6. GTM → Ads conversion mapping (tested)  
 7. US + AU custom paid domains + per-market GTM/GA4/GSC  

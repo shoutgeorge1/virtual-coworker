@@ -8,7 +8,7 @@
 | 2 | **Lead recipients** | George / Braden | **Hard blocker.** Real `LEAD_EMAIL_*` / Resend / webhook. Log-only is blocked mode — not paid-ready |
 | 3 | **Response time SLA** | Ops | Who answers inquiries, how fast? |
 | 4 | **Durable delivery verified** | George | End-to-end success + failure paths tested with real channel |
-| 5 | **Zoho** | George | Unresolved — optional; must not fake sync |
+| 5 | **Zoho** | George | **Open/waiting:** access exists (level unknown). Audit modules / fields / ownership (download/export OK for later). Access ≠ integration. Plan offline conversion actions later (job order $200–$400 TBD · placement $500–$800 TBD — **not approved**; unique Zoho IDs; no double-count without rules; GCLID path). Stage 1 primary = employer inquiry + qualified call — not order/placement. |
 | 6 | **Architecture / budgets** | ~~open~~ | **Locked:** 2 campaigns/account; Core→`/us`/`/au`; Roles→category; Brand deferred |
 | 7 | **Max CPC** | ~~open~~ | **Locked defaults:** US $8 · AU A$6 |
 | 8 | **Proof / content** | Marketing | Badges OK as badges; no invented testimonials/pricing |

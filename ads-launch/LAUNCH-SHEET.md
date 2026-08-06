@@ -20,7 +20,8 @@
 | US phone | 310-426-8776 (env override OK) |
 | AU phone | None — form primary (locked) |
 | Careers URL | `/ph` via `NEXT_PUBLIC_CAREERS_URL` (locked for Stage 1) |
-| Lead QA | `ALLOW_LOG_ONLY_LEADS=true` — TEMPORARY logs only; Zoho not live |
+| Lead QA | `ALLOW_LOG_ONLY_LEADS=true` — TEMPORARY logs only; Zoho access ≠ integration |
+| Editor Account col | USA `496-715-1855` · AU `573-539-1940` stamped on every CSV row |
 | Budgets / CPC | Core $75 / Roles $50 (US) · Core A$75 / Roles A$50 (AU) · Max CPC $8 / A$6 — see `DECISIONS.md` |
 | Monthly pace | ≈ $3.8k US + A$3.8k AU at these dailies — inside $10–20k/account story |
 
