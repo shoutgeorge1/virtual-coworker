@@ -5,8 +5,8 @@ v6 (2026-08-05): George-approved architecture — Brand deferred.
   VC_{US|AU}_S_CORE   (~60%) high-intent VA / hire / PH-offshore
   VC_{US|AU}_S_ROLES  (~40%) Digital · Social · Admin · Controlled roles
 
-OPERATING RULE (locked): Old account = historical archive.
-  New VC_* = isolated clean system. This builder emits ONLY:
+OPERATING RULE (locked): Existing account remains unchanged.
+  New VC_* campaigns are a separate Stage 1 system. This builder emits ONLY:
   - new Paused VC_* campaigns (never PM_*)
   - campaign-level negatives from the curated NEGATIVES list below
   It does NOT pull, attach, or reference account shared / PM_* mega
@@ -4438,13 +4438,13 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "",
         "## Operating rule (locked)",
         "",
-        "**Old account = historical archive. New `VC_*` = isolated clean system.**",
+        "**Existing account remains unchanged. New `VC_*` campaigns are a separate Stage 1 system.**",
         "",
-        "- Leave old `PM_*` campaigns, shared mega negative lists, old Zoho/Zapier "
+        "- Leave existing `PM_*` campaigns, shared negative lists, Zoho/Zapier "
         "conversion actions, and historical reporting alone.",
         "- This package attaches **only** curated campaign-level negatives "
         f"(~{unique_negs} unique, cap {MAX_UNIQUE_NEGATIVES}) — **not** account shared / "
-        "`PM_*` 3000+ dumps.",
+        "`PM_*` large shared lists.",
         "- Do **not** attach account shared negative lists to `VC_*` after Import/Post.",
         "- Do **not** use audiences to restrict targeting for initial Search launch "
         "(Observation later; ignore customer-lifecycle warnings until Zoho/first-party data).",
@@ -4565,7 +4565,8 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "",
         "## Operator path",
         "",
-        "1. Leave old account machinery alone (no dig/delete/rewrite/pause binge tonight).",
+        "1. Leave existing account campaigns and settings unchanged "
+        "(no dig/delete/rewrite/pause pass on historical structure).",
         "2. Clear **TRAFFIC READY** (durable delivery + live test + named responder).",
         "3. **Domain live:** `www.virtualcoworker.app` — package Final URLs already on www. "
         "Confirm `/us` `/au` `/ph` LPs still 200 before Import.",
@@ -4574,7 +4575,7 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "6. Import **AU split** into AU → Check changes → leave **Paused**.",
         "7. Confirm every Final URL uses `www.virtualcoworker.app` (not `*.vercel.app`).",
         "8. Confirm `VC_*` negatives are campaign-level curated only — "
-        "**do not** attach shared mega lists.",
+        "**do not** attach older shared negative lists.",
         "9. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.",
         "10. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
         "11. Enable is a separate explicit decision after TRAFFIC READY — "

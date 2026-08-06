@@ -203,7 +203,7 @@ window.PILOT_STATUS = {
     },
     {
       id: "callrail",
-      label: "CallRail — approval/ownership unresolved; later, not fake-operational",
+      label: "CallRail — approval/ownership unresolved; later, not Stage 1 operational",
       status: "blocked"
     },
     {
@@ -238,7 +238,7 @@ window.PILOT_STATUS = {
   ],
   nextThree: [
     "TRAFFIC READY: durable inbox/webhook/sheet + live test + named responder (Brand deferred — do not center on Brand)",
-    "OPTIMIZATION parallel: NEW form→thank-you + basic phone conversions (never reuse old account actions); Zoho lead-port path (API preferred); Zapier document-only",
+    "OPTIMIZATION parallel: NEW form→thank-you + basic phone conversions (do not reuse existing account conversion actions); Zoho lead-port path (API preferred); document existing Zapier only",
     "Editor Import/Post www Final URL CSVs while Paused; Enable Tier 1A/1B only after TRAFFIC READY + George OK"
   ],
   openItemsUnresolved: [
