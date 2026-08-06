@@ -18,6 +18,7 @@ import {
 } from "../../config/categories";
 import { SITE } from "../../config/site";
 import type { HeroOverlay } from "../../lib/hero-overlay";
+import { resolveHeroSecondaryBadge } from "../../lib/hero-badge-copy";
 
 export default function MarketLanding({
   market,
@@ -122,7 +123,7 @@ export default function MarketLanding({
         {
           k: "04",
           t: "Onboard with support",
-          d: "Once you hire, we help with onboarding, employment ops, and ongoing account support so you can focus on the work.",
+          d: "Once you hire, we help with onboarding, employment admin, and ongoing account support so you can focus on the work.",
         },
       ]
     : [
@@ -198,6 +199,7 @@ export default function MarketLanding({
   const showOverlay = heroOverlay !== "none";
   const h1Class =
     heroOverlay === "hot" ? "anim-rise hero-h1-hot" : "anim-rise";
+  const secondaryBadge = resolveHeroSecondaryBadge(market, category);
 
   return (
     <main
@@ -291,26 +293,48 @@ export default function MarketLanding({
                 {cat ? cat.shortLabel : "Dedicated hire"}
               </span>
             ) : null}
-            {heroOverlay === "badge" || heroOverlay === "hot" ? (
+            {showOverlay ? (
               <div
-                className="va-hero-badge va-hero-badge-circle"
-                aria-label="Dedicated full-time, monthly"
+                className={`va-hero-badge-stack va-hero-badge-stack-${heroOverlay}`}
               >
-                <span className="va-hero-badge-ring" aria-hidden />
-                <span className="va-hero-badge-core">
-                  <em>Dedicated</em>
-                  <strong>Full-time</strong>
-                  <span>Monthly</span>
-                </span>
-              </div>
-            ) : null}
-            {heroOverlay === "pill" ? (
-              <div
-                className="va-hero-badge va-hero-badge-pill"
-                aria-label="Dedicated full-time, monthly"
-              >
-                <strong>Dedicated full-time</strong>
-                <span>Monthly placement</span>
+                {heroOverlay === "pill" ? (
+                  <div
+                    className="va-hero-badge va-hero-badge-pill"
+                    aria-label="Dedicated full-time, monthly"
+                  >
+                    <strong>Dedicated · Full-time</strong>
+                    <span>Monthly placement</span>
+                  </div>
+                ) : (
+                  <div
+                    className="va-hero-badge va-hero-badge-circle"
+                    aria-label="Dedicated full-time, monthly"
+                  >
+                    <span className="va-hero-badge-ring" aria-hidden />
+                    <span className="va-hero-badge-core">
+                      <em>Dedicated</em>
+                      <strong>Full-time</strong>
+                      <span>Monthly</span>
+                    </span>
+                  </div>
+                )}
+                {secondaryBadge.kind === "rate" ? (
+                  <div
+                    className="va-hero-badge va-hero-badge-rate"
+                    aria-label={secondaryBadge.rate.aria}
+                  >
+                    <strong>{secondaryBadge.rate.amount}</strong>
+                    <span>{secondaryBadge.rate.unit}</span>
+                  </div>
+                ) : (
+                  <div
+                    className="va-hero-badge va-hero-badge-ph"
+                    aria-label={secondaryBadge.aria}
+                  >
+                    <strong>{secondaryBadge.label}</strong>
+                    <span>{secondaryBadge.sub}</span>
+                  </div>
+                )}
               </div>
             ) : null}
             <figcaption>
@@ -346,8 +370,8 @@ export default function MarketLanding({
             </h2>
             <p className={`${shell}-sell-sub`}>
               {isAu
-                ? "Built for Australian businesses that want ownership of the hire — not gig-platform churn. "
-                : "Built for US employers that want ownership of the hire — not gig-platform churn. "}
+                ? "Built for Australian businesses that want ownership of the hire — not a gig platform. "
+                : "Built for US employers that want ownership of the hire — not a gig platform. "}
               <Link href={`/how-it-works?market=${market}`}>
                 See the full process →
               </Link>

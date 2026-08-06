@@ -83,7 +83,7 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     headline: "Hire dedicated Filipino staff for your Australian business.",
     prop: "Virtual Coworker connects Australian businesses with vetted Philippines teammates who work Australian business hours — recruit, screen, and support included. Not a gig marketplace.",
     staffingExplain:
-      "Send the role you need filled. Our team follows up for a hiring conversation, takes your brief, and shortlists screened candidates. You interview before anyone starts. We handle employment ops so you stay focused on the work.",
+      "Send the role you need filled. Our team follows up for a hiring conversation, takes your brief, and shortlists screened candidates. You interview before anyone starts. We handle employment admin so you stay focused on the work.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",

@@ -103,8 +103,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Hire Philippines digital marketing staff for your Australian business.",
         },
         subhead: {
-          us: "Need campaigns, content, or marketing ops covered? Tell us the seat — we shortlist vetted talent, you interview and decide.",
-          au: "Need campaigns, content, or marketing ops covered? Tell us the seat — we shortlist vetted talent, you interview and decide.",
+          us: "Need campaigns, content, or marketing covered? Tell us the role — we shortlist vetted talent, you interview and decide.",
+          au: "Need campaigns, content, or marketing covered? Tell us the role — we shortlist vetted talent, you interview and decide.",
         },
         primaryCta: "Tell us who you need →",
         heroImage: { us: "/brand/va-au.jpg", au: "/brand/va-au.jpg" },
@@ -299,8 +299,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Get dedicated bookkeeping capacity from the Philippines.",
         },
         subhead: {
-          us: "For US teams that need reliable remote books support — without marketplace churn.",
-          au: "For Australian teams that need reliable remote books support — without marketplace churn.",
+          us: "For US teams that need reliable remote books support — without a freelance marketplace.",
+          au: "For Australian teams that need reliable remote books support — without a freelance marketplace.",
         },
         primaryCta: "Get matched →",
         heroImage: { us: "/brand/va-face-2.jpg", au: "/brand/va-face-2.jpg" },
@@ -347,8 +347,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Hire a Philippines virtual assistant for your Australian business.",
         },
         subhead: {
-          us: "Admin, EA, or day-to-day ops — tell us who you need. We recruit Filipino talent; you interview and choose.",
-          au: "Admin, EA, or day-to-day ops — tell us who you need. We recruit Filipino talent for Australian business hours; you interview and choose.",
+          us: "Admin, EA, or day-to-day support — tell us who you need. We recruit Filipino talent; you interview and choose.",
+          au: "Admin, EA, or day-to-day support — tell us who you need. We recruit Filipino talent for Australian business hours; you interview and choose.",
         },
         primaryCta: "Tell us who you need →",
         heroImage: { us: "/brand/va-ph.jpg", au: "/brand/va-ph.jpg" },
@@ -498,7 +498,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
     faq: [
       {
         q: "HR or recruitment support?",
-        a: "Need someone running hiring ops day to day? Try recruitment. Broader people-ops support sits here.",
+        a: "Need someone running hiring day to day? Try recruitment. Broader people support sits here.",
       },
       {
         q: "What does submitting mean?",
@@ -530,8 +530,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Hire Philippines recruitment support for your Australian business.",
         },
         subhead: {
-          us: "Tell us the recruiting ops role you need staffed. You keep final hire decisions.",
-          au: "Tell us the recruiting ops role you need staffed. You keep final hire decisions.",
+          us: "Tell us the recruiting support role you need staffed. You keep final hire decisions.",
+          au: "Tell us the recruiting support role you need staffed. You keep final hire decisions.",
         },
         primaryCta: "Tell us who you need →",
         heroImage: { us: "/brand/va-face-2.jpg", au: "/brand/va-face-2.jpg" },
@@ -548,11 +548,11 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
         },
         primaryCta: "Get matched →",
         heroImage: { us: "/brand/talent-john.jpeg", au: "/brand/talent-john.jpeg" },
-        heroAlt: "Dedicated Philippines recruiting ops teammate",
+        heroAlt: "Dedicated Philippines recruiting support teammate",
       },
     },
     benefits: [
-      "Recruiting-ops support for your hiring pipeline",
+      "Recruiting support for your hiring pipeline",
       "Built for businesses staffing a seat — not applicants",
       "You interview the shortlist",
     ],
@@ -591,8 +591,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Hire Philippines sales support for your Australian business.",
         },
         subhead: {
-          us: "Appointment setting, CRM ops, or sales VA — tell us the seat you need.",
-          au: "Appointment setting, CRM ops, or sales VA — tell us the seat you need.",
+          us: "Appointment setting, CRM, or sales VA — tell us the role you need.",
+          au: "Appointment setting, CRM, or sales VA — tell us the role you need.",
         },
         primaryCta: "Tell us who you need →",
         heroImage: { us: "/brand/va-us.jpg", au: "/brand/va-us.jpg" },
@@ -604,8 +604,8 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Get dedicated sales capacity from the Philippines.",
         },
         subhead: {
-          us: "For US businesses that want vetted remote sales support — not gig churn.",
-          au: "For Australian businesses that want vetted remote sales support — not gig churn.",
+          us: "For US businesses that want vetted remote sales support — not a gig platform.",
+          au: "For Australian businesses that want vetted remote sales support — not a gig platform.",
         },
         primaryCta: "Start hiring →",
         heroImage: { us: "/brand/va-face-1.jpg", au: "/brand/va-face-1.jpg" },

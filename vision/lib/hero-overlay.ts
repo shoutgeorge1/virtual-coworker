@@ -1,10 +1,14 @@
 /**
  * Optional hero-image overlay treatments for QA / Stage-1 A/B review.
- * Independent of copy variant (?variant=a|b). Default = current LP chrome.
+ * Independent of copy variant (?variant=a|b). Default = current LP chrome
+ * (small role tag only — not forced onto Ads Final URLs).
  *
- * badge — polished circular commitment badge on the photo
- * pill  — horizontal pill badge on the photo
- * hot   — circular badge + hot-pink H1 accent (Meta-energy, still same LP)
+ * badge — circular commitment + rate/PH secondary (nicest preview path)
+ * pill  — stacked horizontal pills on the photo
+ * hot   — badge treatment + hot-pink H1 accent (Meta-energy, still same LP)
+ *
+ * Max 2 badges. Rate lines only when published on the public Price Guide
+ * (see lib/hero-badge-copy.ts).
  */
 
 export type HeroOverlay = "none" | "badge" | "pill" | "hot";
