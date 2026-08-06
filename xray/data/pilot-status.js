@@ -23,11 +23,17 @@ window.PILOT_STATUS = {
   },
   /** Domains + measurement — separate per employer market; PH can hang for Stage 1. */
   micrositeInfra: {
-    model: "three_separate_microsites",
+    model: "one_host_path_markets",
     domains: {
-      us: { status: "buy_on_vercel", note: "~$10 Vercel — attach to vision for US employer site" },
-      au: { status: "buy_on_vercel", note: "~$10 Vercel — separate AU domain; do not share with US" },
-      ph: { status: "deferred", note: "No Stage 1 domain required — careers path can hang on preview host" }
+      production: {
+        status: "live",
+        note: "www.virtualcoworker.app on Vercel vision (apex → www). Paths /us · /au · /ph — not two country domains."
+      },
+      preview: {
+        status: "qa_only",
+        note: "vision-three-alpha.vercel.app still exists — not for Ads Final URLs / Import"
+      },
+      ph: { status: "path_on_same_host", note: "Careers at /ph on www — no separate Stage 1 domain" }
     },
     measurement: {
       rule: "Do not share one GTM/GA4 across US+AU",
@@ -231,9 +237,9 @@ window.PILOT_STATUS = {
     "Pilot payment clearing (on its way — not yet confirmed received)"
   ],
   nextThree: [
-    "Account hygiene in Ads: Brand review · conversion events end-to-end · goal baskets · Zapier/lead map (Zapier ≠ fixed) · Assets · shared negatives · Auto-apply off",
-    "Then Editor download + paused CSV import; keep path Final URLs; wire GTM_US + GTM_AU; lead inbox/webhook",
-    "Enable PH long-tail first only after gates green (Launch Control step 20; brand deferred)"
+    "TRAFFIC READY: durable inbox/webhook/sheet + live test + named responder (Brand deferred — do not center on Brand)",
+    "OPTIMIZATION parallel: NEW form→thank-you + basic phone conversions (never reuse old account actions); Zoho lead-port path (API preferred); Zapier document-only",
+    "Editor Import/Post www Final URL CSVs while Paused; Enable Tier 1A/1B only after TRAFFIC READY + George OK"
   ],
   openItemsUnresolved: [
     "Conversion events end-to-end audit (USA + AU Primary/Secondary / source / fire path)",

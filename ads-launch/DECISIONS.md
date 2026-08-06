@@ -2,6 +2,50 @@
 
 George asked for decisive defaults so QA / deploy can proceed. These are **operator defaults**, not “launch ready” and not Ads enable approval. Campaigns stay **Paused**. Change anytime.
 
+## Google Ads API lock (HARD — permanent)
+
+**API = read-only / cheap probes ONLY.** Stage 1 package work = **Google Ads Editor CSV only**.
+
+| Allowed | Forbidden |
+|---------|-----------|
+| `list_accessible_customers` or one tiny Search `LIMIT 1` | Create / update / enable campaigns, AGs, ads, keywords, budgets via API |
+| Max **1–2** API calls unless George explicitly authorizes more | Bulk mutate, inventory dumps, pagination loops |
+| Stop immediately on quota / `RESOURCE_EXHAUSTED` | Treat “API is live” as permission to Post or Enable |
+
+Past burn: agents launched ~8 campaigns + many AGs via API and burned developer-token quota on ELA — do not repeat. Durable agent rule: `~/.cursor/rules/google-ads-api-editor-only.mdc`.
+
+## Brand deferred (HARD — 2026-08-06)
+
+- Old agencies wasted money; live accounts are on **trickle mode**. Whatever is still Enabled (including Brand) is **obvious from the Ads UI** — not an agent “discovery.” Do **not** surface it unprompted.
+- Do **not** center strategy, probes, checklists, or next steps on Brand.
+- Stage 1 priority: build the real clean **`VC_*` Editor package** first. Brand = tap later after that system exists.
+- Optional API “what’s spending now” probes = **low value**; don’t push them.
+- Durable agent rule: `~/.cursor/rules/vc-ads-brand-deferred.mdc`.
+
+## Conversion / CRM stack (LOCKED direction — 2026-08-06)
+
+**Do NOT use old account conversions** (old Zoho/Zapier micros, junk Primaries). Build **new, simple** actions for `VC_*`. Leave museum actions untouched for archive/reporting.
+
+### Stage 1 / soon (OPTIMIZATION path — **not** a TRAFFIC READY blocker)
+
+1. **Form fill → thank-you** — primary online signal. Employer inquiry delivered (`employer_inquiry_submitted` after durable delivery). Calendly already on thank-you (US/AU) = **secondary / separate** candidate — never a second Primary for the same inquiry.
+2. **Phone call** — basic click-to-call OK to observe; **phone CTA ≠ qualified** until CallRail (or equivalent) exists. Plan a real call conversion later.
+3. Prefer **direct integrations** (form → email/webhook/sheet; later Zoho API) over complicated Zapier architecture. Zapier may exist in the museum — document, don’t lean on “weird Zapier” as the design.
+4. **Zoho:** George has access. Figure the **lead port path** (API preferred once product/org identified). Recruit vs CRM discovery still **deferred** — no Leads assumption; no live write from repo until path is chosen. Ask VC who owns CRM/admin when stuck.
+5. **Zoho ↔ Google Ads native integration** — audit/document; use **later** for higher-value offline (qualified lead / job order / placement). **Not** a duplicate Primary for the same inquiry.
+6. **CallRail:** layer in ~1–2 months when they get serious — **not** Stage 1 required.
+7. Offline / higher-value conversions via Zoho **after** basic form + phone exist.
+
+### Still true
+
+| Lock | Meaning |
+|------|---------|
+| **TRAFFIC READY** | Durable delivery + named responder (email/webhook/sheet OK first). Zoho **not** required to start Max Clicks. |
+| **One inquiry ≠ two Primaries** | Don’t double-count form + Calendly + Zoho offline on the same event as multiple Primaries. |
+| **Brand deferred** | Clean `VC_*` Editor package first. |
+| **Editor for package / API read-only** | No Ads API mutate; no Enable from CSV. |
+| **Host** | `www.virtualcoworker.app` Final URLs. |
+
 ## Launch sequencing (LOCKED — 2026-08-06 addendum)
 
 **Do NOT make complete Zoho CRM, native Zoho↔Google Ads, offline conversions, or Google Ads API access prerequisites for the initial Maximize Clicks launch.**
@@ -66,8 +110,10 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | **Lead delivery** | Real channel required for **TRAFFIC READY** | `ALLOW_LOG_ONLY_LEADS=true` = **explicit blocked mode** — QA logs only, `conversion_eligible=false`, not TRAFFIC READY. Zoho CRM = **CRM READY** parallel track (not a traffic gate). |
 | **Exit-intent** | Off unless `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true` | Frequency-capped once/session. No fake live chat. |
 | **Ads conversions (firing)** | `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false` | Observe-only until new GTM → new Ads actions tested. |
-| **New conversion actions** | **Plan via new GTM** — do not replace old | Create **new** actions: (1) employer inquiry **delivered** (2) phone ~60s / qualified call when CallRail ready. Leave old Zoho/Zapier actions untouched for archive/reporting. |
+| **New conversion actions** | **Build new — never reuse old account actions** | Stage 1 OPTIMIZATION: (1) form fill → thank-you / employer inquiry **delivered** (2) phone (basic now; qualified ~60s when CallRail). Prefer direct integrations. Leave old Zoho/Zapier actions untouched for archive. One inquiry ≠ two Primaries. |
 | **Calendly / booking** | Wired on thank-you from live WP (2026-08-06) | US `calendly.com/cheyenne-virtualcoworker/30min` · AU `calendly.com/apac-virtualcoworker/30min`. Env override: `NEXT_PUBLIC_CALENDLY_US` / `_AU`. Confirm with VC. **Not** TRAFFIC READY. Booking CTA = Stage 1 **secondary / separate conversion candidate** — do **not** replace primary `employer_inquiry_submitted`. Booked-call event = OPTIMIZATION READY / later once GTM fires. |
+| **Zoho lead port** | Access yes · path TBD · API preferred | George has Zoho access. Discover Recruit vs CRM (deferred). Prefer API when product known; native Zoho↔Ads for offline later — not duplicate Primary. No live write until path locked. Zapier = document only, not architecture. Ask VC who owns CRM/admin. |
+| **CallRail** | ~1–2 months | Not Stage 1 / not TRAFFIC READY. Until then phone CTA ≠ qualified call. |
 | **Campaign goals** | **Campaign-specific on each `VC_*`** | After Post in Ads UI: Goals → campaign-specific → only the new actions. Editor CSV cannot fully express this. |
 | **Negatives** | **VC-only curated campaign negs** | Builder emits campaign-level Broad rows from `NEGATIVES` only. Soft cap ~220 unique. Never attach account shared mega lists to `VC_*`. |
 | **Audiences** | **Off at launch** | Observation later; ignore customer-lifecycle warnings until Zoho/first-party data. Not launch-critical. |
@@ -118,8 +164,8 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 - Thank-you → **book hiring conversation** (Calendly): Stage 1 **secondary** or separate conversion candidate — **never** Primary replacing `employer_inquiry_submitted`. Confirm URLs with VC; booked-call event when GTM ready → OPTIMIZATION READY / later. **Not** required for TRAFFIC READY.
 - CallRail / qualified-call tracking
 - GTM Ads conversion mapping (tested) → **OPTIMIZATION READY**
-- Brand Search (deferred — not in this CSV)
-- Pause decision on legacy `PM_*` Brand campaigns still live outside this package
+- Brand Search (deferred — not in this CSV; see **Brand deferred** hard lock above — do not center Stage 1 on live Brand remnants)
+- Pause decision on legacy `PM_*` Brand campaigns: **later**, after `VC_*` exists — not a Stage 1 checklist item
 
 ## Where applied
 

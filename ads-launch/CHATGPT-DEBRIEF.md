@@ -2,148 +2,277 @@
 
 **Paste this whole file into ChatGPT.** Ask it to stress-test honesty, architecture, Final URLs, conversion definitions, LP integrity, Ads package hygiene, isolation from the old account, and launch blockers — not to rewrite ads for vibes.
 
+**Also:** paste `ads-launch/TEAM-UPDATE-EMAIL.md` (or the “Team update” section below) into ChatGPT to polish the stakeholder email George will send — keep the push-forward tone; do not soften into permission-to-stall.
+
 | Field | Value |
 |-------|-------|
-| Generated | 2026-08-06 (domain live + www Final URLs) |
+| Generated | 2026-08-06 (audit + conversion/CRM stack lock + team email) |
 | Branch | `vision-demo` |
-| Commit SHA | `047f87ac0b1a28532c1b43da8e11aef2ca9ac18a` |
-| Prior isolation SHA | `7b703c5` · Editor P0 `9cd37d0` |
+| Commit SHA | `81adca8817c24d2fa5f02f9d0592c736c0958d56` |
 | Repo | `/Users/george/Developer/virtual-coworker` |
 | Package | `lp_version=stage1-v7` · Editor hygiene + isolation + Phase 1 manifests |
 | Builder | `ads-launch/build_stage1_editor_package.py` |
 | Preferred imports | `google-ads-editor-import-us.csv` · `google-ads-editor-import-au.csv` |
 | Preflight | `ads-launch/EDITOR-PREFLIGHT-REPORT.md` |
 | Decisions | `ads-launch/DECISIONS.md` |
+| Team email draft | `ads-launch/TEAM-UPDATE-EMAIL.md` |
 | Activation | `ads-launch/PHASED-ACTIVATION.md` · `PHASE1-REVIEW.md` |
 | Zoho docs | `ads-launch/zoho/` |
-| Mega prompt source | `ads-launch/VC-CURSOR-MEGA-PROMPT-EDITOR-ZOHO.md` |
 | LP host (production) | **https://www.virtualcoworker.app** (apex → www) |
-| LP host (preview) | https://vision-three-alpha.vercel.app (still exists; not for Import) |
+| LP host (preview) | https://vision-three-alpha.vercel.app (QA only; **not** for Import) |
 | Launch Control | **https://vc-xray.vercel.app/launch-control** |
+| Ads package overview | **https://vc-xray.vercel.app/ads-package** |
 | Corporate WP (untouched) | https://virtualcoworker.com · https://virtualcoworker.com.au |
 | MCC | `119-318-9031` (Shout George) |
 | Child accounts | USA `496-715-1855` · AU `573-539-1940` |
 | Ads enable | **NOT approved** — all CSV entities **Paused** |
-| TRAFFIC READY | **Not yet** — need durable email/webhook/sheet + responder + live test |
-| CRM READY | **Not yet** — platform discovery **deferred**; no Leads in UI; do not assume CRM V8 |
-| OPTIMIZATION READY | **Not yet** — GTM/new Ads actions/goals parallel |
-| Verdict | **SAFE TO IMPORT INTO EDITOR FOR REVIEW · SAFE TO POST WHILE PAUSED · NOT SAFE FOR PAID TRAFFIC** |
+| TRAFFIC READY | **Not yet** — durable email/webhook/sheet + responder + live test |
+| CRM READY | **Not yet** — Zoho access yes; lead-port path + Recruit vs CRM deferred |
+| OPTIMIZATION READY | **Not yet** — build **new** form+phone actions; CallRail ~1–2 mo; offline later |
+| Verdict | **SAFE TO IMPORT FOR REVIEW · SAFE TO POST WHILE PAUSED · NOT SAFE FOR PAID TRAFFIC** |
 
 ---
 
-## 0. Launch sequencing (LOCKED addendum)
+## 0. Operating locks (HARD)
 
-**Zoho (any product) / native Ads connector / offline conversions / Ads API are NOT prerequisites for initial Maximize Clicks Enable.**
+| Lock | Rule |
+|------|------|
+| **Isolation** | Old account = historical archive. New `VC_*` = clean parallel system. Do not dig/delete/rewrite museum tonight. |
+| **Brand deferred** | Do not center Stage 1 / checklist / next steps on old Brand remnants. Clean `VC_*` Editor package first. |
+| **Ads API** | **Read-only / cheap probes only.** Package work = **Google Ads Editor CSV**. No create/update/enable via API. Stop on quota burn. |
+| **Domain** | Production Final URLs = **https://www.virtualcoworker.app** (paths `/us` `/au` `/ph`). Not vision-three-alpha. Not two country domains. |
+| **TRAFFIC READY gates** | Durable monitored delivery + live test arrives + named responder + still Paused until George Enable. Zoho **not** required. |
+| **CRM READY** | Zoho lead port (API preferred). Recruit vs CRM deferred. No live Zoho write from repo until path locked. |
+| **OPTIMIZATION READY** | **New** Ads conversions only — never reuse old account actions. Form→thank-you primary; phone basic; CallRail later; offline via Zoho later. |
+| **One inquiry ≠ two Primaries** | Form + Calendly + Zoho offline must not all be Primary for the same event. |
+| **Negatives** | Tight VC-only curated campaign negs (~172 unique). **No** mega shared / `PM_*` lists on `VC_*`. |
+| **Match** | Positive keywords = **Exact + Phrase only**. Broad rows in CSV = campaign **negatives** (`Negative=True`). |
 
-| Status | Gate |
-|--------|------|
-| **TRAFFIC READY** | Durable monitored email/webhook/sheet (not log-only) + live test arrives + named responder + form retains market/UTMs/click IDs/submission id + US/AU routing + still Paused until George Enable |
-| **CRM READY** | Direct Zoho record + verified field mapping — **parallel · deferred** until product/API known |
-| **OPTIMIZATION READY** | GTM → new Ads conversions, campaign-specific goals, downstream CRM feedback — **parallel** |
+### Conversion / CRM stack (locked direction — 2026-08-06)
 
-Keep Max Clicks · Exact+Phrase · Tier 1A then 1B · no Broad+/PMax/DSA/Max Conv until optimization is real.
+**Do NOT use old account conversions.** Build new, simple:
 
-### Zoho platform discovery — **DEFERRED** (George UI observation)
-
-| Finding | Lock |
-|---------|------|
-| No visible **Leads**; can start module exports; no full Data Backup | Prefer minimal exports; do not hardcode Leads |
-| Visible: Accounts, Contacts, Job Orders, Placements, Campaigns, Calls, Meetings, Notes, Competitors | Inspect employer spine Account → Contact → Job Order → Placement |
-| May be Zoho Recruit **or** heavily customized CRM | Do **not** assume CRM API V8 |
-| Live inventory + API implementation | Labeled **deferred** — see `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md` |
-| Native Google Ads integration audit | Separate; do **not** assume it needs George’s pending Ads developer token |
-| Max Clicks | Zoho/API stays parallel — **not** a TRAFFIC READY blocker if durable delivery + test + named responder verified |
-
-Later-phase checklist (do not execute from this debrief): identify product/org → choose Recruit API V2 or CRM API V8 → inventory modules/layouts/fields/ownership/workflows → decide inquiry entry module → minimal exports (Accounts/Contacts/Job Orders/Placements only) → exclude Candidates/Notes/Calls/Meetings/emails/attachments unless later necessary → least-privilege auth instructions **after** platform ID.
-
----
-
-## 1. Operating rule (locked tonight)
-
-**Old account = historical archive. New `VC_*` campaigns = isolated clean system.**
-
-| DO | DO NOT |
-|----|--------|
-| Import / review / Post **new paused `VC_*` only** | Dig / delete / rewrite / pause binge on old account-wide machinery tonight |
-| Attach **tight curated** campaign negatives from Stage 1 builder (~175 unique, soft cap 220) | Inherit account shared / `PM_*` mega negative lists (3000+ dumps) onto `VC_*` |
-| Plan **new** Ads conversion actions via **new** per-market GTM | Touch / replace / delete old Zoho/Zapier conversion actions or historical reporting |
-| Set **campaign-specific goals** on each `VC_*` after Post (Ads UI) | Let `VC_*` optimize toward account-default junk conversion baskets |
-| Keep audiences **off** for initial Search (Observation later) | Use audiences to restrict targeting at launch |
-| Ignore customer-lifecycle / audience warnings until Zoho/first-party data | Treat those warnings as launch blockers |
-| Keep every `VC_*` **Paused** — Import ≠ live | Enable / unpause from CSV or Import/Post alone |
-
-**Plain English:** Leave the historical shit alone. Ship a clean parallel system. Do not “fix” the museum by inheriting its negatives, conversions, or goal baskets.
-
-Sources: `DECISIONS.md` · `EDITOR-PREFLIGHT-REPORT.md` · builder isolation QA.
+1. **Form fill → thank-you** (primary online) — employer inquiry + Calendly on thank-you (Calendly = secondary)
+2. **Phone call** — basic/click-to-call now; CTA ≠ qualified until CallRail
+3. Prefer **direct integrations** over complicated Zapier (document museum Zapier; don’t design around it)
+4. **Zoho:** George has access — figure lead port (API preferred). Recruit vs CRM still deferred discovery. Ask VC who owns CRM/admin.
+5. **Zoho ↔ Google Ads native** — audit/document; later for qualified lead / job order / placement — **not** duplicate Primary
+6. **CallRail** ~1–2 months — not Stage 1 required
+7. Offline / higher-value via Zoho **after** basic form + phone exist
 
 ---
 
-## 2. Accounts / money / access
-
-| Item | Value |
-|------|-------|
-| MCC | `119-318-9031` |
-| USA | `496-715-1855` |
-| AU | `573-539-1940` |
-| Access | Standard via MCC — enough for Stage 1 Editor import/review |
-| Bid strategy | Maximize Clicks |
-| Max CPC (campaign-only `Maximum CPC bid limit`) | US **$8** · AU **A$6** |
-| Daily budgets | Core **$75 / A$75** · Roles **$50 / A$50** → **$125 / A$125 per day** ≈ **$3.8k / A$3.8k mo** Stage 1 pace (placeholders inside a $10–20k/account monthly story) |
-| Phone US | **310-426-8776** (`NEXT_PUBLIC_US_PHONE`) |
-| Phone AU | **None** — form-primary (no fake AU number) |
-| Legacy live spenders (outside this CSV) | `PM_US_RSA_Brand` · `PM_AU_RSA_Brand` may still spend — pause decision separate; **do not rewrite old account tonight** |
-
-**ADS REMAIN OFF.** Not **TRAFFIC READY** until durable lead delivery exists (real email/webhook/sheet — not log-only) + named responder + live test. Zoho CRM is **not** this gate.
-
----
-
-## 3. Architecture shipped
+## 1. Architecture
 
 ### Ads (Paused Editor package)
 
 | Campaign | Account | Budget/day | Max CPC | Final URL job |
 |----------|---------|----------:|--------:|---------------|
-| `VC_US_S_CORE` | 496-715-1855 | $75 | $8 | → `/us` market employer home |
+| `VC_US_S_CORE` | 496-715-1855 | $75 | $8 | → `/us` |
 | `VC_US_S_ROLES` | 496-715-1855 | $50 | $8 | → `/us/{category}` |
-| `VC_AU_S_CORE` | 573-539-1940 | A$75 | A$6 | → `/au` market employer home |
+| `VC_AU_S_CORE` | 573-539-1940 | A$75 | A$6 | → `/au` |
 | `VC_AU_S_ROLES` | 573-539-1940 | A$50 | A$6 | → `/au/{category}` |
 
-- Search · **Exact + Phrase only** · Brand **deferred** · all entities **Paused**
-- Package counts (current): **4** campaigns · **40** AGs · **1,568** positives (Exact 1,182 · Phrase 386) · **116** RSAs · **688** campaign-neg rows (**172** unique × 4) · **19** commercial holdouts not imported · Phase 1 manifests 784 kw/market · **0** shared-list / audience / `PM_*` rows
-- RSA rule: **3 unique full RSAs (15H/4D) per main AG**; city-test **1**
-- Tracking template: `{lpurl}` · Final URL suffix once with ValueTrack UTMs + `lp_version=stage1-v7`
+- Search · Maximize Clicks · **Exact + Phrase positives** · Brand **deferred** · all **Paused**
+- RSA: **3** unique full RSAs (15H/4D) per main AG; city-test **1**
+- Tracking template `{lpurl}` · Final URL suffix ValueTrack UTMs + `lp_version=stage1-v7`
+- Max CPC = campaign-only `Maximum CPC bid limit` (blank on child rows)
 
-### Phase 1 activation (enable order — not enable approval)
+### Package inventory (verified 2026-08-06)
 
-Source: `PHASED-ACTIVATION.md`
+| Metric | US | AU | Combined |
+|--------|---:|---:|---------:|
+| CSV rows | 1,230 | 1,230 | 2,460 |
+| Account stamp | 496-715-1855 | 573-539-1940 | both |
+| Campaigns | 2 | 2 | **4** |
+| Ad groups | 20 | 20 | **40** |
+| Positive keywords | 784 (Exact 591 · Phrase 193) | 784 | **1,568** |
+| RSAs | 58 | 58 | **116** |
+| Campaign negative rows | 344 (172 unique) | 344 | **688** (172 × 4) |
+| Commercial holdouts (not imported) | — | — | **19** |
+| Shared-list / audience / `PM_*` rows | **0** | **0** | **0** |
+| Enabled statuses | **0** | **0** | **0** |
+| Final URL hosts | **only** `www.virtualcoworker.app` | same | same |
+| Broad **positives** | **0** | **0** | **0** |
 
-1. **PH / Filipino / offshore long-tail first** (Exact + tight Phrase) across Core **and** Roles — books/accounting OK when PH-shaped  
-2. Broader category Exact/Phrase without PH geo  
-3. Generic Core heads later (tighter CPC)  
-4. US before AU · Brand deferred · never Broad/PMax/DSA/WP Final URLs
+Phase 1 review manifests (Paused, not enable files): 784 kw/market — Tier 1A 278 · 1B 321 · 2 146 · 3 39.
 
-### Microsite (one host · path markets · separate tracking)
+**Human display names** (dashboard only — Editor entity IDs stay technical): US/AU · Core Search / Role Search; AGs like “Virtual Assistant · Hire”, “Digital Marketing · Outsource”, etc. Source: `build_xray_ads_overview.py` → https://vc-xray.vercel.app/ads-package
 
-| Surface | Role |
-|---------|------|
-| US employer `/us` + `/us/*` | Primary PPC micro-site |
-| AU employer `/au` + `/au/*` | AU employer path on **same host** (not a second country domain) |
-| PH talent `/ph` (+ `/ph/apply`) | Careers — **never** employer conversion |
-| Root `/` | Redirects → `/us` |
-| WordPress | **Untouched** — zero egress from microsite nav/footer/CTAs |
+### Core AGs (per market)
 
-- **Domain model (locked + live):** one host with `/us` `/au` `/ph` — **not** two paid country domains. **Production:** https://www.virtualcoworker.app (apex → www) on Vercel `vision`. Preview https://vision-three-alpha.vercel.app still exists. Editor CSVs use www Final URLs (builder default). Domain ≠ durable leads / ≠ TRAFFIC READY.  
-- Launch Control: https://vc-xray.vercel.app/launch-control  
-- Hire-vs-job gate intentional: employer → form; job seeker → `/ph`  
-- Tracking env placeholders: `NEXT_PUBLIC_GTM_US` / `_AU` / `_PH` (+ GA4 twins) — **separate containers per market** even on one host; do **not** share one GTM across US+AU  
-- Ads conversion firing: `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false`  
-- Pilot: `NEXT_PUBLIC_PILOT_NOINDEX=true`
+`Hire_VA_PH` · `Offshore_VA_PH` → Final URL market home (`/us` or `/au`)
 
-### Conversion honesty (locked — do not inflate)
+### Roles AGs (per market · 18)
+
+Hire/Outsource pairs for: Accounting · Bookkeeping · Digital Marketing · Social Media · Administration/EA · Customer Service · Human Resources · Recruitment · Sales · plus `Admin_City_Test`
+
+Category Final URLs: `/administrative-support` · `/digital-marketing` · `/social-media` · `/accounting` · `/bookkeeping` · `/customer-service` · `/hr` · `/recruitment` · `/sales`  
+HR alias: `/{us\|au}/human-resources` → 308 → `/{us\|au}/hr`
+
+Sitelinks include market home, `#gate`, and sample category URLs — all www host. **Zero** WP / vision-three Final URLs in package.
+
+---
+
+## 2. Live LP audit (https://www.virtualcoworker.app — 2026-08-06)
+
+| URL | Result |
+|-----|--------|
+| `/` | 200 → `/us` |
+| apex `virtualcoworker.app` | 308 → www |
+| `/us` · `/au` · `/ph` | **200** · hire/job gate present (“I’m hiring…” / “I’m looking for a job”) |
+| Sample categories US+AU | **200** |
+| `/ph/apply` | **200** |
+| `/privacy` · `/terms` · `/thank-you` · `/how-it-works` · `/services` | **200** (root paths — not `/us/privacy`) |
+| `/us/human-resources` | 200 → `/us/hr` |
+| Thank-you Calendly | US `calendly.com/cheyenne-virtualcoworker/30min` · AU `calendly.com/apac-virtualcoworker/30min` |
+| WP egress from microsite | Forbidden by design / CI |
+
+**Note:** `/us/privacy` etc. 404 by design — legal/thank-you live at site root.
+
+Domain ≠ TRAFFIC READY. Ads firing flag still off. Pilot noindex on.
+
+---
+
+## 3. X-ray dashboards (https://vc-xray.vercel.app)
+
+| Page | Check |
+|------|-------|
+| `/launch-control` | TRAFFIC / CRM / OPTIMIZATION READY cards; domain-before-Enable; Brand deferred; Import≠Post≠Enable; www LP links |
+| `/landing-pages` | www host links; preview noted as QA only |
+| `/lead-routing` | Zoho ≠ TRAFFIC READY; named responder asks |
+| `/tracking` | **New conversion stack** encoded — form→thank-you, phone basic, direct>Zapier, Zoho lead port, native offline later, CallRail ~1–2 mo |
+| `/ads-package` | Counts match CSV; host www only; human display names |
+
+Stale link **labels** fixed forward (`project-status` / `us` / `au` now show www text). Preview host may still be mentioned as QA — correct.
+
+---
+
+## 4. What shipped recently (compressed)
+
+- Production domain **www.virtualcoworker.app** + Editor Final URLs regenerated on www  
+- Calendly on thank-you (US/AU from live WP)  
+- Public LP jargon cleanup (employer sales voice; hiring conversation language)  
+- Launch Control checklist rebalance: TRAFFIC READY first; domain before Enable; Brand deferred  
+- Ads package overview + human names (`build_xray_ads_overview.py`)  
+- Isolation locks: no mega shared negs; VC-only curated  
+- Editor P0s: Account stamps, US/AU split CSVs, campaign-only Max CPC, ValueTrack UTMs  
+- Ads API editor-only rule (read-only probes; no mutate)  
+- Zoho platform discovery deferred (Recruit suspicion; no Leads assumption)  
+- Conversion/CRM stack lock (this debrief) + team update email draft  
+
+**Not done (correctly):** Import / Post / Enable · Ads API mutate · live Zoho write · paid traffic
+
+---
+
+## 5. Import instructions (George)
+
+1. Leave old account machinery alone (no museum rewrite binge).  
+2. Google Ads Editor → download fresh USA + AU.  
+3. Read `EDITOR-PREFLIGHT-REPORT.md`.  
+4. **Import US:** `google-ads-editor-import-us.csv` → `496-715-1855`.  
+5. **Import AU:** `google-ads-editor-import-au.csv` → `573-539-1940`.  
+6. Prefer splits. Multi-account file only for manager import (Account column stamped).  
+7. **Import ≠ Post ≠ Enable**  
+   - **Import** = local Editor draft only  
+   - **Post** = upload to live account — entities stay **Paused**  
+   - **Enable** = separate explicit George decision after TRAFFIC READY  
+8. Check changes · confirm www Final URLs · confirm curated campaign negs only.  
+9. **Do NOT** attach shared mega negative lists.  
+10. Post only after review (still Paused).  
+11. After Post (Ads UI, OPTIMIZATION path): campaign-specific goals → **only new** actions. Leave old conversions alone.  
+12. Stay Maximize Clicks. No Max Conv until new actions verified.  
+13. Enable only per `PHASED-ACTIVATION.md` after TRAFFIC READY + explicit OK.
+
+---
+
+## 6. Blockers — NOT SAFE FOR PAID TRAFFIC
+
+| # | Blocker | Gate |
+|---|---------|------|
+| 1 | No durable production lead path (log-only ≠ ready) | **TRAFFIC READY** |
+| 2 | Named responder + live test lead proof | **TRAFFIC READY** |
+| 3 | Explicit George Enable approval | **TRAFFIC READY** |
+| 4 | Zoho lead-port path TBD (access yes; Recruit vs CRM open) | CRM READY parallel |
+| 5 | New Ads conversion actions not built/live | OPTIMIZATION parallel |
+| 6 | CallRail / qualified-call | Later (~1–2 mo) |
+| 7 | Offline job order / placement values | TBD, not approved |
+| 8 | Brand remnants may still trickle | Deferred — don’t center Stage 1 |
+
+**Done / not substitutes for TRAFFIC READY:** www domain · LP 200s · Calendly · Paused Editor package · X-ray checklist
+
+---
+
+## 7. Team update (stakeholder firehose)
+
+Full draft: **`ads-launch/TEAM-UPDATE-EMAIL.md`**
+
+**Paste to ChatGPT to polish the team email** — keep push-forward tone; firehose ownership asks; do not ask permission to stall.
+
+Asks for VC:
+
+- Approve LPs on www (or flag changes)  
+- Who answers leads (+ backup)  
+- Durable monitored inbox  
+- Confirm Calendly US/AU  
+- Who owns Zoho/CRM admin + where inquiries should land  
+- Optional RSA/creative feedback  
+
+Not happening yet: Enable / paid traffic · Brand focus · old account rewrite · Zoho as traffic gate · CallRail Stage 1
+
+---
+
+## 8. Questions for ChatGPT to stress-test
+
+1. Is Core → `/us`/`/au` correct vs category admin for “hire VA”?  
+2. Is log-only acceptable for any paid click? (**Our answer: No.**)  
+3. Are Max CPC $8 / A$6 and $75/$50 dailies sane vs historical CPC / $10–20k monthly story?  
+4. Is PH long-tail-first activation correct?  
+5. Isolation: does Post still risk inheriting account-default goals / shared negs unless George sets campaign-specific goals and refuses shared-list attach?  
+6. Conversion stack: any risk of double Primaries (form + Calendly + Zoho offline)?  
+7. Is “email/webhook first, Zoho API when product known” the right CRM sequencing?  
+8. RSA×3 — invented savings, “top 1%”, SaaS consult language?  
+9. Keyword hygiene — job-seeker / medical / Spanish leaks? Bare `hire` negatived by mistake?  
+10. What must be true before first $1 of Enable — ordered checklist?  
+11. Does the team email ask for the right ownership items without inviting stall?
+
+### Do not invent requirements we never claimed
+
+- Live Zoho writeback / assumed Leads+CRM V8 · CallRail as Stage 1 · WP redesign · Broad/PMax for volume · Fake AU phone · Brand in this CSV · Fake placement guarantees · Offline $ values as approved · Inheritance of 3000+ old negatives · Zoho as TRAFFIC READY gate · Reusing old account conversions
+
+---
+
+## 9. File map
+
+| Path | Purpose |
+|------|---------|
+| `ads-launch/CHATGPT-DEBRIEF.md` | **This file** — canonical ChatGPT paste |
+| `ads-launch/TEAM-UPDATE-EMAIL.md` | Stakeholder email draft |
+| `ads-launch/DECISIONS.md` | Locked defaults + conversion/CRM stack + API/Brand locks |
+| `ads-launch/EDITOR-PREFLIGHT-REPORT.md` | Import inventory + verdict |
+| `ads-launch/PHASED-ACTIVATION.md` | Enable order (PH long-tail first) |
+| `ads-launch/build_stage1_editor_package.py` | Builder + QA + CSV writers |
+| `ads-launch/google-ads-editor-import-us.csv` | **Preferred** USA import |
+| `ads-launch/google-ads-editor-import-au.csv` | **Preferred** AU import |
+| `ads-launch/google-ads-editor-import.csv` | Multi-account (= multi twin) |
+| `ads-launch/phase1-enable-manifest-{us,au}.csv` | Review-only enable ladder |
+| `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md` | Zoho product/API later |
+| `vision/` | Next.js hiring microsite |
+| `xray/launch-control.html` | Operator checklist |
+| `xray/tracking.html` | Conversion / bidding ladder |
+| `xray/ads-package.html` | Package overview UI |
+| `xray/docs/ads-launch/*` | Mirrored docs for xray host |
+
+Rebuild CSVs: `python3 ads-launch/build_stage1_editor_package.py`  
+Rebuild ads overview: `python3 ads-launch/build_xray_ads_overview.py`
+
+---
+
+## 10. Conversion honesty
 
 ```
 Ad click
-  → employer_inquiry_submitted   (= server-accepted + durably delivered employer inquiry)
+  → employer_inquiry_submitted   (= server-accepted + durably delivered)
   → human follow-up
   → job order                    (CRM — not wired)
   → placement                    (ops — not wired)
@@ -151,240 +280,14 @@ Ad click
 form submit ≠ job order ≠ placement
 log_only accept ≠ employer_inquiry_submitted
 phone_cta_clicked ≠ qualified call
-Editor "Conversions" / "All conv" ≠ job orders
+Calendly book ≠ replace primary inquiry
+Editor "Conversions" / old Zoho/Zapier ≠ truth for VC_*
 ZOHO_WEBHOOK_URL success ≠ Zoho CRM sync
 ```
 
-Historical Ads “Conversions” in exports are **not** proof of placements.
-
 ---
 
-## 4. Mega prompt P0s executed
-
-Source prompt: `ads-launch/VC-CURSOR-MEGA-PROMPT-EDITOR-ZOHO.md`  
-Shipped in commit `9cd37d0` — *Fix Editor import hygiene from mega prompt P0s.*  
-Isolation locks shipped in commit `7b703c5` (see §5).
-
-### Shipped (done)
-
-| P0 | What |
-|----|------|
-| **Account routing** | Every row stamps `Account` = USA `496-715-1855` / AU `573-539-1940` |
-| **US/AU split CSVs** | Preferred: `google-ads-editor-import-us.csv` · `…-au.csv` (1236 rows each) |
-| **Multi-account CSV** | `google-ads-editor-import.csv` ≡ `…-multi-account.csv` (2472 rows) — manager import only |
-| **Max CPC fix** | Campaign-only `Maximum CPC bid limit` (US 8 / AU 6); blank on child rows; old misused `Max CPC` removed |
-| **ValueTrack UTMs** | Suffix uses `{campaignid}` `{adgroupid}` `{keyword}` `{matchtype}` `{device}` — **no** undefined `{_campaign}` / `{_adgroup}` |
-| **Template** | `{lpurl}` only — no double UTM |
-| **Commercial neg holdouts** | 16 terms held out of import (cost/review/pricing/cheap/filipina va etc.) — see preflight |
-| **Preflight report** | `EDITOR-PREFLIGHT-REPORT.md` — SAFE TO IMPORT FOR REVIEW · IMPORT/POST/ENABLE NOT PERFORMED |
-| **LC import copy** | Step 13 points at split files + Import≠Post≠Enable |
-| **Webhook ≠ CRM honesty** | `vision/lib/lead-delivery.ts` documents channel `"zoho"` = generic `ZOHO_WEBHOOK_URL` POST, not CRM API |
-| **Zoho gitignore** | `.local/zoho/` ignored — raw backups/PII never commit |
-| **Account column stamp** | Earlier `8a3477e` + reinforced in P0 |
-| **Plain-English LC** | `7be9f73` · account hygiene / Zapier audit steps `b741d6c` |
-| **PH long-tail activation lock** | `544c127` · `PHASED-ACTIVATION.md` |
-| **v7 Core→market home** | `7cf6ada` / `26bc35a` — Core Final URL `/us`/`/au` not administrative-support |
-
-### Deliberately skipped / not complete (mega prompt Workstream D+)
-
-| Item | Status |
-|------|--------|
-| Full Zoho API adapter (`vision/lib/zoho/*`) | **Deferred for live use** — CRM V8 stubs feature-flagged; product/API unknown; no live write |
-| Zoho OAuth bootstrap + inventory (`npm run zoho:*`) | **Deferred** — CRM V8–oriented stubs; run only after platform discovery |
-| Platform discovery runbook | **Shipped (docs)** — `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md` |
-| Native Zoho ↔ Google Ads audit doc | **Checklist shipped** — observe only; ≠ Ads developer token; do not authorize from repo |
-| Offline conversion uploader / Data Manager path | **Skipped / planned later** — values TBD, not approved; not TRAFFIC READY |
-| Phase 1 keyword review manifests | **Shipped** — `phase1-enable-manifest-{us,au}.csv` + `PHASE1-REVIEW.md` |
-| Public-copy lint + commercial neg holdouts (pay/hourly rate, VA reviews) | **Shipped** |
-| Standalone `validate_editor_package.py` | **Skipped** — QA lives inside builder `qa()` |
-| Live OAuth / Ads API / Post / Enable / deploy / live Zoho write | **Forbidden** — not done |
-
----
-
-## 5. Isolation repair (George’s latest instruction)
-
-**Instruction:** Leave historical account alone. New campaigns = clean system. Own tight negatives only. New GTM conversion actions. Campaign-specific goals. Leave old conversions untouched. Audiences Observation later. Ignore customer-lifecycle warnings. All new campaigns Paused.
-
-### Done (code + docs — commit `7b703c5`)
-
-| Change | Where |
-|--------|-------|
-| Operating rule table locked | `DECISIONS.md` |
-| Builder header: emit only VC_* + curated campaign negs; never shared mega lists | `build_stage1_editor_package.py` |
-| `MAX_UNIQUE_NEGATIVES = 220` soft cap + QA fail if exceeded | builder |
-| Isolation QA: forbid shared-list / audience / `PM_*` row types | builder `qa()` |
-| Neg comment stamps “VC-only curated… NOT account shared” | builder |
-| Preflight sections: operating rule, conversion goals after Post, audiences, operator path “do not attach shared lists” | `EDITOR-PREFLIGHT-REPORT.md` |
-| Current package: **175** unique campaign negs (tight curated + holdouts) — **not** 3000+ inheritance | CSVs |
-
-### Pending / partial
-
-| Item | Status |
-|------|--------|
-| Launch Control checklist language for isolation + sequencing | **Updated** — steps 6–10 museum-safe; three statuses TRAFFIC/CRM/OPTIMIZATION READY; step 10 = do not attach shared mega lists |
-| Campaign-specific goals in live Ads UI | **Operator after Post** — CSV cannot express; documented in preflight |
-| New GTM → new Ads conversion actions | **Not built live** — plan only; firing flag false |
-| Pause legacy `PM_*` Brand | **George decision in Ads UI** — outside CSV; do not binge-rewrite museum tonight |
-
----
-
-## 6. Import instructions for George
-
-1. Leave old account machinery alone tonight (no delete/rewrite/global pause binge).  
-2. Open Google Ads Editor → download fresh USA + AU (sync).  
-3. Read `ads-launch/EDITOR-PREFLIGHT-REPORT.md`.  
-4. **Import US:** `ads-launch/google-ads-editor-import-us.csv` → account `496-715-1855`.  
-5. **Import AU:** `ads-launch/google-ads-editor-import-au.csv` → account `573-539-1940`.  
-6. Prefer splits. Use `google-ads-editor-import-multi-account.csv` / `google-ads-editor-import.csv` only for manager multi-account import (every row has Account).  
-7. **Import ≠ Post ≠ Enable**  
-   - **Import** = local Editor draft only — does **not** change live Ads  
-   - **Post** = uploads to live account — entities stay **Paused**  
-   - **Enable** = separate explicit George decision after gates green  
-8. Run Editor **Check changes**. Review while **Paused**.  
-9. Confirm negatives on `VC_*` are campaign-level curated only.  
-10. **Do NOT attach** old shared / `PM_*` mega negative lists to `VC_*`.  
-11. Post only after review (still Paused).  
-12. **After Post (Ads UI):** each `VC_*` → Goals → **campaign-specific** → only **new** actions (employer inquiry delivered + qualified phone ~60s when ready). Leave old Zoho/Zapier actions untouched for archive.  
-13. Keep Maximize Clicks. Do **not** switch to Max Conversions until new actions verified.  
-14. Audiences off. Ignore customer-lifecycle warnings.  
-15. **Domain live:** Import the www Final URL split CSVs (`www.virtualcoworker.app`). Confirm no `*.vercel.app` Final URLs before Enable.  
-16. Enable only per `PHASED-ACTIVATION.md` after durable leads + explicit approval — still **not** paid-ready until TRAFFIC READY.
-
----
-
-## 7. Honest blockers
-
-| # | Blocker | Notes |
-|---|---------|-------|
-| 1 | **No durable production lead path** | **TRAFFIC READY** hard gate. `ALLOW_LOG_ONLY_LEADS=true` = blocked (`conversion_eligible: false`). |
-| 2 | **Named responder + live test lead** | **TRAFFIC READY** — who answers + proof a test arrives |
-| 3 | **Explicit George Enable approval** | Required even when TRAFFIC READY |
-| 4 | **Legacy Brand bleed** | `PM_*` Brand may still spend — separate UI decision |
-| 5 | **Zoho access ≠ CRM READY** | Parallel + **deferred** discovery (Recruit vs CRM; no Leads). Webhook ≠ API. Not a traffic blocker. |
-| 6 | **Zapier weird** | Document; don’t rip blind. Not a traffic blocker if durable email/webhook exists. |
-| 7 | **Job order / placement offline values** | TBD, not approved. OPTIMIZATION / CRM later. |
-| 8 | CallRail / qualified-call | Later; phone click ≠ qualified |
-| 9 | GTM → Ads mapping tested | OPTIMIZATION READY; firing still off |
-| 10 | One custom domain before Enable | **Done** — `www.virtualcoworker.app` live; Final URLs regenerated. Preview still exists. Not a TRAFFIC READY substitute; no more domain buys |
-
----
-
-## 8. File map
-
-| Path | Purpose |
-|------|---------|
-| `ads-launch/CHATGPT-DEBRIEF.md` | **This file** — canonical ChatGPT paste |
-| `ads-launch/DECISIONS.md` | Locked operator defaults + isolation rule |
-| `ads-launch/EDITOR-PREFLIGHT-REPORT.md` | Import inventory + verdict |
-| `ads-launch/PHASED-ACTIVATION.md` | Enable order (PH long-tail first) |
-| `ads-launch/VC-CURSOR-MEGA-PROMPT-EDITOR-ZOHO.md` | Mega prompt that drove Editor/Zoho P0s |
-| `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md` | Later-phase Zoho product/API discovery + audit |
-| `ads-launch/build_stage1_editor_package.py` | Builder + QA + CSV writers |
-| `ads-launch/google-ads-editor-import-us.csv` | **Preferred** USA import |
-| `ads-launch/google-ads-editor-import-au.csv` | **Preferred** AU import |
-| `ads-launch/google-ads-editor-import.csv` | Multi-account (= multi-account twin) |
-| `ads-launch/google-ads-editor-import-multi-account.csv` | Same as combined; manager-only |
-| `ads-launch/TONIGHT-HANDOFF.md` | Earlier Account-column handoff note |
-| `ads-launch/LAUNCH-SHEET.md` | Short launch sheet (some counts may lag; trust preflight) |
-| `ads-launch/12-blocker-decision-list.md` | Blocker table |
-| `ads-launch/10-tracking-event-spec.md` | Event definitions |
-| `ads-launch/06-stage1-campaign-architecture.md` | Architecture notes |
-| `ads-launch/07-phased-activation-recommendation.md` | Short activation checklist |
-| `ads-launch/09-ads-human-review-matrix.md` | Human review matrix |
-| `ads-launch/FULL-BUILD-REPORT.md` | Short index |
-| `ads-launch/CHATGPT-MEGA-AUDIT.md` | Older deep companion (this debrief supersedes for tonight) |
-| `ads-launch/historical-performance-summary.json` | ~2y ST machine summary |
-| `vision/` | Next.js hiring microsite |
-| `vision/lib/lead-delivery.ts` | Honest delivery channels; webhook≠CRM |
-| `vision/lib/no-wp-links.test.ts` | WP egress CI |
-| `vision/config/categories.ts` | Category copy + A/B |
-| `xray/launch-control.html` | Operator checklist UI |
-| `xray/docs/ads-launch/*` | Mirrored CSV/docs for xray host |
-
-Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
-
----
-
-## 9. Conversion / microsite honesty detail
-
-### Events (dataLayer / GTM-ready; Ads firing off)
-
-| Event | Meaning |
-|-------|---------|
-| `employer_gate_selected` | Chose employer |
-| `employer_form_started` | First form interaction |
-| `employer_form_validation_error` | Client validation fail |
-| `employer_inquiry_submitted` | **Server accepted + durable delivery** (candidate primary) |
-| `employer_inquiry_submitted_deduped` | Refresh-safe block |
-| `employer_inquiry_delivery_failed` | 502/503 / network |
-| `employer_inquiry_log_only` | Log-only blocked mode (never primary) |
-| `phone_cta_clicked` | tel: click — `is_qualified_call: false` |
-| `job_seeker_redirected` | Divert to `/ph` — never primary Ads conv |
-
-### Category LPs (Roles Final URLs)
-
-digital-marketing · social-media · accounting · bookkeeping · administrative-support · customer-service · hr · recruitment · sales  
-HR alias: `/{us|au}/human-resources` → 308 `/{us|au}/hr`
-
-### Funnel next-step language (public LPs — 2026-08-06)
-
-Corporate US/AU how-it-works evidence: **free consultation → job brief → recruit/vet → employer interviews → onboard** (not a SaaS product demo). Live WP thank-you Calendly wired on microsite thank-you (2026-08-06): US `cheyenne-virtualcoworker/30min` · AU `apac-virtualcoworker/30min` (env `NEXT_PUBLIC_CALENDLY_US` / `_AU`). Public LP/thank-you/how-it-works copy uses **hiring conversation / schedule a call / talk through the role** — then brief → shortlist → you interview → onboard. Booking = **secondary / later conversion candidate** — do **not** replace primary `employer_inquiry_submitted`. TRAFFIC READY does not require Calendly; OPTIMIZATION READY / later can add booked-call once GTM fires. Kill operator/audit voice on buyer UI (inquire formalese, measurement asides, “not invented for ads”, job-order CRM speak). Public-copy lint expanded accordingly.
-
-### Prior fuck-ups → fixed (compressed)
-
-Double UTM · inert `?role=` URLs · boilerplate RSAs · fake AU phone · consult/demo SaaS language · plastic heroes · silent log-only as conversion · Core→admin mismatch → Core→market home · 22-campaign sprawl → 2/account · Account column missing → stamped · undefined `{_custom}` UTMs → ValueTrack · Max CPC on every row → campaign-only bid limit · commercial research negs → holdouts · isolation: no mega-list inheritance.
-
----
-
-## 10. Historical evidence (context only — not conversion truth)
-
-Sources: Editor exports ~2024-08-01 → 2026-08-04. Summary: `historical-performance-summary.json`
-
-| Account | Cost | Clicks | Ads “Conversions” | Note |
-|---------|-----:|-------:|------------------:|------|
-| USA | ~$724k | ~87k | ~2.6k | Inflated vs placements |
-| AU | ~$457k | ~49k | ~1.4k | Same caveat |
-
-Informs keywords/negatives/RSA angles. Does **not** prove microsite ROI. Do not rewrite old conversions to “fix” history.
-
----
-
-## 11. Recent git spine (vision-demo)
-
-```
-7b703c5 Lock VC_* isolation and ship full ChatGPT debrief.
-9cd37d0 Fix Editor import hygiene from mega prompt P0s.
-7be9f73 Rewrite Launch Control in plain PPC English.
-b741d6c Add account hygiene and Zapier audits to Launch Control.
-8a3477e Stamp Editor Account IDs and add Zoho offline checklist.
-544c127 Lock PH long-tail first for Stage 1 activation.
-26bc35a Stabilize Stage 1 v7 for review…
-8bd8fe7 Sync xray Launch Control + docs mirrors to v7 Core→market-home.
-7cf6ada Finalize v7 Core→market-home routing and honest conversion contract.
-```
-
----
-
-## 12. Questions for ChatGPT to stress-test
-
-1. Is Core → `/us`/`/au` correct vs category admin for “hire VA”?  
-2. Is log-only acceptable for any paid click? (**Our answer: No.**)  
-3. Are Max CPC $8 / A$6 and $75/$50 dailies sane vs historical CPC / $10–20k monthly story?  
-4. Is PH long-tail-first activation correct vs old “Core + Digital/Social/Admin only”?  
-5. Isolation: any risk that Post still inherits account-default goals / shared negatives unless George sets campaign-specific goals and refuses shared-list attach?  
-6. RSA×3 — invented savings, “top 1%”, consult language, clone-y noun swaps?  
-7. Keyword hygiene — job-seeker / medical / Spanish / competitor leaks? Bare `hire` negatived by mistake?  
-8. Double UTM / WP Final URL regressions?  
-9. Webhook-labeled-as-zoho confusion risk for paid readiness?  
-10. What must be true before first $1 of Enable — ordered checklist?
-
-### Do not invent requirements we never claimed
-
-- Live Zoho writeback / assumed Leads+CRM V8 · CallRail qualified calls · WP redesign · Broad/PMax for volume · Fake AU phone · Brand Search in this CSV · Fake placement guarantees · Offline $ values as approved · Inheritance of 3000+ old negatives as “best practice” · Zoho as TRAFFIC READY gate
-
----
-
-## 13. Verdict
+## 11. Verdict
 
 ```
 SAFE TO IMPORT INTO EDITOR FOR REVIEW
@@ -393,12 +296,15 @@ NOT SAFE FOR PAID TRAFFIC (TRAFFIC READY incomplete)
 ADS REMAIN OFF
 OLD ACCOUNT = ARCHIVE (do not rewrite tonight)
 NEW VC_* = ISOLATED CLEAN SYSTEM (Paused)
+BRAND = DEFERRED
+ADS API = READ-ONLY / EDITOR BUILDS ONLY
 CRM READY / OPTIMIZATION READY = PARALLEL (not traffic gates)
-ZOHO PLATFORM DISCOVERY + LIVE INVENTORY/API = DEFERRED
+ZOHO = ACCESS YES · LEAD PORT TBD · NO LIVE WRITE YET
+CONVERSIONS = BUILD NEW (form→thank-you · phone basic · offline later)
 ```
 
-Operator next: **domain is live** on `www.virtualcoworker.app` — use www links; Import CSVs already have www Final URLs. **Enable gate:** clear **TRAFFIC READY** (durable channel + test + responder) before any Enable. Then Import → review Paused → Post Paused → Enable Tier 1A/1B only with explicit George OK. Still don’t Enable until TRAFFIC READY. Campaign-specific goals + Zoho discovery = parallel later.
+Operator next: clear **TRAFFIC READY** (inbox · test · named responder). Send team email for LP approval + lead ownership + Zoho/CRM owner. Import www CSVs for review when ready — still don’t Enable until TRAFFIC READY.
 
 ---
 
-*End of FULL ChatGPT debrief. Canonical paste for tonight. Companion history: `CHATGPT-MEGA-AUDIT.md`. Index: `FULL-BUILD-REPORT.md`. Preflight: `EDITOR-PREFLIGHT-REPORT.md`.*
+*End of FULL ChatGPT debrief. Canonical paste. Team email: `TEAM-UPDATE-EMAIL.md`. Preflight: `EDITOR-PREFLIGHT-REPORT.md`. Decisions: `DECISIONS.md`.*

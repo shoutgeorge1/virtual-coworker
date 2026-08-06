@@ -42,7 +42,7 @@
     }
   </style>
 </head>
-<body data-page="tracking.html" data-foot="Form + phone first<br />Job order · placement later">
+<body data-page="tracking.html" data-foot="New actions only<br />Form + phone → offline later">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
@@ -51,23 +51,90 @@
         <p class="kicker">Bidding ladder</p>
         <h1>Tracking</h1>
         <p>
-          Start simple. Learn from clicks, then clean form fills and phone calls.
-          Job order / placement come later — not Stage 1.
+          Build <strong>new, simple</strong> conversions for <code>VC_*</code>.
+          Do <strong>not</strong> reuse old account Zoho/Zapier conversion junk.
         </p>
       </header>
 
       <div class="notice">
         <p>
-          <strong>Rule:</strong> don’t bid on job order / placement until form + call data is clean.
-          Zoho offline values = TBD (basic Zoho seat ≠ ready to optimize). See <a href="lead-routing.html">Lead Routing</a>.
+          <strong>Rule:</strong> OPTIMIZATION path ≠ TRAFFIC READY gate.
+          Paid Enable needs a real inbox + test + named responder first.
+          Zoho / CallRail / offline values are parallel later.
         </p>
         <p style="margin-top:0.65rem">
-          <strong>Domain model (locked):</strong> one host with path markets
-          (<code>/us</code> · <code>/au</code> · <code>/ph</code> — not two country domains.
-          Still run <strong>separate GTM + GA4 per market</strong> (GTM_US / GTM_AU; GTM_PH if needed)
-          so US hire vs AU hire audiences and conversions stay clean. Custom domain is optional polish, not a traffic gate.
+          <strong>One inquiry ≠ two Primaries.</strong>
+          Form fill, Calendly book, and Zoho offline must not all fire as Primary for the same event.
+          See <a href="lead-routing.html">Lead Routing</a> ·
+          <a href="launch-control.html">Checklist</a>.
+        </p>
+        <p style="margin-top:0.65rem">
+          <strong>Domain (locked):</strong>
+          <code>www.virtualcoworker.app</code> with path markets
+          (<code>/us</code> · <code>/au</code> · <code>/ph</code>.
+          Still run <strong>separate GTM + GA4 per market</strong> (GTM_US / GTM_AU).
         </p>
       </div>
+
+      <section class="panel" id="stack">
+        <div class="panel-hd">
+          <p class="kicker">Locked direction</p>
+          <h2>Conversion / CRM stack</h2>
+        </div>
+        <div class="panel-bd">
+          <ol class="ladder">
+            <li>
+              <span class="when now">Stage 1</span>
+              <div>
+                <strong>Form fill → thank-you (primary online)</strong>
+                <span>Employer inquiry delivered after durable delivery. Calendly already on thank-you (US/AU) = secondary / separate — not a second Primary.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when now">Stage 1</span>
+              <div>
+                <strong>Phone call (basic now)</strong>
+                <span>Click-to-call OK to observe. Phone CTA ≠ qualified until CallRail (~1–2 months). Plan a real ~60s call conversion later.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when now">Prefer</span>
+              <div>
+                <strong>Direct integrations over weird Zapier</strong>
+                <span>Form → email / webhook / sheet first (TRAFFIC READY). Later Zoho API when Recruit vs CRM is identified. Document museum Zapier — don’t design around it.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when">CRM</span>
+              <div>
+                <strong>Zoho lead port (George has access)</strong>
+                <span>Figure where an inquiry lands. API preferred. No live write from us until path locked. Ask VC who owns CRM/admin.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when">Later</span>
+              <div>
+                <strong>Zoho ↔ Google Ads native + offline</strong>
+                <span>Audit/document now. Use later for qualified lead / job order / placement — higher value, not a duplicate Primary for the same form fill.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when">Later</span>
+              <div>
+                <strong>CallRail (~1–2 months)</strong>
+                <span>Layer when they get serious. Not Stage 1 required. Not a TRAFFIC READY blocker.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when">Later</span>
+              <div>
+                <strong>Maximize Conversions / value bidding</strong>
+                <span>Only after new form + phone actions are clean and campaign-specific goals are set on each VC_*. Stay Max Clicks until then.</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
 
       <section class="panel" id="ladder">
         <div class="panel-hd">
@@ -80,35 +147,28 @@
               <span class="when now">Now</span>
               <div>
                 <strong>Maximize Clicks</strong>
-                <span>Learn CTR and which searches click. Cheap signal while setup finishes.</span>
+                <span>Learn CTR and which searches click while TRAFFIC READY + new conversion wiring finish.</span>
               </div>
             </li>
             <li>
               <span class="when now">Stage 1</span>
               <div>
-                <strong>Form fill that actually arrives + phone call (~60 seconds)</strong>
-                <span>Form only counts if it lands in a real inbox. Phone ~60s is the bar.</span>
+                <strong>New form fill + basic phone</strong>
+                <span>Form only counts if it lands in a real inbox. Phone CTA observed; qualified call when CallRail exists.</span>
               </div>
             </li>
             <li>
               <span class="when">Later</span>
               <div>
                 <strong>Maximize Conversions</strong>
-                <span>Only after form + call tracking is clean — not on junk micros.</span>
+                <span>Only on the <em>new</em> actions — never on old account conversion baskets.</span>
               </div>
             </li>
             <li>
               <span class="when">Later</span>
               <div>
                 <strong>Job order + placement offline from Zoho</strong>
-                <span>Import with dollar values (TBD — not approved). Needs unique IDs so we don’t double-count.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when">Later</span>
-              <div>
-                <strong>ROAS / value bidding</strong>
-                <span>After offline values are trusted. Not Stage 1.</span>
+                <span>Via native Zoho↔Ads or offline import. Dollar values TBD — not approved. Unique IDs so we don’t double-count.</span>
               </div>
             </li>
           </ol>
@@ -123,12 +183,14 @@
         <div class="panel-bd">
           <ul class="glance-bullets">
             <li>
-              <strong>Conversion action audit</strong> —
-              In Ads (USA + AU): every action’s name, Primary vs Secondary, what fires it. Flag junk. Don’t delete old Zoho/Zapier actions yet.
+              <strong>Old conversion action map (observe only)</strong> —
+              In Ads (USA + AU): jot names / Primary vs Secondary. Flag junk.
+              <strong>Do not delete</strong> old Zoho/Zapier actions yet — and do <strong>not</strong> attach them to <code>VC_*</code>.
             </li>
             <li>
-              <strong>Zapier / lead inbox audit</strong> —
-              Map where form leads go today. Don’t rip it until you know what it does.
+              <strong>Lead path map</strong> —
+              Where do form leads go today (email / sheet / Zapier / Zoho)?
+              Prefer direct for Stage 1. Don’t rip Zapier blind — don’t design the new stack around it either.
             </li>
           </ul>
           <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">

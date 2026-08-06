@@ -1,6 +1,7 @@
 # Ads launch — Stage 1 v6 (local)
 
 **ChatGPT paste (start here):** [`CHATGPT-DEBRIEF.md`](./CHATGPT-DEBRIEF.md)  
+**Team email draft:** [`TEAM-UPDATE-EMAIL.md`](./TEAM-UPDATE-EMAIL.md) — paste to ChatGPT to polish  
 Deep audit: [`CHATGPT-MEGA-AUDIT.md`](./CHATGPT-MEGA-AUDIT.md)  
 Short index: [`FULL-BUILD-REPORT.md`](./FULL-BUILD-REPORT.md)
 
@@ -9,6 +10,7 @@ Short index: [`FULL-BUILD-REPORT.md`](./FULL-BUILD-REPORT.md)
 | # | Deliverable |
 |---|-------------|
 | DEBRIEF | [CHATGPT-DEBRIEF.md](./CHATGPT-DEBRIEF.md) |
+| TEAM | [TEAM-UPDATE-EMAIL.md](./TEAM-UPDATE-EMAIL.md) |
 | MEGA | [CHATGPT-MEGA-AUDIT.md](./CHATGPT-MEGA-AUDIT.md) |
 | 0 | [DECISIONS.md](./DECISIONS.md) · [LAUNCH-SHEET.md](./LAUNCH-SHEET.md) · [PHASED-ACTIVATION.md](./PHASED-ACTIVATION.md) |
 | 1 | [01-current-state-audit.md](./01-current-state-audit.md) |
