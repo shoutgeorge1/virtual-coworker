@@ -1,15 +1,16 @@
-# Stage 1 Google Ads + LP — FULL BUILD REPORT (v6 · RSA×3)
+# Stage 1 Google Ads + LP — FULL BUILD REPORT (v7 · Core→market home)
 
 **For:** ChatGPT audit + George review  
 **Generated:** 2026-08-05  
 **Package:** `ads-launch/google-ads-editor-import.csv`  
 **Builder:** `ads-launch/build_stage1_editor_package.py`  
-**LP version:** `lp_version=stage1-v6`  
+**LP version:** `lp_version=stage1-v7`  
 **Accounts:** USA `496-715-1855` · Australia `573-539-1940`  
 **All Ads entities in CSV:** **Paused**  
 **Live LP host:** `https://vision-three-alpha.vercel.app`  
 **Launch Control:** `https://vc-xray.vercel.app/launch-control`  
-**Casting commit on prod:** `8705ff05a92ffd89225294c02eb514f5ec1b445c`
+**Casting commit on prod:** `8705ff05a92ffd89225294c02eb514f5ec1b445c`  
+**Paid status:** **NOT READY FOR PAID TRAFFIC** (no durable lead delivery)
 
 ---
 
@@ -24,16 +25,16 @@ This file is the short index only.
 
 ## Executive verdict
 
-Stage 1 stack is **category-routed LPs + 2-campaign Search package per market** (Core + Roles; Brand deferred), **3 unique full RSAs per main AG**, evidence-backed from ~2y Editor exports, with honest events. Casting approved. Microsite nav/footer polish landed. **Not launch-ready** while real lead inbox/webhook, custom domain, GTM Ads mapping, Zoho/CallRail, and **explicit enable approval** remain open. Campaigns stay **Paused**. QA lead delivery is TEMPORARY log-only.
+Stage 1 stack is **three microsites** (`/us` · `/au` · `/ph`) + **2-campaign Search package per market** (Core + Roles; Brand deferred), **3 unique full RSAs per main AG**. **Core Final URLs = market home** (`/us`/`/au`); Roles = category slugs. Honest conversion contract: durable delivery only. WP-link audit in CI. **NOT READY FOR PAID TRAFFIC** until real lead inbox/webhook, domains, GTM mapping, and **explicit enable approval**. Campaigns stay **Paused**. Log-only = blocked mode (`conversion_eligible: false`).
 
 ---
 
 ## Architecture (locked)
 
-| Campaign | Share | Purpose |
-|----------|------:|---------|
-| `VC_{US\|AU}_S_CORE` | ~60% | High-intent VA / hire / PH-offshore |
-| `VC_{US\|AU}_S_ROLES` | ~40% | Digital · Social · Admin · Controlled |
+| Campaign | Share | Purpose | Final URL |
+|----------|------:|---------|-----------|
+| `VC_{US\|AU}_S_CORE` | ~60% | High-intent VA / hire / PH-offshore | `/{us\|au}` |
+| `VC_{US\|AU}_S_ROLES` | ~40% | Digital · Social · Admin · Controlled | `/{us\|au}/{slug}` |
 
 Brand **not** in launch package. RSA: **3 per main AG** (city-test 1).
 

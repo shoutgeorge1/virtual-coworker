@@ -29,7 +29,7 @@ MIRROR = ROOT / "xray" / "docs" / "ads-launch" / "google-ads-editor-import.csv"
 HL_MAX = 30
 DESC_MAX = 90
 PATH_MAX = 15
-LP_VERSION = "stage1-v6"
+LP_VERSION = "stage1-v7"
 
 # George-decidable Stage 1 defaults (see ads-launch/DECISIONS.md).
 # 2-campaign model: Core ~60% / Roles ~40% of Stage 1 daily spend.
@@ -3455,8 +3455,12 @@ def build_core(
     budget_ph: str,
     base_url: str,
 ) -> None:
-    """VC_*_S_CORE — high-intent VA / hire / PH-offshore (~60% budget)."""
-    admin_final = f"{base_url}/administrative-support"
+    """VC_*_S_CORE — high-intent VA / hire / PH-offshore (~60% budget).
+
+    Final URL = market employer home (/us or /au) — NOT administrative-support.
+    Category admin traffic lives under ROLES Administration_EA_PH.
+    """
+    core_final = base_url.rstrip("/")  # …/us or …/au
     cname = f"VC_{mkt}_S_CORE"
     append_campaign_shell(
         rows,
@@ -3464,8 +3468,8 @@ def build_core(
         loc=loc,
         budget_ph=budget_ph,
         comment=(
-            "Stage1 v6 CORE (~60%); Max Clicks; Search only; Exact+Phrase; "
-            "Paused; Brand deferred"
+            "Stage1 v7 CORE (~60%); Max Clicks; Search only; Exact+Phrase; "
+            "Paused; Brand deferred; Final URL=market home"
         ),
     )
 
@@ -3477,7 +3481,7 @@ def build_core(
             rows,
             cname=cname,
             ag=ag,
-            comment=f"CORE AG — {ag}; Final URL=administrative-support",
+            comment=f"CORE AG — {ag}; Final URL=market home",
         )
         append_kw_rows(
             rows,
@@ -3493,12 +3497,12 @@ def build_core(
                 rows,
                 cname=cname,
                 ag=ag,
-                final=admin_final,
+                final=core_final,
                 headlines=hs,
                 descs=ds,
                 p1=p1,
                 p2=p2,
-                comment=f"Core RSA {angle}; Final URL=administrative-support",
+                comment=f"Core RSA {angle}; Final URL=market home",
             )
 
     append_negatives_assets(
@@ -3509,25 +3513,25 @@ def build_core(
                 "Tell Us Who You Need",
                 "Employer hiring path",
                 "Form for businesses",
-                f"{admin_final}#gate",
+                f"{core_final}#gate",
             ),
             (
                 "How Hiring Works",
                 "Recruit, vet, shortlist",
                 "You interview talent",
-                admin_final,
+                core_final,
             ),
             (
-                "Hire PH VA",
-                "Philippines VA staffing",
-                "Category landing page",
-                admin_final,
+                "Admin Support Hire",
+                "EA / admin category LP",
+                "Role-specific landing",
+                f"{core_final}/administrative-support",
             ),
             (
-                f"{mkt} Employer Page",
-                "Dedicated landing page",
+                f"{mkt} Employer Home",
+                "Generic Core landing",
                 "Not WordPress homepage",
-                base_url,
+                core_final,
             ),
         ],
     )
@@ -3828,20 +3832,47 @@ def qa(rows: list[dict[str, str]]) -> None:
 
     for r in ads:
         fu = r.get("Final URL") or ""
+        camp = r.get("Campaign") or ""
         if "?role=" in fu:
             raise SystemExit(f"Legacy inert ?role= Final URL: {fu}")
-        if "virtualcoworker.com" in fu and "vision-three-alpha" not in fu:
+        if "virtualcoworker.com" in fu.lower():
             raise SystemExit(f"WP Final URL leak: {fu}")
         if "/us" not in fu and "/au" not in fu:
             raise SystemExit(f"Final URL missing market path: {fu}")
-        # Brand deferred — no generic-only market Final URLs on ads
-        if fu.rstrip("/").endswith("/us") or fu.rstrip("/").endswith("/au"):
-            raise SystemExit(f"Generic market Final URL (Brand deferred): {fu}")
-        if r["Tracking template"] not in ("", "{lpurl}") and "utm_source" in r[
-            "Tracking template"
-        ]:
-            if r.get("Final URL suffix") and "utm_source" in r["Final URL suffix"]:
-                raise SystemExit(f"Double UTM on {r['Campaign']}/{r['Ad Group']}")
+        # CORE → market employer home; ROLES → category slug paths.
+        is_core = camp.endswith("_S_CORE")
+        path_only = fu.split("?", 1)[0].split("#", 1)[0].rstrip("/")
+        ends_market_home = path_only.endswith("/us") or path_only.endswith("/au")
+        if is_core and not ends_market_home:
+            raise SystemExit(f"CORE Final URL must be market home (/us|/au): {fu}")
+        if not is_core and ends_market_home:
+            raise SystemExit(f"ROLES Final URL must be category path, not home: {fu}")
+        if not is_core:
+            known_slugs = (
+                "digital-marketing",
+                "social-media",
+                "accounting",
+                "bookkeeping",
+                "administrative-support",
+                "customer-service",
+                "hr",
+                "recruitment",
+                "sales",
+            )
+            if not any(f"/{slug}" in path_only for slug in known_slugs):
+                raise SystemExit(f"ROLES Final URL missing category slug: {fu}")
+        if r["Tracking template"] not in ("", TRACK):
+            raise SystemExit(
+                f"Unexpected tracking template (want {{lpurl}} only): "
+                f"{r['Tracking template']!r}"
+            )
+        if (
+            r["Tracking template"] not in ("", TRACK)
+            and "utm_source" in r["Tracking template"]
+            and r.get("Final URL suffix")
+            and "utm_source" in r["Final URL suffix"]
+        ):
+            raise SystemExit(f"Double UTM on {r['Campaign']}/{r['Ad Group']}")
 
     for r in rows:
         for col in ("Campaign Status", "Ad Group Status", "Keyword Status", "Ad Status"):

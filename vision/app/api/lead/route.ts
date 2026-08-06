@@ -113,11 +113,16 @@ export async function POST(req: NextRequest) {
   const dupKey = duplicateKey(email, market);
   const dup = checkDuplicate(dupKey);
   if (dup.duplicate) {
+    // Only conversion-eligible if a durable channel exists (log-only never is).
+    const durable = configuredChannels().channels.length > 0;
     return NextResponse.json({
       ok: true,
       stored: true,
       duplicate: true,
       submission_id: dup.submissionId,
+      delivery: durable ? "durable" : "log_only",
+      conversion_eligible: durable,
+      paid_ready: durable,
     });
   }
 
@@ -233,15 +238,21 @@ export async function POST(req: NextRequest) {
 
   if (!anyConfigured) {
     if (allowLogOnlyLeads()) {
-      console.warn("[lead] ALLOW_LOG_ONLY_LEADS=true — accepting to logs only (not production-ready)");
+      // Explicit blocked mode for local/QA — NOT paid-ready.
+      // Do not treat as conversion_eligible; client must not fire primary.
+      console.warn(
+        "[lead] ALLOW_LOG_ONLY_LEADS=true — log-only blocked mode (not paid-ready, not conversion-eligible)",
+      );
       rememberSubmission(dupKey, submissionId);
       return NextResponse.json({
         ok: true,
         stored: true,
         submission_id: submissionId,
         delivery: "log_only",
+        conversion_eligible: false,
+        paid_ready: false,
         deliveries,
-        warning: "log_only — not a live lead delivery channel",
+        warning: "log_only — not a live lead delivery channel; not conversion-eligible",
       });
     }
     console.error("[lead] BLOCKER: no delivery channel configured");
@@ -251,6 +262,8 @@ export async function POST(req: NextRequest) {
         stored: false,
         error: deliveryBlockerMessage(),
         code: "delivery_not_configured",
+        conversion_eligible: false,
+        paid_ready: false,
         deliveries,
       },
       { status: 503 },
@@ -262,9 +275,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         ok: false,
-        stored: true,
-        error: "Lead stored in logs but external delivery failed. Check server logs.",
+        stored: false,
+        error: "We could not deliver your request to the team. Please try again shortly.",
         code: "delivery_failed",
+        conversion_eligible: false,
+        paid_ready: false,
         deliveries,
       },
       { status: 502 },
@@ -276,6 +291,9 @@ export async function POST(req: NextRequest) {
     ok: true,
     stored: true,
     submission_id: submissionId,
+    delivery: "durable",
+    conversion_eligible: true,
+    paid_ready: true,
     deliveries,
     zoho_synced: Boolean((record as { zoho_synced?: boolean }).zoho_synced),
   });

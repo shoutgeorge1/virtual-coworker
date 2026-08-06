@@ -11,11 +11,12 @@ export const metadata: Metadata = {
 export default async function ThankYouPage({
   searchParams,
 }: {
-  searchParams: Promise<{ market?: string; sid?: string }>;
+  searchParams: Promise<{ market?: string; sid?: string; eligible?: string }>;
 }) {
   const sp = await searchParams;
   const market = sp?.market === "au" ? "au" : sp?.market === "us" ? "us" : "";
   const sid = sp?.sid || "";
+  const conversionEligible = sp?.eligible !== "0";
 
   return (
     <main
@@ -34,21 +35,29 @@ export default async function ThankYouPage({
           textTransform: "uppercase",
         }}
       >
-        Virtual Coworker · Employer inquiry confirmed
+        Virtual Coworker ·{" "}
+        {conversionEligible ? "Employer inquiry confirmed" : "QA / log-only receipt"}
       </p>
       <h1 style={{ fontSize: "1.75rem", margin: "0.5rem 0 0.75rem", color: "#214873" }}>
-        Thanks — we got your request.
+        {conversionEligible
+          ? "Thanks — we got your request."
+          : "Request logged (delivery not live)."}
       </h1>
       <p style={{ color: "#2e333c", lineHeight: 1.6 }}>
-        A team member will follow up using the details you provided. This confirmation only
-        appears after your employer inquiry was accepted by our server.
+        {conversionEligible
+          ? "A team member will follow up using the details you provided. This confirmation only appears after your employer inquiry was accepted and delivered."
+          : "This environment is in log-only / blocked delivery mode. Your details were written to server logs for QA — they were not delivered to a live inbox, and this is not a paid conversion."}
       </p>
       {sid ? (
         <p style={{ color: "#5a6270", fontSize: "0.85rem", marginTop: "1rem" }}>
           Reference: <code>{sid}</code>
         </p>
       ) : null}
-      <ThankYouClient market={market} submissionId={sid} />
+      <ThankYouClient
+        market={market}
+        submissionId={sid}
+        conversionEligible={conversionEligible}
+      />
       <p style={{ marginTop: "1.5rem" }}>
         {market === "au" ? (
           <Link href="/au" style={{ color: "#0f6e6a" }}>

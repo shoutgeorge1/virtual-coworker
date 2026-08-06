@@ -8,8 +8,9 @@ import type { AbVariant } from "../../config/categories";
 const SESSION_KEY = "vc_exit_intent_seen";
 
 /**
- * Soft employer conversion overlay — exit-intent OR one timed nudge.
+ * Soft employer conversion assist — exit-intent OR one timed nudge.
  * Employer microsites only. Never mount on /ph.
+ * Behind NEXT_PUBLIC_ENABLE_EXIT_INTENT=true + once/session frequency cap.
  */
 export default function ExitIntent({
   market,
@@ -23,8 +24,12 @@ export default function ExitIntent({
   variant?: AbVariant;
 }) {
   const [open, setOpen] = useState(false);
+  const enabled =
+    typeof process !== "undefined" &&
+    (process.env.NEXT_PUBLIC_ENABLE_EXIT_INTENT || "").trim() === "true";
 
   useEffect(() => {
+    if (!enabled) return;
     if (typeof window === "undefined") return;
     try {
       if (sessionStorage.getItem(SESSION_KEY) === "1") return;
@@ -42,6 +47,14 @@ export default function ExitIntent({
         /* ignore */
       }
       setOpen(true);
+      trackEvent("conversion_assist_opened", {
+        market,
+        category: category || "",
+        variant: variant || "",
+        reason,
+        assist_type: "exit_intent",
+      });
+      // Legacy alias for existing GTM drafts
       trackEvent("exit_intent_shown", {
         market,
         category: category || "",
@@ -61,9 +74,9 @@ export default function ExitIntent({
       window.clearTimeout(timer);
       document.removeEventListener("mouseout", onLeave);
     };
-  }, [market, category, variant]);
+  }, [enabled, market, category, variant]);
 
-  if (!open) return null;
+  if (!enabled || !open) return null;
 
   const dismiss = () => setOpen(false);
 
@@ -92,6 +105,12 @@ export default function ExitIntent({
             href={gateHref}
             className="exit-intent-primary"
             onClick={() => {
+              trackEvent("conversion_assist_cta_clicked", {
+                market,
+                category: category || "",
+                variant: variant || "",
+                assist_type: "exit_intent",
+              });
               trackEvent("exit_intent_accepted", {
                 market,
                 category: category || "",

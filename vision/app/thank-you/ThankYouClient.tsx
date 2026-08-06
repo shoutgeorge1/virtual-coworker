@@ -7,14 +7,20 @@ import { trackValidEmployerSubmit } from "../../lib/tracking";
 export default function ThankYouClient({
   market,
   submissionId,
+  conversionEligible = true,
 }: {
   market: string;
   submissionId: string;
+  conversionEligible?: boolean;
 }) {
   useEffect(() => {
     if (!submissionId || (market !== "us" && market !== "au")) return;
-    trackValidEmployerSubmit({ market, submissionId });
-  }, [market, submissionId]);
+    trackValidEmployerSubmit({
+      market,
+      submissionId,
+      conversionEligible,
+    });
+  }, [market, submissionId, conversionEligible]);
 
   return null;
 }

@@ -130,16 +130,30 @@ export function resolvePhone(market: MarketId): {
   };
 }
 
+const WP_HOST_RE = /virtualcoworker\.com(\.au)?/i;
+
+/**
+ * Job-seeker exit stays inside the PH microsite.
+ * Never return a WordPress careers URL — reject env misconfiguration.
+ */
 export function resolveCareersUrl(): string {
   const configured = (process.env.NEXT_PUBLIC_CAREERS_URL || "").trim();
-  if (configured) return configured;
-  // Explicit blocker path — /ph is a local concept page, not a live careers proof
+  if (configured) {
+    if (WP_HOST_RE.test(configured)) {
+      console.error(
+        "[careers] NEXT_PUBLIC_CAREERS_URL points at WordPress — falling back to /ph",
+      );
+      return MARKETS.us.careersUrlFallback;
+    }
+    return configured;
+  }
   return MARKETS.us.careersUrlFallback;
 }
 
-/** True when careers URL is still the local fallback (blocker for paid launch). */
+/** True when careers env was set to a WordPress host (misconfig). /ph itself is valid. */
 export function careersUrlIsBlocker(): boolean {
-  return !(process.env.NEXT_PUBLIC_CAREERS_URL || "").trim();
+  const configured = (process.env.NEXT_PUBLIC_CAREERS_URL || "").trim();
+  return Boolean(configured && WP_HOST_RE.test(configured));
 }
 
 export const PILOT = {
@@ -148,5 +162,5 @@ export const PILOT = {
     "Can Google Search generate qualified US and Australian employer inquiries at an acceptable cost?",
   primaryContact: "Braden",
   gateVariant: "inline",
-  lpVersion: "stage1-v7-micro",
+  lpVersion: "stage1-v7",
 } as const;

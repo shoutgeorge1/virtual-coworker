@@ -1,17 +1,21 @@
 /**
  * Client-side attribution + Stage 1 dataLayer helpers.
- * No hard-coded Ads conversion IDs. Primary fires only after server accept,
- * once per submission id (refresh-safe).
+ * No hard-coded Ads conversion IDs. Primary fires only after server accept
+ * with durable delivery success, once per submission id (refresh-safe).
  *
  * Event names (Stage 1 contract):
  * - employer_gate_selected
  * - employer_form_started
- * - employer_inquiry_submitted  (primary candidate — not a job order)
- * - phone_cta_clicked          (not a qualified call)
- * - job_seeker_diverted
+ * - employer_form_validation_error
+ * - employer_inquiry_submitted          (primary — durable delivery only)
+ * - employer_inquiry_delivery_failed
+ * - phone_cta_clicked                   (not a qualified call)
+ * - conversion_assist_opened
+ * - conversion_assist_cta_clicked
+ * - job_seeker_redirected               (interaction only — never primary)
  */
 
-export const LP_VERSION = "stage1-v5";
+export const LP_VERSION = "stage1-v7";
 
 export type Attribution = {
   utm_source: string;
@@ -185,8 +189,9 @@ function markPrimaryFired(submissionId: string) {
 }
 
 /**
- * Primary conversion candidate after server accept.
+ * Primary conversion candidate after server accept + durable delivery.
  * Name: employer_inquiry_submitted — NOT job_order / placement / qualified_call.
+ * Never fire for log_only / conversion_eligible=false.
  */
 export function trackValidEmployerSubmit(opts: {
   market: string;
@@ -194,7 +199,16 @@ export function trackValidEmployerSubmit(opts: {
   role?: string;
   category?: string;
   variant?: string;
+  conversionEligible?: boolean;
 }) {
+  if (opts.conversionEligible === false) {
+    trackEvent("employer_inquiry_log_only", {
+      market: opts.market,
+      submission_id: opts.submissionId,
+      primary_eligible: false,
+    });
+    return;
+  }
   if (!opts.submissionId || alreadyFiredPrimary(opts.submissionId)) {
     trackEvent("employer_inquiry_submitted_deduped", {
       market: opts.market,

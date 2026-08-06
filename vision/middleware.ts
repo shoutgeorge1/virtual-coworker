@@ -25,6 +25,16 @@ const ROLE_REDIRECT: Record<string, string> = {
 export function middleware(req: NextRequest) {
   const { pathname, searchParams } = req.nextUrl;
 
+  // Canonical HR slug: /{us|au}/human-resources → /{us|au}/hr
+  // Preserve GCLID / WBRAID / GBRAID / UTMs / variant query string.
+  const hrAlias = pathname.match(/^\/(us|au)\/human-resources\/?$/i);
+  if (hrAlias) {
+    const url = req.nextUrl.clone();
+    url.pathname = `/${hrAlias[1]}/hr`;
+    const res = NextResponse.redirect(url, 308);
+    return withAbCookie(req, res);
+  }
+
   // Backward-compat: /us?role=bookkeeping → /us/bookkeeping (preserve other params)
   if (pathname === "/us" || pathname === "/au") {
     const role = searchParams.get("role");

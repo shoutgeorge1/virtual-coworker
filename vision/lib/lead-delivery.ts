@@ -38,7 +38,11 @@ export function configuredChannels(env: NodeJS.ProcessEnv = process.env): {
   return { channels, emailToUs, emailToAu, from, resend, webhook, sheet, zoho };
 }
 
-/** Explicit opt-in for local QA without a real inbox. Never default-on in production. */
+/**
+ * Explicit opt-in for local/QA log-only blocked mode.
+ * Never default-on. Never conversion-eligible. Never paid-ready.
+ * Production paid traffic requires a real email/webhook/sheet channel.
+ */
 export function allowLogOnlyLeads(env: NodeJS.ProcessEnv = process.env): boolean {
   return (env.ALLOW_LOG_ONLY_LEADS || "").trim() === "true";
 }

@@ -9,7 +9,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "audit:wp-links": "vitest run lib/no-wp-links.test.ts",
+    "validate:routes": "node scripts/validate-routes.mjs"
   },
   "dependencies": {
     "next": "^15.4.5",

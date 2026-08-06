@@ -160,14 +160,8 @@ export default function LeadGate({
   function onJobSeekerGate() {
     setIntent("job_seeker");
     setError(null);
-    trackEvent("job_seeker_diverted", {
-      market,
-      category: category || "",
-      variant: variant || "",
-      gate_variant: "inline",
-      intent: "job_seeker",
-    });
-    // No employer form, no employer-lead conversion, no sales pipeline.
+    // Interaction only — primary conversion never fires for job seekers.
+    // job_seeker_redirected fires when they click through to /ph.
   }
 
   function validateClient(fd: FormData): Record<string, string> {
@@ -187,7 +181,15 @@ export default function LeadGate({
     const fd = new FormData(form);
     const errs = validateClient(fd);
     setFieldErrors(errs);
-    if (Object.keys(errs).length) return;
+    if (Object.keys(errs).length) {
+      trackEvent("employer_form_validation_error", {
+        market,
+        category: category || "",
+        variant: variant || "",
+        fields: Object.keys(errs).join(","),
+      });
+      return;
+    }
 
     setSubmitting(true);
     const attr = readAttribution(market, {
@@ -207,7 +209,7 @@ export default function LeadGate({
       website: String(fd.get("website") || ""),
       form_started_at: startedAt || Date.now(),
       market,
-      lp_version: attr.lp_version || "stage1-v5",
+      lp_version: attr.lp_version || "stage1-v7",
       submitted_at: new Date().toISOString(),
     };
 
@@ -224,6 +226,7 @@ export default function LeadGate({
         submission_id?: string;
         duplicate?: boolean;
         delivery?: string;
+        conversion_eligible?: boolean;
       };
 
       if (!res.ok || !data.ok || !data.submission_id) {
@@ -231,6 +234,19 @@ export default function LeadGate({
           trackEvent("spam_or_applicant_rejected", {
             market,
             code: data.code || "rejected",
+          });
+        }
+        if (
+          data.code === "delivery_failed" ||
+          data.code === "delivery_not_configured" ||
+          res.status === 502 ||
+          res.status === 503
+        ) {
+          trackEvent("employer_inquiry_delivery_failed", {
+            market,
+            category: category || "",
+            variant: variant || "",
+            code: data.code || `http_${res.status}`,
           });
         }
         setError(
@@ -242,12 +258,14 @@ export default function LeadGate({
         return;
       }
 
+      const eligible = data.conversion_eligible !== false && data.delivery !== "log_only";
       trackValidEmployerSubmit({
         market,
         submissionId: data.submission_id,
         role: role || "",
         category: category || "",
         variant: variant || "",
+        conversionEligible: eligible,
       });
       setDone(true);
       setSubmitting(false);
@@ -257,8 +275,15 @@ export default function LeadGate({
       });
       if (category) q.set("category", category);
       if (variant) q.set("variant", variant);
+      if (!eligible) q.set("eligible", "0");
       router.push(`/thank-you?${q.toString()}`);
     } catch {
+      trackEvent("employer_inquiry_delivery_failed", {
+        market,
+        category: category || "",
+        variant: variant || "",
+        code: "network_error",
+      });
       setError(
         "Network error — your request was not sent. Please try again" +
           (copy.phoneHref ? ", or call us." : "."),
@@ -319,7 +344,21 @@ export default function LeadGate({
             <div className="gate-divert">
               <strong>{copy.divertTitle}</strong>
               <p>{copy.divertBody}</p>
-              <a href={copy.careersHref} className="gate-submit">
+              <a
+                href={copy.careersHref}
+                className="gate-submit"
+                onClick={() =>
+                  trackEvent("job_seeker_redirected", {
+                    market,
+                    category: category || "",
+                    variant: variant || "",
+                    gate_variant: "inline",
+                    intent: "job_seeker",
+                    destination: copy.careersHref,
+                    primary_eligible: false,
+                  })
+                }
+              >
                 {copy.divertCta}
               </a>
             </div>

@@ -1,7 +1,7 @@
-# 06 — Stage 1 campaign architecture (v6)
+# 06 — Stage 1 campaign architecture (v7)
 
 **Accounts:** USA `496-715-1855` · AU `573-539-1940`  
-**Package:** `ads-launch/google-ads-editor-import.csv` (v6) · builder `build_stage1_editor_package.py`  
+**Package:** `ads-launch/google-ads-editor-import.csv` (v7) · builder `build_stage1_editor_package.py`  
 **All entities:** **Paused**  
 **Match types:** Exact + Phrase positives only · **no** Broad / PMax / DSA / competitor farm  
 **Brand:** **Deferred** — not in this package
@@ -12,8 +12,8 @@
 
 ```
 VC_{MKT}_S_CORE          (~60% budget)
-  ├─ Hire_VA_PH          → /{mkt}/administrative-support
-  └─ Offshore_VA_PH      → /{mkt}/administrative-support
+  ├─ Hire_VA_PH          → /{mkt}   (market employer home)
+  └─ Offshore_VA_PH      → /{mkt}   (market employer home)
 
 VC_{MKT}_S_ROLES         (~40% budget)
   ├─ Digital             Digital_Marketing_Hire_PH · Outsource_PH → /digital-marketing
@@ -39,7 +39,7 @@ VC_{MKT}_S_ROLES         (~40% budget)
 | Bid | Maximize Clicks · Max CPC US `$8` / AU `A$6` |
 | Budget | US Core `$75` / Roles `$50` · AU Core `A$75` / Roles `A$50` |
 | Tracking template | `{lpurl}` only |
-| Final URL suffix | UTMs + `lp_version=stage1-v6` (**once**) |
+| Final URL suffix | UTMs + `lp_version=stage1-v7` (**once**) |
 
 **Monthly implication (placeholders):** US ≈ $125/day ≈ **$3.8k/mo**; AU ≈ A$125/day ≈ **A$3.8k/mo**. Fits inside a **$10–20k/account** monthly budget story with headroom to raise dailies after inquiry quality is trusted.
 
@@ -49,7 +49,7 @@ VC_{MKT}_S_ROLES         (~40% budget)
 
 | Layer | Final URL |
 |-------|-----------|
-| Core | `…/{us\|au}/administrative-support` |
+| Core | `…/{us\|au}` (generic employer home — not admin category) |
 | Roles Digital/Social/Admin/Controlled | `…/{us\|au}/{category-slug}` |
 
 Sitelinks → same host microsite only (no WordPress). No Brand generics in this CSV.
