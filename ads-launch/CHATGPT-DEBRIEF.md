@@ -8,7 +8,7 @@
 |-------|-------|
 | Generated | 2026-08-06 (audit + conversion/CRM stack lock + team email) |
 | Branch | `vision-demo` |
-| Commit SHA | `9a68b451a1c16ac24420262f2cd2632c40e251d7` |
+| Commit SHA | `67c2475fb7d72589713ddb95bc388c829e8a3440` (vision-demo tip) |
 | Repo | `/Users/george/Developer/virtual-coworker` |
 | Package | `lp_version=stage1-v7` · Editor hygiene + isolation + Phase 1 manifests |
 | Builder | `ads-launch/build_stage1_editor_package.py` |
