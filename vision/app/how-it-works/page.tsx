@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
+import { HOW_STEP_ICONS } from "../components/MicroIcons";
 import type { MarketId } from "../../config/markets";
 import type { SiteSurface } from "../../config/site";
 
@@ -126,8 +127,8 @@ export default async function HowItWorksPage({
           <img
             src="/brand/hero-hub-map-b.jpg"
             alt=""
-            width={1600}
-            height={900}
+            width={1536}
+            height={1024}
           />
         </div>
         <div className="micro-hero-veil" aria-hidden />
@@ -161,18 +162,24 @@ export default async function HowItWorksPage({
 
       <section className="micro-section">
         <div className="how-steps">
-          {steps.map((s) => (
-            <article className="how-step" key={s.k}>
-              <em>{s.k}</em>
-              <h2>{s.t}</h2>
-              <p>{s.d}</p>
-              <ul>
-                {s.points.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
+          {steps.map((s, i) => {
+            const Icon = HOW_STEP_ICONS[i];
+            return (
+              <article className="how-step" key={s.k}>
+                <span className="micro-icon" aria-hidden>
+                  <Icon />
+                </span>
+                <em>{s.k}</em>
+                <h2>{s.t}</h2>
+                <p>{s.d}</p>
+                <ul>
+                  {s.points.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+              </article>
+            );
+          })}
         </div>
       </section>
 

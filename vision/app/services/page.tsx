@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
+import { ServiceIcon } from "../components/MicroIcons";
 import { CATEGORY_SLUGS, CATEGORIES } from "../../config/categories";
 import type { MarketId } from "../../config/markets";
 import type { SiteSurface } from "../../config/site";
@@ -44,8 +45,8 @@ export default async function ServicesPage({
           <img
             src="/brand/hero-hub-map-b.jpg"
             alt=""
-            width={1600}
-            height={900}
+            width={1536}
+            height={1024}
           />
         </div>
         <div className="micro-hero-veil" aria-hidden />
@@ -83,6 +84,9 @@ export default async function ServicesPage({
             const c = CATEGORIES[slug];
             return (
               <article className="services-card" key={slug}>
+                <span className="micro-icon" aria-hidden>
+                  <ServiceIcon slug={slug} />
+                </span>
                 <em>{c.shortLabel}</em>
                 <h2>{c.label}</h2>
                 <p>{c.description[market]}</p>

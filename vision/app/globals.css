@@ -2115,7 +2115,7 @@ a.gate-call:hover {
 .micro-hero--map {
   position: relative;
   max-width: none;
-  min-height: clamp(17.5rem, 46vw, 26rem);
+  min-height: clamp(18rem, 42vw, 24rem);
   padding: clamp(2.75rem, 7vw, 5rem) var(--shell) clamp(2rem, 4vw, 3rem);
   overflow: hidden;
   isolation: isolate;
@@ -2129,24 +2129,19 @@ a.gate-call:hover {
   inset: 0;
   z-index: -2;
   background: #0c1826;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Full map in frame — contain, no zoom-crop of continents */
 .micro-hero-map img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 42% 45%;
+  object-fit: contain;
+  object-position: center center;
   display: block;
-  opacity: 0.92;
-}
-
-/* Market framing: keep US cluster vs AU/PH cluster more present */
-.micro-hero--us .micro-hero-map img {
-  object-position: 22% 42%;
-}
-
-.micro-hero--au .micro-hero-map img {
-  object-position: 78% 52%;
+  opacity: 1;
 }
 
 .micro-hero-veil {
@@ -2157,35 +2152,36 @@ a.gate-call:hover {
   background:
     linear-gradient(
       105deg,
-      rgba(12, 24, 38, 0.92) 0%,
-      rgba(12, 24, 38, 0.72) 34%,
-      rgba(12, 24, 38, 0.38) 58%,
-      rgba(12, 24, 38, 0.55) 100%
+      rgba(12, 24, 38, 0.72) 0%,
+      rgba(12, 24, 38, 0.42) 32%,
+      rgba(12, 24, 38, 0.18) 58%,
+      rgba(12, 24, 38, 0.32) 100%
     ),
     linear-gradient(
       to bottom,
-      rgba(12, 24, 38, 0.35) 0%,
-      transparent 28%,
-      transparent 62%,
-      rgba(12, 24, 38, 0.82) 100%
+      rgba(12, 24, 38, 0.22) 0%,
+      transparent 30%,
+      transparent 58%,
+      rgba(12, 24, 38, 0.62) 100%
     );
 }
 
+/* AU: mirror veil so copy side still reads cleanly */
 .micro-hero--au .micro-hero-veil {
   background:
     linear-gradient(
       255deg,
-      rgba(12, 24, 38, 0.9) 0%,
-      rgba(12, 24, 38, 0.68) 36%,
-      rgba(12, 24, 38, 0.4) 60%,
-      rgba(12, 24, 38, 0.58) 100%
+      rgba(12, 24, 38, 0.7) 0%,
+      rgba(12, 24, 38, 0.4) 34%,
+      rgba(12, 24, 38, 0.18) 58%,
+      rgba(12, 24, 38, 0.34) 100%
     ),
     linear-gradient(
       to bottom,
-      rgba(12, 24, 38, 0.38) 0%,
-      transparent 28%,
-      transparent 62%,
-      rgba(12, 24, 38, 0.84) 100%
+      rgba(12, 24, 38, 0.24) 0%,
+      transparent 30%,
+      transparent 58%,
+      rgba(12, 24, 38, 0.64) 100%
     );
 }
 
@@ -2231,19 +2227,7 @@ a.gate-call:hover {
 
 @media (max-width: 700px) {
   .micro-hero--map {
-    min-height: clamp(16rem, 78vw, 22rem);
-  }
-
-  .micro-hero-map img {
-    opacity: 0.78;
-  }
-
-  .micro-hero--us .micro-hero-map img {
-    object-position: 28% 40%;
-  }
-
-  .micro-hero--au .micro-hero-map img {
-    object-position: 72% 48%;
+    min-height: clamp(15.5rem, 72vw, 20rem);
   }
 
   .micro-hero-veil,
@@ -2251,16 +2235,16 @@ a.gate-call:hover {
     background:
       linear-gradient(
         180deg,
-        rgba(12, 24, 38, 0.72) 0%,
-        rgba(12, 24, 38, 0.55) 38%,
-        rgba(12, 24, 38, 0.78) 72%,
-        rgba(12, 24, 38, 0.92) 100%
+        rgba(12, 24, 38, 0.48) 0%,
+        rgba(12, 24, 38, 0.28) 36%,
+        rgba(12, 24, 38, 0.5) 68%,
+        rgba(12, 24, 38, 0.72) 100%
       ),
       linear-gradient(
         105deg,
-        rgba(12, 24, 38, 0.88) 0%,
-        rgba(12, 24, 38, 0.55) 55%,
-        rgba(12, 24, 38, 0.7) 100%
+        rgba(12, 24, 38, 0.58) 0%,
+        rgba(12, 24, 38, 0.28) 55%,
+        rgba(12, 24, 38, 0.42) 100%
       );
   }
 }
@@ -2308,10 +2292,34 @@ a.gate-call:hover {
   margin: 0 auto;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .how-steps {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+@media (min-width: 1100px) {
+  .how-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.micro-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  margin-bottom: 0.85rem;
+  border-radius: 12px;
+  color: var(--vc-cyan);
+  background: rgba(51, 222, 216, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(51, 222, 216, 0.28);
+}
+
+.micro-icon svg {
+  width: 1.28rem;
+  height: 1.28rem;
 }
 
 .how-step {
@@ -2396,6 +2404,17 @@ a.gate-call:hover {
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.05);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.services-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(51, 222, 216, 0.28);
+  transform: translateY(-2px);
+}
+
+.services-card .micro-icon {
+  margin-bottom: 0.75rem;
 }
 
 .services-card em {
