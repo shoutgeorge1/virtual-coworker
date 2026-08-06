@@ -12,7 +12,7 @@
   <style>
     .people-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 0.65rem;
     }
     .person-card {
@@ -38,8 +38,10 @@
       font-size: 0.86rem;
       font-weight: 600;
       color: var(--ink);
+      overflow-wrap: anywhere;
     }
-    .person-card .email.get {
+    .person-card .email a { color: inherit; }
+    .person-card .email.ask {
       color: var(--warn);
       font-weight: 600;
     }
@@ -56,6 +58,19 @@
     }
     .short-list li:last-child { border-bottom: none; }
     .short-list strong { color: var(--ink); }
+    .split-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    @media (max-width: 760px) {
+      .split-2 { grid-template-columns: 1fr; }
+    }
+    .split-2 h3 {
+      margin: 0 0 0.4rem;
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
   </style>
 </head>
 <body data-page="lead-routing.html" data-foot="Where leads go<br />Need a real inbox before ads spend">
@@ -67,61 +82,98 @@
         <p class="kicker">After someone fills the form or calls</p>
         <h1>Lead Routing</h1>
         <p>
-          Form or phone → a real place leads actually arrive → their team works it.
-          Ads stay off until that inbox exists. Paid pages do not use WordPress.
+          Form or phone → a real inbox → their team answers.
+          Ads stay off until that path works. No WordPress on paid pages.
         </p>
       </header>
 
       <div class="notice">
         <p>
-          <strong>George’s emails:</strong>
-          Zoho One access is <code>george@shoutgeorge.com</code> (domain bought for that).
-          Team still often writes <code>shoutgeorge1@gmail.com</code> — move them to the new address.
-          They prefer chat over email when possible.
+          <strong>George:</strong>
+          use <code>george@shoutgeorge.com</code> (Zoho One).
+          Old address <code>shoutgeorge1@gmail.com</code> — move the team off it.
+          Prefer Google Chat when they offer it.
         </p>
       </div>
 
       <section class="panel" id="people">
         <div class="panel-hd">
-          <p class="kicker">Who handles what</p>
-          <h2>Team</h2>
+          <p class="kicker">From Gmail · Aug 2026</p>
+          <h2>People + emails</h2>
         </div>
         <div class="panel-bd">
           <div class="people-grid">
             <article class="person-card">
-              <h3>Caitlin</h3>
-              <p class="role">Ops + lead quality. May start maternity leave anytime.</p>
-              <p class="email get">get email</p>
+              <h3>Braden Yuill</h3>
+              <p class="role">CEO / founder. Main day-to-day contact (Caitlin leave).</p>
+              <p class="email"><a href="mailto:braden@virtualcoworker.com">braden@virtualcoworker.com</a></p>
             </article>
             <article class="person-card">
-              <h3>Braden</h3>
-              <p class="role">Day-to-day takeover while Caitlin is out.</p>
-              <p class="email get">get email</p>
+              <h3>Caitlin McCartan</h3>
+              <p class="role">Ops. May start maternity leave anytime. Still on Chat.</p>
+              <p class="email"><a href="mailto:caitlin@virtualcoworker.com">caitlin@virtualcoworker.com</a></p>
             </article>
             <article class="person-card">
-              <h3>Raffie</h3>
-              <p class="role">PH · Zoho + answers NA phone <code>310-426-8776</code>.</p>
-              <p class="email get">get email</p>
+              <h3>Raffie Ramos</h3>
+              <p class="role">PH · IT, phones, Zoho help. Answers NA <code>310-426-8776</code>.</p>
+              <p class="email"><a href="mailto:raffie@virtualcoworker.com">raffie@virtualcoworker.com</a></p>
             </article>
             <article class="person-card">
               <h3>Cheyenne</h3>
-              <p class="role">Lead quality (Los Angeles).</p>
-              <p class="email get">get email</p>
+              <p class="role">US Regional Manager · sales + lead quality (LA area).</p>
+              <p class="email"><a href="mailto:cheyenne@virtualcoworker.com">cheyenne@virtualcoworker.com</a></p>
+            </article>
+            <article class="person-card">
+              <h3>Holly</h3>
+              <p class="role">AU Regional Manager · sales + lead quality (new in role).</p>
+              <p class="email"><a href="mailto:holly@virtualcoworker.com">holly@virtualcoworker.com</a></p>
             </article>
             <article class="person-card">
               <h3>Pauly</h3>
-              <p class="role">Lead quality.</p>
-              <p class="email get">get email</p>
+              <p class="role">Lead quality (earlier notes).</p>
+              <p class="email ask">email unknown — ask</p>
             </article>
             <article class="person-card">
               <h3>Essa</h3>
-              <p class="role">AI and internship initiatives.</p>
-              <p class="email get">get email</p>
+              <p class="role">AI / internship (earlier notes). Who’s Who names Ash as AI intern — no email found.</p>
+              <p class="email ask">email unknown — ask</p>
             </article>
           </div>
           <p class="muted" style="margin:0.85rem 0 0;font-size:0.88rem">
-            Prefer chat. Get the official chat platform + invite George.
-            No invented emails — ask for each address.
+            Source: Caitlin “Who’s Who” + live VC threads. No invented addresses.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel" id="zoho">
+        <div class="panel-hd">
+          <p class="kicker">CRM READY · parallel</p>
+          <h2>Zoho — what you can do now</h2>
+        </div>
+        <div class="panel-bd">
+          <div class="split-2">
+            <div>
+              <h3>Basic seat (you have this)</h3>
+              <ul class="short-list">
+                <li><strong>Sign in and look around</strong> — click modules, open records, learn the shape.</li>
+                <li><strong>Export small lists if UI allows</strong> — Accounts / Contacts / Job Orders / Placements when visible.</li>
+                <li><strong>Note what you see</strong> — product looks like CRM; no Admin / no API yet.</li>
+                <li><strong>Ask Raffie or Caitlin</strong> when something is locked or confusing.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Deferred (not a traffic gate)</h3>
+              <ul class="short-list">
+                <li><strong>Admin / API / OAuth</strong> — not now. No live write from our code.</li>
+                <li><strong>Recruit vs CRM TBD</strong> — don’t assume standard Leads funnel.</li>
+                <li><strong>Field map + Ads offline</strong> — after we know where a new inquiry should land.</li>
+                <li><strong>Account → Contact → Job Order → Placement</strong> — discovery later.</li>
+              </ul>
+            </div>
+          </div>
+          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
+            <strong>Zoho ≠ TRAFFIC READY.</strong> Ads can go live on a real inbox + test lead + named person who answers — even while Zoho stays half-baked.
+            Detail: <a href="launch-control.html">Checklist</a>.
           </p>
         </div>
       </section>
@@ -137,7 +189,7 @@
               <strong>NA:</strong> <code>310-426-8776</code> — Raffie answers. Do not port.
             </li>
             <li>
-              <strong>AU:</strong> Form-primary for Stage 1. No fake AU number on the LP.
+              <strong>AU:</strong> Form-first for Stage 1. No fake AU number on the LP.
             </li>
             <li>
               <strong>CallRail:</strong> Later. Not live yet.
@@ -154,13 +206,13 @@
         <div class="panel-bd">
           <ul class="short-list">
             <li>
-              <strong>Employer form or solid phone call</strong> — job seekers don’t count as Ads conversions.
+              <strong>Employer form or solid phone call</strong> — job seekers don’t count.
             </li>
             <li>
-              <strong>Lead lands in a real inbox</strong> — email is fine for Stage 1. Log-only is temporary, not paid-ready.
+              <strong>Lead lands in a real inbox</strong> — email is fine. Silent log ≠ paid-ready.
             </li>
             <li>
-              <strong>Keep click IDs + UTMs with the lead</strong> — so Zoho → Ads offline can work later.
+              <strong>Keep click IDs + UTMs with the lead</strong> — for Zoho → Ads later.
             </li>
             <li>
               <strong>Don’t optimize ads to job order / placement yet</strong> — clean form + call data first.

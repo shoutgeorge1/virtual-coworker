@@ -15,26 +15,66 @@
     .page-head p { font-size: 0.94rem; overflow-wrap: anywhere; }
     .lc-start {
       margin: 0 0 0.9rem;
-      padding: 0.65rem 0.95rem;
+      padding: 0.75rem 0.95rem;
       border-radius: 8px;
-      border: 1px solid var(--edge);
-      background: var(--panel-inset);
-      font-size: 0.92rem;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
+      font-size: 0.95rem;
       color: var(--body);
       line-height: 1.4;
     }
     .lc-start strong { color: var(--ink); }
-    .lc-logic {
-      margin: 0 0 0.9rem;
-      padding: 0.55rem 0.95rem;
-      border-radius: 8px;
-      border: 1px solid var(--tint-cool-edge);
-      background: var(--tint-cool);
-      font-size: 0.88rem;
-      color: var(--body);
-      line-height: 1.4;
+    .lc-ready-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.65rem;
+      margin: 0 0 0.85rem;
     }
-    .lc-logic strong { color: var(--ink); }
+    @media (max-width: 900px) {
+      .lc-ready-grid { grid-template-columns: 1fr; }
+    }
+    .lc-ready-card {
+      border-radius: 8px;
+      border: 1px solid var(--edge);
+      background: var(--panel-inset);
+      padding: 0.7rem 0.8rem;
+      min-width: 0;
+    }
+    .lc-ready-card .lc-ready-label {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.45rem;
+    }
+    .lc-ready-card .lc-ready-label strong {
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+    }
+    .lc-ready-card ul {
+      margin: 0;
+      padding: 0 0 0 1.1rem;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      color: var(--body);
+    }
+    .lc-ready-card li { margin: 0.2rem 0; }
+    .lc-ready-card.traffic { border-color: var(--tint-rose-edge); background: var(--tint-rose); }
+    .lc-ready-card.crm { border-color: var(--tint-amber-edge); background: var(--tint-amber); }
+    .lc-ready-card.opt { border-color: var(--tint-cool-edge); background: var(--tint-cool); }
+    .lc-verdicts {
+      margin: 0;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge);
+      background: var(--panel);
+      font-size: 0.86rem;
+      line-height: 1.45;
+      color: var(--body);
+    }
+    .lc-verdicts strong { color: var(--ink); }
+    .lc-verdicts code { font-family: var(--mono); font-size: 0.78rem; }
     .lc-board {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -59,11 +99,7 @@
       padding: 0.55rem 0.85rem;
       border-bottom: 1px solid var(--edge-soft);
     }
-    .lc-bucket-hd h2 {
-      margin: 0;
-      font-size: 0.92rem;
-      font-weight: 700;
-    }
+    .lc-bucket-hd h2 { margin: 0; font-size: 0.92rem; font-weight: 700; }
     .lc-bucket.ok .lc-bucket-hd { background: var(--tint-green-hd); border-color: var(--tint-green-edge); }
     .lc-bucket.block .lc-bucket-hd { background: var(--tint-rose-hd); border-color: var(--tint-rose-edge); }
     .lc-bucket.george .lc-bucket-hd { background: var(--tint-amber-hd); border-color: var(--tint-amber-edge); }
@@ -83,47 +119,52 @@
     }
     .lc-bucket li:last-child { border-bottom: none; }
     .lc-bucket li strong { color: var(--ink); }
-    .lc-gates { margin: 0; padding: 0; list-style: none; }
-    .lc-gates li {
+    .sitemap {
       display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.45rem 0.7rem;
-      align-items: start;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid var(--edge-soft);
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
     }
-    .lc-gates li:last-child { border-bottom: none; }
-    .lc-gates .gate-body { min-width: 0; }
-    .lc-gates .gate-body strong {
-      display: block;
-      font-size: 0.96rem;
+    @media (max-width: 900px) {
+      .sitemap { grid-template-columns: 1fr; }
+    }
+    .sitemap-branch {
+      border: 1px solid var(--edge-soft);
+      border-radius: 8px;
+      background: var(--panel-inset);
+      padding: 0.7rem 0.85rem;
+      min-width: 0;
+    }
+    .sitemap-branch h3 {
+      margin: 0 0 0.45rem;
+      font-size: 0.92rem;
       color: var(--ink);
     }
-    .lc-gates .gate-body span {
-      display: block;
-      margin-top: 0.15rem;
-      font-size: 0.84rem;
+    .sitemap-branch .branch-note {
+      margin: 0 0 0.5rem;
+      font-size: 0.8rem;
       color: var(--muted);
-      line-height: 1.4;
-      overflow-wrap: anywhere;
     }
-    .lc-open {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
+    .sitemap-tree {
+      list-style: none;
       margin: 0;
       padding: 0;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+    .sitemap-tree ul {
       list-style: none;
+      margin: 0.15rem 0 0.35rem;
+      padding: 0 0 0 0.95rem;
+      border-left: 1px solid var(--edge);
     }
-    .lc-open li {
-      padding: 0.3rem 0.6rem;
-      border-radius: 6px;
-      border: 1px solid var(--tint-amber-edge);
-      background: var(--tint-amber);
-      font-size: 0.82rem;
-      font-weight: 500;
+    .sitemap-tree li { margin: 0.12rem 0; color: var(--body); }
+    .sitemap-tree a {
       color: var(--ink);
+      text-decoration: none;
+      font-weight: 500;
     }
+    .sitemap-tree a:hover { text-decoration: underline; }
+    .sitemap-tree .dim { color: var(--muted); font-weight: 400; }
     .lc-fold {
       margin-top: 0.85rem;
       border: 1px solid var(--edge);
@@ -181,50 +222,6 @@
       font-weight: 600;
       color: var(--muted);
     }
-    .lc-markets {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.85rem;
-    }
-    @media (max-width: 760px) {
-      .lc-markets { grid-template-columns: 1fr; }
-    }
-    .lc-markets h3 {
-      margin: 0 0 0.4rem;
-      font-size: 0.95rem;
-    }
-    .lp-previews {
-      display: grid;
-      gap: 0.85rem;
-    }
-    .lp-previews h3 {
-      margin: 0 0 0.35rem;
-      font-size: 0.92rem;
-      color: var(--ink);
-    }
-    .lp-link-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .lp-link-grid a {
-      display: inline-block;
-      padding: 0.28rem 0.55rem;
-      border-radius: 6px;
-      border: 1px solid var(--edge);
-      background: var(--panel-inset);
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--ink);
-      text-decoration: none;
-    }
-    .lp-link-grid a:hover {
-      border-color: var(--tint-cool-edge);
-      background: var(--tint-cool);
-    }
     .tech-link {
       margin-top: 1.25rem;
       padding: 0.75rem 1rem;
@@ -274,58 +271,6 @@
       padding-left: 0;
       padding-right: 0;
     }
-    .lc-ready-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.65rem;
-      margin: 0 0 0.85rem;
-    }
-    @media (max-width: 900px) {
-      .lc-ready-grid { grid-template-columns: 1fr; }
-    }
-    .lc-ready-card {
-      border-radius: 8px;
-      border: 1px solid var(--edge);
-      background: var(--panel-inset);
-      padding: 0.7rem 0.8rem;
-      min-width: 0;
-    }
-    .lc-ready-card .lc-ready-label {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.35rem;
-      margin-bottom: 0.4rem;
-    }
-    .lc-ready-card .lc-ready-label strong {
-      font-size: 0.88rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-    }
-    .lc-ready-card p {
-      margin: 0;
-      font-size: 0.82rem;
-      line-height: 1.4;
-      color: var(--body);
-    }
-    .lc-ready-card.traffic { border-color: var(--tint-rose-edge); background: var(--tint-rose); }
-    .lc-ready-card.crm { border-color: var(--tint-amber-edge); background: var(--tint-amber); }
-    .lc-ready-card.opt { border-color: var(--tint-cool-edge); background: var(--tint-cool); }
-    .lc-verdicts {
-      margin: 0;
-      padding: 0.65rem 0.85rem;
-      border-radius: 8px;
-      border: 1px solid var(--edge);
-      background: var(--panel);
-      font-size: 0.86rem;
-      line-height: 1.45;
-      color: var(--body);
-    }
-    .lc-verdicts strong { color: var(--ink); }
-    .lc-verdicts code {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-    }
   </style>
 </head>
 <body data-page="launch-control.html" data-foot="Your Ads checklist<br />TRAFFIC READY ≠ CRM READY ≠ OPTIMIZATION READY">
@@ -337,26 +282,14 @@
         <p class="kicker">Stage 1 · USA + Australia</p>
         <h1>Checklist</h1>
         <p>
-          Three readiness statuses (locked): <strong>TRAFFIC READY</strong> · <strong>CRM READY</strong> · <strong>OPTIMIZATION READY</strong>.
-          Ads can go live only when TRAFFIC READY + you say Enable — not when Zoho is finished.
-          Tick boxes as you finish — finished items tuck under Done.
+          Three statuses: <strong>TRAFFIC</strong> · <strong>CRM</strong> · <strong>OPTIMIZATION</strong>.
+          Ads go live only when TRAFFIC READY + you Enable — not when Zoho is finished.
         </p>
       </header>
 
       <p class="lc-start">
-        <strong>Do next: Review the live Brand campaigns</strong> (account hygiene) — before Editor import.
-        USA + AU Brand are the only things spending. Check status, spend, Final URL — then decide pause vs leave.
-        After Brand/hygiene: clear the TRAFFIC READY gates (real inbox + test lead + named person who answers).
-        Old account stuff = archive — do <em>not</em> attach old shared mega negative lists to new <code>VC_*</code> campaigns.
-      </p>
-
-      <p class="lc-logic">
-        <strong>Editor words (memorize):</strong>
-        <strong>Import</strong> = draft on your computer ·
-        <strong>Post</strong> = upload to Google (still Paused) ·
-        <strong>Enable</strong> = separate click later, only after TRAFFIC READY + your OK.
-        Tracking ladder: Max Clicks → form that arrives + ~60s call → Max Conversions → Zoho offline later
-        (<a href="tracking.html">Tracking</a> · <a href="lead-routing.html">Lead Routing</a>).
+        <strong>Do next:</strong> Open USA + AU Brand campaigns. Note status, spend, Final URL. Decide pause vs leave.
+        Then clear TRAFFIC READY (real inbox → test lead arrives → name who answers).
       </p>
 
       <section class="panel" id="readiness-statuses">
@@ -371,38 +304,46 @@
                 <strong>TRAFFIC READY</strong>
                 <span class="st st-blocked">Gate for Enable</span>
               </div>
-              <p>
-                Real email inbox (or sheet) where leads actually land — not a silent log · send a test form and confirm it arrives · name who answers · form keeps market + click info · US/AU stay separate · campaigns stay Paused until you Enable.
-                <em>Zoho is NOT required for this — Zoho runs in parallel, not as a traffic gate.</em>
-              </p>
+              <ul>
+                <li>Real inbox (or sheet) — not a silent log</li>
+                <li>You send a test and see it arrive</li>
+                <li>Named person who answers</li>
+                <li>US / AU stay separate · campaigns stay Paused until Enable</li>
+                <li><em>Zoho not required</em></li>
+              </ul>
             </div>
             <div class="lc-ready-card crm" role="listitem">
               <div class="lc-ready-label">
                 <strong>CRM READY</strong>
-                <span class="st st-deferred">Parallel · deferred</span>
+                <span class="st st-deferred">Parallel</span>
               </div>
-              <p>
-                Zoho writes a real record with the right fields — later. Platform discovery is deferred (may be Recruit; George’s UI shows no Leads; looks like Account → Contact → Job Order → Placement).
-                Does not block Max Clicks. Do not assume standard CRM Leads.
-              </p>
+              <ul>
+                <li>You have a <strong>basic Zoho seat</strong> — look around, export if UI allows</li>
+                <li>Not Admin · not API · no live write from us</li>
+                <li>Recruit vs CRM TBD · don’t assume Leads</li>
+                <li>Account → Contact → Job Order → Placement = later</li>
+                <li><em>Does not block Max Clicks</em></li>
+              </ul>
             </div>
             <div class="lc-ready-card opt" role="listitem">
               <div class="lc-ready-label">
                 <strong>OPTIMIZATION READY</strong>
                 <span class="st st-access">Later</span>
               </div>
-              <p>
-                New tracking tags → new Ads conversion actions → each <code>VC_*</code> campaign uses only those new goals → later Zoho/job-order feedback.
-                Stay on Max Clicks until this is real.
-              </p>
+              <ul>
+                <li>New tracking tags → new Ads conversion actions</li>
+                <li>Each <code>VC_*</code> uses only those new goals</li>
+                <li>Zoho / job-order feedback later</li>
+                <li>Stay on Max Clicks until this is real</li>
+              </ul>
             </div>
           </div>
           <p class="lc-verdicts">
-            <strong>Ads package verdicts (honest):</strong>
+            <strong>Ads package (honest):</strong>
             <code>SAFE TO IMPORT INTO EDITOR FOR REVIEW</code> ·
             <code>SAFE TO POST WHILE PAUSED</code> ·
             <code>NOT SAFE FOR PAID TRAFFIC</code> until TRAFFIC READY + your Enable.
-            Old Brand + old Zoho/Zapier conversion actions = archive — leave them alone.
+            Old Brand + old Zoho/Zapier conversions = archive — leave them alone.
           </p>
         </div>
       </section>
@@ -418,141 +359,141 @@
             <li data-order="1">
               <input type="checkbox" id="ads1" data-todo="ads1" checked />
               <label for="ads1">
-                <strong>1. Confirm Ads access is set</strong>
-                <span class="todo-hint">Already done. Standard access via MCC on USA <code>496-715-1855</code> and Australia <code>573-539-1940</code>.</span>
+                <strong>1. Confirm Ads access</strong>
+                <span class="todo-hint">Done. Standard via MCC — USA <code>496-715-1855</code> · AU <code>573-539-1940</code>.</span>
               </label>
             </li>
             <li data-order="2">
               <input type="checkbox" id="ads2" data-todo="ads2" checked />
               <label for="ads2">
-                <strong>2. Open Google Ads → USA account</strong>
-                <span class="todo-hint">Already done Aug 5. USA <code>496-715-1855</code> confirmed.</span>
+                <strong>2. Open Google Ads → USA</strong>
+                <span class="todo-hint">Done Aug 5. USA confirmed.</span>
               </label>
             </li>
             <li data-order="3">
               <input type="checkbox" id="ads3" data-todo="ads3" checked />
               <label for="ads3">
-                <strong>3. Paste the USA campaign list in this thread</strong>
-                <span class="todo-hint">Already done. Only live spender: <code>PM_US_RSA_Brand</code> ($100/day Max Conv, ~$39, 0 conversions). Rest paused.</span>
+                <strong>3. USA campaign list</strong>
+                <span class="todo-hint">Done. Only live: <code>PM_US_RSA_Brand</code> ($100/day Max Conv, ~$39, 0 conv). Rest paused.</span>
               </label>
             </li>
             <li data-order="4">
               <input type="checkbox" id="ads4" data-todo="ads4" checked />
               <label for="ads4">
-                <strong>4. Paste the Australia campaign list in this thread</strong>
-                <span class="todo-hint">Already done. Only live: <code>PM_AU_RSA_Brand</code> ($30/day Max Conv, ~A$3, 0 conversions). Rest paused.</span>
+                <strong>4. Australia campaign list</strong>
+                <span class="todo-hint">Done. Only live: <code>PM_AU_RSA_Brand</code> ($30/day Max Conv, ~A$3, 0 conv). Rest paused.</span>
               </label>
             </li>
             <li data-order="5">
               <input type="checkbox" id="ads5" data-todo="ads5" />
               <label for="ads5">
-                <strong>5. Review live Brand campaigns ← you are here</strong>
-                <span class="todo-hint">Open USA + AU Brand. Note status, spend, Final URL. Decide pause vs leave. You pause in Ads — not from this page.</span>
+                <strong>5. Review live Brand ← you are here</strong>
+                <span class="todo-hint">Open USA + AU Brand. Status, spend, Final URL. Pause vs leave — you click in Ads.</span>
               </label>
             </li>
             <li data-order="6">
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
-                <strong>6. Peek at old conversion actions (archive — don’t rewrite)</strong>
-                <span class="todo-hint"><strong>OPTIMIZATION READY later.</strong> Tools → Conversions: jot names + Primary/Secondary so you know the junk. Do <em>not</em> delete or replace old Zoho/Zapier actions. New campaigns get <em>new</em> actions later — not required before Max Clicks goes live.</span>
+                <strong>6. Peek at old conversion actions</strong>
+                <span class="todo-hint">OPTIMIZATION later. Tools → Conversions: jot names. Don’t delete old Zoho/Zapier junk.</span>
               </label>
             </li>
             <li data-order="7">
               <input type="checkbox" id="ads7" data-todo="ads7" />
               <label for="ads7">
-                <strong>7. Plan campaign-specific goals (after Post — not a traffic gate)</strong>
-                <span class="todo-hint"><strong>OPTIMIZATION READY.</strong> After Post: each new <code>VC_*</code> campaign → Goals → use only the <em>new</em> employer-inquiry actions when those exist. Stay on Maximize Clicks until then. Old account-default goals are not a reason to delay TRAFFIC READY.</span>
+                <strong>7. Plan campaign-specific goals</strong>
+                <span class="todo-hint">After Post — not a traffic gate. New <code>VC_*</code> → only new employer-inquiry actions when ready. Stay Max Clicks.</span>
               </label>
             </li>
             <li data-order="8">
               <input type="checkbox" id="ads8" data-todo="ads8" />
               <label for="ads8">
-                <strong>8. Confirm a real inbox for leads (TRAFFIC READY)</strong>
-                <span class="todo-hint">A real email inbox (or sheet) where the form lands — not a silent log. Send a test; confirm it arrives; name who answers. Don’t rip Zapier tonight. Zoho sync is <em>CRM READY</em> (parallel) — not this gate. People: <a href="lead-routing.html">Lead Routing</a> · use <code>george@shoutgeorge.com</code> (not <code>shoutgeorge1@gmail.com</code>).</span>
+                <strong>8. Confirm a real inbox (TRAFFIC READY)</strong>
+                <span class="todo-hint">Test form → see it arrive → name who answers. Zoho is parallel. People: <a href="lead-routing.html">Lead Routing</a>.</span>
               </label>
             </li>
             <li data-order="9">
               <input type="checkbox" id="ads9" data-todo="ads9" />
               <label for="ads9">
-                <strong>9. Spot-check account Assets for WordPress links</strong>
-                <span class="todo-hint">Old sitelinks/callouts that point at WordPress can stick onto new campaigns. Flag them — don’t binge-rewrite the whole old account.</span>
+                <strong>9. Spot-check Assets for WordPress links</strong>
+                <span class="todo-hint">Old sitelinks can stick onto new campaigns. Flag them — don’t binge-rewrite the whole account.</span>
               </label>
             </li>
             <li data-order="10">
               <input type="checkbox" id="ads10" data-todo="ads10" />
               <label for="ads10">
-                <strong>10. Do NOT attach old shared mega negative lists</strong>
-                <span class="todo-hint">Old account = archive. New <code>VC_*</code> campaigns already ship their own curated negatives (~172 + commercial holdouts). Look at shared lists only so you know what <em>not</em> to inherit.</span>
+                <strong>10. Do NOT attach old shared mega negatives</strong>
+                <span class="todo-hint">New <code>VC_*</code> already ship curated negatives. Don’t inherit the old mega lists.</span>
               </label>
             </li>
             <li data-order="11">
               <input type="checkbox" id="ads11" data-todo="ads11" />
               <label for="ads11">
                 <strong>11. Turn off Recommendations / Auto-apply junk</strong>
-                <span class="todo-hint">Kill auto-apply for broad match, Performance Max, and similar. Stage 1 = Exact + Phrase Search only.</span>
+                <span class="todo-hint">Kill auto-apply for broad match + Performance Max. Stage 1 = Exact + Phrase Search only.</span>
               </label>
             </li>
             <li data-order="12">
               <input type="checkbox" id="ads12" data-todo="ads12" />
               <label for="ads12">
-                <strong>12. Open Google Ads Editor and download both accounts</strong>
-                <span class="todo-hint">Fresh local copy of USA + AU before you import anything.</span>
+                <strong>12. Editor — download both accounts</strong>
+                <span class="todo-hint">Fresh local copy of USA + AU before import.</span>
               </label>
             </li>
             <li data-order="13">
               <input type="checkbox" id="ads13" data-todo="ads13" />
               <label for="ads13">
-                <strong>13. Import the paused CSV — leave everything Paused</strong>
-                <span class="todo-hint"><strong>Import = draft on your computer. Post = upload to Google (still paused). Enable = separate, later.</strong> Prefer split files: <code>google-ads-editor-import-us.csv</code> into USA, <code>…-au.csv</code> into AU. Read <code>EDITOR-PREFLIGHT-REPORT.md</code> first.</span>
+                <strong>13. Import paused CSV — leave everything Paused</strong>
+                <span class="todo-hint"><strong>Import</strong> = draft on computer · <strong>Post</strong> = upload (still paused) · <strong>Enable</strong> = later. Split US/AU files. Read <code>EDITOR-PREFLIGHT-REPORT.md</code>.</span>
               </label>
             </li>
             <li data-order="14">
               <input type="checkbox" id="ads14" data-todo="ads14" />
               <label for="ads14">
-                <strong>14. Buy US custom domain (~$10 on Vercel)</strong>
-                <span class="todo-hint">Attach to the vision project for the US employer site. Preview until then: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a>.</span>
+                <strong>14. Buy US custom domain (~$10)</strong>
+                <span class="todo-hint">Nice-to-have. Preview OK for TRAFFIC READY: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a>.</span>
               </label>
             </li>
             <li data-order="15">
               <input type="checkbox" id="ads15" data-todo="ads15" />
               <label for="ads15">
-                <strong>15. Buy AU custom domain (~$10 on Vercel)</strong>
-                <span class="todo-hint">Separate from US — don’t share one domain. Preview: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. PH domain can wait.</span>
+                <strong>15. Buy AU custom domain (~$10)</strong>
+                <span class="todo-hint">Separate from US. Preview: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. PH can wait.</span>
               </label>
             </li>
             <li data-order="16">
               <input type="checkbox" id="ads16" data-todo="ads16" />
               <label for="ads16">
-                <strong>16. Point Ads Final URLs at the new US + AU domains</strong>
-                <span class="todo-hint">Keep the paths (Core → /us or /au · Roles → category pages). No WordPress.</span>
+                <strong>16. Point Ads Final URLs at new domains</strong>
+                <span class="todo-hint">Keep paths (Core → /us or /au · Roles → category pages). No WordPress.</span>
               </label>
             </li>
             <li data-order="17">
               <input type="checkbox" id="ads17" data-todo="ads17" />
               <label for="ads17">
-                <strong>17. Set up US tracking (its own GTM + GA4)</strong>
-                <span class="todo-hint">US microsite only — separate container, property, Search Console, Ads conversions. Do not share with AU.</span>
+                <strong>17. Set up US tracking (own GTM + GA4)</strong>
+                <span class="todo-hint">US microsite only. Do not share with AU.</span>
               </label>
             </li>
             <li data-order="18">
               <input type="checkbox" id="ads18" data-todo="ads18" />
               <label for="ads18">
-                <strong>18. Set up AU tracking (its own GTM + GA4)</strong>
-                <span class="todo-hint">Same idea for AU only. PH tracking optional later.</span>
+                <strong>18. Set up AU tracking (own GTM + GA4)</strong>
+                <span class="todo-hint">AU only. PH optional later.</span>
               </label>
             </li>
             <li data-order="19">
               <input type="checkbox" id="ads19" data-todo="ads19" />
               <label for="ads19">
                 <strong>19. Confirm daily budgets and Max CPC</strong>
-                <span class="todo-hint">Defaults already in the CSV. Change in Editor if you want, then Post while still Paused.</span>
+                <span class="todo-hint">Defaults in CSV. Change in Editor if you want, then Post while still Paused.</span>
               </label>
             </li>
             <li data-order="20">
               <input type="checkbox" id="ads20" data-todo="ads20" />
               <label for="ads20">
-                <strong>20. Enable Tier 1A then 1B — only when TRAFFIC READY + your OK</strong>
-                <span class="todo-hint">Exact hire/outsource/staffing PH long-tail first (1A), then reviewed 1B for volume. Keep Max Clicks. Keep AU quiet until US looks sane. Zoho/CRM/GTM optimization are parallel — not this gate. You Enable in Ads — not from this page.</span>
+                <strong>20. Enable Tier 1A then 1B</strong>
+                <span class="todo-hint">Only when TRAFFIC READY + your OK. Keep Max Clicks. AU quiet until US looks sane. You Enable in Ads.</span>
               </label>
             </li>
           </ul>
@@ -575,24 +516,24 @@
           <ul>
             <li><strong>MCC linked</strong> — under Shout George</li>
             <li><strong>Ads access</strong> — Standard on USA + AU</li>
-            <li><strong>Three microsites live on preview</strong> — US · AU · PH</li>
+            <li><strong>Three microsites on preview</strong> — US · AU · PH</li>
             <li><strong>Paused Editor CSV ready</strong> — USA + AU stamped</li>
-            <li><strong>Ads path</strong> — microsite only (not WordPress)</li>
+            <li><strong>Basic Zoho seat</strong> — look only; not Admin / not API</li>
             <li><strong>US/NA phone</strong> — <code>310-426-8776</code> (do not port)</li>
           </ul>
         </section>
 
         <section class="lc-bucket block" aria-labelledby="block-hd">
           <div class="lc-bucket-hd">
-            <h2 id="block-hd">Must finish before ads go live</h2>
+            <h2 id="block-hd">Before ads go live</h2>
             <span class="st st-blocked">TRAFFIC READY</span>
           </div>
           <ul>
-            <li><strong>Real inbox for leads</strong> — email (or sheet) where the form actually lands (silent log ≠ ready)</li>
-            <li><strong>Test lead arrives</strong> — you send one and see it show up</li>
-            <li><strong>Named person who answers</strong> — who + how (see <a href="lead-routing.html">Lead Routing</a>)</li>
-            <li><strong>Editor Import / Post</strong> — still Paused; Enable is a separate later click</li>
-            <li><strong>Old Brand still spending</strong> — recommend pause before/with new import (you click pause in Ads)</li>
+            <li><strong>Real inbox</strong> — form actually lands there</li>
+            <li><strong>Test lead arrives</strong> — you see it</li>
+            <li><strong>Named person who answers</strong> — <a href="lead-routing.html">Lead Routing</a></li>
+            <li><strong>Editor Import / Post</strong> — still Paused; Enable later</li>
+            <li><strong>Old Brand still spending</strong> — recommend pause (you click in Ads)</li>
           </ul>
         </section>
 
@@ -602,13 +543,11 @@
             <span class="st st-access">George</span>
           </div>
           <ul>
-            <li><strong>Next:</strong> review live Brand campaigns (hygiene) — before Editor</li>
-            <li><strong>Then:</strong> real inbox test (TRAFFIC READY) · Assets spot-check · do not attach shared mega negs</li>
-            <li>Editor download + paused split CSV import (US then AU) — Import = draft · Post = upload paused</li>
-            <li>Buy US + AU domains when ready (nice-to-have; preview host OK for TRAFFIC READY)</li>
-            <li><strong>Parallel CRM READY (deferred):</strong> Zoho platform discovery later (may be Recruit; no Leads in UI). Not a traffic gate. Your Zoho email: <code>george@shoutgeorge.com</code> — move team off <code>shoutgeorge1@gmail.com</code></li>
-            <li><strong>OPTIMIZATION READY later:</strong> separate US/AU tracking + new conversion actions + campaign-specific goals</li>
-            <li>Confirm payment-cleared date when the bank shows it</li>
+            <li><strong>Next:</strong> review live Brand</li>
+            <li><strong>Then:</strong> inbox test · Assets spot-check · no mega negs</li>
+            <li>Editor download + paused split CSV (Import → Post → Enable later)</li>
+            <li>Domains nice-to-have; preview host OK for TRAFFIC READY</li>
+            <li>Zoho: browse + note modules — <em>not</em> a traffic gate. Email: <code>george@shoutgeorge.com</code></li>
           </ul>
         </section>
 
@@ -618,163 +557,106 @@
             <span class="st st-progress">VC</span>
           </div>
           <ul>
-            <li>AU phone locked form-primary for Stage 1 — NA dest <code>310-426-8776</code> confirmed</li>
-            <li>Real lead inbox per market (email OK for Stage 1) — replace log-only before paid</li>
-            <li><strong>Pilot payment — IN TRANSIT</strong> (not unpaid; not cleared)</li>
-            <li>Chat platform + invite George (they prefer chat over email)</li>
+            <li>AU phone locked form-primary — NA dest <code>310-426-8776</code></li>
+            <li>Real lead inbox per market (email OK for Stage 1)</li>
+            <li><strong>Pilot payment — IN TRANSIT</strong></li>
+            <li>Chat platform + invite George</li>
           </ul>
         </section>
       </div>
 
       <section class="panel" id="lp-previews">
         <div class="panel-hd">
-          <p class="kicker">Preview host · vision-three-alpha.vercel.app</p>
-          <h2>Landing page previews</h2>
-        </div>
-        <div class="panel-bd lp-previews">
-          <div>
-            <h3>Money pages · US</h3>
-            <ul class="lp-link-grid">
-              <li><a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/us/digital-marketing" target="_blank" rel="noopener">digital-marketing</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/us/social-media" target="_blank" rel="noopener">social-media</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/us/accounting" target="_blank" rel="noopener">accounting</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/us/bookkeeping" target="_blank" rel="noopener">bookkeeping</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/us/administrative-support" target="_blank" rel="noopener">administrative-support</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/us/customer-service" target="_blank" rel="noopener">customer-service</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/us/hr" target="_blank" rel="noopener">hr</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/us/recruitment" target="_blank" rel="noopener">recruitment</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/us/sales" target="_blank" rel="noopener">sales</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Money pages · AU</h3>
-            <ul class="lp-link-grid">
-              <li><a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/au/digital-marketing" target="_blank" rel="noopener">digital-marketing</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/au/social-media" target="_blank" rel="noopener">social-media</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/au/accounting" target="_blank" rel="noopener">accounting</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/au/bookkeeping" target="_blank" rel="noopener">bookkeeping</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/au/administrative-support" target="_blank" rel="noopener">administrative-support</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/au/customer-service" target="_blank" rel="noopener">customer-service</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/au/hr" target="_blank" rel="noopener">hr</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/au/recruitment" target="_blank" rel="noopener">recruitment</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/au/sales" target="_blank" rel="noopener">sales</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Site pages</h3>
-            <ul class="lp-link-grid">
-              <li><a href="https://vision-three-alpha.vercel.app/how-it-works" target="_blank" rel="noopener">how-it-works</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/services" target="_blank" rel="noopener">services</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/privacy" target="_blank" rel="noopener">privacy</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/terms" target="_blank" rel="noopener">terms</a></li>
-              <li><a href="https://vision-three-alpha.vercel.app/ph" target="_blank" rel="noopener">/ph</a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel" id="gates">
-        <div class="panel-hd">
-          <p class="kicker">Minimum TRAFFIC READY</p>
-          <h2>Must finish before ads go live (Max Clicks)</h2>
+          <p class="kicker">Preview · vision-three-alpha.vercel.app</p>
+          <h2>Landing page sitemap</h2>
         </div>
         <div class="panel-bd">
-          <ol class="lc-gates">
-            <li>
-              <span class="st st-ready">Done</span>
-              <div class="gate-body">
-                <strong>Ads access confirmed</strong>
-                <span>Standard via MCC on USA + AU. Enough to import and review in Editor.</span>
-              </div>
-            </li>
-            <li>
-              <span class="st st-blocked">Open</span>
-              <div class="gate-body">
-                <strong>Real inbox + test lead + named person who answers</strong>
-                <span>Form lands in a real email inbox (or sheet); you see a test arrive; someone is named to answer. NA phone <code>310-426-8776</code>; AU form-first. Zoho not required. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
-              </div>
-            </li>
-            <li>
-              <span class="st st-blocked">Open</span>
-              <div class="gate-body">
-                <strong>Budgets + Max CPC confirmed</strong>
-                <span>Defaults in CSV (US $8 / AU A$6 Max Clicks). Change before Enable if you want. Still needs your OK.</span>
-              </div>
-            </li>
-            <li>
-              <span class="st st-access">Parallel</span>
-              <div class="gate-body">
-                <strong>OPTIMIZATION READY (not a traffic gate)</strong>
-                <span>Custom domains + separate US/AU tracking + new Ads conversion actions + campaign-specific goals. Do later; keep Max Clicks until verified.</span>
-              </div>
-            </li>
-            <li>
-              <span class="st st-access">Paused</span>
-              <div class="gate-body">
-                <strong>Paused Editor import reviewed</strong>
-                <span><strong>Import = draft on your computer. Post = upload to Google (still paused). Enable = separate click after TRAFFIC READY + your OK.</strong></span>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="panel" id="open-items">
-        <div class="panel-hd">
-          <p class="kicker">Still open · Stage 1</p>
-          <h2>Decisions + inputs</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="lc-open">
-            <li><strong>TRAFFIC READY:</strong> real lead inbox + test arrives + named person who answers (replace silent log)</li>
-            <li>Optional: revise budget / Max CPC</li>
-            <li>Payment-cleared date</li>
-            <li>Pause old Brand? (recommend yes)</li>
-            <li>Move team email → <code>george@shoutgeorge.com</code> (off <code>shoutgeorge1@gmail.com</code>)</li>
-          </ul>
-          <details class="lc-fold" style="margin-top:1rem">
-            <summary>CRM READY + OPTIMIZATION READY (parallel — not traffic blockers) <span class="hint">Zoho deferred · tracking · CallRail</span></summary>
-            <div class="fold-bd">
-              <ul class="lc-open">
-                <li><strong>CRM READY (deferred):</strong> figure out Zoho product (Recruit vs CRM) · no Leads assumption · minimal exports Accounts/Contacts/Job Orders/Placements · then field map · await George before live write</li>
-                <li>Native Zoho↔Ads audit — look only; don’t authorize from here</li>
-                <li><strong>OPTIMIZATION READY:</strong> US+AU domains · separate tracking · new conversion actions · campaign-specific goals</li>
-                <li>Job order + placement offline values TBD — not approved; never a second Primary for the same inquiry</li>
-                <li>CallRail / ~60s qualified call · Ads Admin when convenient</li>
+          <p class="muted" style="margin:0 0 0.85rem;font-size:0.88rem">
+            Three separate sites: US employer · AU employer · PH talent. Shared legal/hub pages hang off the root.
+            Root <code>/</code> redirects to <code>/us</code>.
+          </p>
+          <div class="sitemap">
+            <div class="sitemap-branch">
+              <h3>US employer</h3>
+              <p class="branch-note">Paid money path · phone <code>310-426-8776</code></p>
+              <ul class="sitemap-tree">
+                <li><a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> <span class="dim">hub</span>
+                  <ul>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/consult" target="_blank" rel="noopener">/us/consult</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/social-media" target="_blank" rel="noopener">/us/social-media</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/accounting" target="_blank" rel="noopener">/us/accounting</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/bookkeeping" target="_blank" rel="noopener">/us/bookkeeping</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/administrative-support" target="_blank" rel="noopener">/us/administrative-support</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/customer-service" target="_blank" rel="noopener">/us/customer-service</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/hr" target="_blank" rel="noopener">/us/hr</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/recruitment" target="_blank" rel="noopener">/us/recruitment</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/sales" target="_blank" rel="noopener">/us/sales</a></li>
+                  </ul>
+                </li>
               </ul>
             </div>
-          </details>
+
+            <div class="sitemap-branch">
+              <h3>AU employer</h3>
+              <p class="branch-note">Paid money path · form-primary (no fake AU phone)</p>
+              <ul class="sitemap-tree">
+                <li><a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> <span class="dim">hub</span>
+                  <ul>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/consult" target="_blank" rel="noopener">/au/consult</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/digital-marketing" target="_blank" rel="noopener">/au/digital-marketing</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/social-media" target="_blank" rel="noopener">/au/social-media</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/accounting" target="_blank" rel="noopener">/au/accounting</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/bookkeeping" target="_blank" rel="noopener">/au/bookkeeping</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/administrative-support" target="_blank" rel="noopener">/au/administrative-support</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/customer-service" target="_blank" rel="noopener">/au/customer-service</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/hr" target="_blank" rel="noopener">/au/hr</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/recruitment" target="_blank" rel="noopener">/au/recruitment</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/sales" target="_blank" rel="noopener">/au/sales</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+            <div class="sitemap-branch">
+              <h3>PH talent</h3>
+              <p class="branch-note">Careers / apply — not Ads Final URLs</p>
+              <ul class="sitemap-tree">
+                <li><a href="https://vision-three-alpha.vercel.app/ph" target="_blank" rel="noopener">/ph</a> <span class="dim">careers hub</span>
+                  <ul>
+                    <li><a href="https://vision-three-alpha.vercel.app/ph/apply" target="_blank" rel="noopener">/ph/apply</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+            <div class="sitemap-branch">
+              <h3>Shared hub + legal</h3>
+              <p class="branch-note">Nav from employer sites · market query when linked</p>
+              <ul class="sitemap-tree">
+                <li><a href="https://vision-three-alpha.vercel.app/services" target="_blank" rel="noopener">/services</a></li>
+                <li><a href="https://vision-three-alpha.vercel.app/how-it-works" target="_blank" rel="noopener">/how-it-works</a></li>
+                <li><a href="https://vision-three-alpha.vercel.app/privacy" target="_blank" rel="noopener">/privacy</a></li>
+                <li><a href="https://vision-three-alpha.vercel.app/terms" target="_blank" rel="noopener">/terms</a></li>
+                <li><a href="https://vision-three-alpha.vercel.app/thank-you" target="_blank" rel="noopener">/thank-you</a> <span class="dim">post-submit</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
-      <details class="lc-fold" id="markets">
+      <details class="lc-fold" id="zoho-note">
         <summary>
-          Markets · US + AU
-          <span class="hint">Accounts · campaigns</span>
+          Zoho (basic seat) · not a traffic gate
+          <span class="hint">CRM READY parallel</span>
         </summary>
-        <div class="fold-bd lc-markets">
-          <div>
-            <h3>United States</h3>
-            <ul class="glance-bullets">
-              <li>Account <code>496-715-1855</code></li>
-              <li>New (paused import): <code>VC_US_S_CORE</code> + <code>VC_US_S_ROLES</code></li>
-              <li><strong>Still live:</strong> <code>PM_US_RSA_Brand</code> — $100/day Max Conv; ~$39 / 0 conv</li>
-              <li>Phone: <code>310-426-8776</code></li>
-              <li>Leads: need real inbox before paid</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Australia</h3>
-            <ul class="glance-bullets">
-              <li>Account <code>573-539-1940</code></li>
-              <li>New (paused import): <code>VC_AU_S_CORE</code> + <code>VC_AU_S_ROLES</code></li>
-              <li><strong>Still live:</strong> <code>PM_AU_RSA_Brand</code> — $30/day Max Conv; A$3 / 0 conv</li>
-              <li>Phone: form-primary (no fake AU number)</li>
-              <li>Leads: need real inbox before paid</li>
-            </ul>
-          </div>
+        <div class="fold-bd">
+          <ul class="glance-bullets">
+            <li><strong>Now:</strong> sign in, click around, export small lists if the UI allows. Ask Raffie/Caitlin when stuck.</li>
+            <li><strong>Not now:</strong> Admin, API, OAuth, or live write from our code.</li>
+            <li><strong>Still open:</strong> Recruit vs CRM · where a new inquiry should land · Account → Contact → Job Order → Placement map.</li>
+            <li>People + emails: <a href="lead-routing.html">Lead Routing</a>.</li>
+          </ul>
         </div>
       </details>
 
@@ -788,12 +670,12 @@
             <li>Ads access confirmed (done).</li>
             <li>Confirm live campaigns in thread (done Aug 5).</li>
             <li>Review live Brand — next.</li>
-            <li>Confirm TRAFFIC READY: real inbox + test lead arrives + named person who answers.</li>
-            <li>Assets spot-check · do not attach shared mega negs · Auto-apply off.</li>
+            <li>TRAFFIC READY: real inbox + test arrives + named person.</li>
+            <li>Assets spot-check · no shared mega negs · Auto-apply off.</li>
             <li>Download accounts into Editor.</li>
-            <li>Import paused split CSVs. Import = draft. Post = upload (still Paused). Enable = later.</li>
+            <li>Import paused split CSVs. Import = draft. Post = upload paused. Enable = later.</li>
             <li>Confirm budgets / Max CPC · Final URLs · Search partners off.</li>
-            <li>Enable Tier 1A then 1B after TRAFFIC READY + your OK (Zoho/tracking parallel).</li>
+            <li>Enable Tier 1A then 1B after TRAFFIC READY + your OK.</li>
           </ol>
         </div>
       </details>
@@ -803,9 +685,9 @@
           72h watch + stop conditions
           <span class="hint">After enable</span>
         </summary>
-        <div class="fold-bd lc-markets">
+        <div class="fold-bd" style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem">
           <div>
-            <h3>Watch</h3>
+            <h3 style="margin:0 0 0.4rem;font-size:0.95rem">Watch</h3>
             <ul class="glance-bullets">
               <li>Search terms → add negatives fast</li>
               <li>Job-seeker / spam reject rate</li>
@@ -815,7 +697,7 @@
             </ul>
           </div>
           <div>
-            <h3>Stop / pause if</h3>
+            <h3 style="margin:0 0 0.4rem;font-size:0.95rem">Stop / pause if</h3>
             <ul class="glance-bullets">
               <li>Most clicks are job/career queries</li>
               <li>Form fires but lead never arrives</li>
@@ -829,8 +711,9 @@
 
       <div class="tech-link">
         <strong>More detail if needed</strong> —
+        <a href="lead-routing.html">Lead Routing</a> ·
+        <a href="tracking.html">Tracking</a> ·
         <a href="clean-rebuild.html">Clean Rebuild package</a>
-        · <code>ads-launch/CHATGPT-MEGA-AUDIT.md</code>
       </div>
     </main>
   </div>
@@ -843,18 +726,15 @@
       try { store = JSON.parse(localStorage.getItem(KEY) || "null") || null; } catch (e) { store = null; }
       if (!store) {
         try { store = JSON.parse(localStorage.getItem(PREV) || "{}") || {}; } catch (e) { store = {}; }
-        /* Remap pre-account-review ids: old 5–13 → new 12–20 */
         var remap = { ads5: "ads12", ads6: "ads13", ads7: "ads14", ads8: "ads15", ads9: "ads16", ads10: "ads17", ads11: "ads18", ads12: "ads19", ads13: "ads20" };
         Object.keys(remap).forEach(function (oldId) {
           if (store[oldId]) store[remap[oldId]] = true;
           delete store[oldId];
         });
-        /* Aug 5 paste-from-Ads look-through: steps 1–4 done */
         store.ads1 = true;
         store.ads2 = true;
         store.ads3 = true;
         store.ads4 = true;
-        /* New account-review steps 5–11 start unchecked */
         ["ads5","ads6","ads7","ads8","ads9","ads10","ads11"].forEach(function (id) { delete store[id]; });
       }
       var activeList = document.getElementById("todo-active");
