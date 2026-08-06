@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import HashScroll from "./components/HashScroll";
 import "./globals.css";
 
 const noindex = process.env.NEXT_PUBLIC_PILOT_NOINDEX !== "false";
@@ -36,7 +37,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <HashScroll />
+        {children}
+      </body>
     </html>
   );
 }

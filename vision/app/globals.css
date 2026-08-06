@@ -469,6 +469,12 @@ button {
 }
 
 /* ═══════ PPC conversion card: intent gate + qualifier + form, one unit ═══════ */
+#gate,
+#inquire,
+.gate-card {
+  scroll-margin-top: 5.75rem;
+}
+
 .gate-card {
   --g-ink: #12283f;
   --g-mute: #6f8296;
@@ -1943,6 +1949,21 @@ a.gate-call:hover {
   font-weight: 650;
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+
+/* .micro-cta p beats .micro-cross on specificity — restore separation from the CTA */
+.micro-cta .micro-actions {
+  margin: 0 0 0.35rem;
+}
+
+.micro-cta .micro-cross {
+  margin: 1.65rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  max-width: none;
+  font-size: 0.92rem;
+  opacity: 0.85;
+  color: #b7c9da;
 }
 
 /* Trust quotes band */
