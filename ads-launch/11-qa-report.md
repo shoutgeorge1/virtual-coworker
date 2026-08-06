@@ -1,6 +1,6 @@
 # 11 — QA report
 
-**Date:** 2026-08-05 · Local only · No deploy · No Ads enable
+**Date:** 2026-08-05 · Vision deployed (casting on prod) · No Ads enable
 
 ---
 
@@ -66,7 +66,8 @@ Tests  25 passed (25)
 
 ## Residual QA risks
 
-1. Careers fallback `/ph` is not a production careers destination.  
+1. Careers `/ph` is a Stage 1 default — may not be the long-term careers destination.  
 2. Badge assets are recognition badges — not quote testimonials.  
 3. A/B lift unmeasured until analytics wired.  
-4. Human must still replace `[APPROVAL_*]` before any enable.
+4. Budgets/CPC defaults are filled — still need explicit George enable approval (not token replacement).  
+5. Lead delivery is TEMPORARY log-only on prod — replace before paid traffic.

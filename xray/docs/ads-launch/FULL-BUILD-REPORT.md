@@ -7,13 +7,22 @@
 **LP version:** `lp_version=stage1-v5`  
 **Accounts:** USA `496-715-1855` · Australia `573-539-1940`  
 **All Ads entities in CSV:** **Paused**  
-**Live Ads / WP / deploy / commit:** none
+**Live LP host:** `https://vision-three-alpha.vercel.app`  
+**Casting commit on prod:** `8705ff05a92ffd89225294c02eb514f5ec1b445c`
+
+---
+
+## Paste this for a full audit
+
+→ **`ads-launch/CHATGPT-MEGA-AUDIT.md`** (comprehensive, honest, pasteable)
+
+This file is the short index only.
 
 ---
 
 ## Executive verdict
 
-Local Stage 1 stack is now **category-routed LPs + Brand/Core/Role Search package**, evidence-backed from ~2y Editor exports, with honest events and delivery blockers. **Not launch-ready** while recipients, budgets/CPC, AU phone decision, careers URL, Zoho, and CallRail timing remain open.
+Stage 1 stack is **category-routed LPs + Brand/Core/Role Search package**, evidence-backed from ~2y Editor exports, with honest events. Casting approved. **Not launch-ready** while real lead inbox/webhook, custom domain, GTM Ads mapping, Zoho/CallRail, and **explicit enable approval** remain open. Campaigns stay **Paused**. QA lead delivery is TEMPORARY log-only.
 
 ---
 
@@ -28,6 +37,7 @@ Local Stage 1 stack is now **category-routed LPs + Brand/Core/Role Search packag
 | No category LP engine | 9×2 routes + data config |
 | No A/B | Stable A/B + QA override |
 | Log-only leads by default | 503 unless channel or explicit flag |
+| Plastic / white-HR heroes | Recast Filipino aspirational assets |
 
 ---
 
@@ -35,6 +45,8 @@ Local Stage 1 stack is now **category-routed LPs + Brand/Core/Role Search packag
 
 | # | File |
 |---|------|
+| **MEGA** | **`CHATGPT-MEGA-AUDIT.md`** ← paste into ChatGPT |
+| 0 | `DECISIONS.md` · `LAUNCH-SHEET.md` |
 | 1 | `01-current-state-audit.md` |
 | 2 | `02-historical-data-audit.md` + `historical-performance-summary.json` |
 | 3 | `03-search-term-category-findings.md` |
@@ -61,6 +73,8 @@ Local Stage 1 stack is now **category-routed LPs + Brand/Core/Role Search packag
 | Campaign negative rows | 4202 (191 unique × 22) |
 | CSV rows | 6198 |
 
+Budgets/CPC filled per `DECISIONS.md` (US Brand $40 / Core $60 / Role $25 · AU Brand+Core A$40 / Role A$20 · Max CPC US $8 / AU A$6).
+
 ---
 
 ## Historical snapshot
@@ -73,15 +87,15 @@ Local Stage 1 stack is now **category-routed LPs + Brand/Core/Role Search packag
 | All conv | 4,629.39 | 3,505.46 |
 | ST raw → deduped | 66,869 → 66,465 | 26,211 → 26,132 |
 
-Prior v4 benchmarks matched within ~0–1%. **Conversions ≠ All conv ≠ job orders.**
+**Conversions ≠ All conv ≠ job orders.**
 
 ---
 
 ## Operator next
 
-1. Review LPs + blockers list.  
-2. Fill delivery + budgets/CPC + careers URL.  
+1. Paste `CHATGPT-MEGA-AUDIT.md` into ChatGPT.  
+2. Replace log-only with real delivery; optional custom domain.  
 3. Import CSV **Paused**.  
 4. Enable only per `07-phased-activation-recommendation.md` after explicit approval.
 
-*End of v5 report — local work only.*
+*End of v5 short report — Ads not enabled.*

@@ -40,8 +40,8 @@ VC_{MKT}_S_ROLE_sales
 | Networks | Google Search only (partners/Display OFF in comment — confirm in Editor) |
 | Geo | US or AU · Presence |
 | Language | English |
-| Bid | Maximize Clicks · Max CPC `[APPROVAL_MAX_CPC]` |
-| Budget | `[APPROVAL_DAILY_BUDGET_USD]` / `[APPROVAL_DAILY_BUDGET_AUD]` |
+| Bid | Maximize Clicks · Max CPC US `$8` / AU `A$6` (see `DECISIONS.md`) |
+| Budget | US Brand `$40` / Core `$60` / Role `$25` · AU Brand+Core `A$40` / Role `A$20` |
 | Tracking template | `{lpurl}` only |
 | Final URL suffix | UTMs + `lp_version=stage1-v5` (**once**) |
 

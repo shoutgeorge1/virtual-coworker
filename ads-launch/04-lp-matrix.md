@@ -43,4 +43,4 @@ Capture on submit: market, category, variant, UTMs, GCLID, WBRAID, GBRAID, refer
 2. Job seeker → careers divert (**no** employer conversion)  
 3. Employer → role chips (preselected on category) → details → submit  
 
-Careers URL: `NEXT_PUBLIC_CAREERS_URL` or fallback `/ph` (**blocker** until real careers URL set).
+Careers URL: `NEXT_PUBLIC_CAREERS_URL=/ph` (Stage 1 locked default — change if a better careers destination is confirmed).

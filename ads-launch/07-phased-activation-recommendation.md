@@ -7,12 +7,12 @@ All CSV entities ship **Paused**.
 
 ## Phase 0 — Local / ops readiness (now)
 
-1. George reviews LP routes + A/B + gate on local/Vercel preview.  
+1. George reviews LP routes + A/B + gate on vision preview (casting approved).  
 2. Set lead delivery (email/webhook) — **not** log-only for paid.  
-3. Confirm US phone; decide AU phone or stay form-primary.  
-4. Set real `NEXT_PUBLIC_CAREERS_URL`.  
-5. Replace budget + Max CPC placeholders.  
-6. Confirm paid host / custom domain.
+3. US phone + AU form-primary locked (`DECISIONS.md`).  
+4. Careers URL locked to `/ph` for Stage 1 (change if better URL confirmed).  
+5. Budget + Max CPC defaults filled in CSV — revise if needed.  
+6. Confirm paid host / custom domain (swap Final URL host; keep category paths).
 
 ## Phase 1 — Soft import (still Paused)
 

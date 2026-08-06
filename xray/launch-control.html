@@ -300,7 +300,7 @@
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
                 <strong>6. Import the paused CSV — leave everything Paused</strong>
-                <span class="todo-hint">In Editor, import <code>ads-launch/google-ads-editor-import.csv</code> (<strong>stage1-v4</strong> — keywords/negatives folded from ~2y search-term exports). You should see nine US role campaigns and nine AU role campaigns (<code>VC_US_S_ROLE_*</code> / <code>VC_AU_S_ROLE_*</code>) for digital marketing, social media, accounting, bookkeeping, administration, customer service, HR, recruitment, and sales. Brand is deferred — not in this file. Do not turn anything on. Everything stays <strong>Paused</strong>. Full report: <code>ads-launch/FULL-BUILD-REPORT.md</code>.</span>
+                <span class="todo-hint">In Editor, import <code>ads-launch/google-ads-editor-import.csv</code> (<strong>stage1-v5</strong> — Brand + Core + 9 role campaigns per market = 22 total, all Paused). Final URLs are microsite category paths: <code>/us|/au</code> (Brand) · <code>/us|/au/administrative-support</code> (Core) · <code>/us|/au/{category}</code> (roles) — not WordPress, not <code>?role=</code>. Budgets/Max CPC already filled from <code>DECISIONS.md</code> defaults. Mega audit: <code>ads-launch/CHATGPT-MEGA-AUDIT.md</code>.</span>
               </label>
             </li>
             <li data-order="7">
@@ -314,21 +314,21 @@
               <input type="checkbox" id="ads8" data-todo="ads8" />
               <label for="ads8">
                 <strong>8. Point Ads Final URLs at that domain</strong>
-                <span class="todo-hint">After the domain is attached, set Ads Final URLs to that host’s <code>/us</code> and <code>/au</code> pages — not WordPress.</span>
+                <span class="todo-hint">After the domain is attached, swap the host on Final URLs only — keep paths: <code>/{us|au}</code>, <code>/{us|au}/administrative-support</code>, and the nine <code>/{us|au}/{category}</code> routes. Do not collapse everything to generic <code>/us</code>/<code>/au</code> and do not use WordPress.</span>
               </label>
             </li>
             <li data-order="9">
               <input type="checkbox" id="ads9" data-todo="ads9" />
               <label for="ads9">
-                <strong>9. Set daily budgets and Max CPC (after you approve the dollar caps)</strong>
-                <span class="todo-hint">Replace the <code>[APPROVAL_*]</code> placeholders only after you pick the ceilings. Post the changes while still <strong>Paused</strong>. Spot-check in the Ads website.</span>
+                <strong>9. Confirm daily budgets and Max CPC (defaults already in CSV)</strong>
+                <span class="todo-hint">CSV already has Stage 1 defaults (US Brand $40 / Core $60 / Role $25 · AU Brand+Core A$40 / Role A$20 · Max CPC US $8 / AU A$6). Change in Editor if you want different ceilings, then Post while still <strong>Paused</strong>. Spot-check in the Ads website. See <code>ads-launch/DECISIONS.md</code>.</span>
               </label>
             </li>
             <li data-order="10">
               <input type="checkbox" id="ads10" data-todo="ads10" />
               <label for="ads10">
-                <strong>10. Turn on US role campaigns — only after gates below are green</strong>
-                <span class="todo-hint">Brand stays deferred. Enable US role campaigns (<code>VC_US_S_ROLE_*</code>) after budgets/CPC/Final URLs are set — start with administration + one finance + one marketing role if you want a staged turn-on. Keep Australia quiet until the US looks sane. You click Enable in Ads or Editor — not from this page. Do not enable spend early.</span>
+                <strong>10. Turn on US Brand + Core first — only after gates below are green</strong>
+                <span class="todo-hint">Per <code>07-phased-activation-recommendation.md</code>: enable <code>VC_US_S_BRAND</code> + <code>VC_US_S_CORE_hire_va</code> first, then expand role campaigns. Keep Australia quiet until the US looks sane. You click Enable in Ads or Editor — not from this page. Do not enable spend early. Explicit George approval required.</span>
               </label>
             </li>
           </ul>
@@ -364,9 +364,8 @@
             <span class="st st-blocked">Blocked</span>
           </div>
           <ul>
-            <li><strong>AU phone + where leads go</strong> — still open</li>
-            <li><strong>Budgets + Max CPC</strong> — not approved yet</li>
-            <li><strong>Domain (~$10 on Vercel)</strong> — buy, then lock Final URLs</li>
+            <li><strong>Where leads go</strong> — real inbox/webhook still open (QA is TEMPORARY log-only on vision)</li>
+            <li><strong>Domain (~$10 on Vercel)</strong> — buy, then swap Final URL host (paths already category-correct)</li>
             <li><strong>Editor import</strong> — stays paused until you say go</li>
             <li><strong>Old Brand still spending</strong> — Aug 5 campaign view: <code>PM_US_RSA_Brand</code> (~$39) and <code>PM_AU_RSA_Brand</code> (A$3), Maximize conversions, 0 conversions. Recommend pause before or with the new import — you click pause in Ads; not from this page.</li>
           </ul>
@@ -380,9 +379,9 @@
           <ul>
             <li><strong>Next: step 5</strong> — open Google Ads Editor and download USA + AU</li>
             <li>Optional: pause both old <code>PM_*</code> Brand campaigns in Ads if you want that small spend stopped — you click pause there, not here</li>
-            <li>Approve budgets + Max CPC ceilings</li>
-            <li><strong>Buy domain on Vercel (~$10)</strong> — needed for the real Final URL (not the preview URL)</li>
-            <li>Confirm Final URLs after the domain is attached</li>
+            <li>Optionally change budget / Max CPC defaults (already filled)</li>
+            <li><strong>Buy domain on Vercel (~$10)</strong> — needed for the real Final URL host (not the preview URL)</li>
+            <li>Confirm Final URL host after the domain is attached (keep category paths)</li>
             <li>Confirm payment-cleared date when the bank shows it</li>
             <li>Review the paused Editor import before any enable</li>
           </ul>
@@ -394,8 +393,8 @@
             <span class="st st-progress">VC</span>
           </div>
           <ul>
-            <li>AU phone (official AU-site number) — NA dest <code>310-426-8776</code> confirmed</li>
-            <li>Lead inbox / webhook per market (email OK for Stage 1)</li>
+            <li>AU phone locked form-primary for Stage 1 (no fake AU number) — NA dest <code>310-426-8776</code> confirmed</li>
+            <li>Lead inbox / webhook per market (email OK for Stage 1) — replace log-only before paid</li>
             <li><strong>Pilot payment — IN TRANSIT</strong> (not unpaid; not cleared)</li>
             <li>Chat platform + George invite · lead-quality feedback path</li>
           </ul>
@@ -419,22 +418,22 @@
             <li>
               <span class="st st-blocked">Open</span>
               <div class="gate-body">
-                <strong>Phones + lead delivery filled</strong>
-                <span>NA dest <code>310-426-8776</code> confirmed (do not port). Still need AU official number + lead email/webhook. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
+                <strong>Lead delivery filled (phones decided)</strong>
+                <span>NA dest <code>310-426-8776</code> confirmed (do not port). AU = form-primary (locked). Still need real lead email/webhook before paid — QA log-only is temporary. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
               </div>
             </li>
             <li>
               <span class="st st-blocked">Open</span>
               <div class="gate-body">
-                <strong>Budgets + CPC ceilings approved</strong>
-                <span>Placeholders only until George signs off: <code>[APPROVAL_DAILY_BUDGET_USD]</code> · <code>[APPROVAL_DAILY_BUDGET_AUD]</code> · <code>[APPROVAL_MAX_CPC]</code>.</span>
+                <strong>Budgets + CPC ceilings confirmed</strong>
+                <span>Defaults filled in CSV (see <code>ads-launch/DECISIONS.md</code>). George can change before enable. Still blocked on explicit enable approval — not on missing tokens.</span>
               </div>
             </li>
             <li>
               <span class="st st-access">Open</span>
               <div class="gate-body">
                 <strong>Landing pages live on the real domain</strong>
-                <span>Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. <strong>Buy domain(s) on Vercel (~$10)</strong>, attach to vision, then lock Final URLs and check the forms.</span>
+                <span>Preview host: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> · plus 9 category LPs each. <strong>Buy domain(s) on Vercel (~$10)</strong>, attach to vision, then swap Final URL host (keep category paths) and check the forms.</span>
               </div>
             </li>
             <li>
@@ -455,12 +454,10 @@
         </div>
         <div class="panel-bd">
           <ul class="lc-open">
-            <li>Budgets</li>
-            <li>Max CPC</li>
-            <li>AU phone</li>
-            <li>Lead inbox/webhook</li>
+            <li>Lead inbox/webhook (replace TEMP log-only)</li>
             <li><strong>Domain purchase on Vercel (~$10) — pending George</strong></li>
-            <li>Final host → lock Ads Final URLs</li>
+            <li>Final host → swap Ads Final URL host (paths already set)</li>
+            <li>Optional: revise budget/CPC defaults</li>
             <li>Payment-cleared date</li>
             <li>Pause old Brand campaigns in Ads? (recommend yes — you click)</li>
           </ul>
@@ -491,9 +488,9 @@
             <h3>United States</h3>
             <ul class="glance-bullets">
               <li>Account <code>496-715-1855</code></li>
-              <li>Stage 1 campaigns (paused import): nine <code>VC_US_S_ROLE_*</code> (digital marketing · social media · accounting · bookkeeping · administration · customer service · HR · recruitment · sales). Brand deferred.</li>
+              <li>Stage 1 campaigns (paused import): <code>VC_US_S_BRAND</code> + <code>VC_US_S_CORE_hire_va</code> + nine <code>VC_US_S_ROLE_*</code>.</li>
               <li><strong>Still live (Aug 5 read):</strong> <code>PM_US_RSA_Brand</code> — $100/day Max Conv, Enabled; ~$39 / 0 conv. Rest of list = paused (~50 in view).</li>
-              <li>LP: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us preview</a></li>
+              <li>LP: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> + category routes e.g. <a href="https://vision-three-alpha.vercel.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
               <li>Phone dest: <code>310-426-8776</code> (confirmed; Raffie/Raffy PH — CallRail later)</li>
               <li>Lead: <code>LEAD_EMAIL_US</code> or webhook (Stage 1); Zoho when access confirmed</li>
             </ul>
@@ -502,10 +499,10 @@
             <h3>Australia</h3>
             <ul class="glance-bullets">
               <li>Account <code>573-539-1940</code></li>
-              <li>Stage 1 campaigns (paused import): nine <code>VC_AU_S_ROLE_*</code> (same nine roles as US). Brand deferred.</li>
+              <li>Stage 1 campaigns (paused import): <code>VC_AU_S_BRAND</code> + <code>VC_AU_S_CORE_hire_va</code> + nine <code>VC_AU_S_ROLE_*</code>.</li>
               <li><strong>Still live (Aug 5 read):</strong> <code>PM_AU_RSA_Brand</code> — $30/day Max Conv, Eligible (Limited); A$3 / 0 conv. Rest of list = paused (~62 total).</li>
-              <li>LP: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au preview</a></li>
-              <li>Phone: official AU-site number only — <code>[AU_BUSINESS_PHONE]</code> unresolved</li>
+              <li>LP: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> + same nine category routes</li>
+              <li>Phone: form-primary (locked) — no fake AU number on LP</li>
               <li>Lead: <code>LEAD_EMAIL_AU</code> or webhook (Stage 1)</li>
             </ul>
           </div>
@@ -525,13 +522,13 @@
             <li>Confirm live campaigns for USA + AU in this thread. (Done Aug 5: US Brand live; AU Brand live/limited; rest paused.)</li>
             <li>Download USA + AU into Google Ads Editor. ← next</li>
             <li>Optional: pause old Brand campaigns in Ads if you want bleed stopped (you click; recommended before/with import).</li>
-            <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused).</li>
-            <li>Replace budget / Max CPC placeholders per market.</li>
-            <li>Confirm Final URLs = Stage 1 LPs; no WP sitelinks.</li>
+            <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused · stage1-v5).</li>
+            <li>Confirm budget / Max CPC defaults (or revise); no <code>[APPROVAL_*]</code> tokens left.</li>
+            <li>Confirm Final URLs = Stage 1 category LPs; no WP sitelinks; no inert <code>?role=</code>.</li>
             <li>Confirm Search partners off, Display expansion off, Presence geo.</li>
             <li>Confirm Stage 1 conversion goals observe-only (no legacy Max Conv poison).</li>
             <li>Post Paused changes; spot-check in Ads UI.</li>
-            <li>Enable US role campaigns only (brand deferred; AU throttle until US sane).</li>
+            <li>Enable US Brand + Core first, then roles (AU throttle until US sane).</li>
             <li>Fire test clicks / search preview; verify LP attribution params.</li>
             <li>Watch 72h: search terms, reject logs, form accepts, CPC. Stop → pause the noisiest role campaign first.</li>
           </ol>
@@ -570,6 +567,7 @@
 
       <div class="tech-link">
         <strong>Technical documentation</strong> —
+        Mega audit for ChatGPT: <code>ads-launch/CHATGPT-MEGA-AUDIT.md</code> ·
         <a href="clean-rebuild.html">Clean Rebuild package</a>
         <span class="muted"> (secondary; rebuild docs, launch sheet, implementation notes)</span>
       </div>

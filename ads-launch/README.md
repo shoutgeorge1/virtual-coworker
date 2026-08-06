@@ -1,9 +1,14 @@
 # Ads launch — Stage 1 v5 (local)
 
+**ChatGPT paste audit:** [`CHATGPT-MEGA-AUDIT.md`](./CHATGPT-MEGA-AUDIT.md)  
+Short index: [`FULL-BUILD-REPORT.md`](./FULL-BUILD-REPORT.md)
+
 Paused Editor package + LP engine deliverables. **No live Ads mutations.**
 
 | # | Deliverable |
 |---|-------------|
+| MEGA | [CHATGPT-MEGA-AUDIT.md](./CHATGPT-MEGA-AUDIT.md) |
+| 0 | [DECISIONS.md](./DECISIONS.md) · [LAUNCH-SHEET.md](./LAUNCH-SHEET.md) |
 | 1 | [01-current-state-audit.md](./01-current-state-audit.md) |
 | 2 | [02-historical-data-audit.md](./02-historical-data-audit.md) · [historical-performance-summary.json](./historical-performance-summary.json) |
 | 3 | [03-search-term-category-findings.md](./03-search-term-category-findings.md) |
