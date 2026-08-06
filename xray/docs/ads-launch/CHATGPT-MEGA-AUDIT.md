@@ -12,7 +12,7 @@
 | Ads package | `ads-launch/google-ads-editor-import.csv` · `lp_version=stage1-v5` |
 | LP engine | `vision/config/categories.ts` + `MarketLanding` / `LeadGate` |
 | Casting commit | `8705ff05a92ffd89225294c02eb514f5ec1b445c` — **deployed** to vision production |
-| Mega-audit commit | `b3c8542` (full: resolve via `git rev-parse b3c8542` on `vision-demo`) |
+| Mega-audit commit | `b3c8542b38679e343ae0f4d7777975787003640a` (content) · HEAD stamp `73676c9` on `vision-demo` |
 | WordPress | **Untouched** — paid traffic must not use WP Final URLs |
 | Ads enable | **NOT approved** — all Stage 1 CSV entities **Paused** |
 
