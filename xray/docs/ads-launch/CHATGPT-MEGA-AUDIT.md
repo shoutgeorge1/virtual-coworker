@@ -1,7 +1,7 @@
 # Virtual Coworker Stage 1 — MEGA AUDIT for ChatGPT (v6)
 
-**Prefer starting with** `ads-launch/CHATGPT-DEBRIEF.md` **(shorter paste).**  
-This file is the deep companion. Ask ChatGPT to challenge honesty, conversion definitions, Final URL/path integrity, Ads package hygiene, and remaining launch blockers — not to rewrite copy for vibes.
+**Canonical paste:** `ads-launch/CHATGPT-DEBRIEF.md` — **complete whole-package brief** (LPs, URLs, Ads, tracking, blockers).  
+This file is the deep companion. Prefer the debrief first; use MEGA for extra depth. Ask ChatGPT to challenge honesty, conversion definitions, Final URL/path integrity, Ads package hygiene, and remaining launch blockers — not to rewrite copy for vibes.
 
 | Field | Value |
 |-------|-------|
@@ -10,7 +10,7 @@ This file is the deep companion. Ask ChatGPT to challenge honesty, conversion de
 | Repo | `/Users/george/Developer/virtual-coworker` |
 | LP host (preview) | `https://vision-three-alpha.vercel.app` |
 | Launch Control | `https://vc-xray.vercel.app/launch-control` |
-| Ads package | `ads-launch/google-ads-editor-import.csv` · `lp_version=stage1-v6` |
+| Ads package | `ads-launch/google-ads-editor-import.csv` · `lp_version=stage1-v6` · **RSA×3/main AG** |
 | LP engine | `vision/config/categories.ts` + `MarketLanding` / `LeadGate` |
 | Casting commit | `8705ff05a92ffd89225294c02eb514f5ec1b445c` — **deployed** to vision production |
 | Architecture | **2 campaigns × 2 markets** — Brand **deferred** |
@@ -170,7 +170,7 @@ Keep / kill clusters and limitations: see DEBRIEF §3 and `03-search-term-catego
 | Campaigns | **4** | Paused |
 | Ad groups | **40** | Paused |
 | Positive keywords | **1,568** (Exact 1,182 · Phrase 386) | Paused |
-| RSAs | **78** | Paused |
+| RSAs | **116** (3/main AG · city 1) | Paused |
 | Campaign negative rows | **764** (191 unique × 4) | Broad |
 | Callouts / sitelinks / snippets | 24 / 16 / 4 | |
 | **CSV rows** | **2,498** | |
@@ -244,7 +244,7 @@ Live Zoho · CallRail qualified calls · WP redesign · Broad/PMax volume · Fak
 
 ```bash
 python3 ads-launch/build_stage1_editor_package.py
-# Expect: 4 campaigns, ~2498 rows, QA OK, lp_version stage1-v6
+# Expect: 4 campaigns, ~2536 rows, 116 RSAs, QA OK, lp_version stage1-v6
 
 curl -sI 'https://vision-three-alpha.vercel.app/us/hr?variant=a' | grep -i link
 # Expect va-face-1.jpg — not hire-talent.webp

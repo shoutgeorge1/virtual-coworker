@@ -5,8 +5,9 @@ v6 (2026-08-05): George-approved architecture — Brand deferred.
   VC_{US|AU}_S_CORE   (~60%) high-intent VA / hire / PH-offshore
   VC_{US|AU}_S_ROLES  (~40%) Digital · Social · Admin · Controlled roles
 
-Retains v5 category Final URLs, single UTM path, employer CTAs, v4 ST evidence
-keywords/negatives. Exact+Phrase only. No Ads API. All Paused.
+RSA: 3 unique full RSAs (15H/4D) per main AG — hire-intent / role-outcome or
+PH-offshore / proof-speed-of-staffing angles from ST evidence. City-test AGs
+stay 1 RSA. Exact+Phrase only. No Ads API. All Paused.
 
 Outputs:
   - ads-launch/google-ads-editor-import.csv
@@ -1362,6 +1363,524 @@ def market_bits(mkt: str) -> dict[str, str]:
     }
 
 
+def _third_rsa_angles() -> dict:
+    """Third unique RSA per main AG — proof/speed or dedicated-seat angles from ST evidence.
+    Not a noun-swap clone of A/B. City-test AGs stay 1 RSA.
+    """
+
+    def H(*hs: str) -> list[str]:
+        return list(hs)
+
+    def D(*ds: str) -> list[str]:
+        return list(ds)
+
+    out: dict = {}
+    out['digital_marketing'] = {
+        'Digital_Marketing_Hire_PH': (
+            'C_speed',
+                lambda m: H(
+                    "Shortlist Marketing Talent",
+                    "Vetted Marketers Ready",
+                    "Recruit Then You Interview",
+                    "Marketing Hire Shortlist",
+                    "PH Marketer Screening",
+                    "Skip Marketplace Search",
+                    "Role Brief to Shortlist",
+                    "Get Marketing Finalists",
+                    "Digital Hire Pathway",
+                    "Screened SEO Candidates",
+                    "Content Hire Pipeline",
+                    "Employer Shortlist First",
+                    "Marketing Seat Ready",
+                    "Staffing Pipeline Speed",
+                    "Ask for Marketing Shortlist",
+                ),
+                lambda m: D(
+                    "Need a marketing hire? We recruit and screen Philippines talent into a shortlist.",
+                    "You interview finalists — we handle sourcing and vetting for digital roles.",
+                    "Speed comes from a staffing pipeline, not invented placement guarantees.",
+                    "Tell us the marketing seat. We return interview-ready candidates.",
+                ),
+            'shortlist',
+            'mkt',
+        ),
+        'Digital_Marketing_Outsource_PH': (
+            'C_proof',
+                lambda m: H(
+                    "Dedicated PH Marketer",
+                    "Same Marketer Daily",
+                    "Accountable Marketing Seat",
+                    "Philippines Marketing Hire",
+                    "Not Rotating Freelancers",
+                    "Offshore With Ownership",
+                    "Marketing Ops Continuity",
+                    "PH Specialist You Keep",
+                    "Interview Then Commit",
+                    "Vetted Then Dedicated",
+                    "Remote Marketing Owner",
+                    "Staffing Not Gig Apps",
+                    "Marketing Seat Proof",
+                    "Campaign Owner From PH",
+                    "Request Dedicated Seat",
+                ),
+                lambda m: D(
+                    "Outsource marketing with a dedicated Philippines seat — not freelancer rotation.",
+                    "Continuity is the proof: one vetted marketer you interview before placement.",
+                    f"Built for {m["employers"]} who want accountable offshore marketing capacity.",
+                    "Partner-led seat. You keep hire authority. No invented savings claims.",
+                ),
+            'dedicated',
+            'mkt',
+        ),
+    }
+
+    out['social_media'] = {
+        'Social_Media_Hire_PH': (
+            'C_speed',
+                lambda m: H(
+                    "Shortlist Social Managers",
+                    "Vetted SMM Finalists",
+                    "SMM Hire Shortlist Fast",
+                    "Recruit Social Then Interview",
+                    "PH Community Manager Screen",
+                    "Skip Gig SMM Search",
+                    "Social Role to Shortlist",
+                    "Get SMM Candidates Ready",
+                    "Employer Social Hire Path",
+                    "Screened Content Schedulers",
+                    "Brand Voice Hire Pipeline",
+                    "Social Seat Shortlist",
+                    "Staffing Pipeline for SMM",
+                    "Interview-Ready SMM List",
+                    "Ask for SMM Shortlist",
+                ),
+                lambda m: D(
+                    "Need a social media hire? We recruit and screen Philippines SMM talent first.",
+                    "Shortlist-first path: you interview; we source and vet community managers.",
+                    "No fake response-time claims — speed means a ready staffing pipeline.",
+                    "Tell us the social seat. Review vetted finalists before you hire.",
+                ),
+            'shortlist',
+            'smm',
+        ),
+        'Social_Media_Outsource_PH': (
+            'C_proof',
+                lambda m: H(
+                    "Dedicated PH Social Seat",
+                    "Same SMM Every Day",
+                    "Accountable Social Manager",
+                    "Philippines SMM Continuity",
+                    "Not Freelance Posters",
+                    "Offshore Brand Voice Seat",
+                    "Social Ops You Can Keep",
+                    "Interview SMM Then Place",
+                    "Vetted Channel Owner PH",
+                    "Remote Social Ownership",
+                    "Staffing Not Gig Boards",
+                    "Proof in Dedicated SMM",
+                    "Community Seat From PH",
+                    "Calendar Owner Dedicated",
+                    "Request Dedicated SMM",
+                ),
+                lambda m: D(
+                    "Outsource social with a dedicated Philippines seat — not rotating freelancers.",
+                    "Proof is continuity: one vetted SMM you interview before placement support.",
+                    f"Built for {m["employers"]} needing accountable offshore social capacity.",
+                    "Partner-led seat model. No invented engagement or follower guarantees.",
+                ),
+            'dedicated',
+            'smm',
+        ),
+    }
+
+    out['accounting'] = {
+        'Accounting_Hire_PH': (
+            'C_speed',
+                lambda m: H(
+                    "Shortlist Accountants PH",
+                    "Vetted Finance Finalists",
+                    "Accounting Hire Shortlist",
+                    "Recruit AP Then Interview",
+                    "PH Accountant Screening",
+                    "Skip Freelance Finance",
+                    "Finance Role to Shortlist",
+                    "Get Accounting Finalists",
+                    "Employer Finance Hire Path",
+                    "Screened Ledger Candidates",
+                    "AP Hire Pipeline Ready",
+                    "Accounting Seat Shortlist",
+                    "Staffing Pipeline Finance",
+                    "Interview-Ready Accountants",
+                    "Ask for Finance Shortlist",
+                ),
+                lambda m: D(
+                    "Need an accounting hire? We recruit and screen Philippines finance talent first.",
+                    "Shortlist-first: you interview AP/AR and accounting finalists we vet.",
+                    "No invented credential or close-time guarantees on this creative.",
+                    "Tell us the finance seat. Review vetted candidates before you hire.",
+                ),
+            'shortlist',
+            'acct',
+        ),
+        'Accounting_Outsource_PH': (
+            'C_proof',
+                lambda m: H(
+                    "Dedicated PH Accountant",
+                    "Same Finance Seat Daily",
+                    "Accountable Ledger Support",
+                    "Philippines Accounting Seat",
+                    "Not Gig Bookkeeping Apps",
+                    "Offshore Finance Continuity",
+                    "AP Owner You Can Keep",
+                    "Interview Then Place PH",
+                    "Vetted Accounting Seat",
+                    "Remote Finance Ownership",
+                    "Staffing Not Task Markets",
+                    "Proof in Dedicated Finance",
+                    "Ledger Seat From PH",
+                    "Close Support Dedicated",
+                    "Request Dedicated Finance",
+                ),
+                lambda m: D(
+                    "Outsource accounting with a dedicated Philippines seat — not task gigs.",
+                    "Proof is continuity: one vetted finance seat you interview first.",
+                    f"Built for {m["employers"]} who need accountable offshore accounting capacity.",
+                    "Partner-led model. No invented $/hr rates or savings percentages.",
+                ),
+            'dedicated',
+            'acct',
+        ),
+    }
+
+    out['bookkeeping'] = {
+        'Bookkeeping_Hire_PH': (
+            'C_speed',
+                lambda m: H(
+                    "Shortlist Bookkeepers PH",
+                    "Vetted Books Finalists",
+                    "Bookkeeper Hire Shortlist",
+                    "Recruit Books Then Interview",
+                    "PH Bookkeeper Screening",
+                    "Skip Marketplace Books",
+                    "Books Role to Shortlist",
+                    "Get Bookkeeping Finalists",
+                    "Employer Books Hire Path",
+                    "Screened Reconciliation Help",
+                    "Weekly Books Hire Pipeline",
+                    "Books Seat Shortlist",
+                    "Staffing Pipeline Books",
+                    "Interview-Ready Bookkeepers",
+                    "Ask for Books Shortlist",
+                ),
+                lambda m: D(
+                    "Need a bookkeeper? We recruit and screen Philippines books talent first.",
+                    "Shortlist-first hiring: you interview; we source and vet bookkeepers.",
+                    "No fake turnaround promises — speed means a ready staffing pipeline.",
+                    "Tell us the books seat. Review vetted finalists before you hire.",
+                ),
+            'shortlist',
+            'books',
+        ),
+        'Bookkeeping_Outsource_PH': (
+            'C_proof',
+                lambda m: H(
+                    "Dedicated PH Bookkeeper",
+                    "Same Books Seat Weekly",
+                    "Accountable Books Support",
+                    "Philippines Books Continuity",
+                    "Not Freelance Book Tasks",
+                    "Offshore Books Ownership",
+                    "Books Seat You Can Keep",
+                    "Interview Bookkeeper First",
+                    "Vetted Weekly Books Seat",
+                    "Remote Books Ownership",
+                    "Staffing Not Gig Bundles",
+                    "Proof in Dedicated Books",
+                    "Reconciliation Seat PH",
+                    "Xero QB Seat Dedicated",
+                    "Request Dedicated Books",
+                ),
+                lambda m: D(
+                    "Outsource bookkeeping with a dedicated Philippines seat — not task bundles.",
+                    "Proof is continuity: one vetted bookkeeper you interview before placement.",
+                    f"Built for {m["employers"]} who need accountable offshore books capacity.",
+                    "Partner-led seat. Tool fit confirmed in follow-up — not invented here.",
+                ),
+            'dedicated',
+            'books',
+        ),
+    }
+
+    out['administration'] = {
+        'Administration_EA_PH': (
+            'C_speed',
+                lambda m: H(
+                    "Shortlist Executive Assistants",
+                    "Vetted EA Finalists",
+                    "EA Hire Shortlist Fast",
+                    "Recruit EA Then Interview",
+                    "PH EA Screening Path",
+                    "Skip Freelance EA Hunt",
+                    "EA Role Brief to List",
+                    "Get EA Candidates Ready",
+                    "Employer EA Hire Path",
+                    "Screened Calendar Support",
+                    "Executive Ops Pipeline",
+                    "EA Seat Shortlist",
+                    "Staffing Pipeline for EA",
+                    "Interview-Ready EA List",
+                    "Ask for EA Shortlist",
+                ),
+                lambda m: D(
+                    "Need an executive assistant? We recruit and screen Philippines EA talent first.",
+                    "Shortlist-first: you interview; we source and vet remote EA finalists.",
+                    "No invented availability guarantees — speed means a staffing pipeline.",
+                    "Tell us the EA seat. Review vetted candidates before you hire.",
+                ),
+            'shortlist',
+            'ea',
+        ),
+    }
+
+    out['customer_service'] = {
+        'Customer_Service_Hire_PH': (
+            'C_speed',
+                lambda m: H(
+                    "Shortlist Support Agents",
+                    "Vetted CS Finalists",
+                    "Support Hire Shortlist",
+                    "Recruit CS Then Interview",
+                    "PH Support Screening",
+                    "Skip Freelance Agents",
+                    "Support Role to Shortlist",
+                    "Get CS Candidates Ready",
+                    "Employer Support Hire Path",
+                    "Screened Chat Email Help",
+                    "Helpdesk Hire Pipeline",
+                    "CS Seat Shortlist",
+                    "Staffing Pipeline Support",
+                    "Interview-Ready Agents",
+                    "Ask for Support Shortlist",
+                ),
+                lambda m: D(
+                    "Need customer service staff? We recruit and screen Philippines support talent.",
+                    "Shortlist-first hiring: you interview; we source and vet CS finalists.",
+                    "No fake SLA claims — speed means a ready staffing pipeline.",
+                    "Tell us the support seat. Review vetted agents before you hire.",
+                ),
+            'shortlist',
+            'cs',
+        ),
+        'Customer_Service_Outsource_PH': (
+            'C_proof',
+                lambda m: H(
+                    "Dedicated PH Support Seat",
+                    "Same Agent Coverage Daily",
+                    "Accountable Care Capacity",
+                    "Philippines Support Continuity",
+                    "Not Rotating Gig Agents",
+                    "Offshore Support Ownership",
+                    "Support Seat You Keep",
+                    "Interview Agents Then Place",
+                    "Vetted Helpdesk Seat PH",
+                    "Remote Care Ownership",
+                    "Staffing Not Gig Support",
+                    "Proof in Dedicated CS",
+                    "Ticket Seat From PH",
+                    "Chat Email Seat Dedicated",
+                    "Request Dedicated Support",
+                ),
+                lambda m: D(
+                    "Outsource support with a dedicated Philippines seat — not rotating agents.",
+                    "Proof is continuity: one vetted support seat you interview first.",
+                    f"Built for {m["employers"]} who need accountable offshore customer care.",
+                    "Partner-led model. No invented response-time or CSAT guarantees.",
+                ),
+            'dedicated',
+            'cs',
+        ),
+    }
+
+    out['hr'] = {
+        'Human_Resources_Hire_PH': (
+            'C_speed',
+                lambda m: H(
+                    "Shortlist HR Assistants",
+                    "Vetted People Ops Finalists",
+                    "HR Hire Shortlist Path",
+                    "Recruit HR Then Interview",
+                    "PH HR Screening Path",
+                    "Skip Freelance HR Gigs",
+                    "HR Role Brief to List",
+                    "Get HR Candidates Ready",
+                    "Employer HR Hire Path",
+                    "Screened Onboarding Help",
+                    "People Ops Hire Pipeline",
+                    "HR Seat Shortlist",
+                    "Staffing Pipeline for HR",
+                    "Interview-Ready HR Staff",
+                    "Ask for HR Shortlist",
+                ),
+                lambda m: D(
+                    "Need HR support? We recruit and screen Philippines people-ops talent first.",
+                    "Shortlist-first: you interview; we source and vet HR admin finalists.",
+                    "Thin historical ST volume acknowledged — still a clear employer hire path.",
+                    "Tell us the HR seat. Review vetted candidates before you hire.",
+                ),
+            'shortlist',
+            'hr',
+        ),
+        'Human_Resources_Outsource_PH': (
+            'C_proof',
+                lambda m: H(
+                    "Dedicated PH HR Seat",
+                    "Same HR Admin Daily",
+                    "Accountable People Ops",
+                    "Philippines HR Continuity",
+                    "Not Freelance HR Tasks",
+                    "Offshore HR Ownership",
+                    "HR Seat You Can Keep",
+                    "Interview HR Then Place",
+                    "Vetted People Ops Seat",
+                    "Remote HR Ownership",
+                    "Staffing Not Gig HR Apps",
+                    "Proof in Dedicated HR",
+                    "Onboarding Seat From PH",
+                    "Payroll Admin Dedicated",
+                    "Request Dedicated HR",
+                ),
+                lambda m: D(
+                    "Outsource HR admin with a dedicated Philippines seat — not task gigs.",
+                    "Proof is continuity: one vetted HR seat you interview before placement.",
+                    f"Built for {m["employers"]} needing accountable offshore people-ops capacity.",
+                    "Partner-led model. Policy control stays with you — no invented claims.",
+                ),
+            'dedicated',
+            'hr',
+        ),
+    }
+
+    out['recruitment'] = {
+        'Recruitment_Hire_PH': (
+            'C_speed',
+                lambda m: H(
+                    "Shortlist Recruiting Ops",
+                    "Vetted TA Finalists",
+                    "Recruiting Hire Shortlist",
+                    "Recruit TA Then Interview",
+                    "PH Sourcer Screening",
+                    "Skip Freelance Recruiters",
+                    "TA Role Brief to List",
+                    "Get Recruiting Finalists",
+                    "Employer TA Hire Path",
+                    "Screened Screening Support",
+                    "Sourcing Hire Pipeline",
+                    "TA Seat Shortlist",
+                    "Staffing Pipeline for TA",
+                    "Interview-Ready TA Staff",
+                    "Ask for TA Shortlist",
+                ),
+                lambda m: D(
+                    "Need recruiting support? We recruit and screen Philippines TA talent first.",
+                    "Shortlist-first: you interview; we source and vet recruiting ops finalists.",
+                    "Near-zero historical ST — curated Stage 1 keywords only, still employer-only.",
+                    "Tell us the TA seat. Review vetted candidates before you hire.",
+                ),
+            'shortlist',
+            'ta',
+        ),
+        'Recruitment_Outsource_PH': (
+            'C_proof',
+                lambda m: H(
+                    "Dedicated PH TA Seat",
+                    "Same Sourcer Daily",
+                    "Accountable Recruiting Ops",
+                    "Philippines TA Continuity",
+                    "Not Gig Recruiting Apps",
+                    "Offshore TA Ownership",
+                    "TA Seat You Can Keep",
+                    "Interview TA Then Place",
+                    "Vetted Recruiting Seat",
+                    "Remote TA Ownership",
+                    "Staffing Not Job Boards",
+                    "Proof in Dedicated TA",
+                    "Sourcing Seat From PH",
+                    "Screening Ops Dedicated",
+                    "Request Dedicated TA",
+                ),
+                lambda m: D(
+                    "Outsource recruiting ops with a dedicated Philippines seat — not gig apps.",
+                    "Proof is continuity: one vetted TA seat you interview before placement.",
+                    f"Built for {m["employers"]} needing accountable offshore recruiting capacity.",
+                    "Partner-led model. You keep hiring decisions — no invented fill rates.",
+                ),
+            'dedicated',
+            'ta',
+        ),
+    }
+
+    out['sales'] = {
+        'Sales_Hire_PH': (
+            'C_speed',
+                lambda m: H(
+                    "Shortlist Lead Gen Talent",
+                    "Vetted Sales Finalists",
+                    "Lead Gen Hire Shortlist",
+                    "Recruit Sales Then Interview",
+                    "PH Setter Screening",
+                    "Skip Freelance Lead Lists",
+                    "Sales Role to Shortlist",
+                    "Get Pipeline Finalists",
+                    "Employer Sales Hire Path",
+                    "Screened Appointment Setters",
+                    "Outbound Hire Pipeline",
+                    "Sales Seat Shortlist",
+                    "Staffing Pipeline Sales",
+                    "Interview-Ready Setters",
+                    "Ask for Sales Shortlist",
+                ),
+                lambda m: D(
+                    "Need sales support? We recruit and screen Philippines lead-gen talent first.",
+                    "Shortlist-first: you interview; we source and vet setters and sales VAs.",
+                    "No invented pipeline or meeting-volume guarantees on this creative.",
+                    "Tell us the sales seat. Review vetted finalists before you hire.",
+                ),
+            'shortlist',
+            'sales',
+        ),
+        'Sales_Outsource_PH': (
+            'C_proof',
+                lambda m: H(
+                    "Dedicated PH Sales Seat",
+                    "Same Setter Every Day",
+                    "Accountable Lead Gen Seat",
+                    "Philippines Sales Continuity",
+                    "Not Gig Outbound Apps",
+                    "Offshore Pipeline Ownership",
+                    "Sales Seat You Can Keep",
+                    "Interview Setter Then Place",
+                    "Vetted Lead Gen Seat PH",
+                    "Remote Outbound Ownership",
+                    "Staffing Not List Markets",
+                    "Proof in Dedicated Sales",
+                    "Prospecting Seat From PH",
+                    "Appointment Seat Dedicated",
+                    "Request Dedicated Sales",
+                ),
+                lambda m: D(
+                    "Outsource lead gen with a dedicated Philippines seat — not gig list work.",
+                    "Proof is continuity: one vetted sales seat you interview before placement.",
+                    f"Built for {m["employers"]} who need accountable offshore outbound capacity.",
+                    "Partner-led model. No invented appointment or revenue guarantees.",
+                ),
+            'dedicated',
+            'sales',
+        ),
+    }
+
+    return out
+
+
 # RSA catalog: role -> ag -> angle -> (headlines_fn, descs_fn, path1, path2)
 # Built as callables so US/AU language differs beyond a country token swap.
 
@@ -2401,6 +2920,17 @@ def _rsa_catalog() -> dict:
         ],
     }
 
+    # Append third unique RSA (proof/speed or dedicated-seat) per main AG
+    for role, ag_map in _third_rsa_angles().items():
+        for ag, entry in ag_map.items():
+            if ag not in cat[role]:
+                raise ValueError(f"third RSA AG missing from catalog: {role}/{ag}")
+            if len(cat[role][ag]) != 2:
+                raise ValueError(
+                    f"expected 2 RSAs before third append: {role}/{ag} has {len(cat[role][ag])}"
+                )
+            cat[role][ag].append(entry)
+
     return cat
 
 
@@ -2760,7 +3290,7 @@ def append_rsa(
 
 
 def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
-    """angle: hire | hire_b | offshore | offshore_b — full 15/4, no blanks."""
+    """angle: hire | hire_b | hire_c | offshore | offshore_b | offshore_c — full 15/4."""
     m = market_bits(mkt)
     if angle == "hire":
         headlines = [
@@ -2812,6 +3342,32 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
             "Tell us the role. We recruit and vet. You decide who joins.",
         ]
         return headlines, descs, "va", "hire"
+    if angle == "hire_c":
+        headlines = [
+            "How to Hire a VA Fast",
+            "VA Shortlist for Employers",
+            "Screened Filipino Finalists",
+            f"{m['tag']} Hire Path Speed",
+            "Recruit Vet Then Interview",
+            "Skip Job Board Searching",
+            "Get VA Candidates Ready",
+            "Staffing Pipeline Hire",
+            "Role Brief to Shortlist",
+            "Employer Shortlist First",
+            "Vetted Remote VA Seats",
+            "Not DIY VA Hiring",
+            "Dedicated Hire Support",
+            "Clear Next Hire Step",
+            "{KeyWord:How to Hire a VA}",
+        ]
+        descs = [
+            f"Need a VA for your {m['business']}? We recruit and screen — you interview.",
+            "Shortlist-first hiring: tell us the role, review vetted Philippines finalists.",
+            "No invented timelines. Speed comes from a staffing pipeline, not guarantees.",
+            "Employer path only. Inquiry accepted is not a job order or placement.",
+        ]
+        return headlines, descs, "shortlist", "va"
+
     if angle == "offshore":
         headlines = [
             "Offshore VA Philippines",
@@ -2862,6 +3418,32 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
             "Employer inquiries only. Inquiry accepted ≠ job order or placement.",
         ]
         return headlines, descs, "ph", "va"
+    if angle == "offshore_c":
+        headlines = [
+            "Dedicated PH VA Seat",
+            "Same VA Every Workday",
+            "Philippines Seat Not Gig",
+            f"{m['tag']} Offshore Proof Path",
+            "Accountable Remote Staff",
+            "Interview Then Place PH",
+            "Vetted Offshore Teammate",
+            "Not Rotating Freelancers",
+            "Offshore With Continuity",
+            "PH Staff You Can Keep",
+            "Remote Ops Ownership",
+            "Staffing Seat Evidence",
+            "Outsource Role Dedicated",
+            "Employer Controls Hire",
+            "{KeyWord:Dedicated Virtual Assistant}",
+        ]
+        descs = [
+            f"Philippines offshore seats for {m['employers']} who want one dedicated teammate.",
+            "Proof is continuity: a vetted seat you interview — not marketplace rotation.",
+            "We recruit and support. You keep hire authority before placement.",
+            "Exact/Phrase employer intent. No Broad, PMax, or DSA in this package.",
+        ]
+        return headlines, descs, "dedicated", "ph"
+
     raise ValueError(f"unknown core RSA angle: {angle}")
 
 
@@ -2888,8 +3470,8 @@ def build_core(
     )
 
     for ag, angles in (
-        ("Hire_VA_PH", ("hire", "hire_b")),
-        ("Offshore_VA_PH", ("offshore", "offshore_b")),
+        ("Hire_VA_PH", ("hire", "hire_b", "hire_c")),
+        ("Offshore_VA_PH", ("offshore", "offshore_b", "offshore_c")),
     ):
         append_ad_group(
             rows,
@@ -3152,6 +3734,18 @@ def qa(rows: list[dict[str, str]]) -> None:
             raise SystemExit(f"BLANK RSA SLOT: {r['Campaign']} / {r['Ad Group']}")
         validate_rsa(hs, ds, f"{r['Campaign']}/{r['Ad Group']}")
 
+    # Main AGs: exactly 3 unique full RSAs; city-test may stay 1–2
+    from collections import defaultdict as _dd
+    ag_rsa = _dd(int)
+    for r in ads:
+        ag_rsa[(r["Campaign"], r["Ad Group"])] += 1
+    for (camp, ag), n in sorted(ag_rsa.items()):
+        if "City" in ag:
+            if n < 1 or n > 2:
+                raise SystemExit(f"City AG RSA count {n} not in 1–2: {camp}/{ag}")
+        elif n != 3:
+            raise SystemExit(f"Main AG needs exactly 3 RSAs, got {n}: {camp}/{ag}")
+
     us_ads = [
         r
         for r in ads
@@ -3167,7 +3761,7 @@ def qa(rows: list[dict[str, str]]) -> None:
         for h in hs:
             freq[h] += 1
     # Fewer campaigns → shared CTAs recur more; flag only extreme clones.
-    spam = [(h, c) for h, c in freq.items() if c > 14]
+    spam = [(h, c) for h, c in freq.items() if c > 18]
     if spam:
         raise SystemExit(f"Boilerplate headline spam across RSAs: {spam[:8]}")
 

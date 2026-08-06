@@ -1,6 +1,6 @@
-# 11 — QA report (v6)
+# 11 — QA report (v6 · RSA×3)
 
-**Date:** 2026-08-05 · Vision casting on prod · No Ads enable · Package rebuilt to 2-campaign architecture
+**Date:** 2026-08-05 · Vision casting on prod · No Ads enable · Package rebuilt to 2-campaign architecture + 3 RSAs/main AG
 
 ---
 
@@ -8,14 +8,14 @@
 
 | Check | Command | Result |
 |-------|---------|--------|
-| Editor package builder | `python3 ads-launch/build_stage1_editor_package.py` | **PASS** — QA OK; **4** campaigns; **2498** rows; `lp_version=stage1-v6` |
+| Editor package builder | `python3 ads-launch/build_stage1_editor_package.py` | **PASS** — QA OK; **4** campaigns; **2536** rows; **116** RSAs; `lp_version=stage1-v6` |
 | Historical analyzer | `python3 ads-launch/analyze_historical_performance.py` | **PASS** (prior) — JSON written |
 
-Vision typecheck/test/build not re-run this pass (LP engine unchanged; Ads CSV/docs only).
+Vision typecheck/test/build not re-run this pass (Ads CSV/docs + debrief; microsite polish tracked separately).
 
 ---
 
-## Package validation (v6)
+## Package validation (v6 · RSA×3)
 
 | Item | Result |
 |------|--------|
@@ -23,7 +23,7 @@ Vision typecheck/test/build not re-run this pass (LP engine unchanged; Ads CSV/d
 | Budgets | US 75/50 · AU 75/50 · Max CPC 8/6 |
 | Core share | ~60% daily |
 | Positive KWs | 1568 Exact+Phrase |
-| RSAs | 78 — full 15/4, no blanks |
+| RSAs | **116** — 38 main AGs × 3 + 2 city × 1; full 15/4, no blanks |
 | Unique negatives | 191 × 4 |
 | Final URLs | Category paths only; no `?role=`; no WP; no Brand generics |
 | Double UTM | Tracking template `{lpurl}` only |
@@ -38,7 +38,6 @@ Vision typecheck/test/build not re-run this pass (LP engine unchanged; Ads CSV/d
 - Google Ads Editor import / enable
 - Real lead email delivery for paid
 - CallRail / Zoho live tests
-- LP redeploy (not required for this CSV architecture change)
 
 ---
 

@@ -14,6 +14,7 @@ George asked for decisive defaults so QA / deploy can proceed. These are **opera
 | **US daily budgets** | Core **$75** · Roles **$50** | USD. ≈ **$125/day** ≈ **$3.8k/mo** — placeholders inside a **$10–20k/account** monthly budget story (room to scale). George-decidable. |
 | **AU daily budgets** | Core **A$75** · Roles **A$50** | AUD. Same ~60/40 split. ≈ **A$3.8k/mo** Stage 1 pace. George-decidable. |
 | **Max CPC** | US **$8** · AU **A$6** | Maximize Clicks cap. George-decidable. |
+| **RSA count** | **3 unique full RSAs (15H/4D) per main AG** | Distinct angles (hire-intent / role or PH-offshore / proof-speed). City-test AGs stay 1–2. No fake claims. |
 | **Google Ads Post / enable** | **Not approved** | Package ships Paused. No live campaign enable from this decision set. |
 
 ## Still open (not faked)
