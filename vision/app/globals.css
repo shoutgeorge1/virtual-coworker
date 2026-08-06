@@ -2537,21 +2537,98 @@ a.gate-call:hover {
 
 .thank-you-us {
   background:
-    radial-gradient(ellipse 70% 55% at 85% -5%, rgba(51, 222, 216, 0.16), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 0% 30%, rgba(250, 192, 86, 0.1), transparent 50%),
-    linear-gradient(165deg, #0a1522 0%, #142a48 42%, #0c1826 100%);
+    radial-gradient(ellipse 80% 60% at 90% -8%, rgba(250, 192, 86, 0.18), transparent 55%),
+    radial-gradient(ellipse 55% 45% at -5% 35%, rgba(51, 222, 216, 0.14), transparent 52%),
+    radial-gradient(ellipse 40% 35% at 60% 90%, rgba(33, 72, 115, 0.55), transparent 60%),
+    linear-gradient(165deg, #08121c 0%, #163354 40%, #0c1826 100%);
 }
 
 .thank-you-au {
   background:
-    radial-gradient(ellipse 70% 55% at 15% -5%, rgba(51, 222, 216, 0.14), transparent 55%),
-    radial-gradient(ellipse 55% 45% at 100% 20%, rgba(0, 113, 201, 0.18), transparent 50%),
-    linear-gradient(195deg, #0b1a28 0%, #143552 45%, #0c1826 100%);
+    radial-gradient(ellipse 75% 55% at 8% -6%, rgba(51, 222, 216, 0.16), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 18%, rgba(0, 113, 201, 0.28), transparent 52%),
+    radial-gradient(ellipse 45% 40% at 40% 95%, rgba(20, 70, 110, 0.4), transparent 60%),
+    linear-gradient(195deg, #07141f 0%, #124066 44%, #0c1826 100%);
+}
+
+.thank-you-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.thank-you-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.55;
+  animation: thank-you-drift 14s ease-in-out infinite;
+}
+
+.thank-you-us .thank-you-orb-a {
+  top: 8%;
+  right: 6%;
+  width: min(28rem, 55vw);
+  height: min(28rem, 55vw);
+  background: rgba(250, 192, 86, 0.16);
+}
+
+.thank-you-us .thank-you-orb-b {
+  top: 42%;
+  left: -8%;
+  width: min(22rem, 48vw);
+  height: min(22rem, 48vw);
+  background: rgba(51, 222, 216, 0.12);
+  animation-delay: -4s;
+}
+
+.thank-you-au .thank-you-orb-a {
+  top: 6%;
+  left: 4%;
+  width: min(26rem, 52vw);
+  height: min(26rem, 52vw);
+  background: rgba(51, 222, 216, 0.14);
+}
+
+.thank-you-au .thank-you-orb-b {
+  top: 38%;
+  right: -10%;
+  width: min(24rem, 50vw);
+  height: min(24rem, 50vw);
+  background: rgba(0, 113, 201, 0.22);
+  animation-delay: -5s;
+}
+
+.thank-you-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 55% at 50% 20%, #000 20%, transparent 75%);
+}
+
+@keyframes thank-you-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(1.5%, -2%, 0) scale(1.06);
+  }
+}
+
+.thank-you > *:not(.thank-you-atmosphere) {
+  position: relative;
+  z-index: 1;
 }
 
 .thank-you-hero {
   position: relative;
-  padding: clamp(2.75rem, 7vw, 4.75rem) var(--shell) clamp(1.75rem, 3vw, 2.5rem);
+  padding: clamp(2.75rem, 7vw, 4.75rem) var(--shell) clamp(1.25rem, 2.5vw, 2rem);
   max-width: 44rem;
 }
 
@@ -2559,7 +2636,7 @@ a.gate-call:hover {
   position: absolute;
   inset: -20% 20% auto -10%;
   height: 14rem;
-  background: radial-gradient(ellipse at center, rgba(51, 222, 216, 0.12), transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(51, 222, 216, 0.14), transparent 70%);
   pointer-events: none;
   animation: thank-you-breathe 7s ease-in-out infinite;
 }
@@ -2618,6 +2695,75 @@ a.gate-call:hover {
   }
 }
 
+.thank-you-book {
+  padding: 0 var(--shell) clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.thank-you-book-inner {
+  max-width: 44rem;
+  padding: clamp(1.5rem, 3vw, 2rem) clamp(1.4rem, 3vw, 2rem) 1.65rem;
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(51, 222, 216, 0.14), transparent 42%),
+    linear-gradient(160deg, rgba(24, 52, 86, 0.95), rgba(14, 34, 56, 0.92));
+  box-shadow:
+    inset 0 0 0 1px rgba(51, 222, 216, 0.28),
+    0 18px 40px rgba(0, 0, 0, 0.22);
+  animation: thank-you-rise 0.8s ease-out 0.1s both;
+}
+
+.thank-you-au .thank-you-book-inner {
+  background:
+    linear-gradient(135deg, rgba(0, 140, 220, 0.18), transparent 45%),
+    linear-gradient(160deg, rgba(18, 58, 96, 0.96), rgba(12, 36, 58, 0.94));
+  box-shadow:
+    inset 0 0 0 1px rgba(120, 190, 255, 0.28),
+    0 18px 40px rgba(0, 0, 0, 0.22);
+}
+
+.thank-you-book-eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--vc-cyan);
+}
+
+.thank-you-book h2 {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 1.4vw + 1rem, 1.85rem);
+  letter-spacing: -0.02em;
+  color: #f4f8fc;
+}
+
+.thank-you-book p {
+  margin: 0 0 1.15rem;
+  font-size: var(--step-body);
+  line-height: 1.55;
+  color: #d0e0ef;
+  max-width: 46ch;
+}
+
+.thank-you-book-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.thank-you-book-primary {
+  font-size: 1.05rem;
+  padding-inline: 1.35rem;
+}
+
+.thank-you-book-note {
+  margin: 1rem 0 0 !important;
+  font-size: 0.9rem !important;
+  color: #9bb0c4 !important;
+}
+
 .thank-you-next {
   padding-top: 0.25rem;
 }
@@ -2639,6 +2785,7 @@ a.gate-call:hover {
   display: grid;
   gap: 0.85rem;
   max-width: 84rem;
+  counter-reset: none;
 }
 
 @media (min-width: 800px) {
@@ -2663,6 +2810,10 @@ a.gate-call:hover {
 
 .thank-you-step:nth-child(1) {
   animation-delay: 0.12s;
+  background:
+    linear-gradient(160deg, rgba(51, 222, 216, 0.1), transparent 55%),
+    rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(51, 222, 216, 0.22);
 }
 .thank-you-step:nth-child(2) {
   animation-delay: 0.2s;
@@ -2705,7 +2856,7 @@ a.gate-call:hover {
 }
 
 .thank-you-aside-inner {
-  max-width: 42rem;
+  max-width: 48rem;
   padding: 1.6rem 1.55rem 1.7rem;
   border-radius: 18px;
   background: linear-gradient(120deg, rgba(20, 42, 72, 0.9), rgba(29, 63, 104, 0.85));
@@ -2724,7 +2875,44 @@ a.gate-call:hover {
   font-size: var(--step-body);
   line-height: 1.6;
   color: #c8d8e8;
-  max-width: 48ch;
+  max-width: 52ch;
+}
+
+.thank-you-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.85rem;
+  margin: 0 0 0.35rem;
+}
+
+.thank-you-links a {
+  color: #e8f4ff;
+  font-size: 0.95rem;
+  text-decoration: none;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.thank-you-links a:hover {
+  background: rgba(51, 222, 216, 0.16);
+  color: #fff;
+}
+
+.thank-you-placeholder-cta {
+  margin-top: 1rem;
+}
+
+.thank-you-placeholder-cta .micro-btn-primary[aria-disabled="true"] {
+  opacity: 0.72;
+  cursor: not-allowed;
+  pointer-events: none;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.35;
+  max-width: 28rem;
 }
 
 .thank-you-legal {
@@ -2742,7 +2930,9 @@ a.gate-call:hover {
   .thank-you-hero-glow,
   .thank-you-hero h1,
   .thank-you-lead,
-  .thank-you-step {
+  .thank-you-step,
+  .thank-you-book-inner,
+  .thank-you-orb {
     animation: none;
   }
 }

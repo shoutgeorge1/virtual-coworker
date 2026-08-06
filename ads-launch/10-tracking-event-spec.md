@@ -36,6 +36,7 @@
 | `employer_inquiry_delivery_failed` | 502/503 / network | No | Fail honestly |
 | `employer_inquiry_log_only` | Log-only blocked mode accept | **Never** | QA diagnostic |
 | `phone_cta_clicked` | tel: click | Secondary only | **`is_qualified_call: false`** |
+| `calendly_cta_clicked` | thank-you book CTA | Secondary / later candidate | Hiring conversation booking — **never** replace primary `employer_inquiry_submitted`. Booked-call event = OPTIMIZATION READY / later when GTM fires. Not TRAFFIC READY. |
 | `conversion_assist_opened` | Exit-intent / timed assist shown | No | Flag-gated |
 | `conversion_assist_cta_clicked` | Assist CTA → `#gate` | No | |
 | `job_seeker_redirected` | Job seeker clicks through to `/ph` | **Never** | Interaction only |

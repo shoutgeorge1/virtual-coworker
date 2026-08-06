@@ -327,7 +327,7 @@ HR alias: `/{us|au}/human-resources` → 308 `/{us|au}/hr`
 
 ### Funnel next-step language (public LPs — 2026-08-06)
 
-Corporate US/AU how-it-works evidence: **free consultation → job brief → recruit/vet → employer interviews → onboard** (not a SaaS product demo; no Calendly invented on microsite). Public LP/thank-you/how-it-works copy uses **hiring conversation / talk through the role / we follow up** — then brief → shortlist → you interview → onboard. Kill operator/audit voice on buyer UI (inquire formalese, measurement asides, “not invented for ads”, job-order CRM speak). Public-copy lint expanded accordingly.
+Corporate US/AU how-it-works evidence: **free consultation → job brief → recruit/vet → employer interviews → onboard** (not a SaaS product demo). Live WP thank-you Calendly wired on microsite thank-you (2026-08-06): US `cheyenne-virtualcoworker/30min` · AU `apac-virtualcoworker/30min` (env `NEXT_PUBLIC_CALENDLY_US` / `_AU`). Public LP/thank-you/how-it-works copy uses **hiring conversation / schedule a call / talk through the role** — then brief → shortlist → you interview → onboard. Booking = **secondary / later conversion candidate** — do **not** replace primary `employer_inquiry_submitted`. TRAFFIC READY does not require Calendly; OPTIMIZATION READY / later can add booked-call once GTM fires. Kill operator/audit voice on buyer UI (inquire formalese, measurement asides, “not invented for ads”, job-order CRM speak). Public-copy lint expanded accordingly.
 
 ### Prior fuck-ups → fixed (compressed)
 

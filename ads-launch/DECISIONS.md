@@ -67,6 +67,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | **Exit-intent** | Off unless `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true` | Frequency-capped once/session. No fake live chat. |
 | **Ads conversions (firing)** | `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false` | Observe-only until new GTM → new Ads actions tested. |
 | **New conversion actions** | **Plan via new GTM** — do not replace old | Create **new** actions: (1) employer inquiry **delivered** (2) phone ~60s / qualified call when CallRail ready. Leave old Zoho/Zapier actions untouched for archive/reporting. |
+| **Calendly / booking** | Wired on thank-you from live WP (2026-08-06) | US `calendly.com/cheyenne-virtualcoworker/30min` · AU `calendly.com/apac-virtualcoworker/30min`. Env override: `NEXT_PUBLIC_CALENDLY_US` / `_AU`. Confirm with VC. **Not** TRAFFIC READY. Booking CTA = Stage 1 **secondary / separate conversion candidate** — do **not** replace primary `employer_inquiry_submitted`. Booked-call event = OPTIMIZATION READY / later once GTM fires. |
 | **Campaign goals** | **Campaign-specific on each `VC_*`** | After Post in Ads UI: Goals → campaign-specific → only the new actions. Editor CSV cannot fully express this. |
 | **Negatives** | **VC-only curated campaign negs** | Builder emits campaign-level Broad rows from `NEGATIVES` only. Soft cap ~220 unique. Never attach account shared mega lists to `VC_*`. |
 | **Audiences** | **Off at launch** | Observation later; ignore customer-lifecycle warnings until Zoho/first-party data. Not launch-critical. |
@@ -110,6 +111,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
   - Job placement — value TBD (range discussed **$500–$800**, **not approved**)
   - Deduping: unique Zoho IDs as conversion IDs; don’t double-count order+placement on the same journey without rules; GCLID / offline import path
 - Stage 1 primary conversion (when wired for optimization): **employer inquiry delivered**. Qualified call when CallRail ready. Job order / placement = later offline.
+- Thank-you → **book hiring conversation** (Calendly): Stage 1 **secondary** or separate conversion candidate — **never** Primary replacing `employer_inquiry_submitted`. Confirm URLs with VC; booked-call event when GTM ready → OPTIMIZATION READY / later. **Not** required for TRAFFIC READY.
 - CallRail / qualified-call tracking
 - GTM Ads conversion mapping (tested) → **OPTIMIZATION READY**
 - Brand Search (deferred — not in this CSV)
