@@ -54,7 +54,7 @@ LP_VERSION = "stage1-v7"
 # Final URL host for all market paths. Default = preview.
 # When George buys a domain: ADS_FINAL_URL_HOST=yourdomain.com python3 ads-launch/build_stage1_editor_package.py
 # (FINAL_URL_HOST accepted as alias.) Paths stay /us /au /ph — one host, not two country domains.
-DEFAULT_FINAL_URL_HOST = "vision-three-alpha.vercel.app"
+DEFAULT_FINAL_URL_HOST = "www.virtualcoworker.app"
 
 
 def final_url_host() -> str:
@@ -3043,7 +3043,7 @@ def city_rsa(mkt: str) -> tuple[list[str], list[str], str, str]:
             "Employers Hiring Only",
             "Offshore VA Partner",
             "Inbox & Calendar Support",
-            "Clear Employer Path",
+            "Clear Employer Process",
             "Remote Admin Capacity",
             "Partner-Led VA Hiring",
             "Hire PH Role Staff",
@@ -3067,7 +3067,7 @@ def city_rsa(mkt: str) -> tuple[list[str], list[str], str, str]:
             "Employers Hiring Only",
             "Offshore VA Partner",
             "Inbox & Calendar Support",
-            "Clear Employer Path",
+            "Clear Employer Process",
             "Remote Admin Capacity",
             "Partner-Led VA Hiring",
             "Hire PH Role Staff",
@@ -3392,17 +3392,17 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
             "Interview Before Hire",
             "Not Gig Platform VA",
             "How to Hire a VA",
-            "Core VA Employer Path",
+            "Core VA Hire Process",
             "Hire PH Role Staff",
             "Remote Admin Capacity",
-            "Clear Employer Path",
+            "Clear Employer Process",
             "Staffing Partner Hire",
             "{KeyWord:Hire Virtual Assistant}",
         ]
         descs = [
             f"Hire dedicated Philippines VAs for your {m['business']}.",
             "Tell us who you need. We recruit and screen — you interview the shortlist.",
-            "Employer path only. Form inquiry is not a job order or placement.",
+            "For businesses only. A form submit is not a hire or placement.",
             "Staffing partner for established businesses — not DIY training or job ads.",
         ]
         return headlines, descs, "hire", "va"
@@ -3453,7 +3453,7 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
             f"Need a VA for your {m['business']}? We recruit and screen — you interview.",
             "Shortlist-first hiring: tell us the role, review vetted Philippines finalists.",
                     "Speed comes from a staffing pipeline — timelines confirmed in follow-up.",
-            "Employer path only. Inquiry accepted is not a job order or placement.",
+            "For businesses only. An accepted form is not a hire or placement.",
         ]
         return headlines, descs, "shortlist", "va"
 
@@ -3504,7 +3504,7 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
             f"Philippines VA and remote staff for {m['business']} ops capacity.",
             "Filipino talent shortlist — you interview; we recruit, vet, and support.",
             "Offshore staffing partner model. Not Upwork. Not a job board.",
-            "Employer inquiries only. Inquiry accepted ≠ job order or placement.",
+            "Businesses only. An accepted form ≠ a hire or placement.",
         ]
         return headlines, descs, "ph", "va"
     if angle == "offshore_c":
@@ -4499,13 +4499,11 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         f"- Tracking template (campaign): `{TRACK}`",
         f"- Final URL suffix (campaign): `{SUFFIX}`",
         "- No `{_campaign}` / `{_adgroup}` custom params",
-        f"- **Final URL host:** `{final_url_host()}` with path markets "
+        f"- **Final URL host (production):** `{final_url_host()}` with path markets "
         "(`/us`, `/au`, category pages). One host — not two country domains. "
-        "**Strongly prefer custom domain before Enable** (URL stability before paid clicks). "
-        "Preview host OK for paused Import structure review; if imported on preview, "
-        "**rewrite Final URLs before Enable**. Regen once: "
-        "`ADS_FINAL_URL_HOST=yourdomain.com python3 ads-launch/build_stage1_editor_package.py`. "
-        "Domain ≠ TRAFFIC READY substitute.",
+        "Preview `vision-three-alpha.vercel.app` still exists but **Import CSVs use www**. "
+        "Apex `virtualcoworker.app` → 308 → `www`. Domain ≠ TRAFFIC READY substitute. "
+        "Override: `ADS_FINAL_URL_HOST=host python3 ads-launch/build_stage1_editor_package.py`.",
         "",
         "## Conversion actions + campaign goals (after Post — Ads UI)",
         "",
@@ -4569,19 +4567,18 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "",
         "1. Leave old account machinery alone (no dig/delete/rewrite/pause binge tonight).",
         "2. Clear **TRAFFIC READY** (durable delivery + live test + named responder).",
-        "3. **Prefer:** buy/attach one custom domain → confirm `/us` `/au` `/ph` LPs → "
-        "regen with `ADS_FINAL_URL_HOST` before Import.",
+        "3. **Domain live:** `www.virtualcoworker.app` — package Final URLs already on www. "
+        "Confirm `/us` `/au` `/ph` LPs still 200 before Import.",
         "4. Download fresh USA + AU accounts into Editor (read-only sync).",
         "5. Import **US split** into USA → Check changes → leave **Paused**.",
         "6. Import **AU split** into AU → Check changes → leave **Paused**.",
-        "7. If imported on preview host: **rewrite every Final URL** to custom domain "
-        "before Enable.",
+        "7. Confirm every Final URL uses `www.virtualcoworker.app` (not `*.vercel.app`).",
         "8. Confirm `VC_*` negatives are campaign-level curated only — "
         "**do not** attach shared mega lists.",
         "9. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.",
         "10. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
-        "11. Enable is a separate explicit decision after TRAFFIC READY + preferred "
-        "Final URL host — never from Import/Post alone.",
+        "11. Enable is a separate explicit decision after TRAFFIC READY — "
+        "never from Import/Post alone. Still **NOT** paid-ready until TRAFFIC READY.",
         "",
     ]
     PREFLIGHT.write_text("\n".join(lines) + "\n", encoding="utf-8")

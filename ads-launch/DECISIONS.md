@@ -55,7 +55,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | Decision | Locked value | Notes |
 |----------|--------------|-------|
 | **Architecture** | **2 campaigns × 2 markets** | `VC_{US\|AU}_S_CORE` (~60%) + `VC_{US\|AU}_S_ROLES` (~40%). Brand **deferred**. |
-| **Domain model** | **One host + path markets** | `/us` · `/au` · `/ph` on the same domain. **Not** two country domains. Preview host OK for TRAFFIC READY lead tests + paused Import structure review. **Strongly prefer one custom domain attached before Enable** so Final URLs are not a throwaway `*.vercel.app` host — regenerate once with `ADS_FINAL_URL_HOST` (or rewrite Final URLs in Editor before Enable). Domain ≠ durable leads; domain **is** preferred URL stability before paid clicks. Same paths transfer — no AU subdomain. |
+| **Domain model** | **One host + path markets** | **Production:** `www.virtualcoworker.app` (apex `virtualcoworker.app` → 308 → www) on Vercel project `vision`. Paths `/us` · `/au` · `/ph`. **Not** two country domains. Preview `vision-three-alpha.vercel.app` still exists for QA. Editor package default Final URL host = `www.virtualcoworker.app`. Domain ≠ durable leads / ≠ TRAFFIC READY. Same paths transfer — no AU subdomain. |
 | **Core Final URL** | `…/us` · `…/au` | Generic VA/hire/offshore → market employer home. **Not** administrative-support. |
 | **Roles Final URL** | Matching category slug | Admin AG → `/administrative-support`; HR → `/hr` (alias `/human-resources` → `/hr`). |
 | **Measurement** | **Separate GTM + GA4 per market** | `GTM_US` / `GTM_AU` (+ `GTM_PH` if needed) even on one host — audiences/conversions must not contaminate. |
@@ -101,9 +101,9 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 - Named responder + practical response process per market
 - Explicit George approval to Enable any Search campaign
 
-### Strongly prefer before Enable (not a TRAFFIC READY substitute)
+### Domain / Final URLs (done — not a TRAFFIC READY substitute)
 
-- **One custom domain** on the paid host (path markets stay) — buy → attach Vercel → confirm `/us` `/au` `/ph` LPs → set Ads Final URLs to that host **before Enable**. Acceptable: Import/review on preview while Paused, then **must rewrite Final URLs** before Enable. Does **not** replace durable lead delivery.
+- **Live:** `www.virtualcoworker.app` — LPs confirmed; Editor CSVs regenerated with www Final URLs. Import should use those CSVs. Preview host remains for QA only. Still **Paused / not paid-ready** until TRAFFIC READY + George Enable.
 
 ### Parallel / later (not traffic blockers)
 
@@ -124,4 +124,4 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 ## Where applied
 
 - Editor CSV budgets/CPC + Account stamps: `build_stage1_editor_package.py` → `google-ads-editor-import.csv`
-- Vision prod env: vision-three-alpha (`vision` Vercel project)
+- Vision production host: `www.virtualcoworker.app` (`vision` Vercel project; preview `vision-three-alpha.vercel.app` still exists)

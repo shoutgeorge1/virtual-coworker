@@ -4,9 +4,9 @@
 
 | Field | Value |
 |-------|-------|
-| Generated | 2026-08-06 (Zoho platform-discovery deferred addendum) |
+| Generated | 2026-08-06 (domain live + www Final URLs) |
 | Branch | `vision-demo` |
-| Commit SHA | `e2d36e76768eea6a111e1eddbdc7e94cb5b04ce3` |
+| Commit SHA | `047f87ac0b1a28532c1b43da8e11aef2ca9ac18a` |
 | Prior isolation SHA | `7b703c5` · Editor P0 `9cd37d0` |
 | Repo | `/Users/george/Developer/virtual-coworker` |
 | Package | `lp_version=stage1-v7` · Editor hygiene + isolation + Phase 1 manifests |
@@ -17,7 +17,8 @@
 | Activation | `ads-launch/PHASED-ACTIVATION.md` · `PHASE1-REVIEW.md` |
 | Zoho docs | `ads-launch/zoho/` |
 | Mega prompt source | `ads-launch/VC-CURSOR-MEGA-PROMPT-EDITOR-ZOHO.md` |
-| LP host (preview) | **https://vision-three-alpha.vercel.app** |
+| LP host (production) | **https://www.virtualcoworker.app** (apex → www) |
+| LP host (preview) | https://vision-three-alpha.vercel.app (still exists; not for Import) |
 | Launch Control | **https://vc-xray.vercel.app/launch-control** |
 | Corporate WP (untouched) | https://virtualcoworker.com · https://virtualcoworker.com.au |
 | MCC | `119-318-9031` (Shout George) |
@@ -131,8 +132,7 @@ Source: `PHASED-ACTIVATION.md`
 | Root `/` | Redirects → `/us` |
 | WordPress | **Untouched** — zero egress from microsite nav/footer/CTAs |
 
-- **Domain model (locked):** one host with `/us` `/au` `/ph` — **not** two paid country domains for Stage 1. Preview host OK for TRAFFIC READY lead tests + paused Import structure review. **Strongly prefer one custom domain before Enable** so Final URLs are not `*.vercel.app` — regen with `ADS_FINAL_URL_HOST` or rewrite Final URLs in Editor before Enable. Domain ≠ durable leads; domain = URL stability before paid clicks. Same paths transfer (no AU subdomain).
-- Preview: https://vision-three-alpha.vercel.app  
+- **Domain model (locked + live):** one host with `/us` `/au` `/ph` — **not** two paid country domains. **Production:** https://www.virtualcoworker.app (apex → www) on Vercel `vision`. Preview https://vision-three-alpha.vercel.app still exists. Editor CSVs use www Final URLs (builder default). Domain ≠ durable leads / ≠ TRAFFIC READY.  
 - Launch Control: https://vc-xray.vercel.app/launch-control  
 - Hire-vs-job gate intentional: employer → form; job seeker → `/ph`  
 - Tracking env placeholders: `NEXT_PUBLIC_GTM_US` / `_AU` / `_PH` (+ GA4 twins) — **separate containers per market** even on one host; do **not** share one GTM across US+AU  
@@ -247,8 +247,8 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 12. **After Post (Ads UI):** each `VC_*` → Goals → **campaign-specific** → only **new** actions (employer inquiry delivered + qualified phone ~60s when ready). Leave old Zoho/Zapier actions untouched for archive.  
 13. Keep Maximize Clicks. Do **not** switch to Max Conversions until new actions verified.  
 14. Audiences off. Ignore customer-lifecycle warnings.  
-15. **Prefer domain live first:** set `ADS_FINAL_URL_HOST=yourdomain.com` → regenerate package → Import with final host. **Acceptable:** Import/review on preview while Paused, then **rewrite every Final URL** to the custom domain before Enable.  
-16. Enable only per `PHASED-ACTIVATION.md` after durable leads + Final URLs on preferred host + explicit approval.
+15. **Domain live:** Import the www Final URL split CSVs (`www.virtualcoworker.app`). Confirm no `*.vercel.app` Final URLs before Enable.  
+16. Enable only per `PHASED-ACTIVATION.md` after durable leads + explicit approval — still **not** paid-ready until TRAFFIC READY.
 
 ---
 
@@ -265,7 +265,7 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 | 7 | **Job order / placement offline values** | TBD, not approved. OPTIMIZATION / CRM later. |
 | 8 | CallRail / qualified-call | Later; phone click ≠ qualified |
 | 9 | GTM → Ads mapping tested | OPTIMIZATION READY; firing still off |
-| 10 | One custom domain before Enable | **Strongly prefer before Enable / Final URL freeze** — not a TRAFFIC READY substitute. One host + `/us` `/au` `/ph`; preview OK for paused review; rewrite Final URLs before Enable if imported on preview; no dual-domain buy |
+| 10 | One custom domain before Enable | **Done** — `www.virtualcoworker.app` live; Final URLs regenerated. Preview still exists. Not a TRAFFIC READY substitute; no more domain buys |
 
 ---
 
@@ -397,7 +397,7 @@ CRM READY / OPTIMIZATION READY = PARALLEL (not traffic gates)
 ZOHO PLATFORM DISCOVERY + LIVE INVENTORY/API = DEFERRED
 ```
 
-Operator next: **money step** = buy one clean .com (Porkbun; pick from domain walkthrough — you checkout) → attach Vercel `vision-three-alpha` → regen Final URL host. **Parallel Enable gate:** clear **TRAFFIC READY** (durable channel + test + responder). Then Import split CSVs → review Paused → Post Paused → Enable Tier 1A/1B only with explicit George OK (if imported on preview, rewrite Final URLs before Enable). Campaign-specific goals + Zoho discovery = parallel later.
+Operator next: **domain is live** on `www.virtualcoworker.app` — use www links; Import CSVs already have www Final URLs. **Enable gate:** clear **TRAFFIC READY** (durable channel + test + responder) before any Enable. Then Import → review Paused → Post Paused → Enable Tier 1A/1B only with explicit George OK. Still don’t Enable until TRAFFIC READY. Campaign-specific goals + Zoho discovery = parallel later.
 
 ---
 

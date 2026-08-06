@@ -20,7 +20,7 @@ open -a "Google Chrome" http://127.0.0.1:8766/
 
 Deployed: **https://vc-xray.vercel.app** → opens the **Checklist** (Launch Control).
 
-Landing page concepts: https://vision-three-alpha.vercel.app/us · [/au](https://vision-three-alpha.vercel.app/au)
+Landing pages (production): https://www.virtualcoworker.app/us · [/au](https://www.virtualcoworker.app/au) · preview still at vision-three-alpha.vercel.app
 
 ---
 

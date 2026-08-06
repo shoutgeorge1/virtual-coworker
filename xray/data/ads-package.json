@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-06 17:03 UTC",
+  "generated_at": "2026-08-06 17:37 UTC",
   "source_files": [
     "ads-launch/google-ads-editor-import-us.csv",
     "ads-launch/google-ads-editor-import-au.csv"
@@ -189,7 +189,7 @@
           "location": "United States",
           "tracking_template": "{lpurl}",
           "final_url_suffix": "utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}&utm_matchtype={matchtype}&utm_device={device}&lp_version=stage1-v7",
-          "final_url_pattern": "https://vision-three-alpha.vercel.app/us",
+          "final_url_pattern": "https://www.virtualcoworker.app/us",
           "ad_group_count": 2,
           "keyword_count": 112,
           "rsa_count": 6,
@@ -210,7 +210,7 @@
           "location": "United States",
           "tracking_template": "{lpurl}",
           "final_url_suffix": "utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}&utm_matchtype={matchtype}&utm_device={device}&lp_version=stage1-v7",
-          "final_url_pattern": "https://vision-three-alpha.vercel.app/us/*",
+          "final_url_pattern": "https://www.virtualcoworker.app/us/*",
           "ad_group_count": 18,
           "keyword_count": 672,
           "rsa_count": 52,
@@ -229,9 +229,9 @@
           "exact": 50,
           "phrase": 13,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us"
+            "https://www.virtualcoworker.app/us"
           ]
         },
         {
@@ -244,9 +244,9 @@
           "exact": 37,
           "phrase": 12,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us"
+            "https://www.virtualcoworker.app/us"
           ]
         },
         {
@@ -259,9 +259,9 @@
           "exact": 38,
           "phrase": 11,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/us/digital-marketing",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/digital-marketing"
+            "https://www.virtualcoworker.app/us/digital-marketing"
           ]
         },
         {
@@ -274,9 +274,9 @@
           "exact": 28,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/us/digital-marketing",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/digital-marketing"
+            "https://www.virtualcoworker.app/us/digital-marketing"
           ]
         },
         {
@@ -289,9 +289,9 @@
           "exact": 38,
           "phrase": 11,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/social-media",
+          "final_url": "https://www.virtualcoworker.app/us/social-media",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/social-media"
+            "https://www.virtualcoworker.app/us/social-media"
           ]
         },
         {
@@ -304,9 +304,9 @@
           "exact": 25,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/social-media",
+          "final_url": "https://www.virtualcoworker.app/us/social-media",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/social-media"
+            "https://www.virtualcoworker.app/us/social-media"
           ]
         },
         {
@@ -319,9 +319,9 @@
           "exact": 31,
           "phrase": 10,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/us/administrative-support",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/administrative-support"
+            "https://www.virtualcoworker.app/us/administrative-support"
           ]
         },
         {
@@ -334,9 +334,9 @@
           "exact": 0,
           "phrase": 7,
           "rsa_count": 1,
-          "final_url": "https://vision-three-alpha.vercel.app/us/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/us/administrative-support",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/administrative-support"
+            "https://www.virtualcoworker.app/us/administrative-support"
           ]
         },
         {
@@ -349,9 +349,9 @@
           "exact": 33,
           "phrase": 10,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/accounting",
+          "final_url": "https://www.virtualcoworker.app/us/accounting",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/accounting"
+            "https://www.virtualcoworker.app/us/accounting"
           ]
         },
         {
@@ -364,9 +364,9 @@
           "exact": 27,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/accounting",
+          "final_url": "https://www.virtualcoworker.app/us/accounting",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/accounting"
+            "https://www.virtualcoworker.app/us/accounting"
           ]
         },
         {
@@ -379,9 +379,9 @@
           "exact": 38,
           "phrase": 12,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/us/bookkeeping",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/bookkeeping"
+            "https://www.virtualcoworker.app/us/bookkeeping"
           ]
         },
         {
@@ -394,9 +394,9 @@
           "exact": 25,
           "phrase": 8,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/us/bookkeeping",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/bookkeeping"
+            "https://www.virtualcoworker.app/us/bookkeeping"
           ]
         },
         {
@@ -409,9 +409,9 @@
           "exact": 33,
           "phrase": 10,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/customer-service",
+          "final_url": "https://www.virtualcoworker.app/us/customer-service",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/customer-service"
+            "https://www.virtualcoworker.app/us/customer-service"
           ]
         },
         {
@@ -424,9 +424,9 @@
           "exact": 25,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/customer-service",
+          "final_url": "https://www.virtualcoworker.app/us/customer-service",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/customer-service"
+            "https://www.virtualcoworker.app/us/customer-service"
           ]
         },
         {
@@ -439,9 +439,9 @@
           "exact": 30,
           "phrase": 10,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/hr",
+          "final_url": "https://www.virtualcoworker.app/us/hr",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/hr"
+            "https://www.virtualcoworker.app/us/hr"
           ]
         },
         {
@@ -454,9 +454,9 @@
           "exact": 22,
           "phrase": 7,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/hr",
+          "final_url": "https://www.virtualcoworker.app/us/hr",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/hr"
+            "https://www.virtualcoworker.app/us/hr"
           ]
         },
         {
@@ -469,9 +469,9 @@
           "exact": 27,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/recruitment",
+          "final_url": "https://www.virtualcoworker.app/us/recruitment",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/recruitment"
+            "https://www.virtualcoworker.app/us/recruitment"
           ]
         },
         {
@@ -484,9 +484,9 @@
           "exact": 22,
           "phrase": 7,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/recruitment",
+          "final_url": "https://www.virtualcoworker.app/us/recruitment",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/recruitment"
+            "https://www.virtualcoworker.app/us/recruitment"
           ]
         },
         {
@@ -499,9 +499,9 @@
           "exact": 39,
           "phrase": 12,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/sales",
+          "final_url": "https://www.virtualcoworker.app/us/sales",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/sales"
+            "https://www.virtualcoworker.app/us/sales"
           ]
         },
         {
@@ -514,9 +514,9 @@
           "exact": 23,
           "phrase": 8,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/us/sales",
+          "final_url": "https://www.virtualcoworker.app/us/sales",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/us/sales"
+            "https://www.virtualcoworker.app/us/sales"
           ]
         }
       ],
@@ -7586,7 +7586,7 @@
           "ad_group_display": "Virtual Assistant · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "path1": "hire",
           "path2": "va",
           "headlines": [
@@ -7599,17 +7599,17 @@
             "Interview Before Hire",
             "Not Gig Platform VA",
             "How to Hire a VA",
-            "Core VA Employer Path",
+            "Core VA Hire Process",
             "Hire PH Role Staff",
             "Remote Admin Capacity",
-            "Clear Employer Path",
+            "Clear Employer Process",
             "Staffing Partner Hire",
             "{KeyWord:Hire Virtual Assistant}"
           ],
           "descriptions": [
             "Hire dedicated Philippines VAs for your US business.",
             "Tell us who you need. We recruit and screen — you interview the shortlist.",
-            "Employer path only. Form inquiry is not a job order or placement.",
+            "For businesses only. A form submit is not a hire or placement.",
             "Staffing partner for established businesses — not DIY training or job ads."
           ],
           "headline_count": 15,
@@ -7622,7 +7622,7 @@
           "ad_group_display": "Virtual Assistant · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "path1": "va",
           "path2": "hire",
           "headlines": [
@@ -7658,7 +7658,7 @@
           "ad_group_display": "Virtual Assistant · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "path1": "shortlist",
           "path2": "va",
           "headlines": [
@@ -7682,7 +7682,7 @@
             "Need a VA for your US business? We recruit and screen — you interview.",
             "Shortlist-first hiring: tell us the role, review vetted Philippines finalists.",
             "Speed comes from a staffing pipeline — timelines confirmed in follow-up.",
-            "Employer path only. Inquiry accepted is not a job order or placement."
+            "For businesses only. An accepted form is not a hire or placement."
           ],
           "headline_count": 15,
           "description_count": 4
@@ -7694,7 +7694,7 @@
           "ad_group_display": "Offshore VA · Core",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -7730,7 +7730,7 @@
           "ad_group_display": "Offshore VA · Core",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "path1": "ph",
           "path2": "va",
           "headlines": [
@@ -7754,7 +7754,7 @@
             "Philippines VA and remote staff for US business ops capacity.",
             "Filipino talent shortlist — you interview; we recruit, vet, and support.",
             "Offshore staffing partner model. Not Upwork. Not a job board.",
-            "Employer inquiries only. Inquiry accepted ≠ job order or placement."
+            "Businesses only. An accepted form ≠ a hire or placement."
           ],
           "headline_count": 15,
           "description_count": 4
@@ -7766,7 +7766,7 @@
           "ad_group_display": "Offshore VA · Core",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "path1": "dedicated",
           "path2": "ph",
           "headlines": [
@@ -7802,7 +7802,7 @@
           "ad_group_display": "Digital Marketing · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/us/digital-marketing",
           "path1": "marketing",
           "path2": "hire",
           "headlines": [
@@ -7838,7 +7838,7 @@
           "ad_group_display": "Digital Marketing · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/us/digital-marketing",
           "path1": "digital",
           "path2": "va",
           "headlines": [
@@ -7874,7 +7874,7 @@
           "ad_group_display": "Digital Marketing · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/us/digital-marketing",
           "path1": "shortlist",
           "path2": "mkt",
           "headlines": [
@@ -7910,7 +7910,7 @@
           "ad_group_display": "Digital Marketing · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/us/digital-marketing",
           "path1": "outsource",
           "path2": "mkt",
           "headlines": [
@@ -7946,7 +7946,7 @@
           "ad_group_display": "Digital Marketing · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/us/digital-marketing",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -7982,7 +7982,7 @@
           "ad_group_display": "Digital Marketing · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/us/digital-marketing",
           "path1": "dedicated",
           "path2": "mkt",
           "headlines": [
@@ -8018,7 +8018,7 @@
           "ad_group_display": "Social Media · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/social-media",
+          "final_url": "https://www.virtualcoworker.app/us/social-media",
           "path1": "social",
           "path2": "hire",
           "headlines": [
@@ -8054,7 +8054,7 @@
           "ad_group_display": "Social Media · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/social-media",
+          "final_url": "https://www.virtualcoworker.app/us/social-media",
           "path1": "social",
           "path2": "va",
           "headlines": [
@@ -8090,7 +8090,7 @@
           "ad_group_display": "Social Media · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/social-media",
+          "final_url": "https://www.virtualcoworker.app/us/social-media",
           "path1": "shortlist",
           "path2": "smm",
           "headlines": [
@@ -8126,7 +8126,7 @@
           "ad_group_display": "Social Media · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/social-media",
+          "final_url": "https://www.virtualcoworker.app/us/social-media",
           "path1": "outsource",
           "path2": "smm",
           "headlines": [
@@ -8162,7 +8162,7 @@
           "ad_group_display": "Social Media · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/social-media",
+          "final_url": "https://www.virtualcoworker.app/us/social-media",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -8198,7 +8198,7 @@
           "ad_group_display": "Social Media · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/social-media",
+          "final_url": "https://www.virtualcoworker.app/us/social-media",
           "path1": "dedicated",
           "path2": "smm",
           "headlines": [
@@ -8234,7 +8234,7 @@
           "ad_group_display": "Administration · EA",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/us/administrative-support",
           "path1": "ea",
           "path2": "hire",
           "headlines": [
@@ -8270,7 +8270,7 @@
           "ad_group_display": "Administration · EA",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/us/administrative-support",
           "path1": "ea",
           "path2": "ph",
           "headlines": [
@@ -8306,7 +8306,7 @@
           "ad_group_display": "Administration · EA",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/us/administrative-support",
           "path1": "shortlist",
           "path2": "ea",
           "headlines": [
@@ -8342,7 +8342,7 @@
           "ad_group_display": "Admin · City Test",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/us/administrative-support",
           "path1": "hire",
           "path2": "local",
           "headlines": [
@@ -8357,7 +8357,7 @@
             "Employers Hiring Only",
             "Offshore VA Partner",
             "Inbox & Calendar Support",
-            "Clear Employer Path",
+            "Clear Employer Process",
             "Remote Admin Capacity",
             "Partner-Led VA Hiring",
             "Hire PH Role Staff"
@@ -8378,7 +8378,7 @@
           "ad_group_display": "Accounting · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/accounting",
+          "final_url": "https://www.virtualcoworker.app/us/accounting",
           "path1": "accounting",
           "path2": "hire",
           "headlines": [
@@ -8414,7 +8414,7 @@
           "ad_group_display": "Accounting · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/accounting",
+          "final_url": "https://www.virtualcoworker.app/us/accounting",
           "path1": "finance",
           "path2": "va",
           "headlines": [
@@ -8450,7 +8450,7 @@
           "ad_group_display": "Accounting · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/accounting",
+          "final_url": "https://www.virtualcoworker.app/us/accounting",
           "path1": "shortlist",
           "path2": "acct",
           "headlines": [
@@ -8486,7 +8486,7 @@
           "ad_group_display": "Accounting · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/accounting",
+          "final_url": "https://www.virtualcoworker.app/us/accounting",
           "path1": "outsource",
           "path2": "acct",
           "headlines": [
@@ -8522,7 +8522,7 @@
           "ad_group_display": "Accounting · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/accounting",
+          "final_url": "https://www.virtualcoworker.app/us/accounting",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -8558,7 +8558,7 @@
           "ad_group_display": "Accounting · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/accounting",
+          "final_url": "https://www.virtualcoworker.app/us/accounting",
           "path1": "dedicated",
           "path2": "acct",
           "headlines": [
@@ -8594,7 +8594,7 @@
           "ad_group_display": "Bookkeeping · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/us/bookkeeping",
           "path1": "books",
           "path2": "hire",
           "headlines": [
@@ -8630,7 +8630,7 @@
           "ad_group_display": "Bookkeeping · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/us/bookkeeping",
           "path1": "books",
           "path2": "va",
           "headlines": [
@@ -8666,7 +8666,7 @@
           "ad_group_display": "Bookkeeping · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/us/bookkeeping",
           "path1": "shortlist",
           "path2": "books",
           "headlines": [
@@ -8702,7 +8702,7 @@
           "ad_group_display": "Bookkeeping · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/us/bookkeeping",
           "path1": "outsource",
           "path2": "books",
           "headlines": [
@@ -8738,7 +8738,7 @@
           "ad_group_display": "Bookkeeping · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/us/bookkeeping",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -8774,7 +8774,7 @@
           "ad_group_display": "Bookkeeping · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/us/bookkeeping",
           "path1": "dedicated",
           "path2": "books",
           "headlines": [
@@ -8810,7 +8810,7 @@
           "ad_group_display": "Customer Service · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/customer-service",
+          "final_url": "https://www.virtualcoworker.app/us/customer-service",
           "path1": "support",
           "path2": "hire",
           "headlines": [
@@ -8846,7 +8846,7 @@
           "ad_group_display": "Customer Service · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/customer-service",
+          "final_url": "https://www.virtualcoworker.app/us/customer-service",
           "path1": "support",
           "path2": "va",
           "headlines": [
@@ -8882,7 +8882,7 @@
           "ad_group_display": "Customer Service · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/customer-service",
+          "final_url": "https://www.virtualcoworker.app/us/customer-service",
           "path1": "shortlist",
           "path2": "cs",
           "headlines": [
@@ -8918,7 +8918,7 @@
           "ad_group_display": "Customer Service · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/customer-service",
+          "final_url": "https://www.virtualcoworker.app/us/customer-service",
           "path1": "outsource",
           "path2": "cs",
           "headlines": [
@@ -8954,7 +8954,7 @@
           "ad_group_display": "Customer Service · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/customer-service",
+          "final_url": "https://www.virtualcoworker.app/us/customer-service",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -8990,7 +8990,7 @@
           "ad_group_display": "Customer Service · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/customer-service",
+          "final_url": "https://www.virtualcoworker.app/us/customer-service",
           "path1": "dedicated",
           "path2": "cs",
           "headlines": [
@@ -9026,7 +9026,7 @@
           "ad_group_display": "Human Resources · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/hr",
+          "final_url": "https://www.virtualcoworker.app/us/hr",
           "path1": "hr",
           "path2": "hire",
           "headlines": [
@@ -9062,7 +9062,7 @@
           "ad_group_display": "Human Resources · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/hr",
+          "final_url": "https://www.virtualcoworker.app/us/hr",
           "path1": "hr",
           "path2": "va",
           "headlines": [
@@ -9098,7 +9098,7 @@
           "ad_group_display": "Human Resources · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/hr",
+          "final_url": "https://www.virtualcoworker.app/us/hr",
           "path1": "shortlist",
           "path2": "hr",
           "headlines": [
@@ -9134,7 +9134,7 @@
           "ad_group_display": "Human Resources · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/hr",
+          "final_url": "https://www.virtualcoworker.app/us/hr",
           "path1": "outsource",
           "path2": "hr",
           "headlines": [
@@ -9170,7 +9170,7 @@
           "ad_group_display": "Human Resources · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/hr",
+          "final_url": "https://www.virtualcoworker.app/us/hr",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -9206,7 +9206,7 @@
           "ad_group_display": "Human Resources · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/hr",
+          "final_url": "https://www.virtualcoworker.app/us/hr",
           "path1": "dedicated",
           "path2": "hr",
           "headlines": [
@@ -9242,7 +9242,7 @@
           "ad_group_display": "Recruitment · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/recruitment",
+          "final_url": "https://www.virtualcoworker.app/us/recruitment",
           "path1": "recruit",
           "path2": "hire",
           "headlines": [
@@ -9278,7 +9278,7 @@
           "ad_group_display": "Recruitment · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/recruitment",
+          "final_url": "https://www.virtualcoworker.app/us/recruitment",
           "path1": "recruit",
           "path2": "va",
           "headlines": [
@@ -9314,7 +9314,7 @@
           "ad_group_display": "Recruitment · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/recruitment",
+          "final_url": "https://www.virtualcoworker.app/us/recruitment",
           "path1": "shortlist",
           "path2": "ta",
           "headlines": [
@@ -9350,7 +9350,7 @@
           "ad_group_display": "Recruitment · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/recruitment",
+          "final_url": "https://www.virtualcoworker.app/us/recruitment",
           "path1": "outsource",
           "path2": "ta",
           "headlines": [
@@ -9386,7 +9386,7 @@
           "ad_group_display": "Recruitment · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/recruitment",
+          "final_url": "https://www.virtualcoworker.app/us/recruitment",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -9422,7 +9422,7 @@
           "ad_group_display": "Recruitment · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/recruitment",
+          "final_url": "https://www.virtualcoworker.app/us/recruitment",
           "path1": "dedicated",
           "path2": "ta",
           "headlines": [
@@ -9458,7 +9458,7 @@
           "ad_group_display": "Sales · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/sales",
+          "final_url": "https://www.virtualcoworker.app/us/sales",
           "path1": "sales",
           "path2": "hire",
           "headlines": [
@@ -9494,7 +9494,7 @@
           "ad_group_display": "Sales · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/sales",
+          "final_url": "https://www.virtualcoworker.app/us/sales",
           "path1": "sales",
           "path2": "va",
           "headlines": [
@@ -9530,7 +9530,7 @@
           "ad_group_display": "Sales · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/sales",
+          "final_url": "https://www.virtualcoworker.app/us/sales",
           "path1": "shortlist",
           "path2": "sales",
           "headlines": [
@@ -9566,7 +9566,7 @@
           "ad_group_display": "Sales · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/sales",
+          "final_url": "https://www.virtualcoworker.app/us/sales",
           "path1": "outsource",
           "path2": "sales",
           "headlines": [
@@ -9602,7 +9602,7 @@
           "ad_group_display": "Sales · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/sales",
+          "final_url": "https://www.virtualcoworker.app/us/sales",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -9638,7 +9638,7 @@
           "ad_group_display": "Sales · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/us/sales",
+          "final_url": "https://www.virtualcoworker.app/us/sales",
           "path1": "dedicated",
           "path2": "sales",
           "headlines": [
@@ -9850,56 +9850,56 @@
         {
           "campaign": "VC_US_S_CORE",
           "link_text": "Tell Us Who You Need",
-          "final_url": "https://vision-three-alpha.vercel.app/us#gate",
+          "final_url": "https://www.virtualcoworker.app/us#gate",
           "desc1": "Employer hiring path",
           "desc2": "Form for businesses"
         },
         {
           "campaign": "VC_US_S_CORE",
           "link_text": "How Hiring Works",
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "desc1": "Recruit, vet, shortlist",
           "desc2": "You interview talent"
         },
         {
           "campaign": "VC_US_S_CORE",
           "link_text": "Admin Support Hire",
-          "final_url": "https://vision-three-alpha.vercel.app/us/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/us/administrative-support",
           "desc1": "EA / admin category LP",
           "desc2": "Role-specific landing"
         },
         {
           "campaign": "VC_US_S_CORE",
           "link_text": "US Employer Home",
-          "final_url": "https://vision-three-alpha.vercel.app/us",
+          "final_url": "https://www.virtualcoworker.app/us",
           "desc1": "Generic Core landing",
           "desc2": "Not WordPress homepage"
         },
         {
           "campaign": "VC_US_S_ROLES",
           "link_text": "Tell Us Who You Need",
-          "final_url": "https://vision-three-alpha.vercel.app/us/administrative-support#gate",
+          "final_url": "https://www.virtualcoworker.app/us/administrative-support#gate",
           "desc1": "Employer hiring path",
           "desc2": "Form for businesses"
         },
         {
           "campaign": "VC_US_S_ROLES",
           "link_text": "Digital Marketing Hire",
-          "final_url": "https://vision-three-alpha.vercel.app/us/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/us/digital-marketing",
           "desc1": "Philippines marketing staff",
           "desc2": "Category landing page"
         },
         {
           "campaign": "VC_US_S_ROLES",
           "link_text": "Social Media Hire",
-          "final_url": "https://vision-three-alpha.vercel.app/us/social-media",
+          "final_url": "https://www.virtualcoworker.app/us/social-media",
           "desc1": "Philippines SMM staff",
           "desc2": "Category landing page"
         },
         {
           "campaign": "VC_US_S_ROLES",
           "link_text": "Bookkeeping Hire",
-          "final_url": "https://vision-three-alpha.vercel.app/us/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/us/bookkeeping",
           "desc1": "Philippines books staff",
           "desc2": "Category landing page"
         }
@@ -9969,7 +9969,7 @@
           "location": "Australia",
           "tracking_template": "{lpurl}",
           "final_url_suffix": "utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}&utm_matchtype={matchtype}&utm_device={device}&lp_version=stage1-v7",
-          "final_url_pattern": "https://vision-three-alpha.vercel.app/au",
+          "final_url_pattern": "https://www.virtualcoworker.app/au",
           "ad_group_count": 2,
           "keyword_count": 112,
           "rsa_count": 6,
@@ -9990,7 +9990,7 @@
           "location": "Australia",
           "tracking_template": "{lpurl}",
           "final_url_suffix": "utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}&utm_matchtype={matchtype}&utm_device={device}&lp_version=stage1-v7",
-          "final_url_pattern": "https://vision-three-alpha.vercel.app/au/*",
+          "final_url_pattern": "https://www.virtualcoworker.app/au/*",
           "ad_group_count": 18,
           "keyword_count": 672,
           "rsa_count": 52,
@@ -10009,9 +10009,9 @@
           "exact": 50,
           "phrase": 13,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au"
+            "https://www.virtualcoworker.app/au"
           ]
         },
         {
@@ -10024,9 +10024,9 @@
           "exact": 37,
           "phrase": 12,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au"
+            "https://www.virtualcoworker.app/au"
           ]
         },
         {
@@ -10039,9 +10039,9 @@
           "exact": 38,
           "phrase": 11,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/au/digital-marketing",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/digital-marketing"
+            "https://www.virtualcoworker.app/au/digital-marketing"
           ]
         },
         {
@@ -10054,9 +10054,9 @@
           "exact": 28,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/au/digital-marketing",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/digital-marketing"
+            "https://www.virtualcoworker.app/au/digital-marketing"
           ]
         },
         {
@@ -10069,9 +10069,9 @@
           "exact": 38,
           "phrase": 11,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/social-media",
+          "final_url": "https://www.virtualcoworker.app/au/social-media",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/social-media"
+            "https://www.virtualcoworker.app/au/social-media"
           ]
         },
         {
@@ -10084,9 +10084,9 @@
           "exact": 25,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/social-media",
+          "final_url": "https://www.virtualcoworker.app/au/social-media",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/social-media"
+            "https://www.virtualcoworker.app/au/social-media"
           ]
         },
         {
@@ -10099,9 +10099,9 @@
           "exact": 31,
           "phrase": 10,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/au/administrative-support",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/administrative-support"
+            "https://www.virtualcoworker.app/au/administrative-support"
           ]
         },
         {
@@ -10114,9 +10114,9 @@
           "exact": 0,
           "phrase": 7,
           "rsa_count": 1,
-          "final_url": "https://vision-three-alpha.vercel.app/au/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/au/administrative-support",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/administrative-support"
+            "https://www.virtualcoworker.app/au/administrative-support"
           ]
         },
         {
@@ -10129,9 +10129,9 @@
           "exact": 33,
           "phrase": 10,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/accounting",
+          "final_url": "https://www.virtualcoworker.app/au/accounting",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/accounting"
+            "https://www.virtualcoworker.app/au/accounting"
           ]
         },
         {
@@ -10144,9 +10144,9 @@
           "exact": 27,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/accounting",
+          "final_url": "https://www.virtualcoworker.app/au/accounting",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/accounting"
+            "https://www.virtualcoworker.app/au/accounting"
           ]
         },
         {
@@ -10159,9 +10159,9 @@
           "exact": 38,
           "phrase": 12,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/au/bookkeeping",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/bookkeeping"
+            "https://www.virtualcoworker.app/au/bookkeeping"
           ]
         },
         {
@@ -10174,9 +10174,9 @@
           "exact": 25,
           "phrase": 8,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/au/bookkeeping",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/bookkeeping"
+            "https://www.virtualcoworker.app/au/bookkeeping"
           ]
         },
         {
@@ -10189,9 +10189,9 @@
           "exact": 33,
           "phrase": 10,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/customer-service",
+          "final_url": "https://www.virtualcoworker.app/au/customer-service",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/customer-service"
+            "https://www.virtualcoworker.app/au/customer-service"
           ]
         },
         {
@@ -10204,9 +10204,9 @@
           "exact": 25,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/customer-service",
+          "final_url": "https://www.virtualcoworker.app/au/customer-service",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/customer-service"
+            "https://www.virtualcoworker.app/au/customer-service"
           ]
         },
         {
@@ -10219,9 +10219,9 @@
           "exact": 30,
           "phrase": 10,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/hr",
+          "final_url": "https://www.virtualcoworker.app/au/hr",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/hr"
+            "https://www.virtualcoworker.app/au/hr"
           ]
         },
         {
@@ -10234,9 +10234,9 @@
           "exact": 22,
           "phrase": 7,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/hr",
+          "final_url": "https://www.virtualcoworker.app/au/hr",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/hr"
+            "https://www.virtualcoworker.app/au/hr"
           ]
         },
         {
@@ -10249,9 +10249,9 @@
           "exact": 27,
           "phrase": 9,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/recruitment",
+          "final_url": "https://www.virtualcoworker.app/au/recruitment",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/recruitment"
+            "https://www.virtualcoworker.app/au/recruitment"
           ]
         },
         {
@@ -10264,9 +10264,9 @@
           "exact": 22,
           "phrase": 7,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/recruitment",
+          "final_url": "https://www.virtualcoworker.app/au/recruitment",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/recruitment"
+            "https://www.virtualcoworker.app/au/recruitment"
           ]
         },
         {
@@ -10279,9 +10279,9 @@
           "exact": 39,
           "phrase": 12,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/sales",
+          "final_url": "https://www.virtualcoworker.app/au/sales",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/sales"
+            "https://www.virtualcoworker.app/au/sales"
           ]
         },
         {
@@ -10294,9 +10294,9 @@
           "exact": 23,
           "phrase": 8,
           "rsa_count": 3,
-          "final_url": "https://vision-three-alpha.vercel.app/au/sales",
+          "final_url": "https://www.virtualcoworker.app/au/sales",
           "final_urls": [
-            "https://vision-three-alpha.vercel.app/au/sales"
+            "https://www.virtualcoworker.app/au/sales"
           ]
         }
       ],
@@ -17366,7 +17366,7 @@
           "ad_group_display": "Virtual Assistant · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "path1": "hire",
           "path2": "va",
           "headlines": [
@@ -17379,17 +17379,17 @@
             "Interview Before Hire",
             "Not Gig Platform VA",
             "How to Hire a VA",
-            "Core VA Employer Path",
+            "Core VA Hire Process",
             "Hire PH Role Staff",
             "Remote Admin Capacity",
-            "Clear Employer Path",
+            "Clear Employer Process",
             "Staffing Partner Hire",
             "{KeyWord:Hire Virtual Assistant}"
           ],
           "descriptions": [
             "Hire dedicated Philippines VAs for your Australian business.",
             "Tell us who you need. We recruit and screen — you interview the shortlist.",
-            "Employer path only. Form inquiry is not a job order or placement.",
+            "For businesses only. A form submit is not a hire or placement.",
             "Staffing partner for established businesses — not DIY training or job ads."
           ],
           "headline_count": 15,
@@ -17402,7 +17402,7 @@
           "ad_group_display": "Virtual Assistant · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "path1": "va",
           "path2": "hire",
           "headlines": [
@@ -17438,7 +17438,7 @@
           "ad_group_display": "Virtual Assistant · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "path1": "shortlist",
           "path2": "va",
           "headlines": [
@@ -17462,7 +17462,7 @@
             "Need a VA for your Australian business? We recruit and screen — you interview.",
             "Shortlist-first hiring: tell us the role, review vetted Philippines finalists.",
             "Speed comes from a staffing pipeline — timelines confirmed in follow-up.",
-            "Employer path only. Inquiry accepted is not a job order or placement."
+            "For businesses only. An accepted form is not a hire or placement."
           ],
           "headline_count": 15,
           "description_count": 4
@@ -17474,7 +17474,7 @@
           "ad_group_display": "Offshore VA · Core",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -17510,7 +17510,7 @@
           "ad_group_display": "Offshore VA · Core",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "path1": "ph",
           "path2": "va",
           "headlines": [
@@ -17534,7 +17534,7 @@
             "Philippines VA and remote staff for Australian business ops capacity.",
             "Filipino talent shortlist — you interview; we recruit, vet, and support.",
             "Offshore staffing partner model. Not Upwork. Not a job board.",
-            "Employer inquiries only. Inquiry accepted ≠ job order or placement."
+            "Businesses only. An accepted form ≠ a hire or placement."
           ],
           "headline_count": 15,
           "description_count": 4
@@ -17546,7 +17546,7 @@
           "ad_group_display": "Offshore VA · Core",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "path1": "dedicated",
           "path2": "ph",
           "headlines": [
@@ -17582,7 +17582,7 @@
           "ad_group_display": "Digital Marketing · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/au/digital-marketing",
           "path1": "marketing",
           "path2": "hire",
           "headlines": [
@@ -17618,7 +17618,7 @@
           "ad_group_display": "Digital Marketing · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/au/digital-marketing",
           "path1": "digital",
           "path2": "va",
           "headlines": [
@@ -17654,7 +17654,7 @@
           "ad_group_display": "Digital Marketing · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/au/digital-marketing",
           "path1": "shortlist",
           "path2": "mkt",
           "headlines": [
@@ -17690,7 +17690,7 @@
           "ad_group_display": "Digital Marketing · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/au/digital-marketing",
           "path1": "outsource",
           "path2": "mkt",
           "headlines": [
@@ -17726,7 +17726,7 @@
           "ad_group_display": "Digital Marketing · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/au/digital-marketing",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -17762,7 +17762,7 @@
           "ad_group_display": "Digital Marketing · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/au/digital-marketing",
           "path1": "dedicated",
           "path2": "mkt",
           "headlines": [
@@ -17798,7 +17798,7 @@
           "ad_group_display": "Social Media · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/social-media",
+          "final_url": "https://www.virtualcoworker.app/au/social-media",
           "path1": "social",
           "path2": "hire",
           "headlines": [
@@ -17834,7 +17834,7 @@
           "ad_group_display": "Social Media · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/social-media",
+          "final_url": "https://www.virtualcoworker.app/au/social-media",
           "path1": "social",
           "path2": "va",
           "headlines": [
@@ -17870,7 +17870,7 @@
           "ad_group_display": "Social Media · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/social-media",
+          "final_url": "https://www.virtualcoworker.app/au/social-media",
           "path1": "shortlist",
           "path2": "smm",
           "headlines": [
@@ -17906,7 +17906,7 @@
           "ad_group_display": "Social Media · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/social-media",
+          "final_url": "https://www.virtualcoworker.app/au/social-media",
           "path1": "outsource",
           "path2": "smm",
           "headlines": [
@@ -17942,7 +17942,7 @@
           "ad_group_display": "Social Media · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/social-media",
+          "final_url": "https://www.virtualcoworker.app/au/social-media",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -17978,7 +17978,7 @@
           "ad_group_display": "Social Media · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/social-media",
+          "final_url": "https://www.virtualcoworker.app/au/social-media",
           "path1": "dedicated",
           "path2": "smm",
           "headlines": [
@@ -18014,7 +18014,7 @@
           "ad_group_display": "Administration · EA",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/au/administrative-support",
           "path1": "ea",
           "path2": "hire",
           "headlines": [
@@ -18050,7 +18050,7 @@
           "ad_group_display": "Administration · EA",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/au/administrative-support",
           "path1": "ea",
           "path2": "ph",
           "headlines": [
@@ -18086,7 +18086,7 @@
           "ad_group_display": "Administration · EA",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/au/administrative-support",
           "path1": "shortlist",
           "path2": "ea",
           "headlines": [
@@ -18122,7 +18122,7 @@
           "ad_group_display": "Admin · City Test",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/au/administrative-support",
           "path1": "hire",
           "path2": "local",
           "headlines": [
@@ -18137,7 +18137,7 @@
             "Employers Hiring Only",
             "Offshore VA Partner",
             "Inbox & Calendar Support",
-            "Clear Employer Path",
+            "Clear Employer Process",
             "Remote Admin Capacity",
             "Partner-Led VA Hiring",
             "Hire PH Role Staff"
@@ -18158,7 +18158,7 @@
           "ad_group_display": "Accounting · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/accounting",
+          "final_url": "https://www.virtualcoworker.app/au/accounting",
           "path1": "accounting",
           "path2": "hire",
           "headlines": [
@@ -18194,7 +18194,7 @@
           "ad_group_display": "Accounting · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/accounting",
+          "final_url": "https://www.virtualcoworker.app/au/accounting",
           "path1": "finance",
           "path2": "va",
           "headlines": [
@@ -18230,7 +18230,7 @@
           "ad_group_display": "Accounting · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/accounting",
+          "final_url": "https://www.virtualcoworker.app/au/accounting",
           "path1": "shortlist",
           "path2": "acct",
           "headlines": [
@@ -18266,7 +18266,7 @@
           "ad_group_display": "Accounting · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/accounting",
+          "final_url": "https://www.virtualcoworker.app/au/accounting",
           "path1": "outsource",
           "path2": "acct",
           "headlines": [
@@ -18302,7 +18302,7 @@
           "ad_group_display": "Accounting · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/accounting",
+          "final_url": "https://www.virtualcoworker.app/au/accounting",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -18338,7 +18338,7 @@
           "ad_group_display": "Accounting · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/accounting",
+          "final_url": "https://www.virtualcoworker.app/au/accounting",
           "path1": "dedicated",
           "path2": "acct",
           "headlines": [
@@ -18374,7 +18374,7 @@
           "ad_group_display": "Bookkeeping · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/au/bookkeeping",
           "path1": "books",
           "path2": "hire",
           "headlines": [
@@ -18410,7 +18410,7 @@
           "ad_group_display": "Bookkeeping · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/au/bookkeeping",
           "path1": "books",
           "path2": "va",
           "headlines": [
@@ -18446,7 +18446,7 @@
           "ad_group_display": "Bookkeeping · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/au/bookkeeping",
           "path1": "shortlist",
           "path2": "books",
           "headlines": [
@@ -18482,7 +18482,7 @@
           "ad_group_display": "Bookkeeping · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/au/bookkeeping",
           "path1": "outsource",
           "path2": "books",
           "headlines": [
@@ -18518,7 +18518,7 @@
           "ad_group_display": "Bookkeeping · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/au/bookkeeping",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -18554,7 +18554,7 @@
           "ad_group_display": "Bookkeeping · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/au/bookkeeping",
           "path1": "dedicated",
           "path2": "books",
           "headlines": [
@@ -18590,7 +18590,7 @@
           "ad_group_display": "Customer Service · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/customer-service",
+          "final_url": "https://www.virtualcoworker.app/au/customer-service",
           "path1": "support",
           "path2": "hire",
           "headlines": [
@@ -18626,7 +18626,7 @@
           "ad_group_display": "Customer Service · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/customer-service",
+          "final_url": "https://www.virtualcoworker.app/au/customer-service",
           "path1": "support",
           "path2": "va",
           "headlines": [
@@ -18662,7 +18662,7 @@
           "ad_group_display": "Customer Service · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/customer-service",
+          "final_url": "https://www.virtualcoworker.app/au/customer-service",
           "path1": "shortlist",
           "path2": "cs",
           "headlines": [
@@ -18698,7 +18698,7 @@
           "ad_group_display": "Customer Service · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/customer-service",
+          "final_url": "https://www.virtualcoworker.app/au/customer-service",
           "path1": "outsource",
           "path2": "cs",
           "headlines": [
@@ -18734,7 +18734,7 @@
           "ad_group_display": "Customer Service · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/customer-service",
+          "final_url": "https://www.virtualcoworker.app/au/customer-service",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -18770,7 +18770,7 @@
           "ad_group_display": "Customer Service · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/customer-service",
+          "final_url": "https://www.virtualcoworker.app/au/customer-service",
           "path1": "dedicated",
           "path2": "cs",
           "headlines": [
@@ -18806,7 +18806,7 @@
           "ad_group_display": "Human Resources · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/hr",
+          "final_url": "https://www.virtualcoworker.app/au/hr",
           "path1": "hr",
           "path2": "hire",
           "headlines": [
@@ -18842,7 +18842,7 @@
           "ad_group_display": "Human Resources · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/hr",
+          "final_url": "https://www.virtualcoworker.app/au/hr",
           "path1": "hr",
           "path2": "va",
           "headlines": [
@@ -18878,7 +18878,7 @@
           "ad_group_display": "Human Resources · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/hr",
+          "final_url": "https://www.virtualcoworker.app/au/hr",
           "path1": "shortlist",
           "path2": "hr",
           "headlines": [
@@ -18914,7 +18914,7 @@
           "ad_group_display": "Human Resources · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/hr",
+          "final_url": "https://www.virtualcoworker.app/au/hr",
           "path1": "outsource",
           "path2": "hr",
           "headlines": [
@@ -18950,7 +18950,7 @@
           "ad_group_display": "Human Resources · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/hr",
+          "final_url": "https://www.virtualcoworker.app/au/hr",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -18986,7 +18986,7 @@
           "ad_group_display": "Human Resources · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/hr",
+          "final_url": "https://www.virtualcoworker.app/au/hr",
           "path1": "dedicated",
           "path2": "hr",
           "headlines": [
@@ -19022,7 +19022,7 @@
           "ad_group_display": "Recruitment · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/recruitment",
+          "final_url": "https://www.virtualcoworker.app/au/recruitment",
           "path1": "recruit",
           "path2": "hire",
           "headlines": [
@@ -19058,7 +19058,7 @@
           "ad_group_display": "Recruitment · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/recruitment",
+          "final_url": "https://www.virtualcoworker.app/au/recruitment",
           "path1": "recruit",
           "path2": "va",
           "headlines": [
@@ -19094,7 +19094,7 @@
           "ad_group_display": "Recruitment · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/recruitment",
+          "final_url": "https://www.virtualcoworker.app/au/recruitment",
           "path1": "shortlist",
           "path2": "ta",
           "headlines": [
@@ -19130,7 +19130,7 @@
           "ad_group_display": "Recruitment · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/recruitment",
+          "final_url": "https://www.virtualcoworker.app/au/recruitment",
           "path1": "outsource",
           "path2": "ta",
           "headlines": [
@@ -19166,7 +19166,7 @@
           "ad_group_display": "Recruitment · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/recruitment",
+          "final_url": "https://www.virtualcoworker.app/au/recruitment",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -19202,7 +19202,7 @@
           "ad_group_display": "Recruitment · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/recruitment",
+          "final_url": "https://www.virtualcoworker.app/au/recruitment",
           "path1": "dedicated",
           "path2": "ta",
           "headlines": [
@@ -19238,7 +19238,7 @@
           "ad_group_display": "Sales · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/sales",
+          "final_url": "https://www.virtualcoworker.app/au/sales",
           "path1": "sales",
           "path2": "hire",
           "headlines": [
@@ -19274,7 +19274,7 @@
           "ad_group_display": "Sales · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/sales",
+          "final_url": "https://www.virtualcoworker.app/au/sales",
           "path1": "sales",
           "path2": "va",
           "headlines": [
@@ -19310,7 +19310,7 @@
           "ad_group_display": "Sales · Hire",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/sales",
+          "final_url": "https://www.virtualcoworker.app/au/sales",
           "path1": "shortlist",
           "path2": "sales",
           "headlines": [
@@ -19346,7 +19346,7 @@
           "ad_group_display": "Sales · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/sales",
+          "final_url": "https://www.virtualcoworker.app/au/sales",
           "path1": "outsource",
           "path2": "sales",
           "headlines": [
@@ -19382,7 +19382,7 @@
           "ad_group_display": "Sales · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/sales",
+          "final_url": "https://www.virtualcoworker.app/au/sales",
           "path1": "offshore",
           "path2": "ph",
           "headlines": [
@@ -19418,7 +19418,7 @@
           "ad_group_display": "Sales · Outsource",
           "status": "Paused",
           "ad_type": "Responsive search ad",
-          "final_url": "https://vision-three-alpha.vercel.app/au/sales",
+          "final_url": "https://www.virtualcoworker.app/au/sales",
           "path1": "dedicated",
           "path2": "sales",
           "headlines": [
@@ -19630,56 +19630,56 @@
         {
           "campaign": "VC_AU_S_CORE",
           "link_text": "Tell Us Who You Need",
-          "final_url": "https://vision-three-alpha.vercel.app/au#gate",
+          "final_url": "https://www.virtualcoworker.app/au#gate",
           "desc1": "Employer hiring path",
           "desc2": "Form for businesses"
         },
         {
           "campaign": "VC_AU_S_CORE",
           "link_text": "How Hiring Works",
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "desc1": "Recruit, vet, shortlist",
           "desc2": "You interview talent"
         },
         {
           "campaign": "VC_AU_S_CORE",
           "link_text": "Admin Support Hire",
-          "final_url": "https://vision-three-alpha.vercel.app/au/administrative-support",
+          "final_url": "https://www.virtualcoworker.app/au/administrative-support",
           "desc1": "EA / admin category LP",
           "desc2": "Role-specific landing"
         },
         {
           "campaign": "VC_AU_S_CORE",
           "link_text": "AU Employer Home",
-          "final_url": "https://vision-three-alpha.vercel.app/au",
+          "final_url": "https://www.virtualcoworker.app/au",
           "desc1": "Generic Core landing",
           "desc2": "Not WordPress homepage"
         },
         {
           "campaign": "VC_AU_S_ROLES",
           "link_text": "Tell Us Who You Need",
-          "final_url": "https://vision-three-alpha.vercel.app/au/administrative-support#gate",
+          "final_url": "https://www.virtualcoworker.app/au/administrative-support#gate",
           "desc1": "Employer hiring path",
           "desc2": "Form for businesses"
         },
         {
           "campaign": "VC_AU_S_ROLES",
           "link_text": "Digital Marketing Hire",
-          "final_url": "https://vision-three-alpha.vercel.app/au/digital-marketing",
+          "final_url": "https://www.virtualcoworker.app/au/digital-marketing",
           "desc1": "Philippines marketing staff",
           "desc2": "Category landing page"
         },
         {
           "campaign": "VC_AU_S_ROLES",
           "link_text": "Social Media Hire",
-          "final_url": "https://vision-three-alpha.vercel.app/au/social-media",
+          "final_url": "https://www.virtualcoworker.app/au/social-media",
           "desc1": "Philippines SMM staff",
           "desc2": "Category landing page"
         },
         {
           "campaign": "VC_AU_S_ROLES",
           "link_text": "Bookkeeping Hire",
-          "final_url": "https://vision-three-alpha.vercel.app/au/bookkeeping",
+          "final_url": "https://www.virtualcoworker.app/au/bookkeeping",
           "desc1": "Philippines books staff",
           "desc2": "Category landing page"
         }

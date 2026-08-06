@@ -30,7 +30,7 @@ Companion checklist: `07-phased-activation-recommendation.md` · Launch Control 
 ### Phase 0 — TRAFFIC READY (before any Enable)
 
 **TRAFFIC READY** hard gates: durable lead delivery (email/webhook/sheet — not log-only), live-format test arrives, named responder, LP/gate QA, phones locked, Final URLs = Core→market home · Roles→category, budgets/CPC confirmed, campaigns still Paused, **explicit George Enable approval**.  
-**URL stability (strongly prefer before Enable):** one custom domain + Final URLs on that host (or rewrite off preview before Enable). Domain ≠ durable-leads substitute; one host + `/us` `/au` `/ph` paths — not two country domains. Regen: `ADS_FINAL_URL_HOST`.  
+**URL stability (done):** production host `www.virtualcoworker.app` (apex → www). Editor CSVs use www Final URLs. Preview `vision-three-alpha.vercel.app` still exists for QA. Domain ≠ TRAFFIC READY.  
 
 See `DECISIONS.md` (sequencing lock), `12-blocker-decision-list.md`, Launch Control.
 

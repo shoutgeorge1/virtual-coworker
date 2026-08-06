@@ -3,12 +3,11 @@ import { notFound } from "next/navigation";
 import MarketLanding from "../../components/MarketLanding";
 import { CATEGORIES, CATEGORY_SLUGS, isCategorySlug } from "../../../config/categories";
 import { resolveLpVariant } from "../../../lib/resolve-lp-variant";
-import { normalizeHeroOverlay } from "../../../lib/hero-overlay";
 import "../au.css";
 
 type Props = {
   params: Promise<{ category: string }>;
-  searchParams: Promise<{ variant?: string; hero?: string }>;
+  searchParams: Promise<{ variant?: string }>;
 };
 
 export function generateStaticParams() {
@@ -31,13 +30,7 @@ export default async function AUCategoryPage({ params, searchParams }: Props) {
   if (!isCategorySlug(category)) notFound();
   const sp = await searchParams;
   const variant = await resolveLpVariant(sp);
-  const heroOverlay = normalizeHeroOverlay(sp.hero);
   return (
-    <MarketLanding
-      market="au"
-      category={category}
-      variant={variant}
-      heroOverlay={heroOverlay}
-    />
+    <MarketLanding market="au" category={category} variant={variant} />
   );
 }

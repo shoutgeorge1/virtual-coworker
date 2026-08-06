@@ -15,7 +15,7 @@ Sequencing lock: **TRAFFIC READY** ≠ **CRM READY** ≠ **OPTIMIZATION READY** 
 | 8 | **Proof / content** | Marketing | Badges OK as badges; no invented testimonials/pricing |
 | 9 | **CallRail timing** | George | OPTIMIZATION later — don’t treat phone clicks as qualified until live |
 | 10 | **Careers URL** | ~~open~~ | **Locked:** `/ph` microsite (never WP) |
-| 11 | **One paid domain before Enable** | George | **Not a TRAFFIC READY substitute** (leads still gate paid traffic). **Strongly prefer before Enable / Final URL freeze:** buy one domain → attach Vercel → confirm `/us` `/au` `/ph` → set Ads Final URLs (regen `ADS_FINAL_URL_HOST` or rewrite in Editor). Preview OK for paused Import structure review only. No dual-domain buy. |
+| 11 | **One paid domain before Enable** | ~~done~~ | **Done:** `www.virtualcoworker.app` on Vercel `vision` (apex → www). Final URLs regenerated. Preview still exists. **Not** a TRAFFIC READY substitute — still don’t Enable until leads gate clears. No more domain buys. |
 | 12 | **GTM / GA4 / GSC per market** | George | **OPTIMIZATION READY** — `GTM_US` + `GTM_AU` (+ `GTM_PH` if needed) even on one host; map inquiry after durable delivery |
 | 13 | **Legacy live brand / museum campaigns** | George | Pause/coexist decision outside this CSV |
 | 14 | **ENABLE anything** | George | Explicit approval only after TRAFFIC READY — package ships Paused |

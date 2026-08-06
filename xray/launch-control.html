@@ -288,9 +288,9 @@
       </header>
 
       <p class="lc-start">
-        <strong>Do next:</strong> Clear <strong>TRAFFIC READY</strong> first (real inbox → test lead arrives → name who answers) — that still blocks paid Enable.
-        <strong>Strongly prefer before Enable:</strong> buy <strong>one</strong> clean .com → attach to Vercel <code>vision-three-alpha</code> → confirm <code>/us</code> <code>/au</code> <code>/ph</code> → set Final URLs on that host (regen <code>ADS_FINAL_URL_HOST</code> or rewrite in Editor).
-        Import while Paused is OK for structure review — but rewrite Final URLs off <code>*.vercel.app</code> before any Enable.
+        <strong>Do next:</strong> Clear <strong>TRAFFIC READY</strong> (real inbox → test lead arrives → name who answers) — that still blocks paid Enable.
+        <strong>Domain done:</strong> production host is <code>https://www.virtualcoworker.app</code> (apex 308 → www; Vercel project <code>vision</code>). Preview <code>vision-three-alpha.vercel.app</code> still exists.
+        Editor CSVs already use www Final URLs — Import when ready, keep everything <strong>Paused</strong>. Do <strong>not</strong> Enable until TRAFFIC READY.
       </p>
 
       <section class="panel" id="readiness-statuses">
@@ -435,17 +435,17 @@
               </label>
             </li>
             <li data-order="12">
-              <input type="checkbox" id="ads12" data-todo="ads12" />
+              <input type="checkbox" id="ads12" data-todo="ads12" checked />
               <label for="ads12">
-                <strong>12. Buy + attach one custom domain (before Enable) ← money step</strong>
-                <span class="todo-hint"><strong>Operator money step now:</strong> you buy one .com (Porkbun ~at-cost; Cloudflare if you already have CF). Top pick shortlist: <code>hirewithvc.com</code> · <code>staffwithvc.com</code> · <code>hirevcstaff.com</code>. One host on Vercel <code>vision-three-alpha</code> — same paths <code>/us</code> · <code>/au</code> · <code>/ph</code> (<em>not</em> two country domains). Confirm LPs on <code>https://yourdomain.com/us/…</code>. Domain ≠ TRAFFIC READY — but avoid Ads on throwaway <code>vision-three-alpha.vercel.app</code>.</span>
+                <strong>12. Buy + attach one custom domain (before Enable)</strong>
+                <span class="todo-hint"><strong>Done:</strong> <code>www.virtualcoworker.app</code> on Vercel project <code>vision</code> (apex → www). Paths <code>/us</code> · <code>/au</code> · <code>/ph</code>. Preview <code>vision-three-alpha.vercel.app</code> still exists. Domain ≠ TRAFFIC READY.</span>
               </label>
             </li>
             <li data-order="13">
-              <input type="checkbox" id="ads13" data-todo="ads13" />
+              <input type="checkbox" id="ads13" data-todo="ads13" checked />
               <label for="ads13">
                 <strong>13. Freeze Final URL host on that domain</strong>
-                <span class="todo-hint"><strong>Prefer:</strong> domain live → regenerate package with <code>ADS_FINAL_URL_HOST=yourdomain.com</code> → import with final host. Paths stay Core → <code>/us</code>/<code>/au</code> · Roles → category. No WordPress.</span>
+                <span class="todo-hint"><strong>Done:</strong> package regenerated with <code>ADS_FINAL_URL_HOST=www.virtualcoworker.app</code> (now the builder default). Core → <code>/us</code>/<code>/au</code> · Roles → category. Import CSVs use www — not <code>*.vercel.app</code>.</span>
               </label>
             </li>
             <li data-order="14">
@@ -459,14 +459,14 @@
               <input type="checkbox" id="ads15" data-todo="ads15" />
               <label for="ads15">
                 <strong>15. Import paused CSV — leave everything Paused</strong>
-                <span class="todo-hint"><strong>Prefer:</strong> import after domain + Final URL host are set. <strong>Acceptable:</strong> import/review on preview host while Paused for structure only — then you <strong>must</strong> rewrite every Final URL to the custom domain before Enable. <strong>Import</strong> = draft · <strong>Post</strong> = upload (still paused) · <strong>Enable</strong> = later. Split US/AU files. <a href="ads-package.html">Ads package</a> · <code>EDITOR-PREFLIGHT-REPORT.md</code>.</span>
+                <span class="todo-hint">Import the www Final URL CSVs (US + AU split). <strong>Import</strong> = draft · <strong>Post</strong> = upload (still paused) · <strong>Enable</strong> = later — only after TRAFFIC READY. <a href="ads-package.html">Ads package</a> · <code>EDITOR-PREFLIGHT-REPORT.md</code>.</span>
               </label>
             </li>
             <li data-order="16">
               <input type="checkbox" id="ads16" data-todo="ads16" />
               <label for="ads16">
-                <strong>16. Before Enable — Final URLs = custom domain</strong>
-                <span class="todo-hint">Hard stop if still on <code>*.vercel.app</code>. Confirm every Core/Roles Final URL uses the paid host + path markets. Preview host OK for TRAFFIC READY lead tests only.</span>
+                <strong>16. Before Enable — Final URLs = www host</strong>
+                <span class="todo-hint">Hard stop if still on <code>*.vercel.app</code>. Confirm every Core/Roles Final URL uses <code>www.virtualcoworker.app</code> + path markets. Preview host is for QA only.</span>
               </label>
             </li>
             <li data-order="17">
@@ -517,8 +517,9 @@
           <ul>
             <li><strong>MCC linked</strong> — under Shout George</li>
             <li><strong>Ads access</strong> — Standard on USA + AU</li>
-            <li><strong>Three microsites on preview</strong> — US · AU · PH</li>
-            <li><strong>Paused Editor CSV ready</strong> — USA + AU stamped</li>
+            <li><strong>Three microsites live on www</strong> — US · AU · PH at <code>www.virtualcoworker.app</code></li>
+            <li><strong>Custom domain + Final URLs on www</strong> — Editor CSVs regenerated</li>
+            <li><strong>Paused Editor CSV ready</strong> — USA + AU stamped · still not paid-ready</li>
             <li><strong>Basic Zoho seat</strong> — look only; not Admin / not API</li>
             <li><strong>US/NA phone</strong> — <code>310-426-8776</code> (do not port)</li>
           </ul>
@@ -533,8 +534,7 @@
             <li><strong>Real inbox</strong> — form actually lands there</li>
             <li><strong>Test lead arrives</strong> — you see it</li>
             <li><strong>Named person who answers</strong> — <a href="lead-routing.html">Lead Routing</a></li>
-            <li><strong>Custom domain before Enable</strong> — Final URLs on paid host (not <code>*.vercel.app</code>)</li>
-            <li><strong>Editor Import / Post</strong> — still Paused; Enable later</li>
+            <li><strong>Editor Import / Post</strong> — use www Final URL CSVs; still Paused; Enable later</li>
             <li><strong>Old Brand still spending</strong> — recommend pause (you click in Ads)</li>
           </ul>
         </section>
@@ -546,9 +546,8 @@
           </div>
           <ul>
             <li><strong>Next:</strong> TRAFFIC READY (inbox · test · named responder) + review live Brand</li>
-            <li><strong>Then (before Enable):</strong> buy <strong>one</strong> .com → attach Vercel → confirm <code>/us</code> <code>/au</code> <code>/ph</code></li>
-            <li>Prefer: regenerate Final URLs → Editor import → Post paused → Enable</li>
-            <li>Or: import on preview while paused, <strong>rewrite Final URLs before Enable</strong></li>
+            <li><strong>Then:</strong> Import www Final URL CSVs → Post paused → Enable only after TRAFFIC READY + your OK</li>
+            <li>Production host <code>www.virtualcoworker.app</code> · preview still exists · no more domain buy</li>
             <li>One host + paths (not two country domains) · separate GTM_US + GTM_AU</li>
             <li>Zoho: browse + note modules — <em>not</em> a traffic gate. Email: <code>george@shoutgeorge.com</code></li>
             <li>
@@ -587,13 +586,13 @@
 
       <section class="panel" id="lp-previews">
         <div class="panel-hd">
-          <p class="kicker">Preview · vision-three-alpha.vercel.app</p>
+          <p class="kicker">Production · www.virtualcoworker.app</p>
           <h2>Landing page sitemap</h2>
         </div>
         <div class="panel-bd">
           <p class="muted" style="margin:0 0 0.85rem;font-size:0.88rem">
             Full tree — every real route. Same list on <a href="landing-pages.html">LP previews</a>.
-            Root <a href="https://vision-three-alpha.vercel.app/" target="_blank" rel="noopener"><code>/</code></a> → <code>/us</code>.
+            Root <a href="https://www.virtualcoworker.app/" target="_blank" rel="noopener"><code>/</code></a> → <code>/us</code>.
             A/B: <code>?variant=a|b</code> on hubs/categories (not separate paths). Hire = hub <code>#gate</code>.
           </p>
           <div class="sitemap">
@@ -601,19 +600,19 @@
               <h3>US employer</h3>
               <p class="branch-note">Paid money path · phone <code>310-426-8776</code></p>
               <ul class="sitemap-tree">
-                <li><a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> <span class="dim">hub</span>
+                <li><a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> <span class="dim">hub</span>
                   <ul>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/consult" target="_blank" rel="noopener">/us/consult</a> <span class="dim">→ /us#gate</span></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/social-media" target="_blank" rel="noopener">/us/social-media</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/accounting" target="_blank" rel="noopener">/us/accounting</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/bookkeeping" target="_blank" rel="noopener">/us/bookkeeping</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/administrative-support" target="_blank" rel="noopener">/us/administrative-support</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/customer-service" target="_blank" rel="noopener">/us/customer-service</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/hr" target="_blank" rel="noopener">/us/hr</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/human-resources" target="_blank" rel="noopener">/us/human-resources</a> <span class="dim">alias → /hr</span></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/recruitment" target="_blank" rel="noopener">/us/recruitment</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/sales" target="_blank" rel="noopener">/us/sales</a></li>
+                    <li><a href="https://www.virtualcoworker.app/us/consult" target="_blank" rel="noopener">/us/consult</a> <span class="dim">→ /us#gate</span></li>
+                    <li><a href="https://www.virtualcoworker.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
+                    <li><a href="https://www.virtualcoworker.app/us/social-media" target="_blank" rel="noopener">/us/social-media</a></li>
+                    <li><a href="https://www.virtualcoworker.app/us/accounting" target="_blank" rel="noopener">/us/accounting</a></li>
+                    <li><a href="https://www.virtualcoworker.app/us/bookkeeping" target="_blank" rel="noopener">/us/bookkeeping</a></li>
+                    <li><a href="https://www.virtualcoworker.app/us/administrative-support" target="_blank" rel="noopener">/us/administrative-support</a></li>
+                    <li><a href="https://www.virtualcoworker.app/us/customer-service" target="_blank" rel="noopener">/us/customer-service</a></li>
+                    <li><a href="https://www.virtualcoworker.app/us/hr" target="_blank" rel="noopener">/us/hr</a></li>
+                    <li><a href="https://www.virtualcoworker.app/us/human-resources" target="_blank" rel="noopener">/us/human-resources</a> <span class="dim">alias → /hr</span></li>
+                    <li><a href="https://www.virtualcoworker.app/us/recruitment" target="_blank" rel="noopener">/us/recruitment</a></li>
+                    <li><a href="https://www.virtualcoworker.app/us/sales" target="_blank" rel="noopener">/us/sales</a></li>
                   </ul>
                 </li>
               </ul>
@@ -623,19 +622,19 @@
               <h3>AU employer</h3>
               <p class="branch-note">Paid money path · form-primary (no fake AU phone)</p>
               <ul class="sitemap-tree">
-                <li><a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> <span class="dim">hub</span>
+                <li><a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> <span class="dim">hub</span>
                   <ul>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/consult" target="_blank" rel="noopener">/au/consult</a> <span class="dim">→ /au#gate</span></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/digital-marketing" target="_blank" rel="noopener">/au/digital-marketing</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/social-media" target="_blank" rel="noopener">/au/social-media</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/accounting" target="_blank" rel="noopener">/au/accounting</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/bookkeeping" target="_blank" rel="noopener">/au/bookkeeping</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/administrative-support" target="_blank" rel="noopener">/au/administrative-support</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/customer-service" target="_blank" rel="noopener">/au/customer-service</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/hr" target="_blank" rel="noopener">/au/hr</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/human-resources" target="_blank" rel="noopener">/au/human-resources</a> <span class="dim">alias → /hr</span></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/recruitment" target="_blank" rel="noopener">/au/recruitment</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/sales" target="_blank" rel="noopener">/au/sales</a></li>
+                    <li><a href="https://www.virtualcoworker.app/au/consult" target="_blank" rel="noopener">/au/consult</a> <span class="dim">→ /au#gate</span></li>
+                    <li><a href="https://www.virtualcoworker.app/au/digital-marketing" target="_blank" rel="noopener">/au/digital-marketing</a></li>
+                    <li><a href="https://www.virtualcoworker.app/au/social-media" target="_blank" rel="noopener">/au/social-media</a></li>
+                    <li><a href="https://www.virtualcoworker.app/au/accounting" target="_blank" rel="noopener">/au/accounting</a></li>
+                    <li><a href="https://www.virtualcoworker.app/au/bookkeeping" target="_blank" rel="noopener">/au/bookkeeping</a></li>
+                    <li><a href="https://www.virtualcoworker.app/au/administrative-support" target="_blank" rel="noopener">/au/administrative-support</a></li>
+                    <li><a href="https://www.virtualcoworker.app/au/customer-service" target="_blank" rel="noopener">/au/customer-service</a></li>
+                    <li><a href="https://www.virtualcoworker.app/au/hr" target="_blank" rel="noopener">/au/hr</a></li>
+                    <li><a href="https://www.virtualcoworker.app/au/human-resources" target="_blank" rel="noopener">/au/human-resources</a> <span class="dim">alias → /hr</span></li>
+                    <li><a href="https://www.virtualcoworker.app/au/recruitment" target="_blank" rel="noopener">/au/recruitment</a></li>
+                    <li><a href="https://www.virtualcoworker.app/au/sales" target="_blank" rel="noopener">/au/sales</a></li>
                   </ul>
                 </li>
               </ul>
@@ -645,9 +644,9 @@
               <h3>PH talent</h3>
               <p class="branch-note">Careers / apply — not Ads Final URLs</p>
               <ul class="sitemap-tree">
-                <li><a href="https://vision-three-alpha.vercel.app/ph" target="_blank" rel="noopener">/ph</a> <span class="dim">careers hub</span>
+                <li><a href="https://www.virtualcoworker.app/ph" target="_blank" rel="noopener">/ph</a> <span class="dim">careers hub</span>
                   <ul>
-                    <li><a href="https://vision-three-alpha.vercel.app/ph/apply" target="_blank" rel="noopener">/ph/apply</a></li>
+                    <li><a href="https://www.virtualcoworker.app/ph/apply" target="_blank" rel="noopener">/ph/apply</a></li>
                   </ul>
                 </li>
               </ul>
@@ -657,22 +656,22 @@
               <h3>Shared hub + legal</h3>
               <p class="branch-note">Root pages · <code>?market=us|au</code> scopes nav</p>
               <ul class="sitemap-tree">
-                <li><a href="https://vision-three-alpha.vercel.app/" target="_blank" rel="noopener">/</a> <span class="dim">→ /us</span></li>
-                <li><a href="https://vision-three-alpha.vercel.app/services" target="_blank" rel="noopener">/services</a>
+                <li><a href="https://www.virtualcoworker.app/" target="_blank" rel="noopener">/</a> <span class="dim">→ /us</span></li>
+                <li><a href="https://www.virtualcoworker.app/services" target="_blank" rel="noopener">/services</a>
                   <ul>
-                    <li><a href="https://vision-three-alpha.vercel.app/services?market=us" target="_blank" rel="noopener">/services?market=us</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/services?market=au" target="_blank" rel="noopener">/services?market=au</a></li>
+                    <li><a href="https://www.virtualcoworker.app/services?market=us" target="_blank" rel="noopener">/services?market=us</a></li>
+                    <li><a href="https://www.virtualcoworker.app/services?market=au" target="_blank" rel="noopener">/services?market=au</a></li>
                   </ul>
                 </li>
-                <li><a href="https://vision-three-alpha.vercel.app/how-it-works" target="_blank" rel="noopener">/how-it-works</a>
+                <li><a href="https://www.virtualcoworker.app/how-it-works" target="_blank" rel="noopener">/how-it-works</a>
                   <ul>
-                    <li><a href="https://vision-three-alpha.vercel.app/how-it-works?market=us" target="_blank" rel="noopener">/how-it-works?market=us</a></li>
-                    <li><a href="https://vision-three-alpha.vercel.app/how-it-works?market=au" target="_blank" rel="noopener">/how-it-works?market=au</a></li>
+                    <li><a href="https://www.virtualcoworker.app/how-it-works?market=us" target="_blank" rel="noopener">/how-it-works?market=us</a></li>
+                    <li><a href="https://www.virtualcoworker.app/how-it-works?market=au" target="_blank" rel="noopener">/how-it-works?market=au</a></li>
                   </ul>
                 </li>
-                <li><a href="https://vision-three-alpha.vercel.app/privacy" target="_blank" rel="noopener">/privacy</a></li>
-                <li><a href="https://vision-three-alpha.vercel.app/terms" target="_blank" rel="noopener">/terms</a></li>
-                <li><a href="https://vision-three-alpha.vercel.app/thank-you" target="_blank" rel="noopener">/thank-you</a> <span class="dim">post-submit</span></li>
+                <li><a href="https://www.virtualcoworker.app/privacy" target="_blank" rel="noopener">/privacy</a></li>
+                <li><a href="https://www.virtualcoworker.app/terms" target="_blank" rel="noopener">/terms</a></li>
+                <li><a href="https://www.virtualcoworker.app/thank-you" target="_blank" rel="noopener">/thank-you</a> <span class="dim">post-submit</span></li>
               </ul>
             </div>
           </div>
@@ -706,11 +705,10 @@
             <li>Review live Brand.</li>
             <li><strong>TRAFFIC READY</strong> (paid-traffic blocker): real inbox + test arrives + named person.</li>
             <li>Assets spot-check · no shared mega negs · Auto-apply off.</li>
-            <li><strong>Custom domain</strong> (strongly before Enable): buy one → attach Vercel → confirm LPs on that host.</li>
-            <li>Freeze Final URL host (regen with <code>ADS_FINAL_URL_HOST</code>, or rewrite in Editor before Enable).</li>
-            <li>Download accounts → Import paused split CSVs → Post paused. Enable = later.</li>
-            <li>Confirm budgets / Max CPC · Final URLs = custom domain · Search partners off.</li>
-            <li>Enable Tier 1A then 1B after TRAFFIC READY + domain Final URLs + your OK.</li>
+            <li><strong>Domain + Final URLs</strong> — done on <code>www.virtualcoworker.app</code> (preview still exists).</li>
+            <li>Download accounts → Import paused www CSVs → Post paused. Enable = later.</li>
+            <li>Confirm budgets / Max CPC · Final URLs = www · Search partners off.</li>
+            <li>Enable Tier 1A then 1B after TRAFFIC READY + your OK — still don’t Enable until then.</li>
           </ol>
         </div>
       </details>

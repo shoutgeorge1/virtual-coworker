@@ -16,10 +16,10 @@ window.PILOT_STATUS = {
   objective:
     "Can Google Search → independent US/AU employer microsites generate qualified leads at an acceptable cost? Three identities (US · AU · PH); WordPress stays as-is with zero paid egress.",
   landingPages: {
-    rootRedirectsTo: "https://vision-three-alpha.vercel.app/us",
-    us: "https://vision-three-alpha.vercel.app/us",
-    au: "https://vision-three-alpha.vercel.app/au",
-    ph: "https://vision-three-alpha.vercel.app/ph"
+    rootRedirectsTo: "https://www.virtualcoworker.app/us",
+    us: "https://www.virtualcoworker.app/us",
+    au: "https://www.virtualcoworker.app/au",
+    ph: "https://www.virtualcoworker.app/ph"
   },
   /** Domains + measurement — separate per employer market; PH can hang for Stage 1. */
   micrositeInfra: {
@@ -217,7 +217,7 @@ window.PILOT_STATUS = {
   georgeHandles: [
     "MCC + Google Ads Editor (Standard access confirmed on US + AU — Stage 1 OK)",
     "Three microsites on vision (US · AU · PH) — not WordPress; / → /us",
-    "One host + /us /au /ph paths (optional one paid domain later — not TRAFFIC READY)",
+    "Production host www.virtualcoworker.app + /us /au /ph paths (preview still exists — not TRAFFIC READY)",
     "Separate GTM_US + GTM_AU (+ GTM_PH if needed) / GA4 / GSC / Ads conversions — same host OK",
     "Paused Clean Search import (Core + Roles US+AU; brand deferred)",
     "Lead form → secure server-side → email/webhook Stage 1; Zoho when access confirmed",

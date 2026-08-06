@@ -1,6 +1,6 @@
 # Editor preflight report
 
-- Generated: 2026-08-06 13:25 UTC
+- Generated: 2026-08-06 17:37 UTC
 - LP version (suffix): `stage1-v7` (unchanged)
 - Package hygiene: Editor ValueTrack + campaign CPC cap + US/AU split
 
@@ -54,7 +54,7 @@
 - Tracking template (campaign): `{lpurl}`
 - Final URL suffix (campaign): `utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}&utm_matchtype={matchtype}&utm_device={device}&lp_version=stage1-v7`
 - No `{_campaign}` / `{_adgroup}` custom params
-- **Final URL host:** preview `vision-three-alpha.vercel.app` with path markets (`/us`, `/au`, category pages). One host — not two country domains. **Strongly prefer custom domain before Enable** (URL stability before paid clicks). Preview OK for paused Import structure review; if imported on preview, **rewrite Final URLs before Enable**. Regen once when domain is live: `ADS_FINAL_URL_HOST=yourdomain.com python3 ads-launch/build_stage1_editor_package.py`. Domain ≠ TRAFFIC READY substitute.
+- **Final URL host (production):** `www.virtualcoworker.app` with path markets (`/us`, `/au`, category pages). One host — not two country domains. Preview `vision-three-alpha.vercel.app` still exists but **Import CSVs use www**. Apex `virtualcoworker.app` → 308 → `www`. Domain ≠ TRAFFIC READY substitute. Override: `ADS_FINAL_URL_HOST=host python3 ads-launch/build_stage1_editor_package.py`.
 
 ## Conversion actions + campaign goals (after Post — Ads UI)
 
@@ -121,13 +121,13 @@ Job-seeker / medical / Spanish / platform negatives stay active.
 
 1. Leave old account machinery alone (no dig/delete/rewrite/pause binge tonight).
 2. Clear **TRAFFIC READY** (durable delivery + live test + named responder).
-3. **Prefer:** buy/attach one custom domain → confirm `/us` `/au` `/ph` LPs → regen with `ADS_FINAL_URL_HOST` before Import.
+3. **Domain live:** `www.virtualcoworker.app` — package Final URLs already on www. Confirm `/us` `/au` `/ph` LPs still 200 before Import.
 4. Download fresh USA + AU accounts into Editor (read-only sync).
 5. Import **US split** into USA → Check changes → leave **Paused**.
 6. Import **AU split** into AU → Check changes → leave **Paused**.
-7. If imported on preview host: **rewrite every Final URL** to custom domain before Enable.
+7. Confirm every Final URL uses `www.virtualcoworker.app` (not `*.vercel.app`).
 8. Confirm `VC_*` negatives are campaign-level curated only — **do not** attach shared mega lists.
 9. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.
 10. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.
-11. Enable is a separate explicit decision after TRAFFIC READY + preferred Final URL host — never from Import/Post alone.
+11. Enable is a separate explicit decision after TRAFFIC READY — never from Import/Post alone. Still **NOT** paid-ready until TRAFFIC READY.
 

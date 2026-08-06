@@ -17,20 +17,15 @@ import {
   type CategorySlug,
 } from "../../config/categories";
 import { SITE } from "../../config/site";
-import type { HeroOverlay } from "../../lib/hero-overlay";
-import { resolveHeroSecondaryBadge } from "../../lib/hero-badge-copy";
 
 export default function MarketLanding({
   market,
   category,
   variant,
-  heroOverlay = "none",
 }: {
   market: MarketId;
   category?: CategorySlug | null;
   variant: AbVariant;
-  /** QA-only image overlay treatments (?hero=badge|pill|hot). Default = current chrome. */
-  heroOverlay?: HeroOverlay;
 }) {
   const cfg = MARKETS[market];
   const phone = resolvePhone(market);
@@ -196,17 +191,11 @@ export default function MarketLanding({
       : "A teammate will follow up to talk through the role and next steps.",
   };
 
-  const showOverlay = heroOverlay !== "none";
-  // Prefer image overlays over recoloring H1 — hot keeps default typography.
-  const h1Class = "anim-rise";
-  const secondaryBadge = resolveHeroSecondaryBadge(market, category);
-
   return (
     <main
       className={shell}
       data-variant={variant}
       data-category={category || "generic"}
-      data-hero={heroOverlay}
     >
       <SiteNav tone={light ? "light" : "dark"} market={market} />
 
@@ -220,7 +209,7 @@ export default function MarketLanding({
               {cat ? ` · ${cat.label}` : ""}
               {" · "}Philippines talent
             </p>
-            <h1 className={h1Class}>{h1}</h1>
+            <h1 className="anim-rise">{h1}</h1>
             <p className={`${shell}-lead anim-rise-d1`}>{sub}</p>
 
             <ul className={`${shell}-ticks anim-rise-d1`}>
@@ -280,66 +269,13 @@ export default function MarketLanding({
             </div>
           </div>
 
-          <figure
-            className={`va-card ${shell}-va anim-rise-d1${
-              showOverlay ? ` va-card-hero-${heroOverlay}` : ""
-            }`}
-          >
+          <figure className={`va-card ${shell}-va anim-rise-d1`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={heroSrc} alt={heroAlt} />
-            {!showOverlay ? (
-              <span className="va-card-tag">
-                <i />
-                {cat ? cat.shortLabel : "Dedicated hire"}
-              </span>
-            ) : null}
-            {showOverlay ? (
-              <div
-                className={`va-hero-badge-stack va-hero-badge-stack-${heroOverlay}`}
-              >
-                {heroOverlay === "pill" ? (
-                  <div
-                    className="va-hero-badge va-hero-badge-pill"
-                    aria-label="Dedicated full-time, monthly"
-                  >
-                    <strong>Dedicated · Full-time</strong>
-                    <span>Monthly placement</span>
-                  </div>
-                ) : (
-                  <div
-                    className="va-hero-badge va-hero-badge-circle"
-                    aria-label="Dedicated full-time, monthly"
-                  >
-                    <span className="va-hero-badge-glow" aria-hidden />
-                    <span className="va-hero-badge-ring" aria-hidden />
-                    <span className="va-hero-badge-core">
-                      <em>Dedicated</em>
-                      <strong>Full-time</strong>
-                      <i aria-hidden />
-                      <span>Monthly</span>
-                    </span>
-                  </div>
-                )}
-                {secondaryBadge.kind === "rate" ? (
-                  <div
-                    className="va-hero-badge va-hero-badge-rate"
-                    aria-label={secondaryBadge.rate.aria}
-                  >
-                    <em>{secondaryBadge.rate.prefix}</em>
-                    <strong>{secondaryBadge.rate.amount}</strong>
-                    <span>{secondaryBadge.rate.unit}</span>
-                  </div>
-                ) : (
-                  <div
-                    className="va-hero-badge va-hero-badge-ph"
-                    aria-label={secondaryBadge.aria}
-                  >
-                    <strong>{secondaryBadge.label}</strong>
-                    <span>{secondaryBadge.sub}</span>
-                  </div>
-                )}
-              </div>
-            ) : null}
+            <span className="va-card-tag">
+              <i />
+              {cat ? cat.shortLabel : "Dedicated hire"}
+            </span>
             <figcaption>
               <b>{cat ? `${cat.label}` : "Matched to your role"}</b>
               <span>
