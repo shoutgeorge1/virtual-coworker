@@ -157,7 +157,13 @@ export default function PHHome() {
 
       <footer className="ph-footer">
         <span>{t.foot}</span>
-        <Link href="/us">US employer page →</Link>
+        <span>
+          <Link href="/us">US employers</Link>
+          {" · "}
+          <Link href="/privacy">Privacy</Link>
+          {" · "}
+          <Link href="/terms">Terms</Link>
+        </span>
       </footer>
     </main>
   );

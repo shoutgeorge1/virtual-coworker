@@ -45,9 +45,9 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: "/ph",
     headline: "Hire dedicated Philippines staff for your US business.",
-    prop: "Virtual Coworker recruits, vets, and manages offshore teammates so you can hire with a clear employer path — not a freelance marketplace.",
+    prop: "Virtual Coworker is a staffing partner for US employers — we recruit and screen Philippines talent, you interview and choose, then we support the hire with payroll and account management.",
     staffingExplain:
-      "You tell us the role. We shortlist screened talent, you interview, and we handle payroll and account management once you hire.",
+      "Brief the seat you need filled. Get a shortlist of screened candidates. Interview on your terms. Hire with employment ops handled — so you stay the client, not a gig-platform customer.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",
@@ -81,9 +81,9 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: "/ph",
     headline: "Hire dedicated Philippines staff for your Australian business.",
-    prop: "Virtual Coworker is a staffing partner for Australian employers who want vetted offshore teammates with clear ownership — not gig-platform churn.",
+    prop: "Virtual Coworker is a staffing partner for Australian employers who want vetted Philippines teammates with clear ownership — not gig-platform churn.",
     staffingExplain:
-      "You brief the role. We recruit and screen. You choose who to hire. We manage the employment ops so your business stays the client.",
+      "Brief the role. We recruit and screen in the Philippines. You interview and choose. We manage employment ops so your business stays the client.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",
@@ -148,5 +148,5 @@ export const PILOT = {
     "Can Google Search generate qualified US and Australian employer inquiries at an acceptable cost?",
   primaryContact: "Braden",
   gateVariant: "inline",
-  lpVersion: "stage1-v5",
+  lpVersion: "stage1-v7-micro",
 } as const;

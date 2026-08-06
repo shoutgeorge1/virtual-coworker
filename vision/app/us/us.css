@@ -199,10 +199,24 @@
 
 .us-lead {
   margin: 0 0 1.35rem;
-  max-width: 40ch;
+  max-width: 42ch;
   font-size: var(--step-lead);
-  line-height: 1.55;
-  color: #c0cfdd;
+  line-height: 1.62;
+  color: #d4e2ef;
+}
+
+.us-sell-sub {
+  margin: 0.85rem 0 0;
+  max-width: 48ch;
+  font-size: var(--step-body);
+  line-height: 1.6;
+  color: #c2d3e4;
+}
+
+.us-sell-sub a {
+  color: var(--cyan);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .us-ticks {
@@ -216,9 +230,9 @@
 .us-ticks li {
   position: relative;
   padding-left: 1.7rem;
-  font-size: 0.94rem;
-  line-height: 1.45;
-  color: #d4e0ea;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: #e2edf6;
 }
 
 .us-ticks li::before {
@@ -418,19 +432,7 @@
   transform: translateY(-2px);
 }
 
-.us-footer {
-  padding: 1.35rem var(--shell) 2.25rem;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  font-size: 0.83rem;
-  color: var(--mute);
-}
-
-.us-footer a:hover {
-  color: var(--cyan);
-}
+/* Legacy us-footer kept for consult pages; market LPs use SiteFooter */
 
 /* — Consult page — */
 .us-consult {

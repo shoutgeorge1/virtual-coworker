@@ -216,10 +216,25 @@
 
 .au-lead {
   margin: 0 0 1.35rem;
-  max-width: 40ch;
+  max-width: 42ch;
   font-size: var(--step-lead);
-  line-height: 1.55;
-  color: var(--mute);
+  line-height: 1.62;
+  color: #2a4258;
+}
+
+.au-sell-sub {
+  margin: 0.85rem 0 0;
+  max-width: 48ch;
+  font-size: var(--step-body);
+  line-height: 1.6;
+  color: #2c4459;
+}
+
+.au-sell-sub a {
+  color: #0d7a76;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .au-ticks {
@@ -233,9 +248,9 @@
 .au-ticks li {
   position: relative;
   padding-left: 1.7rem;
-  font-size: 0.94rem;
-  line-height: 1.45;
-  color: #2c4459;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: #1a3044;
 }
 
 .au-ticks li::before {
@@ -468,20 +483,7 @@
     0 10px 22px rgba(23, 51, 79, 0.1);
 }
 
-.au-footer {
-  padding: 1.35rem var(--shell) 2.25rem;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  font-size: 0.83rem;
-  color: var(--mute);
-  background: var(--mist);
-}
-
-.au-footer a:hover {
-  color: var(--ocean);
-}
+/* Legacy au-footer kept for consult pages; market LPs use SiteFooter */
 
 /* — Consult page — */
 .au-consult {

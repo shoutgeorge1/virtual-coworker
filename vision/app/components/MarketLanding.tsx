@@ -1,6 +1,9 @@
 import Link from "next/link";
 import LeadGate, { type GateCopy } from "./LeadGate";
 import StickyCta from "./StickyCta";
+import SiteNav from "./SiteNav";
+import SiteFooter from "./SiteFooter";
+import TrustQuotes from "./TrustQuotes";
 import {
   MARKETS,
   resolveCareersUrl,
@@ -12,6 +15,7 @@ import {
   type AbVariant,
   type CategorySlug,
 } from "../../config/categories";
+import { SITE } from "../../config/site";
 
 export default function MarketLanding({
   market,
@@ -35,8 +39,9 @@ export default function MarketLanding({
   const heroAlt = v?.heroAlt || "Virtual Coworker team member at a desk";
   const benefits = cat?.benefits || [
     "Staffing partner — not a freelance marketplace",
+    "Philippines-based talent matched to your role brief",
     "You interview and choose who to hire",
-    "Clear employer path from inquiry to placement ops",
+    "Payroll + account management after you hire",
   ];
   const faq = cat?.faq || [
     {
@@ -48,6 +53,10 @@ export default function MarketLanding({
       a: "No. Submit is an employer inquiry. Job order and placement come later if you proceed.",
     },
     {
+      q: "Why Philippines staff?",
+      a: "English-proficient professionals who work your hours. We recruit and screen; you interview and decide.",
+    },
+    {
       q: "Does a phone click equal a qualified call?",
       a: "No. Phone CTA click is tracked separately until CallRail + human qualification exist.",
     },
@@ -55,6 +64,7 @@ export default function MarketLanding({
 
   const showPhone = phone.configured && Boolean(phone.href);
   const shell = market === "us" ? "us" : "au";
+  const light = market === "au";
 
   const gate: GateCopy = {
     eyebrow: "Employers only · about 60 seconds",
@@ -96,31 +106,7 @@ export default function MarketLanding({
 
   return (
     <main className={shell} data-variant={variant} data-category={category || "generic"}>
-      <nav className={`${shell}-nav`}>
-        <Link href={`/${market}`} className={`${shell}-brand`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/logo-vc.png"
-            alt="Virtual Coworker"
-            className={market === "us" ? "logo-img logo-img-on-dark" : "logo-img"}
-          />
-        </Link>
-        <div className={`${shell}-nav-right`}>
-          {showPhone ? (
-            <a
-              href={phone.href!}
-              className={`${shell}-navcall`}
-              data-track="phone_cta_clicked"
-            >
-              <span aria-hidden>☎</span> {phone.display}
-            </a>
-          ) : (
-            <span className={`${shell}-nav-link`} style={{ opacity: 0.75 }}>
-              {market === "au" ? "Australia · Form primary" : cfg.label}
-            </span>
-          )}
-        </div>
-      </nav>
+      <SiteNav tone={light ? "light" : "dark"} market={market} />
 
       <section className={`${shell}-hero`}>
         <div className={market === "us" ? "us-hero-bg" : "au-hero-veil"} aria-hidden />
@@ -130,6 +116,7 @@ export default function MarketLanding({
             <p className={`${shell}-kicker anim-rise`}>
               {cfg.label} · Employers
               {cat ? ` · ${cat.label}` : ""}
+              {" · "}Philippines talent
             </p>
             <h1 className="anim-rise">{h1}</h1>
             <p className={`${shell}-lead anim-rise-d1`}>{sub}</p>
@@ -145,7 +132,7 @@ export default function MarketLanding({
             </p>
 
             <div
-              className={`trust-row anim-rise-d2${market === "au" ? " trust-row-light" : ""}`}
+              className={`trust-row anim-rise-d2${light ? " trust-row-light" : ""}`}
             >
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -160,7 +147,7 @@ export default function MarketLanding({
               </span>
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/brand/badge-google-5star.webp" alt="Google reviews badge" />
+                <img src="/brand/badge-google-5star.webp" alt="Google 5-Star Reviews badge" />
                 <span>
                   <b>Google</b>
                   <span>Reviews badge</span>
@@ -181,6 +168,13 @@ export default function MarketLanding({
                   <span>Business Council badge</span>
                 </span>
               </span>
+              <span className="trust-chip trust-chip-stat">
+                <em>PH</em>
+                <span>
+                  <b>Philippines</b>
+                  <span>Dedicated hires</span>
+                </span>
+              </span>
             </div>
           </div>
 
@@ -194,7 +188,7 @@ export default function MarketLanding({
             <figcaption>
               <b>{cat ? `${cat.label} path` : "Matched to your role"}</b>
               <span>
-                Employer inquiry · {market === "us" ? "US business hours" : "AU business hours"}
+                Employer inquiry · {market === "us" ? "US business hours" : "AU business hours"} · Philippines talent
               </span>
             </figcaption>
           </figure>
@@ -216,25 +210,29 @@ export default function MarketLanding({
               How staffing works here
             </p>
             <h2>
-              One primary path: tell us the role, interview shortlisted talent, hire with support.
+              One clear path: brief the role, interview shortlisted Philippines talent, hire with support.
             </h2>
+            <p className={`${shell}-sell-sub`}>
+              Built for employers who want ownership of the hire — not gig-platform churn.{" "}
+              <Link href="/how-it-works">See the full process →</Link>
+            </p>
           </div>
-          <div className="sell-grid">
+          <div className={`sell-grid sell-grid-3${light ? " sell-grid-light" : ""}`}>
             {[
               {
                 k: "Recruit",
                 t: "We source and screen",
-                d: "Role brief in → shortlist of candidates aligned to your workflow.",
+                d: "You send a role brief. Our Philippines recruitment team sources and screens candidates aligned to your tools and workflow — not a resume dump.",
               },
               {
                 k: "Choose",
                 t: "You interview",
-                d: "You decide who joins your business. No mystery matching.",
+                d: "You meet shortlisted talent on video, ask what matters to your business, and decide who joins. No mystery matching.",
               },
               {
                 k: "Operate",
                 t: "We support the hire",
-                d: "Account management and employment ops so you stay focused on the work.",
+                d: "Once you hire, we handle employment ops and account management so you stay focused on the work — and remain the client.",
               },
             ].map((b) => (
               <div className="sell-card" key={b.k}>
@@ -247,15 +245,17 @@ export default function MarketLanding({
         </div>
       </section>
 
+      <TrustQuotes light={light} />
+
       <section className={`${shell}-sell`} style={{ paddingTop: 0 }}>
         <div className={`${shell}-sell-inner`}>
           <div className={`${shell}-sell-head`}>
             <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>FAQ</p>
             <h2>Straight answers before you inquire.</h2>
           </div>
-          <div className="sell-grid">
+          <div className={`sell-grid${light ? " sell-grid-light" : ""}`}>
             {faq.map((item) => (
-              <div className="sell-card" key={item.q}>
+              <div className="sell-card sell-card-faq" key={item.q}>
                 <strong>{item.q}</strong>
                 <p>{item.a}</p>
               </div>
@@ -278,13 +278,15 @@ export default function MarketLanding({
         </div>
       </section>
 
-      <footer className={`${shell}-footer`}>
-        <span>
-          {cfg.label} employer paid LP · Virtual Coworker
-          {cat ? ` · ${cat.label}` : ""}
-        </span>
-        <Link href="/privacy">Privacy</Link>
-      </footer>
+      <SiteFooter
+        tone={light ? "light" : "dark"}
+        market={market}
+        categoryLabel={cat?.label}
+      />
+
+      <p className="sr-only">
+        Legal: {SITE.copyright}. Addresses published on virtualcoworker.com/contact/.
+      </p>
 
       <StickyCta
         href="#gate"
