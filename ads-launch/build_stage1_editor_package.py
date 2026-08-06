@@ -5,6 +5,13 @@ v6 (2026-08-05): George-approved architecture — Brand deferred.
   VC_{US|AU}_S_CORE   (~60%) high-intent VA / hire / PH-offshore
   VC_{US|AU}_S_ROLES  (~40%) Digital · Social · Admin · Controlled roles
 
+OPERATING RULE (locked): Old account = historical archive.
+  New VC_* = isolated clean system. This builder emits ONLY:
+  - new Paused VC_* campaigns (never PM_*)
+  - campaign-level negatives from the curated NEGATIVES list below
+  It does NOT pull, attach, or reference account shared / PM_* mega
+  negative lists (some 3000+ terms). Do not add shared-list rows here.
+
 RSA: 3 unique full RSAs (15H/4D) per main AG — hire-intent / role-outcome or
 PH-offshore / proof-speed-of-staffing angles from ST evidence. City-test AGs
 stay 1 RSA. Exact+Phrase only. No Ads API. All Paused.
@@ -159,9 +166,13 @@ FIELDS = [
     "Comment",
 ]
 
-# Campaign-level Broad negatives — curated from strategy + real ~2y ST waste.
+# Campaign-level Broad negatives — curated Stage 1 set only (tight).
+# Applied per VC_* campaign as "Campaign negative keyword" rows.
+# NEVER inherit account shared / PM_* mega lists into this package.
 # Never bare hire/hiring. Do NOT blanket-neg "how to" (blocks converting
 # "how to hire a virtual assistant"); use specific DIY how-tos instead.
+# Soft cap: keep this curated, not a 3k dump. QA fails if unique > MAX.
+MAX_UNIQUE_NEGATIVES = 220
 NEGATIVES = [
     # Job seeker (ST: VA jobs $723, salary $270+, AU jobs $426, PH salary $231)
     "job",
@@ -3099,7 +3110,10 @@ def append_negatives_assets(
                 "Keyword": neg,
                 "Criterion Type": "Broad",
                 "Negative": "True",
-                "Comment": "v6 curated + ST waste; repeated per campaign (Editor requirement)",
+                "Comment": (
+                    "VC-only curated Stage1 neg; NOT account shared / PM_* mega list; "
+                    "repeated per campaign (Editor requirement)"
+                ),
             }
         )
         rows.append(r)
@@ -4008,6 +4022,40 @@ def qa(rows: list[dict[str, str]]) -> None:
     if "hire" in negs or "hiring" in negs:
         raise SystemExit("hire/hiring must not be campaign negatives")
 
+    # Isolation lock: no PM_* entities, no shared-list attach rows, tight negs only.
+    forbidden_row_types = {
+        "Campaign negative keyword list",
+        "Negative keyword list",
+        "Shared set",
+        "Campaign shared set",
+        "Audience",
+        "Campaign audience",
+        "Ad group audience",
+    }
+    for r in rows:
+        if r["Row Type"] in forbidden_row_types:
+            raise SystemExit(
+                f"Isolation lock: forbidden Row Type in package: {r['Row Type']}"
+            )
+        camp = r.get("Campaign") or ""
+        if camp.startswith("PM_"):
+            raise SystemExit(f"Isolation lock: PM_* campaign leaked into package: {camp}")
+        if not camp.startswith("VC_") and r["Row Type"] not in ("",):
+            # Every entity row must belong to a VC_* campaign
+            if r["Row Type"] and camp:
+                raise SystemExit(
+                    f"Isolation lock: non-VC campaign in package: {camp} ({r['Row Type']})"
+                )
+    if len(negs) > MAX_UNIQUE_NEGATIVES:
+        raise SystemExit(
+            f"Isolation lock: unique negatives {len(negs)} > cap {MAX_UNIQUE_NEGATIVES} "
+            "(do not dump account mega lists into Stage 1)"
+        )
+    if len(NEGATIVES) > MAX_UNIQUE_NEGATIVES:
+        raise SystemExit(
+            f"NEGATIVES source list too large: {len(NEGATIVES)} > {MAX_UNIQUE_NEGATIVES}"
+        )
+
     for r in rows:
         if r["Row Type"] == "Callout" and not r["Callout text"]:
             raise SystemExit("Empty callout")
@@ -4069,12 +4117,27 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
     negs = [r for r in rows if r["Row Type"] == "Campaign negative keyword"]
     us_rows = [r for r in rows if r["Account"] == ACCOUNT_IDS["US"]]
     au_rows = [r for r in rows if r["Account"] == ACCOUNT_IDS["AU"]]
+    unique_negs = len({r["Keyword"].lower() for r in negs})
     lines = [
         "# Editor preflight report",
         "",
         f"- Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
         f"- LP version (suffix): `{LP_VERSION}` (unchanged)",
         f"- Package hygiene: Editor ValueTrack + campaign CPC cap + US/AU split",
+        "",
+        "## Operating rule (locked)",
+        "",
+        "**Old account = historical archive. New `VC_*` = isolated clean system.**",
+        "",
+        "- Leave old `PM_*` campaigns, shared mega negative lists, old Zoho/Zapier "
+        "conversion actions, and historical reporting alone.",
+        "- This package attaches **only** curated campaign-level negatives "
+        f"(~{unique_negs} unique, cap {MAX_UNIQUE_NEGATIVES}) — **not** account shared / "
+        "`PM_*` 3000+ dumps.",
+        "- Do **not** attach account shared negative lists to `VC_*` after Import/Post.",
+        "- Do **not** use audiences to restrict targeting for initial Search launch "
+        "(Observation later; ignore customer-lifecycle warnings until Zoho/first-party data).",
+        "- Import ≠ live. Every campaign stays **Paused**. No Enable from this package.",
         "",
         "## Verdict",
         "",
@@ -4098,8 +4161,9 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         f"- Positive keywords: {len(pos)}",
         f"- RSAs: {kinds.get('Ad', 0)}",
         f"- Active campaign negatives: {len(negs)} rows "
-        f"({len({r['Keyword'].lower() for r in negs})} unique × 4 campaigns)",
+        f"({unique_negs} unique × 4 campaigns) — VC-only curated, not shared mega lists",
         f"- Commercial holdouts (not imported): {len(NEGATIVE_REVIEW_HOLDOUT)}",
+        f"- Shared-list / audience / PM_* rows: **none** (isolation QA)",
         "",
         "## Budgets + bid caps (campaign only)",
         "",
@@ -4112,11 +4176,48 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         )
     lines += [
         "",
-        "## Tracking",
+        "## Tracking (UTMs)",
         "",
         f"- Tracking template (campaign): `{TRACK}`",
         f"- Final URL suffix (campaign): `{SUFFIX}`",
         "- No `{_campaign}` / `{_adgroup}` custom params",
+        "",
+        "## Conversion actions + campaign goals (after Post — Ads UI)",
+        "",
+        "Editor CSV does **not** fully express conversion goals. After Post, George sets "
+        "these in Google Ads UI. Do **not** replace or delete old Zoho/Zapier conversion "
+        "actions — leave them for historical reporting.",
+        "",
+        "### New conversion actions (via **new** per-market GTM — plan, not live yet)",
+        "",
+        "| Action (create new) | Fires when | Primary for Stage 1? |",
+        "|---------------------|------------|----------------------|",
+        "| Employer inquiry delivered | `employer_inquiry_submitted` after durable delivery "
+        "(not log-only) | **Yes** |",
+        "| Qualified phone call (~60s) | Call tracking / CallRail when wired "
+        "(phone click alone ≠ qualified) | **Yes** (when ready) |",
+        "",
+        "Wire tags in the **new** US/AU GTM containers → new Ads conversion actions. "
+        "Keep `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false` until mapping is tested. "
+        "Details: `10-tracking-event-spec.md` · `DECISIONS.md`.",
+        "",
+        "### Campaign-specific goals (required for each `VC_*`)",
+        "",
+        "1. Open each `VC_US_*` / `VC_AU_*` campaign → **Settings → Goals** "
+        "(or Goals on the campaign).",
+        "2. Choose **campaign-specific** goals — do **not** use the account-default "
+        "goal basket that includes old Zoho/Zapier micros.",
+        "3. Include **only** the new actions above (inquiry delivered + phone ~60s when ready).",
+        "4. Leave Maximize Clicks for now — do **not** switch to Max Conversions until "
+        "those new actions are verified.",
+        "",
+        "Launch Control checklist encodes the same steps in plain English.",
+        "",
+        "## Audiences",
+        "",
+        "- **Launch:** no audience targeting restrictions on `VC_*`.",
+        "- **Later:** Observation-only audiences OK once first-party/Zoho data exists.",
+        "- Ignore customer-lifecycle / audience warnings until then — not launch-critical.",
         "",
         "## Negative holdouts (not in CSV)",
         "",
@@ -4129,13 +4230,36 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "",
         "## Operator path",
         "",
-        "1. Download fresh USA + AU accounts into Editor.",
-        "2. Import **US split** into USA → Check changes → leave Paused.",
-        "3. Import **AU split** into AU → Check changes → leave Paused.",
-        "4. Post only after review (still Paused). Enable is separate.",
+        "1. Leave old account machinery alone (no dig/delete/rewrite/pause binge tonight).",
+        "2. Download fresh USA + AU accounts into Editor (read-only sync).",
+        "3. Import **US split** into USA → Check changes → leave **Paused**.",
+        "4. Import **AU split** into AU → Check changes → leave **Paused**.",
+        "5. Confirm `VC_*` negatives are campaign-level curated only — "
+        "**do not** attach shared mega lists.",
+        "6. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
+        "7. Enable is a separate explicit decision — never from Import/Post alone.",
         "",
     ]
     PREFLIGHT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+DOC_MIRRORS = (
+    "EDITOR-PREFLIGHT-REPORT.md",
+    "DECISIONS.md",
+    "PHASED-ACTIVATION.md",
+    "10-tracking-event-spec.md",
+    "07-phased-activation-recommendation.md",
+    "TONIGHT-HANDOFF.md",
+)
+
+
+def mirror_docs() -> None:
+    dest_root = ROOT / "xray" / "docs" / "ads-launch"
+    dest_root.mkdir(parents=True, exist_ok=True)
+    for name in DOC_MIRRORS:
+        src = ROOT / "ads-launch" / name
+        if src.exists():
+            shutil.copy2(src, dest_root / name)
 
 
 def main() -> None:
@@ -4148,10 +4272,13 @@ def main() -> None:
     write_preflight(rows)
     MIRROR.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(OUT, MIRROR)
+    shutil.copy2(OUT_US, MIRROR.parent / OUT_US.name)
+    shutil.copy2(OUT_AU, MIRROR.parent / OUT_AU.name)
+    mirror_docs()
     print(f"Wrote {OUT} ({len(rows)} rows)")
     print(f"Wrote {OUT_US} / {OUT_AU} / {OUT_MULTI}")
     print(f"Wrote {PREFLIGHT}")
-    print(f"Mirrored {MIRROR}")
+    print(f"Mirrored CSV + docs → {MIRROR.parent}")
 
 
 if __name__ == "__main__":

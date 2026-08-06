@@ -2,6 +2,21 @@
 
 George asked for decisive defaults so QA / deploy can proceed. These are **operator defaults**, not “launch ready” and not Ads enable approval. Campaigns stay **Paused**. Change anytime.
 
+## Operating rule (locked — judgment over busywork)
+
+**Old account = historical archive. New campaigns = isolated clean system.**
+
+| Do | Do not |
+|----|--------|
+| Import / review / Post **new paused `VC_*` only** | Dig / delete / rewrite / pause binge on old account-wide machinery tonight |
+| Attach **tight curated** campaign negatives from the Stage 1 builder (~175 terms) | Inherit account shared / `PM_*` mega negative lists (3000+ dumps) onto `VC_*` |
+| Plan **new** Ads conversion actions via **new** per-market GTM | Touch / replace / delete old Zoho/Zapier conversion actions or historical reporting |
+| Set **campaign-specific goals** on each `VC_*` after Post (Ads UI) | Let `VC_*` optimize toward account-default junk conversion baskets |
+| Keep audiences off for initial Search launch (Observation later) | Use audiences to restrict targeting at launch |
+| Keep every `VC_*` **Paused** — Import ≠ live | Enable / unpause from CSV or Import/Post alone |
+
+Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-REPORT.md` for Ads UI steps.
+
 | Decision | Locked value | Notes |
 |----------|--------------|-------|
 | **Architecture** | **2 campaigns × 2 markets** | `VC_{US\|AU}_S_CORE` (~60%) + `VC_{US\|AU}_S_ROLES` (~40%). Brand **deferred**. |
@@ -13,7 +28,11 @@ George asked for decisive defaults so QA / deploy can proceed. These are **opera
 | **Careers URL** | `/ph` (PH microsite) | Internal job-seeker exit. **Never** WordPress. Env WP hosts rejected. |
 | **Lead delivery** | Real channel required for paid | `ALLOW_LOG_ONLY_LEADS=true` = **explicit blocked mode** — QA logs only, `conversion_eligible=false`, not paid-ready. Zoho not live. |
 | **Exit-intent** | Off unless `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true` | Frequency-capped once/session. No fake live chat. |
-| **Ads conversions** | `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false` | Observe-only; no Ads conversion firing. |
+| **Ads conversions (firing)** | `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false` | Observe-only until new GTM → new Ads actions tested. |
+| **New conversion actions** | **Plan via new GTM** — do not replace old | Create **new** actions: (1) employer inquiry **delivered** (2) phone ~60s / qualified call when CallRail ready. Leave old Zoho/Zapier actions untouched for archive/reporting. |
+| **Campaign goals** | **Campaign-specific on each `VC_*`** | After Post in Ads UI: Goals → campaign-specific → only the new actions. Editor CSV cannot fully express this. |
+| **Negatives** | **VC-only curated campaign negs** | Builder emits campaign-level Broad rows from `NEGATIVES` only. Soft cap ~220 unique. Never attach account shared mega lists to `VC_*`. |
+| **Audiences** | **Off at launch** | Observation later; ignore customer-lifecycle warnings until Zoho/first-party data. Not launch-critical. |
 | **Pilot indexing** | `NEXT_PUBLIC_PILOT_NOINDEX=true` | Keep pilot out of organic index. |
 | **LP version** | `stage1-v7` | Core→market-home routing stamp. |
 | **US daily budgets** | Core **$75** · Roles **$50** | USD. ≈ **$125/day** ≈ **$3.8k/mo** — placeholders inside a **$10–20k/account** monthly budget story (room to scale). George-decidable. |
