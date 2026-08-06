@@ -2175,39 +2175,44 @@ a.gate-call:hover {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  /* Left copy scrim + light bottom fade — map/ocean stays open on the right */
   background:
     linear-gradient(
       105deg,
       rgba(12, 24, 38, 0.78) 0%,
-      rgba(12, 24, 38, 0.45) 32%,
-      rgba(12, 24, 38, 0.16) 58%,
-      rgba(12, 24, 38, 0.3) 100%
+      rgba(12, 24, 38, 0.42) 30%,
+      rgba(12, 24, 38, 0.1) 55%,
+      transparent 78%
     ),
     linear-gradient(
       to bottom,
-      rgba(12, 24, 38, 0.24) 0%,
+      rgba(12, 24, 38, 0.18) 0%,
       transparent 30%,
-      transparent 58%,
-      rgba(12, 24, 38, 0.64) 100%
+      transparent 62%,
+      rgba(12, 24, 38, 0.5) 100%
     );
 }
 
-/* AU: mirror veil so copy side still reads cleanly */
+/*
+ * AU: copy stays left (same as US). Do NOT mirror the veil —
+ * that washed out Philippines / ocean on the right. Keep a tight
+ * left scrim for text only; right side stays crisp and colorful.
+ */
 .micro-hero--au .micro-hero-veil {
   background:
     linear-gradient(
-      255deg,
-      rgba(12, 24, 38, 0.76) 0%,
-      rgba(12, 24, 38, 0.42) 34%,
-      rgba(12, 24, 38, 0.16) 58%,
-      rgba(12, 24, 38, 0.32) 100%
+      95deg,
+      rgba(12, 24, 38, 0.74) 0%,
+      rgba(12, 24, 38, 0.4) 26%,
+      rgba(12, 24, 38, 0.1) 46%,
+      transparent 64%
     ),
     linear-gradient(
       to bottom,
-      rgba(12, 24, 38, 0.26) 0%,
-      transparent 30%,
-      transparent 58%,
-      rgba(12, 24, 38, 0.66) 100%
+      rgba(12, 24, 38, 0.16) 0%,
+      transparent 28%,
+      transparent 64%,
+      rgba(12, 24, 38, 0.42) 100%
     );
 }
 
@@ -2269,21 +2274,38 @@ a.gate-call:hover {
     object-position: 66% 50%;
   }
 
-  .micro-hero-veil,
-  .micro-hero--au .micro-hero-veil {
+  .micro-hero-veil {
     background:
       linear-gradient(
         180deg,
-        rgba(12, 24, 38, 0.55) 0%,
-        rgba(12, 24, 38, 0.32) 36%,
-        rgba(12, 24, 38, 0.55) 68%,
-        rgba(12, 24, 38, 0.78) 100%
+        rgba(12, 24, 38, 0.48) 0%,
+        rgba(12, 24, 38, 0.22) 36%,
+        rgba(12, 24, 38, 0.38) 70%,
+        rgba(12, 24, 38, 0.62) 100%
       ),
       linear-gradient(
         105deg,
         rgba(12, 24, 38, 0.62) 0%,
-        rgba(12, 24, 38, 0.3) 55%,
-        rgba(12, 24, 38, 0.45) 100%
+        rgba(12, 24, 38, 0.22) 50%,
+        transparent 78%
+      );
+  }
+
+  /* AU mobile: left copy scrim only — keep PH crisp on the right */
+  .micro-hero--au .micro-hero-veil {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(12, 24, 38, 0.42) 0%,
+        rgba(12, 24, 38, 0.18) 34%,
+        rgba(12, 24, 38, 0.28) 70%,
+        rgba(12, 24, 38, 0.52) 100%
+      ),
+      linear-gradient(
+        95deg,
+        rgba(12, 24, 38, 0.66) 0%,
+        rgba(12, 24, 38, 0.28) 42%,
+        transparent 72%
       );
   }
 }
