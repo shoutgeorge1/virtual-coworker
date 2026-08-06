@@ -451,7 +451,7 @@ button {
 
 .va-hero-badge-stack-pill .va-hero-badge-rate,
 .va-hero-badge-stack-pill .va-hero-badge-ph {
-  top: 5.6rem;
+  top: 6.15rem;
   bottom: auto;
   left: 0.7rem;
   border-radius: 999px;
@@ -620,7 +620,7 @@ button {
 
   .va-hero-badge-stack-pill .va-hero-badge-rate,
   .va-hero-badge-stack-pill .va-hero-badge-ph {
-    top: 5.35rem;
+    top: 5.9rem;
     left: 0.55rem;
   }
 }
