@@ -315,6 +315,7 @@ export default function MarketLanding({
                     <span className="va-hero-badge-core">
                       <em>Dedicated</em>
                       <strong>Full-time</strong>
+                      <i aria-hidden />
                       <span>Monthly</span>
                     </span>
                   </div>
@@ -324,6 +325,7 @@ export default function MarketLanding({
                     className="va-hero-badge va-hero-badge-rate"
                     aria-label={secondaryBadge.rate.aria}
                   >
+                    <em>{secondaryBadge.rate.prefix}</em>
                     <strong>{secondaryBadge.rate.amount}</strong>
                     <span>{secondaryBadge.rate.unit}</span>
                   </div>

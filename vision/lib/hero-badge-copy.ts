@@ -16,7 +16,9 @@ import type { MarketId } from "../config/markets";
 import type { CategorySlug } from "../config/categories";
 
 export type HeroRateBadge = {
-  /** Short display, e.g. "from $12" */
+  /** Qualifier ahead of the figure — keeps "starting at" honest. */
+  prefix: string;
+  /** The figure on its own so it can carry the big-number treatment, e.g. "$12" */
   amount: string;
   /** Unit line, e.g. "/hr" or "AUD/hr" */
   unit: string;
@@ -75,14 +77,16 @@ export function resolveHeroRateBadge(
   const n = entry.amountUsdOrAud;
   if (market === "au") {
     return {
-      amount: `from $${n}`,
+      prefix: "from",
+      amount: `$${n}`,
       unit: "AUD/hr",
       aria: `Starting from ${n} Australian dollars per hour for ${entry.roleLabel}`,
       roleLabel: entry.roleLabel,
     };
   }
   return {
-    amount: `from $${n}`,
+    prefix: "from",
+    amount: `$${n}`,
     unit: "/hr",
     aria: `Starting from ${n} dollars per hour for ${entry.roleLabel}`,
     roleLabel: entry.roleLabel,
