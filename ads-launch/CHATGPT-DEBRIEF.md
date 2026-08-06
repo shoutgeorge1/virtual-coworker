@@ -6,7 +6,7 @@
 |-------|-------|
 | Generated | 2026-08-06 (Zoho platform-discovery deferred addendum) |
 | Branch | `vision-demo` |
-| Commit SHA | _(set after commit)_ |
+| Commit SHA | `e2d36e76768eea6a111e1eddbdc7e94cb5b04ce3` |
 | Prior isolation SHA | `7b703c5` · Editor P0 `9cd37d0` |
 | Repo | `/Users/george/Developer/virtual-coworker` |
 | Package | `lp_version=stage1-v7` · Editor hygiene + isolation + Phase 1 manifests |
