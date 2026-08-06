@@ -9,7 +9,7 @@
 ## 1. Branch and final commit
 
 - Branch: `vision-demo`
-- Final commit: *(filled after push — see `git log -1 --oneline`)*
+- Final commit: `26bc35a` — Stabilize Stage 1 v7 for review: fix builder Python 3.9, Launch Control honesty, tonight handoff.
 
 ## 2. Files changed in this pass
 
