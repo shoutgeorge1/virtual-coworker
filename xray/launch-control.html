@@ -572,8 +572,9 @@
         </div>
         <div class="panel-bd">
           <p class="muted" style="margin:0 0 0.85rem;font-size:0.88rem">
-            Three separate sites: US employer · AU employer · PH talent. Shared legal/hub pages hang off the root.
-            Root <code>/</code> redirects to <code>/us</code>.
+            Full tree — every real route. Same list on <a href="landing-pages.html">LP previews</a>.
+            Root <a href="https://vision-three-alpha.vercel.app/" target="_blank" rel="noopener"><code>/</code></a> → <code>/us</code>.
+            A/B: <code>?variant=a|b</code> on hubs/categories (not separate paths). Hire = hub <code>#gate</code>.
           </p>
           <div class="sitemap">
             <div class="sitemap-branch">
@@ -582,7 +583,7 @@
               <ul class="sitemap-tree">
                 <li><a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> <span class="dim">hub</span>
                   <ul>
-                    <li><a href="https://vision-three-alpha.vercel.app/us/consult" target="_blank" rel="noopener">/us/consult</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/consult" target="_blank" rel="noopener">/us/consult</a> <span class="dim">→ /us#gate</span></li>
                     <li><a href="https://vision-three-alpha.vercel.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/us/social-media" target="_blank" rel="noopener">/us/social-media</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/us/accounting" target="_blank" rel="noopener">/us/accounting</a></li>
@@ -590,6 +591,7 @@
                     <li><a href="https://vision-three-alpha.vercel.app/us/administrative-support" target="_blank" rel="noopener">/us/administrative-support</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/us/customer-service" target="_blank" rel="noopener">/us/customer-service</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/us/hr" target="_blank" rel="noopener">/us/hr</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/us/human-resources" target="_blank" rel="noopener">/us/human-resources</a> <span class="dim">alias → /hr</span></li>
                     <li><a href="https://vision-three-alpha.vercel.app/us/recruitment" target="_blank" rel="noopener">/us/recruitment</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/us/sales" target="_blank" rel="noopener">/us/sales</a></li>
                   </ul>
@@ -603,7 +605,7 @@
               <ul class="sitemap-tree">
                 <li><a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> <span class="dim">hub</span>
                   <ul>
-                    <li><a href="https://vision-three-alpha.vercel.app/au/consult" target="_blank" rel="noopener">/au/consult</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/consult" target="_blank" rel="noopener">/au/consult</a> <span class="dim">→ /au#gate</span></li>
                     <li><a href="https://vision-three-alpha.vercel.app/au/digital-marketing" target="_blank" rel="noopener">/au/digital-marketing</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/au/social-media" target="_blank" rel="noopener">/au/social-media</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/au/accounting" target="_blank" rel="noopener">/au/accounting</a></li>
@@ -611,6 +613,7 @@
                     <li><a href="https://vision-three-alpha.vercel.app/au/administrative-support" target="_blank" rel="noopener">/au/administrative-support</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/au/customer-service" target="_blank" rel="noopener">/au/customer-service</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/au/hr" target="_blank" rel="noopener">/au/hr</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/au/human-resources" target="_blank" rel="noopener">/au/human-resources</a> <span class="dim">alias → /hr</span></li>
                     <li><a href="https://vision-three-alpha.vercel.app/au/recruitment" target="_blank" rel="noopener">/au/recruitment</a></li>
                     <li><a href="https://vision-three-alpha.vercel.app/au/sales" target="_blank" rel="noopener">/au/sales</a></li>
                   </ul>
@@ -632,10 +635,21 @@
 
             <div class="sitemap-branch">
               <h3>Shared hub + legal</h3>
-              <p class="branch-note">Nav from employer sites · market query when linked</p>
+              <p class="branch-note">Root pages · <code>?market=us|au</code> scopes nav</p>
               <ul class="sitemap-tree">
-                <li><a href="https://vision-three-alpha.vercel.app/services" target="_blank" rel="noopener">/services</a></li>
-                <li><a href="https://vision-three-alpha.vercel.app/how-it-works" target="_blank" rel="noopener">/how-it-works</a></li>
+                <li><a href="https://vision-three-alpha.vercel.app/" target="_blank" rel="noopener">/</a> <span class="dim">→ /us</span></li>
+                <li><a href="https://vision-three-alpha.vercel.app/services" target="_blank" rel="noopener">/services</a>
+                  <ul>
+                    <li><a href="https://vision-three-alpha.vercel.app/services?market=us" target="_blank" rel="noopener">/services?market=us</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/services?market=au" target="_blank" rel="noopener">/services?market=au</a></li>
+                  </ul>
+                </li>
+                <li><a href="https://vision-three-alpha.vercel.app/how-it-works" target="_blank" rel="noopener">/how-it-works</a>
+                  <ul>
+                    <li><a href="https://vision-three-alpha.vercel.app/how-it-works?market=us" target="_blank" rel="noopener">/how-it-works?market=us</a></li>
+                    <li><a href="https://vision-three-alpha.vercel.app/how-it-works?market=au" target="_blank" rel="noopener">/how-it-works?market=au</a></li>
+                  </ul>
+                </li>
                 <li><a href="https://vision-three-alpha.vercel.app/privacy" target="_blank" rel="noopener">/privacy</a></li>
                 <li><a href="https://vision-three-alpha.vercel.app/terms" target="_blank" rel="noopener">/terms</a></li>
                 <li><a href="https://vision-three-alpha.vercel.app/thank-you" target="_blank" rel="noopener">/thank-you</a> <span class="dim">post-submit</span></li>
