@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Build Stage 1 Google Ads Editor import — Brand + Core + Role Search.
+"""Build Stage 1 Google Ads Editor import — 2 campaigns × 2 markets (v6).
 
-v5 (2026-08-05): category Final URLs (/us|au/{slug}), Brand + Core VA/offshore,
-single UTM path (Final URL suffix only), employer CTAs (no consult/demo language).
-Retains v4 ST evidence keywords/negatives. Exact+Phrase only. No Ads API. All Paused.
+v6 (2026-08-05): George-approved architecture — Brand deferred.
+  VC_{US|AU}_S_CORE   (~60%) high-intent VA / hire / PH-offshore
+  VC_{US|AU}_S_ROLES  (~40%) Digital · Social · Admin · Controlled roles
+
+Retains v5 category Final URLs, single UTM path, employer CTAs, v4 ST evidence
+keywords/negatives. Exact+Phrase only. No Ads API. All Paused.
 
 Outputs:
   - ads-launch/google-ads-editor-import.csv
@@ -25,16 +28,30 @@ MIRROR = ROOT / "xray" / "docs" / "ads-launch" / "google-ads-editor-import.csv"
 HL_MAX = 30
 DESC_MAX = 90
 PATH_MAX = 15
-LP_VERSION = "stage1-v5"
+LP_VERSION = "stage1-v6"
 
 # George-decidable Stage 1 defaults (see ads-launch/DECISIONS.md).
-# Conservative placeholders so Editor Post is not blocked by [APPROVAL_*] tokens.
-# Change anytime; campaigns ship Paused — not an enable approval.
+# 2-campaign model: Core ~60% / Roles ~40% of Stage 1 daily spend.
+# Placeholders within a $10–20k/account monthly budget story (not enable approval).
+# US $75+$50 = $125/day ≈ $3.8k/mo; AU A$75+A$50 ≈ A$3.8k/mo — room to scale.
 BUDGET_DAILY = {
-    "US": {"brand": "40", "core": "60", "role": "25"},  # USD
-    "AU": {"brand": "40", "core": "40", "role": "20"},  # AUD
+    "US": {"core": "75", "roles": "50"},  # USD
+    "AU": {"core": "75", "roles": "50"},  # AUD
 }
 MAX_CPC = {"US": "8", "AU": "6"}  # USD / AUD
+
+# Roles campaign AG tiers (all under VC_*_S_ROLES).
+PRIMARY_ROLE_KEYS = ("digital_marketing", "social_media")
+# Admin = EA/admin support (generic VA cluster lives in CORE, not here).
+ADMIN_ROLE_KEY = "administration"
+CONTROLLED_ROLE_KEYS = (
+    "accounting",
+    "bookkeeping",
+    "customer_service",
+    "hr",
+    "recruitment",
+    "sales",
+)
 
 # Final URL suffix only — do NOT also put UTMs on Tracking template (double-UTM bug).
 SUFFIX = (
@@ -635,95 +652,8 @@ EXACT_BY_AG: dict[str, dict[str, list[str]]] = {
         ],
     },
     "administration": {
-        # Absorbs former CORE hire_va depth (brand deferred). ST-heavy keepers.
-        "Administration_Hire_PH": [
-            # Core converting ST (employer) — brand/competitors excluded
-            "virtual assistant",
-            "virtual assistants",
-            "hire virtual assistant",
-            "hire a virtual assistant",
-            "virtual assistant hire",
-            "hire a va",
-            "hire va",
-            "virtual assistants for hire",
-            "virtual assistant for hire",
-            "va for hire",
-            "looking for a virtual assistant",
-            "looking for virtual assistant",
-            "how to hire a virtual assistant",
-            "how to hire a virtual assistant philippines",
-            "filipino virtual assistant",
-            "filipino virtual assistants",
-            "filipino va",
-            "filipino vas",
-            "hire filipino virtual assistant",
-            "hire a filipino virtual assistant",
-            "hire filipino virtual assistants",
-            "hire filipino va",
-            "hire a filipino va",
-            "virtual assistant philippines",
-            "philippines virtual assistant",
-            "virtual assistants philippines",
-            "philippine virtual assistant",
-            "virtual assistant in philippines",
-            "virtual assistants in philippines",
-            "virtual assistants in the philippines",
-            "virtual assistant from the philippines",
-            "hire virtual assistant from philippines",
-            "hire philippines virtual assistant",
-            "hire a virtual assistant philippines",
-            "hire virtual assistant philippines",
-            "hire va philippines",
-            "va philippines",
-            "philippines va",
-            "va in philippines",
-            "va from philippines",
-            "virtual assistant services",
-            "va services",
-            "virtual assistant agency",
-            "va agency",
-            "va agency philippines",
-            "virtual assistant agency philippines",
-            "virtual assistant companies",
-            "virtual assistant company philippines",
-            "virtual assistant companies philippines",
-            "virtual assistant services philippines",
-            "outsource virtual assistant philippines",
-            "outsourcing virtual assistant",
-            "offshore virtual assistant",
-            "offshore virtual assistant philippines",
-            "offshore virtual assistants",
-            "offshore va",
-            "overseas virtual assistant",
-            "virtual assistant overseas",
-            "hire offshore virtual assistant",
-            "hire overseas virtual assistant",
-            "hire remote virtual assistant",
-            "virtual assistant for business",
-            "virtual assistant company",
-            "dedicated virtual assistant",
-            "virtual staffing company",
-            "filipino virtual assistant for hire",
-            "hire a va in the philippines",
-            "hire a virtual assistant in the philippines",
-            "hiring virtual assistant philippines",
-            "hire virtual assistant ph",
-            "philippines va company",
-            "remote virtual assistant for business",
-            "virtual assistant hiring philippines",
-            "virtual assistant hiring",
-            "hiring virtual assistant",
-            "virtual admin assistant",
-            "virtual assistance",
-            "virtual assistance services",
-            "virtual assistant providers",
-            "find a virtual assistant",
-            "philippines assistant",
-            "virtual staff philippines",
-            "virtual staff ph",
-            "remote staff philippines",
-            "where to hire virtual assistant philippines",
-        ],
+        # v6: generic VA / hire / PH-offshore cluster lives in VC_*_S_CORE.
+        # ROLES Admin AG = EA / admin support only (category Final URL still admin).
         "Administration_EA_PH": [
             # ST: PH EA / admin assistant / virtual office / personal assistant PH
             "philippines executive assistant",
@@ -1117,24 +1047,7 @@ PHRASE_BY_AG: dict[str, dict[str, list[str]]] = {
         ],
     },
     "administration": {
-        "Administration_Hire_PH": [
-            "hire virtual assistant philippines",
-            "hire filipino virtual assistant",
-            "hire filipino va",
-            "hire a virtual assistant",
-            "offshore virtual assistant",
-            "offshore va",
-            "virtual assistant for business",
-            "hire va philippines",
-            "filipino virtual assistant company",
-            "dedicated virtual assistant philippines",
-            "philippines virtual staffing",
-            "hire remote filipino assistant",
-            "how to hire a virtual assistant",
-            "virtual assistant services philippines",
-            "va agency philippines",
-            "looking for a virtual assistant",
-        ],
+        # v6: Hire_PH Phrase seeds moved to CORE_PHRASE_BY_AG
         "Administration_EA_PH": [
             "hire executive assistant philippines",
             "filipino executive assistant",
@@ -1264,6 +1177,137 @@ CITY_PHRASE_AU = [
     "hire virtual assistant adelaide",
     "hire filipino va canberra",
 ]
+
+# ---------------------------------------------------------------------------
+# CORE campaign keywords — high-intent VA / hire / PH-offshore (ST-heavy).
+# Split Hire vs Offshore to avoid intra-campaign Exact overlap.
+# ---------------------------------------------------------------------------
+
+CORE_EXACT_BY_AG: dict[str, list[str]] = {
+    "Hire_VA_PH": [
+        "virtual assistant",
+        "virtual assistants",
+        "hire virtual assistant",
+        "hire a virtual assistant",
+        "virtual assistant hire",
+        "hire a va",
+        "hire va",
+        "virtual assistants for hire",
+        "virtual assistant for hire",
+        "va for hire",
+        "looking for a virtual assistant",
+        "looking for virtual assistant",
+        "how to hire a virtual assistant",
+        "how to hire a virtual assistant philippines",
+        "hire filipino virtual assistant",
+        "hire a filipino virtual assistant",
+        "hire filipino virtual assistants",
+        "hire filipino va",
+        "hire a filipino va",
+        "hire virtual assistant from philippines",
+        "hire philippines virtual assistant",
+        "hire a virtual assistant philippines",
+        "hire virtual assistant philippines",
+        "hire va philippines",
+        "hire offshore virtual assistant",
+        "hire overseas virtual assistant",
+        "hire remote virtual assistant",
+        "hire a va in the philippines",
+        "hire a virtual assistant in the philippines",
+        "hiring virtual assistant philippines",
+        "hire virtual assistant ph",
+        "virtual assistant hiring philippines",
+        "virtual assistant hiring",
+        "hiring virtual assistant",
+        "filipino virtual assistant for hire",
+        "where to hire virtual assistant philippines",
+        "virtual assistant services",
+        "va services",
+        "virtual assistant agency",
+        "va agency",
+        "virtual assistant company",
+        "virtual assistant companies",
+        "dedicated virtual assistant",
+        "virtual assistant for business",
+        "remote virtual assistant for business",
+        "virtual assistance",
+        "virtual assistance services",
+        "virtual assistant providers",
+        "find a virtual assistant",
+        "virtual staffing company",
+    ],
+    "Offshore_VA_PH": [
+        "filipino virtual assistant",
+        "filipino virtual assistants",
+        "filipino va",
+        "filipino vas",
+        "virtual assistant philippines",
+        "philippines virtual assistant",
+        "virtual assistants philippines",
+        "philippine virtual assistant",
+        "virtual assistant in philippines",
+        "virtual assistants in philippines",
+        "virtual assistants in the philippines",
+        "virtual assistant from the philippines",
+        "va philippines",
+        "philippines va",
+        "va in philippines",
+        "va from philippines",
+        "va agency philippines",
+        "virtual assistant agency philippines",
+        "virtual assistant company philippines",
+        "virtual assistant companies philippines",
+        "virtual assistant services philippines",
+        "outsource virtual assistant philippines",
+        "outsourcing virtual assistant",
+        "offshore virtual assistant",
+        "offshore virtual assistant philippines",
+        "offshore virtual assistants",
+        "offshore va",
+        "overseas virtual assistant",
+        "virtual assistant overseas",
+        "philippines va company",
+        "philippines assistant",
+        "virtual staff philippines",
+        "virtual staff ph",
+        "remote staff philippines",
+        "philippines virtual staffing",
+        "filipino virtual assistant company",
+        "dedicated virtual assistant philippines",
+    ],
+}
+
+CORE_PHRASE_BY_AG: dict[str, list[str]] = {
+    "Hire_VA_PH": [
+        "hire virtual assistant",
+        "hire a virtual assistant",
+        "hire filipino virtual assistant",
+        "hire filipino va",
+        "hire va philippines",
+        "hire virtual assistant philippines",
+        "how to hire a virtual assistant",
+        "looking for a virtual assistant",
+        "virtual assistant for business",
+        "virtual assistant services",
+        "va agency",
+        "hire remote filipino assistant",
+        "dedicated virtual assistant",
+    ],
+    "Offshore_VA_PH": [
+        "offshore virtual assistant",
+        "offshore va",
+        "philippines virtual assistant",
+        "filipino virtual assistant",
+        "virtual assistant philippines",
+        "va philippines",
+        "virtual assistant services philippines",
+        "va agency philippines",
+        "philippines virtual staffing",
+        "filipino virtual assistant company",
+        "dedicated virtual assistant philippines",
+        "outsource virtual assistant philippines",
+    ],
+}
 
 
 def _len_ok(s: str, max_len: int) -> bool:
@@ -1815,66 +1859,8 @@ def _rsa_catalog() -> dict:
         ],
     }
 
-    # ---- administration (Hire VA + EA) ----
+    # ---- administration (EA / admin only — generic VA RSAs live on CORE) ----
     cat["administration"] = {
-        "Administration_Hire_PH": [
-            (
-                "A_staffing",
-                lambda m: H(
-                    "Hire a Virtual Assistant",
-                    "Filipino VA for Business",
-                    "Philippines VA Services",
-                    f"{m['tag']} VA Staffing",
-                    "How to Hire a VA",
-                    "Vetted VA Shortlist",
-                    "You Interview Finalists",
-                    "Offshore VA Partner",
-                    "VA Agency Alternative",
-                    "Employers Hiring Only",
-                    "Virtual Staffing Company",
-                    "Not a Gig Marketplace",
-                    f"Built for {m['sme']}",
-                    "Dedicated Remote VA Seat",
-                    "Tell Us Who You Need",
-                ),
-                lambda m: D(
-                    "Hire Filipino virtual assistants with a clear employer staffing path.",
-                    "We recruit and vet; you interview before we support the placement.",
-                    f"For {m['employers']} searching hire VA / Philippines VA intent.",
-                    "Dedicated VAs for business ops — not freelance task boards.",
-                ),
-                "va",
-                "hire",
-            ),
-            (
-                "B_role",
-                lambda m: H(
-                    "{KeyWord:Hire Filipino VA}",
-                    "Virtual Assistants PH",
-                    "Hire VA Philippines",
-                    "Offshore VA Hire",
-                    "VA Services for SMBs",
-                    "Looking for a VA?",
-                    "Scale Admin Bandwidth",
-                    f"{m['adj']} Teams Hiring",
-                    "Dedicated VA Capacity",
-                    "Partner-Managed VA Hire",
-                    "Interview-Ready Talent",
-                    "Overseas VA Staffing",
-                    "Remote Admin Specialist",
-                    "Philippines Staffing Hire",
-                    "Request Hiring Shortlist",
-                ),
-                lambda m: D(
-                    "Match converting hire-VA searches to vetted Philippines talent.",
-                    "Coverage for inbox, scheduling, documentation, and ops follow-through.",
-                    f"Staffing support shaped for your {m['business']} day-to-day ops.",
-                    f"We {m['specialize']} in employer-intent remote VA hires.",
-                ),
-                "admin",
-                "ph",
-            ),
-        ],
         "Administration_EA_PH": [
             (
                 "A_staffing",
@@ -2479,12 +2465,18 @@ def blank_row() -> dict[str, str]:
     return {k: "" for k in FIELDS}
 
 
-def camp_name(mkt: str, role: str) -> str:
-    return f"VC_{mkt}_S_ROLE_{role}"
-
-
 def iter_role_ags(role: str) -> list[str]:
     return list(EXACT_BY_AG[role].keys())
+
+
+def roles_tier(role: str) -> str:
+    if role in PRIMARY_ROLE_KEYS:
+        return "primary"
+    if role == ADMIN_ROLE_KEY:
+        return "admin"
+    if role in CONTROLLED_ROLE_KEYS:
+        return "controlled"
+    raise ValueError(f"unknown role tier: {role}")
 
 
 def append_campaign_shell(
@@ -2543,7 +2535,7 @@ def append_negatives_assets(
                 "Keyword": neg,
                 "Criterion Type": "Broad",
                 "Negative": "True",
-                "Comment": "v5 curated + ST waste; repeated per campaign (Editor requirement)",
+                "Comment": "v6 curated + ST waste; repeated per campaign (Editor requirement)",
             }
         )
         rows.append(r)
@@ -2653,7 +2645,7 @@ def append_kw_rows(
                 "Keyword": kw,
                 "Criterion Type": "Exact",
                 "Keyword Status": "Paused",
-                "Comment": "v5 Exact — ST evidence + employer long-tail",
+                "Comment": "v6 Exact — ST evidence + employer long-tail",
             }
         )
         rows.append(r)
@@ -2684,71 +2676,91 @@ def append_kw_rows(
                 "Keyword": kw,
                 "Criterion Type": "Phrase",
                 "Keyword Status": "Paused",
-                "Comment": "v5 Phrase — discovery from converting ST clusters",
+                "Comment": "v6 Phrase — discovery from converting ST clusters",
             }
         )
         rows.append(r)
 
 
-def brand_rsa(mkt: str) -> tuple[list[str], list[str], str, str]:
-    m = market_bits(mkt)
-    headlines = [
-        "Virtual Coworker Official",
-        f"Virtual Coworker {m['tag']}",
-        "Hire Offshore Staff",
-        "Philippines Staffing Partner",
-        "Recruit Vet & Manage",
-        "Employer Hiring Path",
-        "Dedicated Remote Staff",
-        "Not a Gig Marketplace",
-        "Interview Your Shortlist",
-        "Clear Employer Path",
-        "Filipino VA Staffing",
-        "Remote Team Partner",
-        "Brand Employer Inquiry",
-        "Staffing Not Freelance",
-        "{KeyWord:Virtual Coworker}",
-    ]
-    descs = [
-        f"Official Virtual Coworker for {m['employers']} hiring Philippines staff.",
-        "We recruit, vet, and support dedicated remote teammates — you interview and decide.",
-        "Employer hiring only. Not a job board. Not a freelance marketplace.",
-        "Tell us who you need. We shortlist vetted talent for your business.",
-    ]
-    validate_rsa(headlines, descs, f"{mkt}/brand")
-    return headlines, descs, "hire", m["tag"].lower()[:15]
+def append_ad_group(
+    rows: list[dict[str, str]],
+    *,
+    cname: str,
+    ag: str,
+    comment: str,
+) -> None:
+    r = blank_row()
+    r.update(
+        {
+            "Row Type": "Ad group",
+            "Campaign": cname,
+            "Campaign Type": "Search",
+            "Campaign Status": "Paused",
+            "Budget type": "Daily",
+            "Bid Strategy Type": "Maximize Clicks",
+            "Networks": "Google Search",
+            "Languages": "en",
+            "Location options": "Presence",
+            "Tracking template": TRACK,
+            "Final URL suffix": SUFFIX,
+            "Ad Group": ag,
+            "Ad Group Status": "Paused",
+            "Max CPC": "[APPROVAL_MAX_CPC]",
+            "Comment": comment,
+        }
+    )
+    rows.append(r)
 
 
-def brand_nav_rsa(mkt: str) -> tuple[list[str], list[str], str, str]:
-    m = market_bits(mkt)
-    headlines = [
-        f"VC {m['tag']} Official Site",
-        "Virtual Coworker Staffing",
-        "Employer Brand Landing",
-        "Hire With Virtual Coworker",
-        "PH Staffing Partner Brand",
-        "Known-Intent Brand Search",
-        "Official Employer Page",
-        "Remote Staffing Brand",
-        "Vetted Filipino Staffing",
-        "Partner-Led VA Hiring",
-        "Not a Job Marketplace",
-        "Business Hiring Only",
-        "Dedicated Hire Partner",
-        "Inquire About Staffing",
-        "{KeyWord:Virtual Coworker}",
-    ]
-    descs = [
-        f"Navigate to Virtual Coworker for {m['employers']} seeking Philippines staff.",
-        "Brand search destination — employer inquiry form, not careers applications.",
-        "Recruit, vet, and manage path. You interview before anyone joins.",
-        "No SaaS demo language. This is staffing for established businesses.",
-    ]
-    validate_rsa(headlines, descs, f"{mkt}/brand_nav")
-    return headlines, descs, "brand", "hire"
+def append_rsa(
+    rows: list[dict[str, str]],
+    *,
+    cname: str,
+    ag: str,
+    final: str,
+    headlines: list[str],
+    descs: list[str],
+    p1: str,
+    p2: str,
+    comment: str,
+) -> None:
+    for p in (p1, p2):
+        if len(p) > PATH_MAX:
+            raise ValueError(f"path too long: {p}")
+    r = blank_row()
+    r.update(
+        {
+            "Row Type": "Ad",
+            "Campaign": cname,
+            "Campaign Type": "Search",
+            "Campaign Status": "Paused",
+            "Budget type": "Daily",
+            "Bid Strategy Type": "Maximize Clicks",
+            "Networks": "Google Search",
+            "Languages": "en",
+            "Location options": "Presence",
+            "Tracking template": TRACK,
+            "Final URL suffix": SUFFIX,
+            "Ad Group": ag,
+            "Ad Group Status": "Paused",
+            "Max CPC": "[APPROVAL_MAX_CPC]",
+            "Ad Status": "Paused",
+            "Ad type": "Responsive search ad",
+            "Final URL": final,
+            "Path 1": p1,
+            "Path 2": p2,
+            "Comment": comment,
+        }
+    )
+    for i, h in enumerate(headlines, 1):
+        r[f"Headline {i}"] = h
+    for i, d in enumerate(descs, 1):
+        r[f"Description {i}"] = d
+    rows.append(r)
 
 
 def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
+    """angle: hire | hire_b | offshore | offshore_b — full 15/4, no blanks."""
     m = market_bits(mkt)
     if angle == "hire":
         headlines = [
@@ -2760,7 +2772,7 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
             "Vetted VA Shortlist",
             "Interview Before Hire",
             "Not Gig Platform VA",
-            "Offshore VA Partner",
+            "How to Hire a VA",
             "Core VA Employer Path",
             "Hire PH Role Staff",
             "Remote Admin Capacity",
@@ -2774,8 +2786,33 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
             "Employer path only. Form inquiry is not a job order or placement.",
             "Staffing partner for established businesses — not DIY training or job ads.",
         ]
-        p1, p2 = "hire", "va"
-    else:
+        return headlines, descs, "hire", "va"
+    if angle == "hire_b":
+        headlines = [
+            "Looking for a VA?",
+            "VA for Hire Philippines",
+            "Virtual Assistant Agency",
+            f"{m['tag']} VA Hiring Path",
+            "Filipino VA for Business",
+            "You Interview Finalists",
+            "Dedicated Not Freelance",
+            "VA Services for SMBs",
+            "Hire Remote VA Seat",
+            "Employer Hiring Only",
+            "Virtual Staffing Partner",
+            "Not a Job Board VA",
+            "Scale Admin Bandwidth",
+            "Request Hiring Shortlist",
+            "{KeyWord:Hire Filipino VA}",
+        ]
+        descs = [
+            f"Match hire-VA searches to vetted Philippines talent for {m['employers']}.",
+            "We shortlist. You interview. Dedicated seat — not marketplace task work.",
+            "Exact/Phrase employer intent. No Broad, PMax, or DSA in this package.",
+            "Tell us the role. We recruit and vet. You decide who joins.",
+        ]
+        return headlines, descs, "va", "hire"
+    if angle == "offshore":
         headlines = [
             "Offshore VA Philippines",
             "Philippines Remote Staff",
@@ -2799,12 +2836,36 @@ def core_rsa(mkt: str, angle: str) -> tuple[list[str], list[str], str, str]:
             "Exact/Phrase employer intent only. No PMax, DSA, or broad positives.",
             "Tell us the role. We shortlist. You decide who joins your business.",
         ]
-        p1, p2 = "offshore", "ph"
-    validate_rsa(headlines, descs, f"{mkt}/core/{angle}")
-    return headlines, descs, p1, p2
+        return headlines, descs, "offshore", "ph"
+    if angle == "offshore_b":
+        headlines = [
+            "Filipino Virtual Assistant",
+            "VA Philippines Staffing",
+            "Philippines VA Company",
+            f"{m['tag']} PH Remote Hire",
+            "Offshore VA Partner",
+            "Virtual Staff Philippines",
+            "Dedicated PH VA Seat",
+            "Outsource Admin to PH",
+            "Not Gig Offshore VA",
+            "Vetted Filipino Talent",
+            "Remote Staff From PH",
+            "Employer PH Hire Path",
+            "Interview Before Place",
+            "Staffing Not Freelance",
+            "{KeyWord:Philippines Virtual Assistant}",
+        ]
+        descs = [
+            f"Philippines VA and remote staff for {m['business']} ops capacity.",
+            "Filipino talent shortlist — you interview; we recruit, vet, and support.",
+            "Offshore staffing partner model. Not Upwork. Not a job board.",
+            "Employer inquiries only. Inquiry accepted ≠ job order or placement.",
+        ]
+        return headlines, descs, "ph", "va"
+    raise ValueError(f"unknown core RSA angle: {angle}")
 
 
-def build_brand_and_core(
+def build_core(
     rows: list[dict[str, str]],
     *,
     mkt: str,
@@ -2812,259 +2873,207 @@ def build_brand_and_core(
     budget_ph: str,
     base_url: str,
 ) -> None:
-    """Brand + Core VA + PH/offshore — Exact/Phrase only, category/generic Final URLs."""
+    """VC_*_S_CORE — high-intent VA / hire / PH-offshore (~60% budget)."""
     admin_final = f"{base_url}/administrative-support"
-
-    # --- Brand ---
-    cname = f"VC_{mkt}_S_BRAND"
+    cname = f"VC_{mkt}_S_CORE"
     append_campaign_shell(
         rows,
         cname=cname,
         loc=loc,
         budget_ph=budget_ph,
-        comment="Stage1 v5 Brand Search; Max Clicks; Search only; Paused pending approval",
+        comment=(
+            "Stage1 v6 CORE (~60%); Max Clicks; Search only; Exact+Phrase; "
+            "Paused; Brand deferred"
+        ),
     )
-    ag = "Brand"
-    r = blank_row()
-    r.update(
-        {
-            "Row Type": "Ad group",
-            "Campaign": cname,
-            "Campaign Type": "Search",
-            "Campaign Status": "Paused",
-            "Budget type": "Daily",
-            "Bid Strategy Type": "Maximize Clicks",
-            "Networks": "Google Search",
-            "Languages": "en",
-            "Location options": "Presence",
-            "Tracking template": TRACK,
-            "Final URL suffix": SUFFIX,
-            "Ad Group": ag,
-            "Ad Group Status": "Paused",
-            "Max CPC": "[APPROVAL_MAX_CPC]",
-            "Comment": "Brand AG",
-        }
-    )
-    rows.append(r)
-    brand_exact = [
-        "virtual coworker",
-        "virtualcoworker",
-        "virtual coworker staffing",
-        f"virtual coworker {'usa' if mkt == 'US' else 'australia'}",
-        "virtual coworker reviews",
-    ]
-    brand_phrase = ["virtual coworker", "virtual coworker staffing"]
-    append_kw_rows(rows, cname=cname, ag=ag, exact=brand_exact, phrase=brand_phrase)
-    hs, ds, p1, p2 = brand_rsa(mkt)
-    r = blank_row()
-    r.update(
-        {
-            "Row Type": "Ad",
-            "Campaign": cname,
-            "Campaign Type": "Search",
-            "Campaign Status": "Paused",
-            "Budget type": "Daily",
-            "Bid Strategy Type": "Maximize Clicks",
-            "Networks": "Google Search",
-            "Languages": "en",
-            "Location options": "Presence",
-            "Tracking template": TRACK,
-            "Final URL suffix": SUFFIX,
-            "Ad Group": ag,
-            "Ad Group Status": "Paused",
-            "Max CPC": "[APPROVAL_MAX_CPC]",
-            "Ad Status": "Paused",
-            "Ad type": "Responsive search ad",
-            "Final URL": base_url,
-            "Path 1": p1,
-            "Path 2": p2,
-            "Comment": "Brand RSA; Final URL=generic market LP",
-        }
-    )
-    for i, h in enumerate(hs, 1):
-        r[f"Headline {i}"] = h
-    for i, d in enumerate(ds, 1):
-        r[f"Description {i}"] = d
-    rows.append(r)
-    ag2 = "Brand_Nav"
-    r = blank_row()
-    r.update(
-        {
-            "Row Type": "Ad group",
-            "Campaign": cname,
-            "Campaign Type": "Search",
-            "Campaign Status": "Paused",
-            "Budget type": "Daily",
-            "Bid Strategy Type": "Maximize Clicks",
-            "Networks": "Google Search",
-            "Languages": "en",
-            "Location options": "Presence",
-            "Tracking template": TRACK,
-            "Final URL suffix": SUFFIX,
-            "Ad Group": ag2,
-            "Ad Group Status": "Paused",
-            "Max CPC": "[APPROVAL_MAX_CPC]",
-            "Comment": "Brand navigation Exact",
-        }
-    )
-    rows.append(r)
-    append_kw_rows(
-        rows,
-        cname=cname,
-        ag=ag2,
-        exact=["virtual coworker official", "virtual coworker company"],
-        phrase=["virtual coworker official"],
-    )
-    hs2, ds2, p1b, p2b = brand_nav_rsa(mkt)
-    r = blank_row()
-    r.update(
-        {
-            "Row Type": "Ad",
-            "Campaign": cname,
-            "Campaign Type": "Search",
-            "Campaign Status": "Paused",
-            "Budget type": "Daily",
-            "Bid Strategy Type": "Maximize Clicks",
-            "Networks": "Google Search",
-            "Languages": "en",
-            "Location options": "Presence",
-            "Tracking template": TRACK,
-            "Final URL suffix": SUFFIX,
-            "Ad Group": ag2,
-            "Ad Group Status": "Paused",
-            "Max CPC": "[APPROVAL_MAX_CPC]",
-            "Ad Status": "Paused",
-            "Ad type": "Responsive search ad",
-            "Final URL": base_url,
-            "Path 1": p1b,
-            "Path 2": p2b,
-            "Comment": "Brand nav RSA",
-        }
-    )
-    for i, h in enumerate(hs2, 1):
-        r[f"Headline {i}"] = h
-    for i, d in enumerate(ds2, 1):
-        r[f"Description {i}"] = d
-    rows.append(r)
+
+    for ag, angles in (
+        ("Hire_VA_PH", ("hire", "hire_b")),
+        ("Offshore_VA_PH", ("offshore", "offshore_b")),
+    ):
+        append_ad_group(
+            rows,
+            cname=cname,
+            ag=ag,
+            comment=f"CORE AG — {ag}; Final URL=administrative-support",
+        )
+        append_kw_rows(
+            rows,
+            cname=cname,
+            ag=ag,
+            exact=CORE_EXACT_BY_AG[ag],
+            phrase=CORE_PHRASE_BY_AG[ag],
+        )
+        for angle in angles:
+            hs, ds, p1, p2 = core_rsa(mkt, angle)
+            validate_rsa(hs, ds, f"{mkt}/core/{ag}/{angle}")
+            append_rsa(
+                rows,
+                cname=cname,
+                ag=ag,
+                final=admin_final,
+                headlines=hs,
+                descs=ds,
+                p1=p1,
+                p2=p2,
+                comment=f"Core RSA {angle}; Final URL=administrative-support",
+            )
+
     append_negatives_assets(
         rows,
         cname=cname,
         sitelinks=[
-            ("Tell Us Who You Need", "Employer hiring path", "Form for businesses", f"{base_url}#gate"),
-            ("How Hiring Works", "Recruit, vet, shortlist", "You interview talent", base_url),
-            ("Admin Support Hire", "Philippines admin staff", "Category landing page", admin_final),
-            (f"{mkt} Employer Page", "Dedicated landing page", "Not WordPress homepage", base_url),
+            (
+                "Tell Us Who You Need",
+                "Employer hiring path",
+                "Form for businesses",
+                f"{admin_final}#gate",
+            ),
+            (
+                "How Hiring Works",
+                "Recruit, vet, shortlist",
+                "You interview talent",
+                admin_final,
+            ),
+            (
+                "Hire PH VA",
+                "Philippines VA staffing",
+                "Category landing page",
+                admin_final,
+            ),
+            (
+                f"{mkt} Employer Page",
+                "Dedicated landing page",
+                "Not WordPress homepage",
+                base_url,
+            ),
         ],
     )
 
-    # --- Core hire VA + offshore ---
-    cname = f"VC_{mkt}_S_CORE_hire_va"
+
+def build_roles(
+    rows: list[dict[str, str]],
+    *,
+    mkt: str,
+    loc: str,
+    budget_ph: str,
+    base_url: str,
+) -> None:
+    """VC_*_S_ROLES — Digital · Social · Admin · Controlled (~40% budget)."""
+    cname = f"VC_{mkt}_S_ROLES"
+    mbits = market_bits(mkt)
     append_campaign_shell(
         rows,
         cname=cname,
         loc=loc,
         budget_ph=budget_ph,
-        comment="Stage1 v5 Core VA + PH/offshore; Exact+Phrase; Paused",
+        comment=(
+            "Stage1 v6 ROLES (~40%); AGs Digital·Social·Admin·Controlled; "
+            "category Final URLs; Max Clicks; Paused; Brand deferred"
+        ),
     )
-    for ag, angle, exact, phrase in (
-        (
-            "Hire_VA_PH",
-            "hire",
-            [
-                "hire virtual assistant",
-                "hire a virtual assistant",
-                "hire virtual assistant philippines",
-                "hire filipino virtual assistant",
-                "hire a va",
-                "virtual assistant hire",
-                "how to hire a virtual assistant",
-            ],
-            [
-                "hire virtual assistant",
-                "hire filipino virtual assistant",
-                "virtual assistant philippines",
-            ],
-        ),
-        (
-            "Offshore_VA_PH",
-            "offshore",
-            [
-                "offshore va",
-                "offshore virtual assistant",
-                "philippines virtual assistant",
-                "filipino virtual assistant",
-                "va philippines",
-                "philippine virtual assistant",
-            ],
-            [
-                "offshore virtual assistant",
-                "philippines virtual assistant",
-                "filipino virtual assistant",
-            ],
-        ),
-    ):
-        r = blank_row()
-        r.update(
-            {
-                "Row Type": "Ad group",
-                "Campaign": cname,
-                "Campaign Type": "Search",
-                "Campaign Status": "Paused",
-                "Budget type": "Daily",
-                "Bid Strategy Type": "Maximize Clicks",
-                "Networks": "Google Search",
-                "Languages": "en",
-                "Location options": "Presence",
-                "Tracking template": TRACK,
-                "Final URL suffix": SUFFIX,
-                "Ad Group": ag,
-                "Ad Group Status": "Paused",
-                "Max CPC": "[APPROVAL_MAX_CPC]",
-                "Comment": f"Core AG — {ag}",
-            }
-        )
-        rows.append(r)
-        append_kw_rows(rows, cname=cname, ag=ag, exact=exact, phrase=phrase)
-        hs, ds, p1, p2 = core_rsa(mkt, angle)
-        r = blank_row()
-        r.update(
-            {
-                "Row Type": "Ad",
-                "Campaign": cname,
-                "Campaign Type": "Search",
-                "Campaign Status": "Paused",
-                "Budget type": "Daily",
-                "Bid Strategy Type": "Maximize Clicks",
-                "Networks": "Google Search",
-                "Languages": "en",
-                "Location options": "Presence",
-                "Tracking template": TRACK,
-                "Final URL suffix": SUFFIX,
-                "Ad Group": ag,
-                "Ad Group Status": "Paused",
-                "Max CPC": "[APPROVAL_MAX_CPC]",
-                "Ad Status": "Paused",
-                "Ad type": "Responsive search ad",
-                "Final URL": admin_final,
-                "Path 1": p1,
-                "Path 2": p2,
-                "Comment": f"Core RSA {angle}; Final URL=administrative-support category",
-            }
-        )
-        for i, h in enumerate(hs, 1):
-            r[f"Headline {i}"] = h
-        for i, d in enumerate(ds, 1):
-            r[f"Description {i}"] = d
-        rows.append(r)
 
+    role_order = (
+        list(PRIMARY_ROLE_KEYS)
+        + [ADMIN_ROLE_KEY]
+        + list(CONTROLLED_ROLE_KEYS)
+    )
+
+    for role in role_order:
+        tier = roles_tier(role)
+        slug = ROLE_CATEGORY_SLUG[role]
+        final = f"{base_url}/{slug}"
+        for ag in iter_role_ags(role):
+            append_ad_group(
+                rows,
+                cname=cname,
+                ag=ag,
+                comment=f"ROLES {tier} — {ag}; category={slug}",
+            )
+            append_kw_rows(
+                rows,
+                cname=cname,
+                ag=ag,
+                exact=EXACT_BY_AG[role][ag],
+                phrase=PHRASE_BY_AG[role][ag],
+            )
+            for suffix, hl_fn, desc_fn, p1, p2 in RSA_CATALOG[role][ag]:
+                hs = hl_fn(mbits)
+                ds = desc_fn(mbits)
+                validate_rsa(hs, ds, f"{mkt}/{role}/{ag}/{suffix}")
+                append_rsa(
+                    rows,
+                    cname=cname,
+                    ag=ag,
+                    final=final,
+                    headlines=hs,
+                    descs=ds,
+                    p1=p1,
+                    p2=p2,
+                    comment=(
+                        f"RSA angle {suffix}; full 15/4; tier={tier}; "
+                        f"role={ROLE_LABEL[role]}; no invented pricing"
+                    ),
+                )
+
+        if role == ADMIN_ROLE_KEY:
+            city_ag = "Admin_City_Test"
+            append_ad_group(
+                rows,
+                cname=cname,
+                ag=city_ag,
+                comment="LIGHT city Phrase + location-insertion RSA (Admin tier)",
+            )
+            city_kws = CITY_PHRASE_US if mkt == "US" else CITY_PHRASE_AU
+            append_kw_rows(
+                rows,
+                cname=cname,
+                ag=city_ag,
+                exact=[],
+                phrase=city_kws,
+            )
+            hs, ds, p1, p2 = city_rsa(mkt)
+            append_rsa(
+                rows,
+                cname=cname,
+                ag=city_ag,
+                final=final,
+                headlines=hs,
+                descs=ds,
+                p1=p1,
+                p2=p2,
+                comment="Location insertion test RSA; full 15/4",
+            )
+
+    # Campaign-level sitelinks span primary role LPs
     append_negatives_assets(
         rows,
         cname=cname,
         sitelinks=[
-            ("Tell Us Who You Need", "Employer hiring path", "Form for businesses", f"{admin_final}#gate"),
-            ("How Hiring Works", "Recruit, vet, shortlist", "You interview talent", admin_final),
-            ("Hire PH VA", "Philippines VA staffing", "Category landing page", admin_final),
-            (f"{mkt} Employer Page", "Dedicated landing page", "Not WordPress homepage", base_url),
+            (
+                "Tell Us Who You Need",
+                "Employer hiring path",
+                "Form for businesses",
+                f"{base_url}/administrative-support#gate",
+            ),
+            (
+                "Digital Marketing Hire",
+                "Philippines marketing staff",
+                "Category landing page",
+                f"{base_url}/digital-marketing",
+            ),
+            (
+                "Social Media Hire",
+                "Philippines SMM staff",
+                "Category landing page",
+                f"{base_url}/social-media",
+            ),
+            (
+                "Bookkeeping Hire",
+                "Philippines books staff",
+                "Category landing page",
+                f"{base_url}/bookkeeping",
+            ),
         ],
     )
 
@@ -3077,267 +3086,12 @@ def build() -> list[dict[str, str]]:
         ("AU", "Australia", "[APPROVAL_DAILY_BUDGET_AUD]"),
     ):
         base_url = f"https://vision-three-alpha.vercel.app/{mkt.lower()}"
-        mbits = market_bits(mkt)
-
-        build_brand_and_core(
+        build_core(
             rows, mkt=mkt, loc=loc, budget_ph=budget_ph, base_url=base_url
         )
-
-        for role in ROLES:
-            cname = camp_name(mkt, role)
-            comment = (
-                f"Stage1 v5 Max Clicks; Search partners OFF; Display OFF; "
-                f"role={ROLE_LABEL[role]}; category Final URL; "
-                f"confirm networks in Editor"
-            )
-
-            append_campaign_shell(
-                rows,
-                cname=cname,
-                loc=loc,
-                budget_ph=budget_ph,
-                comment=comment,
-            )
-
-            slug = ROLE_CATEGORY_SLUG[role]
-            final = f"{base_url}/{slug}"
-
-            for ag in iter_role_ags(role):
-                r = blank_row()
-                r.update(
-                    {
-                        "Row Type": "Ad group",
-                        "Campaign": cname,
-                        "Campaign Type": "Search",
-                        "Campaign Status": "Paused",
-                        "Budget type": "Daily",
-                        "Bid Strategy Type": "Maximize Clicks",
-                        "Networks": "Google Search",
-                        "Languages": "en",
-                        "Location options": "Presence",
-                        "Tracking template": TRACK,
-                        "Final URL suffix": SUFFIX,
-                        "Ad Group": ag,
-                        "Ad Group Status": "Paused",
-                        "Max CPC": "[APPROVAL_MAX_CPC]",
-                        "Comment": f"Theme AG — {ag}",
-                    }
-                )
-                rows.append(r)
-
-                seen_exact: set[str] = set()
-                for kw in EXACT_BY_AG[role][ag]:
-                    key = kw.strip().lower()
-                    if key in seen_exact:
-                        continue
-                    seen_exact.add(key)
-                    r = blank_row()
-                    r.update(
-                        {
-                            "Row Type": "Keyword",
-                            "Campaign": cname,
-                            "Campaign Type": "Search",
-                            "Campaign Status": "Paused",
-                            "Budget type": "Daily",
-                            "Bid Strategy Type": "Maximize Clicks",
-                            "Networks": "Google Search",
-                            "Languages": "en",
-                            "Location options": "Presence",
-                            "Tracking template": TRACK,
-                            "Final URL suffix": SUFFIX,
-                            "Ad Group": ag,
-                            "Ad Group Status": "Paused",
-                            "Max CPC": "[APPROVAL_MAX_CPC]",
-                            "Keyword": kw,
-                            "Criterion Type": "Exact",
-                            "Keyword Status": "Paused",
-                            "Comment": "v4 Exact — ST evidence + employer long-tail",
-                        }
-                    )
-                    rows.append(r)
-
-                seen_phrase: set[str] = set()
-                for kw in PHRASE_BY_AG[role][ag]:
-                    key = kw.strip().lower()
-                    if key in seen_phrase:
-                        continue
-                    seen_phrase.add(key)
-                    r = blank_row()
-                    r.update(
-                        {
-                            "Row Type": "Keyword",
-                            "Campaign": cname,
-                            "Campaign Type": "Search",
-                            "Campaign Status": "Paused",
-                            "Budget type": "Daily",
-                            "Bid Strategy Type": "Maximize Clicks",
-                            "Networks": "Google Search",
-                            "Languages": "en",
-                            "Location options": "Presence",
-                            "Tracking template": TRACK,
-                            "Final URL suffix": SUFFIX,
-                            "Ad Group": ag,
-                            "Ad Group Status": "Paused",
-                            "Max CPC": "[APPROVAL_MAX_CPC]",
-                            "Keyword": kw,
-                            "Criterion Type": "Phrase",
-                            "Keyword Status": "Paused",
-                            "Comment": "v4 Phrase — discovery from converting ST clusters",
-                        }
-                    )
-                    rows.append(r)
-
-                for suffix, hl_fn, desc_fn, p1, p2 in RSA_CATALOG[role][ag]:
-                    hs = hl_fn(mbits)
-                    ds = desc_fn(mbits)
-                    validate_rsa(hs, ds, f"{mkt}/{role}/{ag}/{suffix}")
-                    for p in (p1, p2):
-                        if len(p) > PATH_MAX:
-                            raise ValueError(f"path too long: {p}")
-                    r = blank_row()
-                    r.update(
-                        {
-                            "Row Type": "Ad",
-                            "Campaign": cname,
-                            "Campaign Type": "Search",
-                            "Campaign Status": "Paused",
-                            "Budget type": "Daily",
-                            "Bid Strategy Type": "Maximize Clicks",
-                            "Networks": "Google Search",
-                            "Languages": "en",
-                            "Location options": "Presence",
-                            "Tracking template": TRACK,
-                            "Final URL suffix": SUFFIX,
-                            "Ad Group": ag,
-                            "Ad Group Status": "Paused",
-                            "Max CPC": "[APPROVAL_MAX_CPC]",
-                            "Ad Status": "Paused",
-                            "Ad type": "Responsive search ad",
-                            "Final URL": final,
-                            "Path 1": p1,
-                            "Path 2": p2,
-                            "Comment": (
-                                f"RSA angle {suffix}; full 15/4; "
-                                f"role-unique; market={mkt}; no invented pricing"
-                            ),
-                        }
-                    )
-                    for i, h in enumerate(hs, 1):
-                        r[f"Headline {i}"] = h
-                    for i, d in enumerate(ds, 1):
-                        r[f"Description {i}"] = d
-                    rows.append(r)
-
-            if role == "administration":
-                city_ag = "Admin_City_Test"
-                r = blank_row()
-                r.update(
-                    {
-                        "Row Type": "Ad group",
-                        "Campaign": cname,
-                        "Campaign Type": "Search",
-                        "Campaign Status": "Paused",
-                        "Budget type": "Daily",
-                        "Bid Strategy Type": "Maximize Clicks",
-                        "Networks": "Google Search",
-                        "Languages": "en",
-                        "Location options": "Presence",
-                        "Tracking template": TRACK,
-                        "Final URL suffix": SUFFIX,
-                        "Ad Group": city_ag,
-                        "Ad Group Status": "Paused",
-                        "Max CPC": "[APPROVAL_MAX_CPC]",
-                        "Comment": "LIGHT city Phrase + location-insertion RSA",
-                    }
-                )
-                rows.append(r)
-                city_kws = CITY_PHRASE_US if mkt == "US" else CITY_PHRASE_AU
-                for kw in city_kws:
-                    r = blank_row()
-                    r.update(
-                        {
-                            "Row Type": "Keyword",
-                            "Campaign": cname,
-                            "Campaign Type": "Search",
-                            "Campaign Status": "Paused",
-                            "Budget type": "Daily",
-                            "Bid Strategy Type": "Maximize Clicks",
-                            "Networks": "Google Search",
-                            "Languages": "en",
-                            "Location options": "Presence",
-                            "Tracking template": TRACK,
-                            "Final URL suffix": SUFFIX,
-                            "Ad Group": city_ag,
-                            "Ad Group Status": "Paused",
-                            "Max CPC": "[APPROVAL_MAX_CPC]",
-                            "Keyword": kw,
-                            "Criterion Type": "Phrase",
-                            "Keyword Status": "Paused",
-                        }
-                    )
-                    rows.append(r)
-                hs, ds, p1, p2 = city_rsa(mkt)
-                r = blank_row()
-                r.update(
-                    {
-                        "Row Type": "Ad",
-                        "Campaign": cname,
-                        "Campaign Type": "Search",
-                        "Campaign Status": "Paused",
-                        "Budget type": "Daily",
-                        "Bid Strategy Type": "Maximize Clicks",
-                        "Networks": "Google Search",
-                        "Languages": "en",
-                        "Location options": "Presence",
-                        "Tracking template": TRACK,
-                        "Final URL suffix": SUFFIX,
-                        "Ad Group": city_ag,
-                        "Ad Group Status": "Paused",
-                        "Max CPC": "[APPROVAL_MAX_CPC]",
-                        "Ad Status": "Paused",
-                        "Ad type": "Responsive search ad",
-                        "Final URL": final,
-                        "Path 1": p1,
-                        "Path 2": p2,
-                        "Comment": "Location insertion test RSA; full 15/4",
-                    }
-                )
-                for i, h in enumerate(hs, 1):
-                    r[f"Headline {i}"] = h
-                for i, d in enumerate(ds, 1):
-                    r[f"Description {i}"] = d
-                rows.append(r)
-
-            append_negatives_assets(
-                rows,
-                cname=cname,
-                sitelinks=[
-                    (
-                        "Tell Us Who You Need",
-                        "Employer hiring path",
-                        "Form for businesses",
-                        f"{final}#gate",
-                    ),
-                    (
-                        "How Hiring Works",
-                        "Recruit, vet, shortlist",
-                        "You interview talent",
-                        final,
-                    ),
-                    (
-                        f"Hire {ROLE_LABEL[role]}"[:25],
-                        "Philippines remote staff",
-                        "Category landing page",
-                        final,
-                    ),
-                    (
-                        f"{mkt} Employer Page",
-                        "Dedicated landing page",
-                        "Not WordPress homepage",
-                        base_url,
-                    ),
-                ],
-            )
+        build_roles(
+            rows, mkt=mkt, loc=loc, budget_ph=budget_ph, base_url=base_url
+        )
 
     apply_budget_cpc_defaults(rows)
     return rows
@@ -3358,14 +3112,12 @@ def apply_budget_cpc_defaults(rows: list[dict[str, str]]) -> None:
         if r.get("Row Type") != "Campaign":
             continue
         budgets = BUDGET_DAILY[mkt]
-        if "_S_BRAND" in cname:
-            r["Budget"] = budgets["brand"]
-        elif "_S_CORE_" in cname:
+        if cname.endswith("_S_CORE"):
             r["Budget"] = budgets["core"]
-        elif "_S_ROLE_" in cname:
-            r["Budget"] = budgets["role"]
+        elif cname.endswith("_S_ROLES"):
+            r["Budget"] = budgets["roles"]
         elif r.get("Budget", "").startswith("[APPROVAL_"):
-            r["Budget"] = budgets["role"]
+            r["Budget"] = budgets["roles"]
 
 
 def qa(rows: list[dict[str, str]]) -> None:
@@ -3379,7 +3131,8 @@ def qa(rows: list[dict[str, str]]) -> None:
     leftover = [
         (r.get("Row Type"), r.get("Campaign"), r.get("Budget"), r.get("Max CPC"))
         for r in rows
-        if "[APPROVAL_" in (r.get("Budget") or "") or "[APPROVAL_" in (r.get("Max CPC") or "")
+        if "[APPROVAL_" in (r.get("Budget") or "")
+        or "[APPROVAL_" in (r.get("Max CPC") or "")
     ]
     if leftover:
         raise SystemExit(f"APPROVAL placeholders remain: {leftover[:5]}")
@@ -3388,7 +3141,7 @@ def qa(rows: list[dict[str, str]]) -> None:
         for r in rows
         if r["Row Type"] == "Campaign"
     }
-    print("Daily budgets (sample):", {k: camp_budgets[k] for k in sorted(camp_budgets)[:6]})
+    print("Daily budgets:", camp_budgets)
     print("Max CPC US/AU:", MAX_CPC)
 
     ads = [r for r in rows if r["Row Type"] == "Ad"]
@@ -3404,35 +3157,56 @@ def qa(rows: list[dict[str, str]]) -> None:
         for r in ads
         if r["Campaign"].startswith("VC_US_") and "City" not in r["Ad Group"]
     ]
-    hl_sets = []
+    freq = Counter()
     for r in us_ads:
         hs = {
             h
             for h in (r[f"Headline {i}"] for i in range(1, 16))
             if not h.startswith("{")
         }
-        hl_sets.append(hs)
-    freq = Counter()
-    for s in hl_sets:
-        for h in s:
+        for h in hs:
             freq[h] += 1
-    # Employer CTAs may recur across role RSAs; flag only extreme clones (>20 ads).
-    spam = [(h, c) for h, c in freq.items() if c > 20]
+    # Fewer campaigns → shared CTAs recur more; flag only extreme clones.
+    spam = [(h, c) for h, c in freq.items() if c > 14]
     if spam:
         raise SystemExit(f"Boilerplate headline spam across RSAs: {spam[:8]}")
+
+    expected = {
+        "VC_US_S_CORE",
+        "VC_US_S_ROLES",
+        "VC_AU_S_CORE",
+        "VC_AU_S_ROLES",
+    }
+    if set(camps) != expected:
+        raise SystemExit(f"Expected {sorted(expected)}, got {camps}")
 
     for c in camps:
         kws = [
             r
             for r in rows
-            if r["Campaign"] == c and r["Row Type"] == "Keyword" and r["Negative"] != "True"
+            if r["Campaign"] == c
+            and r["Row Type"] == "Keyword"
+            and r["Negative"] != "True"
         ]
         ads_c = [r for r in rows if r["Campaign"] == c and r["Row Type"] == "Ad"]
         if not kws or not ads_c:
             raise SystemExit(f"EMPTY SHELL: {c} kws={len(kws)} ads={len(ads_c)}")
         ags = {r["Ad Group"] for r in kws}
-        if len(ags) < 2:
-            raise SystemExit(f"FAT SINGLE AG: {c} ags={ags}")
+        if c.endswith("_S_CORE") and len(ags) < 2:
+            raise SystemExit(f"CORE needs ≥2 AGs: {c} ags={ags}")
+        if c.endswith("_S_ROLES") and len(ags) < 4:
+            raise SystemExit(f"ROLES needs Digital·Social·Admin·Controlled AGs: {c}={ags}")
+
+    # Budget share check (~60/40)
+    for mkt, cur in (("US", "$"), ("AU", "A$")):
+        core_b = int(camp_budgets[f"VC_{mkt}_S_CORE"])
+        roles_b = int(camp_budgets[f"VC_{mkt}_S_ROLES"])
+        total = core_b + roles_b
+        core_pct = core_b / total
+        if not (0.55 <= core_pct <= 0.65):
+            raise SystemExit(
+                f"{mkt} Core share {core_pct:.0%} not ~60% ({cur}{core_b}+{cur}{roles_b})"
+            )
 
     blob = "\n".join(
         " ".join(r[f"Headline {i}"] for i in range(1, 16))
@@ -3446,13 +3220,8 @@ def qa(rows: list[dict[str, str]]) -> None:
     )
     if bad.search(blob):
         raise SystemExit(f"Forbidden claim in RSA: {bad.search(blob).group(0)}")
-
-    brand_camps = [c for c in camps if "_S_BRAND" in c]
-    core_camps = [c for c in camps if "_S_CORE_" in c]
-    if len(brand_camps) != 2:
-        raise SystemExit(f"Expected 2 Brand campaigns, got {brand_camps}")
-    if len(core_camps) != 2:
-        raise SystemExit(f"Expected 2 Core campaigns, got {core_camps}")
+    if re.search(r"\bconsult\b|book a demo|schedule a demo", blob, re.I):
+        raise SystemExit("Consult/demo language leaked into RSA")
 
     mt = Counter(
         r["Criterion Type"]
@@ -3463,23 +3232,30 @@ def qa(rows: list[dict[str, str]]) -> None:
     if mt.get("Broad"):
         raise SystemExit("Positive Broad keywords not allowed")
 
-    # Final URLs must be category routes (or generic market for Brand)
     for r in ads:
         fu = r.get("Final URL") or ""
         if "?role=" in fu:
             raise SystemExit(f"Legacy inert ?role= Final URL: {fu}")
         if "virtualcoworker.com" in fu and "vision-three-alpha" not in fu:
             raise SystemExit(f"WP Final URL leak: {fu}")
-        if r["Tracking template"] not in ("", "{lpurl}") and "utm_source" in r["Tracking template"]:
+        if "/us" not in fu and "/au" not in fu:
+            raise SystemExit(f"Final URL missing market path: {fu}")
+        # Brand deferred — no generic-only market Final URLs on ads
+        if fu.rstrip("/").endswith("/us") or fu.rstrip("/").endswith("/au"):
+            raise SystemExit(f"Generic market Final URL (Brand deferred): {fu}")
+        if r["Tracking template"] not in ("", "{lpurl}") and "utm_source" in r[
+            "Tracking template"
+        ]:
             if r.get("Final URL suffix") and "utm_source" in r["Final URL suffix"]:
                 raise SystemExit(f"Double UTM on {r['Campaign']}/{r['Ad Group']}")
 
-    # All entity statuses Paused
     for r in rows:
         for col in ("Campaign Status", "Ad Group Status", "Keyword Status", "Ad Status"):
             st = r.get(col) or ""
             if st and st != "Paused":
-                raise SystemExit(f"Non-paused {col}={st} on {r['Row Type']} {r.get('Campaign')}")
+                raise SystemExit(
+                    f"Non-paused {col}={st} on {r['Row Type']} {r.get('Campaign')}"
+                )
 
     pos_blob = " ".join(
         r["Keyword"].lower()
@@ -3498,6 +3274,11 @@ def qa(rows: list[dict[str, str]]) -> None:
     ):
         if term in pos_blob:
             raise SystemExit(f"LEAK in positives: {term}")
+
+    # Brand terms must not appear as Stage 1 positives (Brand deferred)
+    for brand_kw in ("virtual coworker", "virtualcoworker"):
+        if brand_kw in pos_blob:
+            raise SystemExit(f"Brand keyword in Stage 1 package (deferred): {brand_kw}")
 
     negs = {
         r["Keyword"].lower()
@@ -3522,8 +3303,12 @@ def qa(rows: list[dict[str, str]]) -> None:
         for r in ads
         if "{KeyWord:" in " ".join(r[f"Headline {i}"] for i in range(1, 16))
     ]
-    if len(dki_ads) < 18:
+    if len(dki_ads) < 8:
         raise SystemExit(f"DKI underused: only {len(dki_ads)} ads have KeyWord insertion")
+
+    # lp_version stamp
+    if f"lp_version={LP_VERSION}" not in SUFFIX:
+        raise SystemExit(f"SUFFIX missing {LP_VERSION}")
 
     print(
         "QA OK — RSA ads:",
@@ -3532,6 +3317,8 @@ def qa(rows: list[dict[str, str]]) -> None:
         sum(mt.values()),
         "unique negs:",
         len(negs),
+        "lp_version:",
+        LP_VERSION,
     )
 
 

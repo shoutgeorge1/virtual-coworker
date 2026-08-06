@@ -1,10 +1,10 @@
-# Stage 1 Google Ads + LP — FULL BUILD REPORT (v5)
+# Stage 1 Google Ads + LP — FULL BUILD REPORT (v6)
 
 **For:** ChatGPT audit + George review  
 **Generated:** 2026-08-05  
 **Package:** `ads-launch/google-ads-editor-import.csv`  
 **Builder:** `ads-launch/build_stage1_editor_package.py`  
-**LP version:** `lp_version=stage1-v5`  
+**LP version:** `lp_version=stage1-v6`  
 **Accounts:** USA `496-715-1855` · Australia `573-539-1940`  
 **All Ads entities in CSV:** **Paused**  
 **Live LP host:** `https://vision-three-alpha.vercel.app`  
@@ -12,9 +12,10 @@
 
 ---
 
-## Paste this for a full audit
+## Paste for audit
 
-→ **`ads-launch/CHATGPT-MEGA-AUDIT.md`** (comprehensive, honest, pasteable)
+1. **Primary (short, pasteable):** → **`ads-launch/CHATGPT-DEBRIEF.md`**
+2. **Deep dive:** → **`ads-launch/CHATGPT-MEGA-AUDIT.md`**
 
 This file is the short index only.
 
@@ -22,22 +23,35 @@ This file is the short index only.
 
 ## Executive verdict
 
-Stage 1 stack is **category-routed LPs + Brand/Core/Role Search package**, evidence-backed from ~2y Editor exports, with honest events. Casting approved. **Not launch-ready** while real lead inbox/webhook, custom domain, GTM Ads mapping, Zoho/CallRail, and **explicit enable approval** remain open. Campaigns stay **Paused**. QA lead delivery is TEMPORARY log-only.
+Stage 1 stack is **category-routed LPs + 2-campaign Search package per market** (Core + Roles; Brand deferred), evidence-backed from ~2y Editor exports, with honest events. Casting approved. **Not launch-ready** while real lead inbox/webhook, custom domain, GTM Ads mapping, Zoho/CallRail, and **explicit enable approval** remain open. Campaigns stay **Paused**. QA lead delivery is TEMPORARY log-only.
 
 ---
 
-## What changed vs v4
+## Architecture (locked)
 
-| Gap | v5 fix |
-|-----|--------|
-| Final URLs `?role=` inert | `/us\|au/{category-slug}` |
-| Brand deferred | Brand + Core campaigns added |
-| Double UTM | Final URL suffix only |
-| Consult RSA/LP language | Employer CTAs |
-| No category LP engine | 9×2 routes + data config |
-| No A/B | Stable A/B + QA override |
-| Log-only leads by default | 503 unless channel or explicit flag |
-| Plastic / white-HR heroes | Recast Filipino aspirational assets |
+| Campaign | Share | Purpose |
+|----------|------:|---------|
+| `VC_{US\|AU}_S_CORE` | ~60% | High-intent VA / hire / PH-offshore |
+| `VC_{US\|AU}_S_ROLES` | ~40% | Digital · Social · Admin · Controlled (accounting, books, CS, HR, recruitment, sales) |
+
+Brand **not** in launch package.
+
+---
+
+## What changed vs v5
+
+| Gap / prior | v6 fix |
+|-------------|--------|
+| 22 campaigns (Brand + Core + 9 roles) | **4 campaigns** (2 × 2 markets) |
+| Brand in package | Brand **deferred** |
+| Budgets Brand/Core/Role split | Core **$75** / Roles **$50** (US); AU A$75 / A$50 |
+| `lp_version=stage1-v5` | `stage1-v6` |
+| Generic VA keywords under Admin role campaign | Moved into **CORE** (Hire_VA + Offshore) |
+| v5 category URLs / employer CTAs / single UTM | **Kept** |
+
+### Earlier fixes retained (v1–v4 → v5)
+
+Double UTM · inert `?role=` · template RSA spam · fake AU phone · consult language · casting · log-only honesty — see DEBRIEF / MEGA.
 
 ---
 
@@ -45,35 +59,27 @@ Stage 1 stack is **category-routed LPs + Brand/Core/Role Search package**, evide
 
 | # | File |
 |---|------|
-| **MEGA** | **`CHATGPT-MEGA-AUDIT.md`** ← paste into ChatGPT |
+| **DEBRIEF** | **`CHATGPT-DEBRIEF.md`** ← paste into ChatGPT first |
+| **MEGA** | **`CHATGPT-MEGA-AUDIT.md`** |
 | 0 | `DECISIONS.md` · `LAUNCH-SHEET.md` |
-| 1 | `01-current-state-audit.md` |
-| 2 | `02-historical-data-audit.md` + `historical-performance-summary.json` |
-| 3 | `03-search-term-category-findings.md` |
-| 4 | `04-lp-matrix.md` |
-| 5 | `05-ab-matrix.md` |
-| 6 | `06-stage1-campaign-architecture.md` |
-| 7 | `07-phased-activation-recommendation.md` |
+| 1–12 | Audit docs `01`–`12` |
 | 8 | `google-ads-editor-import.csv` |
-| 9 | `09-ads-human-review-matrix.md` |
-| 10 | `10-tracking-event-spec.md` |
-| 11 | `11-qa-report.md` |
-| 12 | `12-blocker-decision-list.md` |
 
 ---
 
-## Inventory (v5)
+## Inventory (v6)
 
 | Entity | Count |
 |--------|------:|
-| Campaigns | 22 |
-| Ad groups | 46 |
-| Positive keywords | 1604 (Exact 1218 · Phrase 386) |
-| RSAs | 82 |
-| Campaign negative rows | 4202 (191 unique × 22) |
-| CSV rows | 6198 |
+| Campaigns | 4 |
+| Ad groups | 40 |
+| Positive keywords | 1568 (Exact 1182 · Phrase 386) |
+| RSAs | 78 |
+| Campaign negative rows | 764 (191 unique × 4) |
+| CSV rows | 2498 |
 
-Budgets/CPC filled per `DECISIONS.md` (US Brand $40 / Core $60 / Role $25 · AU Brand+Core A$40 / Role A$20 · Max CPC US $8 / AU A$6).
+Budgets/CPC: US Core $75 / Roles $50 · AU Core A$75 / Roles A$50 · Max CPC US $8 / AU A$6.  
+Monthly at placeholders ≈ **$3.8k US + A$3.8k AU** (inside $10–20k/account story).
 
 ---
 
@@ -93,9 +99,9 @@ Budgets/CPC filled per `DECISIONS.md` (US Brand $40 / Core $60 / Role $25 · AU 
 
 ## Operator next
 
-1. Paste `CHATGPT-MEGA-AUDIT.md` into ChatGPT.  
+1. Paste `CHATGPT-DEBRIEF.md` into ChatGPT.  
 2. Replace log-only with real delivery; optional custom domain.  
 3. Import CSV **Paused**.  
 4. Enable only per `07-phased-activation-recommendation.md` after explicit approval.
 
-*End of v5 short report — Ads not enabled.*
+*End of v6 short report — Ads not enabled.*

@@ -1,4 +1,4 @@
-# 12 — Blocker / decision list
+# 12 — Blocker / decision list (v6)
 
 **Do not declare launch-ready while these remain.**
 
@@ -9,7 +9,7 @@
 | 3 | **Response time SLA** | Ops | Who answers inquiries, how fast? |
 | 4 | **Temp delivery method** | George | Log-only for QA now; replace with email/webhook before paid traffic |
 | 5 | **Zoho** | George | Unresolved — optional; must not fake sync |
-| 6 | **Budgets** | ~~open~~ | **Locked defaults:** US Brand $40 / Core $60 / Role $25; AU Brand+Core A$40 / Role A$20 |
+| 6 | **Architecture / budgets** | ~~open~~ | **Locked:** 2 campaigns/account; US Core $75 / Roles $50; AU Core A$75 / Roles A$50; Brand deferred |
 | 7 | **Max CPC** | ~~open~~ | **Locked defaults:** US $8 · AU A$6 |
 | 8 | **Proof / content** | Marketing | Badges OK as badges; no invented testimonials/pricing |
 | 9 | **CallRail timing** | George | Later-ready — don’t treat phone clicks as qualified until live |
@@ -18,6 +18,7 @@
 | 12 | **GTM / Ads conversion mapping** | George | Map `employer_inquiry_submitted` carefully — observe first |
 | 13 | **Legacy live brand / museum campaigns** | George | Pause/coexist decision outside this CSV |
 | 14 | **ENABLE anything** | George | Explicit approval only — package ships Paused |
+| 15 | **Brand Search** | George | Deferred — add later only with explicit scope |
 
 ---
 
@@ -27,4 +28,5 @@
 - A/B assignment exists  
 - Double UTM fixed in package  
 - Consult/demo language removed from Stage 1 RSA + LP CTAs  
-- Historical ST mined into Exact/Phrase (with limitations documented)
+- Historical ST mined into Exact/Phrase (with limitations documented)  
+- 2-campaign architecture rebuilt (v6)
