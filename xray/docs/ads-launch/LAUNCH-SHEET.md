@@ -1,11 +1,12 @@
 # Stage 1 Google Ads launch sheet (paused import)
 
 **Status:** Import-ready · all entities **Paused** · no live mutations.  
-**Package version:** stage1-v3 (remediated)  
+**Package version:** stage1-v4 (search-term evidence fold)  
 **Accounts:** USA `496-715-1855` · AU `573-539-1940`.  
 **Import file:** `ads-launch/google-ads-editor-import.csv`  
 **Full audit report:** `ads-launch/FULL-BUILD-REPORT.md`  
-**Rebuild script:** `ads-launch/build_stage1_editor_package.py`
+**Rebuild script:** `ads-launch/build_stage1_editor_package.py`  
+**Evidence:** `audit-data/performance/search_terms_*_2026-08-05.csv` + campaign metrics
 
 ---
 
@@ -14,10 +15,10 @@
 | Decision | Spec |
 |----------|------|
 | Brand | **Deferred** — not in this CSV |
-| Intent | Long-tail employer hire / outsource / Filipino / Philippines / VA / offshore |
+| Intent | Employer hire / outsource / Filipino / Philippines / VA / offshore — **ranked from real ST** |
 | Roles only | Digital marketing · Social media · Accounting · Bookkeeping · Administration · Customer service · HR · Recruitment · Sales |
 | Themes | Each role: **Hire_PH** + **Outsource_PH** (Admin: Hire + EA + city test) |
-| Excludes | Medical staffing · Technology staffing · Spanish-language |
+| Excludes | Medical staffing · Technology staffing · Spanish-language · DSA catch-alls · job-seeker / WFH fluff / review-pricing research |
 | Match | Exact + Phrase only · **no** Broad / PMax / DSA / Demand Gen |
 | Bid | Maximize Clicks · Max CPC = `[APPROVAL_MAX_CPC]` |
 | Networks | Google Search · partners OFF · Display expansion OFF (confirm in Editor) |
@@ -34,7 +35,7 @@
 - `VC_US_S_ROLE_social_media`
 - `VC_US_S_ROLE_accounting`
 - `VC_US_S_ROLE_bookkeeping`
-- `VC_US_S_ROLE_administration` ← Hire_PH (general VA) + EA_PH + Admin_City_Test
+- `VC_US_S_ROLE_administration` ← Hire_PH (general VA / ST-heavy) + EA_PH + Admin_City_Test
 - `VC_US_S_ROLE_customer_service`
 - `VC_US_S_ROLE_hr`
 - `VC_US_S_ROLE_recruitment`
@@ -44,7 +45,7 @@
 
 Same campaign names with `VC_AU_*`. AU creatives use Australian / SMEs / organisation / specialise where natural — not a US clone with country swap.
 
-**Not included:** `VC_*_S_BRAND` · old CORE-only shell · empty ROLE held stubs.
+**Not included:** `VC_*_S_BRAND` · old CORE-only shell · empty ROLE held stubs · DSA / PM_*_RSA farms.
 
 ---
 
@@ -83,6 +84,6 @@ Same campaign names with `VC_AU_*`. AU creatives use Australian / SMEs / organis
 
 ---
 
-## Counts (package v3)
+## Counts (package v4)
 
-1186 positive keywords (Exact+Phrase) · 74 RSAs · 18 campaigns · 38 ad groups · 113 unique curated negatives per campaign · callouts + structured snippets + microsite sitelinks · `lp_version=stage1-v3`.
+1546 positive keywords (Exact+Phrase) · 74 RSAs · 18 campaigns · 38 ad groups · 191 unique curated negatives per campaign · callouts + structured snippets + microsite sitelinks · `lp_version=stage1-v4`.

@@ -1,0 +1,846 @@
+{
+  "keepers": [
+    {
+      "term": "virtual assistant",
+      "conv": 341.2,
+      "cost": 107756.0,
+      "clicks": 4975,
+      "usa_cost": 65582.0,
+      "au_cost": 42174.0
+    },
+    {
+      "term": "virtual assistant philippines",
+      "conv": 81.5,
+      "cost": 37503.0,
+      "clicks": 847,
+      "usa_cost": 17669.0,
+      "au_cost": 19834.0
+    },
+    {
+      "term": "virtual assistants",
+      "conv": 32.5,
+      "cost": 11476.0,
+      "clicks": 419,
+      "usa_cost": 5337.0,
+      "au_cost": 6139.0
+    },
+    {
+      "term": "philippines virtual assistant",
+      "conv": 25.8,
+      "cost": 13947.0,
+      "clicks": 280,
+      "usa_cost": 7613.0,
+      "au_cost": 6334.0
+    },
+    {
+      "term": "virtual assistant services",
+      "conv": 14.0,
+      "cost": 6160.0,
+      "clicks": 227,
+      "usa_cost": 5473.0,
+      "au_cost": 688.0
+    },
+    {
+      "term": "hire virtual assistant",
+      "conv": 11.5,
+      "cost": 3970.0,
+      "clicks": 120,
+      "usa_cost": 2412.0,
+      "au_cost": 1558.0
+    },
+    {
+      "term": "virtual assistants philippines",
+      "conv": 10.3,
+      "cost": 7735.0,
+      "clicks": 144,
+      "usa_cost": 5337.0,
+      "au_cost": 2397.0
+    },
+    {
+      "term": "filipino virtual assistant",
+      "conv": 9.0,
+      "cost": 4725.0,
+      "clicks": 113,
+      "usa_cost": 3378.0,
+      "au_cost": 1347.0
+    },
+    {
+      "term": "how to hire a virtual assistant",
+      "conv": 8.5,
+      "cost": 730.0,
+      "clicks": 40,
+      "usa_cost": 610.0,
+      "au_cost": 120.0
+    },
+    {
+      "term": "virtual assistant hire",
+      "conv": 8.0,
+      "cost": 1626.0,
+      "clicks": 44,
+      "usa_cost": 422.0,
+      "au_cost": 1204.0
+    },
+    {
+      "term": "hire a virtual assistant",
+      "conv": 7.9,
+      "cost": 2672.0,
+      "clicks": 73,
+      "usa_cost": 1586.0,
+      "au_cost": 1086.0
+    },
+    {
+      "term": "hire a va",
+      "conv": 6.0,
+      "cost": 3177.0,
+      "clicks": 78,
+      "usa_cost": 1132.0,
+      "au_cost": 2046.0
+    },
+    {
+      "term": "virtual assistants for hire",
+      "conv": 6.0,
+      "cost": 2504.0,
+      "clicks": 70,
+      "usa_cost": 1822.0,
+      "au_cost": 681.0
+    },
+    {
+      "term": "social media manager philippines",
+      "conv": 6.0,
+      "cost": 2451.0,
+      "clicks": 81,
+      "usa_cost": 1155.0,
+      "au_cost": 1295.0
+    },
+    {
+      "term": "virtual marketing assistant",
+      "conv": 6.0,
+      "cost": 2152.0,
+      "clicks": 84,
+      "usa_cost": 1086.0,
+      "au_cost": 1066.0
+    },
+    {
+      "term": "va philippines",
+      "conv": 5.6,
+      "cost": 5314.0,
+      "clicks": 135,
+      "usa_cost": 2128.0,
+      "au_cost": 3186.0
+    },
+    {
+      "term": "lead generation virtual assistant",
+      "conv": 5.3,
+      "cost": 331.0,
+      "clicks": 11,
+      "usa_cost": 291.0,
+      "au_cost": 40.0
+    },
+    {
+      "term": "hire virtual assistant from philippines",
+      "conv": 5.0,
+      "cost": 1231.0,
+      "clicks": 24,
+      "usa_cost": 648.0,
+      "au_cost": 583.0
+    },
+    {
+      "term": "marketing virtual assistant",
+      "conv": 4.5,
+      "cost": 1192.0,
+      "clicks": 35,
+      "usa_cost": 727.0,
+      "au_cost": 465.0
+    },
+    {
+      "term": "philippine virtual assistant",
+      "conv": 4.0,
+      "cost": 3307.0,
+      "clicks": 88,
+      "usa_cost": 2751.0,
+      "au_cost": 556.0
+    },
+    {
+      "term": "philippines va",
+      "conv": 4.0,
+      "cost": 2306.0,
+      "clicks": 62,
+      "usa_cost": 966.0,
+      "au_cost": 1340.0
+    },
+    {
+      "term": "overseas virtual assistant",
+      "conv": 4.0,
+      "cost": 988.0,
+      "clicks": 26,
+      "usa_cost": 653.0,
+      "au_cost": 335.0
+    },
+    {
+      "term": "virtual social media assistant",
+      "conv": 4.0,
+      "cost": 806.0,
+      "clicks": 28,
+      "usa_cost": 562.0,
+      "au_cost": 243.0
+    },
+    {
+      "term": "va agency",
+      "conv": 4.0,
+      "cost": 403.0,
+      "clicks": 24,
+      "usa_cost": 298.0,
+      "au_cost": 105.0
+    },
+    {
+      "term": "looking for a virtual assistant",
+      "conv": 4.0,
+      "cost": 273.0,
+      "clicks": 8,
+      "usa_cost": 114.0,
+      "au_cost": 159.0
+    },
+    {
+      "term": "social media virtual assistant",
+      "conv": 3.2,
+      "cost": 1346.0,
+      "clicks": 49,
+      "usa_cost": 1095.0,
+      "au_cost": 251.0
+    },
+    {
+      "term": "virtual assistant in philippines",
+      "conv": 3.0,
+      "cost": 2075.0,
+      "clicks": 54,
+      "usa_cost": 1700.0,
+      "au_cost": 375.0
+    },
+    {
+      "term": "philippines bookkeeper",
+      "conv": 3.0,
+      "cost": 1366.0,
+      "clicks": 15,
+      "usa_cost": 1078.0,
+      "au_cost": 288.0
+    },
+    {
+      "term": "digital marketing philippines",
+      "conv": 3.0,
+      "cost": 929.0,
+      "clicks": 20,
+      "usa_cost": 785.0,
+      "au_cost": 144.0
+    },
+    {
+      "term": "hire va",
+      "conv": 3.0,
+      "cost": 928.0,
+      "clicks": 30,
+      "usa_cost": 565.0,
+      "au_cost": 363.0
+    },
+    {
+      "term": "va in philippines",
+      "conv": 3.0,
+      "cost": 916.0,
+      "clicks": 34,
+      "usa_cost": 449.0,
+      "au_cost": 467.0
+    },
+    {
+      "term": "virtual assistant agency",
+      "conv": 3.0,
+      "cost": 866.0,
+      "clicks": 72,
+      "usa_cost": 368.0,
+      "au_cost": 498.0
+    },
+    {
+      "term": "va agency philippines",
+      "conv": 3.0,
+      "cost": 817.0,
+      "clicks": 17,
+      "usa_cost": 606.0,
+      "au_cost": 211.0
+    },
+    {
+      "term": "virtual assistants in philippines",
+      "conv": 3.0,
+      "cost": 783.0,
+      "clicks": 10,
+      "usa_cost": 661.0,
+      "au_cost": 122.0
+    },
+    {
+      "term": "virtual admin assistant",
+      "conv": 3.0,
+      "cost": 705.0,
+      "clicks": 29,
+      "usa_cost": 89.0,
+      "au_cost": 616.0
+    },
+    {
+      "term": "offshore virtual assistants",
+      "conv": 3.0,
+      "cost": 673.0,
+      "clicks": 28,
+      "usa_cost": 107.0,
+      "au_cost": 566.0
+    },
+    {
+      "term": "filipino social media manager",
+      "conv": 3.0,
+      "cost": 631.0,
+      "clicks": 19,
+      "usa_cost": 547.0,
+      "au_cost": 84.0
+    },
+    {
+      "term": "virtual assistant social media",
+      "conv": 3.0,
+      "cost": 509.0,
+      "clicks": 26,
+      "usa_cost": 342.0,
+      "au_cost": 167.0
+    },
+    {
+      "term": "virtual assistant bookkeeping",
+      "conv": 3.0,
+      "cost": 301.0,
+      "clicks": 7,
+      "usa_cost": 238.0,
+      "au_cost": 63.0
+    },
+    {
+      "term": "virtual assistant for sales",
+      "conv": 3.0,
+      "cost": 236.0,
+      "clicks": 5,
+      "usa_cost": 219.0,
+      "au_cost": 17.0
+    },
+    {
+      "term": "outsourcing virtual assistant",
+      "conv": 3.0,
+      "cost": 128.0,
+      "clicks": 5,
+      "usa_cost": 27.0,
+      "au_cost": 102.0
+    },
+    {
+      "term": "hire philippines virtual assistant",
+      "conv": 2.0,
+      "cost": 3267.0,
+      "clicks": 65,
+      "usa_cost": 1714.0,
+      "au_cost": 1553.0
+    },
+    {
+      "term": "filipino va",
+      "conv": 2.0,
+      "cost": 2505.0,
+      "clicks": 52,
+      "usa_cost": 1263.0,
+      "au_cost": 1242.0
+    },
+    {
+      "term": "hire a virtual assistant philippines",
+      "conv": 2.0,
+      "cost": 1746.0,
+      "clicks": 40,
+      "usa_cost": 1088.0,
+      "au_cost": 658.0
+    },
+    {
+      "term": "virtual assistant overseas",
+      "conv": 2.0,
+      "cost": 1157.0,
+      "clicks": 30,
+      "usa_cost": 1007.0,
+      "au_cost": 151.0
+    },
+    {
+      "term": "virtual assistant for hire",
+      "conv": 2.0,
+      "cost": 1084.0,
+      "clicks": 35,
+      "usa_cost": 947.0,
+      "au_cost": 137.0
+    },
+    {
+      "term": "bookkeeping philippines",
+      "conv": 2.0,
+      "cost": 945.0,
+      "clicks": 17,
+      "usa_cost": 847.0,
+      "au_cost": 98.0
+    },
+    {
+      "term": "offshore va",
+      "conv": 2.0,
+      "cost": 923.0,
+      "clicks": 29,
+      "usa_cost": 24.0,
+      "au_cost": 899.0
+    },
+    {
+      "term": "hire virtual assistant philippines",
+      "conv": 2.0,
+      "cost": 820.0,
+      "clicks": 19,
+      "usa_cost": 397.0,
+      "au_cost": 423.0
+    },
+    {
+      "term": "marketing va",
+      "conv": 2.0,
+      "cost": 639.0,
+      "clicks": 18,
+      "usa_cost": 376.0,
+      "au_cost": 263.0
+    },
+    {
+      "term": "va for hire",
+      "conv": 2.0,
+      "cost": 603.0,
+      "clicks": 17,
+      "usa_cost": 473.0,
+      "au_cost": 130.0
+    },
+    {
+      "term": "social media management philippines",
+      "conv": 2.0,
+      "cost": 455.0,
+      "clicks": 12,
+      "usa_cost": 76.0,
+      "au_cost": 378.0
+    },
+    {
+      "term": "hire va philippines",
+      "conv": 2.0,
+      "cost": 441.0,
+      "clicks": 8,
+      "usa_cost": 176.0,
+      "au_cost": 265.0
+    },
+    {
+      "term": "hire philippines social media manager",
+      "conv": 2.0,
+      "cost": 436.0,
+      "clicks": 10,
+      "usa_cost": 216.0,
+      "au_cost": 220.0
+    },
+    {
+      "term": "admin assistant philippines",
+      "conv": 2.0,
+      "cost": 356.0,
+      "clicks": 5,
+      "usa_cost": 236.0,
+      "au_cost": 121.0
+    },
+    {
+      "term": "sales virtual assistant",
+      "conv": 2.0,
+      "cost": 272.0,
+      "clicks": 8,
+      "usa_cost": 244.0,
+      "au_cost": 28.0
+    },
+    {
+      "term": "outsource virtual assistant philippines",
+      "conv": 2.0,
+      "cost": 167.0,
+      "clicks": 2,
+      "usa_cost": 88.0,
+      "au_cost": 79.0
+    },
+    {
+      "term": "outsource customer service",
+      "conv": 2.0,
+      "cost": 48.0,
+      "clicks": 2,
+      "usa_cost": 0.0,
+      "au_cost": 48.0
+    },
+    {
+      "term": "social media assistant",
+      "conv": 1.0,
+      "cost": 1089.0,
+      "clicks": 73,
+      "usa_cost": 849.0,
+      "au_cost": 240.0
+    },
+    {
+      "term": "social media va",
+      "conv": 1.0,
+      "cost": 1002.0,
+      "clicks": 28,
+      "usa_cost": 436.0,
+      "au_cost": 566.0
+    },
+    {
+      "term": "bookkeeper philippines",
+      "conv": 1.0,
+      "cost": 997.0,
+      "clicks": 18,
+      "usa_cost": 614.0,
+      "au_cost": 383.0
+    },
+    {
+      "term": "philippines accounting outsourcing",
+      "conv": 1.0,
+      "cost": 466.0,
+      "clicks": 7,
+      "usa_cost": 291.0,
+      "au_cost": 175.0
+    },
+    {
+      "term": "digital marketing virtual assistant",
+      "conv": 1.0,
+      "cost": 437.0,
+      "clicks": 13,
+      "usa_cost": 242.0,
+      "au_cost": 195.0
+    },
+    {
+      "term": "sales va",
+      "conv": 1.0,
+      "cost": 266.0,
+      "clicks": 4,
+      "usa_cost": 94.0,
+      "au_cost": 173.0
+    },
+    {
+      "term": "customer service virtual assistant",
+      "conv": 1.0,
+      "cost": 96.0,
+      "clicks": 5,
+      "usa_cost": 92.0,
+      "au_cost": 4.0
+    },
+    {
+      "term": "philippines executive assistant",
+      "conv": 0.0,
+      "cost": 553.0,
+      "clicks": 8,
+      "usa_cost": 317.0,
+      "au_cost": 236.0
+    },
+    {
+      "term": "virtual executive assistant philippines",
+      "conv": 0.0,
+      "cost": 486.0,
+      "clicks": 10,
+      "usa_cost": 294.0,
+      "au_cost": 191.0
+    },
+    {
+      "term": "outsource accounting philippines",
+      "conv": 0.0,
+      "cost": 372.0,
+      "clicks": 1,
+      "usa_cost": 372.0,
+      "au_cost": 0.0
+    },
+    {
+      "term": "virtual bookkeeper philippines",
+      "conv": 0.0,
+      "cost": 360.0,
+      "clicks": 6,
+      "usa_cost": 220.0,
+      "au_cost": 140.0
+    },
+    {
+      "term": "philippines customer service",
+      "conv": 0.0,
+      "cost": 318.0,
+      "clicks": 8,
+      "usa_cost": 226.0,
+      "au_cost": 92.0
+    },
+    {
+      "term": "va bookkeeper",
+      "conv": 0.0,
+      "cost": 304.0,
+      "clicks": 4,
+      "usa_cost": 258.0,
+      "au_cost": 46.0
+    },
+    {
+      "term": "virtual assistant appointment setter",
+      "conv": 0.0,
+      "cost": 301.0,
+      "clicks": 30,
+      "usa_cost": 280.0,
+      "au_cost": 21.0
+    },
+    {
+      "term": "philippines accountant",
+      "conv": 0.0,
+      "cost": 249.0,
+      "clicks": 4,
+      "usa_cost": 63.0,
+      "au_cost": 186.0
+    },
+    {
+      "term": "digital marketing outsourcing philippines",
+      "conv": 0.0,
+      "cost": 161.0,
+      "clicks": 4,
+      "usa_cost": 161.0,
+      "au_cost": 0.0
+    },
+    {
+      "term": "outsource digital marketing philippines",
+      "conv": 0.0,
+      "cost": 159.0,
+      "clicks": 4,
+      "usa_cost": 146.0,
+      "au_cost": 14.0
+    },
+    {
+      "term": "appointment setter philippines",
+      "conv": 0.0,
+      "cost": 61.0,
+      "clicks": 2,
+      "usa_cost": 61.0,
+      "au_cost": 0.0
+    },
+    {
+      "term": "human resources virtual assistant",
+      "conv": 0.0,
+      "cost": 61.0,
+      "clicks": 1,
+      "usa_cost": 0.0,
+      "au_cost": 61.0
+    },
+    {
+      "term": "filipino accountant",
+      "conv": 0.0,
+      "cost": 38.0,
+      "clicks": 4,
+      "usa_cost": 15.0,
+      "au_cost": 23.0
+    },
+    {
+      "term": "accounting virtual assistant",
+      "conv": 0.0,
+      "cost": 32.0,
+      "clicks": 1,
+      "usa_cost": 32.0,
+      "au_cost": 0.0
+    }
+  ],
+  "kills": [
+    {
+      "term": "onlinejobs ph",
+      "conv": 87.0,
+      "cost": 32108.0,
+      "clicks": 2307,
+      "usa_cost": 27798.0,
+      "au_cost": 4310.0
+    },
+    {
+      "term": "hello rache",
+      "conv": 4.0,
+      "cost": 3315.0,
+      "clicks": 148,
+      "usa_cost": 3288.0,
+      "au_cost": 27.0
+    },
+    {
+      "term": "free virtual assistant",
+      "conv": 7.0,
+      "cost": 2510.0,
+      "clicks": 1913,
+      "usa_cost": 1621.0,
+      "au_cost": 889.0
+    },
+    {
+      "term": "bruntwork reviews",
+      "conv": 1.0,
+      "cost": 2184.0,
+      "clicks": 61,
+      "usa_cost": 1358.0,
+      "au_cost": 826.0
+    },
+    {
+      "term": "onlinejobs ph pricing",
+      "conv": 4.0,
+      "cost": 1978.0,
+      "clicks": 127,
+      "usa_cost": 1958.0,
+      "au_cost": 20.0
+    },
+    {
+      "term": "online ph",
+      "conv": 0.0,
+      "cost": 1893.0,
+      "clicks": 115,
+      "usa_cost": 1529.0,
+      "au_cost": 364.0
+    },
+    {
+      "term": "virtual world assistants",
+      "conv": 0.0,
+      "cost": 1024.0,
+      "clicks": 82,
+      "usa_cost": 1016.0,
+      "au_cost": 8.0
+    },
+    {
+      "term": "onlinejobs",
+      "conv": 0.0,
+      "cost": 892.0,
+      "clicks": 68,
+      "usa_cost": 738.0,
+      "au_cost": 154.0
+    },
+    {
+      "term": "remote coworker reviews",
+      "conv": 0.0,
+      "cost": 850.0,
+      "clicks": 14,
+      "usa_cost": 850.0,
+      "au_cost": 0.0
+    },
+    {
+      "term": "onlineph",
+      "conv": 0.0,
+      "cost": 810.0,
+      "clicks": 29,
+      "usa_cost": 670.0,
+      "au_cost": 140.0
+    },
+    {
+      "term": "virtual assistant philippines cost",
+      "conv": 1.0,
+      "cost": 771.0,
+      "clicks": 28,
+      "usa_cost": 668.0,
+      "au_cost": 103.0
+    },
+    {
+      "term": "virtual assistant jobs",
+      "conv": 4.0,
+      "cost": 723.0,
+      "clicks": 187,
+      "usa_cost": 55.0,
+      "au_cost": 668.0
+    },
+    {
+      "term": "wing assistant",
+      "conv": 0.0,
+      "cost": 715.0,
+      "clicks": 14,
+      "usa_cost": 710.0,
+      "au_cost": 5.0
+    },
+    {
+      "term": "upwork virtual assistant",
+      "conv": 0.0,
+      "cost": 656.0,
+      "clicks": 36,
+      "usa_cost": 412.0,
+      "au_cost": 243.0
+    },
+    {
+      "term": "virtual assistant cost",
+      "conv": 0.0,
+      "cost": 641.0,
+      "clicks": 45,
+      "usa_cost": 471.0,
+      "au_cost": 170.0
+    },
+    {
+      "term": "top 10 virtual assistant companies",
+      "conv": 0.0,
+      "cost": 596.0,
+      "clicks": 13,
+      "usa_cost": 596.0,
+      "au_cost": 0.0
+    },
+    {
+      "term": "hellorache",
+      "conv": 0.0,
+      "cost": 545.0,
+      "clicks": 31,
+      "usa_cost": 540.0,
+      "au_cost": 5.0
+    },
+    {
+      "term": "work from home",
+      "conv": 1.0,
+      "cost": 448.0,
+      "clicks": 97,
+      "usa_cost": 389.0,
+      "au_cost": 59.0
+    },
+    {
+      "term": "virtual assistant jobs australia",
+      "conv": 3.0,
+      "cost": 426.0,
+      "clicks": 92,
+      "usa_cost": 0.0,
+      "au_cost": 426.0
+    },
+    {
+      "term": "what is a virtual assistant",
+      "conv": 0.0,
+      "cost": 387.0,
+      "clicks": 100,
+      "usa_cost": 278.0,
+      "au_cost": 109.0
+    },
+    {
+      "term": "asistente virtual",
+      "conv": 0.0,
+      "cost": 298.0,
+      "clicks": 31,
+      "usa_cost": 298.0,
+      "au_cost": 0.0
+    },
+    {
+      "term": "virtual assistant salary",
+      "conv": 1.0,
+      "cost": 270.0,
+      "clicks": 39,
+      "usa_cost": 172.0,
+      "au_cost": 98.0
+    },
+    {
+      "term": "virtual assistant philippines salary",
+      "conv": 0.0,
+      "cost": 231.0,
+      "clicks": 25,
+      "usa_cost": 127.0,
+      "au_cost": 104.0
+    },
+    {
+      "term": "asistente virtual bilingue",
+      "conv": 0.0,
+      "cost": 66.0,
+      "clicks": 2,
+      "usa_cost": 62.0,
+      "au_cost": 3.0
+    },
+    {
+      "term": "argentina virtual assistant",
+      "conv": 0.0,
+      "cost": 50.0,
+      "clicks": 1,
+      "usa_cost": 50.0,
+      "au_cost": 0.0
+    },
+    {
+      "term": "virtual assistant colombia",
+      "conv": 0.0,
+      "cost": 43.0,
+      "clicks": 2,
+      "usa_cost": 43.0,
+      "au_cost": 0.0
+    }
+  ]
+}

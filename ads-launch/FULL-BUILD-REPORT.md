@@ -2,130 +2,148 @@
 
 **For:** ChatGPT audit + George operator handoff  
 **Generated:** 2026-08-05  
-**Remediated:** 2026-08-05 (v3)  
+**Remediated:** 2026-08-05 (v3 creatives) → **v4 evidence fold** (same evening)  
 **Package:** `ads-launch/google-ads-editor-import.csv`  
 **Builder:** `ads-launch/build_stage1_editor_package.py` (re-runnable)  
 **Accounts:** USA `496-715-1855` · Australia `573-539-1940`  
 **Status of all entities in CSV:** **Paused**  
-**Live Ads mutations:** none (no API, no enable)
-
-> **ChatGPT critique note:** George’s exact ChatGPT critique text was **not in the repo**. This remediation audited against the failure modes George listed (template RSAs, thin keywords, fat AGs, AU clone, empty assets, fake history, fake DKI) and fixed what was actually weak.
-
----
-
-## 0. Remediation — what was wrong (v2) and what changed (v3)
-
-### Honest verdict on what we shipped before (v2)
-
-ChatGPT’s instinct was fair. The v2 package was structurally complete but creatively lazy:
-
-- **Template RSAs** — “Recruit Vet & Manage”, “Employers Hiring Only”, “Request a Hiring Consult”, “Clear Hiring Path”, “Not a Gig Marketplace” repeated across nearly every role. Descriptions were the same paragraph with the role noun swapped.
-- **One fat ad group per role** — `{Role}_PH` mixed hire + outsource + VA language; poor query→creative relevance.
-- **Thin keywords** — ~20 Exact + 5 Phrase per role (except admin). Lots of near-duplicate rearrangements; digital marketing missing offshore; Phrase sets were mostly Exact clones.
-- **AU ≈ US** — only `US`→`AU` / `US business`→`Australian business`. No AU spelling (`organisation`, `specialise`, `categorisation`) and no SME framing.
-- **DKI underdone** — claimed “light DKI” but only Administration had `{KeyWord:…}`; other roles had zero query mirroring.
-- **Negatives adequate-but-lazy** — job-seeker/info/medical/tech/spanish covered; missing platform bleed (Wishup/Athena/etc.), `how to`, `meaning`, `vacancies`, `va jobs`, etc.
-- **Assets were fine** — callouts / sitelinks / snippets were filled (not empty). Not a real gap.
-- **Historical mining was partially honest** — keywords were archaeology-influenced, but the report over-sold uniqueness. No fake CTR/conv claims (that part was clean).
-- **Brand deferred + CORE absorbed into Administration** — intentional and kept; admin Hire AG now carries the full hire-VA depth again.
-
-### What v3 fixed
-
-| Gap | Fix |
-|-----|-----|
-| Template RSAs | Rewrote creatives per role × theme × angle. Shared CTAs capped; builder QA fails if a non-DKI headline appears in >12 US primary RSAs. |
-| Fat AGs | Split every role into **Hire_PH** + **Outsource_PH** (Admin: **Hire_PH** + **EA_PH** + city test). |
-| Thin KWs | ~48–62 Exact + ~15–25 Phrase per role (US); long-tail hire/outsource/Filipino/offshore/VA variants from Editor archaeology + curation. |
-| AU clone | Market-aware copy: Australian / SMEs / organisation / specialise / categorisation where natural. |
-| DKI | `{KeyWord:…}` on every Hire/EA **B_role** RSA (20 ads) + city `{LOCATION(City):…}` test. |
-| Negatives | Expanded to **113** unique curated Broad negatives (platforms, vacancies, how-to, VA job salary, graphic/web design bleed). |
-| LP version | `lp_version=stage1-v3` |
-
-### What we did **not** invent
-
-- No CTR / CPC / conversion rankings (still no performance CSVs).
-- No pricing, Top 1%, Save 80%, $/hr.
-- No WordPress sitelinks.
-- Budgets / Max CPC still `[APPROVAL_*]` only.
+**Live Ads mutations:** none (no API, no enable)  
+**LP version:** `lp_version=stage1-v4`
 
 ---
 
-## 1. Executive verdict (v3)
+## 0. What changed vs v3 (honest)
 
-Stage 1 is **role-first Search** for Philippine remote staffing employers across **nine service lines**. Brand deferred. Every primary theme has keywords + **fully filled unique RSAs** (15H / 4D). Exact + Phrase only. Maximize Clicks. Final URLs → vision microsite `/us` and `/au`. Budgets and Max CPC remain George placeholders.
+v3 fixed lazy RSAs / fat AGs / thin KWs / AU clone. It did **not** use performance CSVs (they arrived later the same evening).
+
+**v4 folds real ~2y Editor search-term + campaign metrics** from `audit-data/performance/` into positives and negatives.
+
+| Gap in v3 | v4 fix |
+|-----------|--------|
+| Keywords archaeology-only | Promoted converting / high-intent employer ST into Exact+Phrase (79 audited keepers all present) |
+| Negatives strategy-curated | Expanded with real waste: DSA catch-alls, Spanish/LATAM, WFH fluff, review/pricing, salary/jobs clusters |
+| Blanket `how to` negative | Removed — was blocking converting `how to hire a virtual assistant` (8.5 conv / $730). Kept DIY how-tos (`how to become`, `how to make money`, …) |
+| Admin RSA still generic-ish | Rewrote Hire_PH angles around hire-VA / PH services / offshore VA ST language |
+| Report oversold “mined” without ST | This file cites cost/clicks/conv from exports |
+
+**Unchanged (still correct):** brand deferred · 9 roles US+AU · Hire_PH + Outsource_PH · Exact+Phrase only · Max Clicks · full unique RSAs · microsite Final URLs · `[APPROVAL_*]` budgets/CPC · no DSA/PMax/Broad positives.
 
 ---
 
-## 2. Historical data — available vs missing
+## 1. Executive verdict (v4)
 
-### Available (mined)
+Stage 1 is **role-first Search** for Philippine remote staffing employers across **nine service lines**, now keyword-ranked from ~2y search terms. Brand deferred. Every primary theme has keywords + **fully filled unique RSAs** (15H / 4D). Exact + Phrase only. Maximize Clicks. Final URLs → vision microsite `/us` and `/au`. Budgets and Max CPC remain George placeholders.
+
+**Do not clone** historical DSA catch-alls or thin `PM_*_RSA_*` theme farms — campaign metrics show those as CPA traps.
+
+---
+
+## 2. Evidence sources
 
 | Source | Path | Used for |
 |--------|------|----------|
-| Editor USA export | `audit-data/editor-exports/virtual-coworker-usa.csv` | Keyword archaeology via `docs/rebuild/_scratch_keywords.json` |
-| Editor AU export | `audit-data/editor-exports/virtual-coworker-australia.csv` | Same, AU mirror |
-| Editor structure audit | `audit-data/editor-account-audit.md` | Enabled remnant = brand Max Conv → WP |
-| Keyword scratch | `docs/rebuild/_scratch_keywords.json` | hire_va_ph / role_specific / bookkeeping employer terms |
-| Negative scratch + `03-*.md` | curated job-seeker / info / platform lists | |
-| Prior blueprint | `docs/rebuild/02-*.md`, `03-*.md` | Naming, Exact-first, honesty rules |
-| Pilot status | `xray/data/pilot-status.js` | Confirmed 9 prioritize roles + excludes |
+| USA search terms | `audit-data/performance/search_terms_usa_4967151855_2026-08-05.csv` | Keep/kill ranking (~66.9k rows, UTF-16 TSV) |
+| AU search terms | `audit-data/performance/search_terms_au_5735391940_2026-08-05.csv` | Same (~26.2k rows) |
+| USA campaign metrics | `audit-data/performance/campaigns_metrics_usa_4967151855_2026-08-05.csv` | Avoid cloning DSA/RSA farms |
+| AU campaign metrics | `audit-data/performance/campaigns_metrics_au_5735391940_2026-08-05.csv` | Same |
+| Cite scratch | `ads-launch/_evidence_search_terms.json` | Aggregated keep/kill cites for this report |
+| Editor structure (earlier) | `audit-data/editor-exports/*`, scratch JSON | Archaeology long-tail where ST thin (HR/recruitment) |
 
-### Missing (explicit — do not invent)
+**Window:** Editor stats ~2024-08-01 → 2026-08-04.  
+**Honesty:** ST cost totals < campaign totals (not every click has an ST row; PMax mix). Treat **CPA = cost÷conversions**, not conv-value ROAS, until tracking re-audit. Frequency ≠ quality — employer intent + conv used together.
 
-| Missing | Implication |
-|---------|-------------|
-| Campaign / keyword / search-term **performance** CSVs | **No CTR/CPC/conv ranking used.** |
-| Ads API pulls | Intentionally not used. |
-| Live search terms report | Negatives curated from Editor lists + strategy, not live ST. |
+### Campaign-level picture (~2y)
 
-**Honesty rule:** Frequency in old Editor structure ≠ “converted” or “high CTR.”
-
----
-
-## 3. What was kept vs killed from the old account
-
-### Kept (adapted)
-
-| Kept | Why |
-|------|-----|
-| Employer PH / Filipino / hire / outsource / offshore language | Stage 1 intent |
-| Role themes with historical AG presence | Aligns with 9 lines |
-| Job-seeker + info + platform negatives | Protects Max Clicks |
-| Staffing-partner positioning (no fake pricing) | Supportable |
-| Microsite Final URLs vs WP | Rejects contaminated brand→WP pattern |
-| Admin absorbs general hire-VA (old CORE depth) | Brand deferred; roles-first |
-
-### Killed / rejected
-
-| Rejected | Why |
-|----------|-----|
-| Brand campaigns in Stage 1 | Deferred |
-| Empty ROLE shells | George hates blanks |
-| Medical / tech / Spanish | Explicit exclude |
-| Job-seeker positives | Wrong intent |
-| Broad positives | Forbidden |
-| PMax / DSA / Demand Gen / Display expansion | Out of Stage 1 |
-| “Top 1%”, “Save 80%”, $/hr, fake guarantees | Banned |
-| WP sitelinks | Contaminated sprawl |
-| Wholesale `PM_Generic Non-Qualified` | Opaque choke risk |
-| Competitor conquest farms | Deferred |
+| Account | Cost | Clicks | Conv | Worst CPA traps (do not clone) | Better cores (context only) |
+|---------|------|--------|------|--------------------------------|-----------------------------|
+| USA | ~$724k | ~87k | ~2,597 | `PM_US_DSA_Generic_Catch-all` (~$1.3k CPA), `PM_US_RSA_*` Role/Pain/Core/Competitors (CPA $2.5k–$16k) | Brand Search (~$101 CPA), SKAG VA / Specific Services / Generic VA (CPA ~$270–$440) |
+| AU | ~$457k | ~49k | ~1,413 | `PM_AU_DSA_Generic_Catch-all` (~$2.3k CPA), `PM_AU_RSA_*` Role/Core/Pain/Competitors | Brand / DSA / Competitor Search (lower CPA than RSA farms) |
 
 ---
 
-## 4. Final account architecture (v3)
+## 3. Search-term KEEP table (employer intent → package)
+
+Aggregated USA+AU. Metrics from exports — not invented. Brand / competitor conquest **not** added as positives (deferred).
+
+| Search term | Conv | Cost | Clicks | Package placement |
+|-------------|-----:|-----:|-------:|-------------------|
+| virtual assistant | 341.2 | $107,756 | 4,975 | Admin Hire Exact |
+| virtual assistant philippines | 81.5 | $37,503 | 847 | Admin Hire Exact |
+| virtual assistants | 32.5 | $11,476 | 419 | Admin Hire Exact |
+| philippines virtual assistant | 25.8 | $13,947 | 280 | Admin Hire Exact |
+| virtual assistant services | 14.0 | $6,160 | 227 | Admin Hire Exact |
+| hire virtual assistant | 11.5 | $3,970 | 120 | Admin Hire Exact |
+| virtual assistants philippines | 10.3 | $7,735 | 144 | Admin Hire Exact |
+| filipino virtual assistant | 9.0 | $4,725 | 113 | Admin Hire Exact |
+| how to hire a virtual assistant | 8.5 | $730 | 40 | Admin Hire Exact+Phrase (not negatived) |
+| virtual assistant hire | 8.0 | $1,626 | 44 | Admin Hire Exact |
+| hire a virtual assistant | 7.9 | $2,672 | 73 | Admin Hire Exact+Phrase |
+| hire a va | 6.0 | $3,177 | 78 | Admin Hire Exact |
+| virtual assistants for hire | 6.0 | $2,504 | 70 | Admin Hire Exact |
+| social media manager philippines | 6.0 | $2,451 | 81 | Social Hire Exact+Phrase |
+| virtual marketing assistant | 6.0 | $2,152 | 84 | Digital Hire Exact+Phrase |
+| va philippines | 5.6 | $5,314 | 135 | Admin Hire Exact |
+| lead generation virtual assistant | 5.3 | $331 | 11 | Sales Hire Exact+Phrase |
+| hire virtual assistant from philippines | 5.0 | $1,231 | 24 | Admin Hire Exact |
+| marketing virtual assistant | 4.5 | $1,192 | 35 | Digital Hire Exact+Phrase |
+| philippine virtual assistant | 4.0 | $3,307 | 88 | Admin Hire Exact |
+| philippines bookkeeper | 3.0 | $1,366 | 15 | Bookkeeping Hire Exact+Phrase |
+| sales virtual assistant / sales va / VA for sales | 2–3 | $236–$272 | — | Sales Hire Exact |
+| philippines accounting outsourcing | 1.0 | $466 | 7 | Accounting Outsource Exact+Phrase |
+| bookkeeper philippines | 1.0 | $997 | 18 | Bookkeeping Hire Exact+Phrase |
+| customer service virtual assistant | 1.0 | $96 | 5 | CS Hire Exact+Phrase |
+| human resources virtual assistant | 0 | $61 | 1 | HR Hire Exact (thin ST; kept as employer VA) |
+| recruitment VA terms | — | near-zero ST | — | Curated long-tail only — **not** invented winners |
+
+**Also promoted (high employer intent / spend even if low conv):** `offshore va`, `hire philippines virtual assistant`, `filipino social media manager`, `digital marketing outsourcing philippines`, `outsource accounting philippines`, `appointment setter philippines`, `philippines executive assistant`, `admin assistant philippines`, etc.
+
+**Explicitly NOT kept as positives:** brand (`virtual coworker`, `remote coworker`), competitors as conquest (`bruntwork`, `myoutdesk`, `beepo`, `onlinejobs ph` — onlinejobs is marketplace/job bleed), `free virtual assistant` (junk), bare `social media manager` without PH/hire/VA qualifier.
+
+---
+
+## 4. Search-term KILL / NEGATIVE table (real waste)
+
+| Search term / cluster | Conv | Cost | Clicks | Negative treatment |
+|-----------------------|-----:|-----:|-------:|--------------------|
+| onlinejobs ph | 87.0 | $32,108 | 2,307 | Negated (marketplace / wrong funnel for employer Max Clicks) |
+| hello rache / hellorache | 4.0 | $3,315+ | 148+ | Negated (DSA/competitor bleed) |
+| free virtual assistant | 7.0 | $2,510 | 1,913 | `free` + specific |
+| bruntwork reviews | 1.0 | $2,184 | 61 | `reviews` / `bruntwork reviews` |
+| onlinejobs ph pricing | 4.0 | $1,978 | 127 | pricing + onlinejobs cluster |
+| online ph | 0 | $1,893 | 115 | DSA catch-all |
+| virtual world assistants | 0 | $1,024 | 82 | Negated |
+| onlinejobs / onlineph | 0 | $892 / $810 | — | Negated |
+| remote coworker reviews | 0 | $850 | 14 | reviews (brand deferred anyway) |
+| virtual assistant philippines cost | 1.0 | $771 | 28 | cost/pricing cluster |
+| virtual assistant jobs | 4.0 | $723 | 187 | `jobs` / VA jobs |
+| wing assistant | 0 | $715 | 14 | DSA bleed |
+| upwork virtual assistant | 0 | $656 | 36 | upwork |
+| virtual assistant cost | 0 | $641 | 45 | cost |
+| top 10 virtual assistant companies | 0 | $596 | 13 | top 10 / research |
+| work from home (+ variants) | ~1 | $448+ | — | bare `work from home` / `wfh` (v4) |
+| what is a virtual assistant | 0 | $387 | 100 | `what is` |
+| virtual assistant salary (+ PH/AU variants) | 0–1 | $270+ | — | salary cluster |
+| asistente virtual (+ ES job variants) | 0 | ~$298+ | — | Spanish/LATAM block (~$1.3k cluster) |
+| virtual assistant colombia / argentina VA | 0 | $43–$50 | — | LATAM geo bleed |
+
+**Intentionally NOT negatived:** bare `hire` / `hiring`; `how to hire a virtual assistant` (converting employer intent).
+
+---
+
+## 5. Final account architecture (unchanged shape)
 
 ```
 USA (496-715-1855)                          AU (573-539-1940)
 ├─ VC_US_S_ROLE_digital_marketing           ├─ VC_AU_S_ROLE_digital_marketing
-│   ├─ Digital_Marketing_Hire_PH            │   ├─ Digital_Marketing_Hire_PH
-│   └─ Digital_Marketing_Outsource_PH       │   └─ Digital_Marketing_Outsource_PH
-├─ VC_US_S_ROLE_social_media                ├─ … (same shape)
+│   ├─ Digital_Marketing_Hire_PH            │   ├─ … same AG shape
+│   └─ Digital_Marketing_Outsource_PH
+├─ VC_US_S_ROLE_social_media
 ├─ VC_US_S_ROLE_accounting
 ├─ VC_US_S_ROLE_bookkeeping
 ├─ VC_US_S_ROLE_administration
-│   ├─ Administration_Hire_PH   ← general VA / CORE depth
-│   ├─ Administration_EA_PH     ← EA / admin assistant
-│   └─ Admin_City_Test          ← light geo Phrase + location RSA
+│   ├─ Administration_Hire_PH   ← general VA / CORE depth (ST-heavy)
+│   ├─ Administration_EA_PH
+│   └─ Admin_City_Test
 ├─ VC_US_S_ROLE_customer_service
 ├─ VC_US_S_ROLE_hr
 ├─ VC_US_S_ROLE_recruitment
@@ -134,84 +152,55 @@ USA (496-715-1855)                          AU (573-539-1940)
 BRAND: deferred — not in CSV
 ```
 
-### Per role campaign
-
 | Layer | Spec |
 |-------|------|
 | Type | Search · **Paused** |
-| Networks | Google Search only (confirm partners/Display **OFF**) |
+| Networks | Google Search only (partners/Display **OFF**) |
 | Geo | US or AU · Presence |
 | Language | English |
 | Bid | Maximize Clicks · Max CPC = `[APPROVAL_MAX_CPC]` |
 | Budget | `[APPROVAL_DAILY_BUDGET_USD]` / `[APPROVAL_DAILY_BUDGET_AUD]` |
 | Ad groups | Hire_PH + Outsource_PH (Admin: Hire + EA + City) |
-| RSAs | 2 angles per theme AG (A staffing/partner · B role/capacity with DKI on Hire/EA) |
+| RSAs | 2 angles per theme AG · DKI on Hire/EA B |
 | Assets | 6 callouts · 1 structured snippet · 4 microsite sitelinks |
-| Negatives | 113 curated Broad per campaign |
+| Negatives | **191** unique curated Broad per campaign |
 
 ---
 
-## 5. Keyword counts by match type (v3)
+## 6. Keyword counts (v4 machine)
 
 | Match | Count (package total) | Notes |
 |-------|----------------------:|-------|
-| Exact | 896 | ~48–62 per role per market; admin densest |
-| Phrase | 290 | Discovery seeds — not Exact clones only |
+| Exact | 1178 | ST keepers + employer long-tail; admin densest |
+| Phrase | 368 | Discovery from converting clusters — not Exact clones only |
 | Broad (positives) | **0** | Forbidden |
-| Campaign negatives (Broad) | 2034 | 113 × 18 campaigns |
+| Campaign negatives (Broad) | 3438 | 191 × 18 campaigns |
 
-**Per market positive keywords:** 593.  
+**Per market positive keywords:** 773.  
 **Builder QA** refuses positive Broad, empty shells, single-AG campaigns, RSA blanks, boilerplate spam, medical/tech/spanish leaks, and bare `hire`/`hiring` negatives.
 
-### Administration note
+---
 
-General “hire Filipino VA / VA Philippines / offshore VA” Exact set lives under **Administration_Hire_PH** (not a separate CORE campaign). EA/admin assistant intent lives under **Administration_EA_PH**.
+## 7. Negative strategy (v4)
+
+1. **Job seeker** — jobs/salary/careers/resume + VA jobs/salary PH/AU variants from ST  
+2. **WFH fluff** — bare `work from home` / `wfh` (new from ST)  
+3. **Info / DIY** — what is, how to become / make money / get a job / start — **not** bare `how to`  
+4. **Review / pricing research** — reviews, cost, how much, top 10, competitor review queries  
+5. **DSA / marketplace catch-alls** — online ph, onlineph, onlinejobs*, wing assistant, hellorache, virtual world assistants, VA hub junk  
+6. **Platforms** — upwork, fiverr, wishup, athena, myoutdesk, bruntwork, zirtual…  
+7. **Spanish / LATAM** — asistente virtual*, español, colombia/argentina/mexico/latam  
+8. **Excluded verticals** — medical / tech / graphic-web design  
 
 ---
 
-## 6. Negative strategy
+## 8. RSA strategy
 
-### Applied to every role campaign (Broad)
-
-1. **Job seeker** — job(s), salary, career(s), resume/cv, apply, vacancies, indeed/glassdoor/jobstreet, onlinejobs, VA jobs/salary, WFH/online/part-time **job** variants  
-2. **Info / DIY** — what is, how to / how to become, tutorial, course(s), training, certification, template, meaning, diy, for beginners  
-3. **Junk** — free, cheap(est), torrent, reddit, youtube, pdf, near me  
-4. **Platforms** — upwork, fiverr, freelancer, wishup, athena, boldly, myoutdesk, zirtual, bruntwork, onlinejobs ph  
-5. **Excluded verticals** — medical/nurse/doctor/healthcare staffing; software/web developer/programmer/coding/IT|tech staffing; graphic designer/web design; spanish/español/bilingual spanish  
-
-### Intentionally NOT negatived
-
-- `hire` / `hiring` alone  
-- Bare `work from home` (used `work from home job` instead)  
-- Bare `pay` (used `pay rate` / `hourly rate`)
+Every RSA: **15 unique headlines ≤30** + **4 unique descriptions ≤90**. Admin Hire rewritten for ST hire-VA language. Other roles keep v3 unique angles (not role-noun swaps). AU uses Australian / SMEs / organisation / specialise. Banned: Top 1%, Save 80%, $/hr, guaranteed/cheapest.
 
 ---
 
-## 7. RSA strategy (v3)
-
-### Fill rule
-
-Every RSA: **15 unique headlines ≤30 chars** + **4 unique descriptions ≤90 chars**. Builder fails on blanks or duplicates.
-
-### Angles
-
-| Theme AG | Angles |
-|----------|--------|
-| `*_Hire_PH` / `Administration_EA_PH` | `A_staffing` + `B_role` (includes `{KeyWord:…}` DKI) |
-| `*_Outsource_PH` | `A_partner` + `B_capacity` |
-| `Admin_City_Test` | Location-insertion RSA |
-
-### AU vs US
-
-Not a country-token swap. AU uses Australian / SMEs / organisation / specialise / categorisation where natural. US keeps organization / specialize / SMBs.
-
-### Banned claims
-
-Top 1% · Save 80% · $/hr rates · guaranteed / cheapest · fake social proof
-
----
-
-## 8. Final URLs
+## 9. Final URLs
 
 | Market | Primary Final URL pattern |
 |--------|---------------------------|
@@ -219,12 +208,12 @@ Top 1% · Save 80% · $/hr rates · guaranteed / cheapest · fake social proof
 | AU | `https://vision-three-alpha.vercel.app/au?role={role}` |
 
 - Sitelinks: same host only. **No WordPress.**  
-- Tracking: UTMs + `lp_version=stage1-v3`  
-- Domain TBD when George attaches custom paid domain
+- Tracking: UTMs + `lp_version=stage1-v4`  
+- Domain TBD when George attaches custom paid domain  
 
 ---
 
-## 9. Placeholders George must still approve
+## 10. Placeholders George must still approve
 
 | Placeholder | Where |
 |-------------|-------|
@@ -237,40 +226,41 @@ Top 1% · Save 80% · $/hr rates · guaranteed / cheapest · fake social proof
 
 ---
 
-## 10. Package inventory (v3 machine counts)
+## 11. Package inventory (v4)
 
 | Entity | Count |
 |--------|------:|
 | Campaigns | 18 |
 | Ad groups | 38 |
-| Positive keywords | 1186 |
+| Positive keywords | 1546 |
 | RSAs | 74 |
-| Campaign negative keyword rows | 2034 |
+| Campaign negative keyword rows | 3438 |
+| Unique negatives | 191 |
 | Callouts | 108 |
 | Structured snippets | 18 |
 | Sitelinks | 72 |
-| **Total CSV rows** | **3548** |
+| **Total CSV rows** | **5312** |
 
 ---
 
-## 11. How ChatGPT should spot-check (re-audit)
+## 12. How ChatGPT should spot-check (re-audit)
 
 1. **Open CSV** → `Row Type = Ad` → every row Headline 1–15 + Description 1–4 non-empty.  
-2. Confirm **no** `VC_*_S_BRAND` and **no** `ROLE_held_for_evidence`.  
+2. Confirm **no** `VC_*_S_BRAND` and **no** empty ROLE shells.  
 3. Confirm 18 `VC_{US|AU}_S_ROLE_*` campaigns for the nine roles.  
-4. Confirm **≥2 ad groups per campaign** (Hire + Outsource; Admin has 3).  
+4. Confirm **≥2 ad groups per campaign** (Admin has 3).  
 5. Filter positives → Criterion Type only Exact or Phrase.  
 6. Grep creatives for `Top 1%`, `$/hr`, `80%`, `guaranteed` — expect zero.  
 7. Grep Final URL for `virtualcoworker.com` WP paths — expect zero.  
-8. Confirm DKI: many ads contain `{KeyWord:` (not just Administration).  
-9. Confirm AU copy uses `Australian` / `specialise` / `organisation` (not US-only swap).  
-10. Confirm shared boilerplate is limited — “Recruit Vet & Manage” should **not** appear on nearly every RSA anymore.  
-11. Budgets/Max CPC still `[APPROVAL_*]` — correct.  
-12. All statuses = Paused.
+8. Confirm DKI: many ads contain `{KeyWord:`.  
+9. Confirm AU copy uses `Australian` / `specialise` / `organisation`.  
+10. Confirm ST keepers present: `virtual assistants`, `how to hire a virtual assistant`, `social media manager philippines`, `philippines bookkeeper`, `virtual marketing assistant`.  
+11. Confirm ST waste negatived: `online ph`, `asistente virtual`, `work from home`, `virtual assistant cost`, `wing assistant`.  
+12. Confirm `lp_version=stage1-v4`. Budgets/Max CPC still `[APPROVAL_*]`. All **Paused**.
 
 ---
 
-## 12. Operator enable guidance (after approvals)
+## 13. Operator enable guidance (after approvals)
 
 1. Import CSV in Editor (split US vs AU rows or import then delete other market).  
 2. Replace budget + Max CPC placeholders.  
@@ -278,21 +268,23 @@ Top 1% · Save 80% · $/hr rates · guaranteed / cheapest · fake social proof
 4. Confirm Final URL host.  
 5. Post **Paused** → UI spot-check.  
 6. Enable only after Launch Control gates green — **roles**, not brand.  
-7. First 14 days: search-term mining → add negatives / promote Exact variants. Never Broad to “fix” volume.
+7. First 14 days: search-term mining → add negatives / promote Exact variants. Never Broad to “fix” volume. Never re-enable DSA catch-alls.
 
 ---
 
-## 13. Files touched this rebuild / remediation
+## 14. Files touched this rebuild (v4)
 
 | File | Action |
 |------|--------|
-| `ads-launch/google-ads-editor-import.csv` | Regenerated (v3) |
-| `ads-launch/build_stage1_editor_package.py` | Rewritten (theme split, unique RSAs, denser KWs) |
+| `ads-launch/google-ads-editor-import.csv` | Regenerated (v4) |
+| `ads-launch/build_stage1_editor_package.py` | ST evidence keywords + negatives + Admin RSA + `stage1-v4` |
+| `ads-launch/_evidence_search_terms.json` | Aggregated keep/kill cites |
 | `ads-launch/LAUNCH-SHEET.md` | Updated |
-| `ads-launch/FULL-BUILD-REPORT.md` | This file (+ Remediation §0) |
+| `ads-launch/FULL-BUILD-REPORT.md` | This file |
 | `ads-launch/IMPLEMENTATION-REPORT.md` | Pointer |
 | `xray/docs/ads-launch/*` | Mirrored |
+| `xray/launch-control.html` | Step 6 hint → v4 evidence package |
 
 ---
 
-*End of report — structure archaeology + remediation; no invented performance metrics.*
+*End of report — v4 evidence fold from Editor performance exports. No Ads API; no invented metrics; no live enable.*
