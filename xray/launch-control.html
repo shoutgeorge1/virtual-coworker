@@ -300,7 +300,7 @@
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
                 <strong>6. Import the paused CSV — leave everything Paused</strong>
-                <span class="todo-hint">In Editor, import <code>ads-launch/google-ads-editor-import.csv</code> (<strong>stage1-v6</strong> — <strong>2 campaigns × 2 markets</strong>: <code>VC_{US|AU}_S_CORE</code> + <code>VC_{US|AU}_S_ROLES</code>, Brand deferred, all Paused). Final URLs are microsite category paths: Core → <code>/us|/au/administrative-support</code> · Roles → <code>/us|/au/{category}</code> — not WordPress, not <code>?role=</code>. Budgets/Max CPC already filled (Core $75 / Roles $50 · AU A$75 / A$50 · Max CPC $8 / A$6). Paste audit: <code>ads-launch/CHATGPT-DEBRIEF.md</code>.</span>
+                <span class="todo-hint">In Editor, import <code>ads-launch/google-ads-editor-import.csv</code> (<strong>stage1-v7</strong> — <strong>2 campaigns × 2 markets</strong>: <code>VC_{US|AU}_S_CORE</code> + <code>VC_{US|AU}_S_ROLES</code>, Brand deferred, all Paused). Final URLs: Core → market home <code>/us|/au</code> · Roles → <code>/us|/au/{category}</code> — not WordPress, not <code>?role=</code>, not Core→administrative-support. Budgets/Max CPC already filled (Core $75 / Roles $50 · AU A$75 / A$50 · Max CPC $8 / A$6). Paste audit: <code>ads-launch/CHATGPT-DEBRIEF.md</code>.</span>
               </label>
             </li>
             <li data-order="7">
@@ -321,7 +321,7 @@
               <input type="checkbox" id="ads9" data-todo="ads9" />
               <label for="ads9">
                 <strong>9. Point Ads Final URLs at the US + AU domains</strong>
-                <span class="todo-hint">After both domains are attached, swap Final URL <em>hosts</em> per market — keep paths: <code>/us|au/administrative-support</code> and the nine <code>/{us|au}/{category}</code> routes. Do not use WordPress. Do not collapse everything to generic hubs. Root <code>/</code> on the microsite already redirects → <code>/us</code>.</span>
+                <span class="todo-hint">After both domains are attached, swap Final URL <em>hosts</em> per market — keep paths: Core → <code>/us|/au</code> (market home) and Roles → the nine <code>/{us|au}/{category}</code> routes. Do not use WordPress. Do not point Core at administrative-support. Root <code>/</code> on the microsite already redirects → <code>/us</code>.</span>
               </label>
             </li>
             <li data-order="10">
@@ -342,7 +342,7 @@
               <input type="checkbox" id="ads12" data-todo="ads12" />
               <label for="ads12">
                 <strong>12. Confirm daily budgets and Max CPC (defaults already in CSV)</strong>
-                <span class="todo-hint">CSV already has Stage 1 v6 defaults (US Core $75 / Roles $50 · AU Core A$75 / Roles A$50 · Max CPC US $8 / AU A$6 — ~60/40; ≈ $3.8k + A$3.8k/mo inside $10–20k/account story). Change in Editor if you want different ceilings, then Post while still <strong>Paused</strong>. Spot-check in the Ads website. See <code>ads-launch/DECISIONS.md</code>.</span>
+                <span class="todo-hint">CSV already has Stage 1 v7 defaults (US Core $75 / Roles $50 · AU Core A$75 / Roles A$50 · Max CPC US $8 / AU A$6 — ~60/40; ≈ $3.8k + A$3.8k/mo inside $10–20k/account story). Change in Editor if you want different ceilings, then Post while still <strong>Paused</strong>. Spot-check in the Ads website. See <code>ads-launch/DECISIONS.md</code>.</span>
               </label>
             </li>
             <li data-order="13">
@@ -386,7 +386,7 @@
           </div>
           <ul>
             <li><strong>Where leads go</strong> — real inbox/webhook still open (QA is TEMPORARY log-only on vision)</li>
-            <li><strong>US + AU domains (~$10 each on Vercel)</strong> — buy separately, attach, then swap Final URL hosts (paths already category-correct). PH domain can wait.</li>
+            <li><strong>US + AU domains (~$10 each on Vercel)</strong> — buy separately, attach, then swap Final URL hosts (paths already set: Core market home · Roles category). PH domain can wait.</li>
             <li><strong>Separate measurement</strong> — US and AU each need their own GTM + GA4 + GSC + Ads conversions (don’t share one container)</li>
             <li><strong>Editor import</strong> — stays paused until you say go</li>
             <li><strong>Old Brand still spending</strong> — Aug 5 campaign view: <code>PM_US_RSA_Brand</code> (~$39) and <code>PM_AU_RSA_Brand</code> (A$3), Maximize conversions, 0 conversions. Recommend pause before or with the new import — you click pause in Ads; not from this page.</li>
@@ -403,7 +403,7 @@
             <li>Optional: pause both old <code>PM_*</code> Brand campaigns in Ads if you want that small spend stopped — you click pause there, not here</li>
             <li>Optionally change budget / Max CPC defaults (already filled)</li>
             <li><strong>Buy US domain (~$10)</strong> + <strong>AU domain (~$10)</strong> on Vercel — two identities; PH can hang</li>
-            <li>Confirm Final URL hosts after domains attach (keep category paths)</li>
+            <li>Confirm Final URL hosts after domains attach (keep Core→home · Roles→category paths)</li>
             <li>Stand up separate US + AU GTM / GA4 / GSC / Ads conversion actions</li>
             <li>Confirm payment-cleared date when the bank shows it</li>
             <li>Review the paused Editor import before any enable</li>
@@ -456,7 +456,7 @@
               <span class="st st-access">Open</span>
               <div class="gate-body">
                 <strong>US + AU microsites live on real domains + separate measurement</strong>
-                <span>Three identities: US employer · AU employer · PH talent (PH domain optional later). Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> · <a href="https://vision-three-alpha.vercel.app/ph" target="_blank" rel="noopener">/ph</a>. <strong>Buy US + AU domains on Vercel (~$10 each)</strong>, attach, swap Final URL hosts (keep category paths). Stand up <strong>separate</strong> GTM/GA4/GSC/Ads conversions per market — never one shared bag for US+AU.</span>
+                <span>Three identities: US employer · AU employer · PH talent (PH domain optional later). Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> · <a href="https://vision-three-alpha.vercel.app/ph" target="_blank" rel="noopener">/ph</a>. <strong>Buy US + AU domains on Vercel (~$10 each)</strong>, attach, swap Final URL hosts (keep Core→market home · Roles→category). Stand up <strong>separate</strong> GTM/GA4/GSC/Ads conversions per market — never one shared bag for US+AU.</span>
               </div>
             </li>
             <li>
@@ -546,9 +546,9 @@
             <li>Confirm live campaigns for USA + AU in this thread. (Done Aug 5: US Brand live; AU Brand live/limited; rest paused.)</li>
             <li>Download USA + AU into Google Ads Editor. ← next</li>
             <li>Optional: pause old Brand campaigns in Ads if you want bleed stopped (you click; recommended before/with import).</li>
-            <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused · stage1-v6 · 4 campaigns).</li>
+            <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused · stage1-v7 · 4 campaigns).</li>
             <li>Confirm budget / Max CPC defaults (or revise); no <code>[APPROVAL_*]</code> tokens left.</li>
-            <li>Confirm Final URLs = Stage 1 category LPs; no WP sitelinks; no inert <code>?role=</code>.</li>
+            <li>Confirm Final URLs = Core market homes + Roles category LPs; no WP sitelinks; no inert <code>?role=</code>.</li>
             <li>Confirm Search partners off, Display expansion off, Presence geo.</li>
             <li>Confirm Stage 1 conversion goals observe-only (no legacy Max Conv poison).</li>
             <li>Post Paused changes; spot-check in Ads UI.</li>

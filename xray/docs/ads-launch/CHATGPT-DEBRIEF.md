@@ -1,4 +1,4 @@
-# Virtual Coworker Stage 1 — Complete ChatGPT Debrief (v6 · RSA×3)
+# Virtual Coworker Stage 1 — Complete ChatGPT Debrief (v7 · Core→market home)
 
 **Paste this whole file into ChatGPT.** Ask it to stress-test honesty, architecture, Final URLs, conversion definitions, LP integrity, Ads package hygiene, and launch blockers — not to rewrite ads for vibes.
 
@@ -7,16 +7,17 @@
 | Date | 2026-08-05 |
 | Branch | `vision-demo` |
 | Repo | `/Users/george/Developer/virtual-coworker` |
-| Package | `ads-launch/google-ads-editor-import.csv` · `lp_version=stage1-v6` |
+| Package | `ads-launch/google-ads-editor-import.csv` · `lp_version=stage1-v7` |
 | Builder | `ads-launch/build_stage1_editor_package.py` |
 | Decisions | `ads-launch/DECISIONS.md` |
 | Short index | `ads-launch/FULL-BUILD-REPORT.md` |
 | Deep companion | `ads-launch/CHATGPT-MEGA-AUDIT.md` (points here as canonical) |
-| LP host (live) | **https://vision-three-alpha.vercel.app** |
+| LP host (preview) | **https://vision-three-alpha.vercel.app** |
 | Launch Control | **https://vc-xray.vercel.app/launch-control** |
 | Corporate WP (untouched) | https://virtualcoworker.com · https://virtualcoworker.com.au |
 | Accounts | USA `496-715-1855` · AU `573-539-1940` |
 | Ads enable | **NOT approved** — all CSV entities **Paused** |
+| Paid status | **NOT READY FOR PAID TRAFFIC** (no durable lead delivery) |
 | RSA rule (locked) | **3 unique full RSAs (15H/4D) per main AG**; city-test 1 |
 
 ---
@@ -31,12 +32,13 @@ Virtual Coworker is a **staffing partner**: US/AU employers hire dedicated Phili
 
 ```
 Ad click
-  → employer_inquiry_submitted   (= server-accepted employer inquiry)
+  → employer_inquiry_submitted   (= server-accepted + durably delivered employer inquiry)
   → human follow-up
   → job order                    (CRM — not wired)
   → placement                    (ops — not wired)
 
 form submit ≠ job order ≠ placement
+log_only accept ≠ employer_inquiry_submitted
 phone_cta_clicked ≠ qualified call
 Editor "Conversions" / "All conv" ≠ job orders
 ```
@@ -45,16 +47,32 @@ Historical Ads “Conversions” in exports are **not** proof of placements. Sta
 
 ---
 
-## 2. Architecture: paid microsite vs WordPress
+## 2. Architecture: three micro-sites (not a hub + WP)
 
 | Surface | Role |
 |---------|------|
-| **Paid microsite** (`vision/` → Vercel `vision-three-alpha`) | Only Final URL host for Stage 1 Search |
-| **WordPress** virtualcoworker.com / .com.au | **Untouched** — marketing site stays; **paid traffic must not use WP Final URLs** |
+| **US employer** `/us` + `/us/*` | Primary PPC micro-site |
+| **AU employer** `/au` + `/au/*` | Separate AU employer micro-site |
+| **PH talent** `/ph` (+ `/ph/apply`) | Separate careers micro-site — **never** employer conversion |
+| **Root `/`** | **Redirects → `/us`** (no multi-market “choose your adventure” hub) |
+| **WordPress** virtualcoworker.com / .com.au | **Untouched** — **zero egress** from microsite nav/footer/CTAs |
 | **Launch Control** vc-xray | Operator dashboard / X-ray / launch checklist |
-| **Careers** `/ph` on microsite | Job-seeker divert — **never** employer conversion |
 
-Microsite is an **independent paid hiring path** with employer gate, category LPs, A/B variants, honest events, and pilot `noindex`.
+**Hard rule — no WordPress egress:** Privacy/Terms are local `/privacy` and `/terms` only. Soft cross-links stay inside US ↔ AU ↔ PH microsite routes. PPC traffic must not leak to WP. Automated audit: `vision/lib/no-wp-links.test.ts` (+ `npm run audit:wp-links`).
+
+**Tracking separation:** three identities — `NEXT_PUBLIC_GTM_US` / `_AU` / `_PH` (+ GA4 twins). dataLayer always carries `market` / `site_surface` (`us` \| `au` \| `ph`). Do **not** assume one shared GTM for everything. Legacy `NEXT_PUBLIC_GTM_ID` is US-only fallback.
+
+### Domains + measurement infra (ops implication)
+
+| Identity | Custom domain | GTM | GA4 | Search Console | Ads conversions |
+|----------|---------------|-----|-----|----------------|-----------------|
+| **US employer** | Buy on Vercel (~$10) — attach to vision US | Separate container | Separate property | Separate property on US domain | Point at US microsite events only |
+| **AU employer** | Buy on Vercel (~$10) — separate from US | Separate container | Separate property | Separate property on AU domain | Point at AU microsite events only |
+| **PH talent** | **Can wait** — no Stage 1 domain required | Optional later (`GTM_PH`) | Optional later | Optional later | Never employer conversions |
+
+**Implication:** three microsite identities ⇒ **do not share one GTM/GA4 across US+AU**. Wire env placeholders after containers exist. Launch Control checklist steps 7–11 cover buy domains + stand up measurement. Preview host until domains attach: `vision-three-alpha.vercel.app`.
+
+Microsite is an **independent paid hiring path** with employer gate, category LPs, A/B variants, sticky CTA, optional exit-intent (flag), honest events, and pilot `noindex`.
 
 ---
 
@@ -65,35 +83,38 @@ Microsite is an **independent paid hiring path** with employer gate, category LP
 | Page | URL |
 |------|-----|
 | Launch Control | https://vc-xray.vercel.app/launch-control |
-| Microsite home | https://vision-three-alpha.vercel.app/ |
-| Services index | https://vision-three-alpha.vercel.app/services |
-| How it works | https://vision-three-alpha.vercel.app/how-it-works |
+| Root (→ US) | https://vision-three-alpha.vercel.app/ → `/us` |
+| Services (market-scoped) | https://vision-three-alpha.vercel.app/services?market=us |
+| How it works (market-scoped) | https://vision-three-alpha.vercel.app/how-it-works?market=us |
 | Privacy (microsite) | https://vision-three-alpha.vercel.app/privacy |
 | Terms (microsite) | https://vision-three-alpha.vercel.app/terms |
 | Thank you | https://vision-three-alpha.vercel.app/thank-you |
 | Careers (PH) | https://vision-three-alpha.vercel.app/ph |
 | Careers apply | https://vision-three-alpha.vercel.app/ph/apply |
 
-### Market hubs
+### Market homes (three sites) — **Core Ads Final URLs**
 
-| Market | Hub | Gate deep-link |
-|--------|-----|----------------|
+| Market | Home (Core Final URL) | Gate deep-link |
+|--------|----------------------|----------------|
 | US | https://vision-three-alpha.vercel.app/us | https://vision-three-alpha.vercel.app/us#gate |
 | AU | https://vision-three-alpha.vercel.app/au | https://vision-three-alpha.vercel.app/au#gate |
+| PH | https://vision-three-alpha.vercel.app/ph | https://vision-three-alpha.vercel.app/ph/apply |
 
-### Category LPs (9 × 2 markets) — Ads Final URLs use these paths
+### Category LPs (9 × 2 markets) — Roles Ads Final URLs
 
 | Category slug | US | AU |
 |---------------|----|----|
-| digital-marketing | https://vision-three-alpha.vercel.app/us/digital-marketing | https://vision-three-alpha.vercel.app/au/digital-marketing |
-| social-media | https://vision-three-alpha.vercel.app/us/social-media | https://vision-three-alpha.vercel.app/au/social-media |
-| accounting | https://vision-three-alpha.vercel.app/us/accounting | https://vision-three-alpha.vercel.app/au/accounting |
-| bookkeeping | https://vision-three-alpha.vercel.app/us/bookkeeping | https://vision-three-alpha.vercel.app/au/bookkeeping |
-| administrative-support | https://vision-three-alpha.vercel.app/us/administrative-support | https://vision-three-alpha.vercel.app/au/administrative-support |
-| customer-service | https://vision-three-alpha.vercel.app/us/customer-service | https://vision-three-alpha.vercel.app/au/customer-service |
-| hr | https://vision-three-alpha.vercel.app/us/hr | https://vision-three-alpha.vercel.app/au/hr |
-| recruitment | https://vision-three-alpha.vercel.app/us/recruitment | https://vision-three-alpha.vercel.app/au/recruitment |
-| sales | https://vision-three-alpha.vercel.app/us/sales | https://vision-three-alpha.vercel.app/au/sales |
+| digital-marketing | …/us/digital-marketing | …/au/digital-marketing |
+| social-media | …/us/social-media | …/au/social-media |
+| accounting | …/us/accounting | …/au/accounting |
+| bookkeeping | …/us/bookkeeping | …/au/bookkeeping |
+| administrative-support | …/us/administrative-support | …/au/administrative-support |
+| customer-service | …/us/customer-service | …/au/customer-service |
+| hr | …/us/hr | …/au/hr |
+| recruitment | …/us/recruitment | …/au/recruitment |
+| sales | …/us/sales | …/au/sales |
+
+**HR alias:** `/{us\|au}/human-resources` → **308** `/{us\|au}/hr` (preserves GCLID/WBRAID/GBRAID/UTMs/variant).
 
 ### A/B + compat
 
@@ -105,20 +126,16 @@ Microsite is an **independent paid hiring path** with employer gate, category LP
 | Legacy query | `/us?role=bookkeeping` → **308** `/us/bookkeeping` (middleware) |
 | Legacy consult | `/us/consult`, `/au/consult` → gate / hiring path (compat) |
 
-Example QA:  
-https://vision-three-alpha.vercel.app/us/administrative-support?variant=a  
-https://vision-three-alpha.vercel.app/us/administrative-support?variant=b
-
-### Ads Final URL mapping (this package)
+### Ads Final URL mapping (v7 — corrected)
 
 | Campaign | Final URL pattern |
 |----------|-------------------|
-| `VC_*_S_CORE` | `…/{us\|au}/administrative-support` (VA / hire / offshore cluster) |
+| `VC_*_S_CORE` | `…/{us\|au}` — **market employer home** (NOT administrative-support) |
 | `VC_*_S_ROLES` | Matching category slug per role AG |
-| Brand | **Deferred** — no generic `/us` or `/au` Final URLs on ads |
+| Brand | **Deferred** — no Brand campaign in CSV |
 
 Tracking template: `{lpurl}` only.  
-Final URL suffix (once): UTMs + `lp_version=stage1-v6`. **No double UTM.**
+Final URL suffix (once): UTMs + `lp_version=stage1-v7`. **No double UTM.**
 
 ---
 
@@ -130,16 +147,24 @@ Final URL suffix (once): UTMs + `lp_version=stage1-v6`. **No double UTM.**
 - Plastic / white-HR stock heroes **killed**.
 - Category A/B heroes pull from `/brand/*` (va-ph, talent-john, support, face series, etc.).
 
-### Nav / footer (polish landed on `vision-demo`)
+### Nav / footer / IA (three micro-sites)
 
-Shared `SiteNav` + `SiteFooter` (`vision/config/site.ts`):
+- **`/` → `/us`** (primary paid market). No corporate hub.
+- **Market-scoped nav:** US pages = Services · How it works · Start hiring (US only). AU same for AU. PH = Careers · Apply. **Not** “US · AU · Careers” as peer equals.
+- **Footer:** market address/phone · local Privacy/Terms · soft cross-links only (US↔AU↔PH). **Zero WP links. Zero dead links.**
+- Trust quotes: published client wording as text — **no WP deep-links**
+- Shared content routes: `/services?market=us|au`, `/how-it-works?market=us|au`, `/privacy`, `/terms`
 
-- Nav: **Services · How it works · US · AU · Start hiring · Careers**
-- Footer: corporate addresses from live WP contact page, privacy/terms links, copyright
-- Trust quotes: public client quotes from virtualcoworker.com homepage (not invented)
-- New routes: `/services`, `/how-it-works` (plus privacy/terms)
+### Conversion tools (employer microsites only)
 
-If something still feels mid-flight in UI polish, **do not block Ads package review** — Ads CSV is complete and Paused.
+| Tool | Spec |
+|------|------|
+| Gate + form | Employer vs job seeker → `/ph` divert (internal) |
+| Phone CTA | US only (`310-426-8776`) |
+| Sticky mobile CTA | Form (+ phone on US) |
+| Exit-intent / timed soft offer | **Off** unless `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true`; once/session; **never on `/ph`** |
+| Fake live chat | **Disabled** — no delivery owner |
+| Events | See §4 events table |
 
 ### Gate / form / phone
 
@@ -149,10 +174,11 @@ If something still feels mid-flight in UI polish, **do not block Ads package rev
 | Form | Employer hiring inquiry → `/api/lead` |
 | US phone | **310-426-8776** (`NEXT_PUBLIC_US_PHONE`) |
 | AU phone | **None** — form-primary (no fake AU number) |
-| Lead delivery | **TEMPORARY log-only** (`ALLOW_LOG_ONLY_LEADS=true`) until real inbox/webhook |
+| Lead delivery | **Hard blocker for paid.** `ALLOW_LOG_ONLY_LEADS=true` = explicit **blocked mode** (`conversion_eligible: false`). Real email/webhook/sheet required. |
 | Zoho | **Not live** — do not pretend sync |
 | Ads conversions | `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false` |
 | Pilot SEO | `NEXT_PUBLIC_PILOT_NOINDEX=true` |
+| Tracking | Separate GTM/GA4 env placeholders per `us` / `au` / `ph` |
 
 ### Events (dataLayer / GTM-ready; Ads firing off)
 
@@ -160,10 +186,15 @@ If something still feels mid-flight in UI polish, **do not block Ads package rev
 |-------|---------|
 | `employer_gate_selected` | Chose employer |
 | `employer_form_started` | First form interaction |
-| `employer_inquiry_submitted` | **Server accepted** inquiry (candidate primary) |
+| `employer_form_validation_error` | Client validation fail |
+| `employer_inquiry_submitted` | **Server accepted + durable delivery** (candidate primary) |
 | `employer_inquiry_submitted_deduped` | Refresh-safe block |
+| `employer_inquiry_delivery_failed` | 502/503 / network |
+| `employer_inquiry_log_only` | Log-only blocked mode (never primary) |
 | `phone_cta_clicked` | tel: click — `is_qualified_call: false` |
-| `job_seeker_diverted` | Careers path — never primary Ads conv |
+| `conversion_assist_opened` | Exit-intent / timed assist shown |
+| `conversion_assist_cta_clicked` | Assist CTA clicked |
+| `job_seeker_redirected` | Clicked through to `/ph` — never primary Ads conv |
 | `spam_or_applicant_rejected` | Validation reject |
 
 ---
@@ -188,24 +219,22 @@ If something still feels mid-flight in UI polish, **do not block Ads package rev
 
 ---
 
-## 6. Ads structure (Paused package)
+## 6. Ads structure (Paused package · v7)
 
 ### Topology (locked)
 
 **2 campaigns × 2 markets. Brand deferred.**
 
-| Campaign | ~Budget share | Job |
-|----------|--------------:|-----|
-| `VC_{US\|AU}_S_CORE` | **~60%** | High-intent VA / hire / Philippines-offshore |
-| `VC_{US\|AU}_S_ROLES` | **~40%** | Digital · Social · Admin · Controlled roles |
+| Campaign | ~Budget share | Job | Final URL |
+|----------|--------------:|-----|-----------|
+| `VC_{US\|AU}_S_CORE` | **~60%** | High-intent VA / hire / Philippines-offshore | **`/{us\|au}`** |
+| `VC_{US\|AU}_S_ROLES` | **~40%** | Digital · Social · Admin · Controlled roles | Matching category |
 
 **Controlled** under Roles = accounting, bookkeeping, customer service, HR, recruitment, sales.
 
-**Why 2 (not 22):** George approved collapsing Brand+Core+9 role campaigns into Core + Roles so budget is controllable (~60/40), Core owns the densest employer ST cluster, Roles keep role intent / Final URL hygiene without nine daily budgets.
-
 ### Settings (all campaigns)
 
-Search · **Exact + Phrase only** · **Maximize Clicks** · Max CPC US **$8** / AU **A$6** · **Paused** · category Final URLs · tracking `{lpurl}` · UTMs once on suffix · employer CTAs · curated ST negatives · extensions microsite-only.
+Search · **Exact + Phrase only** · **Maximize Clicks** · Max CPC US **$8** / AU **A$6** · **Paused** · tracking `{lpurl}` · UTMs once on suffix · employer CTAs · curated ST negatives · extensions microsite-only.
 
 ### Budgets (placeholders — not enable approval)
 
@@ -214,50 +243,32 @@ Search · **Exact + Phrase only** · **Maximize Clicks** · Max CPC US **$8** / 
 | US | $75 | $50 | $125 | ≈ **$3.8k** |
 | AU | A$75 | A$50 | A$125 | ≈ **A$3.8k** |
 
-Inside a **$10–20k per account / month** budget story — Stage 1 pace, headroom to raise after inquiry quality is trusted.
-
 ### Ad group map
 
-**CORE (×2 markets):** `Hire_VA_PH` · `Offshore_VA_PH`
+**CORE (×2 markets):** `Hire_VA_PH` · `Offshore_VA_PH` → market home
 
 **ROLES (×2 markets):**
 
-| Tier | Ad groups |
-|------|-----------|
-| Digital | `Digital_Marketing_Hire_PH` · `Digital_Marketing_Outsource_PH` |
-| Social | `Social_Media_Hire_PH` · `Social_Media_Outsource_PH` |
-| Admin | `Administration_EA_PH` · `Admin_City_Test` (light geo; **1 RSA**) |
-| Controlled | Accounting / Bookkeeping / CS / HR / Recruitment / Sales — each Hire + Outsource (HR/Recruitment Hire+Outsource) |
+| Tier | Ad groups | Activation |
+|------|-----------|------------|
+| Digital | `Digital_Marketing_*` | **Recommend first** with Core |
+| Social | `Social_Media_*` | **Recommend first** with Core |
+| Admin | `Administration_EA_PH` · `Admin_City_Test` | **Recommend first** with Core |
+| Controlled | Accounting / Bookkeeping / CS / HR / Recruitment / Sales | Built, **pause longer** |
 
-Fresh naming: **`VC_*`** — not legacy `PM_*`.
-
-### RSA (locked decision)
+### RSA (locked)
 
 | Rule | Value |
 |------|-------|
 | Main AGs | **3 unique full RSAs** each (15 headlines + 4 descriptions — **no blanks**) |
-| City-test | **1 RSA** (may be 1–2 if tiny) |
-| Angles | Distinct — **not** noun-swap clones of #1/#2 |
-| Typical trio (Hire AGs) | A staffing/hire-intent · B role-outcome · C proof/speed (shortlist) |
-| Typical trio (Outsource AGs) | A partner · B capacity · C dedicated-seat proof |
-| Core example | `Hire_VA_PH`: hire · hire_b · hire_c (how-to-hire / shortlist speed) |
+| City-test | **1 RSA** |
 | Claims ban | No top 1%, $/hr, save X%, guaranteed, consult/demo SaaS language |
-
-**Sample — `VC_US_S_CORE` / `Hire_VA_PH` (three angles):**
-
-1. **hire** — Hire Virtual Assistant PH / Hire Filipino VA → staffing-partner hire path  
-2. **hire_b** — Looking for a VA? / VA for Hire Philippines → agency / looking intent  
-3. **hire_c** — How to Hire a VA Fast / VA Shortlist for Employers → shortlist-speed (ST: “how to hire a virtual assistant”)
 
 ### Negatives
 
-**191 unique** campaign negatives × 4 campaigns = **764** rows. Curated from ST waste — **not** a wholesale dump of the old account. Intentionally **not** negatived: bare `hire` / `hiring`; `how to hire a virtual assistant`.
+**191 unique** campaign negatives × 4 campaigns = **764** rows. Intentionally **not** negatived: bare `hire` / `hiring`; `how to hire a virtual assistant`.
 
-### Extensions
-
-Callouts / sitelinks / structured snippets — **microsite URLs only** (no WP).
-
-### Package counts (machine, after RSA×3)
+### Package counts (machine)
 
 | Entity | Count | Status |
 |--------|------:|--------|
@@ -280,7 +291,8 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 - **No Ads conversion firing**
 - **Brand Search** — deferred (not imported)
 - **WordPress** — untouched for paid Final URLs
-- **Zoho / CallRail / real inbox** — not launch-ready (log-only is TEMPORARY)
+- **Zoho / CallRail / real inbox** — not launch-ready
+- **Log-only** — explicit blocked mode; **not** paid-ready; **not** conversion-eligible
 - **Legacy outside CSV:** `PM_US_RSA_Brand` / `PM_AU_RSA_Brand` may still spend — pause in Ads UI separately
 - We are **not** claiming: launch-ready, Zoho sync, job-order ROI, or that historical conversions = placements
 
@@ -301,32 +313,37 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 | v4→v5 | Brand deferred while Core thin; role sprawl | Category URLs + Brand+Core attempt (22 campaigns) |
 | **v5→v6** | 22 campaigns too many for Stage 1 | **2/account**; Brand deferred; Core $75 / Roles $50 |
 | **v6 RSA** | Only 2 RSAs/AG — less learning | **3 unique full RSAs/main AG** (city stays 1) |
+| **v6→v7** | Core generic VA → administrative-support (intent mismatch) | **Core → `/us` / `/au`**; Admin stays Roles category |
+| **v7** | Log-only fired primary conversion | `conversion_eligible: false`; thank-you honest |
+| **v7** | No WP-link CI | `no-wp-links.test.ts` fails on WP hrefs |
+| **v7** | Exit-intent always on | Behind `NEXT_PUBLIC_ENABLE_EXIT_INTENT` |
 
 ---
 
 ## 9. Remaining blockers (still open)
 
-1. Real lead email / webhook recipients (log-only ≠ paid-ready)  
+1. Real lead email / webhook recipients (**hard** — log-only ≠ paid-ready)  
 2. Response-time SLA / who answers  
-3. Zoho (optional — must not fake)  
-4. CallRail / qualified-call tracking  
-5. GTM → Ads conversion mapping  
-6. Custom paid domain (optional host swap)  
-7. Explicit George approval to enable any campaign  
-8. Pause legacy `PM_*` Brand bleed  
-9. Brand Search scope (when/if added later)
+3. End-to-end delivery success + failure verified  
+4. Zoho (optional — must not fake)  
+5. CallRail / qualified-call tracking  
+6. GTM → Ads conversion mapping (tested)  
+7. US + AU custom paid domains + per-market GTM/GA4/GSC  
+8. Explicit George approval to enable any campaign  
+9. Pause legacy `PM_*` Brand bleed  
+10. Brand Search scope (when/if added later)
 
 ---
 
 ## 10. Exact questions for ChatGPT to stress-test
 
-1. **Is 2-campaign topology sane** vs Brand + many role campaigns? Challenge Core → `administrative-support` Final URL for “hire VA.”  
+1. **Is Core → `/us`/`/au` correct** vs category admin for “hire VA”?  
 2. **Is log-only acceptable for any paid click?** (Our answer: **No.**)  
 3. **Are Max CPC $8 / A$6 and $75/$50 dailies sane** vs historical CPC / $10–20k monthly story?  
 4. **Controlled-tier thin ST (HR/recruitment)** — keep Paused longer / strip from Stage 1?  
 5. **RSA×3 angles** — sample three ads on one AG; any invented savings, “top 1%”, consult language, or clone-y noun swaps?  
 6. **Keyword hygiene** — job-seeker / medical / Spanish / competitor leaks? Bare `hire` negatived by mistake?  
-7. **Double UTM / WP Final URL / generic Brand URL** regressions in CSV.  
+7. **Double UTM / WP Final URL** regressions in CSV.  
 8. **Conversion mapping risk** if GTM maps wrong events before Max Conv.  
 9. **Legacy PM_* Brand still Enabled** — parallel bleed.  
 10. **Careers `/ph` divert** — real careers product or Stage 1 placeholder risk?  
@@ -343,7 +360,7 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 
 | Path | What |
 |------|------|
-| `ads-launch/google-ads-editor-import.csv` | Editor import (Paused) |
+| `ads-launch/google-ads-editor-import.csv` | Editor import (Paused · v7) |
 | `ads-launch/build_stage1_editor_package.py` | Builder + QA |
 | `ads-launch/DECISIONS.md` | Locked operator defaults |
 | `ads-launch/FULL-BUILD-REPORT.md` | Short index |
@@ -353,6 +370,8 @@ Rebuild: `python3 ads-launch/build_stage1_editor_package.py`
 | `vision/` | Microsite (Next.js) |
 | `vision/config/categories.ts` | Category copy + A/B |
 | `vision/config/site.ts` | Nav, footer, public quotes |
+| `vision/lib/no-wp-links.test.ts` | WP egress audit |
+| `vision/scripts/validate-routes.mjs` | Route inventory check |
 | `xray/` | Launch Control / X-ray (CSV mirrored under `xray/docs/ads-launch/`) |
 
 ### Spot-check
@@ -369,14 +388,17 @@ print(Counter(r['Row Type'] for r in rows))
 assert {r['Campaign'] for r in rows} == {
   'VC_US_S_CORE','VC_US_S_ROLES','VC_AU_S_CORE','VC_AU_S_ROLES'}
 ads=[r for r in rows if r['Row Type']=='Ad']
+core=[r for r in ads if r['Campaign'].endswith('_S_CORE')]
+assert all(r['Final URL'].rstrip('/').endswith(('/us','/au')) for r in core)
+assert all(not r['Final URL'].rstrip('/').endswith(('/us','/au')) for r in ads if r['Campaign'].endswith('_S_ROLES'))
 by=defaultdict(int)
 for r in ads: by[(r['Campaign'], r['Ad Group'])]+=1
 assert all(n==3 for (c,a),n in by.items() if 'City' not in a)
 assert all(n==1 for (c,a),n in by.items() if 'City' in a)
-assert all(r[f'Headline {i}'] and r.get(f'Description {j}')
-           for r in ads for i in range(1,16) for j in range(1,5))
-print('RSA', len(ads), 'main AGs ×3 OK; city ×1 OK')
+print('RSA', len(ads), 'CORE→market home OK; Roles→category OK')
 PY
+
+cd vision && npm test && npm run validate:routes && npm run typecheck && npm run build
 ```
 
 ---
@@ -384,13 +406,14 @@ PY
 ## 12. Operator next (not Ads enable)
 
 1. Hostile audit of **this** debrief (optional MEGA companion).  
-2. Replace log-only with real lead delivery.  
+2. Replace log-only with real lead delivery — **hard gate**.  
 3. Import CSV **Paused**; human review matrix `09`.  
 4. Pause legacy `PM_*` Brand if still bleeding.  
-5. Enable only per `07-phased-activation-recommendation.md` after **explicit** George approval.
+5. Enable only per `07-phased-activation-recommendation.md` after **explicit** George approval — subset: **Core + Digital + Social + Admin** first.
 
-**Ads remain Off.**
+**Ads remain Off.**  
+**Paid status: NOT READY FOR PAID TRAFFIC.**
 
 ---
 
-*End of complete ChatGPT debrief (v6 · RSA×3). This file is the canonical paste. Companion: `CHATGPT-MEGA-AUDIT.md`. Index: `FULL-BUILD-REPORT.md`.*
+*End of complete ChatGPT debrief (v7 · Core→market home). This file is the canonical paste. Companion: `CHATGPT-MEGA-AUDIT.md`. Index: `FULL-BUILD-REPORT.md`.*
