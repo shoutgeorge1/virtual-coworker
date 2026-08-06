@@ -197,8 +197,8 @@ export default function MarketLanding({
   };
 
   const showOverlay = heroOverlay !== "none";
-  const h1Class =
-    heroOverlay === "hot" ? "anim-rise hero-h1-hot" : "anim-rise";
+  // Prefer image overlays over recoloring H1 — hot keeps default typography.
+  const h1Class = "anim-rise";
   const secondaryBadge = resolveHeroSecondaryBadge(market, category);
 
   return (
@@ -310,6 +310,7 @@ export default function MarketLanding({
                     className="va-hero-badge va-hero-badge-circle"
                     aria-label="Dedicated full-time, monthly"
                   >
+                    <span className="va-hero-badge-glow" aria-hidden />
                     <span className="va-hero-badge-ring" aria-hidden />
                     <span className="va-hero-badge-core">
                       <em>Dedicated</em>
