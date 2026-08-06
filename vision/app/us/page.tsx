@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import MarketLanding from "../components/MarketLanding";
 import { resolveLpVariant } from "../../lib/resolve-lp-variant";
+import { normalizeHeroOverlay } from "../../lib/hero-overlay";
 import "./us.css";
 
 export const metadata: Metadata = {
@@ -13,9 +14,12 @@ export const metadata: Metadata = {
 export default async function USHome({
   searchParams,
 }: {
-  searchParams: Promise<{ variant?: string }>;
+  searchParams: Promise<{ variant?: string; hero?: string }>;
 }) {
   const sp = await searchParams;
   const variant = await resolveLpVariant(sp);
-  return <MarketLanding market="us" variant={variant} />;
+  const heroOverlay = normalizeHeroOverlay(sp.hero);
+  return (
+    <MarketLanding market="us" variant={variant} heroOverlay={heroOverlay} />
+  );
 }

@@ -3,7 +3,7 @@ import { SITE, type SiteSurface } from "../../config/site";
 
 /**
  * Minimal per-market footer.
- * Working microsite links only · zero WordPress egress · one quiet cross-site line.
+ * Same-host links only · zero WordPress egress · one quiet cross-market line.
  */
 export default function SiteFooter({
   tone = "dark",

@@ -11,6 +11,11 @@ Writes:
   xray/data/ads-package.json
   xray/ads-package.html
 
+Display names (dashboard only):
+  Editor campaign / ad group IDs stay unchanged in import CSVs.
+  This builder adds human `display_name` fields for the overview UI.
+  See DISPLAY_NAME_MAP / campaign_display() / ad_group_display().
+
 Run standalone, or via build_stage1_editor_package.main() after CSV regen.
 """
 
@@ -39,6 +44,55 @@ ACCOUNT_LABELS = {
     "496-715-1855": "US",
     "573-539-1940": "AU",
 }
+
+# Dashboard-only labels. Editor CSV entity names stay technical for import stability.
+CAMPAIGN_DISPLAY = {
+    "VC_US_S_CORE": "US · Core Search",
+    "VC_US_S_ROLES": "US · Role Search",
+    "VC_AU_S_CORE": "AU · Core Search",
+    "VC_AU_S_ROLES": "AU · Role Search",
+}
+
+# Full AG overrides when underscore-split looks awkward.
+AD_GROUP_DISPLAY = {
+    "Hire_VA_PH": "Virtual Assistant · Hire",
+    "Offshore_VA_PH": "Offshore VA · Core",
+    "Administration_EA_PH": "Administration · EA",
+    "Admin_City_Test": "Admin · City Test",
+    "Digital_Marketing_Hire_PH": "Digital Marketing · Hire",
+    "Digital_Marketing_Outsource_PH": "Digital Marketing · Outsource",
+    "Customer_Service_Hire_PH": "Customer Service · Hire",
+    "Customer_Service_Outsource_PH": "Customer Service · Outsource",
+    "Human_Resources_Hire_PH": "Human Resources · Hire",
+    "Human_Resources_Outsource_PH": "Human Resources · Outsource",
+    "Social_Media_Hire_PH": "Social Media · Hire",
+    "Social_Media_Outsource_PH": "Social Media · Outsource",
+    "Accounting_Hire_PH": "Accounting · Hire",
+    "Accounting_Outsource_PH": "Accounting · Outsource",
+    "Bookkeeping_Hire_PH": "Bookkeeping · Hire",
+    "Bookkeeping_Outsource_PH": "Bookkeeping · Outsource",
+    "Recruitment_Hire_PH": "Recruitment · Hire",
+    "Recruitment_Outsource_PH": "Recruitment · Outsource",
+    "Sales_Hire_PH": "Sales · Hire",
+    "Sales_Outsource_PH": "Sales · Outsource",
+}
+
+
+def campaign_display(name: str) -> str:
+    """Human label for operators; falls back to technical name."""
+    return CAMPAIGN_DISPLAY.get(name, name.replace("_", " · "))
+
+
+def ad_group_display(name: str) -> str:
+    """Readable AG label, e.g. Digital Marketing · Hire (not Digital_Marketing_Hire_PH)."""
+    if name in AD_GROUP_DISPLAY:
+        return AD_GROUP_DISPLAY[name]
+    raw = name[:-3] if name.endswith("_PH") else name
+    for suffix, label in (("_Hire", "Hire"), ("_Outsource", "Outsource")):
+        if raw.endswith(suffix):
+            role = raw[: -len(suffix)].replace("_", " ")
+            return f"{role} · {label}"
+    return raw.replace("_", " ")
 
 
 def _load_holdouts() -> list[str]:
@@ -125,6 +179,7 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
         campaigns.append(
             {
                 "name": cname,
+                "display_name": campaign_display(cname),
                 "account": market,
                 "account_id": r.get("Account") or "",
                 "budget": r.get("Budget") or "",
@@ -161,7 +216,9 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
         ad_groups.append(
             {
                 "campaign": cname,
+                "campaign_display": campaign_display(cname),
                 "name": ag,
+                "display_name": ad_group_display(ag),
                 "status": r.get("Ad Group Status") or "",
                 "keyword_count": len(kws),
                 "exact": match.get("Exact", 0),
@@ -174,10 +231,13 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
 
     keywords = []
     for r in by_type["Keyword"]:
+        cname, ag = r["Campaign"], r["Ad Group"]
         keywords.append(
             {
-                "campaign": r["Campaign"],
-                "ad_group": r["Ad Group"],
+                "campaign": cname,
+                "campaign_display": campaign_display(cname),
+                "ad_group": ag,
+                "ad_group_display": ad_group_display(ag),
                 "keyword": r.get("Keyword") or "",
                 "match": r.get("Criterion Type") or "",
                 "status": r.get("Keyword Status") or "",
@@ -187,10 +247,13 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
     rsas = []
     for r in by_type["Ad"]:
         hs, ds = _headlines(r), _descriptions(r)
+        cname, ag = r["Campaign"], r["Ad Group"]
         rsas.append(
             {
-                "campaign": r["Campaign"],
-                "ad_group": r["Ad Group"],
+                "campaign": cname,
+                "campaign_display": campaign_display(cname),
+                "ad_group": ag,
+                "ad_group_display": ad_group_display(ag),
                 "status": r.get("Ad Status") or "",
                 "ad_type": r.get("Ad type") or "",
                 "final_url": r.get("Final URL") or "",
@@ -309,12 +372,27 @@ def build_package() -> dict:
     tiers_us = _tier_counts(MANIFEST_US)
     tiers_au = _tier_counts(MANIFEST_AU)
 
+    name_map = {
+        "note": (
+            "Display names are dashboard-only. Google Ads Editor CSV campaign and "
+            "ad group names stay technical for import accuracy — do not rename "
+            "entities in the CSV based on this table."
+        ),
+        "campaigns": [
+            {"editor": k, "display": v} for k, v in sorted(CAMPAIGN_DISPLAY.items())
+        ],
+        "ad_groups": [
+            {"editor": k, "display": v} for k, v in sorted(AD_GROUP_DISPLAY.items())
+        ],
+    }
+
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "source_files": [
             str(US_CSV.relative_to(ROOT)),
             str(AU_CSV.relative_to(ROOT)),
         ],
+        "display_name_map": name_map,
         "safety": {
             "status": "Paused",
             "banner": "Paused · SAFE TO IMPORT FOR REVIEW · NOT SAFE FOR PAID TRAFFIC",
@@ -375,9 +453,11 @@ def render_html(pkg: dict) -> str:
     camp_rows = []
     for mkt in ("US", "AU"):
         for c in pkg["markets"][mkt]["campaigns"]:
+            dname = c.get("display_name") or campaign_display(c["name"])
             camp_rows.append(
                 "<tr>"
-                f"<td><code>{_esc(c['name'])}</code></td>"
+                f"<td><span class='name-display'>{_esc(dname)}</span>"
+                f"<code class='name-tech'>{_esc(c['name'])}</code></td>"
                 f"<td>{_esc(c['account'])}<br /><span class='dim'>{_esc(c['account_id'])}</span></td>"
                 f"<td>${_esc(c['budget'])} {_esc(c['budget_type']).lower()}</td>"
                 f"<td>{_esc(c['bid_strategy'])}</td>"
@@ -389,6 +469,23 @@ def render_html(pkg: dict) -> str:
                 f"<td class='num'>{c['rsa_count']}</td>"
                 "</tr>"
             )
+
+    map_camp_rows = "".join(
+        f"<tr><td><span class='name-display'>{_esc(r['display'])}</span></td>"
+        f"<td><code class='name-tech'>{_esc(r['editor'])}</code></td></tr>"
+        for r in pkg.get("display_name_map", {}).get("campaigns", [])
+    )
+    map_ag_rows = "".join(
+        f"<tr><td><span class='name-display'>{_esc(r['display'])}</span></td>"
+        f"<td><code class='name-tech'>{_esc(r['editor'])}</code></td></tr>"
+        for r in pkg.get("display_name_map", {}).get("ad_groups", [])
+    )
+    map_note = _esc(
+        pkg.get("display_name_map", {}).get(
+            "note",
+            "Display names are dashboard-only; Editor CSV names stay technical.",
+        )
+    )
 
     holdout_lis = "".join(f"<li><code>{_esc(t)}</code></li>" for t in holdouts)
     neg_lis = "".join(f"<li><code>{_esc(t)}</code></li>" for t in us["negatives"])
@@ -654,6 +751,27 @@ def render_html(pkg: dict) -> str:
       color: var(--muted);
       font-size: 0.88rem;
     }}
+    .name-display {{
+      display: block;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }}
+    .name-tech {{
+      display: inline-block;
+      margin-top: 0.2rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--muted);
+      background: transparent;
+      padding: 0;
+    }}
+    .ag-block summary .name-display {{
+      flex: 1 1 auto;
+      min-width: 10rem;
+    }}
   </style>
 </head>
 <body data-page="ads-package.html" data-foot="Stage 1 Editor package<br />Paused · review only">
@@ -666,6 +784,7 @@ def render_html(pkg: dict) -> str:
         <p>
           Campaigns, ad groups, keywords, RSAs, negatives, and assets from the current
           Paused Editor import — so you can review without opening Google Ads.
+          Friendly names up front; Editor IDs stay in mono for import accuracy.
           Regenerated from <code>google-ads-editor-import-us.csv</code> + <code>-au.csv</code>.
         </p>
       </header>
@@ -725,6 +844,37 @@ def render_html(pkg: dict) -> str:
                 {''.join(camp_rows)}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="name-map">
+        <div class="panel-hd">
+          <p class="kicker">Dashboard display layer</p>
+          <h2>Name map</h2>
+          <span class="badge badge-info">Import IDs unchanged</span>
+        </div>
+        <div class="panel-bd">
+          <p class="muted" style="margin:0 0 0.85rem;font-size:0.88rem">{map_note}</p>
+          <div class="neg-grid">
+            <div>
+              <h3 style="margin:0 0 0.45rem;font-size:0.92rem">Campaigns</h3>
+              <div class="scroll-box" style="max-height:14rem">
+                <table class="data-table">
+                  <thead><tr><th>Display</th><th>Editor</th></tr></thead>
+                  <tbody>{map_camp_rows}</tbody>
+                </table>
+              </div>
+            </div>
+            <div>
+              <h3 style="margin:0 0 0.45rem;font-size:0.92rem">Ad groups</h3>
+              <div class="scroll-box tall">
+                <table class="data-table">
+                  <thead><tr><th>Display</th><th>Editor</th></tr></thead>
+                  <tbody>{map_ag_rows}</tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -935,7 +1085,7 @@ def render_html(pkg: dict) -> str:
     function el(id) {{ return document.getElementById(id); }}
     function clear(node) {{ while (node.firstChild) node.removeChild(node.firstChild); }}
 
-    function fillSelect(select, values, allLabel) {{
+    function fillSelect(select, items, allLabel) {{
       clear(select);
       if (allLabel) {{
         var o = document.createElement("option");
@@ -943,22 +1093,39 @@ def render_html(pkg: dict) -> str:
         o.textContent = allLabel;
         select.appendChild(o);
       }}
-      values.forEach(function (v) {{
+      items.forEach(function (item) {{
         var o = document.createElement("option");
-        o.value = v;
-        o.textContent = v;
+        if (typeof item === "string") {{
+          o.value = item;
+          o.textContent = item;
+        }} else {{
+          o.value = item.value;
+          o.textContent = item.label;
+        }}
         select.appendChild(o);
       }});
     }}
 
-    function campaignNames(mkt) {{
-      return markets[mkt].campaigns.map(function (c) {{ return c.name; }});
+    function campLabel(c) {{
+      return c.display_name || c.name;
     }}
 
-    function agNames(mkt, campaign) {{
+    function agLabel(a) {{
+      return a.display_name || a.name;
+    }}
+
+    function campaignOptions(mkt) {{
+      return markets[mkt].campaigns.map(function (c) {{
+        return {{ value: c.name, label: campLabel(c) }};
+      }});
+    }}
+
+    function agOptions(mkt, campaign) {{
       return markets[mkt].ad_groups
         .filter(function (a) {{ return !campaign || a.campaign === campaign; }})
-        .map(function (a) {{ return a.name; }});
+        .map(function (a) {{
+          return {{ value: a.name, label: agLabel(a) }};
+        }});
     }}
 
     /* —— Ad groups —— */
@@ -978,8 +1145,9 @@ def render_html(pkg: dict) -> str:
         d.className = "ag-block";
         var s = document.createElement("summary");
         s.innerHTML =
-          "<code>" + a.name + "</code>" +
-          "<span class='meta'>" + a.campaign + "</span>" +
+          "<span class='name-display'>" + agLabel(a) + "</span>" +
+          "<code class='name-tech'>" + a.name + "</code>" +
+          "<span class='meta'>" + (a.campaign_display || a.campaign) + "</span>" +
           "<span class='meta'>" + a.keyword_count + " KW · " +
           a.exact + " Exact · " + a.phrase + " Phrase · " +
           a.rsa_count + " RSA</span>" +
@@ -1000,7 +1168,7 @@ def render_html(pkg: dict) -> str:
     }}
 
     function syncAgCampaign() {{
-      fillSelect(agCampaign, campaignNames(agMarket.value), "All campaigns");
+      fillSelect(agCampaign, campaignOptions(agMarket.value), "All campaigns");
       renderAGs();
     }}
     agMarket.addEventListener("change", syncAgCampaign);
@@ -1019,8 +1187,8 @@ def render_html(pkg: dict) -> str:
     var kwBadge = el("kw-count-badge");
 
     function syncKwFilters() {{
-      fillSelect(kwCampaign, campaignNames(kwMarket), "All campaigns");
-      fillSelect(kwAg, agNames(kwMarket, kwCampaign.value), "All ad groups");
+      fillSelect(kwCampaign, campaignOptions(kwMarket), "All campaigns");
+      fillSelect(kwAg, agOptions(kwMarket, kwCampaign.value), "All ad groups");
       renderKeywords();
     }}
 
@@ -1044,8 +1212,10 @@ def render_html(pkg: dict) -> str:
         tr.innerHTML =
           "<td><code>" + k.keyword + "</code></td>" +
           "<td>" + k.match + "</td>" +
-          "<td>" + k.ad_group + "</td>" +
-          "<td><code>" + k.campaign + "</code></td>" +
+          "<td><span class='name-display'>" + (k.ad_group_display || k.ad_group) + "</span>" +
+          "<code class='name-tech'>" + k.ad_group + "</code></td>" +
+          "<td><span class='name-display'>" + (k.campaign_display || k.campaign) + "</span>" +
+          "<code class='name-tech'>" + k.campaign + "</code></td>" +
           "<td><span class='badge badge-high'>" + k.status + "</span></td>";
         kwTbody.appendChild(tr);
       }});
@@ -1068,7 +1238,7 @@ def render_html(pkg: dict) -> str:
       syncKwFilters();
     }});
     kwCampaign.addEventListener("change", function () {{
-      fillSelect(kwAg, agNames(kwMarket, kwCampaign.value), "All ad groups");
+      fillSelect(kwAg, agOptions(kwMarket, kwCampaign.value), "All ad groups");
       renderKeywords();
     }});
     kwAg.addEventListener("change", renderKeywords);
@@ -1089,7 +1259,8 @@ def render_html(pkg: dict) -> str:
       var byAg = {{}};
       markets[mkt].rsas.forEach(function (ad) {{
         if (camp && ad.campaign !== camp) return;
-        if (q && ad.ad_group.toLowerCase().indexOf(q) === -1) return;
+        var hay = ((ad.ad_group_display || "") + " " + ad.ad_group).toLowerCase();
+        if (q && hay.indexOf(q) === -1) return;
         var key = ad.campaign + "||" + ad.ad_group;
         if (!byAg[key]) byAg[key] = [];
         byAg[key].push(ad);
@@ -1103,8 +1274,9 @@ def render_html(pkg: dict) -> str:
         var first = ads[0];
         var s = document.createElement("summary");
         s.innerHTML =
-          "<code>" + parts[1] + "</code>" +
-          "<span class='meta'>" + parts[0] + "</span>" +
+          "<span class='name-display'>" + (first.ad_group_display || parts[1]) + "</span>" +
+          "<code class='name-tech'>" + parts[1] + "</code>" +
+          "<span class='meta'>" + (first.campaign_display || parts[0]) + "</span>" +
           "<span class='meta'>" + ads.length + " RSA · " +
           first.headline_count + "H / " + first.description_count + "D</span>" +
           "<span class='meta'>" + (first.final_url || "") + "</span>";
@@ -1136,7 +1308,7 @@ def render_html(pkg: dict) -> str:
     }}
 
     function syncRsaCampaign() {{
-      fillSelect(rsaCampaign, campaignNames(rsaMarket.value), "All campaigns");
+      fillSelect(rsaCampaign, campaignOptions(rsaMarket.value), "All campaigns");
       renderRSAs();
     }}
     rsaMarket.addEventListener("change", syncRsaCampaign);

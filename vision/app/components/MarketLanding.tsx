@@ -17,15 +17,19 @@ import {
   type CategorySlug,
 } from "../../config/categories";
 import { SITE } from "../../config/site";
+import type { HeroOverlay } from "../../lib/hero-overlay";
 
 export default function MarketLanding({
   market,
   category,
   variant,
+  heroOverlay = "none",
 }: {
   market: MarketId;
   category?: CategorySlug | null;
   variant: AbVariant;
+  /** QA-only image overlay treatments (?hero=badge|pill|hot). Default = current chrome. */
+  heroOverlay?: HeroOverlay;
 }) {
   const cfg = MARKETS[market];
   const phone = resolvePhone(market);
@@ -191,8 +195,17 @@ export default function MarketLanding({
       : "A teammate will follow up to talk through the role and next steps.",
   };
 
+  const showOverlay = heroOverlay !== "none";
+  const h1Class =
+    heroOverlay === "hot" ? "anim-rise hero-h1-hot" : "anim-rise";
+
   return (
-    <main className={shell} data-variant={variant} data-category={category || "generic"}>
+    <main
+      className={shell}
+      data-variant={variant}
+      data-category={category || "generic"}
+      data-hero={heroOverlay}
+    >
       <SiteNav tone={light ? "light" : "dark"} market={market} />
 
       <section className={`${shell}-hero`}>
@@ -205,7 +218,7 @@ export default function MarketLanding({
               {cat ? ` · ${cat.label}` : ""}
               {" · "}Philippines talent
             </p>
-            <h1 className="anim-rise">{h1}</h1>
+            <h1 className={h1Class}>{h1}</h1>
             <p className={`${shell}-lead anim-rise-d1`}>{sub}</p>
 
             <ul className={`${shell}-ticks anim-rise-d1`}>
@@ -265,13 +278,41 @@ export default function MarketLanding({
             </div>
           </div>
 
-          <figure className={`va-card ${shell}-va anim-rise-d1`}>
+          <figure
+            className={`va-card ${shell}-va anim-rise-d1${
+              showOverlay ? ` va-card-hero-${heroOverlay}` : ""
+            }`}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={heroSrc} alt={heroAlt} />
-            <span className="va-card-tag">
-              <i />
-              {cat ? cat.shortLabel : "Dedicated hire"}
-            </span>
+            {!showOverlay ? (
+              <span className="va-card-tag">
+                <i />
+                {cat ? cat.shortLabel : "Dedicated hire"}
+              </span>
+            ) : null}
+            {heroOverlay === "badge" || heroOverlay === "hot" ? (
+              <div
+                className="va-hero-badge va-hero-badge-circle"
+                aria-label="Dedicated full-time, monthly"
+              >
+                <span className="va-hero-badge-ring" aria-hidden />
+                <span className="va-hero-badge-core">
+                  <em>Dedicated</em>
+                  <strong>Full-time</strong>
+                  <span>Monthly</span>
+                </span>
+              </div>
+            ) : null}
+            {heroOverlay === "pill" ? (
+              <div
+                className="va-hero-badge va-hero-badge-pill"
+                aria-label="Dedicated full-time, monthly"
+              >
+                <strong>Dedicated full-time</strong>
+                <span>Monthly placement</span>
+              </div>
+            ) : null}
             <figcaption>
               <b>{cat ? `${cat.label}` : "Matched to your role"}</b>
               <span>

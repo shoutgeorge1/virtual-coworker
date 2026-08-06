@@ -3,13 +3,14 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 /**
- * Automated audit: paid microsite source must not href/link to WordPress hosts.
- * Fails CI/local test if virtualcoworker.com(.au) appears as a navigable URL.
+ * Automated audit: hiring site source must not href/link to WordPress hosts.
+ * Fails CI/local test if virtualcoworker.com(.au) appears as a navigable http(s) URL.
+ * mailto: to company inboxes is allowed (not WP page egress).
  */
 
 const ROOT = join(__dirname, "..");
 const WP_HREF_RE =
-  /(?:href\s*=\s*["'`]|url\s*\(\s*["']?|redirect\s*\(\s*["'`]|window\.location\s*=\s*["'`])[^"'`)]*virtualcoworker\.com(?:\.au)?/i;
+  /(?:href\s*=\s*["'`](?!mailto:)|url\s*\(\s*["']?|redirect\s*\(\s*["'`]|window\.location\s*=\s*["'`])[^"'`)]*virtualcoworker\.com(?:\.au)?/i;
 const WP_BARE_URL_RE = /https?:\/\/(?:www\.)?virtualcoworker\.com(?:\.au)?/gi;
 
 const SCAN_DIRS = ["app", "components", "config", "lib"];

@@ -1,11 +1,11 @@
 /**
- * Public trust / legal facts for the paid microsite.
+ * Public trust / legal facts for this Virtual Coworker website.
  * Addresses sourced from published Virtual Coworker contact details (2026-08-05).
  * Quotes sourced from published client stories — rendered as text only (no WP links).
  *
- * IA (George): three separate micro-sites — /us, /au, /ph.
- * Root `/` redirects to `/us` (primary paid market). No corporate hub.
- * Hard rule: no WordPress egress from nav/footer/CTAs — keep PPC inside this ecosystem.
+ * IA (George): market surfaces — /us, /au, /ph.
+ * Root `/` redirects to `/us` (primary hiring market). No corporate hub.
+ * Hard rule: no WordPress egress from nav/footer/CTAs — keep paid traffic on this host.
  */
 
 import type { MarketId } from "./markets";
@@ -15,7 +15,7 @@ export const SITE = {
   legalEntity: "Virtual Coworker Inc.",
   tagline: "Philippines staffing",
   disclaimer: "Hire dedicated Philippines staff for your business.",
-  /** Confirmed NA business line for this pilot (operator brief). */
+  /** Confirmed NA business line (published contact). */
   usPhoneDisplay: "310-426-8776",
   usPhoneHref: "tel:3104268776",
   addressUs: "750 N San Vicente Blvd, West Hollywood, CA 90069",
