@@ -9,88 +9,131 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
+  <style>
+    .ladder { margin: 0; padding: 0; list-style: none; }
+    .ladder li {
+      display: grid;
+      grid-template-columns: 5.5rem 1fr;
+      gap: 0.55rem 0.75rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      align-items: start;
+    }
+    .ladder li:last-child { border-bottom: none; }
+    .ladder .when {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      padding-top: 0.15rem;
+    }
+    .ladder .when.now { color: var(--ink); }
+    .ladder strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+    .ladder span {
+      display: block;
+      margin-top: 0.15rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+  </style>
 </head>
-<body data-page="tracking.html" data-foot="Form + qualified call first<br />Job order · placement later">
+<body data-page="tracking.html" data-foot="Form + phone first<br />Job order · placement later">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">What we measure</p>
+        <p class="kicker">Bidding ladder</p>
         <h1>Tracking</h1>
         <p>
-          Stage 1 learns from clean employer leads first.
-          Job orders and placements come later — after Zoho can send real outcomes back to Ads.
+          Start simple. Learn from clicks, then clean form fills and phone calls.
+          Do not optimize to job order or placement at the start.
         </p>
       </header>
 
       <div class="notice">
         <p>
-          <strong>Do not initially optimize Ads around job orders or placements.</strong>
-          Need clean lead data first. Future offline values are estimate ranges only until VC approves
-          exact dollars for Ads import.
+          <strong>Rule:</strong> don’t bid on job order / placement until form + call data is clean.
+          Values for those offline conversions are TBD — not approved yet.
         </p>
       </div>
 
       <section class="panel" id="ladder">
         <div class="panel-hd">
-          <p class="kicker">Value chain</p>
-          <h2>How value goes up</h2>
+          <p class="kicker">In order</p>
+          <h2>How we climb</h2>
         </div>
-        <div class="panel-bd tbl-wrap">
-          <table class="tbl-tight">
-            <thead>
-              <tr>
-                <th>Step</th>
-                <th>What it is</th>
-                <th>In Ads now?</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>1 · Employer lead</strong></td>
-                <td>Server-accepted form submit or qualified phone call</td>
-                <td><strong>Yes — Stage 1 primary</strong></td>
-              </tr>
-              <tr>
-                <td><strong>2 · Job order</strong></td>
-                <td>They place an order to hire a VA</td>
-                <td>Later — Zoho → Ads · est. $200–$400 (not approved)</td>
-              </tr>
-              <tr>
-                <td><strong>3 · Job placement</strong></td>
-                <td>VA is placed / hire completes</td>
-                <td>Later — Zoho → Ads · est. $500–$800 (not approved)</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="panel-bd">
+          <ol class="ladder">
+            <li>
+              <span class="when now">Now</span>
+              <div>
+                <strong>Maximize Clicks</strong>
+                <span>Learn CTR and which searches click. Cheap signal while setup finishes.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when now">Stage 1</span>
+              <div>
+                <strong>Form fill that actually arrives + phone call (~60 seconds)</strong>
+                <span>Best-practice conversions. Form only counts if it lands in a real inbox. Phone ~60s is the bar.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when">Later</span>
+              <div>
+                <strong>Maximize Conversions</strong>
+                <span>Only after form + call tracking is clean — not on junk micros.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when">Later</span>
+              <div>
+                <strong>Job order + placement offline from Zoho</strong>
+                <span>Import with dollar values (TBD — not approved). Needs unique IDs so we don’t double-count.</span>
+              </div>
+            </li>
+            <li>
+              <span class="when">Later</span>
+              <div>
+                <strong>ROAS / value bidding</strong>
+                <span>After offline values are trusted. Not Stage 1.</span>
+              </div>
+            </li>
+          </ol>
         </div>
       </section>
 
-      <section class="panel" id="how">
+      <section class="panel" id="audit">
         <div class="panel-hd">
-          <p class="kicker">Behind the scenes</p>
-          <h2>What George sets up</h2>
+          <p class="kicker">Still on your list</p>
+          <h2>Two audits before trust</h2>
         </div>
         <div class="panel-bd">
           <ul class="glance-bullets">
-            <li>Pilot-page tracking (not old WordPress tags)</li>
-            <li>Form submits counted only after server accept; job-seeker path = zero employer Ads credit</li>
-            <li>Phone: NA destination <code>310-426-8776</code>; CallRail tracking later (not live yet)</li>
-            <li>Capture GCLID / GBRAID / WBRAID / UTMs / LP / timestamp for later offline import</li>
-            <li>When Zoho can mark job orders / placements with approved values, import those as higher-value conversions</li>
+            <li>
+              <strong>Conversion action audit</strong> —
+              In Ads (USA + AU): every action’s name, Primary vs Secondary, what fires it. Flag junk.
+            </li>
+            <li>
+              <strong>Zapier / lead inbox audit</strong> —
+              Map where form leads go today. Don’t rip it until you know what it does.
+            </li>
           </ul>
           <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
-            You don’t need to hand over existing analytics to start. Exact defs of qualified lead /
-            job order / placement still need VC confirmation —
-            <a href="launch-checklist">Launch Checklist</a>.
+            Work those on the <a href="launch-control.html">Checklist</a>.
           </p>
         </div>
       </section>
 
       <div class="actions">
         <a class="btn btn-primary" href="lead-routing.html">Lead Routing</a>
-        <a class="btn" href="results.html">Results</a>
+        <a class="btn" href="launch-control.html">Checklist</a>
       </div>
     </main>
   </div>

@@ -24,6 +24,17 @@
       line-height: 1.4;
     }
     .lc-start strong { color: var(--ink); }
+    .lc-logic {
+      margin: 0 0 0.9rem;
+      padding: 0.55rem 0.95rem;
+      border-radius: 8px;
+      border: 1px solid var(--tint-cool-edge);
+      background: var(--tint-cool);
+      font-size: 0.88rem;
+      color: var(--body);
+      line-height: 1.4;
+    }
+    .lc-logic strong { color: var(--ink); }
     .lc-board {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -182,6 +193,38 @@
       margin: 0 0 0.4rem;
       font-size: 0.95rem;
     }
+    .lp-previews {
+      display: grid;
+      gap: 0.85rem;
+    }
+    .lp-previews h3 {
+      margin: 0 0 0.35rem;
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+    .lp-link-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .lp-link-grid a {
+      display: inline-block;
+      padding: 0.28rem 0.55rem;
+      border-radius: 6px;
+      border: 1px solid var(--edge);
+      background: var(--panel-inset);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .lp-link-grid a:hover {
+      border-color: var(--tint-cool-edge);
+      background: var(--tint-cool);
+    }
     .tech-link {
       margin-top: 1.25rem;
       padding: 0.75rem 1rem;
@@ -233,29 +276,34 @@
     }
   </style>
 </head>
-<body data-page="launch-control.html" data-foot="This is the checklist<br />Paused import until gates green">
+<body data-page="launch-control.html" data-foot="Your Ads checklist<br />Ads stay paused until leads have a real inbox">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Stage 1 · USA + Australia · your work list</p>
+        <p class="kicker">Stage 1 · USA + Australia</p>
         <h1>Checklist</h1>
         <p>
-          Numbered steps below — do them in order. Tick each box as you finish.
-          When we need a live Ads read, drop the campaign view in this thread — we update the board from that.
-          Ads stay paused until the gates are clear. Ads go to the microsite, not WordPress.
+          Account review first (Brand, conversions, Zapier, assets, negatives, auto-apply).
+          Editor import comes after. Tick boxes as you finish — finished items tuck under Done.
+          Ads stay off until leads have a real place they actually arrive.
         </p>
       </header>
 
       <p class="lc-start">
-        <strong>Next: step 5 — Review live Brand campaigns.</strong>
-        Finished steps tuck under <strong>Done</strong> at the bottom (collapsed). Tick as you go — saves in this browser.
+        <strong>Do next: Review the live Brand campaigns.</strong>
+        USA + AU Brand are the only things spending. Check status, spend, Final URL — then decide pause vs leave.
+      </p>
+
+      <p class="lc-logic">
+        <strong>Setup in one line:</strong>
+        Three microsites (US · AU · PH) · no WordPress for ads · turn on PH long-tail first when we enable · ads stay off until leads have a real inbox.
       </p>
 
       <section class="panel" id="ads-launch-checklist">
         <div class="panel-hd">
-          <p class="kicker">George · do these in order</p>
+          <p class="kicker">George</p>
           <h2>Do this now</h2>
           <span class="st st-progress">Work here</span>
         </div>
@@ -264,141 +312,141 @@
             <li data-order="1">
               <input type="checkbox" id="ads1" data-todo="ads1" checked />
               <label for="ads1">
-                <strong>1. Tick this — Ads access is already set</strong>
-                <span class="todo-hint">Done. Standard access through the MCC over USA <code>496-715-1855</code> and Australia <code>573-539-1940</code>. Enough for Stage 1.</span>
+                <strong>1. Confirm Ads access is set</strong>
+                <span class="todo-hint">Already done. Standard access via MCC on USA <code>496-715-1855</code> and Australia <code>573-539-1940</code>.</span>
               </label>
             </li>
             <li data-order="2">
               <input type="checkbox" id="ads2" data-todo="ads2" checked />
               <label for="ads2">
-                <strong>2. Open Google Ads and open the USA account</strong>
-                <span class="todo-hint">Done Aug 5. USA <code>496-715-1855</code> confirmed in this thread.</span>
+                <strong>2. Open Google Ads → USA account</strong>
+                <span class="todo-hint">Already done Aug 5. USA <code>496-715-1855</code> confirmed.</span>
               </label>
             </li>
             <li data-order="3">
               <input type="checkbox" id="ads3" data-todo="ads3" checked />
               <label for="ads3">
-                <strong>3. Share the USA campaign list in this thread</strong>
-                <span class="todo-hint">Done Aug 5 — from that view: only live/spending is <code>PM_US_RSA_Brand</code> (Search, Maximize conversions, $100/day, Enabled). Recent: about $39 cost, <strong>0 conversions</strong>. Everything else in view is paused old stuff (~50 campaigns). Ignore Google’s “Add broad match” nag for Stage 1.</span>
+                <strong>3. Paste the USA campaign list in this thread</strong>
+                <span class="todo-hint">Already done. Only live spender: <code>PM_US_RSA_Brand</code> ($100/day Max Conv, ~$39, 0 conversions). Rest paused.</span>
               </label>
             </li>
             <li data-order="4">
               <input type="checkbox" id="ads4" data-todo="ads4" checked />
               <label for="ads4">
-                <strong>4. Share the Australia campaign list in this thread</strong>
-                <span class="todo-hint">Done Aug 5 — from that view: only live is <code>PM_AU_RSA_Brand</code> (Search, Maximize conversions, $30/day, Eligible / Limited). Recent: about A$3 cost, <strong>0 conversions</strong>. Rest of the list is paused old stuff. Ignore Display→Demand Gen / ad blocker / passkey nags.</span>
+                <strong>4. Paste the Australia campaign list in this thread</strong>
+                <span class="todo-hint">Already done. Only live: <code>PM_AU_RSA_Brand</code> ($30/day Max Conv, ~A$3, 0 conversions). Rest paused.</span>
               </label>
             </li>
             <li data-order="5">
               <input type="checkbox" id="ads5" data-todo="ads5" />
               <label for="ads5">
-                <strong>5. Review live Brand campaigns</strong>
-                <span class="todo-hint"><strong>← You are here.</strong> USA <code>PM_US_RSA_Brand</code> + AU <code>PM_AU_RSA_Brand</code> (small spend). Note status, spend, and Final URL for each. Decide pause vs leave until <code>VC_*</code> are live. You click pause in Ads if you want bleed stopped — not from this page. Share the screen in this thread if unsure.</span>
+                <strong>5. Review live Brand campaigns ← you are here</strong>
+                <span class="todo-hint">Open USA + AU Brand. Note status, spend, Final URL. Decide pause vs leave. You pause in Ads — not from this page.</span>
               </label>
             </li>
             <li data-order="6">
               <input type="checkbox" id="ads6" data-todo="ads6" />
               <label for="ads6">
-                <strong>6. Audit conversion events end-to-end</strong>
-                <span class="todo-hint">Tools → Conversions in <strong>USA and AU</strong>. For each action list: name, Primary vs Secondary, source (website / import / call), counting, and what page or event fires it. Flag micro-conversions, duplicates, and anything that could train Max Conversions on junk. Stage 1 primary = employer inquiry (+ qualified call later). Job order / placement = offline later. <strong>Share the list in this thread.</strong> Seeing the Conversions screen ≠ the Zapier path audited (step 8).</span>
+                <strong>6. Audit every conversion action (USA + AU)</strong>
+                <span class="todo-hint">Tools → Conversions. List name, Primary/Secondary, what fires it. Flag junk that could train Max Conversions. Share the list here.</span>
               </label>
             </li>
             <li data-order="7">
               <input type="checkbox" id="ads7" data-todo="ads7" />
               <label for="ads7">
-                <strong>7. Review campaign / account conversion goals</strong>
-                <span class="todo-hint">Check account-default and campaign goal baskets so new <code>VC_*</code> campaigns will not inherit garbage goals. Prefer observe-only / clean Stage 1 goals (employer inquiry + qualified call) — no Max Conv on unverified junk defs.</span>
+                <strong>7. Check account + campaign conversion goals</strong>
+                <span class="todo-hint">Make sure new campaigns won’t inherit garbage goals. Stage 1 wants form fills that arrive + solid phone calls — not junk micros.</span>
               </label>
             </li>
             <li data-order="8">
               <input type="checkbox" id="ads8" data-todo="ads8" />
               <label for="ads8">
-                <strong>8. Audit Zapier / lead integration</strong>
-                <span class="todo-hint">They appear to have a weird Zapier (or similar) setup — George doesn’t know if it’s correct. <strong>Map what it does</strong> with form leads / Ads / Zoho: still WordPress / Gravity Forms? Does it fire Ads conversions? Create Zoho records? Broken or duplicate? Document in this thread. <strong>Do not break it blindly.</strong> Zoho direct is preferred later — don’t rip Zapier until we know what it does. <strong>Zapier ≠ fixed:</strong> Ads access or seeing conversion actions ≠ this integration audited.</span>
+                <strong>8. Audit Zapier / where leads get emailed</strong>
+                <span class="todo-hint">Map what happens when a form submits — email? Zoho? Ads conversion? Broken/duplicate? Document. Don’t rip it until you know.</span>
               </label>
             </li>
             <li data-order="9">
               <input type="checkbox" id="ads9" data-todo="ads9" />
               <label for="ads9">
                 <strong>9. Review account-level Assets</strong>
-                <span class="todo-hint">Sitelinks, callouts, and other account assets. Flag anything pointing at WordPress — those can stick onto new campaigns. Microsite-only destinations for Stage 1.</span>
+                <span class="todo-hint">Sitelinks, callouts, etc. Flag anything pointing at WordPress — those stick onto new campaigns.</span>
               </label>
             </li>
             <li data-order="10">
               <input type="checkbox" id="ads10" data-todo="ads10" />
               <label for="ads10">
                 <strong>10. Review shared negative keyword lists</strong>
-                <span class="todo-hint">Keep good job-seeker / career negatives. Check they do <strong>not</strong> block employer terms like philippines / hire / VA. Note list names + anything risky in this thread.</span>
+                <span class="todo-hint">Keep job-seeker / career negatives. Make sure they don’t block employer terms (philippines / hire / VA).</span>
               </label>
             </li>
             <li data-order="11">
               <input type="checkbox" id="ads11" data-todo="ads11" />
               <label for="ads11">
-                <strong>11. Check Recommendations / Auto-apply</strong>
-                <span class="todo-hint">Turn off auto-apply for broad match, Performance Max, and other junk if it’s on. Stage 1 stays Exact + Phrase Search only — no Broad, no PMax.</span>
+                <strong>11. Turn off Recommendations / Auto-apply junk</strong>
+                <span class="todo-hint">Kill auto-apply for broad match, Performance Max, and similar. Stage 1 = Exact + Phrase Search only.</span>
               </label>
             </li>
             <li data-order="12">
               <input type="checkbox" id="ads12" data-todo="ads12" />
               <label for="ads12">
-                <strong>12. Open Google Ads Editor on your Mac and download both accounts</strong>
-                <span class="todo-hint">Sign in as ShoutGeorge. Download USA <code>496-715-1855</code> and Australia <code>573-539-1940</code> so Editor has a fresh copy before you import anything.</span>
+                <strong>12. Open Google Ads Editor and download both accounts</strong>
+                <span class="todo-hint">Fresh local copy of USA + AU before you import anything.</span>
               </label>
             </li>
             <li data-order="13">
               <input type="checkbox" id="ads13" data-todo="ads13" />
               <label for="ads13">
                 <strong>13. Import the paused CSV — leave everything Paused</strong>
-                <span class="todo-hint"><strong>Import ≠ live.</strong> Import only loads a local Editor draft; <strong>Post</strong> is what uploads to the live account (still Paused — do not Enable). CSV has an <strong>Account</strong> column (USA <code>496-715-1855</code> · AU <code>573-539-1940</code>) so USA+AU rows go to the right accounts. New <code>VC_*</code> names <strong>add alongside</strong> existing <code>PM_*</code> — they do not wipe conversions/billing/users or delete old campaigns. File: <code>ads-launch/google-ads-editor-import.csv</code> (<strong>stage1-v7</strong> · Core+Roles · Brand deferred · all Paused). Final URLs: Core → <code>/us|/au</code> · Roles → category. Budgets/Max CPC filled. Detail: <code>ads-launch/DECISIONS.md</code>.</span>
+                <span class="todo-hint"><strong>Import = draft on your computer. Post = sends to Google (still paused).</strong> Do not Enable. File: <code>ads-launch/google-ads-editor-import.csv</code>.</span>
               </label>
             </li>
             <li data-order="14">
               <input type="checkbox" id="ads14" data-todo="ads14" />
               <label for="ads14">
-                <strong>14. Buy custom domain for US microsite (Vercel ~$10)</strong>
-                <span class="todo-hint">Three separate microsites: <strong>US · AU · PH</strong>. Buy a <strong>US</strong> domain in Vercel (~$10) and attach it to the vision project for the US employer site (<code>/us</code> + category LPs). Preview until then: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a>. <strong>PH careers can wait</strong> — no domain required for Stage 1.</span>
+                <strong>14. Buy US custom domain (~$10 on Vercel)</strong>
+                <span class="todo-hint">Attach to the vision project for the US employer site. Preview until then: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a>.</span>
               </label>
             </li>
             <li data-order="15">
               <input type="checkbox" id="ads15" data-todo="ads15" />
               <label for="ads15">
-                <strong>15. Buy custom domain for AU microsite (Vercel ~$10)</strong>
-                <span class="todo-hint">Buy a <strong>separate AU</strong> domain in Vercel (~$10) and attach it to vision for the AU employer site (<code>/au</code> + category LPs). Do <strong>not</strong> share one domain/identity with US. Preview: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. PH still hangs — no Stage 1 domain needed.</span>
+                <strong>15. Buy AU custom domain (~$10 on Vercel)</strong>
+                <span class="todo-hint">Separate from US — don’t share one domain. Preview: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a>. PH domain can wait.</span>
               </label>
             </li>
             <li data-order="16">
               <input type="checkbox" id="ads16" data-todo="ads16" />
               <label for="ads16">
-                <strong>16. Point Ads Final URLs at the US + AU domains</strong>
-                <span class="todo-hint">After both domains are attached, swap Final URL <em>hosts</em> per market — keep paths: Core → <code>/us|/au</code> (market home) and Roles → the nine <code>/{us|au}/{category}</code> routes. Do not use WordPress. Do not point Core at administrative-support. Root <code>/</code> on the microsite already redirects → <code>/us</code>.</span>
+                <strong>16. Point Ads Final URLs at the new US + AU domains</strong>
+                <span class="todo-hint">Keep the paths (Core → /us or /au · Roles → category pages). No WordPress.</span>
               </label>
             </li>
             <li data-order="17">
               <input type="checkbox" id="ads17" data-todo="ads17" />
               <label for="ads17">
-                <strong>17. US measurement stack (separate — not shared with AU)</strong>
-                <span class="todo-hint">For the <strong>US</strong> microsite only: create a <strong>separate</strong> GTM container, GA4 property, Search Console property (on the US custom domain), and Google Ads conversion actions pointed at US microsite events only. Wire env <code>NEXT_PUBLIC_GTM_US</code> / <code>NEXT_PUBLIC_GA4_US</code>. dataLayer already sends <code>market: us</code>. <strong>Do not</strong> reuse one GTM/GA4 for US+AU.</span>
+                <strong>17. Set up US tracking (its own GTM + GA4)</strong>
+                <span class="todo-hint">US microsite only — separate container, property, Search Console, Ads conversions. Do not share with AU.</span>
               </label>
             </li>
             <li data-order="18">
               <input type="checkbox" id="ads18" data-todo="ads18" />
               <label for="ads18">
-                <strong>18. AU measurement stack (separate — not shared with US)</strong>
-                <span class="todo-hint">Same for <strong>AU</strong>: separate GTM, GA4, Search Console (AU custom domain), and Ads conversion actions for AU microsite only. Wire <code>NEXT_PUBLIC_GTM_AU</code> / <code>NEXT_PUBLIC_GA4_AU</code>. dataLayer sends <code>market: au</code>. PH talent tracking optional later (<code>NEXT_PUBLIC_GTM_PH</code>) — can hang for Stage 1.</span>
+                <strong>18. Set up AU tracking (its own GTM + GA4)</strong>
+                <span class="todo-hint">Same idea for AU only. PH tracking optional later.</span>
               </label>
             </li>
             <li data-order="19">
               <input type="checkbox" id="ads19" data-todo="ads19" />
               <label for="ads19">
-                <strong>19. Confirm daily budgets and Max CPC (defaults already in CSV)</strong>
-                <span class="todo-hint">CSV already has Stage 1 v7 defaults (US Core $75 / Roles $50 · AU Core A$75 / Roles A$50 · Max CPC US $8 / AU A$6 — ~60/40; ≈ $3.8k + A$3.8k/mo inside $10–20k/account story). Change in Editor if you want different ceilings, then Post while still <strong>Paused</strong>. Spot-check in the Ads website. See <code>ads-launch/DECISIONS.md</code>.</span>
+                <strong>19. Confirm daily budgets and Max CPC</strong>
+                <span class="todo-hint">Defaults already in the CSV. Change in Editor if you want, then Post while still Paused.</span>
               </label>
             </li>
             <li data-order="20">
               <input type="checkbox" id="ads20" data-todo="ads20" />
               <label for="ads20">
-                <strong>20. Enable PH long-tail first — only after gates below are green</strong>
-                <span class="todo-hint">Per <code>ads-launch/PHASED-ACTIVATION.md</code> (source of truth): <strong>Phase 1</strong> = Philippines / Filipino / offshore long-tail Exact (+ tight Phrase) across Core <em>and</em> Roles AGs that carry that intent — including bookkeeping/accounting when PH-shaped. <strong>Not</strong> “Core first then only Digital/Social/Admin.” <strong>Phase 2</strong> = broader category Exact/Phrase without PH geo. <strong>Phase 3</strong> = generic Core heads (bare virtual assistant / hire VA) later with tighter CPC. Keep Australia quiet until the US looks sane. Brand deferred. Review-ready ≠ paid-ready. You click Enable in Ads or Editor — not from this page. Explicit George approval required.</span>
+                <strong>20. Enable PH long-tail first — only after gates are clear</strong>
+                <span class="todo-hint">Philippines / Filipino / offshore Exact first. Keep AU quiet until US looks sane. Needs your explicit OK. You Enable in Ads — not from this page.</span>
               </label>
             </li>
           </ul>
@@ -415,68 +463,114 @@
       <div class="lc-board" id="status-board">
         <section class="lc-bucket ok" aria-labelledby="ready-hd">
           <div class="lc-bucket-hd">
-            <h2 id="ready-hd">Ready now</h2>
-            <span class="st st-ready">Done</span>
+            <h2 id="ready-hd">Already done</h2>
+            <span class="st st-ready">Finished</span>
           </div>
           <ul>
             <li><strong>MCC linked</strong> — under Shout George</li>
-            <li><strong>Ads access</strong> — Standard on USA + AU (enough for Stage 1)</li>
-            <li><strong>Three microsites</strong> — US · AU · PH (preview live; <code>/</code> → <code>/us</code>)</li>
-            <li><strong>Editor CSV</strong> — paused import ready (Account column stamped for USA+AU)</li>
-            <li><strong>Path</strong> — Ads → microsite only (zero WP egress)</li>
+            <li><strong>Ads access</strong> — Standard on USA + AU</li>
+            <li><strong>Three microsites live on preview</strong> — US · AU · PH</li>
+            <li><strong>Paused Editor CSV ready</strong> — USA + AU stamped</li>
+            <li><strong>Ads path</strong> — microsite only (not WordPress)</li>
             <li><strong>US/NA phone</strong> — <code>310-426-8776</code> (do not port)</li>
           </ul>
         </section>
 
         <section class="lc-bucket block" aria-labelledby="block-hd">
           <div class="lc-bucket-hd">
-            <h2 id="block-hd">Blocking launch</h2>
+            <h2 id="block-hd">Must finish before ads go live</h2>
             <span class="st st-blocked">Blocked</span>
           </div>
           <ul>
-            <li><strong>Where leads go</strong> — real inbox/webhook still open (QA is TEMPORARY log-only on vision)</li>
-            <li><strong>US + AU domains (~$10 each on Vercel)</strong> — buy separately, attach, then swap Final URL hosts (paths already set: Core market home · Roles category). PH domain can wait.</li>
-            <li><strong>Separate measurement</strong> — US and AU each need their own GTM + GA4 + GSC + Ads conversions (don’t share one container)</li>
+            <li><strong>Where leads get emailed</strong> — need a real place leads actually arrive (QA log-only is temporary)</li>
+            <li><strong>US + AU domains</strong> — buy separately (~$10 each), attach, swap Final URL hosts</li>
+            <li><strong>Separate US + AU tracking</strong> — each market its own GTM / GA4 / Search Console / Ads conversions</li>
             <li><strong>Editor import</strong> — stays paused until you say go</li>
-            <li><strong>Conversion / Zapier hygiene</strong> — end-to-end conversion audit + Zapier/lead map still open (seeing Ads Conversions ≠ Zapier fixed)</li>
-            <li><strong>Old Brand still spending</strong> — Aug 5 campaign view: <code>PM_US_RSA_Brand</code> (~$39) and <code>PM_AU_RSA_Brand</code> (A$3), Maximize conversions, 0 conversions. Recommend pause before or with the new import — you click pause in Ads; not from this page.</li>
+            <li><strong>Conversion + Zapier audit</strong> — still open (seeing Ads Conversions ≠ Zapier checked)</li>
+            <li><strong>Old Brand still spending</strong> — recommend pause before/with new import (you click pause in Ads)</li>
           </ul>
         </section>
 
         <section class="lc-bucket george" aria-labelledby="george-hd">
           <div class="lc-bucket-hd">
-            <h2 id="george-hd">Waiting for George</h2>
+            <h2 id="george-hd">Your turn</h2>
             <span class="st st-access">George</span>
           </div>
           <ul>
-            <li><strong>Next: step 5</strong> — review live Brand campaigns (status / spend / Final URL; pause vs leave)</li>
-            <li><strong>Steps 6–8</strong> — conversion events end-to-end · goal baskets · Zapier/lead map (document; don’t rip yet). Zapier ≠ fixed just because Ads access exists</li>
-            <li><strong>Steps 9–11</strong> — account Assets · shared negatives · Recommendations / Auto-apply off</li>
-            <li>Then Editor download + paused CSV import (steps 12–13)</li>
-            <li>Optionally change budget / Max CPC defaults (already filled)</li>
-            <li><strong>Buy US domain (~$10)</strong> + <strong>AU domain (~$10)</strong> on Vercel — two identities; PH can hang</li>
-            <li>Confirm Final URL hosts after domains attach (keep Core→home · Roles→category paths)</li>
-            <li>Stand up separate US + AU GTM / GA4 / GSC / Ads conversion actions</li>
+            <li><strong>Next:</strong> review live Brand campaigns</li>
+            <li><strong>Then:</strong> conversion audit · goal baskets · Zapier / lead map</li>
+            <li><strong>Then:</strong> Assets · negatives · Auto-apply off</li>
+            <li>Then Editor download + paused CSV import</li>
+            <li>Buy US + AU domains on Vercel</li>
+            <li>Stand up separate US + AU tracking</li>
+            <li><strong>Email for Zoho access:</strong> <code>george@shoutgeorge.com</code> (domain bought for Zoho One). Team still often writes <code>shoutgeorge1@gmail.com</code> — move them to the new address.</li>
             <li>Confirm payment-cleared date when the bank shows it</li>
-            <li>Review the paused Editor import before any enable</li>
-            <li><strong>Audit Zoho access</strong> — what modules/fields/ownership you actually have (download/export OK for later). Access ≠ CRM integration done.</li>
-            <li><strong>Later (not Stage 1 primary):</strong> plan offline conversion actions — job order (value TBD, range discussed $200–$400, not approved) · job placement (value TBD, $500–$800, not approved) · unique Zoho IDs · no double-count order+placement without rules · GCLID/offline import path</li>
+            <li>Audit what Zoho access you actually have (access ≠ CRM wired)</li>
           </ul>
         </section>
 
         <section class="lc-bucket vc" aria-labelledby="vc-hd">
           <div class="lc-bucket-hd">
-            <h2 id="vc-hd">Waiting for Virtual Coworker</h2>
+            <h2 id="vc-hd">Waiting on their team</h2>
             <span class="st st-progress">VC</span>
           </div>
           <ul>
-            <li>AU phone locked form-primary for Stage 1 (no fake AU number) — NA dest <code>310-426-8776</code> confirmed</li>
-            <li>Lead inbox / webhook per market (email OK for Stage 1) — replace log-only before paid</li>
+            <li>AU phone locked form-primary for Stage 1 — NA dest <code>310-426-8776</code> confirmed</li>
+            <li>Real lead inbox per market (email OK for Stage 1) — replace log-only before paid</li>
             <li><strong>Pilot payment — IN TRANSIT</strong> (not unpaid; not cleared)</li>
-            <li>Chat platform + George invite · lead-quality feedback path</li>
+            <li>Chat platform + invite George (they prefer chat over email)</li>
           </ul>
         </section>
       </div>
+
+      <section class="panel" id="lp-previews">
+        <div class="panel-hd">
+          <p class="kicker">Preview host · vision-three-alpha.vercel.app</p>
+          <h2>Landing page previews</h2>
+        </div>
+        <div class="panel-bd lp-previews">
+          <div>
+            <h3>Money pages · US</h3>
+            <ul class="lp-link-grid">
+              <li><a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/us/digital-marketing" target="_blank" rel="noopener">digital-marketing</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/us/social-media" target="_blank" rel="noopener">social-media</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/us/accounting" target="_blank" rel="noopener">accounting</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/us/bookkeeping" target="_blank" rel="noopener">bookkeeping</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/us/administrative-support" target="_blank" rel="noopener">administrative-support</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/us/customer-service" target="_blank" rel="noopener">customer-service</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/us/hr" target="_blank" rel="noopener">hr</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/us/recruitment" target="_blank" rel="noopener">recruitment</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/us/sales" target="_blank" rel="noopener">sales</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Money pages · AU</h3>
+            <ul class="lp-link-grid">
+              <li><a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/au/digital-marketing" target="_blank" rel="noopener">digital-marketing</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/au/social-media" target="_blank" rel="noopener">social-media</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/au/accounting" target="_blank" rel="noopener">accounting</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/au/bookkeeping" target="_blank" rel="noopener">bookkeeping</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/au/administrative-support" target="_blank" rel="noopener">administrative-support</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/au/customer-service" target="_blank" rel="noopener">customer-service</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/au/hr" target="_blank" rel="noopener">hr</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/au/recruitment" target="_blank" rel="noopener">recruitment</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/au/sales" target="_blank" rel="noopener">sales</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Site pages</h3>
+            <ul class="lp-link-grid">
+              <li><a href="https://vision-three-alpha.vercel.app/how-it-works" target="_blank" rel="noopener">how-it-works</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/services" target="_blank" rel="noopener">services</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/privacy" target="_blank" rel="noopener">privacy</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/terms" target="_blank" rel="noopener">terms</a></li>
+              <li><a href="https://vision-three-alpha.vercel.app/ph" target="_blank" rel="noopener">/ph</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       <section class="panel" id="gates">
         <div class="panel-hd">
@@ -486,38 +580,38 @@
         <div class="panel-bd">
           <ol class="lc-gates">
             <li>
-              <span class="st st-ready">Ready</span>
+              <span class="st st-ready">Done</span>
               <div class="gate-body">
-                <strong>Ads access confirmed (Standard via MCC)</strong>
-                <span>MCC over USA <code>496-715-1855</code> + AU <code>573-539-1940</code> at Standard — enough for Stage 1. Admin is optional later (ask Braden when convenient; not a launch gate).</span>
+                <strong>Ads access confirmed</strong>
+                <span>Standard via MCC on USA + AU. Enough for Stage 1.</span>
               </div>
             </li>
             <li>
               <span class="st st-blocked">Open</span>
               <div class="gate-body">
-                <strong>Lead delivery filled (phones decided)</strong>
-                <span>NA dest <code>310-426-8776</code> confirmed (do not port). AU = form-primary (locked). Still need real lead email/webhook before paid — QA log-only is temporary. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
+                <strong>Where leads get emailed (phones decided)</strong>
+                <span>NA phone <code>310-426-8776</code> confirmed. AU = form-primary. Still need a real place leads actually arrive before paid. Detail: <a href="lead-routing.html">Lead Routing</a>.</span>
               </div>
             </li>
             <li>
               <span class="st st-blocked">Open</span>
               <div class="gate-body">
-                <strong>Budgets + CPC ceilings confirmed</strong>
-                <span>Defaults filled in CSV (see <code>ads-launch/DECISIONS.md</code>). George can change before enable. Still blocked on explicit enable approval — not on missing tokens.</span>
+                <strong>Budgets + Max CPC confirmed</strong>
+                <span>Defaults filled in CSV. You can change before enable. Still needs your OK to go live.</span>
               </div>
             </li>
             <li>
               <span class="st st-access">Open</span>
               <div class="gate-body">
-                <strong>US + AU microsites live on real domains + separate measurement</strong>
-                <span>Three identities: US employer · AU employer · PH talent (PH domain optional later). Preview: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> · <a href="https://vision-three-alpha.vercel.app/ph" target="_blank" rel="noopener">/ph</a>. <strong>Buy US + AU domains on Vercel (~$10 each)</strong>, attach, swap Final URL hosts (keep Core→market home · Roles→category). Stand up <strong>separate</strong> GTM/GA4/GSC/Ads conversions per market — never one shared bag for US+AU.</span>
+                <strong>US + AU live on real domains + separate tracking</strong>
+                <span>Buy US + AU domains (~$10 each). Each market gets its own GTM / GA4 / Search Console / Ads conversions. PH domain can wait.</span>
               </div>
             </li>
             <li>
               <span class="st st-access">Paused</span>
               <div class="gate-body">
                 <strong>Paused Editor import reviewed</strong>
-                <span>CSV ready in <code>ads-launch/</code> with Account stamps. <strong>Import = local draft only; Post = live upload</strong> (still Paused). Enable only after you approve — not from this page.</span>
+                <span><strong>Import = draft on your computer. Post = sends to Google (still paused).</strong> Enable only after you approve.</span>
               </div>
             </li>
           </ol>
@@ -531,35 +625,26 @@
         </div>
         <div class="panel-bd">
           <ul class="lc-open">
-            <li>Lead inbox/webhook (replace TEMP log-only)</li>
-            <li><strong>US domain (~$10) + AU domain (~$10) on Vercel — pending George</strong> (PH can wait)</li>
-            <li>Final hosts → swap Ads Final URL hosts per market (paths already set)</li>
-            <li><strong>Separate US + AU measurement</strong> — GTM · GA4 · GSC · Ads conversions each (PH optional later)</li>
-            <li>Optional: revise budget/CPC defaults</li>
+            <li>Real lead inbox (replace TEMP log-only)</li>
+            <li>US domain + AU domain on Vercel</li>
+            <li>Swap Final URL hosts after domains attach</li>
+            <li>Separate US + AU tracking stacks</li>
+            <li>Optional: revise budget / Max CPC</li>
             <li>Payment-cleared date</li>
-            <li>Pause old Brand campaigns in Ads? (recommend yes — you click)</li>
-            <li><strong>Conversion events audit</strong> — Primary/Secondary, source, what fires each (USA + AU); share list in thread</li>
-            <li><strong>Zapier / lead integration map</strong> — WP/GF? Ads conversions? Zoho? Broken/dupe? Document; don’t rip blind. Zapier ≠ fixed</li>
-            <li><strong>Zoho access audit</strong> — modules / fields / ownership (level unknown; download/export OK for later). Access ≠ integration.</li>
+            <li>Pause old Brand? (recommend yes)</li>
+            <li>Conversion action audit (USA + AU)</li>
+            <li>Zapier / lead map — document, don’t rip blind</li>
+            <li>Zoho access audit</li>
+            <li>Move team email → george@shoutgeorge.com</li>
           </ul>
           <details class="lc-fold" style="margin-top:1rem">
-            <summary>Later (not Stage 1 blockers) <span class="hint">Admin · Zoho offline $ · CallRail · SLAs</span></summary>
+            <summary>Later (not Stage 1 blockers) <span class="hint">Admin · Zoho offline $ · CallRail</span></summary>
             <div class="fold-bd">
               <ul class="lc-open">
-                <li>Ads Admin (ask Braden when convenient — users/billing/deep settings)</li>
-                <li><strong>Offline conversion actions (plan — not Stage 1 primary):</strong>
-                  <ul>
-                    <li>Job order — value TBD (range discussed $200–$400 — <strong>not approved</strong>)</li>
-                    <li>Job placement — value TBD (range discussed $500–$800 — <strong>not approved</strong>)</li>
-                    <li>Deduping: unique Zoho IDs as conversion IDs; don’t double-count order+placement on the same journey without rules</li>
-                    <li>GCLID + offline import path</li>
-                  </ul>
-                </li>
-                <li>Stage 1 primary stays <strong>employer inquiry</strong> + <strong>qualified call</strong> — job order/placement = later offline</li>
-                <li>Lead owner / SLA</li>
-                <li>Qual definitions</li>
-                <li>Chat platform</li>
-                <li>CallRail ownership</li>
+                <li>Ads Admin (ask Braden when convenient)</li>
+                <li>Job order + placement offline from Zoho (values TBD — not approved)</li>
+                <li>Stage 1 primary stays form fill that arrives + phone call (~60s)</li>
+                <li>Lead owner / SLA · chat platform · CallRail</li>
               </ul>
             </div>
           </details>
@@ -569,29 +654,27 @@
       <details class="lc-fold" id="markets">
         <summary>
           Markets · US + AU
-          <span class="hint">Accounts · campaigns · preview LPs</span>
+          <span class="hint">Accounts · campaigns</span>
         </summary>
         <div class="fold-bd lc-markets">
           <div>
             <h3>United States</h3>
             <ul class="glance-bullets">
               <li>Account <code>496-715-1855</code></li>
-              <li>Stage 1 campaigns (paused import): <code>VC_US_S_CORE</code> + <code>VC_US_S_ROLES</code> (Brand deferred).</li>
-              <li><strong>Still live (Aug 5 read):</strong> <code>PM_US_RSA_Brand</code> — $100/day Max Conv, Enabled; ~$39 / 0 conv. Rest of list = paused (~50 in view).</li>
-              <li>LP: <a href="https://vision-three-alpha.vercel.app/us" target="_blank" rel="noopener">/us</a> + category routes e.g. <a href="https://vision-three-alpha.vercel.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
-              <li>Phone dest: <code>310-426-8776</code> (confirmed; Raffie/Raffy PH — CallRail later)</li>
-              <li>Lead: <code>LEAD_EMAIL_US</code> or webhook (Stage 1). Zoho access (level unknown) ≠ CRM integration — audit modules/fields before treating as wired.</li>
+              <li>New (paused import): <code>VC_US_S_CORE</code> + <code>VC_US_S_ROLES</code></li>
+              <li><strong>Still live:</strong> <code>PM_US_RSA_Brand</code> — $100/day Max Conv; ~$39 / 0 conv</li>
+              <li>Phone: <code>310-426-8776</code></li>
+              <li>Leads: need real inbox before paid</li>
             </ul>
           </div>
           <div>
             <h3>Australia</h3>
             <ul class="glance-bullets">
               <li>Account <code>573-539-1940</code></li>
-              <li>Stage 1 campaigns (paused import): <code>VC_AU_S_CORE</code> + <code>VC_AU_S_ROLES</code> (Brand deferred).</li>
-              <li><strong>Still live (Aug 5 read):</strong> <code>PM_AU_RSA_Brand</code> — $30/day Max Conv, Eligible (Limited); A$3 / 0 conv. Rest of list = paused (~62 total).</li>
-              <li>LP: <a href="https://vision-three-alpha.vercel.app/au" target="_blank" rel="noopener">/au</a> + same nine category routes</li>
-              <li>Phone: form-primary (locked) — no fake AU number on LP</li>
-              <li>Lead: <code>LEAD_EMAIL_AU</code> or webhook (Stage 1)</li>
+              <li>New (paused import): <code>VC_AU_S_CORE</code> + <code>VC_AU_S_ROLES</code></li>
+              <li><strong>Still live:</strong> <code>PM_AU_RSA_Brand</code> — $30/day Max Conv; A$3 / 0 conv</li>
+              <li>Phone: form-primary (no fake AU number)</li>
+              <li>Leads: need real inbox before paid</li>
             </ul>
           </div>
         </div>
@@ -599,29 +682,21 @@
 
       <details class="lc-fold" id="sequence">
         <summary>
-          Full launch sequence — detail
-          <span class="hint">Backup detail; use checklist above as the work list</span>
+          Full launch sequence
+          <span class="hint">Backup detail</span>
         </summary>
         <div class="fold-bd">
           <ol class="lc-seq">
-            <li>Confirm USA + AU visible under MCC at Standard (done). Admin optional later — ask Braden when convenient.</li>
-            <li>Set vision env: phones, lead delivery, careers URL; redeploy vision.</li>
-            <li>Run George LP validation (gate / job seeker / thank-you / dedupe).</li>
-            <li>Confirm live campaigns for USA + AU in this thread. (Done Aug 5: US Brand live; AU Brand live/limited; rest paused.)</li>
-            <li>Review live Brand (status/spend/Final URL); decide pause vs leave. ← next</li>
-            <li>Audit conversion events end-to-end (USA+AU); share list. Review goal baskets so VC_* don’t inherit junk.</li>
-            <li>Map Zapier / lead path (WP/GF? Ads? Zoho?). Document; don’t break. Zapier ≠ fixed.</li>
-            <li>Review account Assets (flag WP), shared negatives (don’t block PH/hire/VA), Recommendations / Auto-apply off.</li>
-            <li>Download USA + AU into Google Ads Editor.</li>
-            <li>Import <code>ads-launch/google-ads-editor-import.csv</code> (Paused · stage1-v7 · 4 campaigns).</li>
-            <li>Confirm budget / Max CPC defaults (or revise); no <code>[APPROVAL_*]</code> tokens left.</li>
-            <li>Confirm Final URLs = Core market homes + Roles category LPs; no WP sitelinks; no inert <code>?role=</code>.</li>
-            <li>Confirm Search partners off, Display expansion off, Presence geo.</li>
-            <li>Confirm Stage 1 conversion goals observe-only (no legacy Max Conv poison).</li>
-            <li>Post Paused changes; spot-check in Ads UI.</li>
-            <li>Enable per <code>PHASED-ACTIVATION.md</code>: PH/Filipino/offshore long-tail Exact first (Core + Roles, incl. PH books), then broader category, then generic Core heads later. AU throttle until US sane. Brand deferred.</li>
-            <li>Fire test clicks / search preview; verify LP attribution params.</li>
-            <li>Watch 72h: search terms, reject logs, form accepts, CPC. Stop → pause the noisiest role campaign first.</li>
+            <li>Ads access confirmed (done).</li>
+            <li>Confirm live campaigns in thread (done Aug 5).</li>
+            <li>Review live Brand — next.</li>
+            <li>Audit conversions · goals · Zapier / lead path.</li>
+            <li>Assets · negatives · Auto-apply off.</li>
+            <li>Download accounts into Editor.</li>
+            <li>Import paused CSV. Import = local draft. Post = upload (still Paused).</li>
+            <li>Confirm budgets / Max CPC · Final URLs · Search partners off.</li>
+            <li>Buy US + AU domains · separate tracking.</li>
+            <li>Enable PH long-tail first after gates green + your OK.</li>
           </ol>
         </div>
       </details>
@@ -637,30 +712,28 @@
             <ul class="glance-bullets">
               <li>Search terms → add negatives fast</li>
               <li>Job-seeker / spam reject rate</li>
-              <li>Valid employer submits + qualified calls (Stage 1 primaries)</li>
-              <li>CPC vs approval max</li>
-              <li>LP Final URL matches Stage 1 only</li>
-              <li>Sales lead-quality feedback (Caitlin / Cheyenne / Pauly)</li>
+              <li>Form fills that arrive + solid phone calls</li>
+              <li>CPC vs your max</li>
+              <li>Lead-quality feedback from sales</li>
             </ul>
           </div>
           <div>
             <h3>Stop / pause if</h3>
             <ul class="glance-bullets">
-              <li>Majority clicks are job/career queries</li>
-              <li>Form path fires without server accept</li>
-              <li>Spend without employer inquiries + no fixable query issue</li>
-              <li>Wrong Final URL / WP spray reappears</li>
-              <li>Approval budget overrun without George OK</li>
+              <li>Most clicks are job/career queries</li>
+              <li>Form fires but lead never arrives</li>
+              <li>Spend with no employer inquiries</li>
+              <li>Wrong Final URL / WordPress links reappear</li>
+              <li>Budget overrun without your OK</li>
             </ul>
           </div>
         </div>
       </details>
 
       <div class="tech-link">
-        <strong>Technical documentation</strong> —
-        Mega audit for ChatGPT: <code>ads-launch/CHATGPT-MEGA-AUDIT.md</code> ·
+        <strong>More detail if needed</strong> —
         <a href="clean-rebuild.html">Clean Rebuild package</a>
-        <span class="muted"> (secondary; rebuild docs, launch sheet, implementation notes)</span>
+        · <code>ads-launch/CHATGPT-MEGA-AUDIT.md</code>
       </div>
     </main>
   </div>

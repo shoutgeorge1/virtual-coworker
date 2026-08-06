@@ -9,8 +9,56 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
+  <style>
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.65rem;
+    }
+    .person-card {
+      border: 1px solid var(--edge-soft);
+      border-radius: 8px;
+      background: var(--panel-inset);
+      padding: 0.7rem 0.85rem;
+      min-width: 0;
+    }
+    .person-card h3 {
+      margin: 0 0 0.2rem;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+    .person-card .role {
+      margin: 0 0 0.45rem;
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .person-card .email {
+      margin: 0;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .person-card .email.get {
+      color: var(--warn);
+      font-weight: 600;
+    }
+    .short-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .short-list li {
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .short-list li:last-child { border-bottom: none; }
+    .short-list strong { color: var(--ink); }
+  </style>
 </head>
-<body data-page="lead-routing.html" data-foot="Stage 1 · email/webhook<br />Zoho when access confirmed">
+<body data-page="lead-routing.html" data-foot="Where leads go<br />Need a real inbox before ads spend">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
@@ -19,156 +67,111 @@
         <p class="kicker">After someone fills the form or calls</p>
         <h1>Lead Routing</h1>
         <p>
-          Employer form or qualified call → secure delivery → your team works it.
-          Paid pages do <strong>not</strong> depend on WordPress / Gravity Forms.
+          Form or phone → a real place leads actually arrive → their team works it.
+          Ads stay off until that inbox exists. Paid pages do not use WordPress.
         </p>
       </header>
 
       <div class="notice">
         <p>
-          <strong>Stage 1 primary conversions:</strong> employer form submissions + qualified phone calls.
-          Do not initially optimize Ads around job orders/placements — need clean lead data first.
-          Later: Zoho → Ads so campaigns learn which leads produce business.
-          Zoho does not block Stage 1 email/webhook launch.
+          <strong>George’s emails:</strong>
+          Zoho One access is <code>george@shoutgeorge.com</code> (domain bought for that).
+          Team still often writes <code>shoutgeorge1@gmail.com</code> — move them to the new address.
+          They prefer chat over email when possible.
         </p>
       </div>
 
-      <section class="panel" id="prior-problems">
+      <section class="panel" id="people">
         <div class="panel-hd">
-          <p class="kicker">Why Stage 1 is strict</p>
-          <h2>Previous lead-quality problems</h2>
+          <p class="kicker">Who handles what</p>
+          <h2>Team</h2>
         </div>
         <div class="panel-bd">
-          <p style="margin-top:0;font-size:0.92rem">
-            Prior agency traffic produced poor leads. Percentages may overlap — not mutually exclusive:
-          </p>
-          <ul class="glance-bullets">
-            <li>Unsuitable / new businesses with no relevant staffing need</li>
-            <li>~20% job seekers (including PH applicants)</li>
-            <li>~10–15% spam</li>
-          </ul>
-          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
-            Diagnosis: optimizing easy form submits vs downstream outcomes.
-            Stage 1 needs employer-only messaging, strong job-seeker exclusions, spam protection,
-            business qualification fields (recommended — see checklist), search-term monitoring,
-            and sales lead-quality feedback.
+          <div class="people-grid">
+            <article class="person-card">
+              <h3>Caitlin</h3>
+              <p class="role">Ops + lead quality. May start maternity leave anytime.</p>
+              <p class="email get">get email</p>
+            </article>
+            <article class="person-card">
+              <h3>Braden</h3>
+              <p class="role">Day-to-day takeover while Caitlin is out.</p>
+              <p class="email get">get email</p>
+            </article>
+            <article class="person-card">
+              <h3>Raffie</h3>
+              <p class="role">PH · Zoho + answers NA phone <code>310-426-8776</code>.</p>
+              <p class="email get">get email</p>
+            </article>
+            <article class="person-card">
+              <h3>Cheyenne</h3>
+              <p class="role">Lead quality (Los Angeles).</p>
+              <p class="email get">get email</p>
+            </article>
+            <article class="person-card">
+              <h3>Pauly</h3>
+              <p class="role">Lead quality.</p>
+              <p class="email get">get email</p>
+            </article>
+            <article class="person-card">
+              <h3>Essa</h3>
+              <p class="role">AI and internship initiatives.</p>
+              <p class="email get">get email</p>
+            </article>
+          </div>
+          <p class="muted" style="margin:0.85rem 0 0;font-size:0.88rem">
+            Prefer chat. Get the official chat platform + invite George.
+            No invented emails — ask for each address.
           </p>
         </div>
       </section>
 
       <section class="panel" id="phones">
         <div class="panel-hd">
-          <p class="kicker">Confirmed · unresolved</p>
-          <h2>Phone routing</h2>
+          <p class="kicker">Phones</p>
+          <h2>What we know</h2>
         </div>
         <div class="panel-bd">
-          <ul class="glance-bullets">
+          <ul class="short-list">
             <li>
-              <strong>NA destination (confirmed):</strong>
-              <code>310-426-8776</code> — Raffie/Raffy (PH) manages/answers.
-              Do not replace or port this number.
+              <strong>NA:</strong> <code>310-426-8776</code> — Raffie answers. Do not port.
             </li>
             <li>
-              <strong>AU (unresolved):</strong>
-              No new paid-media AU number confirmed. Use only the official approved number
-              already on the AU website. Final AU number = open launch item.
+              <strong>AU:</strong> Form-primary for Stage 1. No fake AU number on the LP.
             </li>
             <li>
-              <strong>CallRail:</strong>
-              Later — tracking numbers forward to existing destinations; AU local tracking eventually.
-              Not fake-operational now. Approval/ownership still open.
+              <strong>CallRail:</strong> Later. Not live yet.
             </li>
           </ul>
         </div>
       </section>
 
-      <section class="panel" id="form-crm">
+      <section class="panel" id="path">
         <div class="panel-hd">
-          <p class="kicker">Forms + CRM</p>
-          <h2>How paid leads should travel</h2>
+          <p class="kicker">Stage 1</p>
+          <h2>What must happen</h2>
         </div>
         <div class="panel-bd">
-          <ul class="glance-bullets">
+          <ul class="short-list">
             <li>
-              <strong>WordPress + Gravity Forms</strong> = existing site process only.
-              Paid microsite pages must not depend on WP/GF.
+              <strong>Employer form or solid phone call</strong> — job seekers don’t count as Ads conversions.
             </li>
             <li>
-              <strong>Preferred (when Zoho access confirmed):</strong>
-              new LP form → secure server-side → direct Zoho CRM + success/fail +
-              backup notify/webhook if Zoho is down. No browser credentials.
+              <strong>Lead lands in a real inbox</strong> — email is fine for Stage 1. Log-only is temporary, not paid-ready.
             </li>
             <li>
-              <strong>Do not build final Zoho</strong> until access, modules, fields,
-              mappings, ownership, and API are confirmed.
+              <strong>Keep click IDs + UTMs with the lead</strong> — so Zoho → Ads offline can work later.
             </li>
             <li>
-              <strong>Stage 1 launch fallback:</strong>
-              email and/or webhook is acceptable. Capture GCLID / GBRAID / WBRAID /
-              UTMs / LP URL / timestamp on every lead.
+              <strong>Don’t optimize ads to job order / placement yet</strong> — clean form + call data first.
             </li>
           </ul>
-        </div>
-      </section>
-
-      <section class="panel" id="flow">
-        <div class="panel-hd">
-          <p class="kicker">Path</p>
-          <h2>What happens (Stage 1)</h2>
-        </div>
-        <div class="panel-bd">
-          <ol class="next-five">
-            <li>
-              <strong>They submit the employer form or call</strong>
-              <span>Job-seeker path must not count as an Ads conversion.</span>
-            </li>
-            <li>
-              <strong>Secure server accepts the lead</strong>
-              <span>Then email/webhook (Stage 1). Zoho push later when access is real.</span>
-            </li>
-            <li>
-              <strong>Attribution travels with it</strong>
-              <span>GCLID / GBRAID / WBRAID · UTMs · LP · timestamp — so offline import can work later.</span>
-            </li>
-            <li>
-              <strong>Your team responds</strong>
-              <span>Owner + SLA still unresolved. Lead-quality: Caitlin, Cheyenne (LA), Pauly.</span>
-            </li>
-            <li>
-              <strong>Later: job order &amp; placement → Ads</strong>
-              <span>Estimate ranges only until approved: order ~$200–$400 · placement ~$500–$800.</span>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="panel" id="people">
-        <div class="panel-hd">
-          <p class="kicker">People</p>
-          <h2>Routing &amp; quality contacts</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="glance-bullets">
-            <li><strong>Caitlin</strong> — ops + lead-quality; may start maternity leave anytime</li>
-            <li><strong>Braden</strong> — expected day-to-day takeover while Caitlin is out</li>
-            <li><strong>Raffie/Raffy</strong> — PH · Zoho + NA phone</li>
-            <li><strong>Cheyenne</strong> — lead-quality (Los Angeles)</li>
-            <li><strong>Pauly</strong> — lead-quality</li>
-            <li><strong>Essa</strong> — AI and internship initiatives</li>
-            <li><strong>Dev team</strong> — contact + hours still needed</li>
-          </ul>
-          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
-            Communication: overseas team, email delayed by TZ, prefers chat.
-            Identify official chat platform, invite George, confirm notifications.
-            Open items list: <a href="launch-checklist">Launch Checklist</a>.
-          </p>
         </div>
       </section>
 
       <div class="actions">
-        <a class="btn btn-primary" href="launch-checklist">Launch Checklist</a>
+        <a class="btn btn-primary" href="launch-control.html">Checklist</a>
         <a class="btn" href="tracking.html">Tracking</a>
-        <a class="btn" href="results.html">Results</a>
       </div>
     </main>
   </div>
