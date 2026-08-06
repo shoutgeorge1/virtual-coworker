@@ -4,9 +4,9 @@
 
 | Field | Value |
 |-------|-------|
-| Generated | 2026-08-06 (sequencing lock addendum) |
+| Generated | 2026-08-06 (Zoho platform-discovery deferred addendum) |
 | Branch | `vision-demo` |
-| Commit SHA | `a52417b9d6d498f782051a5e5446d8cff72a0bec` |
+| Commit SHA | _(set after commit)_ |
 | Prior isolation SHA | `7b703c5` · Editor P0 `9cd37d0` |
 | Repo | `/Users/george/Developer/virtual-coworker` |
 | Package | `lp_version=stage1-v7` · Editor hygiene + isolation + Phase 1 manifests |
@@ -24,23 +24,36 @@
 | Child accounts | USA `496-715-1855` · AU `573-539-1940` |
 | Ads enable | **NOT approved** — all CSV entities **Paused** |
 | TRAFFIC READY | **Not yet** — need durable email/webhook/sheet + responder + live test |
-| CRM READY | **Not yet** — adapter code ready; credentials/inventory pending |
+| CRM READY | **Not yet** — platform discovery **deferred**; no Leads in UI; do not assume CRM V8 |
 | OPTIMIZATION READY | **Not yet** — GTM/new Ads actions/goals parallel |
-| Verdict | **SAFE TO IMPORT INTO EDITOR FOR REVIEW · NOT SAFE FOR PAID TRAFFIC** |
+| Verdict | **SAFE TO IMPORT INTO EDITOR FOR REVIEW · SAFE TO POST WHILE PAUSED · NOT SAFE FOR PAID TRAFFIC** |
 
 ---
 
 ## 0. Launch sequencing (LOCKED addendum)
 
-**Zoho CRM / native Ads connector / offline conversions / Ads API are NOT prerequisites for initial Maximize Clicks Enable.**
+**Zoho (any product) / native Ads connector / offline conversions / Ads API are NOT prerequisites for initial Maximize Clicks Enable.**
 
 | Status | Gate |
 |--------|------|
 | **TRAFFIC READY** | Durable monitored email/webhook/sheet (not log-only) + live test arrives + named responder + form retains market/UTMs/click IDs/submission id + US/AU routing + still Paused until George Enable |
-| **CRM READY** | Direct Zoho record + verified field mapping — **parallel** |
+| **CRM READY** | Direct Zoho record + verified field mapping — **parallel · deferred** until product/API known |
 | **OPTIMIZATION READY** | GTM → new Ads conversions, campaign-specific goals, downstream CRM feedback — **parallel** |
 
 Keep Max Clicks · Exact+Phrase · Tier 1A then 1B · no Broad+/PMax/DSA/Max Conv until optimization is real.
+
+### Zoho platform discovery — **DEFERRED** (George UI observation)
+
+| Finding | Lock |
+|---------|------|
+| No visible **Leads**; can start module exports; no full Data Backup | Prefer minimal exports; do not hardcode Leads |
+| Visible: Accounts, Contacts, Job Orders, Placements, Campaigns, Calls, Meetings, Notes, Competitors | Inspect employer spine Account → Contact → Job Order → Placement |
+| May be Zoho Recruit **or** heavily customized CRM | Do **not** assume CRM API V8 |
+| Live inventory + API implementation | Labeled **deferred** — see `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md` |
+| Native Google Ads integration audit | Separate; do **not** assume it needs George’s pending Ads developer token |
+| Max Clicks | Zoho/API stays parallel — **not** a TRAFFIC READY blocker if durable delivery + test + named responder verified |
+
+Later-phase checklist (do not execute from this debrief): identify product/org → choose Recruit API V2 or CRM API V8 → inventory modules/layouts/fields/ownership/workflows → decide inquiry entry module → minimal exports (Accounts/Contacts/Job Orders/Placements only) → exclude Candidates/Notes/Calls/Meetings/emails/attachments unless later necessary → least-privilege auth instructions **after** platform ID.
 
 ---
 
@@ -175,9 +188,10 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 
 | Item | Status |
 |------|--------|
-| Full Zoho CRM API adapter (`vision/lib/zoho/*`) | **Code ready** — feature-flagged; credentials/schema pending; no live write |
-| Zoho OAuth bootstrap + inventory (`npm run zoho:*`) | **Code ready** — awaiting George Self Client grant; raw under `.local/zoho/` |
-| Native Zoho ↔ Google Ads audit doc | **Checklist shipped** — do not authorize connector from repo |
+| Full Zoho API adapter (`vision/lib/zoho/*`) | **Deferred for live use** — CRM V8 stubs feature-flagged; product/API unknown; no live write |
+| Zoho OAuth bootstrap + inventory (`npm run zoho:*`) | **Deferred** — CRM V8–oriented stubs; run only after platform discovery |
+| Platform discovery runbook | **Shipped (docs)** — `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md` |
+| Native Zoho ↔ Google Ads audit doc | **Checklist shipped** — observe only; ≠ Ads developer token; do not authorize from repo |
 | Offline conversion uploader / Data Manager path | **Skipped / planned later** — values TBD, not approved; not TRAFFIC READY |
 | Phase 1 keyword review manifests | **Shipped** — `phase1-enable-manifest-{us,au}.csv` + `PHASE1-REVIEW.md` |
 | Public-copy lint + commercial neg holdouts (pay/hourly rate, VA reviews) | **Shipped** |
@@ -244,7 +258,7 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 | 2 | **Named responder + live test lead** | **TRAFFIC READY** — who answers + proof a test arrives |
 | 3 | **Explicit George Enable approval** | Required even when TRAFFIC READY |
 | 4 | **Legacy Brand bleed** | `PM_*` Brand may still spend — separate UI decision |
-| 5 | **Zoho access ≠ CRM READY** | Parallel. Webhook ≠ CRM API. Not a traffic blocker. |
+| 5 | **Zoho access ≠ CRM READY** | Parallel + **deferred** discovery (Recruit vs CRM; no Leads). Webhook ≠ API. Not a traffic blocker. |
 | 6 | **Zapier weird** | Document; don’t rip blind. Not a traffic blocker if durable email/webhook exists. |
 | 7 | **Job order / placement offline values** | TBD, not approved. OPTIMIZATION / CRM later. |
 | 8 | CallRail / qualified-call | Later; phone click ≠ qualified |
@@ -262,6 +276,7 @@ Isolation locks shipped in commit `7b703c5` (see §5).
 | `ads-launch/EDITOR-PREFLIGHT-REPORT.md` | Import inventory + verdict |
 | `ads-launch/PHASED-ACTIVATION.md` | Enable order (PH long-tail first) |
 | `ads-launch/VC-CURSOR-MEGA-PROMPT-EDITOR-ZOHO.md` | Mega prompt that drove Editor/Zoho P0s |
+| `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md` | Later-phase Zoho product/API discovery + audit |
 | `ads-launch/build_stage1_editor_package.py` | Builder + QA + CSV writers |
 | `ads-launch/google-ads-editor-import-us.csv` | **Preferred** USA import |
 | `ads-launch/google-ads-editor-import-au.csv` | **Preferred** AU import |
@@ -359,7 +374,7 @@ b741d6c Add account hygiene and Zapier audits to Launch Control.
 
 ### Do not invent requirements we never claimed
 
-- Live Zoho CRM writeback · CallRail qualified calls · WP redesign · Broad/PMax for volume · Fake AU phone · Brand Search in this CSV · Fake placement guarantees · Offline $ values as approved · Inheritance of 3000+ old negatives as “best practice”
+- Live Zoho writeback / assumed Leads+CRM V8 · CallRail qualified calls · WP redesign · Broad/PMax for volume · Fake AU phone · Brand Search in this CSV · Fake placement guarantees · Offline $ values as approved · Inheritance of 3000+ old negatives as “best practice” · Zoho as TRAFFIC READY gate
 
 ---
 
@@ -373,9 +388,10 @@ ADS REMAIN OFF
 OLD ACCOUNT = ARCHIVE (do not rewrite tonight)
 NEW VC_* = ISOLATED CLEAN SYSTEM (Paused)
 CRM READY / OPTIMIZATION READY = PARALLEL (not traffic gates)
+ZOHO PLATFORM DISCOVERY + LIVE INVENTORY/API = DEFERRED
 ```
 
-Operator next: Import split CSVs → review Paused → Post Paused → clear **TRAFFIC READY** (durable channel + test + responder) → Enable Tier 1A/1B only with explicit George OK. Campaign-specific goals + Zoho = parallel.
+Operator next: Import split CSVs → review Paused → Post Paused → clear **TRAFFIC READY** (durable channel + test + responder) → Enable Tier 1A/1B only with explicit George OK. Campaign-specific goals + Zoho discovery = parallel later.
 
 ---
 

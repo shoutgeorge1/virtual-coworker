@@ -1,8 +1,12 @@
-# Zoho CRM — production least-privilege runbook
+# Zoho — production least-privilege runbook (**deferred scopes**)
 
-## Bootstrap / inventory (current)
+**Do not issue production tokens until** `DEFERRED-PLATFORM-DISCOVERY.md` identifies CRM vs Recruit (or customized CRM) and the entry module for employer inquiries.
 
-Scopes (READ only — verified V8 style):
+## Bootstrap / inventory (after platform ID)
+
+Document the READ-only scope string for the **chosen** API here. Current `npm run zoho:*` helpers assume CRM V8-style scopes — treat as **stubs** until discovery.
+
+Historical CRM V8 READ bundle (may be wrong for this org):
 
 ```
 ZohoCRM.org.READ,ZohoCRM.users.READ,ZohoCRM.settings.modules.READ,ZohoCRM.settings.fields.READ,ZohoCRM.modules.READ,ZohoCRM.bulk.READ,ZohoCRM.coql.READ
@@ -10,28 +14,27 @@ ZohoCRM.org.READ,ZohoCRM.users.READ,ZohoCRM.settings.modules.READ,ZohoCRM.settin
 
 No `ALL`, `CREATE`, `UPDATE`, or `DELETE` on bootstrap tokens.
 
-## Production lead upsert (later — George approval)
+If Recruit API V2 is the product: replace the above with Recruit READ-only scopes from Zoho docs after confirmation — do not invent.
 
-After module + field API names are verified:
+## Production upsert (later — George approval)
 
-1. Issue a **separate** refresh token (or Self Client grant) with the narrowest write scopes for the chosen module only, e.g.:
-   - `ZohoCRM.modules.leads.CREATE`
-   - `ZohoCRM.modules.leads.UPDATE`
-   - Keep `ZohoCRM.settings.fields.READ` only if runtime must re-check schema (prefer bake verified names into config).
-2. Store secrets server-only: `ZOHO_CRM_CLIENT_ID`, `ZOHO_CRM_CLIENT_SECRET`, `ZOHO_CRM_REFRESH_TOKEN`, `ZOHO_CRM_ACCOUNTS_URL`, `ZOHO_CRM_API_DOMAIN`.
-3. Gate with `ZOHO_CRM_ENABLED=true` only when ready.
-4. Prefer external id field `VC_Submission_ID` for upsert idempotency.
-5. **Do not** auto-create fields. Documented `--apply-schema` would require explicit George approval (not implemented as a silent default).
+After entry module + field API names are verified:
+
+1. Issue a **separate** refresh token with the narrowest write scopes for the **chosen module only** (do **not** default to `ZohoCRM.modules.leads.*` — Leads may not exist).
+2. Store secrets server-only (names may change with product): client id/secret, refresh token, accounts URL, API domain.
+3. Gate with explicit enable flag only when ready (`ZOHO_CRM_ENABLED` or successor).
+4. Prefer an external id (e.g. `VC_Submission_ID`) for upsert idempotency on the chosen module.
+5. **Do not** auto-create fields. Schema apply requires explicit George approval.
 
 ## Honesty
 
 | Signal | Means |
 |--------|--------|
 | `ZOHO_WEBHOOK_URL` 200 | Generic webhook delivered (`webhook_zoho`) |
-| CRM upsert returns record id | `zoho_synced: true` |
-| Email / sheet / webhook ok | Durable lead possible; not CRM sync |
-| Launch Control gates green | Paid readiness — not the lead API response |
+| Direct API upsert returns record id | `zoho_synced: true` (when wired) |
+| Email / sheet / webhook ok | Durable lead possible; not Zoho sync |
+| Launch Control TRAFFIC READY | Paid readiness — not the Zoho API response |
 
 ## Outbox blocker
 
-Vercel process memory is not a durable Zoho retry outbox. If CRM upsert fails after email/webhook succeeded, `zoho_synced` stays false; a durable outbox/retry store is still required before claiming guaranteed CRM sync.
+Vercel process memory is not a durable Zoho retry outbox. If API upsert fails after email/webhook succeeded, `zoho_synced` stays false; a durable outbox/retry store is still required before claiming guaranteed sync.

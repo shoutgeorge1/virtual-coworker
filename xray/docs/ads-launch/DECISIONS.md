@@ -35,7 +35,7 @@ George asked for decisive defaults so QA / deploy can proceed. These are **opera
 - No historical shared negs / audiences / conversions / account machinery on `VC_*`  
 - Don’t switch Max Conv until new conversion action verified + meaningful data  
 
-Zoho remains an **ACTIVE PARALLEL** workstream (inventory, adapter, native audit, downstream mapping, dup-prevention) — **not** a traffic blocker.
+Zoho remains a **PARALLEL** workstream — **not** a traffic blocker. **Platform discovery + live inventory/API implementation are DEFERRED** (see `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md`): George’s UI shows **no Leads**; visible spine includes Accounts / Contacts / Job Orders / Placements. May be Zoho Recruit or heavily customized CRM — **do not assume CRM API V8 or hardcode Leads**. Native Ads audit stays separate and does **not** assume George’s pending Ads developer token.
 
 ## Operating rule (locked — judgment over busywork)
 
@@ -101,8 +101,8 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 ### Parallel / later (not traffic blockers)
 
 - US + AU custom domains + per-market GTM/GA4/GSC → **OPTIMIZATION READY**
-- **Zoho CRM** inventory / OAuth / direct adapter / field mapping → **CRM READY** (access ≠ integration complete)
-- Native Zoho↔Ads audit (observe only; do not authorize from repo work)
+- **Zoho platform discovery** (product + API path) → then inventory / OAuth / adapter / field mapping → **CRM READY** — **deferred**; access ≠ integration complete; no Leads assumption
+- Native Zoho↔Ads audit (observe only; separate from Ads developer token; do not authorize from repo work)
 - **Offline conversion actions** (plan later — **not** Stage 1 primary / not TRAFFIC READY):
   - Job order — value TBD (range discussed **$200–$400**, **not approved**)
   - Job placement — value TBD (range discussed **$500–$800**, **not approved**)

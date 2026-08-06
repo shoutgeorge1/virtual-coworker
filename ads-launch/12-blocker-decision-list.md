@@ -9,7 +9,7 @@ Sequencing lock: **TRAFFIC READY** ≠ **CRM READY** ≠ **OPTIMIZATION READY** 
 | 2 | **Lead recipients** | George / Braden | **TRAFFIC READY hard blocker.** Real `LEAD_EMAIL_*` / Resend / webhook / sheet. Log-only ≠ TRAFFIC READY |
 | 3 | **Named responder + process** | Ops | Who answers inquiries, practical response process |
 | 4 | **Durable delivery verified** | George | Live-format test reaches destination; failure paths honest |
-| 5 | **Zoho (CRM READY — parallel)** | George | **Not a traffic gate.** Access exists (level unknown). Bootstrap/inventory when ready. Access ≠ CRM READY. Offline values TBD — not approved. |
+| 5 | **Zoho (CRM READY — parallel / deferred)** | George | **Not a traffic gate.** UI: no Leads; employer spine visible. Discover Recruit vs CRM before API. Inventory/API **deferred**. Access ≠ CRM READY. Offline values TBD — not approved. |
 | 6 | **Architecture / budgets** | ~~open~~ | **Locked:** 2 campaigns/account; Core→`/us`/`/au`; Roles→category; Brand deferred |
 | 7 | **Max CPC** | ~~open~~ | **Locked defaults:** US $8 · AU A$6 · Maximize Clicks |
 | 8 | **Proof / content** | Marketing | Badges OK as badges; no invented testimonials/pricing |

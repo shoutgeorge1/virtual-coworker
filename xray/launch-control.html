@@ -313,7 +313,7 @@
               <em>Zoho CRM record is NOT required.</em>
             </li>
             <li>
-              <strong>CRM READY</strong> — direct Zoho record + verified field mapping (parallel workstream). Does not block Max Clicks launch.
+              <strong>CRM READY</strong> — direct Zoho record + verified field mapping (parallel · <em>deferred</em> until product/API known). Does not block Max Clicks launch. Do not assume Leads / CRM V8.
             </li>
             <li>
               <strong>OPTIMIZATION READY</strong> — new GTM → new Ads conversion actions, campaign-specific goals on each VC_*, downstream CRM feedback. Switch off Max Clicks only after this is real.
@@ -521,7 +521,7 @@
             <li><strong>Then:</strong> durable inbox test (TRAFFIC READY) · Assets spot-check · do not attach shared mega negs</li>
             <li>Editor download + paused split CSV import (US then AU)</li>
             <li>Buy US + AU domains when ready (nice-to-have for launch; preview host OK for TRAFFIC READY)</li>
-            <li><strong>Parallel CRM READY:</strong> <code>npm run zoho:bootstrap</code> / inventory — not a traffic gate. Email for Zoho: <code>george@shoutgeorge.com</code></li>
+            <li><strong>Parallel CRM READY (deferred):</strong> Zoho platform discovery first (Recruit vs CRM; no Leads in UI) — see <code>ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md</code>. Not a traffic gate. Email: <code>george@shoutgeorge.com</code></li>
             <li><strong>OPTIMIZATION READY later:</strong> separate US/AU GTM + new conversion actions + campaign-specific goals</li>
             <li>Confirm payment-cleared date when the bank shows it</li>
           </ul>
@@ -650,11 +650,11 @@
             <li>Move team email → george@shoutgeorge.com</li>
           </ul>
           <details class="lc-fold" style="margin-top:1rem">
-            <summary>CRM READY + OPTIMIZATION READY (parallel — not traffic blockers) <span class="hint">Zoho · GTM · CallRail</span></summary>
+            <summary>CRM READY + OPTIMIZATION READY (parallel — not traffic blockers) <span class="hint">Zoho deferred · GTM · CallRail</span></summary>
             <div class="fold-bd">
               <ul class="lc-open">
-                <li><strong>CRM READY:</strong> Zoho bootstrap/inventory · verified field map · direct CRM test (await George approval before live write)</li>
-                <li>Native Zoho↔Ads audit checklist — observe only; do not authorize from here</li>
+                <li><strong>CRM READY (deferred):</strong> identify Zoho product/API (Recruit vs CRM) · no Leads assumption · minimal exports Accounts/Contacts/Job Orders/Placements · then field map · await George before live write</li>
+                <li>Native Zoho↔Ads audit — observe only; separate from Ads developer token; do not authorize from here</li>
                 <li><strong>OPTIMIZATION READY:</strong> US+AU domains · separate GTM/GA4 · new conversion actions · campaign-specific goals</li>
                 <li>Job order + placement offline values TBD — not approved; never second Primary for same inquiry</li>
                 <li>CallRail / qualified call · Ads Admin when convenient</li>
