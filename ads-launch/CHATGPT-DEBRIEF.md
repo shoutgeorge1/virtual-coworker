@@ -6,7 +6,8 @@
 |-------|-------|
 | Generated | 2026-08-06 ~13:06 UTC |
 | Branch | `vision-demo` |
-| Base SHA (pre this debrief commit) | `9cd37d0372c53f23cbcc5d52e7e8667953aa7e70` |
+| Commit SHA | `7b703c5ad53e2078eaf75e892f6ea1571e1c0777` |
+| Prior SHA (Editor P0 hygiene) | `9cd37d0372c53f23cbcc5d52e7e8667953aa7e70` |
 | Repo | `/Users/george/Developer/virtual-coworker` |
 | Package | `lp_version=stage1-v7` · Editor hygiene + isolation locks |
 | Builder | `ads-launch/build_stage1_editor_package.py` |
@@ -131,7 +132,7 @@ Historical Ads “Conversions” in exports are **not** proof of placements.
 
 Source prompt: `ads-launch/VC-CURSOR-MEGA-PROMPT-EDITOR-ZOHO.md`  
 Shipped in commit `9cd37d0` — *Fix Editor import hygiene from mega prompt P0s.*  
-Isolation locks extended in working tree (see §5) and included with this debrief commit.
+Isolation locks shipped in commit `7b703c5` (see §5).
 
 ### Shipped (done)
 
@@ -171,7 +172,7 @@ Isolation locks extended in working tree (see §5) and included with this debrie
 
 **Instruction:** Leave historical account alone. New campaigns = clean system. Own tight negatives only. New GTM conversion actions. Campaign-specific goals. Leave old conversions untouched. Audiences Observation later. Ignore customer-lifecycle warnings. All new campaigns Paused.
 
-### Done (code + docs — this commit / working tree after `9cd37d0`)
+### Done (code + docs — commit `7b703c5`)
 
 | Change | Where |
 |--------|-------|
@@ -312,6 +313,7 @@ Informs keywords/negatives/RSA angles. Does **not** prove microsite ROI. Do not 
 ## 11. Recent git spine (vision-demo)
 
 ```
+7b703c5 Lock VC_* isolation and ship full ChatGPT debrief.
 9cd37d0 Fix Editor import hygiene from mega prompt P0s.
 7be9f73 Rewrite Launch Control in plain PPC English.
 b741d6c Add account hygiene and Zapier audits to Launch Control.
