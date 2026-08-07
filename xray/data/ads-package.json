@@ -126,7 +126,7 @@
         "display_name": "US · Role Search",
         "status": "Enabled",
         "budget": 50.0,
-        "max_cpc": 8.0
+        "max_cpc": 10.0
       }
     ],
     "keyword_breakdown": [
@@ -176,7 +176,7 @@
     "policy": {
       "match": "Exact-only bidding live (all Phrase paused)",
       "au_mirror": "AU package mirrors USA pause curation (LIVE_PAUSED + PHRASE_HOLD); AU campaigns not live yet",
-      "measurement": "Phone-first after routing works; form Secondary; Zoho Qualified later",
+      "measurement": "Phone call conversions = guiding light (USA Search + Brand/accounts); then shallow Zoho qualify → Ads; prefer phone over form spam",
       "brand": "Brand ~$40/day waste control — deferred as strategy center"
     }
   },
@@ -294,7 +294,7 @@
           "budget": "50",
           "budget_type": "Daily",
           "bid_strategy": "Maximize Clicks",
-          "max_cpc": "8",
+          "max_cpc": "10",
           "status": "Paused",
           "networks": "Google Search",
           "location": "United States",

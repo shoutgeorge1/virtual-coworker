@@ -62,22 +62,16 @@ Never return fake Zoho success. Log-only ≠ paid conversion.
 
 ---
 
-## Conversion definitions (business) — Aug 6 lock
+## Conversion definitions (business)
 
 ```
 Ad click
-  → phone call 60–90s     (VC_US_Phone_Call_From_Ads / _From_Website)
-                          first meaningful Primary AFTER routing works
-  → form submit           (VC_US_Employer_Form_Submit) Secondary / observation
-                          dataLayer: employer_inquiry_submitted + form_submit_success
-  → Zoho Qualified        offline quality signal (later; needs GCLID)
-  → job order / placement (CRM — not wired)
+  → employer_inquiry_submitted   (durable employer inquiry only)
+  → human follow-up
+  → job order                    (CRM — not wired)
+  → placement                    (ops — not wired)
 
-phone_cta_clicked / phone_click ≠ qualified call (Secondary micro only)
-form submit ≠ bidding Primary ≠ job order ≠ placement
+phone_cta_clicked ≠ qualified call
+form submit ≠ job order ≠ placement
 log_only accept ≠ employer_inquiry_submitted
-Stay Maximize Clicks — no Max Conv yet
 ```
-
-Aliases for GTM maps: `form_submit_success`, `phone_click`, `calendly_click`.  
-See `CONVERSION-PLAN.md`.

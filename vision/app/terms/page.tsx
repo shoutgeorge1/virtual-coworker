@@ -5,12 +5,15 @@ import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
 import { SITE } from "../../config/site";
 
-export const metadata: Metadata = {
+import { buildPageMetadata } from "../../lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
   title: "Terms · Virtual Coworker",
   description:
     "Terms for using Virtual Coworker’s hiring website and related forms.",
-  robots: { index: false, follow: false },
-};
+  path: "/terms",
+  indexable: true,
+});
 
 export default function TermsPage() {
   return (
@@ -28,7 +31,7 @@ export default function TermsPage() {
           <Link href="/privacy">Privacy notice</Link>.
         </p>
         <p>
-          Virtual Coworker helps businesses hire dedicated Philippines staff and
+          Virtual Coworker helps businesses hire dedicated Filipino staff and
           offers a separate careers path for talent. Content on this site is for
           general information; it is not legal, tax, or employment advice for
           your specific situation.

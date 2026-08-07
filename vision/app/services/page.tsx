@@ -4,17 +4,20 @@ import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
 import HubMapHero from "../components/HubMapHero";
+import JsonLd from "../components/JsonLd";
 import { ServiceIcon } from "../components/MicroIcons";
 import { CATEGORY_SLUGS, CATEGORIES } from "../../config/categories";
 import type { MarketId } from "../../config/markets";
 import type { SiteSurface } from "../../config/site";
+import { breadcrumbJsonLd, buildPageMetadata } from "../../lib/seo";
 
-export const metadata: Metadata = {
-  title: "Roles · Virtual Coworker",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Roles to Hire · Filipino Staff | Virtual Coworker",
   description:
-    "Hire dedicated Philippines staff across marketing, admin, books, support, and more.",
-  robots: { index: false, follow: false },
-};
+    "Browse dedicated Filipino staffing roles — marketing, admin, bookkeeping, support, HR, sales, and more for US and Australian businesses.",
+  path: "/services",
+  indexable: true,
+});
 
 function resolveMarket(
   raw: string | string[] | undefined
@@ -37,6 +40,12 @@ export default async function ServicesPage({
 
   return (
     <main className="micro">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: home },
+          { name: "Roles", path: `/services?market=${market}` },
+        ])}
+      />
       <MarketGtm surface={surface} />
       <SiteNav tone="dark" market={surface} active="services" />
 
@@ -52,7 +61,7 @@ export default async function ServicesPage({
         <p className="micro-lead">
           Pick the seat you need filled. Every page is for{" "}
           {market === "au" ? "Australian" : "US"} businesses hiring dedicated
-          Philippines staff — job seekers are pointed to careers instead.
+          Filipino staff — job seekers use Looking for a job? in the footer.
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">

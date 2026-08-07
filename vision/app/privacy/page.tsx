@@ -5,12 +5,15 @@ import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
 import { SITE } from "../../config/site";
 
-export const metadata: Metadata = {
+import { buildPageMetadata } from "../../lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
   title: "Privacy · Virtual Coworker",
   description:
     "How Virtual Coworker collects, uses, and protects personal information on this website.",
-  robots: { index: false, follow: false },
-};
+  path: "/privacy",
+  indexable: true,
+});
 
 export default function PrivacyPage() {
   return (

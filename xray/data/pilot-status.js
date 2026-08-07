@@ -66,7 +66,7 @@ window.PILOT_STATUS = {
   ],
   keywordClustersLater: ["brand_deferred", "competitors_deferred", "tech_medical_spanish_excluded"],
   matchPolicy: "exact_only_live_phrase_paused",
-  brandPolicy: "trimmed_waste_control_most_kws_paused_budget_~40_day_secondary_to_vc_search",
+  brandPolicy: "left_up_contained_~40_day_paused_weak_kws_secondary_to_vc_search",
   phases: {
     current: 1,
     labels: {
@@ -90,7 +90,7 @@ window.PILOT_STATUS = {
       finalUrls: "www.virtualcoworker.app"
     },
     au: { status: "not_touched_paused_until_phone_confirmed" },
-    brand: "trimmed_most_kws_paused_budget_~40_day_waste_control"
+    brand: "left_up_contained_~40_day_paused_weak_kws"
   },
 
   /* Confirmed conversion strategy (Stage 1) — phone-first; not form Primary */
@@ -126,7 +126,7 @@ window.PILOT_STATUS = {
   /* Confirmed phone routing */
   phones: {
     naDestination: {
-      number: "310-426-8776",
+      number: "310-730-9126",
       status: "rings_to_google_voice_vm",
       note: "Rings ~5–6 → Google Voice VM. Ash (intern) got test VM — not durable. Cheyenne owns US sales. Raffie = phone systems/IT, not US salesperson. Route into Cheyenne/US sales workflow + missed-call owner + E2E."
     },
@@ -238,7 +238,7 @@ window.PILOT_STATUS = {
     },
     {
       id: "na_phone_dest",
-      label: "US phone number confirmed: 310-426-8776 (routing to Cheyenne/sales workflow still open; Raffie ≠ salesperson)",
+      label: "US phone number confirmed: 310-730-9126 (routing to Cheyenne/sales workflow still open; Raffie ≠ salesperson)",
       status: "complete"
     },
     {
@@ -282,7 +282,7 @@ window.PILOT_STATUS = {
   waitingOnVc: [
     {
       id: "phone_routing_us",
-      label: "Route 310-426-8776 into Cheyenne/US sales workflow + missed-call owner + E2E (not Google Voice dump)",
+      label: "Route 310-730-9126 into Cheyenne/US sales workflow + missed-call owner + E2E (not Google Voice dump)",
       status: "waiting"
     },
     {
@@ -320,7 +320,7 @@ window.PILOT_STATUS = {
     "WordPress / hosting / Shopify — stays as-is; not paid destination",
     "WordPress rebuild / SEO / remarketing",
     "Gravity Forms — existing WP process only; paid LPs must not depend on WP/GF",
-    "Brand campaigns — trimmed (~$40/day; most Brand KWs paused); secondary to VC_US_* Search",
+    "Brand campaigns — left up; contained at ~$40/day; paused weak keywords; secondary to VC_US_* Search",
     "Social media or SEO tool logins",
     "New lead tracker this week — Zoho + Monday email enough",
     "Unsafe Google auto-apply — already disabled"
@@ -364,7 +364,7 @@ window.PILOT_STATUS = {
   placeholders: {
     usLeadEmail: "us@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
     auLeadEmail: "apac@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
-    usPhone: "310-426-8776",
+    usPhone: "310-730-9126",
     auPhone: "[AU_BUSINESS_PHONE]",
     usBudget: "$125/day combined (CORE $75 + ROLES $50)",
     auBudget: "[AU_MONTHLY_BUDGET — paused]",

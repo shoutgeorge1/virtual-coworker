@@ -1,14 +1,33 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect, useMemo } from "react";
 import SiteFooter from "../../components/SiteFooter";
+import { resolveCareersUrl } from "../../../config/markets";
+import { trackEvent } from "../../../lib/tracking";
 import "../ph.css";
 
+/** Apply route is an exit ramp — no on-host job form. */
 export default function PHApply() {
+  const careers = useMemo(() => resolveCareersUrl(), []);
+
+  useEffect(() => {
+    trackEvent("job_seeker_interstitial_viewed", {
+      market: "ph",
+      destination: careers,
+      source: "ph_apply",
+      primary_eligible: false,
+    });
+  }, [careers]);
+
   return (
     <main className="ph">
       <nav className="ph-nav">
-        <Link href="/ph" className="ph-brand">
+        <a
+          href={careers}
+          className="ph-brand"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/brand/logo-vc.png"
@@ -16,80 +35,33 @@ export default function PHApply() {
             className="logo-img logo-img-on-dark"
           />
           <span className="ph-brand-tag">Careers</span>
-        </Link>
-        <div className="ph-nav-right">
-          <Link href="/ph" className="ph-nav-link">
-            ← Careers home
-          </Link>
-        </div>
+        </a>
       </nav>
 
       <div className="ph-apply">
-        <h1 className="anim-rise">Apply for VA opportunities</h1>
+        <h1 className="anim-rise">Applications move to Philippines careers</h1>
         <p className="anim-rise-d1">
-          For people building a virtual assistant career. Businesses hiring
-          staff: use the US or Australia hiring pages in the footer — not this
-          form.
+          We don’t collect job applications on this hiring microsite. Continue to
+          our Philippines careers site to apply — opens in a new tab.
         </p>
-
-        <p className="ph-gate-note" style={{ marginBottom: "2rem" }}>
-          This form is talent-only. Hire intent is redirected away on purpose.
-        </p>
-
-        <form
-          className="ph-form anim-rise-d2"
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
+        <a
+          href={careers}
+          className="gate-submit anim-rise-d2"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() =>
+            trackEvent("job_seeker_redirected", {
+              market: "ph",
+              destination: careers,
+              source: "ph_apply",
+              primary_eligible: false,
+            })
+          }
         >
-          <label>
-            Full name
-            <input name="name" type="text" placeholder="Maria Santos" required />
-          </label>
-          <label>
-            Email
-            <input
-              name="email"
-              type="email"
-              placeholder="you@email.com"
-              required
-            />
-          </label>
-          <label>
-            City / region (PH)
-            <input name="city" type="text" placeholder="Cebu City" />
-          </label>
-          <label>
-            Experience level
-            <select name="level" defaultValue="">
-              <option value="" disabled>
-                Select
-              </option>
-              <option>New to VA work</option>
-              <option>1–2 years</option>
-              <option>3+ years</option>
-            </select>
-          </label>
-          <label>
-            Strengths
-            <textarea
-              name="strengths"
-              rows={3}
-              placeholder="Admin, support, tools you know…"
-            />
-          </label>
-          <button type="submit" className="ph-btn ph-btn-primary">
-            Submit application
-          </button>
-        </form>
-        <p
-          style={{
-            marginTop: "1.5rem",
-            fontSize: "0.8rem",
-            color: "var(--mute)",
-          }}
-        >
-          Demo only — form does not submit.
+          Go to Philippines careers →
+        </a>
+        <p className="ph-gate-note" style={{ marginTop: "1.5rem" }}>
+          Businesses hiring staff: use the US or Australia pages in the footer.
         </p>
       </div>
 

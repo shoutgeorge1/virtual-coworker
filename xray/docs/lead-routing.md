@@ -36,7 +36,7 @@ Prior agency traffic produced poor leads (percentages may overlap — not mutual
 
 | Market | Status | Detail |
 |--------|--------|--------|
-| US | **Hot ops** | Destination `310-426-8776` — rings ~5–6 → Google Voice voicemail. Ash (intern) got a test VM; not durable. **Cheyenne owns US sales.** Raffie = phone systems/IT, **not** US salesperson. Real task: route into Cheyenne/US sales workflow, name missed-call owner, E2E test. |
+| US | **Hot ops** | Destination `310-730-9126` — rings ~5–6 → Google Voice voicemail. Ash (intern) got a test VM; not durable. **Cheyenne owns US sales.** Raffie = phone systems/IT, **not** US salesperson. Real task: route into Cheyenne/US sales workflow, name missed-call owner, E2E test. |
 | AU | **Paused gate** | No confirmed/tested AU phone for paid. Form-first; AU ads paused until phone confirmed/tested. |
 | CallRail | **Later** | ~1–2 months. Tracking numbers forward to sales destinations. Not Stage 1 operational. |
 
@@ -132,7 +132,7 @@ Set values via environment variables (see `.env.example`). Never commit secrets.
 | `LEAD_SINK_SECRET` / `GITHUB_LEADS_TOKEN` | Pilot GitHub Issues sink |
 | `ZOHO_WEBHOOK_URL` | Optional later Zoho endpoint — only after access confirmed |
 | `LEAD_SHEET_WEBHOOK_URL` | Optional spreadsheet / Zapier / Make |
-| `NEXT_PUBLIC_US_PHONE` | NA dest: `310-426-8776` (routing still open) |
+| `NEXT_PUBLIC_US_PHONE` | NA dest: `310-730-9126` (routing still open) |
 | `NEXT_PUBLIC_AU_PHONE` | Official AU-site number — unresolved / AU ads paused |
 
 If delivery is not configured, the API returns a clear error and the UI shows a graceful failure — it does not pretend the lead was sent.

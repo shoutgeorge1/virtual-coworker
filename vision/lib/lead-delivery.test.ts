@@ -4,6 +4,8 @@ import {
   configuredChannels,
   deliveryBlockerMessage,
   durableTrafficChannels,
+  formatLeadEmailText,
+  parseLeadCc,
 } from "./lead-delivery";
 
 describe("lead delivery honesty", () => {
@@ -49,5 +51,30 @@ describe("lead delivery honesty", () => {
 
   it("blocker message is honest", () => {
     expect(deliveryBlockerMessage().toLowerCase()).toMatch(/not configured/);
+  });
+
+  it("parses CC list", () => {
+    expect(parseLeadCc({ LEAD_EMAIL_CC: "a@x.com, b@y.com" })).toEqual([
+      "a@x.com",
+      "b@y.com",
+    ]);
+  });
+
+  it("formats lead email like Gravity Forms style", () => {
+    const text = formatLeadEmailText({
+      firstName: "Ada",
+      lastName: "Lovelace",
+      email: "ada@example.com",
+      phone: "555",
+      company: "Analytical Engines",
+      market: "us",
+      utm_source: "google",
+      gclid: "abc",
+      submission_id: "vc_us_test",
+    });
+    expect(text).toContain("Name\n  Ada Lovelace");
+    expect(text).toContain("Email Address\n  ada@example.com");
+    expect(text).toContain("GCLID\n  abc");
+    expect(text).toContain("Submission ID\n  vc_us_test");
   });
 });

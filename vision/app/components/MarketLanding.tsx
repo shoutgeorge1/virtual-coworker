@@ -2,21 +2,32 @@ import Link from "next/link";
 import LeadGate, { type GateCopy } from "./LeadGate";
 import StickyCta from "./StickyCta";
 import ExitIntent from "./ExitIntent";
+import EngageChat from "./EngageChat";
+import RoleQuiz from "./RoleQuiz";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
 import TrustQuotes from "./TrustQuotes";
+import JsonLd from "./JsonLd";
 import {
   MARKETS,
   resolveCareersUrl,
   resolvePhone,
   type MarketId,
 } from "../../config/markets";
+import { hiringProcessStrip } from "../../config/hiring-process";
 import {
   CATEGORIES,
   type AbVariant,
   type CategorySlug,
 } from "../../config/categories";
 import { SITE } from "../../config/site";
+import {
+  breadcrumbJsonLd,
+  faqPageJsonLd,
+  organizationJsonLd,
+  professionalServiceJsonLd,
+  websiteJsonLd,
+} from "../../lib/seo";
 
 export default function MarketLanding({
   market,
@@ -53,8 +64,8 @@ export default function MarketLanding({
           "A staffing partner — not a freelance marketplace",
         ]
       : [
-          "Philippines talent matched to your US hours and tools",
-          "You interview before anyone joins your team",
+          "Dedicated Filipino VAs and remote staff for US business ops",
+          "We recruit and vet — you interview and decide",
           "We handle payroll and account support after you hire",
           "A staffing partner — not a freelance marketplace",
         ]);
@@ -64,15 +75,15 @@ export default function MarketLanding({
       ? [
           {
             q: "Is this for businesses or job seekers?",
-            a: "Businesses only. If you’re looking for work, use the careers link in the footer.",
+            a: "Businesses only. If you’re looking for work, use Looking for a job? in the footer — it opens our Philippines careers site.",
           },
           {
             q: "What happens after I send my role?",
             a: "Our team follows up for a short hiring conversation. From there we take your brief, shortlist screened candidates, and you interview before anyone starts.",
           },
           {
-            q: "Why hire from the Philippines?",
-            a: "English-proficient professionals who can work Australian business hours. We recruit and screen; you choose who to hire.",
+            q: "Why hire Filipino talent?",
+            a: "English-proficient professionals who can work Australian business hours. Our Filipino recruitment team sources and screens; you choose who to hire.",
           },
           {
             q: "Do I have to hire someone from the shortlist?",
@@ -82,15 +93,15 @@ export default function MarketLanding({
       : [
           {
             q: "Is this for businesses or job seekers?",
-            a: "Businesses only. If you’re looking for work, use the careers link in the footer.",
+            a: "Businesses only. If you’re looking for work, use Looking for a job? in the footer — it opens our Philippines careers site.",
           },
           {
             q: "What happens after I send my role?",
             a: "Our team follows up for a short hiring conversation. From there we take your brief, shortlist screened candidates, and you interview before anyone starts.",
           },
           {
-            q: "Why hire from the Philippines?",
-            a: "English-proficient professionals who can work your hours. We recruit and screen; you choose who to hire.",
+            q: "Why hire Filipino talent?",
+            a: "English-proficient Filipino professionals who can support US business ops. Our Filipino recruitment team sources and screens; you interview and decide who to hire.",
           },
           {
             q: "Do I have to hire someone from the shortlist?",
@@ -98,51 +109,7 @@ export default function MarketLanding({
           },
         ]);
 
-  const processSteps = isAu
-    ? [
-        {
-          k: "01",
-          t: "Hiring conversation",
-          d: "Tell us the role. We follow up to talk through what you need, hours, and tools — so we know it’s a fit before recruiting starts.",
-        },
-        {
-          k: "02",
-          t: "We recruit and screen",
-          d: "Share your brief. Our Philippines recruitment team sources and screens candidates against your must-haves — not a resume dump.",
-        },
-        {
-          k: "03",
-          t: "You interview and choose",
-          d: "Review a shortlist, meet people on video, and pick who joins. You stay in control of the hire.",
-        },
-        {
-          k: "04",
-          t: "Onboard with support",
-          d: "Once you hire, we help with onboarding, employment admin, and ongoing account support so you can focus on the work.",
-        },
-      ]
-    : [
-        {
-          k: "01",
-          t: "Hiring conversation",
-          d: "Tell us the role. We follow up to talk through what you need, hours, and tools — so we know it’s a fit before recruiting starts.",
-        },
-        {
-          k: "02",
-          t: "We recruit and screen",
-          d: "Share your brief. Our Philippines recruitment team sources and screens candidates against your must-haves — not a resume dump.",
-        },
-        {
-          k: "03",
-          t: "You interview and choose",
-          d: "Review a shortlist, meet people on video, and pick who joins. You stay in control of the hire.",
-        },
-        {
-          k: "04",
-          t: "Onboard with support",
-          d: "Once you hire, we help with onboarding, payroll, and ongoing account support so you can focus on the work.",
-        },
-      ];
+  const processSteps = hiringProcessStrip(market);
 
   const showPhone = phone.configured && Boolean(phone.href);
   const shell = market === "us" ? "us" : "au";
@@ -157,10 +124,9 @@ export default function MarketLanding({
       : "I’m hiring staff for a business.",
     intentSecondary: "I’m looking for a job.",
     divertTitle: "Looking for work?",
-    divertBody: isAu
-      ? "This page is for businesses hiring staff. Job applications go to careers — not this form."
-      : "This page is for businesses hiring staff. Job applications go to careers — not this form.",
-    divertCta: "Go to careers →",
+    divertBody:
+      "This page is for businesses hiring staff. Job applications open on our Philippines careers site — not this form.",
+    divertCta: "Go to Philippines careers →",
     careersHref: careers,
     roleLabel: "What do you need help with?",
     roles: cfg.servicesProposed,
@@ -191,12 +157,32 @@ export default function MarketLanding({
       : "A teammate will follow up to talk through the role and next steps.",
   };
 
+  const breadcrumbs = cat
+    ? [
+        { name: "Home", path: cfg.landingPath },
+        { name: "Roles", path: `/services?market=${market}` },
+        { name: cat.label, path: `${cfg.landingPath}/${cat.slug}` },
+      ]
+    : [
+        { name: "Home", path: cfg.landingPath },
+        { name: "How it works", path: `/how-it-works?market=${market}` },
+      ];
+
   return (
     <main
       className={shell}
       data-variant={variant}
       data-category={category || "generic"}
     >
+      <JsonLd
+        data={[
+          organizationJsonLd(),
+          websiteJsonLd(),
+          professionalServiceJsonLd(market),
+          breadcrumbJsonLd(breadcrumbs),
+          faqPageJsonLd(faq),
+        ]}
+      />
       <SiteNav tone={light ? "light" : "dark"} market={market} />
 
       <section className={`${shell}-hero`}>
@@ -207,7 +193,7 @@ export default function MarketLanding({
             <p className={`${shell}-kicker anim-rise`}>
               {cfg.label} · {isAu ? "Businesses" : "Employers"}
               {cat ? ` · ${cat.label}` : ""}
-              {" · "}Philippines talent
+              {" · "}Filipino talent
             </p>
             <h1 className="anim-rise">{h1}</h1>
             <p className={`${shell}-lead anim-rise-d1`}>{sub}</p>
@@ -262,7 +248,7 @@ export default function MarketLanding({
               <span className="trust-chip trust-chip-stat">
                 <em>PH</em>
                 <span>
-                  <b>Philippines</b>
+                  <b>Filipino</b>
                   <span>Dedicated hires</span>
                 </span>
               </span>
@@ -280,8 +266,8 @@ export default function MarketLanding({
               <b>{cat ? `${cat.label}` : "Matched to your role"}</b>
               <span>
                 {isAu
-                  ? "Australian business hours · Philippines talent"
-                  : "US business hours · Philippines talent"}
+                  ? "Australian business hours · Filipino talent"
+                  : "US business hours · Filipino talent"}
               </span>
             </figcaption>
           </figure>
@@ -314,6 +300,8 @@ export default function MarketLanding({
               <Link href={`/how-it-works?market=${market}`}>
                 See the full process →
               </Link>
+              {" · "}
+              <Link href={`/services?market=${market}`}>Browse roles →</Link>
             </p>
           </div>
           <div className={`sell-grid sell-grid-4${light ? " sell-grid-light" : ""}`}>
@@ -329,6 +317,13 @@ export default function MarketLanding({
       </section>
 
       <TrustQuotes light={light} market={market} />
+
+      <RoleQuiz
+        market={market}
+        category={category || undefined}
+        variant={variant}
+        light={light}
+      />
 
       <section className={`${shell}-sell`} style={{ paddingTop: 0 }}>
         <div className={`${shell}-sell-inner`}>
@@ -357,9 +352,7 @@ export default function MarketLanding({
         <p>
           {showPhone
             ? "Ready to hire — or prefer to talk?"
-            : isAu
-              ? "Ready to hire Filipino staff for your business?"
-              : "Ready to hire Philippines staff for your business?"}
+            : "Ready to hire Filipino staff for your business?"}
         </p>
         <div className={`${shell}-cta-bar-actions`}>
           {showPhone ? (
@@ -398,6 +391,17 @@ export default function MarketLanding({
         gateHref="#gate"
         category={category || undefined}
         variant={variant}
+        phoneHref={showPhone ? phone.href : null}
+        phoneDisplay={showPhone ? phone.display : undefined}
+      />
+
+      <EngageChat
+        market={market}
+        category={category || undefined}
+        variant={variant}
+        phoneHref={showPhone ? phone.href : null}
+        phoneDisplay={showPhone ? phone.display : undefined}
+        careersHref={careers}
       />
     </main>
   );

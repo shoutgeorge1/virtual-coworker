@@ -1,18 +1,29 @@
 import type { Metadata } from "next";
 import DataTrackClicks from "./components/DataTrackClicks";
 import HashScroll from "./components/HashScroll";
+import {
+  SITE_URL,
+  buildPageMetadata,
+  robotsFor,
+} from "../lib/seo";
+import { SITE } from "../config/site";
 import "./globals.css";
 
-const noindex = process.env.NEXT_PUBLIC_PILOT_NOINDEX !== "false";
-
+/**
+ * Root defaults. Employer money pages set their own indexable metadata.
+ * NEXT_PUBLIC_PILOT_NOINDEX=true forces noindex sitewide (QA). Production: false/unset.
+ */
 export const metadata: Metadata = {
-  title: "Virtual Coworker · Hire Filipino Staff",
-  description:
-    "Hire dedicated Filipino staff for US and Australian businesses — recruit, screen, interview, and hire with Virtual Coworker.",
+  metadataBase: new URL(SITE_URL),
+  ...buildPageMetadata({
+    title: `${SITE.name} · Hire Filipino Staff`,
+    description:
+      "Hire dedicated Filipino staff for US and Australian businesses — recruit, screen, interview, and hire with Virtual Coworker.",
+    path: "/",
+    indexable: true,
+  }),
   icons: { icon: "/brand/favicon.png" },
-  robots: noindex
-    ? { index: false, follow: false, googleBot: { index: false, follow: false } }
-    : { index: true, follow: true },
+  robots: robotsFor("index"),
 };
 
 /**

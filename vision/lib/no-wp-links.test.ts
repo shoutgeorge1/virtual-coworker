@@ -1,20 +1,28 @@
 import { describe, expect, it } from "vitest";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
+import { DEFAULT_CAREERS_URL } from "../config/markets";
 
 /**
- * Automated audit: hiring site source must not href/link to WordPress hosts.
- * Fails CI/local test if virtualcoworker.com(.au) appears as a navigable http(s) URL.
- * mailto: to company inboxes is allowed (not WP page egress).
+ * Paid employer surfaces must not link to US/AU WordPress hosts.
+ * Intentional job-seeker egress to virtualcoworker.com.ph is allowed.
  */
 
 const ROOT = join(__dirname, "..");
-const WP_HREF_RE =
-  /(?:href\s*=\s*["'`](?!mailto:)|url\s*\(\s*["']?|redirect\s*\(\s*["'`]|window\.location\s*=\s*["'`])[^"'`)]*virtualcoworker\.com(?:\.au)?/i;
-const WP_BARE_URL_RE = /https?:\/\/(?:www\.)?virtualcoworker\.com(?:\.au)?/gi;
+const EMPLOYER_WP_HREF_RE =
+  /(?:href\s*=\s*["'`](?!mailto:)|url\s*\(\s*["']?|redirect\s*\(\s*["'`]|window\.location\s*=\s*["'`])[^"'`)]*virtualcoworker\.com(?!\.ph)(?:\.au)?/i;
+const EMPLOYER_WP_BARE_URL_RE =
+  /https?:\/\/(?:www\.)?virtualcoworker\.com(?!\.ph)(?:\.au)?\b/gi;
 
 const SCAN_DIRS = ["app", "components", "config", "lib"];
 const EXT_RE = /\.(tsx?|jsx?|mjs|css)$/;
+
+function stripPhCareersUrls(text: string): string {
+  return text.replace(
+    /https?:\/\/(?:www\.)?virtualcoworker\.com\.ph\b[^"'`\s]*/gi,
+    "",
+  );
+}
 
 function walk(dir: string, out: string[] = []): string[] {
   let entries: string[];
@@ -33,37 +41,42 @@ function walk(dir: string, out: string[] = []): string[] {
   return out;
 }
 
-describe("no WordPress egress on paid microsite", () => {
-  it("rejects navigable virtualcoworker.com links in vision source", () => {
+describe("no employer WordPress egress on paid microsite", () => {
+  it("rejects navigable US/AU virtualcoworker.com links (PH careers allowed)", () => {
     const files = SCAN_DIRS.flatMap((d) => walk(join(ROOT, d)));
     const hits: string[] = [];
 
     for (const file of files) {
-      const text = readFileSync(file, "utf8");
+      const text = stripPhCareersUrls(readFileSync(file, "utf8"));
       const rel = relative(ROOT, file);
-      // Allow prose that forbids WP (comments / disclaimer strings) if no href/url()
-      if (WP_HREF_RE.test(text)) {
-        hits.push(`${rel}: href/url-style WP link`);
+      if (EMPLOYER_WP_HREF_RE.test(text)) {
+        hits.push(`${rel}: href/url-style employer WP link`);
         continue;
       }
-      // Absolute WP URLs anywhere in TSX/JS (string literals used as destinations)
-      const abs = text.match(WP_BARE_URL_RE);
+      const abs = text.match(EMPLOYER_WP_BARE_URL_RE);
       if (abs) {
-        // site.ts disclaimer mentions WP in prose — allow only non-http bare mentions
-        // already caught by https? pattern; site disclaimer uses "WordPress" word only
-        hits.push(`${rel}: absolute WP URL ${[...new Set(abs)].join(", ")}`);
+        hits.push(`${rel}: absolute employer WP URL ${[...new Set(abs)].join(", ")}`);
       }
     }
 
     expect(hits, hits.join("\n") || "clean").toEqual([]);
   });
 
-  it("rejects WP careers env fallback", async () => {
+  it("defaults careers to PH WordPress and blocks employer WP env", async () => {
     const prev = process.env.NEXT_PUBLIC_CAREERS_URL;
-    process.env.NEXT_PUBLIC_CAREERS_URL = "https://virtualcoworker.com/careers";
+    delete process.env.NEXT_PUBLIC_CAREERS_URL;
+    // Fresh import not required — functions read env at call time
     const { resolveCareersUrl, careersUrlIsBlocker } = await import("../config/markets");
-    expect(resolveCareersUrl()).toBe("/ph");
+    expect(resolveCareersUrl()).toBe(DEFAULT_CAREERS_URL);
+
+    process.env.NEXT_PUBLIC_CAREERS_URL = "https://virtualcoworker.com/careers";
+    expect(resolveCareersUrl()).toBe(DEFAULT_CAREERS_URL);
     expect(careersUrlIsBlocker()).toBe(true);
+
+    process.env.NEXT_PUBLIC_CAREERS_URL = DEFAULT_CAREERS_URL;
+    expect(resolveCareersUrl()).toBe(DEFAULT_CAREERS_URL);
+    expect(careersUrlIsBlocker()).toBe(false);
+
     if (prev === undefined) delete process.env.NEXT_PUBLIC_CAREERS_URL;
     else process.env.NEXT_PUBLIC_CAREERS_URL = prev;
   });

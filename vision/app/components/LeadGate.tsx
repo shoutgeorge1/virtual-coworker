@@ -347,6 +347,12 @@ export default function LeadGate({
               <a
                 href={copy.careersHref}
                 className="gate-submit"
+                {...(/^https?:\/\//i.test(copy.careersHref)
+                  ? {
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    }
+                  : {})}
                 onClick={() =>
                   trackEvent("job_seeker_redirected", {
                     market,

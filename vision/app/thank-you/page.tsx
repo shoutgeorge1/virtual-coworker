@@ -7,11 +7,14 @@ import { SITE, type SiteSurface } from "../../config/site";
 import { calendlyUrlForMarket } from "../../lib/calendly";
 import ThankYouClient from "./ThankYouClient";
 
-export const metadata: Metadata = {
+import { buildPageMetadata } from "../../lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
   title: "Thank you · Virtual Coworker",
   description: "Thanks — we got your hiring request.",
-  robots: { index: false, follow: false },
-};
+  path: "/thank-you",
+  indexable: false,
+});
 
 export default async function ThankYouPage({
   searchParams,
@@ -43,18 +46,20 @@ export default async function ThankYouPage({
     },
     {
       k: "02",
-      t: "Brief → we recruit",
-      d: "Share the brief. We source and screen dedicated Philippines talent against your must-haves.",
+      t: "We recruit and screen",
+      d: "Share your job brief — our Filipino recruitment team sources and screens a ready-made shortlist, not a pile of resumes.",
     },
     {
       k: "03",
-      t: "You interview",
-      d: "Meet the shortlist on video. You decide who joins — no pressure hire.",
+      t: "You interview and decide",
+      d: "Meet your shortlist on video and decide on your own schedule — with no pressure to hire.",
     },
     {
       k: "04",
       t: "Onboard with support",
-      d: "Once you hire, we help with onboarding and ongoing support so your new teammate settles in.",
+      d: isAu
+        ? "Once you hire, we handle onboarding, employment ops, and account support so your new teammate settles in from day one."
+        : "Once you hire, we handle onboarding, payroll, and account support so your new teammate settles in from day one.",
     },
   ];
 
@@ -80,8 +85,8 @@ export default async function ThankYouPage({
         {conversionEligible ? (
           <p className="micro-lead thank-you-lead">
             {isAu
-              ? "A teammate will follow up to talk through the role and next steps for your Australian business. This is a hiring conversation — not a software demo."
-              : "A teammate will follow up to talk through the role and next steps for your US business. This is a hiring conversation — not a software demo."}
+              ? "A teammate will follow up to talk through the role and next steps for your Australian business."
+              : "A teammate will follow up to talk through the role and next steps for your US business."}
           </p>
         ) : (
           <p className="micro-lead thank-you-lead">

@@ -15,6 +15,8 @@ import {
   configuredChannels,
   deliveryBlockerMessage,
   durableTrafficChannels,
+  formatLeadEmailText,
+  parseLeadCc,
 } from "../../../lib/lead-delivery";
 import { upsertEmployerLead } from "../../../lib/zoho/client";
 import { leadLogSafe } from "../../../lib/zoho/redact";
@@ -34,9 +36,13 @@ function clientKey(req: NextRequest, email: string): string {
 
 async function postJson(url: string, body: unknown): Promise<{ ok: boolean; detail: string }> {
   try {
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    // Optional bearer for LEAD_WEBHOOK_URL / sheet / zoho_webhook sinks (e.g. lead-sink).
+    const auth = (process.env.LEAD_WEBHOOK_AUTH || "").trim();
+    if (auth) headers.Authorization = `Bearer ${auth}`;
     const res = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify(body),
     });
     if (!res.ok) {
@@ -257,25 +263,39 @@ export async function POST(req: NextRequest) {
   const to = market === "au" ? cfg.emailToAu : cfg.emailToUs;
   if (to && cfg.resend && cfg.from) {
     const t0 = Date.now();
+    const hostLabel =
+      market === "au" ? "virtualcoworker.app/au" : "virtualcoworker.app/us";
+    const displayName =
+      [names.firstName, names.lastName].filter(Boolean).join(" ").trim() ||
+      "employer";
+    const cc = parseLeadCc().filter((addr) => addr.toLowerCase() !== to.toLowerCase());
     try {
+      const payload: Record<string, unknown> = {
+        from: cfg.from,
+        to: [to],
+        subject: `Free Consultation (${hostLabel}) - ${displayName}`,
+        text: formatLeadEmailText(record),
+      };
+      if (cc.length) payload.cc = cc;
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${cfg.resend}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          from: cfg.from,
-          to: [to],
-          subject: `[VC Pilot] ${market.toUpperCase()} employer inquiry — ${names.firstName}`.trim(),
-          text: JSON.stringify(record, null, 2),
-        }),
+        body: JSON.stringify(payload),
       });
       const ok = res.ok;
+      let detail = "sent";
+      if (!ok) {
+        const errText = await res.text().catch(() => "");
+        // Keep log short; Resend often returns {"message":"..."}.
+        detail = `HTTP ${res.status}${errText ? `: ${errText.slice(0, 180)}` : ""}`;
+      }
       deliveries.push({
         channel: "email",
         ok,
-        detail: ok ? "sent" : `HTTP ${res.status}`,
+        detail,
       });
       console.info(
         "[lead]",
@@ -285,7 +305,7 @@ export async function POST(req: NextRequest) {
             market,
             channel: "email",
             ok,
-            error: ok ? undefined : `HTTP ${res.status}`,
+            error: ok ? undefined : detail,
             duration_ms: Date.now() - t0,
           }),
         ),

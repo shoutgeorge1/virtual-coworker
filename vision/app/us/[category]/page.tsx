@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import MarketLanding from "../../components/MarketLanding";
 import { CATEGORIES, CATEGORY_SLUGS, isCategorySlug } from "../../../config/categories";
 import { resolveLpVariant } from "../../../lib/resolve-lp-variant";
+import { buildPageMetadata } from "../../../lib/seo";
 import "../us.css";
 
 type Props = {
@@ -18,11 +19,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category } = await params;
   if (!isCategorySlug(category)) return { title: "Not found" };
   const cat = CATEGORIES[category];
-  return {
+  return buildPageMetadata({
     title: cat.title.us,
     description: cat.description.us,
-    robots: { index: false, follow: false },
-  };
+    path: `/us/${category}`,
+    indexable: true,
+    ogImage: cat.variants.a.heroImage.us,
+  });
 }
 
 export default async function USCategoryPage({ params, searchParams }: Props) {

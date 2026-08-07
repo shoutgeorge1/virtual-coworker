@@ -1,6 +1,6 @@
 /**
  * Market-specific Stage 1 config.
- * US NA phone from operator brief: 310-426-8776.
+ * US NA phone from operator brief: 310-730-9126.
  * AU: no phone — form-primary; do not invent a placeholder tel: link.
  * Do not invent emails, budgets, conversion IDs, or guarantees.
  */
@@ -32,6 +32,9 @@ export type MarketConfig = {
   negativeThemes: string[];
 };
 
+/** Verified public PH careers WordPress host (job-seeker exit only). */
+export const DEFAULT_CAREERS_URL = "https://virtualcoworker.com.ph";
+
 export const MARKETS: Record<MarketId, MarketConfig> = {
   us: {
     id: "us",
@@ -41,13 +44,13 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     landingPath: "/us",
     leadEmailEnv: "LEAD_EMAIL_US",
     phoneEnv: "NEXT_PUBLIC_US_PHONE",
-    knownPhone: "310-426-8776",
+    knownPhone: "310-730-9126",
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
-    careersUrlFallback: "/ph",
-    headline: "Hire dedicated Philippines staff for your US business.",
-    prop: "Need a virtual assistant, Filipino teammate, or dedicated offshore seat? We recruit and screen Philippines talent for US employers — you interview and choose who joins.",
+    careersUrlFallback: DEFAULT_CAREERS_URL,
+    headline: "Hire dedicated Filipino VAs and remote staff for your US business.",
+    prop: "Need a virtual assistant or dedicated Filipino teammate for your US business ops? We recruit, vet, and shortlist — you interview and decide who joins. Dedicated seats, not a freelance marketplace.",
     staffingExplain:
-      "Tell us the role. We follow up for a short hiring conversation, take your brief, and shortlist screened candidates. You interview before anyone starts. We handle payroll and account support after you hire.",
+      "Tell us the role. We follow up for a short hiring conversation, take your brief, and shortlist screened Filipino talent. You interview and decide before anyone starts. We handle payroll and account support after you hire.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",
@@ -79,9 +82,9 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     phoneEnv: "NEXT_PUBLIC_AU_PHONE",
     knownPhone: null,
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
-    careersUrlFallback: "/ph",
+    careersUrlFallback: DEFAULT_CAREERS_URL,
     headline: "Hire dedicated Filipino staff for your Australian business.",
-    prop: "Virtual Coworker connects Australian businesses with vetted Philippines teammates who work Australian business hours — recruit, screen, and support included. Not a gig marketplace.",
+    prop: "Virtual Coworker connects Australian businesses with vetted Filipino teammates who work Australian business hours — recruit, screen, and support included. Not a gig marketplace.",
     staffingExplain:
       "Send the role you need filled. Our team follows up for a hiring conversation, takes your brief, and shortlists screened candidates. You interview before anyone starts. We handle employment admin so you stay focused on the work.",
     servicesProposed: allFormRoleLabels(),
@@ -130,30 +133,50 @@ export function resolvePhone(market: MarketId): {
   };
 }
 
-const WP_HOST_RE = /virtualcoworker\.com(\.au)?/i;
+/** Employer WordPress hosts — never use these as the job-seeker careers exit. */
+const EMPLOYER_WP_HOST_RE =
+  /^https?:\/\/(www\.)?virtualcoworker\.com(\.au)?(\/|$)/i;
+
+/** Philippines careers WordPress (allowed job-seeker egress). */
+const PH_CAREERS_HOST_RE =
+  /^https?:\/\/(www\.)?virtualcoworker\.com\.ph(\/|$)/i;
+
+export function isPhCareersUrl(url: string): boolean {
+  return PH_CAREERS_HOST_RE.test((url || "").trim());
+}
+
+export function isExternalCareersUrl(url: string): boolean {
+  const u = (url || "").trim();
+  return /^https?:\/\//i.test(u);
+}
 
 /**
- * Job-seeker exit stays inside the PH microsite.
- * Never return a WordPress careers URL — reject env misconfiguration.
+ * Job-seeker exit → WordPress Philippines careers (leave paid employer funnel).
+ * Default: https://virtualcoworker.com.ph
+ * Rejects US/AU WordPress employer hosts; allows .ph or same-host relative paths.
  */
 export function resolveCareersUrl(): string {
   const configured = (process.env.NEXT_PUBLIC_CAREERS_URL || "").trim();
   if (configured) {
-    if (WP_HOST_RE.test(configured)) {
+    if (EMPLOYER_WP_HOST_RE.test(configured) && !isPhCareersUrl(configured)) {
       console.error(
-        "[careers] NEXT_PUBLIC_CAREERS_URL points at WordPress — falling back to /ph",
+        "[careers] NEXT_PUBLIC_CAREERS_URL points at employer WordPress — falling back to PH careers",
       );
-      return MARKETS.us.careersUrlFallback;
+      return DEFAULT_CAREERS_URL;
     }
     return configured;
   }
-  return MARKETS.us.careersUrlFallback;
+  return DEFAULT_CAREERS_URL;
 }
 
-/** True when careers env was set to a WordPress host (misconfig). /ph itself is valid. */
+/** True when careers env was set to an employer WordPress host (misconfig). */
 export function careersUrlIsBlocker(): boolean {
   const configured = (process.env.NEXT_PUBLIC_CAREERS_URL || "").trim();
-  return Boolean(configured && WP_HOST_RE.test(configured));
+  return Boolean(
+    configured &&
+      EMPLOYER_WP_HOST_RE.test(configured) &&
+      !isPhCareersUrl(configured),
+  );
 }
 
 export const PILOT = {
@@ -162,5 +185,5 @@ export const PILOT = {
     "Can Google Search generate qualified US and Australian employer inquiries at an acceptable cost?",
   primaryContact: "Braden",
   gateVariant: "inline",
-  lpVersion: "stage1-v7",
+  lpVersion: "stage1-v8",
 } as const;

@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { SITE, type SiteSurface } from "../../config/site";
+import {
+  isExternalCareersUrl,
+  resolveCareersUrl,
+} from "../../config/markets";
 
 /**
  * Minimal per-market footer.
- * Same-host links only · zero WordPress egress · one quiet cross-market line.
+ * Employer pages stay on-host except intentional job-seeker egress → PH WordPress.
  */
 export default function SiteFooter({
   tone = "dark",
@@ -18,6 +22,8 @@ export default function SiteFooter({
   const isPh = surface === "ph";
   const isAu = surface === "au";
   const isUs = surface === "us";
+  const careers = resolveCareersUrl();
+  const careersExternal = isExternalCareersUrl(careers);
 
   const marketLabel = isUs
     ? "United States"
@@ -29,32 +35,66 @@ export default function SiteFooter({
 
   const siteLinks = isPh
     ? ([
-        { href: "/ph", label: "Careers home" },
-        { href: "/ph/apply", label: "Apply" },
-        { href: "/privacy", label: "Privacy" },
-        { href: "/terms", label: "Terms" },
+        { href: careers, label: "Philippines careers", external: careersExternal },
+        { href: "/privacy", label: "Privacy", external: false },
+        { href: "/terms", label: "Terms", external: false },
       ] as const)
     : ([
-        { href: `/services?market=${surface}`, label: "Services" },
-        { href: `/how-it-works?market=${surface}`, label: "How it works" },
-        { href: "/privacy", label: "Privacy" },
-        { href: "/terms", label: "Terms" },
+        { href: `/services?market=${surface}`, label: "Services", external: false },
+        {
+          href: `/how-it-works?market=${surface}`,
+          label: "How it works",
+          external: false,
+        },
+        { href: "/privacy", label: "Privacy", external: false },
+        { href: "/terms", label: "Terms", external: false },
       ] as const);
 
   const cross = isUs
     ? ([
-        { href: "/au", label: "Australia" },
-        { href: "/ph", label: "Careers" },
+        { href: "/au", label: "Australia", external: false },
+        {
+          href: careers,
+          label: "Looking for a job?",
+          external: careersExternal,
+        },
       ] as const)
     : isAu
       ? ([
-          { href: "/us", label: "United States" },
-          { href: "/ph", label: "Careers" },
+          { href: "/us", label: "United States", external: false },
+          {
+            href: careers,
+            label: "Looking for a job?",
+            external: careersExternal,
+          },
         ] as const)
       : ([
-          { href: "/us", label: "US employers" },
-          { href: "/au", label: "AU employers" },
+          { href: "/us", label: "US employers", external: false },
+          { href: "/au", label: "AU employers", external: false },
         ] as const);
+
+  const renderLink = (
+    item: { href: string; label: string; external?: boolean },
+    key: string,
+  ) => {
+    if (item.external) {
+      return (
+        <a
+          key={key}
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {item.label}
+        </a>
+      );
+    }
+    return (
+      <Link key={key} href={item.href}>
+        {item.label}
+      </Link>
+    );
+  };
 
   return (
     <footer className={`site-footer site-footer-${tone}`}>
@@ -64,7 +104,7 @@ export default function SiteFooter({
             <p className="site-footer-name">{SITE.name}</p>
             <p className="site-footer-meta">
               {isPh
-                ? "Careers for talent — not a business hiring form."
+                ? "Careers for talent — continue on our Philippines careers site."
                 : SITE.disclaimer}
               {categoryLabel ? ` · ${categoryLabel}` : ""}
             </p>
@@ -93,21 +133,17 @@ export default function SiteFooter({
           </div>
 
           <nav className="site-footer-nav" aria-label="Footer">
-            {siteLinks.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
+            {siteLinks.map((item) => renderLink(item, item.href + item.label))}
           </nav>
         </div>
 
         <div className="site-footer-bottom">
           <p className="site-footer-cross">
-            <span className="site-footer-label">Also</span>
+            <span className="site-footer-label">Also:</span>{" "}
             {cross.map((item, i) => (
-              <span key={item.href}>
+              <span key={item.href + item.label}>
                 {i > 0 ? <span aria-hidden> · </span> : null}
-                <Link href={item.href}>{item.label}</Link>
+                {renderLink(item, `cross-${item.href}`)}
               </span>
             ))}
           </p>

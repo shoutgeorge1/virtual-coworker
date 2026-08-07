@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import MarketLanding from "../components/MarketLanding";
 import { resolveLpVariant } from "../../lib/resolve-lp-variant";
+import { buildPageMetadata } from "../../lib/seo";
 import "./us.css";
 
-export const metadata: Metadata = {
-  title: "Hire Offshore Staff | Virtual Coworker US",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Hire Filipino Virtual Assistants | Virtual Coworker US",
   description:
-    "Hire dedicated Philippines staff for your US business — recruit, screen, interview, and hire with Virtual Coworker.",
-  robots: { index: false, follow: false },
-};
+    "Hire dedicated Filipino VAs and remote staff for your US business. We recruit and vet — you interview and decide. Not a freelance marketplace.",
+  path: "/us",
+  indexable: true,
+  ogImage: "/brand/hero-us-2026.jpg",
+});
 
 export default async function USHome({
   searchParams,

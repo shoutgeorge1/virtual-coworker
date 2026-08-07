@@ -3,9 +3,10 @@
  * Addresses sourced from published Virtual Coworker contact details (2026-08-05).
  * Quotes sourced from published client stories — rendered as text only (no WP links).
  *
- * IA (George): market surfaces — /us, /au, /ph.
+ * IA (George): market surfaces — /us, /au; job seekers exit to PH WordPress careers.
  * Root `/` redirects to `/us` (primary hiring market). No corporate hub.
- * Hard rule: no WordPress egress from nav/footer/CTAs — keep paid traffic on this host.
+ * Keep paid employer traffic on this host — only intentional job-seeker egress
+ * is virtualcoworker.com.ph (see resolveCareersUrl).
  */
 
 import type { MarketId } from "./markets";
@@ -13,11 +14,11 @@ import type { MarketId } from "./markets";
 export const SITE = {
   name: "Virtual Coworker",
   legalEntity: "Virtual Coworker Inc.",
-  tagline: "Philippines staffing",
-  disclaimer: "Hire dedicated Philippines staff for your business.",
+  tagline: "Filipino staffing",
+  disclaimer: "Hire dedicated Filipino staff for your business.",
   /** Confirmed NA business line (published contact). */
-  usPhoneDisplay: "310-426-8776",
-  usPhoneHref: "tel:3104268776",
+  usPhoneDisplay: "310-730-9126",
+  usPhoneHref: "tel:3107309126",
   addressUs: "750 N San Vicente Blvd, West Hollywood, CA 90069",
   addressAu: "11 York Street, Sydney NSW 2000, Australia",
   copyright: "© Virtual Coworker Inc. All Rights Reserved.",

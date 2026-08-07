@@ -337,7 +337,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Administrative Support | Virtual Coworker AU",
     },
     description: {
-      us: "Hire a dedicated Philippines virtual assistant or admin teammate for your US business.",
+      us: "Hire a dedicated Philippines virtual assistant or admin teammate for US business ops.",
       au: "Hire a dedicated Philippines virtual assistant or admin teammate for your Australian business.",
     },
     variants: {
@@ -347,7 +347,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Hire a Philippines virtual assistant for your Australian business.",
         },
         subhead: {
-          us: "Admin, EA, or day-to-day support — tell us who you need. We recruit Filipino talent; you interview and choose.",
+          us: "Admin, EA, or day-to-day support for US business ops — tell us who you need. We recruit and vet Filipino talent; you interview and decide.",
           au: "Admin, EA, or day-to-day support — tell us who you need. We recruit Filipino talent for Australian business hours; you interview and choose.",
         },
         primaryCta: "Tell us who you need →",
@@ -360,7 +360,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Hire a dedicated Philippines virtual assistant.",
         },
         subhead: {
-          us: "Not a freelance marketplace. You interview. We recruit, screen, and support the hire.",
+          us: "Dedicated offshore capacity for US businesses — not a freelance marketplace. We recruit and vet; you interview and decide.",
           au: "Not a freelance marketplace. You interview. We recruit, screen, and support the hire.",
         },
         primaryCta: "Start hiring →",
@@ -369,9 +369,9 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       },
     },
     benefits: [
-      "Virtual assistant and admin roles for businesses",
-      "You keep interview and hire decisions",
-      "Separate from careers / job applications",
+      "Dedicated VA and admin seats for business ops",
+      "We recruit and vet Filipino talent — you interview and decide",
+      "Built for employers — not a job board or freelance gigs",
     ],
     faq: [
       {
@@ -408,7 +408,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Hire Philippines customer service staff for your Australian business.",
         },
         subhead: {
-          us: "Tell us the support role you need covered. We shortlist — you interview.",
+          us: "Tell us the support seat you need for US business ops. We shortlist Filipino talent — you interview and decide.",
           au: "Tell us the support role you need covered. We shortlist — you interview.",
         },
         primaryCta: "Tell us who you need →",
@@ -421,7 +421,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Get dedicated customer service capacity from the Philippines.",
         },
         subhead: {
-          us: "For US teams that need reliable remote support seats.",
+          us: "Dedicated remote support seats for US businesses — not freelance gigs.",
           au: "For Australian teams that need reliable remote support seats.",
         },
         primaryCta: "Get matched →",
@@ -520,7 +520,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Recruitment Support | Virtual Coworker AU",
     },
     description: {
-      us: "Hire dedicated Philippines recruitment support for your US business.",
+      us: "Hire dedicated Philippines recruitment support for your US hiring pipeline.",
       au: "Hire dedicated Philippines recruitment support for your Australian business.",
     },
     variants: {
@@ -530,7 +530,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Hire Philippines recruitment support for your Australian business.",
         },
         subhead: {
-          us: "Tell us the recruiting support role you need staffed. You keep final hire decisions.",
+          us: "Staffing support for your US hiring pipeline — vetted Philippine specialists for recruitment assistant roles. You keep final hire decisions.",
           au: "Tell us the recruiting support role you need staffed. You keep final hire decisions.",
         },
         primaryCta: "Tell us who you need →",
@@ -543,7 +543,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Get dedicated recruitment capacity from the Philippines.",
         },
         subhead: {
-          us: "For US employers — a staffing partner, not a job board.",
+          us: "For US employers building hiring capacity — a staffing partner, not a job board. We shortlist; you decide.",
           au: "For Australian businesses — a staffing partner, not a job board.",
         },
         primaryCta: "Get matched →",
@@ -552,9 +552,9 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       },
     },
     benefits: [
-      "Recruiting support for your hiring pipeline",
-      "Built for businesses staffing a seat — not applicants",
-      "You interview the shortlist",
+      "Staffing support for your hiring pipeline",
+      "Vetted Philippine specialists for recruitment assistant roles",
+      "You interview the shortlist — businesses only",
     ],
     faq: [
       {

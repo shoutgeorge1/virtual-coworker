@@ -98,3 +98,69 @@ export function deliveryBlockerMessage(): string {
     "Please try again later, or use the business phone if shown."
   );
 }
+
+/** Optional CC list (comma/space separated) — e.g. George during pilot. */
+export function parseLeadCc(env: NodeJS.ProcessEnv = process.env): string[] {
+  const raw = (env.LEAD_EMAIL_CC || "").trim();
+  if (!raw) return [];
+  return raw
+    .split(/[,;\s]+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+type LeadEmailFields = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  company?: string;
+  role?: string;
+  category?: string;
+  timeline?: string;
+  message?: string;
+  market?: string;
+  submission_id?: string;
+  landing_page_url?: string;
+  referrer?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  gclid?: string;
+  gbraid?: string;
+  wbraid?: string;
+  submitted_at?: string;
+};
+
+/**
+ * Human-readable lead email body — same idea as WP Gravity Forms
+ * "Free Consultation" notifications (name / email / phone / UTMs / GCLID).
+ */
+export function formatLeadEmailText(lead: LeadEmailFields): string {
+  const name = [lead.firstName, lead.lastName].filter(Boolean).join(" ").trim() || "(none)";
+  const lines: [string, string][] = [
+    ["Name", name],
+    ["Email Address", lead.email || "(none)"],
+    ["Phone", lead.phone || "(none)"],
+    ["Company", lead.company || "(none)"],
+    ["Market", (lead.market || "").toUpperCase() || "(none)"],
+    ["Role / category", [lead.role, lead.category].filter(Boolean).join(" · ") || "(none)"],
+    ["Timeline", lead.timeline || "(none)"],
+    ["Message", lead.message || "(none)"],
+    ["Landing page", lead.landing_page_url || "(none)"],
+    ["Referrer", lead.referrer || "(none)"],
+    ["UTM Source", lead.utm_source || "(none)"],
+    ["UTM Medium", lead.utm_medium || "(none)"],
+    ["UTM Campaign", lead.utm_campaign || "(none)"],
+    ["UTM Term", lead.utm_term || "(none)"],
+    ["UTM Content", lead.utm_content || "(none)"],
+    ["GCLID", lead.gclid || "(none)"],
+    ["GBRAID", lead.gbraid || "(none)"],
+    ["WBRAID", lead.wbraid || "(none)"],
+    ["Submitted at", lead.submitted_at || "(none)"],
+    ["Submission ID", lead.submission_id || "(none)"],
+  ];
+  return lines.map(([k, v]) => `${k}\n  ${v}`).join("\n\n");
+}

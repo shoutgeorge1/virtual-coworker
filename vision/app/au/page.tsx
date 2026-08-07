@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import MarketLanding from "../components/MarketLanding";
 import { resolveLpVariant } from "../../lib/resolve-lp-variant";
+import { buildPageMetadata } from "../../lib/seo";
 import "./au.css";
 
-export const metadata: Metadata = {
-  title: "Hire Offshore Staff | Virtual Coworker Australia",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Hire Filipino Staff for Australian Business Hours | Virtual Coworker AU",
   description:
-    "Hire dedicated Philippines staff for your Australian business — recruit, screen, interview, and hire with Virtual Coworker.",
-  robots: { index: false, follow: false },
-};
+    "Hire dedicated Filipino teammates for your Australian business — recruit, screen, interview, and hire. Australian business hours. Not a gig marketplace.",
+  path: "/au",
+  indexable: true,
+  ogImage: "/brand/hero-au-2026.jpg",
+});
 
 export default async function AUHome({
   searchParams,

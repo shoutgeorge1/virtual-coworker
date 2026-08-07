@@ -29,7 +29,7 @@
 - Do **not** attach old Zoho/Zapier / account legacy conversions to `VC_US_*`.
 - `tel:` click (`phone_click` / `phone_cta_clicked`) = Secondary micro only — not a qualified call.
 - Don’t triple-count form + Calendly + Zoho Qualified as Primary for one enquiry.
-- Public LP number stays `310-426-8776` until GTM call-tracking replace is tested — don’t hardcode a forwarding # as the public number.
+- Public LP number stays `310-730-9126` until GTM call-tracking replace is tested — don’t hardcode a forwarding # as the public number.
 
 ### Ads UI steps (Calls) — George clicks
 

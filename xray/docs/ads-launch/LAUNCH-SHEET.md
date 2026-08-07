@@ -17,7 +17,7 @@
 | RSAs | 78 (full 15/4 — no blanks) |
 | Unique negatives | 191 (×4 campaign rows) |
 | Final URLs | `/us\|au/{category}` only (no Brand generics in this package) |
-| US phone | 310-426-8776 (env override OK) |
+| US phone | 310-730-9126 (env override OK) |
 | AU phone | None — form primary (locked) |
 | Careers URL | `/ph` via `NEXT_PUBLIC_CAREERS_URL` (locked for Stage 1) |
 | Lead QA | `ALLOW_LOG_ONLY_LEADS=true` — TEMPORARY logs only; Zoho access ≠ integration |

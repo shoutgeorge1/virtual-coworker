@@ -115,7 +115,7 @@ Stage 1 paid funnel sells **hiring inquiries**:
 
 | URL | Market | Phone |
 |-----|--------|-------|
-| https://vision-three-alpha.vercel.app/us | US | `310-426-8776` |
+| https://vision-three-alpha.vercel.app/us | US | `310-730-9126` |
 | https://vision-three-alpha.vercel.app/au | AU | **None** — form primary |
 
 ### Category routes (9 × 2) — Ads Final URLs
@@ -194,7 +194,7 @@ Tracking: template `{lpurl}` only · Final URL suffix UTMs + `lp_version=stage1-
 |----------|--------------|
 | Architecture | 2/account; Brand deferred |
 | AU phone | Form-primary |
-| US phone | `310-426-8776` |
+| US phone | `310-730-9126` |
 | Careers URL | `/ph` |
 | Lead delivery (QA) | Log-only TEMPORARY |
 | Ads conversions | Observe-only (`false`) |
