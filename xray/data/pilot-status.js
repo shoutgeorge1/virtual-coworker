@@ -1,7 +1,8 @@
 /* Launch-blocker status model for the paid-search pilot.
    Edit this file when access or approvals change.
    Do not invent account IDs, emails, phones, budgets, or conversion IDs.
-   Distinguish confirmed facts vs recommendations vs unresolved. */
+   Distinguish confirmed facts vs recommendations vs unresolved.
+   Status as of Aug 7, 2026. */
 window.PILOT_STATUS = {
   pilotName: "Google Search proof of concept",
   fee: "$3,000",
@@ -10,16 +11,18 @@ window.PILOT_STATUS = {
   primaryContact: "Braden",
   previousContact: "Caitlin",
   handoffNote:
-    "Caitlin is ops contact + lead-quality stakeholder and may start maternity leave anytime. Braden is expected to take over day-to-day while she is out.",
-  commercialStatus: "stage1_built_payment_in_transit",
-  commercialLabel: "STAGE 1 BUILT — PAYMENT IN TRANSIT · APPROVALS STILL NEEDED",
+    "Caitlin is ops contact + lead-quality stakeholder and may start maternity leave anytime. Braden is expected to take over day-to-day while she is out. Cheyenne owns US sales; Holly owns APAC.",
+  commercialStatus: "us_search_live_ops",
+  commercialLabel: "USA SEARCH LIVE · $125/DAY · OPERATE CLEAN · AU PAUSED",
   objective:
     "Can Google Search → independent US/AU employer microsites generate qualified leads at an acceptable cost? Three identities (US · AU · PH); WordPress stays as-is with zero paid egress.",
   landingPages: {
     rootRedirectsTo: "https://www.virtualcoworker.app/us",
     us: "https://www.virtualcoworker.app/us",
     au: "https://www.virtualcoworker.app/au",
-    ph: "https://www.virtualcoworker.app/ph"
+    ph: "https://www.virtualcoworker.app/ph",
+    copyNote:
+      "Caitlin LP copy already live (demo removed, Filipino terms, US hero, master 4-step, transparent rates, AU footer, thank-you aligned) — not pending rewrite."
   },
   /** Domains + measurement — separate per employer market; PH can hang for Stage 1. */
   micrositeInfra: {
@@ -63,7 +66,7 @@ window.PILOT_STATUS = {
   ],
   keywordClustersLater: ["brand_deferred", "competitors_deferred", "tech_medical_spanish_excluded"],
   matchPolicy: "exact_and_phrase_no_broad",
-  brandPolicy: "deferred_not_in_stage1_import",
+  brandPolicy: "deferred_untouched_while_vc_star_lives",
   phases: {
     current: 1,
     labels: {
@@ -73,35 +76,94 @@ window.PILOT_STATUS = {
     }
   },
 
+  adsLive: {
+    us: {
+      status: "live_spending",
+      campaigns: [
+        { id: "VC_US_S_CORE", dailyBudget: 75, maxCpc: 12 },
+        { id: "VC_US_S_ROLES", dailyBudget: 50, maxCpc: null }
+      ],
+      combinedDaily: 125,
+      bidding: "Maximize Clicks",
+      match: "Exact / high-intent",
+      network: "Search-only",
+      finalUrls: "www.virtualcoworker.app"
+    },
+    au: { status: "paused_until_phone_confirmed" },
+    brand: "deferred_untouched"
+  },
+
   /* Confirmed conversion strategy (Stage 1) */
   conversionStrategy: {
     stage1Primary: [
-      "Employer form submissions (server-accepted)",
-      "Qualified phone calls"
+      "Employer form submissions after durable delivery (Resend and/or GitHub Issues) — not click"
+    ],
+    stage1Secondary: [
+      "Click-to-call observation",
+      "Calendly booking (secondary/separate — not second Primary)"
     ],
     stage1DoNotOptimize: [
-      "Job orders / placements — need clean lead data first before Ads learns from them"
+      "Job orders / placements — need clean lead data first before Ads learns from them",
+      "Old Zoho/Zapier conversion actions — do not attach to VC_US_*",
+      "Triple-count form + Calendly + Zoho for one enquiry"
     ],
     futureOfflineRanges: {
       jobOrder: "$200–$400 (estimate only — not approved for Ads import)",
       jobPlacement: "$500–$800 (estimate only — not approved for Ads import)"
     },
-    laterPath: "Zoho → Google Ads offline conversions so campaigns learn which leads produce business"
+    laterPath: "Zoho → Google Ads offline conversions so campaigns learn which leads produce business",
+    biddingUntilClean: "Maximize Clicks"
+  },
+
+  calendly: {
+    us: "https://calendly.com/cheyenne-virtualcoworker/30min",
+    apac: "https://calendly.com/apac-virtualcoworker/30min",
+    role: "secondary_separate_not_second_primary"
   },
 
   /* Confirmed phone routing */
   phones: {
     naDestination: {
       number: "310-426-8776",
-      status: "confirmed",
-      note: "Raffie/Raffy (PH) manages/answers. Do not replace or port. CallRail tracking later — forward to this destination."
+      status: "rings_to_google_voice_vm",
+      note: "Rings ~5–6 → Google Voice VM. Ash (intern) got test VM — not durable. Cheyenne owns US sales. Raffie = phone systems/IT, not US salesperson. Route into Cheyenne/US sales workflow + missed-call owner + E2E."
     },
     auDestination: {
       number: null,
-      status: "unresolved",
-      note: "No new paid-media AU number confirmed. Use only the official approved number already on the AU website. Final AU number = open launch item."
+      status: "unresolved_au_ads_paused",
+      note: "AU ads paused until AU phone confirmed/tested. Form-first; no fake AU number on LP."
     },
-    callRail: "Later — not Stage 1 operational. Tracking numbers forward to existing destinations; AU local tracking eventually."
+    callRail: "Later — not Stage 1 operational. Tracking numbers forward to sales destinations; AU local tracking eventually."
+  },
+
+  leadDelivery: {
+    resend: {
+      status: "active",
+      us: "us@virtualcoworker.com",
+      au: "apac@virtualcoworker.com",
+      cc: "George via LEAD_EMAIL_CC only"
+    },
+    githubIssues: {
+      status: "durable_backup_interim_monitor",
+      repo: "shoutgeorge1/vc-employer-leads",
+      verified: ["Caitlin test #5", "probe #6", "Resend to us@"],
+      note: "Not permanent CRM. Form can succeed if either durable path works."
+    },
+    wordpress: {
+      status: "still_emails_group_inboxes",
+      note: "WP + microsite + organic mix into us@/apac@. Monday must distinguish paid microsite/Ads from total inbound."
+    },
+    attributionFields: [
+      "utm_*",
+      "gclid",
+      "gbraid",
+      "wbraid",
+      "landing URL",
+      "referrer",
+      "market",
+      "category",
+      "variant"
+    ]
   },
 
   /* Target services (PH remote staffing priority) */
@@ -124,12 +186,14 @@ window.PILOT_STATUS = {
     ]
   },
 
-  /* People — first names only; no guessed surnames/emails/titles */
+  /* People — confirmed names where known */
   people: [
-    { name: "Caitlin", role: "Ops contact + lead-quality stakeholder; may start maternity leave anytime" },
+    { name: "Caitlin", role: "Ops contact + lead-quality stakeholder; may start maternity leave anytime; LP copy already live" },
     { name: "Braden", role: "Expected takeover for day-to-day while Caitlin is out" },
-    { name: "Raffie/Raffy", role: "PH contact — Zoho + NA phone destination" },
-    { name: "Cheyenne", role: "Lead-quality (Los Angeles)" },
+    { name: "Raffie/Raffy", role: "PH — phone systems / IT / Zoho help; not US salesperson" },
+    { name: "Cheyenne Gichana", role: "US sales owner" },
+    { name: "Holly Wallace", role: "APAC sales owner" },
+    { name: "Ash", role: "Intern — test VM only; not permanent call owner" },
     { name: "Pauly", role: "Lead-quality" },
     { name: "Essa", role: "AI and internship initiatives" },
     { name: "Dev team", role: "Separate team — contact + hours still needed" }
@@ -151,12 +215,52 @@ window.PILOT_STATUS = {
       status: "complete"
     },
     {
+      id: "us_search_live",
+      label: "USA Search live: VC_US_S_CORE ($75/day) + VC_US_S_ROLES ($50/day) = $125/day · Max Clicks · Exact · Search-only",
+      status: "complete"
+    },
+    {
+      id: "lead_resend_github",
+      label: "Microsite lead delivery ACTIVE — Resend → us@/apac@ (+ George CC) + GitHub Issues backup (verified #5/#6)",
+      status: "complete"
+    },
+    {
+      id: "calendly_confirmed",
+      label: "Calendly confirmed (US Cheyenne + APAC) — secondary/separate, not second Primary",
+      status: "complete"
+    },
+    {
+      id: "lp_copy_live",
+      label: "Caitlin LP copy live on www — not pending rewrite",
+      status: "complete"
+    },
+    {
       id: "na_phone_dest",
-      label: "NA phone destination confirmed: 310-426-8776 (Raffie/Raffy PH; do not port)",
+      label: "US phone number confirmed: 310-426-8776 (routing to Cheyenne/sales workflow still open; Raffie ≠ salesperson)",
       status: "complete"
     }
   ],
   verifyNow: [
+    {
+      id: "conversion_tracking",
+      label: "Wire NEW form Primary + click-to-call Secondary on VC_US_* — do not attach old Zoho/Zapier",
+      status: "verify"
+    },
+    {
+      id: "search_terms_daily",
+      label: "Daily search terms / spend / negatives while US spends",
+      status: "verify"
+    },
+    {
+      id: "auto_apply_off",
+      label: "Disable unsafe auto-apply (broad, PMax, auto campaigns, bidding, auto assets)",
+      status: "verify"
+    },
+    {
+      id: "monday_paid_scoreboard",
+      label: "Verify Monday separates paid microsite/Ads from total inbound (attribution visible)",
+      status: "verify"
+    },
     {
       id: "gtm_publish_verify",
       label: "Verify GTM publish permission (still audit-only)",
@@ -165,42 +269,27 @@ window.PILOT_STATUS = {
   ],
   waitingOnVc: [
     {
-      id: "payment",
-      label: "$3,000 pilot payment (on its way to George’s bank — in transit)",
-      status: "in_transit"
+      id: "phone_routing_us",
+      label: "Route 310-426-8776 into Cheyenne/US sales workflow + missed-call owner + E2E (not Google Voice dump)",
+      status: "waiting"
     },
-    { id: "ad_spend_payer", label: "Who pays Google Ads spend", status: "waiting" },
-    { id: "lead_emails", label: "Lead-routing emails / webhook (US + AU) for Stage 1 fallback", status: "waiting" },
+    {
+      id: "sales_counting",
+      label: "Holly/Cheyenne: day-to-day counting source + whether they monitor microsite in group inboxes",
+      status: "waiting"
+    },
     {
       id: "au_phone",
-      label: "AU business phone — confirm official approved AU-site number for paid LPs",
+      label: "AU business phone — confirmed/tested before AU Enable",
       status: "waiting"
     },
     { id: "qualified_def", label: "Exact definitions: qualified lead / job order / placement", status: "waiting" },
-    { id: "lead_owner", label: "Who owns/routes employer leads + response-time expectations", status: "waiting" },
     { id: "lead_feedback", label: "How Caitlin / Cheyenne / Pauly return lead-quality feedback", status: "waiting" },
     { id: "day_contact", label: "Confirm Braden as day-to-day contact when Caitlin unavailable", status: "waiting" },
     { id: "chat_platform", label: "Official chat platform + invite George + notification settings", status: "waiting" },
-    { id: "dev_contact", label: "Dev team email / phone / chat / hours", status: "waiting" },
-    { id: "brand_ok", label: "Brand and messaging approval", status: "waiting" },
-    {
-      id: "qual_fields",
-      label: "Approve recommended business-qualification form fields (see Launch Checklist)",
-      status: "waiting"
-    }
+    { id: "dev_contact", label: "Dev team email / phone / chat / hours", status: "waiting" }
   ],
   blocked: [
-    {
-      id: "zoho_access",
-      label:
-        "Zoho access — modules, field mappings, ownership, and API not confirmed; do not build final Zoho push yet",
-      status: "blocked"
-    },
-    {
-      id: "zoho_api",
-      label: "Zoho API integration — blocked until access/modules/fields/ownership confirmed",
-      status: "blocked"
-    },
     {
       id: "callrail",
       label: "CallRail — approval/ownership unresolved; later, not Stage 1 operational",
@@ -213,44 +302,46 @@ window.PILOT_STATUS = {
     }
   ],
   optionalNotBlockers: [
-    "Ads Admin — nice-to-have later (ask Braden when convenient; Standard is enough for Stage 1)",
+    "Zoho mapping / admin / direct write / offline / Job Order — George can sign in; not a traffic gate",
+    "RSA image assets — useful polish; not required for RSAs to serve",
+    "Ads Admin — nice-to-have later (Standard is enough for Stage 1)",
     "WordPress / hosting / Shopify — stays as-is; not paid destination",
     "WordPress rebuild / SEO / remarketing",
     "Gravity Forms — existing WP process only; paid LPs must not depend on WP/GF",
-    "Zoho / CallRail / offline conversions (do not block Stage 1 — email/webhook OK to launch)",
-    "Social media or SEO tool logins"
+    "Brand campaigns — deferred / untouched",
+    "Social media or SEO tool logins",
+    "New lead tracker this week — Zoho + Monday email enough"
   ],
   georgeHandles: [
-    "MCC + Google Ads Editor (Standard access confirmed on US + AU — Stage 1 OK)",
+    "Daily search terms / spend / negatives on live VC_US_*",
+    "NEW conversion actions + campaign-specific goals on VC_US_* (Max Clicks until clean)",
+    "Disable unsafe Google auto-apply",
+    "Push US phone routing into Cheyenne workflow + E2E",
+    "Verify Monday paid-vs-total scoreboard (attribution fields)",
+    "MCC + Google Ads Editor (Standard access confirmed on US + AU)",
     "Three microsites on vision (US · AU · PH) — not WordPress; / → /us",
-    "Production host www.virtualcoworker.app + /us /au /ph paths (preview still exists — not TRAFFIC READY)",
-    "Separate GTM_US + GTM_AU (+ GTM_PH if needed) / GA4 / GSC / Ads conversions — same host OK",
-    "Paused Clean Search import (Core + Roles US+AU; brand deferred)",
-    "Lead form → secure server-side → email/webhook Stage 1; Zoho when access confirmed",
-    "Capture GCLID / GBRAID / WBRAID / UTMs / LP / timestamp + market site_surface"
+    "Production host www.virtualcoworker.app + /us /au /ph paths",
+    "Separate GTM_US + GTM_AU (+ GTM_PH if needed) / GA4 / GSC / Ads conversions",
+    "Capture GCLID / GBRAID / WBRAID / UTMs / LP / referrer / timestamp + market"
   ],
   majorBlockers: [
-    "Budget / Max CPC approval placeholders",
-    "AU phone + lead-routing email/webhook (NA dest phone confirmed)",
-    "Durable lead delivery (real inbox / webhook / sheet) — domains are not the gate",
-    "Separate GTM_US + GTM_AU measurement stacks (same host + path markets OK)",
-    "Pilot payment clearing (on its way — not yet confirmed received)"
+    "Clean conversion tracking on VC_US_* (high priority while spending)",
+    "US phone routing into Cheyenne/US sales (currently Google Voice VM)",
+    "Sales counting source + group-inbox monitoring confirmation",
+    "AU phone confirmed/tested before AU Enable"
   ],
   nextThree: [
-    "TRAFFIC READY: durable inbox/webhook/sheet + live test + named responder (Brand deferred — do not center on Brand)",
-    "OPTIMIZATION parallel: NEW form→thank-you + basic phone conversions (do not reuse existing account conversion actions); Zoho lead-port path (API preferred); document existing Zapier only",
-    "Editor Import/Post www Final URL CSVs while Paused; Enable Tier 1A/1B only after TRAFFIC READY + George OK"
+    "Daily search terms / spend / negatives",
+    "Wire NEW form Primary + call Secondary on VC_US_* (no old Zoho/Zapier; stay Max Clicks)",
+    "Phone routing → Cheyenne workflow + disable unsafe auto-apply"
   ],
   openItemsUnresolved: [
-    "Conversion events end-to-end audit (USA + AU Primary/Secondary / source / fire path)",
-    "Zapier / lead integration map (WP/GF? Ads conversions? Zoho?) — Zapier ≠ fixed",
-    "Zoho access",
-    "Zoho modules / field mappings",
-    "Who owns / routes employer leads",
-    "Lead response-time expectations",
-    "AU phone (official AU-site number)",
-    "Dev team email / phone / chat / hours",
-    "Approved business-qualification form fields",
+    "Conversion events end-to-end for NEW VC_US_* goals",
+    "US phone → Cheyenne/sales workflow + missed-call owner",
+    "Holly/Cheyenne counting source + inbox monitoring",
+    "Monday paid microsite vs total inbound scoreboard verified",
+    "AU phone (official AU-site number) before AU Enable",
+    "Zoho modules / field mappings (later — not traffic gate)",
     "Exact defs: qualified lead / job order / placement",
     "How Caitlin / Cheyenne / Pauly return lead-quality feedback",
     "CallRail approval / ownership",
@@ -258,19 +349,19 @@ window.PILOT_STATUS = {
     "Official chat platform + George invite"
   ],
   placeholders: {
-    usLeadEmail: "[US_LEAD_EMAIL]",
-    auLeadEmail: "[AU_LEAD_EMAIL]",
+    usLeadEmail: "us@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
+    auLeadEmail: "apac@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
     usPhone: "310-426-8776",
     auPhone: "[AU_BUSINESS_PHONE]",
-    usBudget: "[US_MONTHLY_BUDGET]",
-    auBudget: "[AU_MONTHLY_BUDGET]",
+    usBudget: "$125/day combined (CORE $75 + ROLES $50)",
+    auBudget: "[AU_MONTHLY_BUDGET — paused]",
     gtmUs: "[NEXT_PUBLIC_GTM_US]",
     gtmAu: "[NEXT_PUBLIC_GTM_AU]",
     gtmPh: "[NEXT_PUBLIC_GTM_PH — optional later]",
     ga4Us: "[NEXT_PUBLIC_GA4_US]",
     ga4Au: "[NEXT_PUBLIC_GA4_AU]",
-    adsConversionIdUs: "[ADS_CONVERSION_ID_US]",
-    adsConversionIdAu: "[ADS_CONVERSION_ID_AU]",
+    adsConversionIdUs: "[NEW_ADS_CONVERSION_ID_US — do not reuse old Zoho/Zapier]",
+    adsConversionIdAu: "[ADS_CONVERSION_ID_AU — after AU phone]",
     qualifiedLeadDefinition: "[TO BE CONFIRMED WITH VIRTUAL COWORKER]"
   }
 };

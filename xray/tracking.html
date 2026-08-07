@@ -42,31 +42,44 @@
     }
   </style>
 </head>
-<body data-page="tracking.html" data-foot="New actions only<br />Form + phone → offline later">
+<body data-page="tracking.html" data-foot="New actions only<br />Form Primary · call Secondary · Max Clicks until clean">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Bidding ladder</p>
+        <p class="kicker">Aug 7, 2026 · High priority while US spends</p>
         <h1>Tracking</h1>
         <p>
-          Build <strong>new, simple</strong> conversions for <code>VC_*</code>.
+          Build <strong>new, simple</strong> conversions for <code>VC_US_*</code>.
           Do <strong>not</strong> reuse existing Zoho/Zapier conversion actions from the current accounts.
+          Stay on Maximize Clicks until the new path is clean.
         </p>
       </header>
 
       <div class="notice">
         <p>
-          <strong>Rule:</strong> OPTIMIZATION path ≠ TRAFFIC READY gate.
-          Paid Enable needs a real inbox + test + named responder first.
-          Zoho / CallRail / offline values are parallel later.
+          <strong>Primary (new path):</strong> successful employer form delivery —
+          after durable delivery (Resend and/or GitHub Issues), not a bare click.
+        </p>
+        <p style="margin-top:0.65rem">
+          <strong>Secondary:</strong> click-to-call observation.
+          CallRail / qualified ~60s call later (~1–2 months).
         </p>
         <p style="margin-top:0.65rem">
           <strong>One inquiry ≠ two Primaries.</strong>
           Form fill, Calendly book, and Zoho offline must not all fire as Primary for the same event.
+          Calendly is confirmed and secondary/separate
+          (<a href="https://calendly.com/cheyenne-virtualcoworker/30min" target="_blank" rel="noopener">US</a> ·
+          <a href="https://calendly.com/apac-virtualcoworker/30min" target="_blank" rel="noopener">APAC</a>).
           See <a href="lead-routing.html">Lead Routing</a> ·
           <a href="launch-control.html">Checklist</a>.
+        </p>
+        <p style="margin-top:0.65rem">
+          <strong>Attribution on the form:</strong>
+          <code>utm_*</code>, <code>gclid</code>, <code>gbraid</code>, <code>wbraid</code>,
+          landing URL, referrer, market, category, variant —
+          confirm sales-facing email/CRM exposes enough to ID paid microsite leads (Monday scoreboard).
         </p>
         <p style="margin-top:0.65rem">
           <strong>Domain (locked):</strong>
@@ -84,31 +97,31 @@
         <div class="panel-bd">
           <ol class="ladder">
             <li>
-              <span class="when now">Stage 1</span>
+              <span class="when now">Now</span>
               <div>
-                <strong>Form fill → thank-you (primary online)</strong>
-                <span>Employer inquiry delivered after durable delivery. Calendly already on thank-you (US/AU) = secondary / separate — not a second Primary.</span>
+                <strong>Form fill → thank-you (Primary online)</strong>
+                <span>Fire after durable delivery succeeds (Resend and/or GitHub). Campaign-specific goals on each <code>VC_US_*</code>. Don’t attach old Zoho/Zapier micros.</span>
               </div>
             </li>
             <li>
-              <span class="when now">Stage 1</span>
+              <span class="when now">Now</span>
               <div>
-                <strong>Phone call (basic now)</strong>
+                <strong>Phone call (Secondary)</strong>
                 <span>Click-to-call OK to observe. Phone CTA ≠ qualified until CallRail (~1–2 months). Plan a real ~60s call conversion later.</span>
               </div>
             </li>
             <li>
-              <span class="when now">Prefer</span>
+              <span class="when now">Live</span>
               <div>
-                <strong>Direct integrations preferred</strong>
-                <span>Form → email / webhook / sheet first (TRAFFIC READY). Later Zoho API when Recruit vs CRM is identified. Document any existing Zapier; don’t design Stage 1 around it.</span>
+                <strong>Lead delivery already active</strong>
+                <span>Resend → <code>us@</code> / <code>apac@</code> (+ George CC). GitHub Issues = durable backup / interim monitor — not permanent CRM. Form can succeed if either path works.</span>
               </div>
             </li>
             <li>
               <span class="when">CRM</span>
               <div>
                 <strong>Zoho lead port (George has access)</strong>
-                <span>Figure where an inquiry lands. API preferred. No live write from us until path locked. Ask VC who owns CRM/admin.</span>
+                <span>Not a traffic blocker. Figure where an inquiry lands. API preferred. No live write until path locked. Ask VC who owns CRM/admin.</span>
               </div>
             </li>
             <li>
@@ -122,14 +135,14 @@
               <span class="when">Later</span>
               <div>
                 <strong>CallRail (~1–2 months)</strong>
-                <span>Planned ~1–2 months after Stage 1. Not required for TRAFFIC READY.</span>
+                <span>Not required for current Max Clicks ops. Forward to Cheyenne/US sales workflow once phone routing is fixed.</span>
               </div>
             </li>
             <li>
               <span class="when">Later</span>
               <div>
                 <strong>Maximize Conversions / value bidding</strong>
-                <span>Only after new form + phone actions are clean and campaign-specific goals are set on each VC_*. Stay Max Clicks until then.</span>
+                <span>Only after new form + phone actions are clean and campaign-specific goals are set on each <code>VC_*</code>. Stay Max Clicks until then.</span>
               </div>
             </li>
           </ol>
@@ -147,14 +160,14 @@
               <span class="when now">Now</span>
               <div>
                 <strong>Maximize Clicks</strong>
-                <span>Learn CTR and which searches click while TRAFFIC READY + new conversion wiring finish.</span>
+                <span>US live ($125/day combined). Learn CTR and which searches click while new conversion wiring finishes. CORE $12 CPC cap.</span>
               </div>
             </li>
             <li>
               <span class="when now">Stage 1</span>
               <div>
                 <strong>New form fill + basic phone</strong>
-                <span>Form only counts if it lands in a real inbox. Phone CTA observed; qualified call when CallRail exists.</span>
+                <span>Form Primary only after durable delivery. Phone CTA Secondary; qualified call when CallRail exists. Don’t triple-count form + Calendly + Zoho.</span>
               </div>
             </li>
             <li>
@@ -188,9 +201,9 @@
               <strong>Do not delete</strong> existing Zoho/Zapier actions yet — and do <strong>not</strong> attach them to <code>VC_*</code>.
             </li>
             <li>
-              <strong>Lead path map</strong> —
-              Where do form leads go today (email / sheet / Zapier / Zoho)?
-              Prefer direct delivery for Stage 1. Leave existing Zapier in place until mapped; don’t design the new stack around it.
+              <strong>Monday paid-lead scoreboard</strong> —
+              Confirm sales-facing email/CRM exposes attribution enough to separate paid microsite/Ads from WP + organic total inbound into the same <code>us@</code> / <code>apac@</code> inboxes.
+              Buckets: enquiries · sales calls booked · junk · work-seekers. Checklist item <code>ads20</code>.
             </li>
           </ul>
           <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">

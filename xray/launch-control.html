@@ -15,15 +15,32 @@
     .page-head p { font-size: 0.94rem; overflow-wrap: anywhere; }
     .lc-start {
       margin: 0 0 0.9rem;
-      padding: 0.75rem 0.95rem;
+      padding: 0.85rem 1rem;
       border-radius: 8px;
       border: 1px solid var(--tint-amber-edge);
       background: var(--tint-amber);
       font-size: 0.95rem;
       color: var(--body);
-      line-height: 1.4;
+      line-height: 1.45;
     }
     .lc-start strong { color: var(--ink); }
+    .lc-start .lc-start-title {
+      margin: 0 0 0.35rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .lc-start .lc-start-steps {
+      margin: 0.45rem 0 0.55rem;
+      padding: 0 0 0 1.15rem;
+      font-size: 0.95rem;
+    }
+    .lc-start .lc-start-steps li { margin: 0.28rem 0; }
+    .lc-start .lc-start-note {
+      margin: 0;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
     .lc-ready-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -37,7 +54,7 @@
       border-radius: 8px;
       border: 1px solid var(--edge);
       background: var(--panel-inset);
-      padding: 0.7rem 0.8rem;
+      padding: 0.75rem 0.85rem;
       min-width: 0;
     }
     .lc-ready-card .lc-ready-label {
@@ -45,36 +62,29 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 0.35rem;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.25rem;
     }
     .lc-ready-card .lc-ready-label strong {
-      font-size: 0.88rem;
-      letter-spacing: 0.02em;
+      font-size: 0.95rem;
       color: var(--ink);
+    }
+    .lc-ready-card .lc-ready-why {
+      margin: 0 0 0.45rem;
+      font-size: 0.86rem;
+      line-height: 1.35;
+      color: var(--muted);
     }
     .lc-ready-card ul {
       margin: 0;
       padding: 0 0 0 1.1rem;
-      font-size: 0.82rem;
+      font-size: 0.88rem;
       line-height: 1.4;
       color: var(--body);
     }
-    .lc-ready-card li { margin: 0.2rem 0; }
+    .lc-ready-card li { margin: 0.22rem 0; }
     .lc-ready-card.traffic { border-color: var(--tint-rose-edge); background: var(--tint-rose); }
     .lc-ready-card.crm { border-color: var(--tint-amber-edge); background: var(--tint-amber); }
     .lc-ready-card.opt { border-color: var(--tint-cool-edge); background: var(--tint-cool); }
-    .lc-verdicts {
-      margin: 0;
-      padding: 0.65rem 0.85rem;
-      border-radius: 8px;
-      border: 1px solid var(--edge);
-      background: var(--panel);
-      font-size: 0.86rem;
-      line-height: 1.45;
-      color: var(--body);
-    }
-    .lc-verdicts strong { color: var(--ink); }
-    .lc-verdicts code { font-family: var(--mono); font-size: 0.78rem; }
     .lc-board {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -202,26 +212,6 @@
       padding: 0.75rem 1rem 1rem;
       border-top: 1px solid var(--edge-soft);
     }
-    .lc-seq { counter-reset: step; list-style: none; padding: 0; margin: 0; }
-    .lc-seq li {
-      counter-increment: step;
-      display: grid;
-      grid-template-columns: 1.6rem 1fr;
-      gap: 0.55rem;
-      padding: 0.45rem 0;
-      border-bottom: 1px solid var(--edge-soft);
-      font-size: 0.9rem;
-      line-height: 1.4;
-      color: var(--body);
-    }
-    .lc-seq li:last-child { border-bottom: none; }
-    .lc-seq li::before {
-      content: counter(step);
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--muted);
-    }
     .tech-link {
       margin-top: 1.25rem;
       padding: 0.75rem 1rem;
@@ -273,87 +263,97 @@
     }
   </style>
 </head>
-<body data-page="launch-control.html" data-foot="Your Ads checklist<br />TRAFFIC READY ≠ CRM READY ≠ OPTIMIZATION READY">
+<body data-page="launch-control.html" data-foot="Checklist<br />USA live · operate search terms · conversions · phone">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Stage 1 · USA + Australia</p>
-        <h1>Checklist</h1>
+        <p class="kicker">Aug 7, 2026 · USA Search live · AU paused</p>
+        <h1>We’re live — operate clean</h1>
         <p>
-          Three statuses: <strong>TRAFFIC</strong> · <strong>CRM</strong> · <strong>OPTIMIZATION</strong>.
-          Ads go live only when TRAFFIC READY + you Enable — not when Zoho is finished.
+          <code>VC_US_S_CORE</code> ($75/day) + <code>VC_US_S_ROLES</code> ($50/day) = <strong>$125/day</strong>,
+          Maximize Clicks · Exact / high-intent · Search-only · Final URLs → <code>www.virtualcoworker.app</code>.
+          Brand deferred. Caitlin’s LP copy is already live. Forms → Resend (<code>us@</code> / <code>apac@</code>, George CC) + GitHub Issues backup.
         </p>
       </header>
 
-      <p class="lc-start">
-        <strong>Do next:</strong> Clear <strong>TRAFFIC READY</strong> (real inbox → test lead arrives → name who answers) — that still blocks paid Enable.
-        <strong>Domain done:</strong> production host is <code>https://www.virtualcoworker.app</code> (apex 308 → www; Vercel project <code>vision</code>). Preview <code>vision-three-alpha.vercel.app</code> still exists.
-        Editor CSVs already use www Final URLs — Import when ready, keep everything <strong>Paused</strong>. Do <strong>not</strong> Enable until TRAFFIC READY.
-      </p>
+      <div class="lc-start">
+        <p class="lc-start-title">Operate in this order</p>
+        <ol class="lc-start-steps">
+          <li>
+            <strong>Search terms / spend / negatives daily</strong> — morning hawk check; cut junk; protect employer intent.
+          </li>
+          <li>
+            <strong>Conversion tracking</strong> — new form Primary (after durable delivery) + click-to-call Secondary on <code>VC_US_*</code>; no old Zoho/Zapier actions; stay Max Clicks until clean.
+          </li>
+          <li>
+            <strong>Phone routing</strong> — <code>310-426-8776</code> rings ~5–6 → Google Voice VM; route into Cheyenne / US sales workflow + E2E test (not Raffie-as-salesperson; Ash not permanent).
+          </li>
+          <li>
+            <strong>Disable unsafe auto-apply</strong> — block broad match, PMax, auto campaigns, bidding changes, auto assets.
+          </li>
+          <li>
+            <strong>Assets / RSA polish</strong> — images useful, not required for RSAs to serve; sitelinks/callouts/snippets after #1–#3.
+          </li>
+        </ol>
+        <p class="lc-start-note">
+          AU paused until AU phone confirmed/tested. Zoho mapping = later (not a traffic blocker).
+          Calendly confirmed (secondary only). Monday report must separate paid microsite from total inbound.
+        </p>
+      </div>
 
       <section class="panel" id="readiness-statuses">
         <div class="panel-hd">
-          <p class="kicker">Locked sequencing</p>
-          <h2>Three readiness statuses</h2>
+          <p class="kicker">In plain English</p>
+          <h2>Three checks</h2>
         </div>
         <div class="panel-bd">
           <div class="lc-ready-grid" role="list">
             <div class="lc-ready-card traffic" role="listitem">
               <div class="lc-ready-label">
-                <strong>TRAFFIC READY</strong>
-                <span class="st st-blocked">Gate for Enable</span>
+                <strong>1. Traffic</strong>
+                <span class="st st-ready">US live</span>
               </div>
+              <p class="lc-ready-why">US Search spending. Protect quality + kill Google auto-junk.</p>
               <ul>
-                <li>Real inbox (or sheet) — not a silent log</li>
-                <li>You send a test and see it arrive</li>
-                <li>Named person who answers</li>
-                <li>US / AU stay separate · campaigns stay Paused until Enable</li>
-                <li><em>Zoho not required</em></li>
+                <li>Daily search terms / spend / negatives</li>
+                <li>Turn off unsafe auto-apply</li>
+                <li>AU paused (phone gate)</li>
               </ul>
             </div>
             <div class="lc-ready-card crm" role="listitem">
               <div class="lc-ready-label">
-                <strong>CRM READY</strong>
-                <span class="st st-deferred">Parallel</span>
+                <strong>2. Lead handoff</strong>
+                <span class="st st-progress">Partial</span>
               </div>
+              <p class="lc-ready-why">Forms deliver; phone + sales counting still open.</p>
               <ul>
-                <li>George has Zoho access — figure <strong>lead port path</strong> (API preferred)</li>
-                <li>Recruit vs CRM TBD · don’t assume Leads · no live write yet</li>
-                <li>Prefer direct form → email/webhook/API over complex Zapier chains</li>
-                <li>Native Zoho↔Ads = later offline (order/placement), not duplicate Primary</li>
-                <li><em>Does not block Max Clicks</em></li>
+                <li>Resend active → <code>us@</code> / <code>apac@</code> (+ George CC)</li>
+                <li>GitHub Issues = durable backup (not permanent CRM)</li>
+                <li>US phone → VM; route to Cheyenne workflow</li>
               </ul>
             </div>
             <div class="lc-ready-card opt" role="listitem">
               <div class="lc-ready-label">
-                <strong>OPTIMIZATION READY</strong>
-                <span class="st st-access">Later</span>
+                <strong>3. Measurement</strong>
+                <span class="st st-progress">High priority</span>
               </div>
+              <p class="lc-ready-why">Wire clean goals before trusting Ads learning.</p>
               <ul>
-                <li><strong>New</strong> actions only — do <em>not</em> reuse old account conversions</li>
-                <li>Form fill → thank-you (primary online) + Calendly secondary</li>
-                <li>Phone basic now; CallRail ~1–2 mo for qualified calls</li>
-                <li>Each <code>VC_*</code> → campaign-specific goals on those new actions only</li>
-                <li>Stay on Max Clicks until this is real · one inquiry ≠ two Primaries</li>
+                <li>New form Primary + call Secondary on <code>VC_US_*</code></li>
+                <li>Don’t attach old Zoho/Zapier conversions</li>
+                <li>Verify Monday can ID paid microsite leads</li>
               </ul>
             </div>
           </div>
-          <p class="lc-verdicts">
-            <strong>Ads package (honest):</strong>
-            <code>SAFE TO IMPORT INTO EDITOR FOR REVIEW</code> ·
-            <code>SAFE TO POST WHILE PAUSED</code> ·
-            <code>NOT SAFE FOR PAID TRAFFIC</code> until TRAFFIC READY + your Enable.
-            Existing account remains unchanged; new Stage 1 campaigns and conversion actions are separate.
-          </p>
         </div>
       </section>
 
       <section class="panel" id="ads-launch-checklist">
         <div class="panel-hd">
           <p class="kicker">George</p>
-          <h2>Do this now</h2>
+          <h2>Launch steps</h2>
           <span class="st st-progress">Work here</span>
         </div>
         <div class="panel-bd">
@@ -361,141 +361,141 @@
             <li data-order="1">
               <input type="checkbox" id="ads1" data-todo="ads1" checked />
               <label for="ads1">
-                <strong>1. Confirm Ads access</strong>
-                <span class="todo-hint">Done. Standard via MCC — USA <code>496-715-1855</code> · AU <code>573-539-1940</code>.</span>
+                <strong>1. Ads access</strong>
+                <span class="todo-hint">Done. You can open USA + AU under Shout George.</span>
               </label>
             </li>
             <li data-order="2">
               <input type="checkbox" id="ads2" data-todo="ads2" checked />
               <label for="ads2">
-                <strong>2. Open Google Ads → USA</strong>
-                <span class="todo-hint">Done Aug 5. USA confirmed.</span>
+                <strong>2. Peeked at what’s live today</strong>
+                <span class="todo-hint">Done. Only old Brand campaigns are dripping — leave them alone for now.</span>
               </label>
             </li>
             <li data-order="3">
               <input type="checkbox" id="ads3" data-todo="ads3" checked />
               <label for="ads3">
-                <strong>3. USA campaign list</strong>
-                <span class="todo-hint">Done. Only live: <code>PM_US_RSA_Brand</code> ($100/day Max Conv, ~$39, 0 conv). Rest paused.</span>
+                <strong>3. Website live</strong>
+                <span class="todo-hint">Done. <code>www.virtualcoworker.app</code> — US · AU · PH pages.</span>
               </label>
             </li>
             <li data-order="4">
               <input type="checkbox" id="ads4" data-todo="ads4" checked />
               <label for="ads4">
-                <strong>4. Australia campaign list</strong>
-                <span class="todo-hint">Done. Only live: <code>PM_AU_RSA_Brand</code> ($30/day Max Conv, ~A$3, 0 conv). Rest paused.</span>
+                <strong>4. Lead inbox works</strong>
+                <span class="todo-hint">Done. Resend ACTIVE → <code>us@</code> / <code>apac@</code> (George CC). GitHub Issues = durable backup (<a href="https://github.com/shoutgeorge1/vc-employer-leads/issues" target="_blank" rel="noopener">vc-employer-leads</a> — verified #5/#6). Form succeeds if either path works. Sales owners: Cheyenne (US) · Holly (APAC).</span>
               </label>
             </li>
             <li data-order="5">
-              <input type="checkbox" id="ads5" data-todo="ads5" checked />
+              <input type="checkbox" id="ads5" data-todo="ads5" />
               <label for="ads5">
-                <strong>5. Brand deferred (skip for Stage 1)</strong>
-                <span class="todo-hint"><strong>Locked:</strong> Stage 1 centers on the new <code>VC_*</code> package. Existing Brand campaigns stay as-is for now — not a TRAFFIC READY gate.</span>
+                <strong>5. Confirm sales watch group inboxes</strong>
+                <span class="todo-hint">Confirm Cheyenne/Holly teams monitor <code>us@</code> / <code>apac@</code> microsite msgs (Caitlin may have checked personal inbox, not <code>us@</code>). GitHub Watch = your interim eyes; Zoho CRM dump later.</span>
               </label>
             </li>
             <li data-order="6">
-              <input type="checkbox" id="ads6" data-todo="ads6" />
+              <input type="checkbox" id="ads6" data-todo="ads6" checked />
               <label for="ads6">
-                <strong>6. Plan NEW conversion actions (don’t use old)</strong>
-                <span class="todo-hint">OPTIMIZATION path — not a traffic gate. Build <em>new</em>: form→thank-you (primary) · phone basic (CTA ≠ qualified until CallRail) · Calendly secondary. Do not attach existing Zoho/Zapier conversion actions to <code>VC_*</code>. See <a href="tracking.html">Tracking</a>.</span>
+                <strong>6. Download USA in Google Ads Editor</strong>
+                <span class="todo-hint">Done. AU download can wait until AU phone exists.</span>
               </label>
             </li>
             <li data-order="7">
-              <input type="checkbox" id="ads7" data-todo="ads7" />
+              <input type="checkbox" id="ads7" data-todo="ads7" checked />
               <label for="ads7">
-                <strong>7. Plan campaign-specific goals</strong>
-                <span class="todo-hint">After Post — not a traffic gate. New <code>VC_*</code> → only those <em>new</em> actions. One inquiry ≠ two Primaries. Stay Max Clicks.</span>
+                <strong>7. Import + Post USA package</strong>
+                <span class="todo-hint">Done. Clean <code>VC_US_*</code> Search posted; old Brand left alone.</span>
               </label>
             </li>
             <li data-order="8">
-              <input type="checkbox" id="ads8" data-todo="ads8" />
+              <input type="checkbox" id="ads8" data-todo="ads8" checked />
               <label for="ads8">
-                <strong>8. Confirm a real inbox (TRAFFIC READY) ← you are here</strong>
-                <span class="todo-hint">Test form → see it arrive → name who answers. Email/webhook/sheet OK first. Zoho parallel. People: <a href="lead-routing.html">Lead Routing</a>.</span>
+                <strong>8. Check ad links go to www</strong>
+                <span class="todo-hint">Done. Final URLs → <code>www.virtualcoworker.app/us…</code></span>
               </label>
             </li>
             <li data-order="9">
               <input type="checkbox" id="ads9" data-todo="ads9" />
               <label for="ads9">
-                <strong>9. Spot-check Assets for WordPress links</strong>
-                <span class="todo-hint">Older sitelinks can attach to new campaigns. Flag WordPress destinations for cleanup — no full-account rewrite required.</span>
+                <strong>9. Turn off Google’s auto-apply suggestions</strong>
+                <span class="todo-hint">Priority #4. Recommendations → disable auto-apply for broad match, Performance Max, auto campaigns, bidding changes, and auto assets.</span>
               </label>
             </li>
             <li data-order="10">
-              <input type="checkbox" id="ads10" data-todo="ads10" />
+              <input type="checkbox" id="ads10" data-todo="ads10" checked />
               <label for="ads10">
-                <strong>10. Do NOT attach older shared negative lists</strong>
-                <span class="todo-hint">New <code>VC_*</code> already ship curated negatives. Keep those campaign-level lists; do not inherit large account-shared lists.</span>
+                <strong>10. US ads Enabled</strong>
+                <span class="todo-hint">Done. CORE $75/day · Max CPC $12 · Maximize Clicks · Exact. ROLES $50/day. Combined $125/day. Brand untouched. AU paused.</span>
               </label>
             </li>
             <li data-order="11">
               <input type="checkbox" id="ads11" data-todo="ads11" />
               <label for="ads11">
-                <strong>11. Turn off Recommendations / Auto-apply</strong>
-                <span class="todo-hint">Disable auto-apply for broad match + Performance Max. Stage 1 = Exact + Phrase Search only.</span>
+                <strong>11. Add image assets to Search ads</strong>
+                <span class="todo-hint">Useful polish — images are <em>not</em> required for RSAs to serve. Do after search terms, conversions, and phone. Upload brand photos in Ads / Editor when ready.</span>
               </label>
             </li>
             <li data-order="12">
-              <input type="checkbox" id="ads12" data-todo="ads12" checked />
+              <input type="checkbox" id="ads12" data-todo="ads12" />
               <label for="ads12">
-                <strong>12. Buy + attach one custom domain (before Enable)</strong>
-                <span class="todo-hint"><strong>Done:</strong> <code>www.virtualcoworker.app</code> on Vercel project <code>vision</code> (apex → www). Paths <code>/us</code> · <code>/au</code> · <code>/ph</code>. Preview <code>vision-three-alpha.vercel.app</code> still exists. Domain ≠ TRAFFIC READY.</span>
+                <strong>12. Daily search-term review</strong>
+                <span class="todo-hint">Priority #1 while live. Morning hawk check on spend + search terms. Negate junk; protect employer intent.</span>
               </label>
             </li>
             <li data-order="13">
-              <input type="checkbox" id="ads13" data-todo="ads13" checked />
+              <input type="checkbox" id="ads13" data-todo="ads13" />
               <label for="ads13">
-                <strong>13. Freeze Final URL host on that domain</strong>
-                <span class="todo-hint"><strong>Done:</strong> package regenerated with <code>ADS_FINAL_URL_HOST=www.virtualcoworker.app</code> (now the builder default). Core → <code>/us</code>/<code>/au</code> · Roles → category. Import CSVs use www — not <code>*.vercel.app</code>.</span>
+                <strong>13. Review RSA ad copy (how it shows)</strong>
+                <span class="todo-hint">After traffic is clean. Check combinations in Ads; trim generic headlines/descriptions once impressions land.</span>
               </label>
             </li>
             <li data-order="14">
               <input type="checkbox" id="ads14" data-todo="ads14" />
               <label for="ads14">
-                <strong>14. Editor — download both accounts</strong>
-                <span class="todo-hint">Fresh local copy of USA + AU before import.</span>
+                <strong>14. Audit all assets</strong>
+                <span class="todo-hint">Sitelinks, callouts, structured snippets (+ images when ready) — links work, text isn’t weird, nothing broken on <code>VC_US_*</code>. Not ahead of conversions/phone.</span>
               </label>
             </li>
             <li data-order="15">
               <input type="checkbox" id="ads15" data-todo="ads15" />
               <label for="ads15">
-                <strong>15. Import paused CSV — leave everything Paused</strong>
-                <span class="todo-hint">Import the www Final URL CSVs (US + AU split). <strong>Import</strong> = draft · <strong>Post</strong> = upload (still paused) · <strong>Enable</strong> = later — only after TRAFFIC READY. <a href="ads-package.html">Ads package</a> · <code>EDITOR-PREFLIGHT-REPORT.md</code>.</span>
+                <strong>15. Review negatives</strong>
+                <span class="todo-hint">Part of daily ops. Confirm campaign negatives on <code>VC_US_*</code> (job-seeker / junk blockers). Add from search terms as junk appears.</span>
               </label>
             </li>
             <li data-order="16">
               <input type="checkbox" id="ads16" data-todo="ads16" />
               <label for="ads16">
-                <strong>16. Before Enable — Final URLs = www host</strong>
-                <span class="todo-hint">Hard stop if still on <code>*.vercel.app</code>. Confirm every Core/Roles Final URL uses <code>www.virtualcoworker.app</code> + path markets. Preview host is for QA only.</span>
+                <strong>16. Fix US phone routing</strong>
+                <span class="todo-hint">Priority #3. <code>310-426-8776</code> → ~5–6 rings → Google Voice VM (Ash got a test VM — not durable). Cheyenne owns US sales; Raffie = phones/IT, not US salesperson. Route into Cheyenne workflow, name missed-call owner, E2E test.</span>
               </label>
             </li>
             <li data-order="17">
               <input type="checkbox" id="ads17" data-todo="ads17" />
               <label for="ads17">
-                <strong>17. Set up GTM_US + GA4_US</strong>
-                <span class="todo-hint">US hire market only. Separate container even on the same host — do not share with AU.</span>
+                <strong>17. Wire conversion tracking</strong>
+                <span class="todo-hint">Priority #2. New Primary = successful employer form delivery (after durable delivery, not click). Click-to-call = Secondary. Campaign-specific goals on <code>VC_US_*</code>. Don’t attach old Zoho/Zapier; don’t triple-count form+Calendly+Zoho. Stay Max Clicks until clean. See <a href="tracking.html">Tracking</a>.</span>
               </label>
             </li>
             <li data-order="18">
               <input type="checkbox" id="ads18" data-todo="ads18" />
               <label for="ads18">
-                <strong>18. Set up GTM_AU + GA4_AU</strong>
-                <span class="todo-hint">AU hire market only. Same host + <code>/au</code> path is fine; keep audiences/conversions separate. GTM_PH optional later.</span>
+                <strong>18. Zoho / CRM dump</strong>
+                <span class="todo-hint">Later — not a traffic blocker. George can sign in. Mapping / admin / direct write / offline / Job Order later. Forms already hit Resend + GitHub.</span>
               </label>
             </li>
             <li data-order="19">
               <input type="checkbox" id="ads19" data-todo="ads19" />
               <label for="ads19">
-                <strong>19. Confirm daily budgets and Max CPC</strong>
-                <span class="todo-hint">Defaults in CSV. Change in Editor if you want, then Post while still Paused.</span>
+                <strong>19. Australia — after AU phone</strong>
+                <span class="todo-hint">AU paused until AU phone confirmed/tested. Import fixed AU Editor CSV then. Not day-one priority.</span>
               </label>
             </li>
             <li data-order="20">
               <input type="checkbox" id="ads20" data-todo="ads20" />
               <label for="ads20">
-                <strong>20. Enable Tier 1A then 1B</strong>
-                <span class="todo-hint">Only when TRAFFIC READY + Final URLs on custom domain + your OK. Keep Max Clicks. AU quiet until US looks sane. You Enable in Ads.</span>
+                <strong>20. Verify Monday paid-lead scoreboard</strong>
+                <span class="todo-hint">DoD: Monday email (or Zoho view) separates <em>paid microsite / Ads</em> from total inbound (WP + organic mix into same <code>us@</code>/<code>apac@</code>). Buckets = enquiries · sales calls booked · junk · work-seekers. Confirm sales-facing email/CRM exposes UTMs / gclid / gbraid / wbraid / landing URL / referrer / market enough to ID paid microsite leads. No new tracker this week.</span>
               </label>
             </li>
           </ul>
@@ -516,94 +516,134 @@
             <span class="st st-ready">Finished</span>
           </div>
           <ul>
-            <li><strong>MCC linked</strong> — under Shout George</li>
-            <li><strong>Ads access</strong> — Standard on USA + AU</li>
-            <li><strong>Three microsites live on www</strong> — US · AU · PH at <code>www.virtualcoworker.app</code></li>
-            <li><strong>Custom domain + Final URLs on www</strong> — Editor CSVs regenerated</li>
-            <li><strong>Paused Editor CSV ready</strong> — USA + AU stamped · not cleared for paid traffic yet</li>
-            <li><strong>Zoho access</strong> — George can sign in; lead-port path + Recruit vs CRM still open</li>
-            <li><strong>US/NA phone</strong> — <code>310-426-8776</code> (do not port)</li>
-          </ul>
-        </section>
-
-        <section class="lc-bucket block" aria-labelledby="block-hd">
-          <div class="lc-bucket-hd">
-            <h2 id="block-hd">Before ads go live</h2>
-            <span class="st st-blocked">TRAFFIC READY</span>
-          </div>
-          <ul>
-            <li><strong>Real inbox</strong> — form actually lands there</li>
-            <li><strong>Test lead arrives</strong> — you see it</li>
-            <li><strong>Named person who answers</strong> — <a href="lead-routing.html">Lead Routing</a></li>
-            <li><strong>Editor Import / Post</strong> — use www Final URL CSVs; still Paused; Enable later</li>
-            <li><strong>Brand deferred</strong> — Stage 1 is the new <code>VC_*</code> package; existing Brand campaigns are unchanged for now</li>
+            <li>US Search live: <code>VC_US_S_CORE</code> ($75) + <code>VC_US_S_ROLES</code> ($50) = $125/day</li>
+            <li>Max Clicks · CORE $12 CPC cap · Exact / high-intent · Search-only</li>
+            <li>Final URLs → <code>www.virtualcoworker.app</code>; Brand deferred</li>
+            <li>Caitlin LP copy live (demo removed, Filipino terms, US hero, 4-step, rates, AU footer, thank-you)</li>
+            <li>Resend → <code>us@</code>/<code>apac@</code> (+ George CC) · GitHub Issues backup verified</li>
+            <li>Calendly confirmed: <a href="https://calendly.com/cheyenne-virtualcoworker/30min" target="_blank" rel="noopener">US Cheyenne</a> · <a href="https://calendly.com/apac-virtualcoworker/30min" target="_blank" rel="noopener">APAC</a> (secondary only)</li>
+            <li>Sales owners known: Cheyenne (US) · Holly (APAC)</li>
           </ul>
         </section>
 
         <section class="lc-bucket george" aria-labelledby="george-hd">
           <div class="lc-bucket-hd">
-            <h2 id="george-hd">Your turn</h2>
+            <h2 id="george-hd">Your turn (live ops)</h2>
             <span class="st st-access">George</span>
           </div>
           <ul>
-            <li><strong>Next:</strong> TRAFFIC READY (inbox · test · named responder) — Brand work stays deferred</li>
-            <li><strong>Then:</strong> Import www Final URL CSVs → Post paused → Enable only after TRAFFIC READY + your OK</li>
-            <li>Production host <code>www.virtualcoworker.app</code> · preview still exists · no more domain buy</li>
-            <li>One host + paths (not two country domains) · separate GTM_US + GTM_AU</li>
-            <li>Zoho: access yes — map lead port (API preferred); ask VC who owns CRM/admin. <em>Not</em> a traffic gate. Email: <code>george@shoutgeorge.com</code></li>
-            <li>
-              <strong>Calendly / booking:</strong> thank-you wired from live WP
-              (<code>cheyenne-virtualcoworker/30min</code> US ·
-              <code>apac-virtualcoworker/30min</code> AU). Confirm with VC those
-              are the Stage 1 hiring-conversation links. Booking =
-              <em>secondary / later conversion candidate</em> — do
-              <strong>not</strong> replace primary
-              <code>employer_inquiry_submitted</code>. TRAFFIC READY does
-              <strong>not</strong> require Calendly; OPTIMIZATION READY / later
-              can add a booked-call event once GTM fires.
-            </li>
+            <li><strong>1.</strong> Daily search terms / spend / negatives</li>
+            <li><strong>2.</strong> Wire clean conversion goals on <code>VC_US_*</code></li>
+            <li><strong>3.</strong> Push phone routing into Cheyenne workflow + E2E</li>
+            <li><strong>4.</strong> Disable unsafe auto-apply</li>
+            <li><strong>5.</strong> Assets / RSA polish (images optional for serve)</li>
+            <li>Verify Monday paid-vs-total scoreboard (ads20)</li>
+          </ul>
+        </section>
+
+        <section class="lc-bucket block" aria-labelledby="block-hd">
+          <div class="lc-bucket-hd">
+            <h2 id="block-hd">Actual blockers / hot</h2>
+            <span class="st st-blocked">Hot</span>
+          </div>
+          <ul>
+            <li>Conversion tracking not clean yet (high priority)</li>
+            <li>US phone → Google Voice VM; needs Cheyenne/sales routing</li>
+            <li>Sales counting source + whether they monitor microsite in group inboxes (open)</li>
+            <li>Monday must distinguish paid microsite from WP/organic total</li>
           </ul>
         </section>
 
         <section class="lc-bucket vc" aria-labelledby="vc-hd">
           <div class="lc-bucket-hd">
-            <h2 id="vc-hd">Waiting on their team</h2>
-            <span class="st st-progress">VC</span>
+            <h2 id="vc-hd">Waiting on VC</h2>
+            <span class="st st-progress">Them</span>
           </div>
           <ul>
-            <li>AU phone locked form-primary — NA dest <code>310-426-8776</code></li>
-            <li>Real lead inbox per market (email OK for Stage 1)</li>
-            <li><strong>Pilot payment — IN TRANSIT</strong></li>
-            <li>Chat platform + invite George</li>
-            <li>
-              Confirm Calendly URLs for hiring conversations (US + AU) — or send
-              replacements for <code>NEXT_PUBLIC_CALENDLY_US</code> /
-              <code>_AU</code>. Decide later whether booked-call is secondary vs
-              a separate optimization conversion (never Stage 1 primary).
-            </li>
+            <li>Holly / Cheyenne: day-to-day counting source + inbox monitoring</li>
+            <li>Route / staff <code>310-426-8776</code> into US sales (missed-call owner)</li>
+            <li>AU phone confirmed/tested (blocks AU ads)</li>
+            <li>Zoho admin/mapping later — not blocking traffic</li>
           </ul>
         </section>
       </div>
 
-      <section class="panel" id="lp-previews">
+      <section class="panel" id="operating-order">
         <div class="panel-hd">
-          <p class="kicker">Production · www.virtualcoworker.app</p>
-          <h2>Landing page sitemap</h2>
+          <p class="kicker">Prioritize</p>
+          <h2>Today · Waiting · Later · Do not do yet</h2>
         </div>
         <div class="panel-bd">
+          <div class="lc-board" style="margin:0">
+            <section class="lc-bucket george" aria-labelledby="today-hd">
+              <div class="lc-bucket-hd">
+                <h2 id="today-hd">Today</h2>
+                <span class="st st-access">Do</span>
+              </div>
+              <ul>
+                <li>Search terms / spend / negatives</li>
+                <li>Start conversion tracking wiring</li>
+                <li>Disable unsafe auto-apply</li>
+                <li>Confirm Monday paid-lead scoreboard path</li>
+              </ul>
+            </section>
+            <section class="lc-bucket vc" aria-labelledby="waiting-hd">
+              <div class="lc-bucket-hd">
+                <h2 id="waiting-hd">Waiting</h2>
+                <span class="st st-progress">VC</span>
+              </div>
+              <ul>
+                <li>Holly / Cheyenne answers on counting + inbox monitor</li>
+                <li>US phone → Cheyenne/sales E2E</li>
+                <li>AU phone before AU Enable</li>
+              </ul>
+            </section>
+            <section class="lc-bucket ok" aria-labelledby="later-hd">
+              <div class="lc-bucket-hd">
+                <h2 id="later-hd">Later</h2>
+                <span class="st st-deferred">Optional</span>
+              </div>
+              <ul>
+                <li>RSA images / full asset polish</li>
+                <li>Zoho mapping · API · offline · Job Order</li>
+                <li>CallRail (~1–2 months)</li>
+                <li>Maximize Conversions (after clean goals)</li>
+              </ul>
+            </section>
+            <section class="lc-bucket block" aria-labelledby="dont-hd">
+              <div class="lc-bucket-hd">
+                <h2 id="dont-hd">Do not do yet</h2>
+                <span class="st st-blocked">Stop</span>
+              </div>
+              <ul>
+                <li>Touch / center Brand campaigns</li>
+                <li>Enable AU without confirmed phone</li>
+                <li>Attach old Zoho/Zapier conversions to <code>VC_US_*</code></li>
+                <li>Triple-count form + Calendly + Zoho as Primary</li>
+                <li>Build a new lead tracker this week</li>
+                <li>Treat Zoho rebuild as a traffic gate</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <details class="lc-fold" id="lp-previews">
+        <summary>
+          Landing page links
+          <span class="hint">www.virtualcoworker.app</span>
+        </summary>
+        <div class="fold-bd">
           <p class="muted" style="margin:0 0 0.85rem;font-size:0.88rem">
-            Full tree — every real route. Same list on <a href="landing-pages.html">LP previews</a>.
-            Root <a href="https://www.virtualcoworker.app/" target="_blank" rel="noopener"><code>/</code></a> → <code>/us</code>.
-            A/B: <code>?variant=a|b</code> on hubs/categories (not separate paths). Hire = hub <code>#gate</code>.
+            Same list on <a href="landing-pages.html">LP previews</a>.
           </p>
           <div class="sitemap">
             <div class="sitemap-branch">
               <h3>US employer</h3>
-              <p class="branch-note">Paid money path · phone <code>310-426-8776</code></p>
+              <p class="branch-note">Phone <code>310-426-8776</code></p>
               <ul class="sitemap-tree">
-                <li><a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> <span class="dim">hub</span>
+                <li><a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>
                   <ul>
-                    <li><a href="https://www.virtualcoworker.app/us/consult" target="_blank" rel="noopener">/us/consult</a> <span class="dim">→ /us#gate</span></li>
                     <li><a href="https://www.virtualcoworker.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
                     <li><a href="https://www.virtualcoworker.app/us/social-media" target="_blank" rel="noopener">/us/social-media</a></li>
                     <li><a href="https://www.virtualcoworker.app/us/accounting" target="_blank" rel="noopener">/us/accounting</a></li>
@@ -611,21 +651,18 @@
                     <li><a href="https://www.virtualcoworker.app/us/administrative-support" target="_blank" rel="noopener">/us/administrative-support</a></li>
                     <li><a href="https://www.virtualcoworker.app/us/customer-service" target="_blank" rel="noopener">/us/customer-service</a></li>
                     <li><a href="https://www.virtualcoworker.app/us/hr" target="_blank" rel="noopener">/us/hr</a></li>
-                    <li><a href="https://www.virtualcoworker.app/us/human-resources" target="_blank" rel="noopener">/us/human-resources</a> <span class="dim">alias → /hr</span></li>
                     <li><a href="https://www.virtualcoworker.app/us/recruitment" target="_blank" rel="noopener">/us/recruitment</a></li>
                     <li><a href="https://www.virtualcoworker.app/us/sales" target="_blank" rel="noopener">/us/sales</a></li>
                   </ul>
                 </li>
               </ul>
             </div>
-
             <div class="sitemap-branch">
               <h3>AU employer</h3>
-              <p class="branch-note">Paid money path · form-primary (no fake AU phone)</p>
+              <p class="branch-note">Form-first (no fake AU phone)</p>
               <ul class="sitemap-tree">
-                <li><a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> <span class="dim">hub</span>
+                <li><a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>
                   <ul>
-                    <li><a href="https://www.virtualcoworker.app/au/consult" target="_blank" rel="noopener">/au/consult</a> <span class="dim">→ /au#gate</span></li>
                     <li><a href="https://www.virtualcoworker.app/au/digital-marketing" target="_blank" rel="noopener">/au/digital-marketing</a></li>
                     <li><a href="https://www.virtualcoworker.app/au/social-media" target="_blank" rel="noopener">/au/social-media</a></li>
                     <li><a href="https://www.virtualcoworker.app/au/accounting" target="_blank" rel="noopener">/au/accounting</a></li>
@@ -633,145 +670,80 @@
                     <li><a href="https://www.virtualcoworker.app/au/administrative-support" target="_blank" rel="noopener">/au/administrative-support</a></li>
                     <li><a href="https://www.virtualcoworker.app/au/customer-service" target="_blank" rel="noopener">/au/customer-service</a></li>
                     <li><a href="https://www.virtualcoworker.app/au/hr" target="_blank" rel="noopener">/au/hr</a></li>
-                    <li><a href="https://www.virtualcoworker.app/au/human-resources" target="_blank" rel="noopener">/au/human-resources</a> <span class="dim">alias → /hr</span></li>
                     <li><a href="https://www.virtualcoworker.app/au/recruitment" target="_blank" rel="noopener">/au/recruitment</a></li>
                     <li><a href="https://www.virtualcoworker.app/au/sales" target="_blank" rel="noopener">/au/sales</a></li>
                   </ul>
                 </li>
               </ul>
             </div>
-
             <div class="sitemap-branch">
-              <h3>PH talent</h3>
-              <p class="branch-note">Careers / apply — not Ads Final URLs</p>
+              <h3>PH careers</h3>
+              <p class="branch-note">Not for paid ads</p>
               <ul class="sitemap-tree">
-                <li><a href="https://www.virtualcoworker.app/ph" target="_blank" rel="noopener">/ph</a> <span class="dim">careers hub</span>
-                  <ul>
-                    <li><a href="https://www.virtualcoworker.app/ph/apply" target="_blank" rel="noopener">/ph/apply</a></li>
-                  </ul>
-                </li>
+                <li><a href="https://www.virtualcoworker.app/ph" target="_blank" rel="noopener">/ph</a></li>
+                <li><a href="https://www.virtualcoworker.app/ph/apply" target="_blank" rel="noopener">/ph/apply</a></li>
               </ul>
             </div>
-
             <div class="sitemap-branch">
-              <h3>Shared hub + legal</h3>
-              <p class="branch-note">Root pages · <code>?market=us|au</code> scopes nav</p>
+              <h3>Shared</h3>
               <ul class="sitemap-tree">
-                <li><a href="https://www.virtualcoworker.app/" target="_blank" rel="noopener">/</a> <span class="dim">→ /us</span></li>
-                <li><a href="https://www.virtualcoworker.app/services" target="_blank" rel="noopener">/services</a>
-                  <ul>
-                    <li><a href="https://www.virtualcoworker.app/services?market=us" target="_blank" rel="noopener">/services?market=us</a></li>
-                    <li><a href="https://www.virtualcoworker.app/services?market=au" target="_blank" rel="noopener">/services?market=au</a></li>
-                  </ul>
-                </li>
-                <li><a href="https://www.virtualcoworker.app/how-it-works" target="_blank" rel="noopener">/how-it-works</a>
-                  <ul>
-                    <li><a href="https://www.virtualcoworker.app/how-it-works?market=us" target="_blank" rel="noopener">/how-it-works?market=us</a></li>
-                    <li><a href="https://www.virtualcoworker.app/how-it-works?market=au" target="_blank" rel="noopener">/how-it-works?market=au</a></li>
-                  </ul>
-                </li>
-                <li><a href="https://www.virtualcoworker.app/privacy" target="_blank" rel="noopener">/privacy</a></li>
-                <li><a href="https://www.virtualcoworker.app/terms" target="_blank" rel="noopener">/terms</a></li>
-                <li><a href="https://www.virtualcoworker.app/thank-you" target="_blank" rel="noopener">/thank-you</a> <span class="dim">post-submit</span></li>
+                <li><a href="https://www.virtualcoworker.app/services" target="_blank" rel="noopener">/services</a></li>
+                <li><a href="https://www.virtualcoworker.app/how-it-works" target="_blank" rel="noopener">/how-it-works</a></li>
+                <li><a href="https://www.virtualcoworker.app/thank-you" target="_blank" rel="noopener">/thank-you</a></li>
               </ul>
             </div>
           </div>
-        </div>
-      </section>
-
-      <details class="lc-fold" id="zoho-note">
-        <summary>
-          Zoho (access yes) · not a traffic gate
-          <span class="hint">CRM READY parallel</span>
-        </summary>
-        <div class="fold-bd">
-          <ul class="glance-bullets">
-            <li><strong>Now:</strong> George has Zoho access — browse modules, note where an employer inquiry should land, ask VC who owns CRM/admin.</li>
-            <li><strong>Prefer:</strong> direct lead port (email/webhook first for TRAFFIC READY; <strong>API</strong> when Recruit vs CRM is identified). Document any existing Zapier; don’t design Stage 1 around it.</li>
-            <li><strong>Not now:</strong> live write from our code · assuming Leads module · treating native Zoho↔Ads as Stage 1 Primary.</li>
-            <li><strong>Later:</strong> native Zoho↔Ads / offline for qualified lead · job order · placement (higher value — not a second Primary for the same form fill). CallRail ~1–2 months.</li>
-            <li>People + emails: <a href="lead-routing.html">Lead Routing</a> · conversion ladder: <a href="tracking.html">Tracking</a>.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="lc-fold" id="sequence">
-        <summary>
-          Full launch sequence
-          <span class="hint">Backup detail</span>
-        </summary>
-        <div class="fold-bd">
-          <ol class="lc-seq">
-            <li>Ads access confirmed (done).</li>
-            <li>Confirm live campaigns in thread (done Aug 5).</li>
-            <li><strong>Brand deferred</strong> — Stage 1 = new <code>VC_*</code> package; existing Brand campaigns remain unchanged.</li>
-            <li><strong>TRAFFIC READY</strong> (paid-traffic blocker): real inbox + test arrives + named person.</li>
-            <li>Assets spot-check · do not attach older shared negatives · Auto-apply off.</li>
-            <li><strong>Domain + Final URLs</strong> — done on <code>www.virtualcoworker.app</code> (preview still exists).</li>
-            <li>Download accounts → Import paused www CSVs → Post paused. Enable = later.</li>
-            <li>OPTIMIZATION (parallel): <em>new</em> form + phone conversions · campaign-specific goals · Zoho lead port / native offline later · CallRail ~1–2 mo.</li>
-            <li>Enable Tier 1A then 1B after TRAFFIC READY + your OK — still don’t Enable until then.</li>
-          </ol>
         </div>
       </details>
 
       <details class="lc-fold" id="operate">
         <summary>
-          72h watch + stop conditions
-          <span class="hint">After enable</span>
+          While spending — what to watch
+          <span class="hint">Daily ops</span>
         </summary>
         <div class="fold-bd" style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem">
           <div>
             <h3 style="margin:0 0 0.4rem;font-size:0.95rem">Watch</h3>
             <ul class="glance-bullets">
-              <li>Search terms → add negatives fast</li>
-              <li>Job-seeker / spam reject rate</li>
-              <li>Form fills that arrive + solid phone calls</li>
-              <li>CPC vs your max</li>
-              <li>Lead-quality feedback from sales</li>
+              <li>Search terms → cut junk fast</li>
+              <li>Job-seeker / spam</li>
+              <li>Leads in <code>us@</code> Resend <em>and</em> GitHub Issues</li>
+              <li>Cost per click vs $12 CORE cap</li>
+              <li>Attribution fields present (UTMs / gclid / landing URL)</li>
             </ul>
           </div>
           <div>
-            <h3 style="margin:0 0 0.4rem;font-size:0.95rem">Stop / pause if</h3>
+            <h3 style="margin:0 0 0.4rem;font-size:0.95rem">Pause if</h3>
             <ul class="glance-bullets">
-              <li>Most clicks are job/career queries</li>
-              <li>Form fires but lead never arrives</li>
-              <li>Spend with no employer inquiries</li>
-              <li>Wrong Final URL / WordPress links reappear</li>
-              <li>Budget overrun without your OK</li>
+              <li>Most clicks are “jobs / careers”</li>
+              <li>Forms fire but neither Resend nor GitHub receives</li>
+              <li>Spend with zero hiring leads</li>
+              <li>Ads point at WordPress again</li>
             </ul>
           </div>
         </div>
       </details>
 
       <div class="tech-link">
-        <strong>More detail if needed</strong> —
+        <strong>More detail</strong> —
         <a href="ads-package.html">Ads package</a> ·
         <a href="lead-routing.html">Lead Routing</a> ·
         <a href="tracking.html">Tracking</a> ·
-        <a href="clean-rebuild.html">Clean Rebuild package</a>
+        <a href="landing-pages.html">LP previews</a>
       </div>
     </main>
   </div>
   <script src="nav.js"></script>
   <script>
     (function () {
-      var KEY = "vc-launch-control-todos-v5";
-      var PREV = "vc-launch-control-todos-v4";
+      var KEY = "vc-launch-control-todos-v6";
       var store = {};
       try { store = JSON.parse(localStorage.getItem(KEY) || "null") || null; } catch (e) { store = null; }
       if (!store) {
-        try { store = JSON.parse(localStorage.getItem(PREV) || "{}") || {}; } catch (e) { store = {}; }
-        var remap = { ads5: "ads12", ads6: "ads13", ads7: "ads14", ads8: "ads15", ads9: "ads16", ads10: "ads17", ads11: "ads18", ads12: "ads19", ads13: "ads20" };
-        Object.keys(remap).forEach(function (oldId) {
-          if (store[oldId]) store[remap[oldId]] = true;
-          delete store[oldId];
-        });
-        store.ads1 = true;
-        store.ads2 = true;
-        store.ads3 = true;
-        store.ads4 = true;
-        ["ads5","ads6","ads7","ads8","ads9","ads10","ads11"].forEach(function (id) { delete store[id]; });
+        store = {
+          ads1: true, ads2: true, ads3: true, ads4: true,
+          ads6: true, ads7: true, ads8: true, ads10: true
+        };
       }
       var activeList = document.getElementById("todo-active");
       var doneList = document.getElementById("todo-done");
