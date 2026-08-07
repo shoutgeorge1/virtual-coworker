@@ -238,12 +238,17 @@ window.PILOT_STATUS = {
       id: "na_phone_dest",
       label: "US phone number confirmed: 310-426-8776 (routing to Cheyenne/sales workflow still open; Raffie ≠ salesperson)",
       status: "complete"
+    },
+    {
+      id: "auto_apply_off",
+      label: "Unsafe auto-apply disabled (done — keep off)",
+      status: "complete"
     }
   ],
   verifyNow: [
     {
       id: "conversion_tracking",
-      label: "Wire NEW form Primary + click-to-call Secondary on VC_US_* — do not attach old Zoho/Zapier",
+      label: "After routing: VC_US_Phone_Call_From_Ads/_From_Website (60–90s) Primary; form Secondary; Zoho Qualified offline later — no legacy Zoho/Zapier",
       status: "verify"
     },
     {
@@ -252,13 +257,13 @@ window.PILOT_STATUS = {
       status: "verify"
     },
     {
-      id: "auto_apply_off",
-      label: "Disable unsafe auto-apply (broad, PMax, auto campaigns, bidding, auto assets)",
+      id: "monday_paid_scoreboard",
+      label: "Verify Monday separates paid microsite/Ads from total inbound (attribution visible)",
       status: "verify"
     },
     {
-      id: "monday_paid_scoreboard",
-      label: "Verify Monday separates paid microsite/Ads from total inbound (attribution visible)",
+      id: "exec_snapshot",
+      label: "Keep Braden/CEO executive snapshot current (no fake Ads/Zoho widgets yet)",
       status: "verify"
     },
     {
@@ -302,7 +307,7 @@ window.PILOT_STATUS = {
     }
   ],
   optionalNotBlockers: [
-    "Zoho mapping / admin / direct write / offline / Job Order — George can sign in; not a traffic gate",
+    "Deep Zoho mapping / admin / direct write / offline / Job Order — shallow path first; not a traffic gate",
     "RSA image assets — useful polish; not required for RSAs to serve",
     "Ads Admin — nice-to-have later (Standard is enough for Stage 1)",
     "WordPress / hosting / Shopify — stays as-is; not paid destination",
@@ -310,14 +315,15 @@ window.PILOT_STATUS = {
     "Gravity Forms — existing WP process only; paid LPs must not depend on WP/GF",
     "Brand campaigns — deferred / untouched",
     "Social media or SEO tool logins",
-    "New lead tracker this week — Zoho + Monday email enough"
+    "New lead tracker this week — Zoho + Monday email enough",
+    "Unsafe Google auto-apply — already disabled"
   ],
   georgeHandles: [
     "Daily search terms / spend / negatives on live VC_US_*",
-    "NEW conversion actions + campaign-specific goals on VC_US_* (Max Clicks until clean)",
-    "Disable unsafe Google auto-apply",
+    "Phone-led conversions + shallow Zoho on VC_US_* (Max Clicks until clean; form not preferred Primary)",
     "Push US phone routing into Cheyenne workflow + E2E",
     "Verify Monday paid-vs-total scoreboard (attribution fields)",
+    "Keep Braden/CEO executive snapshot current",
     "MCC + Google Ads Editor (Standard access confirmed on US + AU)",
     "Three microsites on vision (US · AU · PH) — not WordPress; / → /us",
     "Production host www.virtualcoworker.app + /us /au /ph paths",
@@ -325,23 +331,23 @@ window.PILOT_STATUS = {
     "Capture GCLID / GBRAID / WBRAID / UTMs / LP / referrer / timestamp + market"
   ],
   majorBlockers: [
-    "Clean conversion tracking on VC_US_* (high priority while spending)",
+    "Phone-led conversion + shallow Zoho on VC_US_* (next big thing while spending)",
     "US phone routing into Cheyenne/US sales (currently Google Voice VM)",
     "Sales counting source + group-inbox monitoring confirmation",
     "AU phone confirmed/tested before AU Enable"
   ],
   nextThree: [
-    "Daily search terms / spend / negatives",
-    "Wire NEW form Primary + call Secondary on VC_US_* (no old Zoho/Zapier; stay Max Clicks)",
-    "Phone routing → Cheyenne workflow + disable unsafe auto-apply"
+    "Manual search-term curation + Exact-query negatives (main live job)",
+    "Phone routing → Cheyenne E2E (prerequisite before call Primary)",
+    "Then create VC_US_Phone_Call_From_Ads / _From_Website (60–90s); form stays Secondary"
   ],
   openItemsUnresolved: [
-    "Conversion events end-to-end for NEW VC_US_* goals",
+    "Phone-led + shallow Zoho conversion path end-to-end on VC_US_*",
     "US phone → Cheyenne/sales workflow + missed-call owner",
     "Holly/Cheyenne counting source + inbox monitoring",
     "Monday paid microsite vs total inbound scoreboard verified",
     "AU phone (official AU-site number) before AU Enable",
-    "Zoho modules / field mappings (later — not traffic gate)",
+    "Shallow Zoho handoff (deep mapping later — not traffic gate)",
     "Exact defs: qualified lead / job order / placement",
     "How Caitlin / Cheyenne / Pauly return lead-quality feedback",
     "CallRail approval / ownership",

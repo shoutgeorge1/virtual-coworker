@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import DataTrackClicks from "./components/DataTrackClicks";
 import HashScroll from "./components/HashScroll";
 import "./globals.css";
 
 const noindex = process.env.NEXT_PUBLIC_PILOT_NOINDEX !== "false";
 
 export const metadata: Metadata = {
-  title: "Virtual Coworker · Hire Philippines Staff",
+  title: "Virtual Coworker · Hire Filipino Staff",
   description:
-    "Hire dedicated Philippines staff for US and Australian businesses — recruit, screen, interview, and hire with Virtual Coworker.",
+    "Hire dedicated Filipino staff for US and Australian businesses — recruit, screen, interview, and hire with Virtual Coworker.",
   icons: { icon: "/brand/favicon.png" },
   robots: noindex
     ? { index: false, follow: false, googleBot: { index: false, follow: false } }
@@ -39,6 +40,7 @@ export default function RootLayout({
       </head>
       <body>
         <HashScroll />
+        <DataTrackClicks />
         {children}
       </body>
     </html>

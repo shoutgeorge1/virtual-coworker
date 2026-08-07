@@ -57,6 +57,7 @@ describe("trackValidEmployerSubmit dedupe", () => {
       (e) => e.event,
     );
     expect(events.filter((e) => e === "employer_inquiry_submitted")).toHaveLength(1);
+    expect(events.filter((e) => e === "form_submit_success")).toHaveLength(1);
     expect(events).toContain("employer_inquiry_submitted_deduped");
   });
 });

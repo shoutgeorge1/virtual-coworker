@@ -1,18 +1,23 @@
 /**
  * Client-side attribution + Stage 1 dataLayer helpers.
- * No hard-coded Ads conversion IDs. Primary fires only after server accept
- * with durable delivery success, once per submission id (refresh-safe).
+ * No hard-coded Ads conversion IDs. Map Ads goals in GTM / Ads UI.
  *
- * Event names (Stage 1 contract):
+ * Conversion architecture (Aug 2026):
+ * - Phone calls (duration-qualified, e.g. 60s+) = volume steering signal
+ * - Zoho "Qualified lead" offline import = deeper quality signal
+ * - Form submit = delivery / funnel observation only — NOT bidding Primary
+ *
+ * Canonical events (+ short aliases for GTM maps):
  * - employer_gate_selected
  * - employer_form_started
  * - employer_form_validation_error
- * - employer_inquiry_submitted          (primary — durable delivery only)
+ * - employer_inquiry_submitted  (+ alias form_submit_success) — delivery OK, not Ads Primary
  * - employer_inquiry_delivery_failed
- * - phone_cta_clicked                   (not a qualified call)
+ * - phone_cta_clicked           (+ alias phone_click) — click ≠ qualified call
+ * - calendly_cta_clicked        (+ alias calendly_click)
  * - conversion_assist_opened
  * - conversion_assist_cta_clicked
- * - job_seeker_redirected               (interaction only — never primary)
+ * - job_seeker_redirected       (interaction only — never Ads conversion)
  */
 
 export const LP_VERSION = "stage1-v7";
@@ -165,6 +170,26 @@ export function trackEvent(
   });
 }
 
+/** Phone CTA click — canonical + short alias. Not a qualified call conversion. */
+export function trackPhoneClick(
+  payload: Record<string, string | number | boolean | undefined> = {},
+) {
+  trackEvent("phone_cta_clicked", { ...payload, is_qualified_call: false });
+  trackEvent("phone_click", {
+    ...payload,
+    is_qualified_call: false,
+    alias_of: "phone_cta_clicked",
+  });
+}
+
+/** Calendly CTA click — canonical + short alias. Not Ads Primary. */
+export function trackCalendlyClick(
+  payload: Record<string, string | number | boolean | undefined> = {},
+) {
+  trackEvent("calendly_cta_clicked", payload);
+  trackEvent("calendly_click", { ...payload, alias_of: "calendly_cta_clicked" });
+}
+
 function alreadyFiredPrimary(submissionId: string): boolean {
   if (typeof window === "undefined") return false;
   try {
@@ -189,8 +214,10 @@ function markPrimaryFired(submissionId: string) {
 }
 
 /**
- * Primary conversion candidate after server accept + durable delivery.
- * Name: employer_inquiry_submitted — NOT job_order / placement / qualified_call.
+ * Durable form delivery event after server accept.
+ * Name: employer_inquiry_submitted (+ alias form_submit_success).
+ * Funnel / observation only — NOT the Ads bidding Primary (spam risk).
+ * Steering = duration-qualified phone; quality = Zoho Qualified lead offline.
  * Never fire for log_only / conversion_eligible=false.
  */
 export function trackValidEmployerSubmit(opts: {
@@ -206,6 +233,7 @@ export function trackValidEmployerSubmit(opts: {
       market: opts.market,
       submission_id: opts.submissionId,
       primary_eligible: false,
+      bidding_primary: false,
     });
     return;
   }
@@ -217,16 +245,20 @@ export function trackValidEmployerSubmit(opts: {
     return;
   }
   markPrimaryFired(opts.submissionId);
-  trackEvent("employer_inquiry_submitted", {
+  const payload = {
     market: opts.market,
     submission_id: opts.submissionId,
     role: opts.role || "",
     category: opts.category || "",
     variant: opts.variant || "",
+    /** Durable delivery succeeded — still NOT Ads bidding Primary */
     primary_eligible: true,
-    // Honesty flags for GTM mapping
+    bidding_primary: false,
+    funnel_step: "form_submit_success",
     is_job_order: false,
     is_placement: false,
     is_qualified_call: false,
-  });
+  };
+  trackEvent("employer_inquiry_submitted", payload);
+  trackEvent("form_submit_success", { ...payload, alias_of: "employer_inquiry_submitted" });
 }

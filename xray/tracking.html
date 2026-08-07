@@ -42,50 +42,57 @@
     }
   </style>
 </head>
-<body data-page="tracking.html" data-foot="New actions only<br />Form Primary · call Secondary · Max Clicks until clean">
+<body data-page="tracking.html" data-foot="Prepared plan<br />Phone after routing · form Secondary · Max Clicks">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Aug 7, 2026 · High priority while US spends</p>
+        <p class="kicker">Aug 6, 2026 · Prepare / test — don’t claim live Primary yet</p>
         <h1>Tracking</h1>
         <p>
-          Build <strong>new, simple</strong> conversions for <code>VC_US_*</code>.
-          Do <strong>not</strong> reuse existing Zoho/Zapier conversion actions from the current accounts.
-          Stay on Maximize Clicks until the new path is clean.
+          New conversions for <code>VC_US_*</code> only. Stay on <strong>Maximize Clicks</strong>.
+          Phone calls become the first meaningful Primary <em>after</em> routing works.
+          Forms stay Secondary. Zoho Qualified offline comes after immediate setup is stable.
+          Do <strong>not</strong> attach legacy Zoho/Zapier actions.
         </p>
       </header>
 
       <div class="notice">
         <p>
-          <strong>Primary (new path):</strong> successful employer form delivery —
-          after durable delivery (Resend and/or GitHub Issues), not a bare click.
+          <strong>Order:</strong>
+          (1) Phone routing E2E →
+          (2) Call conversions 60–90s as Primary →
+          (3) Form Secondary / observation →
+          (4) GTM + basic call tracking →
+          (5) Zoho Qualified offline.
         </p>
         <p style="margin-top:0.65rem">
-          <strong>Secondary:</strong> click-to-call observation.
-          CallRail / qualified ~60s call later (~1–2 months).
+          <strong>Named actions (Ads UI — prepare):</strong>
+          <code>VC_US_Phone_Call_From_Ads</code> ·
+          <code>VC_US_Phone_Call_From_Website</code> ·
+          <code>VC_US_Employer_Form_Submit</code> (Secondary).
+          Full steps: <a href="docs/ads-launch/CONVERSION-PLAN.md">CONVERSION-PLAN.md</a>.
         </p>
         <p style="margin-top:0.65rem">
           <strong>One inquiry ≠ two Primaries.</strong>
-          Form fill, Calendly book, and Zoho offline must not all fire as Primary for the same event.
-          Calendly is confirmed and secondary/separate
+          Don’t triple-count form + Calendly + Zoho Qualified.
+          Calendly secondary
           (<a href="https://calendly.com/cheyenne-virtualcoworker/30min" target="_blank" rel="noopener">US</a> ·
           <a href="https://calendly.com/apac-virtualcoworker/30min" target="_blank" rel="noopener">APAC</a>).
           See <a href="lead-routing.html">Lead Routing</a> ·
           <a href="launch-control.html">Checklist</a>.
         </p>
         <p style="margin-top:0.65rem">
-          <strong>Attribution on the form:</strong>
+          <strong>Attribution:</strong>
           <code>utm_*</code>, <code>gclid</code>, <code>gbraid</code>, <code>wbraid</code>,
-          landing URL, referrer, market, category, variant —
-          confirm sales-facing email/CRM exposes enough to ID paid microsite leads (Monday scoreboard).
+          landing URL, referrer, market, category, variant, submission id —
+          must reach email/CRM and eventually Zoho for offline.
         </p>
         <p style="margin-top:0.65rem">
-          <strong>Domain (locked):</strong>
-          <code>www.virtualcoworker.app</code> with path markets
-          (<code>/us</code> · <code>/au</code> · <code>/ph</code>.
-          Still run <strong>separate GTM + GA4 per market</strong> (GTM_US / GTM_AU).
+          <strong>GTM/GA4:</strong> env IDs empty today — paste <code>NEXT_PUBLIC_GTM_US</code> /
+          <code>NEXT_PUBLIC_GA4_US</code> when containers exist. Don’t deploy untested tags.
+          dataLayer aliases ready in vision: <code>form_submit_success</code>, <code>phone_click</code>, <code>calendly_click</code>.
         </p>
       </div>
 
@@ -99,50 +106,43 @@
             <li>
               <span class="when now">Now</span>
               <div>
-                <strong>Form fill → thank-you (Primary online)</strong>
-                <span>Fire after durable delivery succeeds (Resend and/or GitHub). Campaign-specific goals on each <code>VC_US_*</code>. Don’t attach old Zoho/Zapier micros.</span>
+                <strong>Phone routing (prerequisite)</strong>
+                <span><code>310-426-8776</code> → Cheyenne / US sales workflow, missed-call owner, hours, E2E. Raffie = IT; Ash ≠ owner. Don’t claim call Primary live until this works.</span>
               </div>
             </li>
             <li>
-              <span class="when now">Now</span>
+              <span class="when">Next</span>
               <div>
-                <strong>Phone call (Secondary)</strong>
-                <span>Click-to-call OK to observe. Phone CTA ≠ qualified until CallRail (~1–2 months). Plan a real ~60s call conversion later.</span>
+                <strong>Phone call conversions (Primary)</strong>
+                <span><code>VC_US_Phone_Call_From_Ads</code> + <code>VC_US_Phone_Call_From_Website</code> · 60–90s · Count One · campaign-specific on <code>VC_US_*</code>. <code>tel:</code> click = Secondary micro only.</span>
               </div>
             </li>
             <li>
               <span class="when now">Live</span>
               <div>
-                <strong>Lead delivery already active</strong>
-                <span>Resend → <code>us@</code> / <code>apac@</code> (+ George CC). GitHub Issues = durable backup / interim monitor — not permanent CRM. Form can succeed if either path works.</span>
+                <strong>Form delivery (Secondary)</strong>
+                <span>Resend + GitHub live. Ads name when mapped: <code>VC_US_Employer_Form_Submit</code>. dataLayer <code>form_submit_success</code> after durable delivery — not bidding Primary.</span>
               </div>
             </li>
             <li>
-              <span class="when">CRM</span>
+              <span class="when">Next</span>
               <div>
-                <strong>Zoho lead port (George has access)</strong>
-                <span>Not a traffic blocker. Figure where an inquiry lands. API preferred. No live write until path locked. Ask VC who owns CRM/admin.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when">Later</span>
-              <div>
-                <strong>Zoho ↔ Google Ads native + offline</strong>
-                <span>Audit/document now. Use later for qualified lead / job order / placement — higher value, not a duplicate Primary for the same form fill.</span>
+                <strong>GTM + GA4 + GSC</strong>
+                <span>Paste US container IDs; map events; website-calls via GTM number replace when tested. GSC verify for virtualcoworker.app (George click). Don’t invent “live” if env empty.</span>
               </div>
             </li>
             <li>
               <span class="when">Later</span>
               <div>
-                <strong>CallRail (~1–2 months)</strong>
-                <span>Not required for current Max Clicks ops. Forward to Cheyenne/US sales workflow once phone routing is fixed.</span>
+                <strong>Zoho Qualified → Ads offline</strong>
+                <span>Discovery/mapping next. No live writes until fields/dupes confirmed. Quality signal with GCLID — not a second Primary for the same raw form.</span>
               </div>
             </li>
             <li>
               <span class="when">Later</span>
               <div>
-                <strong>Maximize Conversions / value bidding</strong>
-                <span>Only after new form + phone actions are clean and campaign-specific goals are set on each <code>VC_*</code>. Stay Max Clicks until then.</span>
+                <strong>Maximize Conversions</strong>
+                <span>Only after new phone (+ optional form Secondary) goals are clean. Never on legacy account actions.</span>
               </div>
             </li>
           </ol>
@@ -160,61 +160,31 @@
               <span class="when now">Now</span>
               <div>
                 <strong>Maximize Clicks</strong>
-                <span>US live ($125/day combined). Learn CTR and which searches click while new conversion wiring finishes. CORE $12 CPC cap.</span>
+                <span>US live (CORE + ROLES). Manual ST curation is the main job while measurement prep finishes.</span>
               </div>
             </li>
             <li>
               <span class="when now">Stage 1</span>
               <div>
-                <strong>New form fill + basic phone</strong>
-                <span>Form Primary only after durable delivery. Phone CTA Secondary; qualified call when CallRail exists. Don’t triple-count form + Calendly + Zoho.</span>
+                <strong>Routing → phone Primary → form Secondary</strong>
+                <span>Then GTM call tracking. Zoho Qualified offline after that. Don’t triple-count.</span>
               </div>
             </li>
             <li>
               <span class="when">Later</span>
               <div>
                 <strong>Maximize Conversions</strong>
-                <span>Only on the <em>new</em> actions — never on existing conversion actions from the current accounts.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when">Later</span>
-              <div>
-                <strong>Job order + placement offline from Zoho</strong>
-                <span>Via native Zoho↔Ads or offline import. Dollar values TBD — not approved. Unique IDs so we don’t double-count.</span>
+                <span>Only on the new <code>VC_US_*</code> actions.</span>
               </div>
             </li>
           </ol>
         </div>
       </section>
 
-      <section class="panel" id="audit">
-        <div class="panel-hd">
-          <p class="kicker">Still on your list</p>
-          <h2>Two audits before trust</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="glance-bullets">
-            <li>
-              <strong>Existing conversion action map (observe only)</strong> —
-              In Ads (USA + AU): note names / Primary vs Secondary. Flag low-quality or duplicate goals.
-              <strong>Do not delete</strong> existing Zoho/Zapier actions yet — and do <strong>not</strong> attach them to <code>VC_*</code>.
-            </li>
-            <li>
-              <strong>Monday paid-lead scoreboard</strong> —
-              Confirm sales-facing email/CRM exposes attribution enough to separate paid microsite/Ads from WP + organic total inbound into the same <code>us@</code> / <code>apac@</code> inboxes.
-              Buckets: enquiries · sales calls booked · junk · work-seekers. Checklist item <code>ads20</code>.
-            </li>
-          </ul>
-          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
-            Work those on the <a href="launch-control.html">Checklist</a>.
-          </p>
-        </div>
-      </section>
-
       <div class="actions">
-        <a class="btn btn-primary" href="lead-routing.html">Lead Routing</a>
-        <a class="btn" href="launch-control.html">Checklist</a>
+        <a class="btn btn-primary" href="launch-control.html">Checklist</a>
+        <a class="btn" href="docs/ads-launch/CONVERSION-PLAN.md">Conversion plan</a>
+        <a class="btn" href="lead-routing.html">Lead Routing</a>
       </div>
     </main>
   </div>

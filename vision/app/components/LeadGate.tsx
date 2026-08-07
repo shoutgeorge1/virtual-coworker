@@ -6,6 +6,7 @@ import {
   captureAttribution,
   readAttribution,
   trackEvent,
+  trackPhoneClick,
   trackValidEmployerSubmit,
 } from "../../lib/tracking";
 import type { MarketId } from "../../config/markets";
@@ -81,11 +82,10 @@ function CallBlock({
       className={cls}
       href={copy.phoneHref}
       onClick={() =>
-        trackEvent("phone_cta_clicked", {
+        trackPhoneClick({
           market,
           category: category || "",
           variant: variant || "",
-          is_qualified_call: false,
         })
       }
     >

@@ -1,6 +1,6 @@
 "use client";
 
-import { trackEvent } from "../../lib/tracking";
+import { trackPhoneClick } from "../../lib/tracking";
 import type { MarketId } from "../../config/markets";
 import type { AbVariant } from "../../config/categories";
 
@@ -29,11 +29,10 @@ export default function StickyCta({
           className="sticky-cta-call"
           href={phoneHref}
           onClick={() =>
-            trackEvent("phone_cta_clicked", {
+            trackPhoneClick({
               market,
               category: category || "",
               variant: variant || "",
-              is_qualified_call: false,
             })
           }
         >
