@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-06 17:37 UTC",
+  "generated_at": "2026-08-07 12:54 UTC",
   "source_files": [
     "ads-launch/google-ads-editor-import-us.csv",
     "ads-launch/google-ads-editor-import-au.csv"
@@ -107,10 +107,96 @@
       }
     ]
   },
+  "live_ops": {
+    "available": true,
+    "source": "/Users/george/Library/Application Support/Google/Google-AdWords-Editor/749/ape_4967151855.db",
+    "db_mtime_utc": "2026-08-07 05:26 UTC",
+    "account": "496-715-1855",
+    "market": "US",
+    "campaigns": [
+      {
+        "name": "VC_US_S_CORE",
+        "display_name": "US · Core Search",
+        "status": "Enabled",
+        "budget": 75.0,
+        "max_cpc": 12.0
+      },
+      {
+        "name": "VC_US_S_ROLES",
+        "display_name": "US · Role Search",
+        "status": "Enabled",
+        "budget": 50.0,
+        "max_cpc": 8.0
+      }
+    ],
+    "keyword_breakdown": [
+      {
+        "campaign": "VC_US_S_CORE",
+        "match": "Phrase",
+        "status": "Paused",
+        "count": 25
+      },
+      {
+        "campaign": "VC_US_S_CORE",
+        "match": "Exact",
+        "status": "Enabled",
+        "count": 79
+      },
+      {
+        "campaign": "VC_US_S_CORE",
+        "match": "Exact",
+        "status": "Paused",
+        "count": 8
+      },
+      {
+        "campaign": "VC_US_S_ROLES",
+        "match": "Phrase",
+        "status": "Paused",
+        "count": 168
+      },
+      {
+        "campaign": "VC_US_S_ROLES",
+        "match": "Exact",
+        "status": "Enabled",
+        "count": 261
+      },
+      {
+        "campaign": "VC_US_S_ROLES",
+        "match": "Exact",
+        "status": "Paused",
+        "count": 241
+      }
+    ],
+    "counts": {
+      "exact_enabled": 340,
+      "exact_paused": 249,
+      "phrase_enabled": 0,
+      "phrase_paused": 193
+    },
+    "policy": {
+      "match": "Exact-only bidding live (all Phrase paused)",
+      "au_mirror": "AU package mirrors USA pause curation (LIVE_PAUSED + PHRASE_HOLD); AU campaigns not live yet",
+      "measurement": "Phone-first after routing works; form Secondary; Zoho Qualified later",
+      "brand": "Brand ~$40/day waste control — deferred as strategy center"
+    }
+  },
+  "package_curation": {
+    "us": {
+      "exact_rows": 591,
+      "phrase_rows": 193,
+      "live_paused_tagged": 269
+    },
+    "au": {
+      "exact_rows": 591,
+      "phrase_rows": 193,
+      "live_paused_tagged": 269
+    },
+    "note": "Editor import CSVs still ship every row Paused (Import ≠ Enable). LIVE_PAUSED tags + PHRASE_HOLD tiers mirror USA Editor curation so AU does not re-enable junk later."
+  },
   "safety": {
     "status": "Paused",
-    "banner": "Paused · SAFE TO IMPORT FOR REVIEW · NOT SAFE FOR PAID TRAFFIC",
-    "note": "Import ≠ Post ≠ Enable. Package ships Paused. Do not Enable until TRAFFIC READY + explicit approval."
+    "banner": "CSV package · all Paused · SAFE TO IMPORT FOR REVIEW",
+    "note": "Import ≠ Post ≠ Enable. Live USA VC_* is already spending (see Live ops). Do not bulk-Enable CSV rows that are LIVE_PAUSED or PHRASE_HOLD."
   },
   "holdouts": {
     "label": "Commercial / employer-research holdouts (NOT in import CSVs)",
@@ -140,16 +226,20 @@
   },
   "phase1_tiers": {
     "us": {
-      "1A": 278,
-      "1B": 321,
-      "2": 146,
-      "3": 39
+      "1A": 129,
+      "1B": 107,
+      "2": 83,
+      "3": 23,
+      "LIVE_PAUSED": 269,
+      "PHRASE_HOLD": 173
     },
     "au": {
-      "1A": 278,
-      "1B": 321,
-      "2": 146,
-      "3": 39
+      "1A": 129,
+      "1B": 107,
+      "2": 83,
+      "3": 23,
+      "LIVE_PAUSED": 269,
+      "PHRASE_HOLD": 173
     },
     "docs": [
       {
@@ -183,7 +273,7 @@
           "budget": "75",
           "budget_type": "Daily",
           "bid_strategy": "Maximize Clicks",
-          "max_cpc": "8",
+          "max_cpc": "12",
           "status": "Paused",
           "networks": "Google Search",
           "location": "United States",
@@ -193,7 +283,7 @@
           "ad_group_count": 2,
           "keyword_count": 112,
           "rsa_count": 6,
-          "negative_count": 172,
+          "negative_count": 183,
           "comment": "Stage1 v7 CORE (~60%); Max Clicks; Search only; Exact+Phrase; Paused; Brand deferred; Final URL=market home"
         },
         {
@@ -214,7 +304,7 @@
           "ad_group_count": 18,
           "keyword_count": 672,
           "rsa_count": 52,
-          "negative_count": 172,
+          "negative_count": 183,
           "comment": "Stage1 v6 ROLES (~40%); AGs Digital·Social·Admin·Controlled; category Final URLs; Max Clicks; Paused; Brand deferred"
         }
       ],
@@ -9669,6 +9759,17 @@
         }
       ],
       "negatives": [
+        "\"customer service representative wfh\"",
+        "\"customer service work from home\"",
+        "\"customer support representative work from home\"",
+        "\"virtual assistant work from home\"",
+        "\"work as customer service from home\"",
+        "\"work as\"",
+        "\"work from home customer service representative\"",
+        "\"work from home customer service\"",
+        "\"work from home representative\"",
+        "\"work from home social media manager\"",
+        "\"work from home virtual assistant\"",
         "application",
         "apply",
         "apply as virtual assistant",
@@ -9842,9 +9943,9 @@
         "youtube",
         "zirtual"
       ],
-      "negative_row_count": 344,
+      "negative_row_count": 366,
       "negative_match_types": {
-        "Broad": 344
+        "Campaign negative": 366
       },
       "sitelinks": [
         {
@@ -9947,8 +10048,8 @@
         "ad_groups": 20,
         "keywords": 784,
         "rsas": 58,
-        "unique_negatives": 172,
-        "negative_rows": 344
+        "unique_negatives": 183,
+        "negative_rows": 366
       }
     },
     "AU": {
@@ -19624,7 +19725,7 @@
       ],
       "negative_row_count": 344,
       "negative_match_types": {
-        "Broad": 344
+        "Campaign negative": 344
       },
       "sitelinks": [
         {
@@ -19737,8 +19838,8 @@
     "ad_groups": 40,
     "keywords": 1568,
     "rsas": 116,
-    "unique_negatives_per_market": 172,
-    "negative_rows_total": 688,
+    "unique_negatives_per_market": 183,
+    "negative_rows_total": 710,
     "holdouts": 19
   }
 }

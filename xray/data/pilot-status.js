@@ -13,7 +13,7 @@ window.PILOT_STATUS = {
   handoffNote:
     "Caitlin is ops contact + lead-quality stakeholder and may start maternity leave anytime. Braden is expected to take over day-to-day while she is out. Cheyenne owns US sales; Holly owns APAC.",
   commercialStatus: "us_search_live_ops",
-  commercialLabel: "USA SEARCH LIVE · $125/DAY · OPERATE CLEAN · AU PAUSED",
+  commercialLabel: "USA SEARCH LIVE · $125/DAY · BRAND ~$40/DAY · AU NOT TOUCHED",
   objective:
     "Can Google Search → independent US/AU employer microsites generate qualified leads at an acceptable cost? Three identities (US · AU · PH); WordPress stays as-is with zero paid egress.",
   landingPages: {
@@ -65,8 +65,8 @@ window.PILOT_STATUS = {
     "sales"
   ],
   keywordClustersLater: ["brand_deferred", "competitors_deferred", "tech_medical_spanish_excluded"],
-  matchPolicy: "exact_and_phrase_no_broad",
-  brandPolicy: "deferred_untouched_while_vc_star_lives",
+  matchPolicy: "exact_only_live_phrase_paused",
+  brandPolicy: "trimmed_waste_control_most_kws_paused_budget_~40_day_secondary_to_vc_search",
   phases: {
     current: 1,
     labels: {
@@ -85,24 +85,26 @@ window.PILOT_STATUS = {
       ],
       combinedDaily: 125,
       bidding: "Maximize Clicks",
-      match: "Exact / high-intent",
+      match: "Exact-only (Phrase paused; junk Exact paused)",
       network: "Search-only",
       finalUrls: "www.virtualcoworker.app"
     },
-    au: { status: "paused_until_phone_confirmed" },
-    brand: "deferred_untouched"
+    au: { status: "not_touched_paused_until_phone_confirmed" },
+    brand: "trimmed_most_kws_paused_budget_~40_day_waste_control"
   },
 
-  /* Confirmed conversion strategy (Stage 1) */
+  /* Confirmed conversion strategy (Stage 1) — phone-first; not form Primary */
   conversionStrategy: {
     stage1Primary: [
-      "Employer form submissions after durable delivery (Resend and/or GitHub Issues) — not click"
+      "Phone call conversions (website + ad call extensions) after US routing works — early steering signal"
     ],
     stage1Secondary: [
+      "Employer form delivery (Resend and/or GitHub) — observe only; not bidding Primary",
       "Click-to-call observation",
       "Calendly booking (secondary/separate — not second Primary)"
     ],
     stage1DoNotOptimize: [
+      "Thank-you page / raw form fills as Primary (spam risk)",
       "Job orders / placements — need clean lead data first before Ads learns from them",
       "Old Zoho/Zapier conversion actions — do not attach to VC_US_*",
       "Triple-count form + Calendly + Zoho for one enquiry"
@@ -111,7 +113,7 @@ window.PILOT_STATUS = {
       jobOrder: "$200–$400 (estimate only — not approved for Ads import)",
       jobPlacement: "$500–$800 (estimate only — not approved for Ads import)"
     },
-    laterPath: "Zoho → Google Ads offline conversions so campaigns learn which leads produce business",
+    laterPath: "Zoho → Google Ads offline: sales tags basic-qualified employer lead → quality signal back into Ads",
     biddingUntilClean: "Maximize Clicks"
   },
 
@@ -243,6 +245,11 @@ window.PILOT_STATUS = {
       id: "auto_apply_off",
       label: "Unsafe auto-apply disabled (done — keep off)",
       status: "complete"
+    },
+    {
+      id: "apac_inbox_monitor",
+      label: "APAC microsite monitoring confirmed — Holly Wallace (Zoho + Outlook; calendar for cold/follow-up; existing workflow enough for Monday; no new tracker/routing)",
+      status: "complete"
     }
   ],
   verifyNow: [
@@ -280,7 +287,7 @@ window.PILOT_STATUS = {
     },
     {
       id: "sales_counting",
-      label: "Holly/Cheyenne: day-to-day counting source + whether they monitor microsite in group inboxes",
+      label: "Cheyenne/US: confirm microsite monitoring in us@ + day-to-day counting source (APAC/Holly confirmed — Zoho+Outlook)",
       status: "waiting"
     },
     {
@@ -313,7 +320,7 @@ window.PILOT_STATUS = {
     "WordPress / hosting / Shopify — stays as-is; not paid destination",
     "WordPress rebuild / SEO / remarketing",
     "Gravity Forms — existing WP process only; paid LPs must not depend on WP/GF",
-    "Brand campaigns — deferred / untouched",
+    "Brand campaigns — trimmed (~$40/day; most Brand KWs paused); secondary to VC_US_* Search",
     "Social media or SEO tool logins",
     "New lead tracker this week — Zoho + Monday email enough",
     "Unsafe Google auto-apply — already disabled"
@@ -333,7 +340,7 @@ window.PILOT_STATUS = {
   majorBlockers: [
     "Phone-led conversion + shallow Zoho on VC_US_* (next big thing while spending)",
     "US phone routing into Cheyenne/US sales (currently Google Voice VM)",
-    "Sales counting source + group-inbox monitoring confirmation",
+    "US inbox monitoring awaiting Cheyenne (APAC/Holly confirmed)",
     "AU phone confirmed/tested before AU Enable"
   ],
   nextThree: [
@@ -344,7 +351,7 @@ window.PILOT_STATUS = {
   openItemsUnresolved: [
     "Phone-led + shallow Zoho conversion path end-to-end on VC_US_*",
     "US phone → Cheyenne/sales workflow + missed-call owner",
-    "Holly/Cheyenne counting source + inbox monitoring",
+    "Cheyenne/US microsite inbox monitoring + counting source (APAC confirmed)",
     "Monday paid microsite vs total inbound scoreboard verified",
     "AU phone (official AU-site number) before AU Enable",
     "Shallow Zoho handoff (deep mapping later — not traffic gate)",

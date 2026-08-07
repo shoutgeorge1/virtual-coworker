@@ -10,12 +10,72 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
   <style>
+    .scan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 0 0 1rem;
+    }
+    @media (max-width: 760px) {
+      .scan-grid { grid-template-columns: 1fr; }
+    }
+    .scan-card {
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      padding: 0.85rem 1rem;
+      min-width: 0;
+    }
+    .scan-card.primary {
+      border-color: var(--tint-teal-edge);
+      background: var(--tint-teal);
+    }
+    .scan-card.secondary {
+      border-color: var(--tint-cool-edge);
+      background: var(--tint-cool);
+    }
+    .scan-card.later {
+      border-color: var(--edge-soft);
+      background: var(--panel-inset);
+    }
+    .scan-card.open {
+      border-color: var(--tint-amber-edge);
+      background: var(--tint-amber);
+    }
+    .scan-card .k {
+      margin: 0 0 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scan-card h2 {
+      margin: 0 0 0.45rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .scan-card ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .scan-card li {
+      padding: 0.32rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--body);
+    }
+    .scan-card li:last-child { border-bottom: none; }
+    .scan-card strong { color: var(--ink); }
     .ladder { margin: 0; padding: 0; list-style: none; }
     .ladder li {
       display: grid;
       grid-template-columns: 5.5rem 1fr;
       gap: 0.55rem 0.75rem;
-      padding: 0.7rem 0;
+      padding: 0.65rem 0;
       border-bottom: 1px solid var(--edge-soft);
       align-items: start;
     }
@@ -40,144 +100,161 @@
       color: var(--muted);
       line-height: 1.4;
     }
+    .short-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .short-list li {
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .short-list li:last-child { border-bottom: none; }
+    .short-list strong { color: var(--ink); }
   </style>
 </head>
-<body data-page="tracking.html" data-foot="Prepared plan<br />Phone after routing · form Secondary · Max Clicks">
+<body data-page="tracking.html" data-foot="Phone Primary after routing<br />Form Secondary · Zoho later">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Aug 6, 2026 · Prepare / test — don’t claim live Primary yet</p>
+        <p class="kicker">Aug 7, 2026 · Prepare / test — don’t claim Primary live yet</p>
         <h1>Tracking</h1>
         <p>
           New conversions for <code>VC_US_*</code> only. Stay on <strong>Maximize Clicks</strong>.
-          Phone calls become the first meaningful Primary <em>after</em> routing works.
-          Forms stay Secondary. Zoho Qualified offline comes after immediate setup is stable.
-          Do <strong>not</strong> attach legacy Zoho/Zapier actions.
+          Phone → Primary after routing. Form → Secondary. Zoho Qualified → later.
         </p>
       </header>
 
-      <div class="notice">
-        <p>
-          <strong>Order:</strong>
-          (1) Phone routing E2E →
-          (2) Call conversions 60–90s as Primary →
-          (3) Form Secondary / observation →
-          (4) GTM + basic call tracking →
-          (5) Zoho Qualified offline.
-        </p>
-        <p style="margin-top:0.65rem">
-          <strong>Named actions (Ads UI — prepare):</strong>
-          <code>VC_US_Phone_Call_From_Ads</code> ·
-          <code>VC_US_Phone_Call_From_Website</code> ·
-          <code>VC_US_Employer_Form_Submit</code> (Secondary).
-          Full steps: <a href="docs/ads-launch/CONVERSION-PLAN.md">CONVERSION-PLAN.md</a>.
-        </p>
-        <p style="margin-top:0.65rem">
-          <strong>One inquiry ≠ two Primaries.</strong>
-          Don’t triple-count form + Calendly + Zoho Qualified.
-          Calendly secondary
-          (<a href="https://calendly.com/cheyenne-virtualcoworker/30min" target="_blank" rel="noopener">US</a> ·
-          <a href="https://calendly.com/apac-virtualcoworker/30min" target="_blank" rel="noopener">APAC</a>).
-          See <a href="lead-routing.html">Lead Routing</a> ·
-          <a href="launch-control.html">Checklist</a>.
-        </p>
-        <p style="margin-top:0.65rem">
-          <strong>Attribution:</strong>
-          <code>utm_*</code>, <code>gclid</code>, <code>gbraid</code>, <code>wbraid</code>,
-          landing URL, referrer, market, category, variant, submission id —
-          must reach email/CRM and eventually Zoho for offline.
-        </p>
-        <p style="margin-top:0.65rem">
-          <strong>GTM/GA4:</strong> env IDs empty today — paste <code>NEXT_PUBLIC_GTM_US</code> /
-          <code>NEXT_PUBLIC_GA4_US</code> when containers exist. Don’t deploy untested tags.
-          dataLayer aliases ready in vision: <code>form_submit_success</code>, <code>phone_click</code>, <code>calendly_click</code>.
-        </p>
+      <div class="scan-grid" id="at-a-glance">
+        <article class="scan-card open">
+          <p class="k">Prerequisite</p>
+          <h2>Phone routing</h2>
+          <ul>
+            <li><code>310-426-8776</code> → Cheyenne / US sales</li>
+            <li>Missed-call owner · hours · E2E</li>
+            <li>Don’t claim call Primary until this works</li>
+          </ul>
+        </article>
+        <article class="scan-card primary">
+          <p class="k">Primary (after routing)</p>
+          <h2>Phone call conversions</h2>
+          <ul>
+            <li><code>VC_US_Phone_Call_From_Ads</code></li>
+            <li><code>VC_US_Phone_Call_From_Website</code></li>
+            <li>60–90s · Count One · <code>VC_US_*</code> only</li>
+          </ul>
+        </article>
+        <article class="scan-card secondary">
+          <p class="k">Secondary · live delivery</p>
+          <h2>Employer form</h2>
+          <ul>
+            <li>Resend + GitHub already deliver</li>
+            <li>Ads name when mapped: <code>VC_US_Employer_Form_Submit</code></li>
+            <li>Not bidding Primary</li>
+          </ul>
+        </article>
+        <article class="scan-card later">
+          <p class="k">Later</p>
+          <h2>Zoho Qualified offline</h2>
+          <ul>
+            <li>Quality signal with GCLID</li>
+            <li>Not a second Primary for the same raw form</li>
+            <li>No live writes until fields/dupes locked</li>
+          </ul>
+        </article>
       </div>
 
       <section class="panel" id="stack">
         <div class="panel-hd">
-          <p class="kicker">Locked direction</p>
-          <h2>Conversion / CRM stack</h2>
+          <p class="kicker">Order</p>
+          <h2>Conversion ladder</h2>
         </div>
         <div class="panel-bd">
           <ol class="ladder">
             <li>
-              <span class="when now">Now</span>
+              <span class="when now">1</span>
               <div>
-                <strong>Phone routing (prerequisite)</strong>
-                <span><code>310-426-8776</code> → Cheyenne / US sales workflow, missed-call owner, hours, E2E. Raffie = IT; Ash ≠ owner. Don’t claim call Primary live until this works.</span>
+                <strong>Phone routing E2E</strong>
+                <span>Cheyenne workflow. Raffie = IT. Ash ≠ owner.</span>
               </div>
             </li>
             <li>
-              <span class="when">Next</span>
+              <span class="when">2</span>
               <div>
-                <strong>Phone call conversions (Primary)</strong>
-                <span><code>VC_US_Phone_Call_From_Ads</code> + <code>VC_US_Phone_Call_From_Website</code> · 60–90s · Count One · campaign-specific on <code>VC_US_*</code>. <code>tel:</code> click = Secondary micro only.</span>
+                <strong>Call conversions as Primary</strong>
+                <span>Prepare in Ads UI now; attach after routing works. Stay Max Clicks.</span>
               </div>
             </li>
             <li>
-              <span class="when now">Live</span>
+              <span class="when now">3</span>
               <div>
-                <strong>Form delivery (Secondary)</strong>
-                <span>Resend + GitHub live. Ads name when mapped: <code>VC_US_Employer_Form_Submit</code>. dataLayer <code>form_submit_success</code> after durable delivery — not bidding Primary.</span>
+                <strong>Form Secondary / observation</strong>
+                <span>dataLayer <code>form_submit_success</code> after durable delivery.</span>
               </div>
             </li>
             <li>
-              <span class="when">Next</span>
+              <span class="when">4</span>
               <div>
                 <strong>GTM + GA4 + GSC</strong>
-                <span>Paste US container IDs; map events; website-calls via GTM number replace when tested. GSC verify for virtualcoworker.app (George click). Don’t invent “live” if env empty.</span>
+                <span>Paste US container IDs when ready. Don’t deploy untested tags.</span>
               </div>
             </li>
             <li>
-              <span class="when">Later</span>
+              <span class="when">5</span>
               <div>
                 <strong>Zoho Qualified → Ads offline</strong>
-                <span>Discovery/mapping next. No live writes until fields/dupes confirmed. Quality signal with GCLID — not a second Primary for the same raw form.</span>
+                <span>After immediate setup is stable.</span>
               </div>
             </li>
             <li>
               <span class="when">Later</span>
               <div>
                 <strong>Maximize Conversions</strong>
-                <span>Only after new phone (+ optional form Secondary) goals are clean. Never on legacy account actions.</span>
+                <span>Only on new <code>VC_US_*</code> actions — never legacy Zoho/Zapier.</span>
               </div>
             </li>
           </ol>
         </div>
       </section>
 
-      <section class="panel" id="ladder">
+      <section class="panel" id="gtm">
         <div class="panel-hd">
-          <p class="kicker">In order</p>
-          <h2>How we climb</h2>
+          <p class="kicker">Placeholders</p>
+          <h2>GTM / GA4</h2>
         </div>
         <div class="panel-bd">
-          <ol class="ladder">
-            <li>
-              <span class="when now">Now</span>
-              <div>
-                <strong>Maximize Clicks</strong>
-                <span>US live (CORE + ROLES). Manual ST curation is the main job while measurement prep finishes.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when now">Stage 1</span>
-              <div>
-                <strong>Routing → phone Primary → form Secondary</strong>
-                <span>Then GTM call tracking. Zoho Qualified offline after that. Don’t triple-count.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when">Later</span>
-              <div>
-                <strong>Maximize Conversions</strong>
-                <span>Only on the new <code>VC_US_*</code> actions.</span>
-              </div>
-            </li>
-          </ol>
+          <ul class="short-list">
+            <li><strong>Env empty today</strong> — paste <code>NEXT_PUBLIC_GTM_US</code> / <code>NEXT_PUBLIC_GA4_US</code> when containers exist.</li>
+            <li><strong>Separate per market</strong> — don’t share one GTM/GA4 across US + AU.</li>
+            <li><strong>dataLayer ready in vision:</strong> <code>form_submit_success</code> · <code>phone_click</code> · <code>calendly_click</code>.</li>
+            <li><strong>GSC:</strong> verify virtualcoworker.app (George click).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="rules">
+        <div class="panel-hd">
+          <p class="kicker">Don’t break measurement</p>
+          <h2>Rules</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="short-list">
+            <li><strong>One inquiry ≠ two Primaries</strong> — don’t triple-count form + Calendly + Zoho.</li>
+            <li><strong>Calendly secondary</strong> —
+              <a href="https://calendly.com/cheyenne-virtualcoworker/30min" target="_blank" rel="noopener">US</a> ·
+              <a href="https://calendly.com/apac-virtualcoworker/30min" target="_blank" rel="noopener">APAC</a>.</li>
+            <li><strong>Attribution must travel:</strong> <code>utm_*</code>, <code>gclid</code>, <code>gbraid</code>, <code>wbraid</code>, landing URL, referrer, market, category, variant.</li>
+            <li><strong>No legacy Zoho/Zapier</strong> actions attached to new <code>VC_US_*</code>.</li>
+          </ul>
+          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
+            Full steps: <a href="docs/ads-launch/CONVERSION-PLAN.md">CONVERSION-PLAN.md</a> ·
+            <a href="lead-routing.html">Lead Routing</a> ·
+            <a href="launch-control.html">Checklist</a>
+          </p>
         </div>
       </section>
 

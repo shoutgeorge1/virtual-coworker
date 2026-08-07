@@ -24,6 +24,7 @@ from __future__ import annotations
 import csv
 import html
 import json
+import sqlite3
 import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -39,6 +40,15 @@ US_CSV = ADS / "google-ads-editor-import-us.csv"
 AU_CSV = ADS / "google-ads-editor-import-au.csv"
 MANIFEST_US = ADS / "phase1-enable-manifest-us.csv"
 MANIFEST_AU = ADS / "phase1-enable-manifest-au.csv"
+
+# USA account Editor local DB (Get recent changes → then read). No Ads API.
+EDITOR_US_DB = (
+    Path.home()
+    / "Library/Application Support/Google/Google-AdWords-Editor/749/ape_4967151855.db"
+)
+# Editor enums (do not swap): Exact=2, Phrase=1, Broad=0; Enabled=0, Paused=1
+_MATCH = {0: "Broad", 1: "Phrase", 2: "Exact"}
+_STATUS = {0: "Enabled", 1: "Paused"}
 
 ACCOUNT_LABELS = {
     "496-715-1855": "US",
@@ -102,6 +112,115 @@ def _load_holdouts() -> list[str]:
     return list(NEGATIVE_REVIEW_HOLDOUT)
 
 
+def read_live_ops_from_editor(db_path: Path = EDITOR_US_DB) -> dict:
+    """Snapshot VC_US_* keyword reality from local Google Ads Editor DB."""
+    if not db_path.exists():
+        return {
+            "available": False,
+            "note": f"Editor DB not found: {db_path}",
+        }
+    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    camps = con.execute(
+        """
+        SELECT name, status, budgetAmount/1000000.0 AS budget,
+               maxCpcBidCeiling/1000000.0 AS max_cpc
+        FROM Campaign WHERE name LIKE 'VC_%'
+        ORDER BY name
+        """
+    ).fetchall()
+    kw_rows = con.execute(
+        """
+        SELECT c.name AS campaign, k.criterionType, k.status, COUNT(*) AS n
+        FROM Keyword k
+        JOIN AdGroup a ON a.localId = (k.parentId & 0xFFFFFFFF)
+        JOIN Campaign c ON c.localId = (a.parentId & 0xFFFFFFFF)
+        WHERE c.name LIKE 'VC_%'
+        GROUP BY c.name, k.criterionType, k.status
+        ORDER BY c.name, k.criterionType, k.status
+        """
+    ).fetchall()
+    paused_exact = con.execute(
+        """
+        SELECT COUNT(*) FROM Keyword k
+        JOIN AdGroup a ON a.localId = (k.parentId & 0xFFFFFFFF)
+        JOIN Campaign c ON c.localId = (a.parentId & 0xFFFFFFFF)
+        WHERE c.name LIKE 'VC_%' AND k.criterionType = 2 AND k.status = 1
+        """
+    ).fetchone()[0]
+    enabled_exact = con.execute(
+        """
+        SELECT COUNT(*) FROM Keyword k
+        JOIN AdGroup a ON a.localId = (k.parentId & 0xFFFFFFFF)
+        JOIN Campaign c ON c.localId = (a.parentId & 0xFFFFFFFF)
+        WHERE c.name LIKE 'VC_%' AND k.criterionType = 2 AND k.status = 0
+        """
+    ).fetchone()[0]
+    phrase_paused = con.execute(
+        """
+        SELECT COUNT(*) FROM Keyword k
+        JOIN AdGroup a ON a.localId = (k.parentId & 0xFFFFFFFF)
+        JOIN Campaign c ON c.localId = (a.parentId & 0xFFFFFFFF)
+        WHERE c.name LIKE 'VC_%' AND k.criterionType = 1 AND k.status = 1
+        """
+    ).fetchone()[0]
+    phrase_enabled = con.execute(
+        """
+        SELECT COUNT(*) FROM Keyword k
+        JOIN AdGroup a ON a.localId = (k.parentId & 0xFFFFFFFF)
+        JOIN Campaign c ON c.localId = (a.parentId & 0xFFFFFFFF)
+        WHERE c.name LIKE 'VC_%' AND k.criterionType = 1 AND k.status = 0
+        """
+    ).fetchone()[0]
+    mtime = datetime.fromtimestamp(db_path.stat().st_mtime, tz=timezone.utc)
+    campaigns = []
+    for name, status, budget, max_cpc in camps:
+        campaigns.append(
+            {
+                "name": name,
+                "display_name": campaign_display(name),
+                "status": _STATUS.get(status, str(status)),
+                "budget": budget,
+                "max_cpc": max_cpc,
+            }
+        )
+    breakdown = []
+    for camp, ctype, status, n in kw_rows:
+        breakdown.append(
+            {
+                "campaign": camp,
+                "match": _MATCH.get(ctype, str(ctype)),
+                "status": _STATUS.get(status, str(status)),
+                "count": n,
+            }
+        )
+    return {
+        "available": True,
+        "source": str(db_path),
+        "db_mtime_utc": mtime.strftime("%Y-%m-%d %H:%M UTC"),
+        "account": "496-715-1855",
+        "market": "US",
+        "campaigns": campaigns,
+        "keyword_breakdown": breakdown,
+        "counts": {
+            "exact_enabled": enabled_exact,
+            "exact_paused": paused_exact,
+            "phrase_enabled": phrase_enabled,
+            "phrase_paused": phrase_paused,
+        },
+        "policy": {
+            "match": "Exact-only bidding live (all Phrase paused)",
+            "au_mirror": (
+                "AU package mirrors USA pause curation (LIVE_PAUSED + PHRASE_HOLD); "
+                "AU campaigns not live yet"
+            ),
+            "measurement": (
+                "Phone-first after routing works; form Secondary; Zoho Qualified later"
+            ),
+            "brand": "Brand ~$40/day waste control — deferred as strategy center",
+        },
+    }
+
+
 def _read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8", newline="") as f:
         return list(csv.DictReader(f))
@@ -163,10 +282,31 @@ def _tier_counts(path: Path) -> dict[str, int]:
     return dict(sorted(c.items(), key=lambda kv: kv[0]))
 
 
+def _is_campaign_neg(r: dict[str, str]) -> bool:
+    return (r.get("Criterion Type") or "").strip().lower() == "campaign negative"
+
+
+def _is_positive_kw(r: dict[str, str]) -> bool:
+    if (r.get("Row Type") or "") != "Keyword":
+        return False
+    if _is_campaign_neg(r):
+        return False
+    if (r.get("Negative") or "").strip().lower() == "true":
+        return False
+    return (r.get("Criterion Type") or "").strip().lower() in {"exact", "phrase", "broad"}
+
+
 def parse_market(rows: list[dict[str, str]], market: str) -> dict:
     by_type: dict[str, list[dict[str, str]]] = defaultdict(list)
     for r in rows:
         by_type[r.get("Row Type") or ""].append(r)
+
+    campaign_negs = [
+        r
+        for r in rows
+        if _is_campaign_neg(r)
+        or (r.get("Row Type") or "") == "Campaign negative keyword"
+    ]
 
     campaigns = []
     for r in by_type["Campaign"]:
@@ -174,8 +314,8 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
         ads = [a for a in by_type["Ad"] if a["Campaign"] == cname]
         urls = [a["Final URL"] for a in ads if a.get("Final URL")]
         ags = [a for a in by_type["Ad group"] if a["Campaign"] == cname]
-        kws = [k for k in by_type["Keyword"] if k["Campaign"] == cname]
-        negs = [n for n in by_type["Campaign negative keyword"] if n["Campaign"] == cname]
+        kws = [k for k in by_type["Keyword"] if k["Campaign"] == cname and _is_positive_kw(k)]
+        negs = [n for n in campaign_negs if n["Campaign"] == cname]
         campaigns.append(
             {
                 "name": cname,
@@ -206,7 +346,7 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
         kws = [
             k
             for k in by_type["Keyword"]
-            if k["Campaign"] == cname and k["Ad Group"] == ag
+            if k["Campaign"] == cname and k["Ad Group"] == ag and _is_positive_kw(k)
         ]
         ads = [
             a for a in by_type["Ad"] if a["Campaign"] == cname and a["Ad Group"] == ag
@@ -231,6 +371,8 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
 
     keywords = []
     for r in by_type["Keyword"]:
+        if not _is_positive_kw(r):
+            continue
         cname, ag = r["Campaign"], r["Ad Group"]
         keywords.append(
             {
@@ -269,13 +411,11 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
     negatives = sorted(
         {
             (r.get("Keyword") or "").strip()
-            for r in by_type["Campaign negative keyword"]
+            for r in campaign_negs
             if (r.get("Keyword") or "").strip()
         }
     )
-    neg_match = Counter(
-        (r.get("Criterion Type") or "") for r in by_type["Campaign negative keyword"]
-    )
+    neg_match = Counter((r.get("Criterion Type") or "") for r in campaign_negs)
 
     sitelinks = []
     for r in by_type["Sitelink"]:
@@ -344,7 +484,7 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
         "keywords": keywords,
         "rsas": rsas,
         "negatives": negatives,
-        "negative_row_count": len(by_type["Campaign negative keyword"]),
+        "negative_row_count": len(campaign_negs),
         "negative_match_types": dict(neg_match),
         "sitelinks": uniq_sitelinks,
         "sitelink_row_count": len(sitelinks),
@@ -360,17 +500,44 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
             "keywords": len(keywords),
             "rsas": len(rsas),
             "unique_negatives": len(negatives),
-            "negative_rows": len(by_type["Campaign negative keyword"]),
+            "negative_rows": len(campaign_negs),
         },
+    }
+
+
+def _csv_pause_counts(rows: list[dict[str, str]]) -> dict[str, int]:
+    """Counts from package CSV comments / match types (import still all Paused)."""
+    live_paused = 0
+    phrase = 0
+    exact = 0
+    for r in rows:
+        if not _is_positive_kw(r):
+            continue
+        mt = (r.get("Criterion Type") or "").strip()
+        if mt == "Phrase":
+            phrase += 1
+        elif mt == "Exact":
+            exact += 1
+        if "VC_Keywords_Paused_Live" in (r.get("Comment") or ""):
+            live_paused += 1
+    return {
+        "exact_rows": exact,
+        "phrase_rows": phrase,
+        "live_paused_tagged": live_paused,
     }
 
 
 def build_package() -> dict:
     holdouts = _load_holdouts()
-    us = parse_market(_read_csv(US_CSV), "US")
-    au = parse_market(_read_csv(AU_CSV), "AU")
+    us_rows = _read_csv(US_CSV)
+    au_rows = _read_csv(AU_CSV)
+    us = parse_market(us_rows, "US")
+    au = parse_market(au_rows, "AU")
     tiers_us = _tier_counts(MANIFEST_US)
     tiers_au = _tier_counts(MANIFEST_AU)
+    live = read_live_ops_from_editor()
+    us_pause = _csv_pause_counts(us_rows)
+    au_pause = _csv_pause_counts(au_rows)
 
     name_map = {
         "note": (
@@ -393,10 +560,24 @@ def build_package() -> dict:
             str(AU_CSV.relative_to(ROOT)),
         ],
         "display_name_map": name_map,
+        "live_ops": live,
+        "package_curation": {
+            "us": us_pause,
+            "au": au_pause,
+            "note": (
+                "Editor import CSVs still ship every row Paused (Import ≠ Enable). "
+                "LIVE_PAUSED tags + PHRASE_HOLD tiers mirror USA Editor curation "
+                "so AU does not re-enable junk later."
+            ),
+        },
         "safety": {
             "status": "Paused",
-            "banner": "Paused · SAFE TO IMPORT FOR REVIEW · NOT SAFE FOR PAID TRAFFIC",
-            "note": "Import ≠ Post ≠ Enable. Package ships Paused. Do not Enable until TRAFFIC READY + explicit approval.",
+            "banner": "CSV package · all Paused · SAFE TO IMPORT FOR REVIEW",
+            "note": (
+                "Import ≠ Post ≠ Enable. Live USA VC_* is already spending "
+                "(see Live ops). Do not bulk-Enable CSV rows that are LIVE_PAUSED "
+                "or PHRASE_HOLD."
+            ),
         },
         "holdouts": {
             "label": "Commercial / employer-research holdouts (NOT in import CSVs)",
@@ -441,6 +622,59 @@ def _esc(s: object) -> str:
     return html.escape("" if s is None else str(s), quote=True)
 
 
+def _live_ops_html(live: dict, curation: dict) -> str:
+    if not live.get("available"):
+        return (
+            "<div class='notice' style='margin-top:1rem'>"
+            f"<p><strong>Live ops:</strong> {_esc(live.get('note') or 'Editor DB unavailable')}</p>"
+            "</div>"
+        )
+    counts = live.get("counts") or {}
+    policy = live.get("policy") or {}
+    camp_lis = "".join(
+        "<li><strong>{dn}</strong> · {st} · ${b:.0f}/day · max CPC ${c:.0f}</li>".format(
+            dn=_esc(c.get("display_name") or c["name"]),
+            st=_esc(c.get("status")),
+            b=float(c.get("budget") or 0),
+            c=float(c.get("max_cpc") or 0),
+        )
+        for c in live.get("campaigns") or []
+    )
+    us_c = curation.get("us") or {}
+    au_c = curation.get("au") or {}
+    return f"""
+      <section class="panel" id="live-ops" style="margin-top:1rem;border-color:var(--tint-teal-edge)">
+        <div class="panel-hd" style="background:var(--tint-teal-hd)">
+          <p class="kicker">USA Editor DB · {_esc(live.get('db_mtime_utc'))}</p>
+          <h2>Live ops (what’s actually spending)</h2>
+          <span class="badge badge-ok">US live</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="short-bullets">
+            <li><strong>Campaigns:</strong></li>
+          </ul>
+          <ul class="short-bullets" style="margin-top:0">{camp_lis}</ul>
+          <ul class="short-bullets" style="margin-top:0.65rem">
+            <li><strong>Exact Enabled:</strong> {counts.get('exact_enabled', '—')} ·
+              <strong>Exact Paused:</strong> {counts.get('exact_paused', '—')}</li>
+            <li><strong>Phrase:</strong> {counts.get('phrase_paused', '—')} paused ·
+              {counts.get('phrase_enabled', 0)} enabled
+              <span class="dim">({_esc(policy.get('match', 'Exact-only'))})</span></li>
+            <li><strong>AU package:</strong> {_esc(policy.get('au_mirror', ''))}</li>
+            <li><strong>Measurement:</strong> {_esc(policy.get('measurement', ''))}</li>
+            <li class="dim">{_esc(policy.get('brand', ''))}</li>
+          </ul>
+          <p class="muted" style="margin:0.75rem 0 0;font-size:0.86rem">
+            Package CSV tags (still all Paused for import):
+            US LIVE_PAUSED rows <strong>{us_c.get('live_paused_tagged', '—')}</strong> ·
+            AU <strong>{au_c.get('live_paused_tagged', '—')}</strong>
+            (mirrored). Phrase → PHRASE_HOLD in enable manifests.
+          </p>
+        </div>
+      </section>
+    """
+
+
 def render_html(pkg: dict) -> str:
     data_json = json.dumps(pkg, ensure_ascii=False, separators=(",", ":"))
     t = pkg["totals"]
@@ -448,12 +682,30 @@ def render_html(pkg: dict) -> str:
     holdouts = pkg["holdouts"]["terms"]
     tiers_us = pkg["phase1_tiers"]["us"]
     tiers_au = pkg["phase1_tiers"]["au"]
+    live = pkg.get("live_ops") or {}
+    curation = pkg.get("package_curation") or {}
+    live_html = _live_ops_html(live, curation)
 
-    # Campaign rows (static table — small)
+    # Campaign rows — package CSV status + live note for US
+    live_by_name = {
+        c["name"]: c for c in (live.get("campaigns") or []) if live.get("available")
+    }
     camp_rows = []
     for mkt in ("US", "AU"):
         for c in pkg["markets"][mkt]["campaigns"]:
             dname = c.get("display_name") or campaign_display(c["name"])
+            live_c = live_by_name.get(c["name"])
+            if live_c:
+                st_badge = (
+                    f"<span class='badge badge-ok'>{_esc(live_c['status'])} live</span>"
+                    f"<br /><span class='dim'>CSV import: Paused</span>"
+                )
+                max_cpc = live_c.get("max_cpc") or c["max_cpc"]
+            else:
+                st_badge = "<span class='badge badge-high'>Paused</span>"
+                if mkt == "AU":
+                    st_badge += "<br /><span class='dim'>not live · mirrors US pauses</span>"
+                max_cpc = c["max_cpc"]
             camp_rows.append(
                 "<tr>"
                 f"<td><span class='name-display'>{_esc(dname)}</span>"
@@ -461,8 +713,8 @@ def render_html(pkg: dict) -> str:
                 f"<td>{_esc(c['account'])}<br /><span class='dim'>{_esc(c['account_id'])}</span></td>"
                 f"<td>${_esc(c['budget'])} {_esc(c['budget_type']).lower()}</td>"
                 f"<td>{_esc(c['bid_strategy'])}</td>"
-                f"<td>${_esc(c['max_cpc'])}</td>"
-                f"<td><span class='badge badge-high'>Paused</span></td>"
+                f"<td>${_esc(max_cpc)}</td>"
+                f"<td>{st_badge}</td>"
                 f"<td><code class='url'>{_esc(c['final_url_pattern'])}</code></td>"
                 f"<td class='num'>{c['ad_group_count']}</td>"
                 f"<td class='num'>{c['keyword_count']}</td>"
@@ -772,20 +1024,36 @@ def render_html(pkg: dict) -> str:
       flex: 1 1 auto;
       min-width: 10rem;
     }}
+    .short-bullets {{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }}
+    .short-bullets li {{
+      padding: 0.28rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }}
+    .short-bullets li:last-child {{ border-bottom: none; }}
+    .badge-ok {{
+      background: var(--tint-green-hd);
+      border: 1px solid var(--tint-green-edge);
+      color: var(--ink);
+    }}
   </style>
 </head>
-<body data-page="ads-package.html" data-foot="Stage 1 Editor package<br />Paused · review only">
+<body data-page="ads-package.html" data-foot="US live Exact-only<br />AU mirrors pauses · CSV Paused">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Stage 1 · Editor CSV snapshot · {_esc(pkg['generated_at'])}</p>
+        <p class="kicker">Live USA Editor + Stage 1 CSV · {_esc(pkg['generated_at'])}</p>
         <h1>Ads package</h1>
         <p>
-          Campaigns, ad groups, keywords, RSAs, negatives, and assets from the current
-          Paused Editor import — so you can review without opening Google Ads.
-          Friendly names up front; Editor IDs stay in mono for import accuracy.
-          Regenerated from <code>google-ads-editor-import-us.csv</code> + <code>-au.csv</code>.
+          Top = what’s live in USA Ads (from local Editor DB). Below = Paused
+          import CSVs for review / AU mirror. Exact-only bidding; junk Exact + all
+          Phrase stay Paused so AU import doesn’t re-enable them.
         </p>
       </header>
 
@@ -794,26 +1062,28 @@ def render_html(pkg: dict) -> str:
         <p>{_esc(pkg['safety']['note'])}</p>
       </div>
 
+      {live_html}
+
       <div class="stats stats-4" style="margin-top:1rem;border:1px solid var(--tint-teal-edge);border-radius:8px;overflow:hidden">
         <div class="stat">
           <p class="lbl">Campaigns</p>
           <p class="val">{t['campaigns']}</p>
-          <p class="sub">US + AU · all Paused</p>
+          <p class="sub">US live · AU paused</p>
         </div>
         <div class="stat">
           <p class="lbl">Keywords</p>
           <p class="val">{t['keywords']}</p>
-          <p class="sub">{us['counts']['keywords']} per market</p>
+          <p class="sub">{us['counts']['keywords']} per market CSV</p>
         </div>
         <div class="stat">
-          <p class="lbl">RSAs</p>
-          <p class="val">{t['rsas']}</p>
-          <p class="sub">15H / 4D target</p>
+          <p class="lbl">Exact live</p>
+          <p class="val">{(live.get('counts') or {}).get('exact_enabled', '—')}</p>
+          <p class="sub">{(live.get('counts') or {}).get('exact_paused', '—')} Exact paused</p>
         </div>
         <div class="stat">
-          <p class="lbl">Negatives</p>
-          <p class="val">{t['unique_negatives_per_market']}</p>
-          <p class="sub">+ {t['holdouts']} holdouts out</p>
+          <p class="lbl">Phrase</p>
+          <p class="val">{(live.get('counts') or {}).get('phrase_paused', '—')}</p>
+          <p class="sub">all paused · Exact-only</p>
         </div>
       </div>
 

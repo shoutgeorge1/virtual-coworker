@@ -9,8 +9,11 @@ OPERATING RULE (locked): Existing account remains unchanged.
   New VC_* campaigns are a separate Stage 1 system. This builder emits ONLY:
   - new Paused VC_* campaigns (never PM_*)
   - campaign-level negatives from the curated NEGATIVES list below
+  - a clearly labeled live job-seeker cohort (VC_Neg_JobSeekers_Live) for
+    VC_US_* only — Phrase campaign negatives with a distinct Comment, not
+    mixed into the curated Stage1 blob and not PM_* shared mega lists
   It does NOT pull, attach, or reference account shared / PM_* mega
-  negative lists (some 3000+ terms). Do not add shared-list rows here.
+  negative lists (some 3000+ terms). Do not attach PM_* shared lists.
 
 RSA: 3 unique full RSAs (15H/4D) per main AG — hire-intent / role-outcome or
 PH-offshore / proof-speed-of-staffing angles from ST evidence. City-test AGs
@@ -29,6 +32,7 @@ Outputs:
   - ads-launch/phase1-enable-manifest-us.csv / -au.csv (review tiers; all Paused)
   - ads-launch/PHASE1-REVIEW.md
   - ads-launch/EDITOR-PREFLIGHT-REPORT.md
+  - ads-launch/VC-KEYWORDS-PAUSED-LIVE.md (George live-paused positives; keep Paused)
   - mirrors into xray/docs/ads-launch/
 """
 
@@ -79,7 +83,11 @@ BUDGET_DAILY = {
     "US": {"core": "75", "roles": "50"},  # USD
     "AU": {"core": "75", "roles": "50"},  # AUD
 }
-MAX_CPC = {"US": "8", "AU": "6"}  # USD / AUD
+# Live USA Editor (2026-08-07): CORE ceiling $12, ROLES $8. AU stays conservative.
+MAX_CPC = {
+    "US": {"core": "12", "roles": "8"},  # USD
+    "AU": {"core": "6", "roles": "6"},  # AUD
+}
 
 # Editor multi-account import — Customer IDs in XXX-XXX-XXXX format.
 # Column name must be "Account" (Google Ads Editor). Required so USA+AU
@@ -155,6 +163,8 @@ EMPLOYER_RESEARCH_CANARIES = (
     "cheap virtual assistant philippines for hire",
     "top 10 virtual assistant companies for agencies",
     "filipina va for bookkeeping hire",
+    # Employer shorthand (live US ST 2026-08-06) — never Broad-neg "workers"
+    "va workers ph",
 )
 
 FIELDS = [
@@ -213,12 +223,29 @@ FIELDS = [
 ]
 
 # Campaign-level Broad negatives — curated Stage 1 set only (tight).
-# Applied per VC_* campaign as "Campaign negative keyword" rows.
+# Applied per VC_* campaign as Keyword rows with Criterion Type = Campaign negative.
+# (Do NOT use Row Type "Campaign negative keyword" + Criterion Type Broad — Editor
+# mis-reads that and spawns blank ad groups to hold the negatives.)
 # NEVER inherit account shared / PM_* mega lists into this package.
 # Never bare hire/hiring. Do NOT blanket-neg "how to" (blocks converting
 # "how to hire a virtual assistant"); use specific DIY how-tos instead.
 # Soft cap: keep this curated, not a 3k dump. QA fails if unique > MAX.
 MAX_UNIQUE_NEGATIVES = 220
+
+
+def is_campaign_negative_row(r: dict[str, str]) -> bool:
+    return (r.get("Criterion Type") or "").strip().lower() == "campaign negative"
+
+
+def is_positive_keyword_row(r: dict[str, str]) -> bool:
+    if (r.get("Row Type") or "") != "Keyword":
+        return False
+    if is_campaign_negative_row(r):
+        return False
+    if (r.get("Negative") or "").strip().lower() == "true":
+        return False
+    return (r.get("Criterion Type") or "").strip().lower() in {"exact", "phrase", "broad"}
+
 NEGATIVES = [
     # Job seeker (ST: VA jobs $723, salary $270+, AU jobs $426, PH salary $231)
     "job",
@@ -281,6 +308,8 @@ NEGATIVES = [
     "va philippines jobs",
     "how much do virtual assistants make",
     "bookkeeper philippines salary",
+    # NOTE: do NOT Broad-neg bare "workers" — "va workers ph" is employer shorthand
+    # (George 2026-08-06). Live WFH/job-seeker Phrase cohort is VC_Neg_JobSeekers_Live.
     # WFH fluff (ST: work from home $448; receptionist/WFH variants)
     "work from home",
     "wfh",
@@ -412,6 +441,339 @@ NEGATIVES = [
 _HOLDOUT_SET = {t.lower() for t in NEGATIVE_REVIEW_HOLDOUT}
 NEGATIVES = [n for n in NEGATIVES if n.lower() not in _HOLDOUT_SET]
 assert not any(n.lower() in _HOLDOUT_SET for n in NEGATIVES)
+assert "workers" not in {n.lower() for n in NEGATIVES}, (
+    "bare 'workers' must not be a Stage1 Broad negative "
+    "(blocks employer shorthand 'va workers ph')"
+)
+
+# Named live cohort — job-seeker / WFH junk from USA search_term_view 2026-08-06.
+# Logical list name for Editor spotting (Comment filter / docs). Emitted as
+# Phrase campaign negatives on VC_US_* only — NOT merged into curated NEGATIVES
+# comments, and NOT account shared / PM_* mega lists (Editor shared-list CSV
+# shape not used here; campaign-neg shape is the proven import path).
+VC_NEG_JOBSEEKERS_LIVE_NAME = "VC_Neg_JobSeekers_Live"
+VC_NEG_JOBSEEKERS_LIVE_TOPIC = (
+    "job-seeker / WFH junk from live US search terms (2026-08-06)"
+)
+# (keyword_text, match) — Phrase preferred; text is bare (quotes added at emit).
+VC_NEG_JOBSEEKERS_LIVE: list[tuple[str, str]] = [
+    ("work as", "Phrase"),
+    ("work from home customer service", "Phrase"),
+    ("work from home customer service representative", "Phrase"),
+    ("work from home virtual assistant", "Phrase"),
+    ("work from home social media manager", "Phrase"),
+    ("work from home representative", "Phrase"),
+    ("customer service work from home", "Phrase"),
+    ("customer support representative work from home", "Phrase"),
+    ("customer service representative wfh", "Phrase"),
+    ("virtual assistant work from home", "Phrase"),
+    ("work as customer service from home", "Phrase"),
+]
+assert all(mt == "Phrase" for _, mt in VC_NEG_JOBSEEKERS_LIVE)
+assert "workers" not in {t.lower() for t, _ in VC_NEG_JOBSEEKERS_LIVE}
+
+# Named live cohort — positives paused in live USA Editor (Exact status=Paused).
+# Source: ape_4967151855 Keyword table (criterionType Exact=2, status Paused=1).
+# Kept in package as Keyword Status=Paused (not deleted). Same texts paused in AU
+# when present. Exact normalized text match only. Aliases not in package kept for
+# auto-pause if added later. Phrase match type is held separately (Exact-only live).
+VC_KEYWORDS_PAUSED_LIVE_NAME = "VC_Keywords_Paused_Live"
+VC_KEYWORDS_PAUSED_LIVE_DATE = "2026-08-07"
+VC_KEYWORDS_PAUSED_LIVE_REASON = (
+    "George paused live USA Exact junk/general/job-seeker-y terms; "
+    "synced from Editor DB ape_4967151855 (Get recent changes). "
+    "Phrase stays paused (Exact-only bidding)."
+)
+# Canonical texts (lowercase, punctuation collapsed). Include aliases George named
+# even if not currently in the package (auto-pause if added later).
+LIVE_PAUSED_KEYWORD_TEXTS: frozenset[str] = frozenset(
+    {
+        "accounting support outsourcing philippines",
+        "customer service hire",
+        "customer service staff philippines hire",
+        "customer support staff philippines",
+        "dedicated bookkeeper philippines",
+        "dedicated books staff philippines",
+        "dedicated cs representative philippines",
+        "dedicated digital marketing va philippines",
+        "dedicated executive assistant philippines",
+        "dedicated hr staff philippines",
+        "dedicated hr va philippines",
+        "dedicated lead gen staff philippines",
+        "dedicated marketing staff philippines",
+        "dedicated recruiting staff philippines",
+        "dedicated recruiting va philippines",
+        "dedicated sales va philippines",
+        "dedicated social media staff philippines",
+        "dedicated social media va philippines",
+        "dedicated support staff philippines",
+        "digital marketing agency alternative philippines",
+        "digital marketing staff philippines",
+        "filipino accounting team for hire",
+        "filipino ap specialist hire",
+        "filipino bookkeeping specialist hire",
+        "filipino bookkeeping team for hire",
+        "filipino call support staff hire",
+        "filipino community manager hire",
+        "filipino customer support hire",
+        "filipino digital marketing manager",
+        "filipino digital marketing specialist",
+        "filipino digital marketing va",
+        "filipino digital marketing virtual assistant",
+        "filipino finance ops outsourcing",
+        "filipino hr assistant",
+        "filipino hr coordinator hire",
+        "filipino hr team for hire",
+        "filipino human resources assistant",
+        "filipino lead generation specialist",
+        "filipino marketing team for hire",
+        "filipino marketing virtual assistant",
+        "filipino payroll support hire",
+        "filipino pipeline support hire",
+        "filipino ppc virtual assistant",
+        "filipino quickbooks virtual assistant",
+        "filipino recruiting coordinator hire",
+        "filipino recruiting team for hire",
+        "filipino recruitment assistant",
+        "filipino recruitment staff",
+        "filipino sales assistant",
+        "filipino sales team for hire",
+        "filipino social media specialist",
+        "filipino social media team for hire",
+        "filipino staff accountant hire",
+        "filipino support team for hire",
+        "filipino talent acquisition va",
+        "filipino virtual bookkeeper",
+        "filipino virtual executive assistant",
+        "filipino virtual hr assistant",
+        "find filipino accountant for business",
+        "hire a filipino accountant",
+        "hire a filipino bookkeeper",
+        "hire a recruitment assistant",
+        "hire a social media manager",
+        "hire a va",
+        "hire accounts payable philippines",
+        "hire accounts receivable philippines",
+        "hire appointment setter philippines",
+        "hire b2b lead gen va philippines",
+        "hire benefits admin philippines",
+        "hire bilingual english support philippines",
+        "hire candidate coordination philippines",
+        "hire chat support philippines",
+        "hire content marketing va philippines",
+        "hire content scheduler philippines",
+        "hire email marketing va philippines",
+        "hire facebook ads va philippines",
+        "hire filipino accounting va",
+        "hire filipino administrative assistant",
+        "hire filipino appointment setter",
+        "hire filipino customer service representative",
+        "hire filipino digital marketing manager",
+        "hire filipino ea",
+        "hire filipino hr assistant",
+        "hire filipino lead generation specialist",
+        "hire filipino recruitment assistant",
+        "hire filipino social media va",
+        "hire hr assistant philippines",
+        "hire hr coordinator philippines",
+        "hire human resources assistant philippines",
+        "hire instagram virtual assistant philippines",
+        "hire lead generation va philippines",
+        "hire lead research va philippines",
+        "hire offshore bookkeeping va",
+        "hire offshore digital marketing va",
+        "hire onboarding assistant philippines",
+        "hire outbound sales va philippines",
+        "hire outsourced appointment setter",
+        "hire outsourced hr assistant",
+        "hire outsourced recruitment assistant",
+        "hire outsourced social media manager",
+        "hire payroll accountant philippines",
+        "hire payroll assistant philippines",
+        "hire people ops assistant philippines",
+        "hire philippines accounting assistant",
+        "hire philippines admin support",
+        "hire philippines bookkeeping va",
+        "hire philippines hr admin",
+        "hire philippines sdr assistant",
+        "hire philippines sourcing assistant",
+        "hire quickbooks bookkeeper philippines",
+        "hire recruiter assistant philippines",
+        "hire recruiting assistant philippines",
+        "hire recruitment assistant philippines",
+        "hire remote customer service philippines",
+        "hire remote hr staff",
+        "hire screening assistant philippines",
+        "hire seo virtual assistant philippines",
+        "hire talent acquisition assistant philippines",
+        "hire va",
+        "hire virtual accountant philippines",
+        "hire virtual bookkeeper philippines",
+        "hire virtual people ops assistant",
+        "hire virtual recruiting ops assistant",
+        "hire virtual recruitment assistant",
+        "hire weekly bookkeeper philippines",
+        "hire xero bookkeeper philippines",
+        "hr ops outsourcing philippines",
+        "hr staffing philippines",
+        "human resources assistant philippines",
+        "live chat support agent philippines",
+        "marketing ops outsourcing philippines",
+        "offshore ap ar staff philippines",
+        "offshore bdr support philippines",
+        "offshore books management philippines",
+        "offshore content and social va",
+        "offshore customer care philippines",
+        "offshore hr assistant",
+        "offshore hr coordination philippines",
+        "offshore marketing staff philippines",
+        "offshore people ops philippines",
+        "offshore recruitment assistant",
+        "offshore sales assistant philippines",
+        "offshore smm specialist",
+        "offshore social media philippines",
+        "offshore sourcer philippines",
+        "offshore support agent philippines",
+        "offshore ta support philippines",
+        "online filipino accountant hire",
+        "online filipino bookkeeper hire",
+        "outsource accounts bookkeeping philippines",
+        "outsource ats admin philippines",
+        "outsource bookkeeping accounting philippines",
+        "outsource brand social media philippines",
+        "outsource campaign management philippines",
+        "outsource candidate screening philippines",
+        "outsource cold outreach support ph",
+        "outsource community management philippines",
+        "outsource content marketing philippines",
+        "outsource content posting philippines",
+        "outsource crm sales admin philippines",
+        "outsource digital marketing to philippines",
+        "outsource employee onboarding philippines",
+        "outsource finance ops philippines",
+        "outsource general ledger philippines",
+        "outsource helpdesk philippines",
+        "outsource hr administration philippines",
+        "outsource hr documentation philippines",
+        "outsource human resources philippines",
+        "outsource inbox support philippines",
+        "outsource interview scheduling philippines",
+        "outsource leave admin philippines",
+        "outsource linkedin management philippines",
+        "outsource list building philippines",
+        "outsource marketing operations philippines",
+        "outsource payroll admin philippines",
+        "outsource ppc management philippines",
+        "outsource prospecting philippines",
+        "outsource quickbooks bookkeeping philippines",
+        "outsource reconciliation support philippines",
+        "outsource recruiter coordination philippines",
+        "outsource recruitment support philippines",
+        "outsource talent sourcing philippines",
+        "outsource ticket support philippines",
+        "outsource xero bookkeeping philippines",
+        "people ops staffing philippines",
+        "philippines accounting services for smbs",
+        "philippines bookkeeping ops staff",
+        "philippines digital marketing support staff",
+        "philippines english support outsourcing",
+        "philippines hr support hire",
+        "philippines human resources support staff",
+        "philippines recruiting outsourcing",
+        "philippines recruitment process support",
+        "philippines remote accounting support",
+        "philippines remote admin hire",
+        "philippines remote bookkeeping support",
+        "philippines remote hr support",
+        "philippines remote marketing hire",
+        "philippines remote recruiting support",
+        "philippines remote sdr support",
+        "philippines remote smm hire",
+        "philippines sales development staffing",
+        "philippines social media management staff",
+        "philippines ta assistant hire",
+        "philippines virtual bookkeeper for smbs",
+        "pipeline support staffing philippines",
+        "recruiting ops outsourcing philippines",
+        "remote accounting team philippines",
+        "remote bookkeeping team philippines",
+        "remote books assistant philippines",
+        "remote customer care team philippines",
+        "remote customer support agent philippines",
+        "remote general administrative assistant philippines",
+        "remote hr assistant philippines",
+        "remote hr coordinator philippines",
+        "remote hr team philippines",
+        "remote marketing team philippines",
+        "remote month end books philippines",
+        "remote outbound team philippines",
+        "remote people ops va philippines",
+        "remote recruiting coordinator philippines",
+        "remote recruitment assistant philippines",
+        "remote sales support philippines",
+        "remote social media team philippines",
+        "remote sourcing team philippines",
+        "sales ops outsourcing philippines",
+        "smb bookkeeping outsourcing philippines",
+        "smb customer support outsourcing ph",
+        "smb hr admin outsourcing philippines",
+        "smb lead gen outsourcing philippines",
+        "smb recruiting support outsourcing ph",
+        "social media ops outsourcing philippines",
+        "social media staff philippines",
+        "social media support staff philippines",
+        "support ops staffing philippines",
+        "talent ops staffing philippines",
+        "talent sourcing assistant philippines",
+        "va agencies",
+        "va agency",
+        "va for hire",
+        "va services",
+        "virtual administrative support philippines",
+        "virtual assistance",
+        "virtual assistant",
+        "virtual assistants",
+        "virtual coworker pricing",
+        "virtual coworker reviews",
+        "virtual coworker staffing",
+        "virtual customer service agent",
+        "virtual customer service representative",
+        "virtual digital marketing manager philippines",
+        "virtual lead generation philippines",
+        "virtual recruiting assistant philippines",
+    }
+)
+
+
+def norm_keyword_text(text: str) -> str:
+    """Lowercase + collapse non-alnum to spaces for flexible keyword matching."""
+    return re.sub(r"[^a-z0-9]+", " ", (text or "").lower()).strip()
+
+
+def is_live_paused_keyword(text: str) -> bool:
+    return norm_keyword_text(text) in LIVE_PAUSED_KEYWORD_TEXTS
+
+
+def is_live_paused_keyword_row(r: dict[str, str]) -> bool:
+    return VC_KEYWORDS_PAUSED_LIVE_NAME in (r.get("Comment") or "")
+
+
+def is_live_jobseeker_neg_row(r: dict[str, str]) -> bool:
+    return VC_NEG_JOBSEEKERS_LIVE_NAME in (r.get("Comment") or "")
+
+
+def phrase_neg_keyword(text: str) -> str:
+    """Editor Phrase campaign negative: quoted keyword text."""
+    bare = text.strip().strip('"')
+    return f'"{bare}"'
+
+
+def live_paused_keyword_comment(*, match_label: str) -> str:
+    return (
+        f"{VC_KEYWORDS_PAUSED_LIVE_NAME} · {VC_KEYWORDS_PAUSED_LIVE_REASON} "
+        f"({VC_KEYWORDS_PAUSED_LIVE_DATE}); was {match_label}"
+    )
+
 
 ROLES = [
     "digital_marketing",
@@ -3139,29 +3501,41 @@ def append_negatives_assets(
 ) -> None:
     for neg in NEGATIVES:
         r = blank_row()
+        # Minimal campaign-negative shape per Google Ads Editor CSV docs:
+        # Criterion Type = "Campaign negative", Ad Group blank, bare keyword = Broad.
         r.update(
             {
-                "Row Type": "Campaign negative keyword",
+                "Row Type": "Keyword",
                 "Campaign": cname,
-                "Campaign Type": "Search",
-                "Campaign Status": "Paused",
-                "Budget type": "Daily",
-                "Bid Strategy Type": "Maximize Clicks",
-                "Networks": "Google Search",
-                "Languages": "en",
-                "Location options": "Presence",
-                "Tracking template": TRACK,
-                "Final URL suffix": SUFFIX,
                 "Keyword": neg,
-                "Criterion Type": "Broad",
-                "Negative": "True",
+                "Criterion Type": "Campaign negative",
                 "Comment": (
-                    "VC-only curated Stage1 neg; NOT account shared / PM_* mega list; "
-                    "repeated per campaign (Editor requirement)"
+                    "VC-only curated Stage1 campaign neg; NOT account shared / PM_* "
+                    "mega list; repeated per campaign (Editor requirement)"
                 ),
             }
         )
         rows.append(r)
+
+    # Live job-seeker cohort — US only, Phrase, clearly labeled (not Stage1 blob).
+    if cname.startswith("VC_US_"):
+        for term, match in VC_NEG_JOBSEEKERS_LIVE:
+            kw = phrase_neg_keyword(term) if match == "Phrase" else term
+            r = blank_row()
+            r.update(
+                {
+                    "Row Type": "Keyword",
+                    "Campaign": cname,
+                    "Keyword": kw,
+                    "Criterion Type": "Campaign negative",
+                    "Comment": (
+                        f"{VC_NEG_JOBSEEKERS_LIVE_NAME} · {VC_NEG_JOBSEEKERS_LIVE_TOPIC}; "
+                        f"{match} campaign neg on VC_US_* only; NOT Stage1 curated blob; "
+                        "NOT account shared / PM_* mega list"
+                    ),
+                }
+            )
+            rows.append(r)
 
     for callout in [
         "Vetted Filipino Talent",
@@ -3248,6 +3622,7 @@ def append_kw_rows(
         if key in seen_exact:
             continue
         seen_exact.add(key)
+        live_paused = is_live_paused_keyword(kw)
         r = blank_row()
         r.update(
             {
@@ -3267,7 +3642,11 @@ def append_kw_rows(
                 "Keyword": kw,
                 "Criterion Type": "Exact",
                 "Keyword Status": "Paused",
-                "Comment": "v6 Exact — ST evidence + employer long-tail",
+                "Comment": (
+                    live_paused_keyword_comment(match_label="Exact")
+                    if live_paused
+                    else "v6 Exact — ST evidence + employer long-tail"
+                ),
             }
         )
         rows.append(r)
@@ -3278,6 +3657,7 @@ def append_kw_rows(
         if key in seen_phrase:
             continue
         seen_phrase.add(key)
+        live_paused = is_live_paused_keyword(kw)
         r = blank_row()
         r.update(
             {
@@ -3297,7 +3677,11 @@ def append_kw_rows(
                 "Keyword": kw,
                 "Criterion Type": "Phrase",
                 "Keyword Status": "Paused",
-                "Comment": "v6 Phrase — discovery from converting ST clusters",
+                "Comment": (
+                    live_paused_keyword_comment(match_label="Phrase")
+                    if live_paused
+                    else "v6 Phrase — discovery from converting ST clusters"
+                ),
             }
         )
         rows.append(r)
@@ -3806,15 +4190,25 @@ def apply_budget_cpc_defaults(rows: list[dict[str, str]]) -> None:
             r["Maximum CPC bid limit"] = ""
             r["Tracking template"] = ""
             r["Final URL suffix"] = ""
+            # Language/geo belong on the campaign only. Stamping Languages on
+            # ad groups makes Editor error: "Ad group level languages are not
+            # allowed in a campaign with location and language targeting…"
+            r["Languages"] = ""
+            r["Location"] = ""
             continue
-        r["Maximum CPC bid limit"] = MAX_CPC[mkt]
         budgets = BUDGET_DAILY[mkt]
+        cpc = MAX_CPC[mkt]
         if cname.endswith("_S_CORE"):
             r["Budget"] = budgets["core"]
+            r["Maximum CPC bid limit"] = cpc["core"]
         elif cname.endswith("_S_ROLES"):
             r["Budget"] = budgets["roles"]
+            r["Maximum CPC bid limit"] = cpc["roles"]
         elif r.get("Budget", "").startswith("[APPROVAL_"):
             r["Budget"] = budgets["roles"]
+            r["Maximum CPC bid limit"] = cpc["roles"]
+        else:
+            r["Maximum CPC bid limit"] = cpc["roles"]
 
 
 def _tokens(text: str) -> list[str]:
@@ -3864,7 +4258,12 @@ _STRONG_PH_INTENT_RE = re.compile(
 
 def classify_enable_tier(keyword: str, match_type: str, campaign: str) -> str:
     kw = keyword.strip()
+    if is_live_paused_keyword(kw):
+        return "LIVE_PAUSED"
     mt = (match_type or "").strip()
+    # Live USA: Exact-only bidding — all Phrase paused. Keep out of enable ladder.
+    if mt == "Phrase":
+        return "PHRASE_HOLD"
     ph = bool(_PH_GEO_RE.search(kw))
     strong = bool(_STRONG_PH_INTENT_RE.search(kw))
     is_core = campaign.endswith("_S_CORE")
@@ -3891,6 +4290,7 @@ MANIFEST_FIELDS = [
 OUT_MANIFEST_US = ROOT / "ads-launch" / "phase1-enable-manifest-us.csv"
 OUT_MANIFEST_AU = ROOT / "ads-launch" / "phase1-enable-manifest-au.csv"
 PHASE1_REVIEW = ROOT / "ads-launch" / "PHASE1-REVIEW.md"
+LIVE_PAUSED_DOC = ROOT / "ads-launch" / "VC-KEYWORDS-PAUSED-LIVE.md"
 
 
 def qa(rows: list[dict[str, str]]) -> None:
@@ -3921,9 +4321,18 @@ def qa(rows: list[dict[str, str]]) -> None:
         cap = (r.get("Maximum CPC bid limit") or "").strip()
         if r["Row Type"] == "Campaign":
             mkt = market_from_campaign(r["Campaign"])
-            if not mkt or cap != MAX_CPC[mkt]:
+            cname = r["Campaign"]
+            if not mkt:
+                raise SystemExit(f"Campaign {cname} unknown market")
+            expect = (
+                MAX_CPC[mkt]["core"]
+                if cname.endswith("_S_CORE")
+                else MAX_CPC[mkt]["roles"]
+            )
+            if cap != expect:
                 raise SystemExit(
-                    f"Campaign {r['Campaign']} bad Maximum CPC bid limit={cap!r}"
+                    f"Campaign {cname} bad Maximum CPC bid limit={cap!r} "
+                    f"(expected {expect!r})"
                 )
         elif cap:
             raise SystemExit(
@@ -3936,19 +4345,44 @@ def qa(rows: list[dict[str, str]]) -> None:
         raise SystemExit("SUFFIX missing ValueTrack campaignid/adgroupid")
     for term in NEGATIVE_REVIEW_HOLDOUT:
         if any(
-            r.get("Keyword", "").lower() == term.lower()
-            and r.get("Row Type") == "Campaign negative keyword"
+            r.get("Keyword", "").lower() == term.lower() and is_campaign_negative_row(r)
             for r in rows
         ):
             raise SystemExit(f"Holdout negative still in import: {term}")
     print("Negative holdouts (not imported):", len(NEGATIVE_REVIEW_HOLDOUT))
 
+    # Bare keyword text under Campaign negative = Broad match negative.
     active_broad_negs = {
         r["Keyword"].lower()
         for r in rows
-        if r["Row Type"] == "Campaign negative keyword"
-        and (r.get("Criterion Type") or "") == "Broad"
+        if is_campaign_negative_row(r)
+        and (r.get("Keyword") or "").strip()
+        and not (r.get("Keyword") or "").startswith(("[", '"'))
     }
+    bad_neg_shape = [
+        r
+        for r in rows
+        if (r.get("Row Type") or "") == "Campaign negative keyword"
+        or (
+            (r.get("Negative") or "").strip().lower() == "true"
+            and (r.get("Criterion Type") or "").strip().lower() == "broad"
+            and not (r.get("Ad Group") or "").strip()
+        )
+    ]
+    if bad_neg_shape:
+        raise SystemExit(
+            "Bad campaign-negative CSV shape "
+            f"({len(bad_neg_shape)} rows) — use Criterion Type='Campaign negative' "
+            "with blank Ad Group (Editor otherwise creates blank ad groups)"
+        )
+    for r in rows:
+        if r.get("Row Type") == "Ad group" and not (r.get("Ad Group") or "").strip():
+            raise SystemExit("Blank Ad group name in package")
+        if is_campaign_negative_row(r) and (r.get("Ad Group") or "").strip():
+            raise SystemExit(
+                f"Campaign negative has Ad Group set: {r.get('Keyword')!r} / "
+                f"{r.get('Ad Group')!r}"
+            )
     # Holdout terms must never appear in import CSVs (any row Keyword).
     import_keywords = {
         (r.get("Keyword") or "").lower()
@@ -4019,9 +4453,7 @@ def qa(rows: list[dict[str, str]]) -> None:
         kws = [
             r
             for r in rows
-            if r["Campaign"] == c
-            and r["Row Type"] == "Keyword"
-            and r["Negative"] != "True"
+            if r["Campaign"] == c and is_positive_keyword_row(r)
         ]
         ads_c = [r for r in rows if r["Campaign"] == c and r["Row Type"] == "Ad"]
         if not kws or not ads_c:
@@ -4073,9 +4505,7 @@ def qa(rows: list[dict[str, str]]) -> None:
         raise SystemExit(f"Missing public-copy banned list: {banned_path}")
 
     mt = Counter(
-        r["Criterion Type"]
-        for r in rows
-        if r["Row Type"] == "Keyword" and r["Negative"] != "True"
+        r["Criterion Type"] for r in rows if is_positive_keyword_row(r)
     )
     print("Positive match types:", dict(mt))
     if mt.get("Broad"):
@@ -4154,7 +4584,7 @@ def qa(rows: list[dict[str, str]]) -> None:
     pos_blob = " ".join(
         r["Keyword"].lower()
         for r in rows
-        if r["Row Type"] == "Keyword" and r["Negative"] != "True"
+        if is_positive_keyword_row(r)
     )
     for term in (
         "medical",
@@ -4174,13 +4604,56 @@ def qa(rows: list[dict[str, str]]) -> None:
         if brand_kw in pos_blob:
             raise SystemExit(f"Brand keyword in Stage 1 package (deferred): {brand_kw}")
 
-    negs = {
-        r["Keyword"].lower()
-        for r in rows
-        if r["Row Type"] == "Campaign negative keyword"
-    }
+    negs = {r["Keyword"].lower() for r in rows if is_campaign_negative_row(r)}
     if "hire" in negs or "hiring" in negs:
         raise SystemExit("hire/hiring must not be campaign negatives")
+    if "workers" in negs:
+        raise SystemExit(
+            "bare 'workers' must not be a campaign negative "
+            "(employer shorthand 'va workers ph')"
+        )
+
+    live_neg_rows = [r for r in rows if is_live_jobseeker_neg_row(r)]
+    expected_live = len(VC_NEG_JOBSEEKERS_LIVE) * 2  # CORE + ROLES, US only
+    if len(live_neg_rows) != expected_live:
+        raise SystemExit(
+            f"{VC_NEG_JOBSEEKERS_LIVE_NAME} row count {len(live_neg_rows)} "
+            f"!= expected {expected_live}"
+        )
+    for r in live_neg_rows:
+        if not (r.get("Campaign") or "").startswith("VC_US_"):
+            raise SystemExit(
+                f"{VC_NEG_JOBSEEKERS_LIVE_NAME} leaked onto non-US campaign: "
+                f"{r.get('Campaign')}"
+            )
+        if not (r.get("Keyword") or "").startswith('"'):
+            raise SystemExit(
+                f"{VC_NEG_JOBSEEKERS_LIVE_NAME} must be Phrase-quoted: "
+                f"{r.get('Keyword')!r}"
+            )
+
+    live_paused_pos = [
+        r for r in rows if is_positive_keyword_row(r) and is_live_paused_keyword(r["Keyword"])
+    ]
+    for r in live_paused_pos:
+        if (r.get("Keyword Status") or "") != "Paused":
+            raise SystemExit(
+                f"{VC_KEYWORDS_PAUSED_LIVE_NAME} must stay Paused: "
+                f"{r.get('Campaign')}/{r.get('Keyword')!r}"
+            )
+        if not is_live_paused_keyword_row(r):
+            raise SystemExit(
+                f"{VC_KEYWORDS_PAUSED_LIVE_NAME} missing Comment tag: "
+                f"{r.get('Campaign')}/{r.get('Keyword')!r}"
+            )
+    # Comment-tagged rows must be exact live-paused texts (no accidental tags)
+    for r in rows:
+        if is_live_paused_keyword_row(r) and is_positive_keyword_row(r):
+            if not is_live_paused_keyword(r["Keyword"]):
+                raise SystemExit(
+                    f"{VC_KEYWORDS_PAUSED_LIVE_NAME} Comment on non-listed keyword: "
+                    f"{r.get('Keyword')!r}"
+                )
 
     # Isolation lock: no PM_* entities, no shared-list attach rows, tight negs only.
     forbidden_row_types = {
@@ -4282,7 +4755,7 @@ def build_enable_manifest_rows(rows: list[dict[str, str]], market: str) -> list[
     finals = _final_url_by_ag(rows)
     manifest: list[dict[str, str]] = []
     for r in rows:
-        if r["Row Type"] != "Keyword" or r.get("Negative") == "True":
+        if not is_positive_keyword_row(r):
             continue
         if r.get("Account") != acct:
             continue
@@ -4294,6 +4767,8 @@ def build_enable_manifest_rows(rows: list[dict[str, str]], market: str) -> list[
         # Guard: bare philippines service heads must not land in 1A
         if tier == "1A" and not _STRONG_PH_INTENT_RE.search(kw):
             raise SystemExit(f"Tier 1A without strong intent: {kw!r}")
+        if tier == "LIVE_PAUSED" and not is_live_paused_keyword(kw):
+            raise SystemExit(f"LIVE_PAUSED tier without live-paused text: {kw!r}")
         manifest.append(
             {
                 "Account": acct,
@@ -4307,7 +4782,14 @@ def build_enable_manifest_rows(rows: list[dict[str, str]], market: str) -> list[
             }
         )
     # Stable review order: tier → campaign → AG → match → keyword
-    tier_rank = {"1A": 0, "1B": 1, "2": 2, "3": 3}
+    tier_rank = {
+        "1A": 0,
+        "1B": 1,
+        "2": 2,
+        "3": 3,
+        "PHRASE_HOLD": 4,
+        "LIVE_PAUSED": 5,
+    }
     manifest.sort(
         key=lambda m: (
             tier_rank.get(m["Tier"], 9),
@@ -4354,10 +4836,15 @@ def write_phase1_review(
         "| **1A** | Strongest PH/Filipino/offshore long-tail **Exact** "
         "(hire / VA / outsource + PH geo). "
         "Not bare `philippines` service heads. |",
-        "| **1B** | PH-shaped **Phrase**, or slightly broader PH **Exact** "
+        "| **1B** | Broader PH **Exact** "
         "(geo + role/service without hire/VA/outsource strength). |",
-        "| **2** | Broader category Exact/Phrase **without** PH geo (Roles). |",
-        "| **3** | Generic Core heads later (no PH geo). |",
+        "| **2** | Broader category **Exact** **without** PH geo (Roles). |",
+        "| **3** | Generic Core **Exact** heads later (no PH geo). |",
+        "| **PHRASE_HOLD** | All **Phrase** — live USA is Exact-only; "
+        "keep Paused (do not enable with 1A/1B). |",
+        "| **LIVE_PAUSED** | George paused live Exact junk/general terms "
+        f"({VC_KEYWORDS_PAUSED_LIVE_DATE}) — keep **Paused**; do not enable. "
+        "See `VC-KEYWORDS-PAUSED-LIVE.md`. |",
         "",
         "## Files",
         "",
@@ -4371,7 +4858,7 @@ def write_phase1_review(
         "| Tier | US | AU |",
         "|------|----|----|",
     ]
-    for tier in ("1A", "1B", "2", "3"):
+    for tier in ("1A", "1B", "2", "3", "PHRASE_HOLD", "LIVE_PAUSED"):
         lines.append(f"| {tier} | {us_c.get(tier, 0)} | {au_c.get(tier, 0)} |")
     lines += [
         f"| **Total** | **{len(us_rows)}** | **{len(au_rows)}** |",
@@ -4386,6 +4873,15 @@ def write_phase1_review(
         "**1B**, not 1A.",
         "4. Import/Post of the Editor package is separate; these manifests do not "
         "replace Editor import CSVs.",
+        f"5. Live job-seeker Phrase cohort `{VC_NEG_JOBSEEKERS_LIVE_NAME}` "
+        f"({VC_NEG_JOBSEEKERS_LIVE_TOPIC}) is in the US Editor CSV on "
+        "`VC_US_S_CORE` / `VC_US_S_ROLES` only — see `VC-NEG-JOBSEEKERS-LIVE.md`. "
+        "Bare Broad `workers` is intentionally absent.",
+        f"6. Live-paused positives (`{VC_KEYWORDS_PAUSED_LIVE_NAME}`, tier "
+        f"**LIVE_PAUSED**) stay Paused — {VC_KEYWORDS_PAUSED_LIVE_REASON} "
+        f"See `VC-KEYWORDS-PAUSED-LIVE.md`. George is not doing negatives yet.",
+        "7. Tier **PHRASE_HOLD** = all Phrase — live USA bids Exact-only; "
+        "do not enable Phrase with 1A/1B.",
         "",
     ]
     PHASE1_REVIEW.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -4409,10 +4905,132 @@ def write_phase1_manifests(rows: list[dict[str, str]]) -> tuple[int, int]:
     write_phase1_review(us_m, au_m)
     print(
         "Phase1 manifests:",
-        f"US {len(us_m)} (1A={sum(1 for r in us_m if r['Tier']=='1A')})",
-        f"AU {len(au_m)} (1A={sum(1 for r in au_m if r['Tier']=='1A')})",
+        f"US {len(us_m)} (1A={sum(1 for r in us_m if r['Tier']=='1A')}; "
+        f"PHRASE_HOLD={sum(1 for r in us_m if r['Tier']=='PHRASE_HOLD')}; "
+        f"LIVE_PAUSED={sum(1 for r in us_m if r['Tier']=='LIVE_PAUSED')})",
+        f"AU {len(au_m)} (1A={sum(1 for r in au_m if r['Tier']=='1A')}; "
+        f"PHRASE_HOLD={sum(1 for r in au_m if r['Tier']=='PHRASE_HOLD')}; "
+        f"LIVE_PAUSED={sum(1 for r in au_m if r['Tier']=='LIVE_PAUSED')})",
     )
     return len(us_m), len(au_m)
+
+
+def write_live_paused_keywords_doc(rows: list[dict[str, str]]) -> None:
+    """Document positives George paused live; package keeps them Paused."""
+    us_rows = [
+        r
+        for r in rows
+        if is_positive_keyword_row(r)
+        and r.get("Account") == ACCOUNT_IDS["US"]
+        and is_live_paused_keyword(r["Keyword"])
+    ]
+    au_rows = [
+        r
+        for r in rows
+        if is_positive_keyword_row(r)
+        and r.get("Account") == ACCOUNT_IDS["AU"]
+        and is_live_paused_keyword(r["Keyword"])
+    ]
+    matched_norms = {
+        norm_keyword_text(r["Keyword"]) for r in us_rows + au_rows
+    }
+    not_found = sorted(LIVE_PAUSED_KEYWORD_TEXTS - matched_norms)
+    matched_sorted = sorted(matched_norms)
+
+    def _uniq_lines(market_rows: list[dict[str, str]]) -> list[str]:
+        seen: set[tuple[str, str, str]] = set()
+        lines: list[str] = []
+        for r in sorted(
+            market_rows,
+            key=lambda x: (
+                x["Keyword"].lower(),
+                x.get("Criterion Type") or "",
+                x["Campaign"],
+                x["Ad Group"],
+            ),
+        ):
+            key = (
+                r["Keyword"].lower(),
+                r.get("Criterion Type") or "",
+                r["Campaign"],
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            lines.append(
+                f"| `{r['Keyword']}` | {r.get('Criterion Type') or ''} | "
+                f"`{r['Campaign']}` / `{r['Ad Group']}` |"
+            )
+        return lines
+
+    lines = [
+        f"# {VC_KEYWORDS_PAUSED_LIVE_NAME}",
+        "",
+        f"**Date:** {VC_KEYWORDS_PAUSED_LIVE_DATE}",
+        f"**Reason:** {VC_KEYWORDS_PAUSED_LIVE_REASON}",
+        "",
+        "## What this is",
+        "",
+        "- Positives George **manually paused in live USA** because they pulled "
+        "bad search terms.",
+        "- Package sync: keep `Keyword Status = Paused` (do **not** delete).",
+        "- Same keyword texts paused in **AU** when present (do not invent AU-only terms).",
+        "- Exact normalized text match only — unlisted longer phrases stay unchanged.",
+        "- George is **not** posting negatives yet; "
+        f"`{VC_NEG_JOBSEEKERS_LIVE_NAME}` can stay in the package unused.",
+        "",
+        "## Spot in Editor",
+        "",
+        f"1. Import US/AU Editor CSV.",
+        "2. Keywords → filter Comment contains "
+        f"`{VC_KEYWORDS_PAUSED_LIVE_NAME}`.",
+        "",
+        "## Counts (this build)",
+        "",
+        f"- US positive rows tagged: **{len(us_rows)}** "
+        f"({len({norm_keyword_text(r['Keyword']) for r in us_rows})} unique texts)",
+        f"- AU positive rows tagged: **{len(au_rows)}** "
+        f"({len({norm_keyword_text(r['Keyword']) for r in au_rows})} unique texts)",
+        f"- Named texts matched in package: **{len(matched_sorted)}**",
+        f"- Named texts not found in package: **{len(not_found)}**",
+        "",
+        "## Normalized texts matched",
+        "",
+    ]
+    for t in matched_sorted:
+        lines.append(f"- `{t}`")
+    lines += ["", "## Named but not in package", ""]
+    if not_found:
+        for t in not_found:
+            lines.append(f"- `{t}`")
+    else:
+        lines.append("- (none)")
+    lines += [
+        "",
+        "## US rows",
+        "",
+        "| Keyword | Match | Campaign / Ad group |",
+        "|---------|-------|---------------------|",
+        *_uniq_lines(us_rows),
+        "",
+        "## AU rows",
+        "",
+        "| Keyword | Match | Campaign / Ad group |",
+        "|---------|-------|---------------------|",
+        *_uniq_lines(au_rows),
+        "",
+        "## Source",
+        "",
+        "George live USA pause decisions "
+        f"({VC_KEYWORDS_PAUSED_LIVE_DATE}). Editor CSV only — no Ads API mutations. "
+        "Brand deferred.",
+        "",
+    ]
+    LIVE_PAUSED_DOC.write_text("\n".join(lines), encoding="utf-8")
+    print(
+        f"Live-paused keywords: US {len(us_rows)} rows / "
+        f"AU {len(au_rows)} rows; not found: {not_found}"
+    )
 
 
 def write_preflight(rows: list[dict[str, str]]) -> None:
@@ -4420,12 +5038,8 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
 
     kinds = Counter(r["Row Type"] for r in rows)
     camps = [r for r in rows if r["Row Type"] == "Campaign"]
-    pos = [
-        r
-        for r in rows
-        if r["Row Type"] == "Keyword" and r.get("Negative") != "True"
-    ]
-    negs = [r for r in rows if r["Row Type"] == "Campaign negative keyword"]
+    pos = [r for r in rows if is_positive_keyword_row(r)]
+    negs = [r for r in rows if is_campaign_negative_row(r)]
     us_rows = [r for r in rows if r["Account"] == ACCOUNT_IDS["US"]]
     au_rows = [r for r in rows if r["Account"] == ACCOUNT_IDS["AU"]]
     unique_negs = len({r["Keyword"].lower() for r in negs})
@@ -4442,10 +5056,12 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "",
         "- Leave existing `PM_*` campaigns, shared negative lists, Zoho/Zapier "
         "conversion actions, and historical reporting alone.",
-        "- This package attaches **only** curated campaign-level negatives "
-        f"(~{unique_negs} unique, cap {MAX_UNIQUE_NEGATIVES}) — **not** account shared / "
+        "- This package attaches curated Stage1 campaign-level negatives "
+        f"(cap {MAX_UNIQUE_NEGATIVES}) plus a **separate labeled live cohort** "
+        f"`{VC_NEG_JOBSEEKERS_LIVE_NAME}` on `VC_US_*` only — **not** account shared / "
         "`PM_*` large shared lists.",
-        "- Do **not** attach account shared negative lists to `VC_*` after Import/Post.",
+        "- Do **not** attach older account shared / `PM_*` negative lists to `VC_*` "
+        "after Import/Post.",
         "- Do **not** use audiences to restrict targeting for initial Search launch "
         "(Observation later; ignore customer-lifecycle warnings until Zoho/first-party data).",
         "- Import ≠ live. Every campaign stays **Paused**. No Enable from this package.",
@@ -4465,23 +5081,33 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         f"| `google-ads-editor-import-us.csv` ({len(us_rows)} rows) | **Preferred** — import into USA `{ACCOUNT_IDS['US']}` only |",
         f"| `google-ads-editor-import-au.csv` ({len(au_rows)} rows) | **Preferred** — import into AU `{ACCOUNT_IDS['AU']}` only |",
         f"| `google-ads-editor-import.csv` / `-multi-account.csv` ({len(rows)} rows) | Manager multi-account only — every row has Account |",
-        f"| `phase1-enable-manifest-us.csv` / `-au.csv` | **Review-only** enable ladder (tiers 1A/1B/2/3; all Paused) |",
+        f"| `phase1-enable-manifest-us.csv` / `-au.csv` | **Review-only** enable ladder (tiers 1A/1B/2/3 + PHRASE_HOLD + LIVE_PAUSED; all Paused) |",
         f"| `PHASE1-REVIEW.md` | Tier definitions + per-market counts |",
+        f"| `VC-NEG-JOBSEEKERS-LIVE.md` | Live job-seeker Phrase cohort (`{VC_NEG_JOBSEEKERS_LIVE_NAME}`) |",
+        f"| `VC-KEYWORDS-PAUSED-LIVE.md` | Live-paused positives (`{VC_KEYWORDS_PAUSED_LIVE_NAME}`) |",
         "",
         "## Counts",
         "",
         f"- Campaigns: {kinds.get('Campaign', 0)} (all Paused)",
         f"- Ad groups: {kinds.get('Ad group', 0)}",
         f"- Positive keywords: {len(pos)}",
+        f"- Live-paused positives (`{VC_KEYWORDS_PAUSED_LIVE_NAME}`): "
+        f"{len([r for r in pos if is_live_paused_keyword(r['Keyword'])])} rows "
+        f"(US+AU; keep Paused — {VC_KEYWORDS_PAUSED_LIVE_REASON})",
         f"- RSAs: {kinds.get('Ad', 0)}",
         f"- Active campaign negatives: {len(negs)} rows "
-        f"({unique_negs} unique × 4 campaigns) — VC-only curated, not shared mega lists",
+        f"({unique_negs} unique texts) — Stage1 curated Broad on all 4 VC_* campaigns "
+        f"+ `{VC_NEG_JOBSEEKERS_LIVE_NAME}` Phrase on `VC_US_*` only",
+        f"- `{VC_NEG_JOBSEEKERS_LIVE_NAME}`: {len(VC_NEG_JOBSEEKERS_LIVE)} Phrase terms "
+        f"× 2 US campaigns ({len([r for r in negs if is_live_jobseeker_neg_row(r)])} rows) "
+        f"— {VC_NEG_JOBSEEKERS_LIVE_TOPIC}",
         f"- Commercial holdouts (not imported): {len(NEGATIVE_REVIEW_HOLDOUT)} "
         f"(includes pay rate / hourly rate / virtual assistant reviews + cost/pricing/"
         f"review research terms)",
         f"- Employer-research Broad canaries: {len(EMPLOYER_RESEARCH_CANARIES)} "
-        f"(QA fails if active Broad negs would block them)",
+        f"(QA fails if active Broad negs would block them; includes `va workers ph`)",
         f"- Shared-list / audience / PM_* rows: **none** (isolation QA)",
+        f"- Bare Broad negative `workers`: **removed** (employer shorthand — do not restore)",
         "",
         "## Budgets + bid caps (campaign only)",
         "",
@@ -4553,12 +5179,44 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
     lines += [
         "",
         "Competitor-named review/pricing terms (e.g. `bruntwork reviews`) stay active.",
-        "Job-seeker / medical / Spanish / platform negatives stay active.",
+        "Job-seeker / medical / Spanish / platform Stage1 Broad negatives stay active.",
+        "",
+        f"## `{VC_NEG_JOBSEEKERS_LIVE_NAME}` (live ST cohort)",
+        "",
+        f"- Topic: {VC_NEG_JOBSEEKERS_LIVE_TOPIC}",
+        "- Scope: `VC_US_S_CORE` + `VC_US_S_ROLES` only (Phrase campaign negatives)",
+        "- Spot in Editor: Keywords → filter Comment contains "
+        f"`{VC_NEG_JOBSEEKERS_LIVE_NAME}` (or search that string)",
+        "- **Not** mixed into the curated Stage1 Broad blob comments",
+        "- **Not** an account shared / `PM_*` mega list attach",
+        "- Bare Broad `workers` intentionally **absent** "
+        "(`va workers ph` is employer shorthand)",
+        "",
+        "Phrase terms in this cohort:",
+        "",
+    ]
+    for term, match in VC_NEG_JOBSEEKERS_LIVE:
+        lines.append(f"- `{phrase_neg_keyword(term)}` ({match})")
+    lines += [
+        "",
+        "Details: `VC-NEG-JOBSEEKERS-LIVE.md`.",
+        "",
+        f"## `{VC_KEYWORDS_PAUSED_LIVE_NAME}` (live-paused positives)",
+        "",
+        f"- Date: {VC_KEYWORDS_PAUSED_LIVE_DATE}",
+        f"- Reason: {VC_KEYWORDS_PAUSED_LIVE_REASON}",
+        "- Scope: matching positive keyword texts on `VC_US_*` and `VC_AU_*` "
+        "(Exact + Phrase when present); Keyword Status stays **Paused**",
+        "- Spot in Editor: Keywords → filter Comment contains "
+        f"`{VC_KEYWORDS_PAUSED_LIVE_NAME}`",
+        "- Enable manifests mark these as tier **LIVE_PAUSED** — do not enable",
+        "- Details: `VC-KEYWORDS-PAUSED-LIVE.md`",
         "",
         "## Phase 1 review manifests",
         "",
         "- `phase1-enable-manifest-us.csv` / `phase1-enable-manifest-au.csv` — "
-        "keyword enable ladder with tiers **1A / 1B / 2 / 3** (all **Paused**).",
+        "keyword enable ladder with tiers **1A / 1B / 2 / 3 / PHRASE_HOLD / LIVE_PAUSED** "
+        "(all **Paused**).",
         "- `PHASE1-REVIEW.md` — tier definitions + counts.",
         "- These are **not** Enabled import files. Enable order follows "
         "`PHASED-ACTIVATION.md` after TRAFFIC READY + explicit George approval.",
@@ -4574,9 +5232,11 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "5. Import **US split** into USA → Check changes → leave **Paused**.",
         "6. Import **AU split** into AU → Check changes → leave **Paused**.",
         "7. Confirm every Final URL uses `www.virtualcoworker.app` (not `*.vercel.app`).",
-        "8. Confirm `VC_*` negatives are campaign-level curated only — "
-        "**do not** attach older shared negative lists.",
-        "9. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval.",
+        "8. Confirm `VC_*` Stage1 curated Broad negs + "
+        f"`{VC_NEG_JOBSEEKERS_LIVE_NAME}` Phrase cohort on `VC_US_*` — "
+        "**do not** attach older `PM_*` / account shared mega lists.",
+        "9. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval. "
+        f"Skip tier **LIVE_PAUSED** (`{VC_KEYWORDS_PAUSED_LIVE_NAME}`).",
         "10. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
         "11. Enable is a separate explicit decision after TRAFFIC READY — "
         "never from Import/Post alone. Still **NOT** paid-ready until TRAFFIC READY.",
@@ -4588,6 +5248,8 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
 DOC_MIRRORS = (
     "EDITOR-PREFLIGHT-REPORT.md",
     "PHASE1-REVIEW.md",
+    "VC-NEG-JOBSEEKERS-LIVE.md",
+    "VC-KEYWORDS-PAUSED-LIVE.md",
     "DECISIONS.md",
     "PHASED-ACTIVATION.md",
     "10-tracking-event-spec.md",
@@ -4615,6 +5277,7 @@ def main() -> None:
     write_csv(OUT_US, [r for r in rows if r["Account"] == ACCOUNT_IDS["US"]])
     write_csv(OUT_AU, [r for r in rows if r["Account"] == ACCOUNT_IDS["AU"]])
     us_n, au_n = write_phase1_manifests(rows)
+    write_live_paused_keywords_doc(rows)
     write_preflight(rows)
     MIRROR.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(OUT, MIRROR)
@@ -4630,6 +5293,7 @@ def main() -> None:
     print(f"Wrote {OUT} ({len(rows)} rows)")
     print(f"Wrote {OUT_US} / {OUT_AU} / {OUT_MULTI}")
     print(f"Wrote {OUT_MANIFEST_US} ({us_n}) / {OUT_MANIFEST_AU} ({au_n})")
+    print(f"Wrote {LIVE_PAUSED_DOC}")
     print(f"Wrote {PHASE1_REVIEW}")
     print(f"Wrote {PREFLIGHT}")
     print(f"Mirrored CSV + docs → {MIRROR.parent}")
