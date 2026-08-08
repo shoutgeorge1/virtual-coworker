@@ -3,7 +3,8 @@ import Link from "next/link";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
-import { SITE, type SiteSurface } from "../../config/site";
+import { type SiteSurface } from "../../config/site";
+import { resolvePhone, type MarketId } from "../../config/markets";
 import { calendlyUrlForMarket } from "../../lib/calendly";
 import ThankYouClient from "./ThankYouClient";
 
@@ -31,6 +32,11 @@ export default async function ThankYouPage({
   const marketLabel = isAu ? "Australia" : "United States";
   const calendlyUrl =
     market === "us" || market === "au" ? calendlyUrlForMarket(market) : null;
+  const phone =
+    market === "us" || market === "au"
+      ? resolvePhone(market as MarketId)
+      : { display: "", href: null, configured: false };
+  const showPhone = phone.configured && Boolean(phone.href);
 
   const steps = [
     {
@@ -127,13 +133,13 @@ export default async function ThankYouPage({
               >
                 Schedule a call
               </a>
-              {!isAu ? (
+              {showPhone ? (
                 <a
-                  href={SITE.usPhoneHref}
+                  href={phone.href!}
                   className="micro-btn micro-btn-ghost"
                   data-track="phone_cta_clicked"
                 >
-                  Or call {SITE.usPhoneDisplay}
+                  Or call {phone.display}
                 </a>
               ) : null}
             </div>
@@ -169,12 +175,14 @@ export default async function ThankYouPage({
               <h2 id="ty-help">While you wait</h2>
               <p>
                 {calendlyUrl
-                  ? isAu
-                    ? "Browse how hiring works or explore role categories — useful context before your conversation."
-                    : "Browse how hiring works, explore role categories, or call the US business line if you’d rather talk sooner."
-                  : isAu
-                    ? "Calendar booking link coming from Virtual Coworker — a teammate will follow up directly to talk through the role."
-                    : "Calendar booking link coming from Virtual Coworker — we’ll reach out directly. Prefer a call first? Use the US business line below."}
+                  ? showPhone
+                    ? "Browse how hiring works, explore role categories, or call the business line if you’d rather talk sooner."
+                    : "Browse how hiring works or explore role categories — useful context before your conversation."
+                  : showPhone
+                    ? "Calendar booking link coming from Virtual Coworker — we’ll reach out directly. Prefer a call first? Use the business line below."
+                    : isAu
+                      ? "Calendar booking link coming from Virtual Coworker — a teammate will follow up directly to talk through the role."
+                      : "Calendar booking link coming from Virtual Coworker — we’ll reach out directly."}
               </p>
             </>
           ) : (
@@ -188,9 +196,9 @@ export default async function ThankYouPage({
             <Link href={`/how-it-works?market=${market}`}>How it works</Link>
             <Link href={`/services?market=${market}`}>Role categories</Link>
             <Link href={home}>{isAu ? "Australia home" : "United States home"}</Link>
-            {!isAu ? (
-              <a href={SITE.usPhoneHref} data-track="phone_cta_clicked">
-                Call {SITE.usPhoneDisplay}
+            {showPhone ? (
+              <a href={phone.href!} data-track="phone_cta_clicked">
+                Call {phone.display}
               </a>
             ) : null}
             <Link href="/privacy">Privacy</Link>
@@ -205,13 +213,13 @@ export default async function ThankYouPage({
               >
                 Book a hiring conversation — link coming from Virtual Coworker
               </span>
-              {!isAu ? (
+              {showPhone ? (
                 <a
-                  href={SITE.usPhoneHref}
+                  href={phone.href!}
                   className="micro-btn micro-btn-ghost"
                   data-track="phone_cta_clicked"
                 >
-                  Call {SITE.usPhoneDisplay}
+                  Call {phone.display}
                 </a>
               ) : null}
             </div>
@@ -219,13 +227,13 @@ export default async function ThankYouPage({
 
           {!conversionEligible ? (
             <div className="micro-actions">
-              {!isAu ? (
+              {showPhone ? (
                 <a
-                  href={SITE.usPhoneHref}
+                  href={phone.href!}
                   className="micro-btn micro-btn-primary"
                   data-track="phone_cta_clicked"
                 >
-                  Call {SITE.usPhoneDisplay}
+                  Call {phone.display}
                 </a>
               ) : null}
               <Link href={home} className="micro-btn micro-btn-ghost">

@@ -1,7 +1,7 @@
 /**
  * Market-specific Stage 1 config.
  * US phone: (888) 954-8644 — aligned with ads Call asset (was 310 interim).
- * AU: no phone — form-primary; do not invent a placeholder tel: link.
+ * AU phone: 1300 886 740 — George-approved (2026-08-08); form still primary CTA.
  * Do not invent emails, budgets, conversion IDs, or guarantees.
  */
 
@@ -19,7 +19,7 @@ export type MarketConfig = {
   phoneEnv: "NEXT_PUBLIC_US_PHONE" | "NEXT_PUBLIC_AU_PHONE";
   /**
    * Known public business line when env empty.
-   * US: brief-confirmed NA number. AU: null — form primary, no fake phone.
+   * US / AU: George-approved public lines. Phone stays secondary to Start Hiring.
    */
   knownPhone: string | null;
   careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL";
@@ -81,7 +81,7 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     landingPath: "/au",
     leadEmailEnv: "LEAD_EMAIL_AU",
     phoneEnv: "NEXT_PUBLIC_AU_PHONE",
-    knownPhone: null,
+    knownPhone: "1300 886 740",
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: DEFAULT_CAREERS_URL,
     headline:
@@ -112,6 +112,24 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
   },
 };
 
+/** Build a dialable tel: href. AU 13/1300/1800 → +61; US keeps national digits. */
+export function phoneTelHref(display: string, market: MarketId): string {
+  const trimmed = display.trim();
+  if (!trimmed) return "";
+  const hasPlus = trimmed.includes("+");
+  const digits = trimmed.replace(/\D/g, "");
+  if (!digits) return "";
+  if (hasPlus) return `tel:+${digits}`;
+  if (market === "au") {
+    // National 13/1300/1800 stay as +61 + full national number (keep leading 1).
+    if (/^(1300|1800|13)\d+$/.test(digits)) return `tel:+61${digits}`;
+    // Other AU numbers: drop leading 0 for E.164 if present.
+    const national = digits.startsWith("0") ? digits.slice(1) : digits;
+    return `tel:+61${national}`;
+  }
+  return `tel:${digits}`;
+}
+
 export function resolvePhone(market: MarketId): {
   display: string;
   href: string | null;
@@ -124,14 +142,13 @@ export function resolvePhone(market: MarketId): {
       : process.env.NEXT_PUBLIC_AU_PHONE;
   const value = (raw || "").trim() || cfg.knownPhone || "";
   if (!value) {
-    // AU default: no phone UI — form primary
     return { display: "", href: null, configured: false };
   }
-  const digits = value.replace(/[^\d+]/g, "");
+  const href = phoneTelHref(value, market);
   return {
     display: value,
-    href: `tel:${digits}`,
-    configured: true,
+    href: href || null,
+    configured: Boolean(href),
   };
 }
 

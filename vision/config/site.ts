@@ -25,9 +25,12 @@ export const SITE = {
     "A form starts a hiring conversation — not an instant hire or contract. Placement, rates, and terms are confirmed separately.",
     "Site content is general information only — not legal, tax, or employment advice. Results vary by role and business.",
   ] as const,
-  /** US site + ads Call asset (aligned 2026-08-07). */
+  /** US site + ads Call asset (aligned 2026-08-07). Prefer resolvePhone("us"). */
   usPhoneDisplay: "(888) 954-8644",
   usPhoneHref: "tel:8889548644",
+  /** AU site + ads Call asset (George-approved 2026-08-08). Prefer resolvePhone("au"). */
+  auPhoneDisplay: "1300 886 740",
+  auPhoneHref: "tel:+611300886740",
   /** Published street addresses from virtualcoworker.com/contact/ (2026-08). */
   addressUs: "750 N San Vicente Blvd, West Hollywood, CA 90069",
   addressAu: "Level 8/11 York St, Sydney NSW 2000, Australia",
