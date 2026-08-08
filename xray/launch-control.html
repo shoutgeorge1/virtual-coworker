@@ -293,7 +293,7 @@
     .lc-secondary a:hover { text-decoration: underline; }
   </style>
 </head>
-<body data-page="launch-control.html" data-foot="Checklist<br />AU priority · US curated · site tests">
+<body data-page="launch-control.html" data-foot="Checklist<br />AU priority · US live · site tests">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
@@ -306,8 +306,8 @@
         <section class="lc-measure" id="how-we-measure" aria-labelledby="measure-hd">
           <h2 id="measure-hd">How we’ll measure success</h2>
           <ul>
-            <li><strong>Now:</strong> mark good leads in Zoho → Ads learns</li>
-            <li><strong>Australia:</strong> count phone calls as wins · add website tags (like US)</li>
+            <li><strong>Australia first:</strong> count phone calls as wins · add website tags (like US)</li>
+            <li><strong>Then:</strong> mark good leads in Zoho → Ads learns</li>
             <li><strong>US:</strong> live · phone guides quality · about $125/day</li>
             <li><strong>Later:</strong> site tests scoreboard (variants work; numbers blank)</li>
           </ul>
@@ -324,29 +324,29 @@
               <li>
                 <input type="checkbox" id="daily1" data-todo="daily1" />
                 <label for="daily1">
-                  <strong>Keywords (+ ST in Ads UI)</strong>
-                  <span class="todo-hint">Curate in Ads. Don’t dump early ST noise on Executive.</span>
+                  <strong>Search terms</strong>
+                  <span class="todo-hint">What people actually typed — cut junk in Ads.</span>
                 </label>
               </li>
               <li>
                 <input type="checkbox" id="daily2" data-todo="daily2" />
                 <label for="daily2">
-                  <strong>Ad copy / combinations</strong>
-                  <span class="todo-hint">What’s getting clicks.</span>
+                  <strong>Ad copy + combinations</strong>
+                  <span class="todo-hint">Headlines/descriptions and which combos get clicks.</span>
                 </label>
               </li>
               <li>
                 <input type="checkbox" id="daily3" data-todo="daily3" />
                 <label for="daily3">
-                  <strong>Spend vs budget</strong>
-                  <span class="todo-hint">CORE + ROLES on track.</span>
+                  <strong>Are we spending the daily budget?</strong>
+                  <span class="todo-hint">CORE + ROLES roughly on track for the day.</span>
                 </label>
               </li>
               <li>
                 <input type="checkbox" id="daily4" data-todo="daily4" />
                 <label for="daily4">
-                  <strong>Enabled keywords</strong>
-                  <span class="todo-hint">Anything too general still on?</span>
+                  <strong>Keywords + negatives</strong>
+                  <span class="todo-hint">Anything too general still on? Junk blocked?</span>
                 </label>
               </li>
             </ul>
@@ -436,14 +436,14 @@
               <input type="checkbox" id="ads17" data-todo="ads17" checked />
               <label for="ads17">
                 <strong>11. Create phone call conversions (guiding light)</strong>
-                <span class="todo-hint">Done (2026-08-07). Primary: <code>VC_US_Phone_Call_From_Ads</code> (60s, Count One). Secondary: <code>VC_US_Phone_Click_Website</code> (GTM tel: click). CORE + ROLES = Phone call leads goal, Max Clicks. Old Brand/Zoho form junk left alone. <strong>Watch:</strong> website phone-click may still show Unverified — wait/verify; don’t recreate (step 15).</span>
+                <span class="todo-hint">Done (2026-08-07). Primary: <code>VC_US_Phone_Call_From_Ads</code> (60s, Count One). Secondary: <code>VC_US_Phone_Click_Website</code> (GTM tel: click). CORE + ROLES = Phone call leads goal, Max Clicks. Old Brand/Zoho form junk left alone. <strong>Watch:</strong> website phone-click may still show Unverified — wait/verify; don’t recreate (step 18).</span>
               </label>
             </li>
             <li data-order="12">
               <input type="checkbox" id="ads16" data-todo="ads16" checked />
               <label for="ads16">
                 <strong>12. Fix US phone routing / someone answers</strong>
-                <span class="todo-hint">Done enough for measurement (2026-08-07). Call asset + site primary <strong>(888) 954-8644</strong> — <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>. 310 may still show for some LA traffic. Cheyenne confirmed 888 routes to her (via tree). Remaining ops: phone tree soft ask (step 13).</span>
+                <span class="todo-hint">Done enough for measurement (2026-08-07). Call asset + site primary <strong>(888) 954-8644</strong> — <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>. 310 may still show for some LA traffic. Cheyenne confirmed 888 routes to her (via tree). Remaining ops: phone tree soft ask (step 17).</span>
               </label>
             </li>
             <li data-order="12.5">
@@ -454,24 +454,24 @@
               </label>
             </li>
             <li data-order="13">
-              <input type="checkbox" id="ads18" data-todo="ads18" />
-              <label for="ads18">
-                <strong>14. Zoho “qualified” → Ads</strong>
-                <span class="todo-hint"><strong>Priority.</strong> Sales marks a real employer lead in Zoho → that mark feeds Google Ads. Not “customer paid.” Plain English on <a href="lead-routing.html">Lead Routing</a>.</span>
+              <input type="checkbox" id="ads32" data-todo="ads32" />
+              <label for="ads32">
+                <strong>14. Australia — phone call conversion in Ads</strong>
+                <span class="todo-hint"><strong>Priority.</strong> Count answered AU calls as wins (call extension / phone conversion), like the US already has. Do this before Zoho → Ads.</span>
               </label>
             </li>
             <li data-order="14">
-              <input type="checkbox" id="ads32" data-todo="ads32" />
-              <label for="ads32">
-                <strong>15. Australia — phone call conversion in Ads</strong>
-                <span class="todo-hint"><strong>Priority.</strong> Count answered AU calls as wins (call extension / phone conversion), like the US already has.</span>
+              <input type="checkbox" id="ads33" data-todo="ads33" />
+              <label for="ads33">
+                <strong>15. Australia — website tags (GTM + GA4)</strong>
+                <span class="todo-hint"><strong>Priority.</strong> Same basic visit tracking the US already has on <code>/au</code>. Do this before Zoho → Ads.</span>
               </label>
             </li>
             <li data-order="15">
-              <input type="checkbox" id="ads33" data-todo="ads33" />
-              <label for="ads33">
-                <strong>16. Australia — website tags (GTM + GA4)</strong>
-                <span class="todo-hint"><strong>Priority.</strong> Same basic visit tracking the US already has on <code>/au</code>.</span>
+              <input type="checkbox" id="ads18" data-todo="ads18" />
+              <label for="ads18">
+                <strong>16. Zoho “qualified” → Ads</strong>
+                <span class="todo-hint"><strong>After AU phone + website tags.</strong> Sales marks a real employer lead in Zoho → that mark feeds Google Ads. Not “customer paid.” Plain English on <a href="lead-routing.html">Lead Routing</a>.</span>
               </label>
             </li>
             <li data-order="16">
@@ -534,21 +534,21 @@
               <input type="checkbox" id="ads22" data-todo="ads22" />
               <label for="ads22">
                 <strong>25. Every couple days — refresh Executive numbers</strong>
-                <span class="todo-hint">Light Ads pull → <a href="executive">Executive</a>. No search-term dumps on the page.</span>
+                <span class="todo-hint">Light Ads pull → <a href="executive">Executive</a>. Keep it calm — spend, clicks, themes.</span>
               </label>
             </li>
             <li data-order="25">
               <input type="checkbox" id="ads12" data-todo="ads12" />
               <label for="ads12">
-                <strong>26. Daily keyword habit</strong>
-                <span class="todo-hint">Covered by Daily checks above. Curate in Ads UI.</span>
+                <strong>26. Daily search-terms habit</strong>
+                <span class="todo-hint">Covered by Daily checks above. Review what people typed in Ads.</span>
               </label>
             </li>
             <li data-order="26">
               <input type="checkbox" id="ads13" data-todo="ads13" />
               <label for="ads13">
-                <strong>27. Review ad copy</strong>
-                <span class="todo-hint">Polish after traffic is clean.</span>
+                <strong>27. Review ad copy + combinations</strong>
+                <span class="todo-hint">Polish headlines/descriptions and RSA combos after traffic is clean.</span>
               </label>
             </li>
             <li data-order="27">
@@ -627,9 +627,9 @@
             <span class="st st-access">You</span>
           </div>
           <ul>
-            <li><strong>1.</strong> Zoho qualified → Ads (step 14)</li>
-            <li><strong>2.</strong> Australia phone call conversion (step 15)</li>
-            <li><strong>3.</strong> Australia website tags (step 16)</li>
+            <li><strong>1.</strong> Australia phone call conversion (step 14)</li>
+            <li><strong>2.</strong> Australia website tags (step 15)</li>
+            <li><strong>3.</strong> Zoho qualified → Ads (step 16)</li>
             <li><strong>Bottom:</strong> Site tests scoreboard (step 33)</li>
             <li><a href="lead-routing.html">Lead Routing</a> · <a href="tracking.html">Tracking</a></li>
             <li><strong>Every couple days:</strong> refresh <a href="executive">Executive</a></li>
@@ -664,14 +664,14 @@
         <div class="fold-bd">
           <ul class="glance-bullets" style="margin:0">
             <li>Re-enable Brand or treat Brand as the main campaign (paused — deferred)</li>
-            <li>Paste messy early search-term dumps onto the Executive page (keywords only)</li>
-            <li>Invent new conversion IDs or mutate Ads via API</li>
+            <li>Put raw “what people typed” lists on the Executive page</li>
+            <li>Invent new conversion actions or change Ads via API</li>
             <li>Attach <code>310</code> as a competing Call asset on US CORE/ROLES (888 only)</li>
             <li>Steer bidding on form / thank-you fills</li>
             <li>Wire old Zoho/Zapier conversions onto new <code>VC_*</code></li>
             <li>Build a new lead tracker this week</li>
             <li>Recreate website phone-click conversion while Unverified</li>
-            <li>Treat value-based / money conversions as Stage 1 busywork before enough deals</li>
+            <li>Treat money/value conversions as Stage 1 busywork before enough deals</li>
           </ul>
         </div>
       </details>
@@ -813,9 +813,12 @@
       saveDaily();
     })();
     (function () {
-      var KEY = "vc-launch-control-todos-v8";
+      var KEY = "vc-launch-control-todos-v9";
       var store = {};
       try { store = JSON.parse(localStorage.getItem(KEY) || "null") || null; } catch (e) { store = null; }
+      if (!store) {
+        try { store = JSON.parse(localStorage.getItem("vc-launch-control-todos-v8") || "null") || null; } catch (e) { store = null; }
+      }
       if (!store) {
         try { store = JSON.parse(localStorage.getItem("vc-launch-control-todos-v7") || "null") || null; } catch (e) { store = null; }
       }

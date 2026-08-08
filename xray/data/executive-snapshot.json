@@ -222,11 +222,11 @@
   },
   "search_terms_executive": {
     "surface": false,
-    "reason": "No search-term dump on Executive."
+    "reason": "Executive shows themes and spend only — not raw typed queries."
   },
   "keywords": {
     "label": "Employer-intent Exact themes",
-    "note": "Curated bidding themes \u2014 not raw search terms",
+    "note": "Bidding themes for the calm read \u2014 not raw typed queries",
     "executive_surface": true,
     "themes": [
       {
@@ -364,7 +364,7 @@
   },
   "operator": {
     "narrative_as_of": "2026-08-08",
-    "status_banner": "US live. Australia phone on site. AU campaigns not spending this week. Still open: Zoho qualified\u2192Ads \u00b7 AU call tracking \u00b7 AU website tags.",
+    "status_banner": "US live. Australia phone on site. AU campaigns not spending this week. Still open: AU call tracking \u00b7 AU website tags \u00b7 then Zoho qualified\u2192Ads.",
     "budgets": [
       {
         "label": "US",
@@ -385,12 +385,12 @@
         "Dedicated seat (not a marketplace gig)",
         "Not Upwork \u2014 you interview the person"
       ],
-      "note": "Ops curation \u2014 not an Ads API ranking."
+      "note": "Operator themes \u2014 not an Ads ranking."
     },
     "whats_next": [
-      "<strong>Mark good leads in Zoho</strong> \u2014 so Google Ads can learn which clicks were real",
       "<strong>Australia phone tracking</strong> \u2014 count answered calls as wins in Ads",
-      "<strong>Australia website tags</strong> \u2014 same basic tracking the US already has"
+      "<strong>Australia website tags</strong> \u2014 same basic tracking the US already has",
+      "<strong>Mark good leads in Zoho</strong> \u2014 so Google Ads can learn which clicks were real"
     ],
     "coming_soon": [
       "Site tests numbers (page variants work; scoreboard still blank)"

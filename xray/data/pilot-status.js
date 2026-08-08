@@ -12,8 +12,8 @@ window.PILOT_STATUS = {
   previousContact: "Caitlin",
   handoffNote:
     "Caitlin is ops contact + lead-quality stakeholder and may start maternity leave anytime. Braden is expected to take over day-to-day while she is out. Cheyenne owns US sales; Holly owns APAC.",
-  commercialStatus: "au_priority_us_curated",
-  commercialLabel: "AU PRIORITY · VC_AU_* ENABLED · SITE PHONE 1300 LIVE · US STAGE 1 CURATED · BRAND PAUSED · AU TRACKING GAPS",
+  commercialStatus: "au_priority_us_live",
+  commercialLabel: "AU PRIORITY · VC_AU_* ENABLED · SITE PHONE 1300 LIVE · US LIVE · BRAND PAUSED · AU TRACKING GAPS",
   objective:
     "Can Google Search → independent US/AU employer microsites generate qualified leads at an acceptable cost? Three identities (US · AU · PH); WordPress stays as-is with zero paid egress.",
   landingPages: {
@@ -117,7 +117,7 @@ window.PILOT_STATUS = {
       jobPlacement: "$500–$800 (estimate only — not approved for Ads import)"
     },
     laterPath:
-      "Near-term: human marks qualified in Zoho → light signal into Ads. Later (enough deals/money): value-based conversions when deals actually pay.",
+      "After AU phone + website tags: human marks qualified in Zoho → light signal into Ads. Later (enough deals/money): value-based conversions when deals actually pay.",
     biddingUntilClean: "Maximize Clicks"
   },
 
@@ -284,7 +284,7 @@ window.PILOT_STATUS = {
     },
     {
       id: "search_terms_daily",
-      label: "Daily search terms / spend / negatives while US spends",
+      label: "Daily: search terms · ad copy combos · budget spend · keywords + negatives",
       status: "verify"
     },
     {
@@ -355,32 +355,33 @@ window.PILOT_STATUS = {
     "Unsafe Google auto-apply — already disabled"
   ],
   georgeHandles: [
-    "AU top of queue: close GTM/GA4/Ads conversion gaps + Unkown AG cleanup",
-    "Daily search terms / spend / negatives on live VC_US_* (and AU while Enabled)",
+    "AU top of queue: phone call conversions → GTM/GA4 → then Zoho qualified → Ads; Unkown AG cleanup",
+    "Daily search terms / budget spend / keywords + negatives on live VC_US_* (and AU while Enabled)",
     "Phone-led conversions + shallow Zoho (Max Clicks until clean; form not preferred Primary)",
-    "Wire site tests experiment events → dashboard",
-    "Near-term Zoho qualified → Ads; value-based later",
-    "Keep Braden/CEO executive snapshot current (keywords, not early ST dumps)",
+    "Wire site tests experiment events → dashboard (bottom of list until working)",
+    "After AU tracking: Zoho qualified → Ads; value-based later",
+    "Keep Braden/CEO executive snapshot calm (spend, clicks, themes — not raw typed queries)",
     "MCC + Google Ads Editor (Standard access on US + AU)",
     "Separate GTM_US + GTM_AU (+ GTM_PH if needed) / GA4 / GSC / Ads conversions"
   ],
   majorBlockers: [
-    "AU top of queue: close GTM/GA4/Ads conversion gaps (VC_AU_* already Enabled)",
+    "AU top of queue: phone call conversions + GTM/GA4 (VC_AU_* already Enabled)",
     "AU ops risk: Unkown AGs with Broad positives — cleanup",
-    "Site tests experiment / variant wiring (GTM or GA4 → dashboard)",
-    "Near-term Zoho qualified → Ads; later value when deals make money",
+    "Site tests experiment / variant wiring (GTM or GA4 → dashboard) — bottom until working",
+    "After AU tracking: Zoho qualified → Ads; later value when deals make money",
     "US inbox monitoring awaiting Cheyenne (APAC/Holly watches apac@)"
   ],
   nextThree: [
-    "Australia — close AU tracking gaps (GTM/GA4/Ads conversions) + Unkown AG cleanup",
-    "Get site tests working (experiment events → Site tests tab)",
-    "Shallow Zoho qualified mark → Ads (near-term); money values later"
+    "Australia — phone call conversions in Ads",
+    "Australia — website tags (GTM + GA4)",
+    "Then Zoho qualified mark → Ads; site tests stay at the bottom until working"
   ],
   openItemsUnresolved: [
-    "AU GTM/GA4/Ads conversion parity (VC_AU_* Enabled; spend not trustworthy until closed)",
+    "AU phone call conversions in Ads (before Zoho → Ads)",
+    "AU GTM/GA4 website tags (before Zoho → Ads)",
     "AU Unkown AG / Broad-positive cleanup",
-    "Site tests GTM/GA4 experiment wiring",
-    "Near-term Zoho qualified → Ads path",
+    "Site tests GTM/GA4 experiment wiring (bottom until working)",
+    "Zoho qualified → Ads path (after AU phone + website tags)",
     "Cheyenne/US microsite inbox monitoring + counting source (APAC/Holly watches)",
     "Monday paid microsite vs total inbound scoreboard verified",
     "Exact defs: qualified lead / job order / placement",
