@@ -5,9 +5,11 @@ import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
 import HubMapHero from "../components/HubMapHero";
 import JsonLd from "../components/JsonLd";
+import PainGain from "../components/PainGain";
 import { HOW_STEP_ICONS } from "../components/MicroIcons";
 import type { MarketId } from "../../config/markets";
 import { hiringProcessSteps } from "../../config/hiring-process";
+import { PRIMARY_HIRE_CTA } from "../../config/employer-cro";
 import type { SiteSurface } from "../../config/site";
 import { breadcrumbJsonLd, buildPageMetadata } from "../../lib/seo";
 
@@ -37,7 +39,7 @@ export default async function HowItWorksPage({
   const steps = hiringProcessSteps(market);
 
   return (
-    <main className="micro">
+    <main className={`micro${isAu ? " micro-light" : ""}`}>
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: home },
@@ -45,7 +47,11 @@ export default async function HowItWorksPage({
         ])}
       />
       <MarketGtm surface={surface} />
-      <SiteNav tone="dark" market={surface} active="how" />
+      <SiteNav
+        tone={isAu ? "light" : "dark"}
+        market={surface}
+        active="how"
+      />
 
       <HubMapHero market={market}>
         <p className="micro-kicker">
@@ -58,12 +64,12 @@ export default async function HowItWorksPage({
         </h1>
         <p className="micro-lead">
           {isAu
-            ? "Four steps. You keep ownership of who joins your team. We recruit, screen, and support dedicated Filipino staff who can work Australian business hours."
-            : "Four steps. You keep ownership of who joins your team. We recruit, screen, and support dedicated Filipino staff for US businesses."}
+            ? "Four clear steps. Tell us what you need, we identify suitable Filipino candidates, you interview and choose, and we support onboarding and employment admin afterward — including Australian business hours."
+            : "Four clear steps. Tell us what you need, we identify suitable Filipino candidates, you interview and choose, and we support onboarding, payroll, and the ongoing relationship."}
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-            Start hiring
+            {PRIMARY_HIRE_CTA}
           </Link>
           <Link
             href={`/services?market=${market}`}
@@ -73,6 +79,8 @@ export default async function HowItWorksPage({
           </Link>
         </div>
       </HubMapHero>
+
+      <PainGain market={market} light={isAu} ctaHref={`${home}#gate`} />
 
       <section className="micro-section">
         <div className="how-steps">
@@ -93,20 +101,20 @@ export default async function HowItWorksPage({
       </section>
 
       <section className="micro-cta">
-        <h2>{isAu ? "Ready to send your role?" : "Ready to tell us who you need?"}</h2>
+        <h2>Ready to free your team from work that keeps slipping?</h2>
         <p>
           {isAu
-            ? "Start a hiring request for your Australian business. Looking for work? Use Looking for a job? in the footer."
-            : "Start a hiring request for your US business. Looking for work? Use Looking for a job? in the footer."}
+            ? "Start a hiring request for your Australian business. Looking for work? Choose the job-seeker option in the form."
+            : "Start a hiring request for your US business. Looking for work? Choose the job-seeker option in the form."}
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-            Tell us who you need
+            {PRIMARY_HIRE_CTA}
           </Link>
         </div>
       </section>
 
-      <SiteFooter tone="dark" market={surface} />
+      <SiteFooter tone={isAu ? "light" : "dark"} market={surface} />
     </main>
   );
 }

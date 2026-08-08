@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 320" role="img" aria-label="Anthill Cool Company Awards Top 100">
+  <!-- shield outer -->
+  <path d="M140 12 L248 36 L258 150 L200 240 L140 300 L80 240 L22 150 L32 36 Z" fill="#C8D2E0"/>
+  <!-- shield inner -->
+  <path d="M140 24 L236 46 L245 148 L192 230 L140 282 L88 230 L35 148 L44 46 Z" fill="#12244E"/>
+  <!-- title -->
+  <text x="140" y="88" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="20" fill="#fff" letter-spacing="1">COOL</text>
+  <text x="140" y="112" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="20" fill="#fff" letter-spacing="1">COMPANY</text>
+  <text x="140" y="136" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="20" fill="#fff" letter-spacing="1">AWARDS</text>
+  <!-- banner -->
+  <rect x="18" y="168" width="244" height="52" rx="4" fill="#C8D2E0"/>
+  <rect x="24" y="174" width="232" height="40" rx="3" fill="#162A58"/>
+  <text x="140" y="202" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="24" fill="#fff" letter-spacing="1">★  TOP 100  ★</text>
+  <text x="140" y="250" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="14" fill="#B8C6D8">anthill</text>
+</svg>

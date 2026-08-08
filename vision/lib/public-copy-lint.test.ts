@@ -3,7 +3,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { CATEGORIES, CATEGORY_SLUGS } from "../config/categories";
 import { MARKETS } from "../config/markets";
-import { PUBLIC_QUOTES, SITE } from "../config/site";
+import { INDUSTRY_STATS, PUBLIC_QUOTES, SITE } from "../config/site";
 
 /**
  * Public-copy lint: buyer-facing LP strings must not carry internal QA / PPC jargon.
@@ -79,7 +79,15 @@ function visibleSiteStrings(): { path: string; text: string }[] {
     {
       tagline: SITE.tagline,
       disclaimer: SITE.disclaimer,
+      footerLegal: SITE.footerLegal,
+      trademark: SITE.trademark,
       quotes: PUBLIC_QUOTES,
+      industryStats: INDUSTRY_STATS.map((s) => ({
+        figure: s.figure,
+        headline: s.headline,
+        body: s.body,
+        sourceLabel: s.sourceLabel,
+      })),
     },
     "site",
     out,
@@ -112,8 +120,13 @@ function extractQuotedStrings(source: string): string[] {
 
 const PUBLIC_SURFACE_FILES = [
   "app/components/MarketLanding.tsx",
+  "app/components/TrustBand.tsx",
   "app/components/TrustQuotes.tsx",
+  "app/components/RoleQuiz.tsx",
+  "app/components/QuizTeaser.tsx",
   "app/components/ExitIntent.tsx",
+  "app/components/EngageChat.tsx",
+  "app/components/LeadGate.tsx",
   "app/components/SiteFooter.tsx",
   "app/components/SiteNav.tsx",
   "app/components/StickyCta.tsx",

@@ -2,10 +2,11 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { focusGate } from "../../lib/focus-gate";
 
 /**
  * Next.js App Router often lands on `/path#gate` without scrolling to the target
- * (or restores a mid-page scroll). Scroll + lightly focus hash / `?focus=` anchors.
+ * (or restores a mid-page scroll). Scroll + focus hash / `?focus=` anchors.
  */
 function resolveAnchorId(): string | null {
   const hash = window.location.hash.replace(/^#/, "");
@@ -18,6 +19,10 @@ function scrollToAnchor(
   id: string,
   behavior: ScrollBehavior = "smooth"
 ): boolean {
+  if (id === "gate") {
+    focusGate({ behavior });
+    return Boolean(document.getElementById("gate"));
+  }
   const el = document.getElementById(id);
   if (!el) return false;
   el.scrollIntoView({ behavior, block: "start" });
@@ -56,6 +61,8 @@ export default function HashScroll() {
 
     // Same-path Next <Link href="#gate"> / `/us#gate` may not fire hashchange.
     const onClick = (e: MouseEvent) => {
+      // RoleQuiz / StickyCta / chat already call focusGate with assist opts.
+      if (e.defaultPrevented) return;
       const target = e.target;
       if (!(target instanceof Element)) return;
       const a = target.closest("a");

@@ -7,6 +7,7 @@ import {
   robotsFor,
 } from "../lib/seo";
 import { SITE } from "../config/site";
+import { EXPERIMENTS_BOOT_SCRIPT } from "../lib/experiments";
 import "./globals.css";
 
 /**
@@ -47,6 +48,16 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
+        />
+        {/* Runs before first paint. Marks the document as JS-capable (scroll
+            reveal animations only arm themselves when it is, so content is never
+            stuck invisible without JS), applies ?vc_exp=&vc_var= force overrides
+            into sticky storage, and paints lp_density so the lean arm never
+            flashes the wordy layout. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: EXPERIMENTS_BOOT_SCRIPT,
+          }}
         />
       </head>
       <body>

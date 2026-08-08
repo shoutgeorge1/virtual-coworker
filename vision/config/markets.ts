@@ -1,6 +1,6 @@
 /**
  * Market-specific Stage 1 config.
- * US NA phone from operator brief: 310-730-9126.
+ * US phone: (888) 954-8644 — aligned with ads Call asset (was 310 interim).
  * AU: no phone — form-primary; do not invent a placeholder tel: link.
  * Do not invent emails, budgets, conversion IDs, or guarantees.
  */
@@ -44,13 +44,14 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     landingPath: "/us",
     leadEmailEnv: "LEAD_EMAIL_US",
     phoneEnv: "NEXT_PUBLIC_US_PHONE",
-    knownPhone: "310-730-9126",
+    knownPhone: "(888) 954-8644",
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: DEFAULT_CAREERS_URL,
-    headline: "Hire dedicated Filipino VAs and remote staff for your US business.",
-    prop: "Need a virtual assistant or dedicated Filipino teammate for your US business ops? We recruit, vet, and shortlist — you interview and decide who joins. Dedicated seats, not a freelance marketplace.",
+    headline:
+      "Free your team from work that keeps slipping — with a dedicated Filipino coworker.",
+    prop: "Recover time for customers and growth. Virtual Coworker matches Filipino professionals to your US role, you interview and choose, and we support payroll and employment admin after you hire. Dedicated staffing — not a freelance marketplace.",
     staffingExplain:
-      "Tell us the role. We follow up for a short hiring conversation, take your brief, and shortlist screened Filipino talent. You interview and decide before anyone starts. We handle payroll and account support after you hire.",
+      "Tell us the role. We follow up for a short hiring conversation, take your brief, and shortlist screened Filipino talent. You interview and decide before anyone starts. We handle payroll and account support after you hire. Rates are discussed once we understand the seat — transparent for the role, not a one-size price tag.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",
@@ -83,10 +84,11 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     knownPhone: null,
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: DEFAULT_CAREERS_URL,
-    headline: "Hire dedicated Filipino staff for your Australian business.",
-    prop: "Virtual Coworker connects Australian businesses with vetted Filipino teammates who work Australian business hours — recruit, screen, and support included. Not a gig marketplace.",
+    headline:
+      "Add dependable capacity for Australian business hours — without building another local department.",
+    prop: "Hand off the work that keeps slipping to a dedicated Filipino teammate. We recruit and shortlist for your role, you interview and choose, and we support employment admin after you hire. Staffing for Australian businesses — not a gig marketplace.",
     staffingExplain:
-      "Send the role you need filled. Our team follows up for a hiring conversation, takes your brief, and shortlists screened candidates. You interview before anyone starts. We handle employment admin so you stay focused on the work.",
+      "Send the role you need filled. Our team follows up for a hiring conversation, takes your brief, and shortlists screened candidates. You interview before anyone starts. We handle employment admin so you stay focused on the work. Rates depend on the role and seniority — we’ll talk through them once we understand what you need.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",

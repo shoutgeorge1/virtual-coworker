@@ -9,9 +9,25 @@ import {
   trackPhoneClick,
   trackValidEmployerSubmit,
 } from "../../lib/tracking";
+import {
+  assignExperiment,
+  trackExperimentConvert,
+  trackExperimentView,
+  type ExpVariant,
+} from "../../lib/experiments";
+import {
+  GATE_ASSIST_EVENT,
+  type GateAssistDetail,
+} from "../../lib/focus-gate";
 import type { MarketId } from "../../config/markets";
 import type { AbVariant, CategorySlug } from "../../config/categories";
 import { formLabelForSlug } from "../../config/categories";
+
+const GATE_TITLES: Record<ExpVariant, { title: string; eyebrowSuffix: string }> = {
+  a: { title: "Start Hiring — 2 minutes.", eyebrowSuffix: "2 minutes" },
+  b: { title: "Start Hiring — short form.", eyebrowSuffix: "about a minute" },
+  c: { title: "Start Hiring — 2 minutes.", eyebrowSuffix: "2 minutes" },
+};
 
 export type GateCopy = {
   eyebrow: string;
@@ -81,13 +97,17 @@ function CallBlock({
     <a
       className={cls}
       href={copy.phoneHref}
-      onClick={() =>
+      onClick={() => {
         trackPhoneClick({
           market,
           category: category || "",
           variant: variant || "",
-        })
-      }
+        });
+        trackExperimentConvert("phone_click", {
+          market,
+          source: "lead_gate",
+        });
+      }}
     >
       {inner}
     </a>
@@ -119,6 +139,8 @@ export default function LeadGate({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const startedRef = useRef(false);
+  const [headlineVariant, setHeadlineVariant] = useState<ExpVariant>("a");
+  const [roleEmphasize, setRoleEmphasize] = useState(false);
 
   useEffect(() => {
     captureAttribution(market, {
@@ -126,6 +148,12 @@ export default function LeadGate({
       variant: variant || "",
     });
   }, [market, category, variant]);
+
+  useEffect(() => {
+    const v = assignExperiment("gate_headline");
+    setHeadlineVariant(v);
+    trackExperimentView("gate_headline", v, { market });
+  }, [market]);
 
   useEffect(() => {
     if (initialRole) setRole(initialRole);
@@ -156,6 +184,58 @@ export default function LeadGate({
     });
     markStart();
   }
+
+  useEffect(() => {
+    const onAssist = (e: Event) => {
+      const detail = (e as CustomEvent<GateAssistDetail>).detail || {};
+      if (detail.intent === "employer") {
+        setIntent((prev) => {
+          if (prev === "employer") return prev;
+          queueMicrotask(() => {
+            trackEvent("employer_gate_selected", {
+              market,
+              category: category || "",
+              variant: variant || "",
+              gate_variant: "inline",
+              intent: "employer",
+              source: "gate_assist",
+            });
+            markStart();
+          });
+          return "employer";
+        });
+        setError(null);
+      }
+      const assistRole = detail.role?.trim();
+      if (assistRole && copy.roles.includes(assistRole)) {
+        setRole(assistRole);
+        markStart();
+      }
+      if (detail.emphasize === "role") {
+        setRoleEmphasize(true);
+        window.setTimeout(() => setRoleEmphasize(false), 2400);
+        // Wait for employer form to paint, then land on role chips
+        window.setTimeout(() => {
+          const gate = document.getElementById("gate");
+          const selected = gate?.querySelector(
+            ".gate-chips button.on",
+          ) as HTMLElement | null;
+          const chip =
+            selected ||
+            (gate?.querySelector(
+              ".gate-chips button, [data-gate-role-step] .gate-chips",
+            ) as HTMLElement | null);
+          try {
+            chip?.focus({ preventScroll: true });
+          } catch {
+            /* ignore */
+          }
+        }, 80);
+      }
+    };
+    window.addEventListener(GATE_ASSIST_EVENT, onAssist);
+    return () => window.removeEventListener(GATE_ASSIST_EVENT, onAssist);
+  }, [market, category, variant, copy.roles]);
 
   function onJobSeekerGate() {
     setIntent("job_seeker");
@@ -267,6 +347,13 @@ export default function LeadGate({
         variant: variant || "",
         conversionEligible: eligible,
       });
+      if (eligible) {
+        trackExperimentConvert("form_submit", {
+          market,
+          category: category || "",
+          submission_id: data.submission_id,
+        });
+      }
       setDone(true);
       setSubmitting(false);
       const q = new URLSearchParams({
@@ -292,11 +379,23 @@ export default function LeadGate({
     }
   }
 
+  const gateFrame = GATE_TITLES[headlineVariant] || GATE_TITLES.a;
+  // Category pages keep role-specific titles; generic LP swaps A/B headline.
+  const isGenericTitle = /start hiring|tell us who you need/i.test(copy.title);
+  const displayTitle = isGenericTitle ? gateFrame.title : copy.title;
+  const displayEyebrow = isGenericTitle
+    ? copy.eyebrow.replace(/about a minute|2 minutes/i, gateFrame.eyebrowSuffix)
+    : copy.eyebrow;
+
   return (
-    <aside className="gate-card anim-rise-d1" id="gate">
+    <aside
+      className="gate-card anim-rise-d1"
+      id="gate"
+      data-exp-gate={headlineVariant}
+    >
       <div className="gate-card-head">
-        <p className="gate-card-eyebrow">{copy.eyebrow}</p>
-        <h2>{copy.title}</h2>
+        <p className="gate-card-eyebrow">{displayEyebrow}</p>
+        <h2>{displayTitle}</h2>
       </div>
 
       {done ? (
@@ -372,7 +471,10 @@ export default function LeadGate({
 
           {intent === "employer" ? (
             <form onSubmit={onSubmit} noValidate>
-              <fieldset className="gate-step">
+              <fieldset
+                className={`gate-step${roleEmphasize ? " is-role-emphasize" : ""}`}
+                data-gate-role-step
+              >
                 <legend>
                   <b>2</b> {copy.roleLabel}
                 </legend>

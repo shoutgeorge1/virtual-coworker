@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { SITE, type SiteSurface } from "../../config/site";
+import {
+  COMPANY_IDENTITY,
+  SITE,
+  TRUST_PROOF,
+  type SiteSurface,
+} from "../../config/site";
 import {
   isExternalCareersUrl,
   resolveCareersUrl,
@@ -31,8 +36,6 @@ export default function SiteFooter({
       ? "Australia"
       : "Philippines careers";
 
-  const address = isAu ? SITE.addressAu : isUs ? SITE.addressUs : null;
-
   const siteLinks = isPh
     ? ([
         { href: careers, label: "Philippines careers", external: careersExternal },
@@ -50,24 +53,15 @@ export default function SiteFooter({
         { href: "/terms", label: "Terms", external: false },
       ] as const);
 
+  /**
+   * Employer footers deliberately carry no job-seeker promo (George, 2026-08-07).
+   * Job seekers are still diverted to the PH careers site by the gate and popup —
+   * the footer just stops advertising it to paid hiring traffic.
+   */
   const cross = isUs
-    ? ([
-        { href: "/au", label: "Australia", external: false },
-        {
-          href: careers,
-          label: "Looking for a job?",
-          external: careersExternal,
-        },
-      ] as const)
+    ? ([{ href: "/au", label: "Australia", external: false }] as const)
     : isAu
-      ? ([
-          { href: "/us", label: "United States", external: false },
-          {
-            href: careers,
-            label: "Looking for a job?",
-            external: careersExternal,
-          },
-        ] as const)
+      ? ([{ href: "/us", label: "United States", external: false }] as const)
       : ([
           { href: "/us", label: "US employers", external: false },
           { href: "/au", label: "AU employers", external: false },
@@ -112,12 +106,22 @@ export default function SiteFooter({
           </div>
 
           <div className="site-footer-contact">
-            {address ? (
-              <p className="site-footer-address">
-                <span className="site-footer-label">Office</span>
-                <span>{address}</span>
-              </p>
-            ) : null}
+            <p className="site-footer-address">
+              <span className="site-footer-label">US office</span>
+              <span>{SITE.addressUs}</span>
+            </p>
+            <p className="site-footer-address">
+              <span className="site-footer-label">Australia office</span>
+              <span>{SITE.addressAu}</span>
+            </p>
+            <p className="site-footer-address">
+              <span className="site-footer-label">Philippines</span>
+              <span>
+                {SITE.addressPh
+                  ? SITE.addressPh
+                  : `${SITE.addressPhLabel} — Filipino talent recruitment & screening`}
+              </span>
+            </p>
             {isUs ? (
               <p className="site-footer-phone">
                 <span className="site-footer-label">US business line</span>
@@ -137,12 +141,40 @@ export default function SiteFooter({
           </nav>
         </div>
 
+        <dl className="site-footer-identity">
+          <div>
+            <dt>Registered</dt>
+            <dd>
+              {COMPANY_IDENTITY.entityUs} · {COMPANY_IDENTITY.entityAu} (ABN{" "}
+              {COMPANY_IDENTITY.abn})
+            </dd>
+          </div>
+          <div>
+            <dt>Founded</dt>
+            <dd>
+              {TRUST_PROOF.sinceYear} by {COMPANY_IDENTITY.founderName},{" "}
+              {COMPANY_IDENTITY.founderTitle}
+            </dd>
+          </div>
+        </dl>
+
+        {!isPh ? (
+          <div className="site-footer-legal">
+            {SITE.footerLegal.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+            <p className="site-footer-trademark">{SITE.trademark}</p>
+          </div>
+        ) : null}
+
         <div className="site-footer-bottom">
           <p className="site-footer-cross">
-            <span className="site-footer-label">Also:</span>{" "}
+            <span className="site-footer-cross-pref">Also looking at</span>
             {cross.map((item, i) => (
               <span key={item.href + item.label}>
-                {i > 0 ? <span aria-hidden> · </span> : null}
+                {i > 0 ? <span aria-hidden> · </span> : (
+                  <span aria-hidden>{" "}</span>
+                )}
                 {renderLink(item, `cross-${item.href}`)}
               </span>
             ))}

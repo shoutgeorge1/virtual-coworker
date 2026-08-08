@@ -1,6 +1,10 @@
 import { PUBLIC_QUOTES } from "../../config/site";
 import type { MarketId } from "../../config/markets";
 
+/**
+ * Standalone quote band — kept for reuse.
+ * Market landings render quotes inside TrustBand (prominent, above the quiz).
+ */
 export default function TrustQuotes({
   light = false,
   market = "us",
@@ -13,13 +17,11 @@ export default function TrustQuotes({
   return (
     <section className={`trust-quotes${light ? " trust-quotes-light" : ""}`}>
       <div className="trust-quotes-inner">
-        <p className="trust-quotes-label">
-          {isAu ? "From Australian & global clients" : "From clients"}
-        </p>
+        <p className="trust-quotes-label">Happy customers</p>
         <h2>
           {isAu
-            ? "Businesses that hired through Virtual Coworker."
-            : "Businesses that hired through Virtual Coworker."}
+            ? "What Australian & global clients say."
+            : "What customers say after they hire."}
         </h2>
         <div className="trust-quotes-grid">
           {PUBLIC_QUOTES.map((q) => (
@@ -27,7 +29,10 @@ export default function TrustQuotes({
               <blockquote>“{q.quote}”</blockquote>
               <figcaption>
                 <b>{q.name}</b>
-                <span>{q.role}</span>
+                <span>
+                  {q.role}
+                  {q.company ? ` · ${q.company}` : ""}
+                </span>
               </figcaption>
             </figure>
           ))}

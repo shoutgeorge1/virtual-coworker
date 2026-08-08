@@ -6,6 +6,7 @@ import {
   type NavId,
   type SiteSurface,
 } from "../../config/site";
+import { PRIMARY_HIRE_CTA } from "../../config/employer-cro";
 import { resolvePhone, type MarketId } from "../../config/markets";
 
 export default function SiteNav({
@@ -71,7 +72,7 @@ export default function SiteNav({
           </Link>
         ) : (
           <a href={hireHref} className="site-nav-call">
-            Start hiring
+            {PRIMARY_HIRE_CTA}
           </a>
         )}
         <span className="site-nav-tag">{SITE.tagline}</span>

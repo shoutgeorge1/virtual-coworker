@@ -5,9 +5,10 @@ import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
 import HubMapHero from "../components/HubMapHero";
 import JsonLd from "../components/JsonLd";
-import { ServiceIcon } from "../components/MicroIcons";
-import { CATEGORY_SLUGS, CATEGORIES } from "../../config/categories";
+import ServicesRoleGrid from "../components/ServicesRoleGrid";
+import PainGain from "../components/PainGain";
 import type { MarketId } from "../../config/markets";
+import { PRIMARY_HIRE_CTA } from "../../config/employer-cro";
 import type { SiteSurface } from "../../config/site";
 import { breadcrumbJsonLd, buildPageMetadata } from "../../lib/seo";
 
@@ -39,7 +40,7 @@ export default async function ServicesPage({
   const otherLabel = other === "au" ? "Australia" : "United States";
 
   return (
-    <main className="micro">
+    <main className={`micro${market === "au" ? " micro-light" : ""}`}>
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: home },
@@ -47,7 +48,11 @@ export default async function ServicesPage({
         ])}
       />
       <MarketGtm surface={surface} />
-      <SiteNav tone="dark" market={surface} active="services" />
+      <SiteNav
+        tone={market === "au" ? "light" : "dark"}
+        market={surface}
+        active="services"
+      />
 
       <HubMapHero market={market}>
         <p className="micro-kicker">
@@ -55,17 +60,18 @@ export default async function ServicesPage({
         </p>
         <h1>
           {market === "au"
-            ? "Roles Australian businesses hire through us."
-            : "Roles US businesses hire through us."}
+            ? "Hand off the work slowing your Australian business down."
+            : "Hand off the work slowing your US business down."}
         </h1>
         <p className="micro-lead">
-          Pick the seat you need filled. Every page is for{" "}
+          Pick the seat you need filled — admin, books, support, marketing, HR,
+          sales, and more. Every page is for{" "}
           {market === "au" ? "Australian" : "US"} businesses hiring dedicated
-          Filipino staff — job seekers use Looking for a job? in the footer.
+          Filipino staff. Job seekers choose the job-seeker option in the form.
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-            Start hiring
+            {PRIMARY_HIRE_CTA}
           </Link>
           <Link
             href={`/how-it-works?market=${market}`}
@@ -76,25 +82,10 @@ export default async function ServicesPage({
         </div>
       </HubMapHero>
 
+      <PainGain market={market} light={market === "au"} ctaHref={`${home}#gate`} />
+
       <section className="micro-section">
-        <div className="services-grid">
-          {CATEGORY_SLUGS.map((slug) => {
-            const c = CATEGORIES[slug];
-            return (
-              <article className="services-card" key={slug}>
-                <span className="micro-icon" aria-hidden>
-                  <ServiceIcon slug={slug} />
-                </span>
-                <em>{c.shortLabel}</em>
-                <h2>{c.label}</h2>
-                <p>{c.description[market]}</p>
-                <div className="services-card-links">
-                  <Link href={`/${market}/${slug}`}>Open →</Link>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+        <ServicesRoleGrid market={market} />
       </section>
 
       <section className="micro-cta">
@@ -107,7 +98,7 @@ export default async function ServicesPage({
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-            Start hiring
+            {PRIMARY_HIRE_CTA}
           </Link>
         </div>
         <p className="micro-cross">
@@ -116,7 +107,10 @@ export default async function ServicesPage({
         </p>
       </section>
 
-      <SiteFooter tone="dark" market={surface} />
+      <SiteFooter
+        tone={market === "au" ? "light" : "dark"}
+        market={surface}
+      />
     </main>
   );
 }

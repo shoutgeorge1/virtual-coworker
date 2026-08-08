@@ -271,9 +271,9 @@
 
 /* — Benefit band: sell the offer without a wall of text — */
 .au-sell {
-  padding: clamp(2.25rem, 4.5vw, 3.5rem) var(--shell);
-  background: linear-gradient(180deg, #f7fbfb, #eaf6f5);
-  border-top: 1px solid rgba(33, 72, 115, 0.09);
+  padding: clamp(2.85rem, 5.5vw, 4.25rem) var(--shell);
+  background: linear-gradient(180deg, #ffffff 0%, #f4faf9 55%, #eaf5f4 100%);
+  border-top: 1px solid rgba(33, 72, 115, 0.08);
 }
 
 .au-sell-inner {

@@ -1,9 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { trackEvent } from "../../lib/tracking";
+import { focusGate } from "../../lib/focus-gate";
+import {
+  assignExperiment,
+  trackExperimentClick,
+  trackExperimentConvert,
+  trackExperimentView,
+  type ExpVariant,
+} from "../../lib/experiments";
 import type { MarketId } from "../../config/markets";
 import type { AbVariant } from "../../config/categories";
+
+const LAUNCHER: Record<ExpVariant, string> = {
+  a: "Need help hiring?",
+  b: "Ask a quick question",
+  c: "Need help hiring?", // unused — chat_launcher is A/B only
+};
 
 type StepId = "open" | "role" | "path" | "done";
 
@@ -59,6 +73,7 @@ export default function EngageChat({
   const [step, setStep] = useState<StepId>("open");
   const [roleHint, setRoleHint] = useState("");
   const [face, setFace] = useState<string>(FACES[0]);
+  const [launcherVariant, setLauncherVariant] = useState<ExpVariant>("a");
   const panelRef = useRef<HTMLDivElement>(null);
   const enabled = flagEnabled();
   const showPhone = Boolean(phoneHref && phoneDisplay);
@@ -66,9 +81,12 @@ export default function EngageChat({
   useEffect(() => {
     if (!enabled) return;
     setFace(pickFace());
+    const v = assignExperiment("chat_launcher");
+    setLauncherVariant(v);
+    trackExperimentView("chat_launcher", v, { market });
     const t = window.setTimeout(() => setNudge(false), 4500);
     return () => window.clearTimeout(t);
-  }, [enabled]);
+  }, [enabled, market]);
 
   useEffect(() => {
     if (!open) return;
@@ -92,6 +110,10 @@ export default function EngageChat({
     const next = !open;
     setOpen(next);
     if (next) {
+      trackExperimentClick("chat_launcher", launcherVariant, {
+        market,
+        cta: "open",
+      });
       track("conversion_assist_opened", { reason: "chat_open" });
       trackEvent("chat_opened", {
         market,
@@ -100,6 +122,8 @@ export default function EngageChat({
       });
     }
   };
+
+  const launcherLabel = LAUNCHER[launcherVariant] || LAUNCHER.a;
 
   return (
     <div className="engage-chat">
@@ -206,6 +230,10 @@ export default function EngageChat({
                       className="engage-chat-primary"
                       onClick={() => {
                         track("conversion_assist_cta_clicked", { cta: "phone" });
+                        trackExperimentConvert("phone_click", {
+                          market,
+                          source: "chat",
+                        });
                         trackEvent("phone_cta_clicked", {
                           market,
                           category: category || "",
@@ -221,13 +249,23 @@ export default function EngageChat({
                   <a
                     href={gateHref}
                     className={showPhone ? "" : "engage-chat-primary"}
-                    onClick={() => {
+                    onClick={(e: MouseEvent<HTMLAnchorElement>) => {
+                      e.preventDefault();
                       track("conversion_assist_cta_clicked", { cta: "form" });
                       setStep("done");
                       setOpen(false);
+                      window.setTimeout(
+                        () =>
+                          focusGate({
+                            behavior: "smooth",
+                            selectEmployer: true,
+                            emphasize: "role",
+                          }),
+                        40,
+                      );
                     }}
                   >
-                    Go to the form →
+                    Start Hiring
                   </a>
                 </div>
               </>
@@ -251,7 +289,7 @@ export default function EngageChat({
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={face} alt="" width={28} height={28} loading="lazy" decoding="async" />
-        <span>{open ? "Close" : "Need help hiring?"}</span>
+        <span>{open ? "Close" : launcherLabel}</span>
       </button>
     </div>
   );

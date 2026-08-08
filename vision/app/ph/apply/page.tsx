@@ -21,12 +21,13 @@ export default function PHApply() {
 
   return (
     <main className="ph">
-      <nav className="ph-nav">
+      <nav className="ph-nav" aria-label="Careers">
         <a
           href={careers}
           className="ph-brand"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Virtual Coworker Philippines careers (opens in new tab)"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

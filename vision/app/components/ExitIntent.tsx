@@ -2,81 +2,83 @@
 
 import { useEffect, useState } from "react";
 import { trackEvent } from "../../lib/tracking";
+import { focusGate } from "../../lib/focus-gate";
+import {
+  assignExperiment,
+  trackExperimentClick,
+  trackExperimentConvert,
+  trackExperimentView,
+  type ExpVariant,
+} from "../../lib/experiments";
+import { DEFAULT_CAREERS_URL } from "../../config/markets";
 import type { MarketId } from "../../config/markets";
 import type { AbVariant } from "../../config/categories";
 
 const SESSION_KEY = "vc_exit_intent_seen";
-const VARIANT_KEY = "vc_exit_popup_variant";
-
-type PopupVariantId = "a" | "b" | "c";
 
 type PopupVariant = {
-  id: PopupVariantId;
+  id: ExpVariant;
   image: string;
   eyebrow: string;
   title: string;
   body: string;
-  primaryCta: string;
   phoneCta: string;
 };
+
+/** Shared 2-step choices — copy variants only change the intro. */
+const HIRE_CTA = "I’m hiring for a business";
+const JOB_CTA = "I’m looking for a job";
 
 const VARIANTS: PopupVariant[] = [
   {
     id: "a",
     image: "/brand/va-face-1.jpg",
-    eyebrow: "Hire Filipino VA",
-    title: "Need a dedicated seat — not Upwork?",
-    body: "We recruit and shortlist. You interview who joins. Tell us the role in about a minute.",
-    primaryCta: "Tell us who you need →",
+    eyebrow: "Skip Upwork roulette",
+    title: "Want someone who sticks — not another freelancer?",
+    body: "One quick question so we send you the right way.",
     phoneCta: "Call now",
   },
   {
     id: "b",
     image: "/brand/va-face-2.jpg",
-    eyebrow: "Dedicated Filipino teammate",
-    title: "You interview. We handle the shortlist.",
-    body: "Not a freelance marketplace — a staffing partner for a dedicated seat on your hours.",
-    primaryCta: "Start hiring →",
+    eyebrow: "Dedicated teammate",
+    title: "Tired of hiring that eats your week?",
+    body: "Quick check first — hiring for a company, or looking for work?",
     phoneCta: "Talk to us",
   },
   {
     id: "c",
     image: "/brand/va-face-3.jpg",
-    eyebrow: "Skip the gig maze",
-    title: "Hire a Filipino VA your way.",
-    body: "Dedicated seat, vetted shortlist, you decide. Prefer to talk? Call — or send the role.",
-    primaryCta: "Send the role →",
+    eyebrow: "Filipino VA, your way",
+    title: "One clear seat. People you actually meet.",
+    body: "Before we point you anywhere — are you hiring, or looking for a job?",
     phoneCta: "Call the team",
   },
 ];
 
-function pickVariant(): PopupVariant {
-  if (typeof window === "undefined") return VARIANTS[0];
-  try {
-    const stored = localStorage.getItem(VARIANT_KEY) as PopupVariantId | null;
-    const found = VARIANTS.find((v) => v.id === stored);
-    if (found) return found;
-  } catch {
-    /* ignore */
-  }
-  const picked = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
-  try {
-    localStorage.setItem(VARIANT_KEY, picked.id);
-    document.cookie = `${VARIANT_KEY}=${picked.id};path=/;max-age=${60 * 60 * 24 * 90};samesite=lax`;
-  } catch {
-    /* ignore */
-  }
-  return picked;
-}
-
+/**
+ * Opt-in only. Auto timed / exit / scroll popups interrupt reading and
+ * duplicate the inline employer/job-seeker gate — default OFF (CRO pass 2026-08).
+ * Set NEXT_PUBLIC_ENABLE_EXIT_INTENT=true only if deliberately re-enabling.
+ */
 function flagEnabled(): boolean {
   const raw = (process.env.NEXT_PUBLIC_ENABLE_EXIT_INTENT || "").trim().toLowerCase();
-  return raw !== "false";
+  return raw === "true";
+}
+
+function isCoarsePointer(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 760;
+  } catch {
+    return window.innerWidth < 760;
+  }
 }
 
 /**
- * Exit-intent OR timed nudge — 3 creative A/B/C variants (image + copy).
- * Employer microsites only. Persist variant in localStorage/cookie. Track dataLayer.
+ * Soft offer popup — exit-intent on desktop; scroll-depth or long wait on mobile.
+ * Light 2-step gate: hiring vs job seeker → form or PH careers egress.
+ * Never immediate. 3 creative A/B/C variants via experiments.ts.
  */
 export default function ExitIntent({
   market,
@@ -85,6 +87,7 @@ export default function ExitIntent({
   variant,
   phoneHref,
   phoneDisplay,
+  careersHref = DEFAULT_CAREERS_URL,
 }: {
   market: MarketId;
   gateHref?: string;
@@ -92,6 +95,7 @@ export default function ExitIntent({
   variant?: AbVariant;
   phoneHref?: string | null;
   phoneDisplay?: string;
+  careersHref?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [popup, setPopup] = useState<PopupVariant>(VARIANTS[0]);
@@ -100,7 +104,8 @@ export default function ExitIntent({
   useEffect(() => {
     if (!enabled) return;
     if (typeof window === "undefined") return;
-    const assigned = pickVariant();
+    const assignedId = assignExperiment("exit_popup");
+    const assigned = VARIANTS.find((v) => v.id === assignedId) || VARIANTS[0];
     setPopup(assigned);
 
     try {
@@ -111,6 +116,11 @@ export default function ExitIntent({
 
     let shown = false;
     let formTouched = false;
+    const mobile = isCoarsePointer();
+    const engagedAt = Date.now();
+    const EXIT_MIN_MS = 12_000;
+    const TIMED_MS = mobile ? 75_000 : 90_000;
+    const SCROLL_DEPTH = 0.5;
 
     const formBusy = () => {
       if (formTouched) return true;
@@ -125,7 +135,6 @@ export default function ExitIntent({
 
     const show = (reason: string) => {
       if (shown) return;
-      // Don't stack on someone already filling the form
       if (formBusy()) return;
       shown = true;
       try {
@@ -133,7 +142,13 @@ export default function ExitIntent({
       } catch {
         /* ignore */
       }
+      document.documentElement.classList.add("vc-popup-open");
       setOpen(true);
+      trackExperimentView("exit_popup", assigned.id, {
+        market,
+        category: category || "",
+        reason,
+      });
       trackEvent("conversion_assist_opened", {
         market,
         category: category || "",
@@ -151,27 +166,104 @@ export default function ExitIntent({
       });
     };
 
-    const onLeave = (e: MouseEvent) => {
-      if (e.clientY <= 8) show("exit_intent");
+    const onLeave = (e: globalThis.MouseEvent) => {
+      if (mobile) return;
+      if (Date.now() - engagedAt < EXIT_MIN_MS) return;
+      if (e.clientY > 8) return;
+      show("exit_intent");
     };
 
-    const timer = window.setTimeout(() => show("timed_45s"), 45_000);
-    document.addEventListener("mouseout", onLeave);
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const scrollable = doc.scrollHeight - window.innerHeight;
+      if (scrollable < 240) return;
+      const depth = window.scrollY / scrollable;
+      if (depth >= SCROLL_DEPTH) {
+        if (mobile || Date.now() - engagedAt >= EXIT_MIN_MS) {
+          show(mobile ? "scroll_50" : "scroll_50_desktop");
+        }
+      }
+    };
+
+    const timer = window.setTimeout(() => show(mobile ? "timed_75s" : "timed_90s"), TIMED_MS);
+    if (!mobile) document.addEventListener("mouseout", onLeave);
+    window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("focusin", onFormInteract, true);
     document.addEventListener("input", onFormInteract, true);
 
     return () => {
       window.clearTimeout(timer);
       document.removeEventListener("mouseout", onLeave);
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("focusin", onFormInteract, true);
       document.removeEventListener("input", onFormInteract, true);
+      document.documentElement.classList.remove("vc-popup-open");
     };
   }, [enabled, market, category, variant]);
 
+  useEffect(() => {
+    if (!open) document.documentElement.classList.remove("vc-popup-open");
+  }, [open]);
+
   if (!enabled || !open) return null;
 
-  const dismiss = () => setOpen(false);
+  const dismiss = () => {
+    document.documentElement.classList.remove("vc-popup-open");
+    setOpen(false);
+  };
   const showPhone = Boolean(phoneHref && phoneDisplay);
+  const careers = careersHref || DEFAULT_CAREERS_URL;
+
+  const acceptHire = () => {
+    trackExperimentClick("exit_popup", popup.id, {
+      market,
+      cta: "hire",
+    });
+    trackEvent("conversion_assist_cta_clicked", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      assist_type: "exit_intent",
+      popup_variant: popup.id,
+      cta: "hire",
+    });
+    trackEvent("exit_intent_accepted", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      popup_variant: popup.id,
+      intent: "employer",
+    });
+    dismiss();
+    window.setTimeout(
+      () =>
+        focusGate({
+          behavior: "smooth",
+          selectEmployer: true,
+          emphasize: "role",
+        }),
+      40,
+    );
+  };
+
+  const acceptJobSeeker = () => {
+    trackExperimentClick("exit_popup", popup.id, {
+      market,
+      cta: "job_seeker",
+    });
+    trackEvent("job_seeker_redirected", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      gate_variant: "exit_intent",
+      intent: "job_seeker",
+      destination: careers,
+      primary_eligible: false,
+      popup_variant: popup.id,
+    });
+    dismiss();
+    window.open(careers, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div
@@ -200,35 +292,28 @@ export default function ExitIntent({
         <p className="exit-intent-eyebrow">{popup.eyebrow}</p>
         <h2 id="exit-intent-title">{popup.title}</h2>
         <p>{popup.body}</p>
+        <div className="exit-intent-choices" role="group" aria-label="Are you hiring or looking for a job?">
+          <button type="button" className="exit-intent-primary" onClick={acceptHire}>
+            {HIRE_CTA}
+          </button>
+          <button type="button" className="exit-intent-secondary" onClick={acceptJobSeeker}>
+            {JOB_CTA}
+          </button>
+        </div>
         <div className="exit-intent-actions">
-          <a
-            href={gateHref}
-            className="exit-intent-primary"
-            onClick={() => {
-              trackEvent("conversion_assist_cta_clicked", {
-                market,
-                category: category || "",
-                variant: variant || "",
-                assist_type: "exit_intent",
-                popup_variant: popup.id,
-                cta: "form",
-              });
-              trackEvent("exit_intent_accepted", {
-                market,
-                category: category || "",
-                variant: variant || "",
-                popup_variant: popup.id,
-              });
-              dismiss();
-            }}
-          >
-            {popup.primaryCta}
-          </a>
           {showPhone ? (
             <a
               href={phoneHref!}
               className="exit-intent-phone"
               onClick={() => {
+                trackExperimentClick("exit_popup", popup.id, {
+                  market,
+                  cta: "phone",
+                });
+                trackExperimentConvert("phone_click", {
+                  market,
+                  source: "exit_intent",
+                });
                 trackEvent("conversion_assist_cta_clicked", {
                   market,
                   category: category || "",
@@ -252,9 +337,10 @@ export default function ExitIntent({
             Not now
           </button>
         </div>
-        <p className="exit-intent-jobseeker">
-          Looking for work? Use Looking for a job? in the footer.
-        </p>
+        {/* gateHref kept for a11y / hash parity; hire CTA scrolls via focusGate */}
+        <a href={gateHref} className="sr-only" onClick={(e) => { e.preventDefault(); acceptHire(); }}>
+          Go to hiring form
+        </a>
       </div>
     </div>
   );

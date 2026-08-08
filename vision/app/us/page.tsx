@@ -5,9 +5,9 @@ import { buildPageMetadata } from "../../lib/seo";
 import "./us.css";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Hire Filipino Virtual Assistants | Virtual Coworker US",
+  title: "Hire Dedicated Filipino Staff | Virtual Coworker US",
   description:
-    "Hire dedicated Filipino VAs and remote staff for your US business. We recruit and vet — you interview and decide. Not a freelance marketplace.",
+    "Free your team from work that keeps slipping. Hire dedicated Filipino coworkers for your US business — we recruit and vet, you interview and decide.",
   path: "/us",
   indexable: true,
   ogImage: "/brand/hero-us-2026.jpg",

@@ -64,9 +64,11 @@ export default async function ThankYouPage({
   ];
 
   return (
-    <main className={`micro thank-you thank-you-${market}`}>
+    <main
+      className={`micro thank-you thank-you-${market}${isAu ? " micro-light" : ""}`}
+    >
       <MarketGtm surface={market} />
-      <SiteNav tone="dark" market={market} />
+      <SiteNav tone={isAu ? "light" : "dark"} market={market} />
 
       <div className="thank-you-atmosphere" aria-hidden>
         <span className="thank-you-orb thank-you-orb-a" />
@@ -85,8 +87,8 @@ export default async function ThankYouPage({
         {conversionEligible ? (
           <p className="micro-lead thank-you-lead">
             {isAu
-              ? "A teammate will follow up to talk through the role and next steps for your Australian business."
-              : "A teammate will follow up to talk through the role and next steps for your US business."}
+              ? "We’ve received your hiring request. A teammate will follow up to talk through the role and next steps for your Australian business."
+              : "We’ve received your hiring request. A teammate will follow up to talk through the role and next steps for your US business."}
           </p>
         ) : (
           <p className="micro-lead thank-you-lead">
@@ -108,12 +110,12 @@ export default async function ThankYouPage({
           aria-labelledby="ty-book"
         >
           <div className="thank-you-book-inner">
-            <p className="thank-you-book-eyebrow">Next step</p>
-            <h2 id="ty-book">Book a hiring conversation</h2>
+            <p className="thank-you-book-eyebrow">Optional next step</p>
+            <h2 id="ty-book">Want to move faster? Book a hiring conversation</h2>
             <p>
               {isAu
-                ? "Pick a time that suits Australian business hours. We’ll talk through the role, fit, and how hiring works — then you decide."
-                : "Pick a time that works for you. We’ll talk through the role, fit, and how hiring works — then you decide."}
+                ? "Optional — pick a time that suits Australian business hours. Or skip booking and wait for email follow-up from your request."
+                : "Optional — pick a time that works for you. Or skip booking and wait for email follow-up from your request."}
             </p>
             <div className="thank-you-book-actions">
               <a
@@ -246,7 +248,7 @@ export default async function ThankYouPage({
         conversionEligible={conversionEligible}
       />
 
-      <SiteFooter tone="dark" market={market} />
+      <SiteFooter tone={isAu ? "light" : "dark"} market={market} />
     </main>
   );
 }
