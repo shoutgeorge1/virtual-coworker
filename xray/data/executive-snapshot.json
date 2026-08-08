@@ -1,8 +1,11 @@
 {
-  "generated_at_utc": "2026-08-07T23:56:11.481261+00:00",
-  "pull_started_utc": "2026-08-07T23:56:03.973527+00:00",
-  "customer_id": "4967151855",
-  "filter": "campaign.name LIKE 'VC_US_%'",
+  "generated_at_utc": "2026-08-08T21:29:24.915954+00:00",
+  "pull_started_utc": "2026-08-08T21:29:21.702102+00:00",
+  "customer_ids": {
+    "us": "4967151855",
+    "au": "5735391940"
+  },
+  "filter": "VC_US_% + VC_AU_% campaigns LAST_7_DAYS",
   "api_calls_used": 2,
   "api_calls_max": 2,
   "api_calls": [
@@ -10,472 +13,216 @@
       "n": 1,
       "name": "campaign_metrics_vc_us_last_7_days",
       "ok": true,
-      "row_count": 2
+      "row_count": 4
     },
     {
       "n": 2,
-      "name": "search_terms_vc_us_last_7_days",
+      "name": "campaign_metrics_vc_au_last_7_days",
       "ok": true,
-      "row_count": 49
+      "row_count": 0
     }
   ],
   "hard_stop": null,
-  "conversions_note": "Conversion KPIs omitted while phone call data seasons (phone = guiding light; Max Clicks meantime).",
-  "performance": {
+  "conversions_note": "Phone wins not scored as KPIs here yet.",
+  "performance_us": {
     "window": "LAST_7_DAYS",
-    "focus_day": "2026-08-06",
+    "focus_day": "2026-08-07",
     "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in LAST_7_DAYS window",
     "totals_focus_day": {
-      "impressions": 230,
-      "clicks": 40,
-      "ctr_pct": 17.39,
-      "cost_usd": 90.6,
-      "avg_cpc_usd": 2.26
+      "impressions": 510,
+      "clicks": 62,
+      "ctr_pct": 12.16,
+      "cost_usd": 164.74,
+      "avg_cpc_usd": 2.66
     },
     "totals_last_7_days": {
-      "impressions": 230,
-      "clicks": 40,
-      "ctr_pct": 17.39,
-      "cost_usd": 90.6,
-      "avg_cpc_usd": 2.26
+      "impressions": 740,
+      "clicks": 102,
+      "ctr_pct": 13.78,
+      "cost_usd": 255.34,
+      "avg_cpc_usd": 2.5
     },
     "campaigns": [
       {
         "name": "VC_US_S_CORE",
         "status": "ENABLED",
         "last_7_days": {
-          "impressions": 155,
-          "clicks": 34,
-          "ctr_pct": 21.94,
-          "cost_usd": 76.66,
-          "avg_cpc_usd": 2.25
+          "impressions": 401,
+          "clicks": 72,
+          "ctr_pct": 17.96,
+          "cost_usd": 150.63,
+          "avg_cpc_usd": 2.09
         },
         "focus_day": {
-          "impressions": 155,
-          "clicks": 34,
-          "ctr_pct": 21.94,
-          "cost_usd": 76.66,
-          "avg_cpc_usd": 2.25
+          "impressions": 246,
+          "clicks": 38,
+          "ctr_pct": 15.45,
+          "cost_usd": 73.97,
+          "avg_cpc_usd": 1.95
         }
       },
       {
         "name": "VC_US_S_ROLES",
         "status": "ENABLED",
         "last_7_days": {
-          "impressions": 75,
-          "clicks": 6,
-          "ctr_pct": 8.0,
-          "cost_usd": 13.94,
-          "avg_cpc_usd": 2.32
+          "impressions": 339,
+          "clicks": 30,
+          "ctr_pct": 8.85,
+          "cost_usd": 104.72,
+          "avg_cpc_usd": 3.49
         },
         "focus_day": {
-          "impressions": 75,
-          "clicks": 6,
-          "ctr_pct": 8.0,
-          "cost_usd": 13.94,
-          "avg_cpc_usd": 2.32
+          "impressions": 264,
+          "clicks": 24,
+          "ctr_pct": 9.09,
+          "cost_usd": 90.78,
+          "avg_cpc_usd": 3.78
         }
       }
     ],
     "dates_in_pull": [
-      "2026-08-06"
+      "2026-08-06",
+      "2026-08-07"
     ]
   },
-  "search_terms": {
+  "performance_au": {
     "window": "LAST_7_DAYS",
-    "source": "google_ads_api",
-    "row_count_raw": 49,
-    "unique_terms": 48,
-    "top_by_clicks": [
+    "focus_day": null,
+    "focus_day_note": "No AU metric rows in LAST_7_DAYS (campaigns may be paused / not spending yet)",
+    "totals_focus_day": {
+      "impressions": 0,
+      "clicks": 0,
+      "ctr_pct": null,
+      "cost_usd": 0.0,
+      "avg_cpc_usd": null
+    },
+    "totals_last_7_days": {
+      "impressions": 0,
+      "clicks": 0,
+      "ctr_pct": null,
+      "cost_usd": 0.0,
+      "avg_cpc_usd": null
+    },
+    "campaigns": [
       {
-        "search_term": "va workers ph",
-        "campaigns": [
-          "VC_US_S_CORE"
-        ],
-        "impressions": 104,
-        "clicks": 25,
-        "ctr_pct": 24.04,
-        "cost_usd": 55.34,
-        "avg_cpc_usd": 2.21,
-        "negatived": false
+        "name": "VC_AU_S_CORE",
+        "status": "PAUSED",
+        "last_7_days": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        },
+        "focus_day": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        }
       },
       {
-        "search_term": "remote staffing agencies",
-        "campaigns": [
-          "VC_US_S_CORE"
-        ],
-        "impressions": 4,
-        "clicks": 2,
-        "ctr_pct": 50.0,
-        "cost_usd": 5.08,
-        "avg_cpc_usd": 2.54,
-        "negatived": false
-      },
-      {
-        "search_term": "administrative assistant remote",
-        "campaigns": [
-          "VC_US_S_ROLES"
-        ],
-        "impressions": 3,
-        "clicks": 1,
-        "ctr_pct": 33.33,
-        "cost_usd": 2.34,
-        "avg_cpc_usd": 2.34,
-        "negatived": false
-      },
-      {
-        "search_term": "virtual assistant business",
-        "campaigns": [
-          "VC_US_S_ROLES"
-        ],
-        "impressions": 2,
-        "clicks": 1,
-        "ctr_pct": 50.0,
-        "cost_usd": 2.34,
-        "avg_cpc_usd": 2.34,
-        "negatived": false
-      },
-      {
-        "search_term": "virtual assistant work from home",
-        "campaigns": [
-          "VC_US_S_CORE"
-        ],
-        "impressions": 2,
-        "clicks": 1,
-        "ctr_pct": 50.0,
-        "cost_usd": 2.34,
-        "avg_cpc_usd": 2.34,
-        "negatived": true,
-        "negatived_status": "Negatived \u2014 not bidding",
-        "negatived_label": "operator-negatived",
-        "negatived_cohort": "VC_Neg_JobSeekers_Live",
-        "negatived_by": "virtual assistant work from home"
-      },
-      {
-        "search_term": "virtualstaff ph",
-        "campaigns": [
-          "VC_US_S_CORE"
-        ],
-        "impressions": 4,
-        "clicks": 1,
-        "ctr_pct": 25.0,
-        "cost_usd": 2.33,
-        "avg_cpc_usd": 2.33,
-        "negatived": false
-      },
-      {
-        "search_term": "work from home customer service representative",
-        "campaigns": [
-          "VC_US_S_ROLES"
-        ],
-        "impressions": 2,
-        "clicks": 1,
-        "ctr_pct": 50.0,
-        "cost_usd": 2.33,
-        "avg_cpc_usd": 2.33,
-        "negatived": true,
-        "negatived_status": "Negatived \u2014 not bidding",
-        "negatived_label": "operator-negatived",
-        "negatived_cohort": "VC_Neg_JobSeekers_Live",
-        "negatived_by": "work from home customer service"
-      },
-      {
-        "search_term": "virtual bookkeeper",
-        "campaigns": [
-          "VC_US_S_ROLES"
-        ],
-        "impressions": 1,
-        "clicks": 1,
-        "ctr_pct": 100.0,
-        "cost_usd": 2.32,
-        "avg_cpc_usd": 2.32,
-        "negatived": false
-      },
-      {
-        "search_term": "remote staffing agency",
-        "campaigns": [
-          "VC_US_S_CORE"
-        ],
-        "impressions": 6,
-        "clicks": 1,
-        "ctr_pct": 16.67,
-        "cost_usd": 2.31,
-        "avg_cpc_usd": 2.31,
-        "negatived": false
-      },
-      {
-        "search_term": "virtual staff ph",
-        "campaigns": [
-          "VC_US_S_CORE"
-        ],
-        "impressions": 2,
-        "clicks": 1,
-        "ctr_pct": 50.0,
-        "cost_usd": 2.29,
-        "avg_cpc_usd": 2.29,
-        "negatived": false
-      },
-      {
-        "search_term": "remote customer service representative",
-        "campaigns": [
-          "VC_US_S_ROLES"
-        ],
-        "impressions": 7,
-        "clicks": 1,
-        "ctr_pct": 14.29,
-        "cost_usd": 2.28,
-        "avg_cpc_usd": 2.28,
-        "negatived": false
-      },
-      {
-        "search_term": "customer service representative",
-        "campaigns": [
-          "VC_US_S_ROLES"
-        ],
-        "impressions": 11,
-        "clicks": 0,
-        "ctr_pct": 0.0,
-        "cost_usd": 0.0,
-        "avg_cpc_usd": null,
-        "negatived": false
-      },
-      {
-        "search_term": "virtual assistant",
-        "campaigns": [
-          "VC_US_S_CORE"
-        ],
-        "impressions": 6,
-        "clicks": 0,
-        "ctr_pct": 0.0,
-        "cost_usd": 0.0,
-        "avg_cpc_usd": null,
-        "negatived": false
-      },
-      {
-        "search_term": "customer service work from home",
-        "campaigns": [
-          "VC_US_S_ROLES"
-        ],
-        "impressions": 4,
-        "clicks": 0,
-        "ctr_pct": 0.0,
-        "cost_usd": 0.0,
-        "avg_cpc_usd": null,
-        "negatived": true,
-        "negatived_status": "Negatived \u2014 not bidding",
-        "negatived_label": "operator-negatived",
-        "negatived_cohort": "VC_Neg_JobSeekers_Live",
-        "negatived_by": "customer service work from home"
-      },
-      {
-        "search_term": "remote customer service",
-        "campaigns": [
-          "VC_US_S_ROLES"
-        ],
-        "impressions": 4,
-        "clicks": 0,
-        "ctr_pct": 0.0,
-        "cost_usd": 0.0,
-        "avg_cpc_usd": null,
-        "negatived": false
+        "name": "VC_AU_S_ROLES",
+        "status": "PAUSED",
+        "last_7_days": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        },
+        "focus_day": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        }
       }
     ],
+    "dates_in_pull": [],
+    "status_source_note": "No LAST_7_DAYS metric rows from Ads API; campaign names from package; status PAUSED per local Editor DB (not a third API call)."
+  },
+  "performance": {
+    "window": "LAST_7_DAYS",
+    "focus_day": "2026-08-07",
+    "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in LAST_7_DAYS window",
+    "totals_focus_day": {
+      "impressions": 510,
+      "clicks": 62,
+      "ctr_pct": 12.16,
+      "cost_usd": 164.74,
+      "avg_cpc_usd": 2.66
+    },
+    "totals_last_7_days": {
+      "impressions": 740,
+      "clicks": 102,
+      "ctr_pct": 13.78,
+      "cost_usd": 255.34,
+      "avg_cpc_usd": 2.5
+    },
+    "campaigns": [
+      {
+        "name": "VC_US_S_CORE",
+        "status": "ENABLED",
+        "last_7_days": {
+          "impressions": 401,
+          "clicks": 72,
+          "ctr_pct": 17.96,
+          "cost_usd": 150.63,
+          "avg_cpc_usd": 2.09
+        },
+        "focus_day": {
+          "impressions": 246,
+          "clicks": 38,
+          "ctr_pct": 15.45,
+          "cost_usd": 73.97,
+          "avg_cpc_usd": 1.95
+        }
+      },
+      {
+        "name": "VC_US_S_ROLES",
+        "status": "ENABLED",
+        "last_7_days": {
+          "impressions": 339,
+          "clicks": 30,
+          "ctr_pct": 8.85,
+          "cost_usd": 104.72,
+          "avg_cpc_usd": 3.49
+        },
+        "focus_day": {
+          "impressions": 264,
+          "clicks": 24,
+          "ctr_pct": 9.09,
+          "cost_usd": 90.78,
+          "avg_cpc_usd": 3.78
+        }
+      }
+    ],
+    "dates_in_pull": [
+      "2026-08-06",
+      "2026-08-07"
+    ]
+  },
+  "customer_id": "4967151855",
+  "search_terms": {
+    "window": "LAST_7_DAYS",
+    "source": "skipped_by_design",
+    "row_count_raw": 0,
+    "unique_terms": 0,
+    "top_by_clicks": [],
     "negatives": {
       "source": "editor_csv_vc_us_campaign_negatives",
       "label": "operator-negatived",
-      "unique_count": 183,
-      "jobseekers_live": [
-        "customer service representative wfh",
-        "customer service work from home",
-        "customer support representative work from home",
-        "virtual assistant work from home",
-        "work as",
-        "work as customer service from home",
-        "work from home customer service",
-        "work from home customer service representative",
-        "work from home representative",
-        "work from home social media manager",
-        "work from home virtual assistant"
-      ],
-      "note": "Matched against Editor CSV campaign negatives (VC_US_*), including VC_Neg_JobSeekers_Live Phrase cohort. Historical clicks may still show from before the negative was live."
-    },
-    "executive_note": "Do not surface on Executive \u2014 keywords only."
-  },
-  "landing_pages": {
-    "window": "LAST_7_DAYS",
-    "source": "derived_from_campaign_final_urls_and_search_terms",
-    "source_note": "Ads click traffic for now; GA4 bounce later. Not a landing_page_view API pull (snapshot already uses 2/2 API calls). CORE \u2192 /us; category rows attributed from ROLES search terms that map to Editor Final URLs.",
-    "label": "from Ads traffic to URL",
-    "roles_unmapped_clicks": 1,
-    "roles_campaign_clicks": 6,
-    "pages": [
-      {
-        "name": "US hub",
-        "path": "/us",
-        "url": "https://www.virtualcoworker.app/us",
-        "why": "CORE campaign Final URL \u2014 main hire/VA traffic lands here.",
-        "attribution": "VC_US_S_CORE Final URL \u2192 /us",
-        "signal_terms": [],
-        "impressions": 155,
-        "clicks": 34,
-        "ctr_pct": 21.94,
-        "cost_usd": 76.66,
-        "avg_cpc_usd": 2.25
-      },
-      {
-        "name": "Customer service",
-        "path": "/us/customer-service",
-        "url": "https://www.virtualcoworker.app/us/customer-service",
-        "why": "ROLES CSR Final URL \u2014 support / CSR searches.",
-        "attribution": "ROLES search-term \u2192 category Final URL",
-        "signal_terms": [
-          "work from home customer service representative",
-          "remote customer service representative"
-        ],
-        "impressions": 28,
-        "clicks": 2,
-        "ctr_pct": 7.14,
-        "cost_usd": 4.61,
-        "avg_cpc_usd": 2.3
-      },
-      {
-        "name": "Admin / EA",
-        "path": "/us/administrative-support",
-        "url": "https://www.virtualcoworker.app/us/administrative-support",
-        "why": "ROLES admin Final URL \u2014 EA / admin intent.",
-        "attribution": "ROLES search-term \u2192 category Final URL",
-        "signal_terms": [
-          "administrative assistant remote",
-          "virtual assistant business"
-        ],
-        "impressions": 5,
-        "clicks": 2,
-        "ctr_pct": 40.0,
-        "cost_usd": 4.68,
-        "avg_cpc_usd": 2.34
-      },
-      {
-        "name": "Bookkeeping",
-        "path": "/us/bookkeeping",
-        "url": "https://www.virtualcoworker.app/us/bookkeeping",
-        "why": "ROLES bookkeeping Final URL \u2014 bookkeeper searches.",
-        "attribution": "ROLES search-term \u2192 category Final URL",
-        "signal_terms": [
-          "virtual bookkeeper"
-        ],
-        "impressions": 1,
-        "clicks": 1,
-        "ctr_pct": 100.0,
-        "cost_usd": 2.32,
-        "avg_cpc_usd": 2.32
-      },
-      {
-        "name": "Accounting",
-        "path": "/us/accounting",
-        "url": "https://www.virtualcoworker.app/us/accounting",
-        "why": "ROLES accounting Final URL \u2014 live category LP.",
-        "attribution": "Live category LP \u2014 no attributed ROLES terms in this pull",
-        "signal_terms": [],
-        "impressions": 0,
-        "clicks": 0,
-        "ctr_pct": null,
-        "cost_usd": 0,
-        "avg_cpc_usd": null
-      },
-      {
-        "name": "Digital marketing",
-        "path": "/us/digital-marketing",
-        "url": "https://www.virtualcoworker.app/us/digital-marketing",
-        "why": "ROLES marketing Final URL \u2014 live category LP.",
-        "attribution": "Live category LP \u2014 no attributed ROLES terms in this pull",
-        "signal_terms": [],
-        "impressions": 0,
-        "clicks": 0,
-        "ctr_pct": null,
-        "cost_usd": 0,
-        "avg_cpc_usd": null
-      },
-      {
-        "name": "Social media",
-        "path": "/us/social-media",
-        "url": "https://www.virtualcoworker.app/us/social-media",
-        "why": "ROLES social Final URL \u2014 live category LP.",
-        "attribution": "Live category LP \u2014 no attributed ROLES terms in this pull",
-        "signal_terms": [],
-        "impressions": 0,
-        "clicks": 0,
-        "ctr_pct": null,
-        "cost_usd": 0,
-        "avg_cpc_usd": null
-      }
-    ]
-  },
-  "operator": {
-    "narrative_as_of": "2026-08-08",
-    "status_banner": "<strong>AU first</strong> \u2014 site live with <code>1300 886 740</code>; <code>VC_AU_*</code> Enabled (last gentle Ads read). US Stage 1 curated \u00b7 CRO baseline shipped \u00b7 Brand paused. Gap: AU tracking (GTM/GA4/Ads conversions) still thin vs US. Ops risk: Unkown AGs with Broad positives.",
-    "budgets": [
-      {
-        "label": "AU Search",
-        "amount": "Enabled \u00b7 priority",
-        "detail": "site phone 1300 live; VC_AU_* Enabled \u2014 no invented AU spend figure; Unkown AG cleanup still open",
-        "kind": "priority"
-      },
-      {
-        "label": "US CORE",
-        "amount": "~$75/day",
-        "detail": "Maximize Clicks, $12 CPC cap, Exact \u2014 curated",
-        "kind": "live_test"
-      },
-      {
-        "label": "US ROLES",
-        "amount": "~$50/day",
-        "detail": "Maximize Clicks, $10 CPC cap, Exact \u2014 role tests",
-        "kind": "live_test"
-      },
-      {
-        "label": "Combined USA Search",
-        "amount": "~$125/day",
-        "detail": "Stage 1 still live",
-        "kind": "live_test"
-      },
-      {
-        "label": "Legacy Brand",
-        "amount": "Paused",
-        "detail": "deferred; SEO owns brand",
-        "kind": "paused_deferred"
-      }
-    ],
-    "whats_working": {
-      "ad_copy_themes": [
-        "Filipino / Philippines VA",
-        "Dedicated seat (not a marketplace gig)",
-        "Not Upwork \u2014 you interview the person"
-      ],
-      "note": "Themes from live ops curation \u2014 not an Ads API ranking. LP metrics are in landing_pages."
-    },
-    "whats_next": [
-      "<strong>Australia</strong> \u2014 close AU tracking gaps (GTM/GA4/conversions) \u00b7 Unkown AG / Broad-positive cleanup \u00b7 keep answering 1300",
-      "<strong>Site tests</strong> \u2014 wire experiment / variant events (GTM or GA4 \u2192 Site tests tab)",
-      "Near-term: sales marks \u201cqualified\u201d in Zoho \u2192 light signal into Google Ads",
-      "Later (enough leads / money): value-based conversions when deals actually pay"
-    ],
-    "coming_soon": [
-      "AU GTM / GA4 / Ads conversion parity (biggest gap vs US)",
-      "AU Unkown AG cleanup (Broad-positive landmine)",
-      "Site tests experiment events \u2192 dashboard numbers",
-      "Conversion / CPA reporting once phone + Zoho qualify season"
-    ],
-    "done_today": [
-      "AU phone on site (1300 886 740) \u00b7 AU jumped queue \u00b7 VC_AU_* Enabled",
-      "US Stage 1 curated \u00b7 CRO baseline shipped",
-      "Brand paused \u00b7 phone guiding light US \u00b7 GTM/GA4 on /us",
-      "Editor Ads package done \u2014 archived from active checklist"
-    ],
-    "honesty": "Australia is top of queue. Site phone 1300 live; VC_AU_* Enabled. US Search stays curated. Keywords on this page \u2014 not early search-term noise."
+      "unique_count": 0,
+      "jobseekers_live": [],
+      "note": "Search terms not pulled (2-call budget = US + AU campaigns only)."
+    }
   },
   "search_terms_executive": {
     "surface": false,
-    "reason": "Leadership sees curated keywords only; early ST noise stays in Ads UI / ops."
+    "reason": "No search-term dump on Executive."
   },
   "keywords": {
     "label": "Employer-intent Exact themes",
@@ -513,5 +260,147 @@
         "why": "Role LP Final URLs"
       }
     ]
+  },
+  "landing_pages": {
+    "window": "LAST_7_DAYS",
+    "source": "derived_from_campaign_final_urls",
+    "source_note": "Hub metrics = VC_US_S_CORE. Role LPs are live; per-URL split skipped (API budget = US+AU campaigns only).",
+    "label": "US LP catalog + CORE traffic",
+    "roles_unmapped_clicks": 30,
+    "roles_campaign_clicks": 30,
+    "pages": [
+      {
+        "name": "US hub",
+        "path": "/us",
+        "url": "https://www.virtualcoworker.app/us",
+        "why": "CORE campaign Final URL \u2014 main hire/VA traffic lands here.",
+        "attribution": "VC_US_S_CORE Final URL \u2192 /us",
+        "signal_terms": [],
+        "impressions": 401,
+        "clicks": 72,
+        "ctr_pct": 17.96,
+        "cost_usd": 150.63,
+        "avg_cpc_usd": 2.09
+      },
+      {
+        "name": "Admin / EA",
+        "path": "/us/administrative-support",
+        "url": "https://www.virtualcoworker.app/us/administrative-support",
+        "why": "ROLES admin Final URL \u2014 EA / admin intent.",
+        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Bookkeeping",
+        "path": "/us/bookkeeping",
+        "url": "https://www.virtualcoworker.app/us/bookkeeping",
+        "why": "ROLES bookkeeping Final URL \u2014 bookkeeper searches.",
+        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Accounting",
+        "path": "/us/accounting",
+        "url": "https://www.virtualcoworker.app/us/accounting",
+        "why": "ROLES accounting Final URL \u2014 live category LP.",
+        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Customer service",
+        "path": "/us/customer-service",
+        "url": "https://www.virtualcoworker.app/us/customer-service",
+        "why": "ROLES CSR Final URL \u2014 support / CSR searches.",
+        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Digital marketing",
+        "path": "/us/digital-marketing",
+        "url": "https://www.virtualcoworker.app/us/digital-marketing",
+        "why": "ROLES marketing Final URL \u2014 live category LP.",
+        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Social media",
+        "path": "/us/social-media",
+        "url": "https://www.virtualcoworker.app/us/social-media",
+        "why": "ROLES social Final URL \u2014 live category LP.",
+        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      }
+    ]
+  },
+  "operator": {
+    "narrative_as_of": "2026-08-08",
+    "status_banner": "US live. Australia phone on site. AU campaigns not spending this week. Still open: Zoho qualified\u2192Ads \u00b7 AU call tracking \u00b7 AU website tags.",
+    "budgets": [
+      {
+        "label": "US",
+        "amount": "~$125/day",
+        "detail": "live",
+        "kind": "live_test"
+      },
+      {
+        "label": "Australia",
+        "amount": "not spending",
+        "detail": "phone 1300 on site; ads paused / quiet",
+        "kind": "priority"
+      }
+    ],
+    "whats_working": {
+      "ad_copy_themes": [
+        "Filipino / Philippines VA",
+        "Dedicated seat (not a marketplace gig)",
+        "Not Upwork \u2014 you interview the person"
+      ],
+      "note": "Ops curation \u2014 not an Ads API ranking."
+    },
+    "whats_next": [
+      "<strong>Mark good leads in Zoho</strong> \u2014 so Google Ads can learn which clicks were real",
+      "<strong>Australia phone tracking</strong> \u2014 count answered calls as wins in Ads",
+      "<strong>Australia website tags</strong> \u2014 same basic tracking the US already has"
+    ],
+    "coming_soon": [
+      "Site tests numbers (page variants work; scoreboard still blank)"
+    ],
+    "done_today": [
+      "AU phone on site (1300 886 740)",
+      "US Search live \u00b7 Brand off",
+      "Ads package archived"
+    ],
+    "honesty": "US Search is live and spending. Australia site phone is live; AU ads show no spend in the last week (paused / not running yet).",
+    "lp_ab_note": "Landing page A/B variants work in the site code. Site tests scoreboard is still blank."
   }
 }

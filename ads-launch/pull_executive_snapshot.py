@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Read-only executive snapshot for VC USA Search (max 2 GAQL calls).
+"""Read-only executive snapshot for VC_* Search US+AU (max 2 GAQL calls).
 
 Hard rules:
 - No mutate / upload / enable
 - On RESOURCE_EXHAUSTED: STOP, do not retry
+- Exactly 2 light calls: US campaigns + AU campaigns (status + spend)
+- No search-term dumps (kept out of Executive; ops uses Ads UI)
 - Writes xray/data/executive-snapshot.json for the Executive tab
 
 Usage (from shoutgeorge-ads venv):
@@ -35,6 +37,7 @@ from sg_google_ads.exceptions import (  # noqa: E402
 )
 
 US_ID = "4967151855"
+AU_ID = "5735391940"
 OUT = Path(__file__).resolve().parents[1] / "xray" / "data" / "executive-snapshot.json"
 REPO = Path(__file__).resolve().parents[1]
 US_EDITOR_CSV = REPO / "ads-launch" / "google-ads-editor-import-us.csv"
@@ -105,45 +108,12 @@ US_LP_CATALOG = [
 OPERATOR_NOTES = {
     "narrative_as_of": "2026-08-08",
     "status_banner": (
-        "<strong>AU first</strong> — site live with <code>1300 886 740</code>; "
-        "<code>VC_AU_*</code> may already be Enabled (confirm in Ads UI). "
-        "US Stage 1 curated · CRO baseline shipped · Brand paused. "
-        "Gap: AU tracking (GTM/GA4/Ads conversions) still thin vs US."
+        "US live. Australia phone on site. "
+        "Still open: Zoho qualified→Ads · AU call tracking · AU website tags."
     ),
     "budgets": [
-        {
-            "label": "AU Search",
-            "amount": "Priority now",
-            "detail": (
-                "site phone 1300 live; campaigns may be Enabled — "
-                "confirm in Ads UI (no invented AU spend here)"
-            ),
-            "kind": "priority",
-        },
-        {
-            "label": "US CORE",
-            "amount": "~$75/day",
-            "detail": "Maximize Clicks, $12 CPC cap, Exact — curated",
-            "kind": "live_test",
-        },
-        {
-            "label": "US ROLES",
-            "amount": "~$50/day",
-            "detail": "Maximize Clicks, $10 CPC cap, Exact — role tests",
-            "kind": "live_test",
-        },
-        {
-            "label": "Combined USA Search",
-            "amount": "~$125/day",
-            "detail": "Stage 1 still live",
-            "kind": "live_test",
-        },
-        {
-            "label": "Legacy Brand",
-            "amount": "Paused",
-            "detail": "deferred; SEO owns brand",
-            "kind": "paused_deferred",
-        },
+        {"label": "US", "amount": "~$125/day", "detail": "live", "kind": "live_test"},
+        {"label": "Australia", "amount": "see Ads", "detail": "phone 1300 on site", "kind": "priority"},
     ],
     "whats_working": {
         "ad_copy_themes": [
@@ -151,34 +121,28 @@ OPERATOR_NOTES = {
             "Dedicated seat (not a marketplace gig)",
             "Not Upwork — you interview the person",
         ],
-        "note": "Themes from live ops curation — not an Ads API ranking. LP metrics are in landing_pages.",
+        "note": "Ops curation — not an Ads API ranking.",
     },
     "whats_next": [
-        (
-            "<strong>Australia</strong> — confirm Enabled state · close AU tracking "
-            "gaps (GTM/GA4/conversions) · keep answering 1300"
-        ),
-        (
-            "<strong>Site tests</strong> — get experiment / variant wiring working "
-            "(GTM or GA4 → Site tests tab)"
-        ),
-        'Near-term: sales marks “qualified” in Zoho → light signal into Google Ads',
-        "Later (enough leads / money): value-based conversions when deals actually pay",
+        "<strong>Mark good leads in Zoho</strong> — so Google Ads can learn which clicks were real",
+        "<strong>Australia phone tracking</strong> — count answered calls as wins in Ads",
+        "<strong>Australia website tags</strong> — same basic tracking the US already has",
     ],
     "coming_soon": [
-        "AU GTM / GA4 / Ads conversion parity (biggest gap vs US)",
-        "Site tests experiment events → dashboard numbers",
-        "Conversion / CPA reporting once phone + Zoho qualify season",
+        "Site tests numbers (page variants work; scoreboard still blank)",
     ],
     "done_today": [
-        "AU phone on site (1300 886 740) · AU jumped queue",
-        "US Stage 1 curated · CRO baseline shipped",
-        "Brand paused · phone guiding light US · GTM/GA4 on /us",
-        "Editor Ads package built — archived from active checklist",
+        "AU phone on site (1300 886 740)",
+        "US Search live · Brand off",
+        "Ads package archived",
     ],
     "honesty": (
-        "Australia jumped the queue. Site has AU phone live; "
-        "US Search stays curated. Keywords on this page — not early search-term noise."
+        "US Search is live. Australia site phone is live. "
+        "A few tracking pieces still need finishing."
+    ),
+    "lp_ab_note": (
+        "Landing page A/B variants work in the site code. "
+        "Site tests scoreboard is still blank."
     ),
 }
 
@@ -251,7 +215,7 @@ def _metrics_blob(impressions: int, clicks: int, cost: float) -> dict[str, Any]:
     }
 
 
-CAMPAIGN_Q = """
+CAMPAIGN_Q_US = """
     SELECT
       campaign.id,
       campaign.name,
@@ -268,17 +232,19 @@ CAMPAIGN_Q = """
       AND segments.date DURING LAST_7_DAYS
 """
 
-SEARCH_TERMS_Q = """
+CAMPAIGN_Q_AU = """
     SELECT
-      search_term_view.search_term,
+      campaign.id,
       campaign.name,
+      campaign.status,
+      segments.date,
       metrics.impressions,
       metrics.clicks,
       metrics.cost_micros,
-      metrics.ctr,
-      metrics.average_cpc
-    FROM search_term_view
-    WHERE campaign.name LIKE 'VC_US_%'
+      metrics.average_cpc,
+      metrics.ctr
+    FROM campaign
+    WHERE campaign.name LIKE 'VC_AU_%'
       AND campaign.status != 'REMOVED'
       AND segments.date DURING LAST_7_DAYS
 """
@@ -557,13 +523,10 @@ def _term_maps_to_lp(term: str, hints: tuple[str, ...]) -> bool:
     return any(h in t for h in hints)
 
 
-def derive_landing_pages(
-    campaigns: dict[str, Any] | None,
-    search_terms: dict[str, Any] | None,
-) -> dict[str, Any]:
-    """Derive LP click traffic from campaign Final URLs + ROLES search-term hints.
+def derive_landing_pages(campaigns: dict[str, Any] | None) -> dict[str, Any]:
+    """Catalog US LPs + CORE campaign metrics on hub. No search-term API.
 
-    No landing_page_view API call — snapshot budget is already 2/2 for campaigns + terms.
+    Snapshot budget is 2/2 for US + AU campaign pulls — no landing_page_view.
     """
     camp_by_name = {
         c["name"]: c for c in ((campaigns or {}).get("campaigns") or [])
@@ -572,39 +535,19 @@ def derive_landing_pages(
     roles = camp_by_name.get("VC_US_S_ROLES") or {}
     core_m = core.get("last_7_days") or _metrics_blob(0, 0, 0.0)
     roles_m = roles.get("last_7_days") or _metrics_blob(0, 0, 0.0)
-    terms = (search_terms or {}).get("top_by_clicks") or []
 
     pages: list[dict[str, Any]] = []
-    attributed_roles_clicks = 0
-    attributed_roles_impr = 0
-    attributed_roles_cost = 0.0
-
     for meta in US_LP_CATALOG:
         slug = meta["slug"]
         if slug == "us":
             metrics = dict(core_m)
             attribution = "VC_US_S_CORE Final URL → /us"
-            signal_terms: list[str] = []
         else:
-            hints = tuple(meta.get("term_hints") or ())
-            matched = [
-                t
-                for t in terms
-                if "VC_US_S_ROLES" in (t.get("campaigns") or [])
-                and _term_maps_to_lp(t.get("search_term") or "", hints)
-            ]
-            impr = sum(int(t.get("impressions") or 0) for t in matched)
-            clicks = sum(int(t.get("clicks") or 0) for t in matched)
-            cost = sum(float(t.get("cost_usd") or 0.0) for t in matched)
-            metrics = _metrics_blob(impr, clicks, cost)
-            attributed_roles_clicks += clicks
-            attributed_roles_impr += impr
-            attributed_roles_cost += cost
-            signal_terms = [t["search_term"] for t in matched if (t.get("clicks") or 0) > 0][:5]
+            # Role LPs live; per-URL spend needs Ads UI / later GA4 — not a 3rd API call
+            metrics = _metrics_blob(0, 0, 0.0)
             attribution = (
-                "ROLES search-term → category Final URL"
-                if matched
-                else "Live category LP — no attributed ROLES terms in this pull"
+                f"Live category LP (ROLES campaign "
+                f"{int(roles_m.get('clicks') or 0)} clicks / 7d — not split by URL here)"
             )
 
         pages.append(
@@ -614,28 +557,23 @@ def derive_landing_pages(
                 "url": meta["url"],
                 "why": meta["why"],
                 "attribution": attribution,
-                "signal_terms": signal_terms,
+                "signal_terms": [],
                 **metrics,
             }
         )
 
-    # Sort: traffic first, then catalog order among zeros
     pages.sort(key=lambda p: (p.get("clicks") or 0, p.get("impressions") or 0), reverse=True)
-
-    roles_clicks = int(roles_m.get("clicks") or 0)
-    residual = max(0, roles_clicks - attributed_roles_clicks)
 
     return {
         "window": (campaigns or {}).get("window") or "LAST_7_DAYS",
-        "source": "derived_from_campaign_final_urls_and_search_terms",
+        "source": "derived_from_campaign_final_urls",
         "source_note": (
-            "Ads click traffic for now; GA4 bounce later. "
-            "Not a landing_page_view API pull (snapshot already uses 2/2 API calls). "
-            "CORE → /us; category rows attributed from ROLES search terms that map to Editor Final URLs."
+            "Hub metrics = VC_US_S_CORE. Role LPs are live; "
+            "per-URL split skipped (API budget = US+AU campaigns only)."
         ),
-        "label": "from Ads traffic to URL",
-        "roles_unmapped_clicks": residual,
-        "roles_campaign_clicks": roles_clicks,
+        "label": "US LP catalog + CORE traffic",
+        "roles_unmapped_clicks": int(roles_m.get("clicks") or 0),
+        "roles_campaign_clicks": int(roles_m.get("clicks") or 0),
         "pages": pages,
     }
 
@@ -655,60 +593,83 @@ def main() -> int:
         print(f"ERROR building client: {exc}", file=sys.stderr)
         return 1
 
-    campaign_rows: list[Any] = []
-    term_rows: list[Any] = []
+    us_rows: list[Any] = []
+    au_rows: list[Any] = []
 
-    # Call 1 — campaign metrics
+    # Call 1 — US VC_* campaign metrics (status + spend)
     try:
         print("API call 1/2: VC_US_% campaign metrics LAST_7_DAYS …", flush=True)
-        campaign_rows = fetch_rows(client, US_ID, CAMPAIGN_Q)
+        us_rows = fetch_rows(client, US_ID, CAMPAIGN_Q_US)
         api_calls.append(
             {
                 "n": 1,
                 "name": "campaign_metrics_vc_us_last_7_days",
                 "ok": True,
-                "row_count": len(campaign_rows),
+                "row_count": len(us_rows),
             }
         )
     except QuotaExhaustedError as exc:
         print(f"STOP quota on call 1: {exc}", file=sys.stderr)
-        api_calls.append({"n": 1, "name": "campaign_metrics_vc_us_last_7_days", "ok": False, "error": str(exc)})
+        api_calls.append(
+            {"n": 1, "name": "campaign_metrics_vc_us_last_7_days", "ok": False, "error": str(exc)}
+        )
         _write_payload(started, api_calls, None, None, hard_stop=str(exc))
         return 1
     except ApiAccessError as exc:
         print(f"STOP API on call 1: {exc}", file=sys.stderr)
-        api_calls.append({"n": 1, "name": "campaign_metrics_vc_us_last_7_days", "ok": False, "error": str(exc)})
+        api_calls.append(
+            {"n": 1, "name": "campaign_metrics_vc_us_last_7_days", "ok": False, "error": str(exc)}
+        )
         _write_payload(started, api_calls, None, None, hard_stop=str(exc))
         return 1
 
-    # Call 2 — search terms
+    # Call 2 — AU VC_* campaign metrics (status + spend). No search-term pull.
     try:
-        print("API call 2/2: VC_US_% search terms LAST_7_DAYS …", flush=True)
-        term_rows = fetch_rows(client, US_ID, SEARCH_TERMS_Q)
+        print("API call 2/2: VC_AU_% campaign metrics LAST_7_DAYS …", flush=True)
+        au_rows = fetch_rows(client, AU_ID, CAMPAIGN_Q_AU)
         api_calls.append(
             {
                 "n": 2,
-                "name": "search_terms_vc_us_last_7_days",
+                "name": "campaign_metrics_vc_au_last_7_days",
                 "ok": True,
-                "row_count": len(term_rows),
+                "row_count": len(au_rows),
             }
         )
     except QuotaExhaustedError as exc:
         print(f"STOP quota on call 2: {exc}", file=sys.stderr)
-        api_calls.append({"n": 2, "name": "search_terms_vc_us_last_7_days", "ok": False, "error": str(exc)})
-        camp = summarize_campaigns(campaign_rows)
-        _write_payload(started, api_calls, camp, None, hard_stop=str(exc))
+        api_calls.append(
+            {"n": 2, "name": "campaign_metrics_vc_au_last_7_days", "ok": False, "error": str(exc)}
+        )
+        us = summarize_campaigns(us_rows)
+        _write_payload(started, api_calls, us, None, hard_stop=str(exc))
         return 1
     except ApiAccessError as exc:
         print(f"STOP API on call 2: {exc}", file=sys.stderr)
-        api_calls.append({"n": 2, "name": "search_terms_vc_us_last_7_days", "ok": False, "error": str(exc)})
-        camp = summarize_campaigns(campaign_rows)
-        _write_payload(started, api_calls, camp, None, hard_stop=str(exc))
+        api_calls.append(
+            {"n": 2, "name": "campaign_metrics_vc_au_last_7_days", "ok": False, "error": str(exc)}
+        )
+        us = summarize_campaigns(us_rows)
+        _write_payload(started, api_calls, us, None, hard_stop=str(exc))
         return 1
 
-    camp = summarize_campaigns(campaign_rows)
-    terms = summarize_search_terms(term_rows)
-    path = _write_payload(started, api_calls, camp, terms, hard_stop=None)
+    us = summarize_campaigns(us_rows)
+    au = summarize_campaigns(au_rows)
+    # If AU has no metric rows (paused / not spending), keep named shell so UI isn't empty.
+    if not (au.get("campaigns") or []):
+        zero = _metrics_blob(0, 0, 0.0)
+        au = {
+            "window": "LAST_7_DAYS",
+            "focus_day": None,
+            "focus_day_note": "No AU metric rows in LAST_7_DAYS",
+            "totals_focus_day": zero,
+            "totals_last_7_days": zero,
+            "campaigns": [
+                {"name": "VC_AU_S_CORE", "status": "UNKNOWN", "last_7_days": zero, "focus_day": zero},
+                {"name": "VC_AU_S_ROLES", "status": "UNKNOWN", "last_7_days": zero, "focus_day": zero},
+            ],
+            "dates_in_pull": [],
+        }
+    path = _write_payload(started, api_calls, us, au, hard_stop=None)
     print(f"Wrote {path}")
     print(f"API calls used: {len(api_calls)} (max 2)")
     return 0
@@ -717,49 +678,48 @@ def main() -> int:
 def _write_payload(
     started: str,
     api_calls: list[dict[str, Any]],
-    campaigns: dict[str, Any] | None,
-    search_terms: dict[str, Any] | None,
+    performance_us: dict[str, Any] | None,
+    performance_au: dict[str, Any] | None,
     *,
     hard_stop: str | None,
 ) -> Path:
     finished = datetime.now(timezone.utc).isoformat()
-    # If search_terms skipped (quota), still annotate from empty + build LP shell
-    if search_terms is None and campaigns is not None:
-        negatives = load_operator_negatives()
-        search_terms = {
-            "window": "LAST_7_DAYS",
-            "source": "skipped",
-            "row_count_raw": 0,
-            "unique_terms": 0,
-            "top_by_clicks": [],
-            "negatives": {
-                "source": negatives.get("source"),
-                "label": negatives.get("label"),
-                "unique_count": negatives.get("unique_count"),
-                "jobseekers_live": negatives.get("jobseekers_live"),
-                "note": "Search-term API call skipped — negatives loaded from Editor CSV only.",
-            },
-        }
-    landing_pages = derive_landing_pages(campaigns, search_terms)
+    # No search-term API — empty shell keeps LP derive + negatives CSV-only.
+    negatives = load_operator_negatives()
+    search_terms = {
+        "window": "LAST_7_DAYS",
+        "source": "skipped_by_design",
+        "row_count_raw": 0,
+        "unique_terms": 0,
+        "top_by_clicks": [],
+        "negatives": {
+            "source": negatives.get("source"),
+            "label": negatives.get("label"),
+            "unique_count": negatives.get("unique_count"),
+            "jobseekers_live": negatives.get("jobseekers_live"),
+            "note": "Search terms not pulled (2-call budget = US + AU campaigns only).",
+        },
+    }
+    landing_pages = derive_landing_pages(performance_us)
     payload = {
         "generated_at_utc": finished,
         "pull_started_utc": started,
-        "customer_id": US_ID,
-        "filter": "campaign.name LIKE 'VC_US_%'",
+        "customer_ids": {"us": US_ID, "au": AU_ID},
+        "filter": "VC_US_% + VC_AU_% campaigns LAST_7_DAYS",
         "api_calls_used": len(api_calls),
         "api_calls_max": 2,
         "api_calls": api_calls,
         "hard_stop": hard_stop,
-        "conversions_note": (
-            "Conversion KPIs omitted while phone call data seasons "
-            "(phone = guiding light; Max Clicks meantime)."
-        ),
-        "performance": campaigns,
-        # Kept for ops/pull continuity — Executive UI must NOT render this dump.
+        "conversions_note": "Phone wins not scored as KPIs here yet.",
+        "performance_us": performance_us,
+        "performance_au": performance_au,
+        # Backward compat for older UI readers
+        "performance": performance_us,
+        "customer_id": US_ID,
         "search_terms": search_terms,
         "search_terms_executive": {
             "surface": False,
-            "reason": "Leadership sees curated keywords only; early ST noise stays in Ads UI / ops.",
+            "reason": "No search-term dump on Executive.",
         },
         "keywords": KEYWORD_THEMES,
         "landing_pages": landing_pages,

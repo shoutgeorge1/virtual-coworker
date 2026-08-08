@@ -10,160 +10,134 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
   <style>
-    /* Executive needs more horizontal room than the default xray shell */
-    body[data-page="executive.html"] .main {
-      max-width: 1280px;
+    body[data-page="executive.html"] .main { max-width: 980px; }
+
+    .exec-top {
+      margin: 0 0 1.25rem;
+      padding: 0;
     }
-    .exec-hero {
-      margin: 0 0 1rem;
-      padding: 1rem 1.1rem;
-      border-radius: 8px;
-      border: 1px solid var(--tint-cool-edge);
-      background: linear-gradient(135deg, var(--tint-cool) 0%, var(--panel) 70%);
-    }
-    .exec-hero .kicker {
+    .exec-top h1 {
       margin: 0 0 0.35rem;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .exec-hero h1 {
-      margin: 0 0 0.4rem;
-      font-size: 1.55rem;
+      font-size: 1.65rem;
       letter-spacing: -0.02em;
+      font-weight: 700;
     }
-    .exec-hero .lede {
+    .exec-top .one-liner {
       margin: 0;
-      font-size: 0.98rem;
+      font-size: 1.05rem;
+      line-height: 1.45;
       color: var(--body);
-      max-width: 42rem;
+      max-width: 36rem;
     }
-    .exec-meta {
-      margin: 0.65rem 0 0;
+    .exec-top .when {
+      margin: 0.55rem 0 0;
       font-size: 0.82rem;
       color: var(--muted);
       font-variant-numeric: tabular-nums;
     }
-    .exec-meta strong { color: var(--ink); font-weight: 600; }
-    .exec-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.85rem;
-      margin: 0 0 1rem;
-    }
-    @media (max-width: 900px) {
-      .exec-grid { grid-template-columns: 1fr; }
-    }
-    .exec-card {
+    .exec-top .when strong { color: var(--ink); font-weight: 600; }
+
+    .exec-open {
+      margin: 0 0 1.15rem;
+      padding: 0.85rem 1rem;
       border-radius: 8px;
-      border: 1px solid var(--edge-soft);
-      background: var(--panel);
-      padding: 0.9rem 1rem;
-      min-width: 0;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
     }
-    .exec-card h2 {
-      margin: 0 0 0.55rem;
+    .exec-open h2 {
+      margin: 0 0 0.45rem;
       font-size: 0.95rem;
       font-weight: 700;
     }
-    .exec-card ul {
+    .exec-open ol {
       margin: 0;
-      padding: 0 0 0 1.1rem;
+      padding: 0 0 0 1.2rem;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: var(--body);
+    }
+    .exec-open li { margin: 0.28rem 0; }
+    .exec-open strong { color: var(--ink); }
+
+    .exec-markets {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 0 0 1.15rem;
+    }
+    @media (max-width: 720px) {
+      .exec-markets { grid-template-columns: 1fr; }
+    }
+    .market {
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      padding: 0.85rem 1rem;
+      min-width: 0;
+    }
+    .market.ok {
+      border-color: var(--tint-green-edge);
+      background: var(--tint-green);
+    }
+    .market.open {
+      border-color: var(--tint-cool-edge);
+      background: var(--tint-cool);
+    }
+    .market .where {
+      margin: 0 0 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .market h2 {
+      margin: 0 0 0.45rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .market .nums {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem 1.25rem;
+      margin: 0 0 0.45rem;
+    }
+    .market .nums div { min-width: 4rem; }
+    .market .nums .lbl {
+      margin: 0;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .market .nums .val {
+      margin: 0.1rem 0 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .market p {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.4;
+      color: var(--body);
+    }
+    .market strong { color: var(--ink); }
+
+    .exec-money {
+      margin: 0 0 1.25rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel-inset);
       font-size: 0.92rem;
       line-height: 1.45;
       color: var(--body);
     }
-    .exec-card li { margin: 0.28rem 0; }
-    .exec-card strong { color: var(--ink); }
-    #bud-list {
-      list-style: none;
-      padding-left: 0;
-    }
-    #bud-list li {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.35rem 0.55rem;
-      margin: 0.4rem 0;
-      font-variant-numeric: tabular-nums;
-    }
-    #bud-list li .amt {
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: -0.01em;
-    }
-    #bud-list li .note {
-      color: var(--muted);
-      font-size: 0.86rem;
-    }
-    .exec-card.cool { background: var(--tint-cool); border-color: var(--tint-cool-edge); }
-    .exec-card.green { background: var(--tint-green); border-color: var(--tint-green-edge); }
-    .exec-card.amber { background: var(--tint-amber); border-color: var(--tint-amber-edge); }
-    .exec-card.place {
-      border-style: dashed;
-      background: var(--panel-inset);
-      color: var(--muted);
-    }
-    .exec-card.place strong { color: var(--ink); }
-    .exec-card .sub {
-      margin: 0 0 0.45rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    .exec-stats {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0;
-      margin: 0 0 1rem;
-      border: 1px solid var(--tint-teal-edge);
-      border-radius: 8px;
-      overflow: hidden;
-      background: var(--tint-teal-hd);
-    }
-    @media (max-width: 900px) {
-      .exec-stats { grid-template-columns: 1fr 1fr; }
-    }
-    .exec-stats .stat {
-      padding: 0.75rem 0.85rem;
-      border-right: 1px solid var(--tint-teal-edge);
-      background: transparent;
-    }
-    .exec-stats .stat:last-child { border-right: none; }
-    .exec-stats .stat:hover { background: #dce8e6; }
-    .exec-stats .lbl {
-      margin: 0;
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--dim);
-    }
-    .exec-stats .val {
-      margin: 0.22rem 0 0;
-      font-size: 1.35rem;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
-    .exec-stats .hint {
-      margin: 0.15rem 0 0;
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
-    .exec-note {
-      margin: 0 0 1rem;
-      padding: 0.7rem 0.9rem;
-      border-radius: 8px;
-      border: 1px solid var(--tint-amber-edge);
-      background: var(--tint-amber);
-      font-size: 0.9rem;
-      line-height: 1.45;
-      color: var(--body);
-    }
-    .exec-note strong { color: var(--ink); }
+    .exec-money strong { color: var(--ink); }
+
     .tbl-wrap { margin-top: 0.35rem; }
     table.exec-tbl {
       width: 100%;
@@ -190,18 +164,6 @@
       white-space: nowrap;
     }
     table.exec-tbl th.num { text-align: right; }
-    .lp-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 0.65rem;
-      margin: 0.35rem 0 0;
-      padding: 0;
-      list-style: none;
-    }
-    .lp-links a {
-      font-size: 0.88rem;
-      font-weight: 600;
-    }
     .tag {
       display: inline-block;
       font-size: 0.72rem;
@@ -219,148 +181,128 @@
       background: var(--tint-amber-hd);
       color: #92400e;
     }
-    .tag.neg {
-      border-color: #d1d5db;
-      background: #f3f4f6;
-      color: #6b7280;
-    }
-    tr.term-neg td {
-      color: var(--muted);
-    }
-    tr.term-neg td.term-name {
-      text-decoration: line-through;
-      text-decoration-thickness: 1.5px;
-    }
     .why-cell {
       font-size: 0.8rem;
       color: var(--muted);
       max-width: 16rem;
     }
+    .more-fold {
+      margin: 0 0 1rem;
+      border: 1px solid var(--edge-soft);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .more-fold > summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 0.7rem 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--panel-inset);
+    }
+    .more-fold > summary::-webkit-details-marker { display: none; }
+    .more-fold .fold-bd { padding: 0.75rem 1rem 1rem; border-top: 1px solid var(--edge-soft); }
+    .more-fold ul {
+      margin: 0;
+      padding: 0 0 0 1.1rem;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    .more-fold li { margin: 0.25rem 0; }
   </style>
 </head>
-<body data-page="executive.html" data-foot="CEO walkthrough · AU priority">
+<body data-page="executive.html" data-foot="Simple leadership view">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
-      <section class="exec-hero" aria-labelledby="exec-title">
-        <p class="kicker">For Braden &amp; leadership · AU priority + US live</p>
-        <h1 id="exec-title">Executive dashboard</h1>
-        <p class="lede" id="exec-honesty">
-          Australia is top of queue. Site phone 1300 live; VC_AU_* Enabled. US Search stays curated.
+      <!-- TOP: calm 10-second read -->
+      <header class="exec-top">
+        <h1>Search ads — how we’re doing</h1>
+        <p class="one-liner" id="exec-honesty">
+          US Search is live. Australia site phone is live. A few tracking pieces still need finishing.
         </p>
-        <p class="exec-meta" id="exec-updated">Loading snapshot…</p>
+        <p class="when" id="exec-updated">Loading…</p>
+      </header>
+
+      <section class="exec-open" aria-labelledby="open-hd">
+        <h2 id="open-hd">Still to finish</h2>
+        <ol id="next-list">
+          <li><strong>Mark good leads in Zoho</strong> — so Google Ads can learn which clicks were real</li>
+          <li><strong>Australia phone tracking</strong> — count answered calls as wins in Ads</li>
+          <li><strong>Australia website tags</strong> — same basic tracking the US already has</li>
+        </ol>
       </section>
 
-      <div class="exec-note" id="exec-status-banner">
-        <strong>Status:</strong> <strong>AU first</strong> — site live with <code>1300 886 740</code>; <code>VC_AU_*</code> Enabled (last gentle Ads read). US Stage 1 curated · CRO baseline shipped · Brand paused. Gap: AU tracking (GTM/GA4/Ads conversions) still thin vs US. Ops risk: Unkown AGs with Broad positives.
+      <div class="exec-markets" id="markets">
+        <article class="market ok" id="market-us">
+          <p class="where">United States</p>
+          <h2 id="us-status">On</h2>
+          <div class="nums">
+            <div>
+              <p class="lbl">Spend (7 days)</p>
+              <p class="val" id="us-spend">—</p>
+            </div>
+            <div>
+              <p class="lbl">Clicks</p>
+              <p class="val" id="us-clicks">—</p>
+            </div>
+            <div>
+              <p class="lbl">Cost / click</p>
+              <p class="val" id="us-cpc">—</p>
+            </div>
+          </div>
+          <p id="us-blurb">About $125/day. Phone calls guide quality. Brand ads are off.</p>
+        </article>
+        <article class="market open" id="market-au">
+          <p class="where">Australia</p>
+          <h2 id="au-status">On</h2>
+          <div class="nums">
+            <div>
+              <p class="lbl">Spend (7 days)</p>
+              <p class="val" id="au-spend">—</p>
+            </div>
+            <div>
+              <p class="lbl">Clicks</p>
+              <p class="val" id="au-clicks">—</p>
+            </div>
+            <div>
+              <p class="lbl">Cost / click</p>
+              <p class="val" id="au-cpc">—</p>
+            </div>
+          </div>
+          <p id="au-blurb">Site phone 1300 886 740 is live. Ads quiet this week. Call tracking + website tags still open.</p>
+        </article>
       </div>
 
-      <div class="exec-stats" id="kpi-row" aria-label="Performance KPIs">
-        <div class="stat">
-          <p class="lbl">Impressions</p>
-          <p class="val" id="kpi-impr">—</p>
-          <p class="hint" id="kpi-impr-hint">Focus day</p>
-        </div>
-        <div class="stat">
-          <p class="lbl">Clicks</p>
-          <p class="val" id="kpi-clicks">—</p>
-          <p class="hint">VC_US_* only</p>
-        </div>
-        <div class="stat">
-          <p class="lbl">CTR</p>
-          <p class="val" id="kpi-ctr">—</p>
-          <p class="hint">Clicks ÷ impressions</p>
-        </div>
-        <div class="stat">
-          <p class="lbl">Spend</p>
-          <p class="val" id="kpi-cost">—</p>
-          <p class="hint">USD</p>
-        </div>
-        <div class="stat">
-          <p class="lbl">Avg CPC</p>
-          <p class="val" id="kpi-cpc">—</p>
-          <p class="hint">Per click</p>
-        </div>
-      </div>
+      <p class="exec-money" id="money-line">
+        <strong>Daily budgets:</strong> US about $125 · Australia live (see Ads for exact)
+      </p>
 
-      <div class="exec-grid">
-        <section class="exec-card cool" aria-labelledby="bud-hd">
-          <h2 id="bud-hd">Budgets</h2>
-          <ul id="bud-list">
-            <li><strong>AU Search</strong> — <span class="amt">Enabled · priority</span> <span class="note">— site phone 1300 live; VC_AU_* Enabled — no invented AU spend figure; Unkown AG cleanup still open</span></li>
-            <li><strong>US CORE</strong> — <span class="amt">~$75/day</span> <span class="note">— Maximize Clicks, $12 CPC cap, Exact — curated</span></li>
-            <li><strong>US ROLES</strong> — <span class="amt">~$50/day</span> <span class="note">— Maximize Clicks, $10 CPC cap, Exact — role tests</span></li>
-            <li><strong>Combined USA Search</strong> — <span class="amt">~$125/day</span> <span class="note">— Stage 1 still live</span></li>
-            <li><strong>Legacy Brand</strong> — <span class="amt">Paused</span> <span class="note">— deferred; SEO owns brand</span></li>
-          </ul>
-        </section>
-
-        <section class="exec-card amber" aria-labelledby="next-hd">
-          <h2 id="next-hd">What’s next</h2>
-          <ul id="next-list">
-            <li><strong>Australia</strong> — close AU tracking gaps (GTM/GA4/conversions) · Unkown AG / Broad-positive cleanup · keep answering 1300</li>
-            <li><strong>Site tests</strong> — wire experiment / variant events (GTM or GA4 → Site tests tab)</li>
-            <li>Near-term: sales marks “qualified” in Zoho → light signal into Google Ads</li>
-            <li>Later (enough leads / money): value-based conversions when deals actually pay</li>
-          </ul>
-        </section>
-      </div>
-
+      <!-- BELOW THE FOLD: detail -->
       <section class="panel" id="campaigns">
         <div class="panel-hd">
-          <p class="kicker">Google Ads · US snapshot (read-only)</p>
-          <h2>VC_US_* campaign performance</h2>
-          <span class="badge badge-ok">Real metrics</span>
+          <p class="kicker">Last 7 days</p>
+          <h2>Campaigns</h2>
         </div>
         <div class="panel-bd">
           <p class="muted" style="margin:0 0 0.55rem;font-size:0.86rem" id="camp-window">
-            Snapshot from Ads API (LAST_7_DAYS). Conversions omitted on purpose.
+            From Google Ads (read-only). Phone wins not shown as a score yet.
           </p>
           <div class="tbl-wrap">
             <table class="exec-tbl" id="camp-table">
               <thead>
                 <tr>
+                  <th>Market</th>
                   <th>Campaign</th>
                   <th>Status</th>
-                  <th class="num">Impr</th>
                   <th class="num">Clicks</th>
-                  <th class="num">CTR</th>
-                  <th class="num">Cost</th>
-                  <th class="num">Avg CPC</th>
+                  <th class="num">Spend</th>
+                  <th class="num">Cost / click</th>
                 </tr>
               </thead>
               <tbody id="camp-body">
-                <tr><td colspan="7">Loading…</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel" id="landing-pages" style="margin-top:1rem">
-        <div class="panel-hd">
-          <p class="kicker">Landing pages · USA</p>
-          <h2>Landing page performance</h2>
-          <span class="badge">Ads traffic → URL</span>
-        </div>
-        <div class="panel-bd">
-          <p class="muted" style="margin:0 0 0.55rem;font-size:0.86rem" id="lp-window">
-            Ads click traffic for now; GA4 bounce later. Links open live pages.
-          </p>
-          <div class="tbl-wrap">
-            <table class="exec-tbl" id="lp-table">
-              <thead>
-                <tr>
-                  <th>Page</th>
-                  <th class="num">Impr</th>
-                  <th class="num">Clicks</th>
-                  <th class="num">CTR</th>
-                  <th class="num">Cost</th>
-                  <th>Why it matters</th>
-                </tr>
-              </thead>
-              <tbody id="lp-body">
                 <tr><td colspan="6">Loading…</td></tr>
               </tbody>
             </table>
@@ -368,58 +310,56 @@
         </div>
       </section>
 
-      <div class="exec-grid" style="margin-top:1rem">
-        <section class="exec-card green" aria-labelledby="work-hd">
-          <h2 id="work-hd">What’s working</h2>
-          <p class="sub">Ad copy themes (ops curation — not an API ranking)</p>
+      <details class="more-fold" id="more-detail" style="margin-top:1rem">
+        <summary>More detail (optional)</summary>
+        <div class="fold-bd">
+          <p class="muted" style="margin:0 0 0.65rem;font-size:0.86rem">
+            Landing pages and keyword themes — for ops, not the 10-second read.
+          </p>
+          <h3 style="margin:0 0 0.4rem;font-size:0.92rem">What the ads say</h3>
           <ul id="theme-list">
             <li>Filipino / Philippines VA</li>
             <li>Dedicated seat (not a marketplace gig)</li>
             <li>Not Upwork — you interview the person</li>
           </ul>
-          <p class="sub" style="margin-top:0.75rem">
-            Live LPs with metrics: <a href="#landing-pages">Landing page performance</a>.
-          </p>
-        </section>
-
-        <section class="exec-card" aria-labelledby="kw-hd">
-          <h2 id="kw-hd">Keywords we’re bidding <span class="tag">Exact · curated</span></h2>
-          <p class="sub" id="kw-sub">Employer-intent themes — not a search-term dump</p>
+          <h3 style="margin:0.85rem 0 0.4rem;font-size:0.92rem">Landing pages (US)</h3>
           <div class="tbl-wrap">
-            <table class="exec-tbl">
+            <table class="exec-tbl" id="lp-table">
               <thead>
                 <tr>
-                  <th>Keyword theme</th>
-                  <th>Market</th>
-                  <th>Campaign</th>
+                  <th>Page</th>
+                  <th class="num">Clicks</th>
+                  <th class="num">Spend</th>
                   <th>Why</th>
                 </tr>
               </thead>
-              <tbody id="kw-body">
+              <tbody id="lp-body">
                 <tr><td colspan="4">Loading…</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="sub" style="margin-top:0.65rem" id="kw-note">
-            Leadership view stays on <strong>keywords</strong> (what we choose to bid).
-            Messy early search-term noise stays in Ads UI / ops — not here.
+          <h3 style="margin:0.85rem 0 0.4rem;font-size:0.92rem">Keyword themes</h3>
+          <div class="tbl-wrap">
+            <table class="exec-tbl">
+              <thead>
+                <tr>
+                  <th>Theme</th>
+                  <th>Market</th>
+                  <th>Why</th>
+                </tr>
+              </thead>
+              <tbody id="kw-body">
+                <tr><td colspan="3">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="muted" style="margin:0.75rem 0 0;font-size:0.84rem" id="soon-note">
+            Site tests (A/B numbers) aren’t on this page yet —
+            <a href="experiments">Site tests</a> ·
+            <a href="launch-control">Checklist</a>
           </p>
-        </section>
-      </div>
-
-      <section class="exec-card place" aria-labelledby="soon-hd" style="margin-bottom:1.25rem">
-        <h2 id="soon-hd">Not wired yet (honest gaps)</h2>
-        <ul id="soon-list">
-          <li>AU GTM / GA4 / Ads conversion parity (biggest gap vs US)</li>
-          <li>Site tests experiment events → dashboard numbers</li>
-          <li>Conversion / CPA reporting once phone + Zoho qualify season</li>
-        </ul>
-        <p class="sub" style="margin-top:0.55rem;margin-bottom:0">
-          Placeholders only — no fake numbers. Ops checklist stays on
-          <a href="launch-control">Checklist</a>. Site A/B inventory on
-          <a href="experiments">Site tests</a>.
-        </p>
-      </section>
+        </div>
+      </details>
     </main>
   </div>
 
@@ -427,6 +367,13 @@
   <script>
     (function () {
       function money(n) {
+        if (n == null || isNaN(n)) return "—";
+        return "$" + Number(n).toLocaleString("en-US", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        });
+      }
+      function money2(n) {
         if (n == null || isNaN(n)) return "—";
         return "$" + Number(n).toLocaleString("en-US", {
           minimumFractionDigits: 2,
@@ -437,19 +384,13 @@
         if (n == null || isNaN(n)) return "—";
         return Number(n).toLocaleString("en-US");
       }
-      function pct(n) {
-        if (n == null || isNaN(n)) return "—";
-        return Number(n).toFixed(2) + "%";
-      }
       function fmtWhen(iso) {
         if (!iso) return "—";
         try {
-          var d = new Date(iso);
-          return d.toLocaleString("en-US", {
+          return new Date(iso).toLocaleString("en-US", {
             timeZone: "America/Los_Angeles",
             month: "short",
             day: "numeric",
-            year: "numeric",
             hour: "numeric",
             minute: "2-digit",
             timeZoneName: "short"
@@ -458,9 +399,36 @@
           return iso;
         }
       }
+      function statusTag(s) {
+        var u = (s || "").toUpperCase();
+        if (u === "ENABLED") return "<span class='tag'>On</span>";
+        if (u === "PAUSED") return "<span class='tag warn'>Paused</span>";
+        return "<span class='tag warn'>" + (s || "—") + "</span>";
+      }
+      function marketLabel(name) {
+        if ((name || "").indexOf("VC_AU_") === 0) return "AU";
+        if ((name || "").indexOf("VC_US_") === 0) return "US";
+        return "—";
+      }
       function fillList(el, items, htmlFn) {
         if (!el) return;
         el.innerHTML = (items || []).map(htmlFn).join("");
+      }
+      function weekTotals(camps) {
+        var out = { clicks: 0, cost: 0, impr: 0 };
+        (camps || []).forEach(function (c) {
+          var m = c.last_7_days || {};
+          out.clicks += Number(m.clicks || 0);
+          out.cost += Number(m.cost_usd || 0);
+          out.impr += Number(m.impressions || 0);
+        });
+        out.cpc = out.clicks > 0 ? out.cost / out.clicks : null;
+        return out;
+      }
+      function anyOn(camps) {
+        return (camps || []).some(function (c) {
+          return (c.status || "").toUpperCase() === "ENABLED";
+        });
       }
 
       fetch("data/executive-snapshot.json", { cache: "no-store" })
@@ -470,112 +438,76 @@
         })
         .then(function (data) {
           var op = data.operator || {};
-          var perf = data.performance || {};
-          var focus = perf.totals_focus_day || {};
-          var keywords = (data.keywords && data.keywords.themes) || op.keyword_themes || [];
+          var us = data.performance_us || data.performance || {};
+          var au = data.performance_au || {};
+          var usCamps = us.campaigns || [];
+          var auCamps = au.campaigns || [];
+          var usW = weekTotals(usCamps);
+          var auW = weekTotals(auCamps);
 
           if (op.honesty) {
             document.getElementById("exec-honesty").textContent = op.honesty;
-          }
-          if (op.status_banner) {
-            document.getElementById("exec-status-banner").innerHTML =
-              "<strong>Status:</strong> " + op.status_banner;
-          }
-
-          document.getElementById("exec-updated").innerHTML =
-            "Updated as of <strong>" +
-            fmtWhen(data.generated_at_utc || op.narrative_as_of) +
-            "</strong> · US Ads snapshot " +
-            (data.api_calls_used || 0) +
-            "/" +
-            (data.api_calls_max || 2) +
-            " calls · filter <code>" +
-            (data.filter || "VC_US_%") +
-            "</code> · focus day <strong>" +
-            (perf.focus_day || "—") +
-            "</strong> · AU priority (ops narrative)";
-
-          document.getElementById("kpi-impr").textContent = num(focus.impressions);
-          document.getElementById("kpi-clicks").textContent = num(focus.clicks);
-          document.getElementById("kpi-ctr").textContent = pct(focus.ctr_pct);
-          document.getElementById("kpi-cost").textContent = money(focus.cost_usd);
-          document.getElementById("kpi-cpc").textContent = money(focus.avg_cpc_usd);
-          document.getElementById("kpi-impr-hint").textContent =
-            "Focus day " + (perf.focus_day || "");
-
-          document.getElementById("camp-window").textContent =
-            "Window: " +
-            (perf.window || "LAST_7_DAYS") +
-            ". Focus day " +
-            (perf.focus_day || "—") +
-            " — " +
-            (perf.focus_day_note || "") +
-            ". Conversions omitted on purpose.";
-
-          var campBody = document.getElementById("camp-body");
-          var camps = perf.campaigns || [];
-          if (!camps.length) {
-            campBody.innerHTML = "<tr><td colspan='7'>No VC_US_* rows in this pull.</td></tr>";
-          } else {
-            campBody.innerHTML = camps
-              .map(function (c) {
-                var m = c.focus_day || c.last_7_days || {};
-                return (
-                  "<tr>" +
-                  "<td><code>" +
-                  c.name +
-                  "</code></td>" +
-                  "<td><span class='tag'>" +
-                  (c.status || "") +
-                  "</span></td>" +
-                  "<td class='num'>" +
-                  num(m.impressions) +
-                  "</td>" +
-                  "<td class='num'>" +
-                  num(m.clicks) +
-                  "</td>" +
-                  "<td class='num'>" +
-                  pct(m.ctr_pct) +
-                  "</td>" +
-                  "<td class='num'>" +
-                  money(m.cost_usd) +
-                  "</td>" +
-                  "<td class='num'>" +
-                  money(m.avg_cpc_usd) +
-                  "</td>" +
-                  "</tr>"
-                );
-              })
-              .join("");
-          }
-
-          if (op.budgets && op.budgets.length) {
-            fillList(document.getElementById("bud-list"), op.budgets, function (b) {
-              var detail = b.detail || b.note || "";
-              var detailHtml = detail
-                ? ' <span class="note">— ' + detail + "</span>"
-                : "";
-              var amt = b.amount || "";
-              return (
-                "<li><strong>" +
-                b.label +
-                '</strong> — <span class="amt">' +
-                amt +
-                "</span>" +
-                detailHtml +
-                "</li>"
-              );
-            });
           }
           if (op.whats_next && op.whats_next.length) {
             fillList(document.getElementById("next-list"), op.whats_next, function (t) {
               return "<li>" + t + "</li>";
             });
           }
-          if (op.coming_soon && op.coming_soon.length) {
-            fillList(document.getElementById("soon-list"), op.coming_soon, function (t) {
-              return "<li>" + t + "</li>";
-            });
+
+          document.getElementById("exec-updated").innerHTML =
+            "Numbers updated <strong>" + fmtWhen(data.generated_at_utc) + "</strong>";
+
+          document.getElementById("us-spend").textContent = money(usW.cost);
+          document.getElementById("us-clicks").textContent = num(usW.clicks);
+          document.getElementById("us-cpc").textContent = money2(usW.cpc);
+          document.getElementById("us-status").textContent = anyOn(usCamps) ? "On" : "Paused / quiet";
+
+          document.getElementById("au-spend").textContent = money(auW.cost);
+          document.getElementById("au-clicks").textContent = num(auW.clicks);
+          document.getElementById("au-cpc").textContent = money2(auW.cpc);
+          document.getElementById("au-status").textContent = anyOn(auCamps)
+            ? "On"
+            : (auCamps.length ? "Paused / quiet" : "Waiting on Ads read");
+
+          var moneyLine = document.getElementById("money-line");
+          if (op.budgets && op.budgets.length) {
+            moneyLine.innerHTML =
+              "<strong>Daily budgets:</strong> " +
+              op.budgets
+                .map(function (b) {
+                  return b.label + " " + (b.amount || "");
+                })
+                .join(" · ");
+          }
+
+          document.getElementById("camp-window").textContent =
+            "Last 7 days from Google Ads. Phone wins aren’t scored as a number here yet.";
+
+          var allCamps = []
+            .concat(usCamps.map(function (c) { return Object.assign({ _market: "US" }, c); }))
+            .concat(auCamps.map(function (c) { return Object.assign({ _market: "AU" }, c); }));
+          var campBody = document.getElementById("camp-body");
+          if (!allCamps.length) {
+            campBody.innerHTML = "<tr><td colspan='6'>No campaign rows in this pull.</td></tr>";
+          } else {
+            campBody.innerHTML = allCamps
+              .map(function (c) {
+                var m = c.last_7_days || {};
+                var nice = (c.name || "")
+                  .replace(/^VC_US_S_/, "US ")
+                  .replace(/^VC_AU_S_/, "AU ");
+                return (
+                  "<tr>" +
+                  "<td>" + (c._market || marketLabel(c.name)) + "</td>" +
+                  "<td><strong>" + nice + "</strong></td>" +
+                  "<td>" + statusTag(c.status) + "</td>" +
+                  "<td class='num'>" + num(m.clicks) + "</td>" +
+                  "<td class='num'>" + money2(m.cost_usd) + "</td>" +
+                  "<td class='num'>" + money2(m.avg_cpc_usd) + "</td>" +
+                  "</tr>"
+                );
+              })
+              .join("");
           }
 
           var ww = op.whats_working || {};
@@ -585,78 +517,38 @@
             });
           }
 
-          var lpBlock = data.landing_pages || {};
-          var lpPages = lpBlock.pages || [];
-          document.getElementById("lp-window").textContent =
-            (lpBlock.source_note ||
-              "Ads click traffic for now; GA4 bounce later.") +
-            " Window: " +
-            (lpBlock.window || "LAST_7_DAYS") +
-            " · label: " +
-            (lpBlock.label || "from Ads traffic to URL") +
-            ".";
+          var lpPages = (data.landing_pages && data.landing_pages.pages) || [];
           var lpBody = document.getElementById("lp-body");
           if (!lpPages.length) {
-            lpBody.innerHTML = "<tr><td colspan='6'>No landing-page rows in snapshot.</td></tr>";
+            lpBody.innerHTML = "<tr><td colspan='4'>No landing-page rows.</td></tr>";
           } else {
             lpBody.innerHTML = lpPages
               .map(function (p) {
                 return (
                   "<tr>" +
-                  "<td><a href=\"" +
-                  p.url +
-                  "\" target=\"_blank\" rel=\"noopener\"><strong>" +
-                  (p.name || p.path) +
-                  "</strong></a><br /><span class=\"muted\" style=\"font-size:0.78rem\">" +
-                  (p.path || "") +
-                  "</span></td>" +
-                  "<td class='num'>" +
-                  num(p.impressions) +
-                  "</td>" +
-                  "<td class='num'>" +
-                  num(p.clicks) +
-                  "</td>" +
-                  "<td class='num'>" +
-                  pct(p.ctr_pct) +
-                  "</td>" +
-                  "<td class='num'>" +
-                  money(p.cost_usd) +
-                  "</td>" +
-                  "<td class='why-cell'>" +
-                  (p.why || "") +
-                  "</td>" +
+                  "<td><a href=\"" + p.url + "\" target=\"_blank\" rel=\"noopener\"><strong>" +
+                  (p.name || p.path) + "</strong></a></td>" +
+                  "<td class='num'>" + num(p.clicks) + "</td>" +
+                  "<td class='num'>" + money2(p.cost_usd) + "</td>" +
+                  "<td class='why-cell'>" + (p.why || "") + "</td>" +
                   "</tr>"
                 );
               })
               .join("");
           }
 
-          var kwMeta = data.keywords || {};
-          document.getElementById("kw-sub").textContent =
-            (kwMeta.label || "Employer-intent Exact themes") +
-            " · " +
-            (kwMeta.note || "Curated bidding themes — not raw search terms");
+          var keywords = (data.keywords && data.keywords.themes) || [];
           var kwBody = document.getElementById("kw-body");
           if (!keywords.length) {
-            kwBody.innerHTML =
-              "<tr><td colspan='4'>No keyword themes in snapshot.</td></tr>";
+            kwBody.innerHTML = "<tr><td colspan='3'>No keyword themes.</td></tr>";
           } else {
             kwBody.innerHTML = keywords
               .map(function (k) {
                 return (
                   "<tr>" +
-                  "<td><strong>" +
-                  (k.theme || k.keyword || "") +
-                  "</strong></td>" +
-                  "<td>" +
-                  (k.market || "US") +
-                  "</td>" +
-                  "<td><code>" +
-                  (k.campaign || "") +
-                  "</code></td>" +
-                  "<td class='why-cell'>" +
-                  (k.why || "") +
-                  "</td>" +
+                  "<td><strong>" + (k.theme || "") + "</strong></td>" +
+                  "<td>" + (k.market || "") + "</td>" +
+                  "<td class='why-cell'>" + (k.why || "") + "</td>" +
                   "</tr>"
                 );
               })
@@ -665,7 +557,7 @@
         })
         .catch(function (err) {
           document.getElementById("exec-updated").textContent =
-            "Could not load executive-snapshot.json — " + err;
+            "Could not load numbers — " + err;
         });
     })();
   </script>

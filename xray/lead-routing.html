@@ -10,65 +10,25 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
   <style>
-    .scan-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin: 0 0 1rem;
-    }
-    @media (max-width: 760px) {
-      .scan-grid { grid-template-columns: 1fr; }
-    }
-    .scan-card {
-      border-radius: 8px;
-      border: 1px solid var(--edge-soft);
-      background: var(--panel);
-      padding: 0.85rem 1rem;
-      min-width: 0;
-    }
-    .scan-card.ok {
-      border-color: var(--tint-green-edge);
-      background: var(--tint-green);
-    }
-    .scan-card.open {
-      border-color: var(--tint-amber-edge);
-      background: var(--tint-amber);
-    }
-    .scan-card.cool {
-      border-color: var(--tint-cool-edge);
-      background: var(--tint-cool);
-    }
-    .scan-card h2 {
-      margin: 0 0 0.45rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .scan-card .k {
-      margin: 0 0 0.35rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .scan-card ul {
+    .lr-top { margin: 0 0 1rem; }
+    .lr-top h1 { margin: 0 0 0.35rem; font-size: 1.45rem; }
+    .lr-top p { margin: 0; font-size: 1rem; color: var(--body); max-width: 36rem; }
+    .simple {
       list-style: none;
       margin: 0;
       padding: 0;
     }
-    .scan-card li {
-      padding: 0.32rem 0;
+    .simple li {
+      padding: 0.55rem 0;
       border-bottom: 1px solid var(--edge-soft);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       line-height: 1.4;
-      color: var(--body);
     }
-    .scan-card li:last-child { border-bottom: none; }
-    .scan-card strong { color: var(--ink); }
+    .simple li:last-child { border-bottom: none; }
+    .simple strong { color: var(--ink); }
     .people-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 0.65rem;
     }
     .person-card {
@@ -76,231 +36,81 @@
       border-radius: 8px;
       background: var(--panel-inset);
       padding: 0.7rem 0.85rem;
-      min-width: 0;
     }
-    .person-card h3 {
-      margin: 0 0 0.2rem;
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-    .person-card .role {
-      margin: 0 0 0.45rem;
-      font-size: 0.84rem;
-      color: var(--muted);
-      line-height: 1.35;
-    }
-    .person-card .email {
-      margin: 0;
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: var(--ink);
-      overflow-wrap: anywhere;
-    }
-    .person-card .email a { color: inherit; }
-    .person-card .email.ask {
-      color: var(--warn);
-      font-weight: 600;
-    }
-    .short-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .short-list li {
-      padding: 0.45rem 0;
-      border-bottom: 1px solid var(--edge-soft);
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-    .short-list li:last-child { border-bottom: none; }
-    .short-list strong { color: var(--ink); }
-    .ladder {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .ladder li {
-      display: grid;
-      grid-template-columns: 5.5rem 1fr;
-      gap: 0.55rem 0.75rem;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid var(--edge-soft);
-      align-items: start;
-    }
-    .ladder li:last-child { border-bottom: none; }
-    .ladder .when {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--muted);
-      padding-top: 0.15rem;
-    }
-    .ladder .when.now { color: var(--ink); }
-    .ladder strong {
-      display: block;
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-    .ladder span {
-      display: block;
-      margin-top: 0.15rem;
-      font-size: 0.86rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
+    .person-card h3 { margin: 0 0 0.2rem; font-size: 0.95rem; }
+    .person-card .role { margin: 0 0 0.35rem; font-size: 0.84rem; color: var(--muted); }
+    .person-card .email { margin: 0; font-size: 0.86rem; font-weight: 600; overflow-wrap: anywhere; }
   </style>
 </head>
-<body data-page="lead-routing.html" data-foot="Where leads go<br />Qualified → Ads later money">
+<body data-page="lead-routing.html" data-foot="Who gets the lead">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
-
     <main class="main">
-      <header class="page-head">
-        <p class="kicker">Aug 8, 2026 · Human version</p>
+      <header class="lr-top">
         <h1>Lead Routing</h1>
-        <p>
-          Who gets the lead, and how Google Ads learns which leads were good.
-          Near-term = Zoho qualified mark → Ads. Later = value when deals pay.
-        </p>
+        <p>Who gets the lead — and how Ads learns which ones were good.</p>
       </header>
 
-      <div class="scan-grid" id="at-a-glance">
-        <article class="scan-card ok">
-          <p class="k">Where forms go today</p>
-          <h2>Inbox delivery (works)</h2>
-          <ul>
-            <li><strong>US</strong> → <code>us@</code> (Cheyenne owns sales)</li>
-            <li><strong>AU / APAC</strong> → <code>apac@</code> (Holly watches)</li>
-            <li><strong>Backup:</strong> GitHub Issues
-              <a href="https://github.com/shoutgeorge1/vc-employer-leads/issues" target="_blank" rel="noopener">vc-employer-leads</a></li>
-          </ul>
-        </article>
-        <article class="scan-card cool">
-          <p class="k">Near-term · Ads learning</p>
-          <h2>Manual “qualified” in Zoho</h2>
-          <ul>
-            <li>Human looks at the lead</li>
-            <li>Marks it <strong>qualified</strong> (looks real — not “customer paid”)</li>
-            <li>That mark feeds Google Ads (GCLID integration)</li>
-          </ul>
-        </article>
-        <article class="scan-card open">
-          <p class="k">Later · when money is real</p>
-          <h2>Value-based conversions</h2>
-          <ul>
-            <li>Only after enough leads / closed deals</li>
-            <li>Tell Ads the dollar value when a deal actually makes money</li>
-            <li>Not Stage 1 — don’t invent values yet</li>
-          </ul>
-        </article>
-        <article class="scan-card ok">
-          <p class="k">Phones</p>
-          <h2>Who answers</h2>
-          <ul>
-            <li><strong>US:</strong> 888-954-8644 → Cheyenne (tree soft-ask still open)</li>
-            <li><strong>AU:</strong> 1300 886 740 live on site · keep answering</li>
-            <li>Raffie = phones/IT, not the US salesperson</li>
-          </ul>
-        </article>
-      </div>
-
-      <section class="panel" id="path">
-        <div class="panel-hd">
-          <p class="kicker">Two steps</p>
-          <h2>How Ads gets smarter over time</h2>
-        </div>
+      <section class="panel">
+        <div class="panel-hd"><h2>Where leads go today</h2></div>
         <div class="panel-bd">
-          <ol class="ladder">
-            <li>
-              <span class="when now">Near-term</span>
-              <div>
-                <strong>Shallow Zoho qualify → Ads</strong>
-                <span>
-                  Sales (or ops) marks a decent qualified employer lead in Zoho.
-                  We try to send that signal into Google Ads with the click ID (GCLID).
-                  Goal: Ads learns “this kind of click was good” — without waiting for a closed deal.
-                </span>
-              </div>
+          <ul class="simple">
+            <li><strong>United States forms</strong> → us@ (Cheyenne owns sales)</li>
+            <li><strong>Australia / APAC forms</strong> → apac@ (Holly watches)</li>
+            <li><strong>US phone</strong> → 888-954-8644 (Cheyenne)</li>
+            <li><strong>AU phone</strong> → 1300 886 740 (keep answering)</li>
+            <li><strong>Backup:</strong>
+              <a href="https://github.com/shoutgeorge1/vc-employer-leads/issues" target="_blank" rel="noopener">GitHub Issues</a>
             </li>
-            <li>
-              <span class="when">Later</span>
-              <div>
-                <strong>Value when money lands</strong>
-                <span>
-                  When there are enough real deals, upload or sync conversion <em>values</em>
-                  (job order / placement dollars). That’s when Maximize Conversions / value
-                  bidding can make sense. Not before.
-                </span>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="panel" id="ops-notes">
-        <div class="panel-hd">
-          <p class="kicker">Keep short</p>
-          <h2>Ops notes</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="short-list">
-            <li><strong>WordPress still emails</strong> the same inboxes — Monday report must split paid microsite/Ads from total inbound.</li>
-            <li><strong>Keep click IDs on the form</strong> (utm / gclid / landing URL / market) or Zoho→Ads can’t tie back.</li>
-            <li><strong>Don’t triple-count</strong> one enquiry as form + Calendly + Zoho Primaries.</li>
-            <li><strong>LPs:</strong>
-              <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> ·
-              <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> ·
-              <a href="landing-pages.html">previews</a>
-              — variants look good; Site tests measurement still open on Checklist.</li>
           </ul>
         </div>
       </section>
 
-      <section class="panel" id="people">
-        <div class="panel-hd">
-          <p class="kicker">From Gmail · Aug 2026</p>
-          <h2>People + emails</h2>
+      <section class="panel" style="margin-top:0.85rem">
+        <div class="panel-hd"><h2>How Ads gets smarter</h2></div>
+        <div class="panel-bd">
+          <ul class="simple">
+            <li>
+              <strong>Soon:</strong> Someone looks at a lead in Zoho and marks it
+              <em>qualified</em> (looks like a real employer). That mark feeds Google Ads.
+            </li>
+            <li>
+              <strong>Later:</strong> When deals actually make money, tell Ads the dollar value.
+              Not yet.
+            </li>
+          </ul>
         </div>
+      </section>
+
+      <section class="panel" style="margin-top:0.85rem">
+        <div class="panel-hd"><h2>People</h2></div>
         <div class="panel-bd">
           <div class="people-grid">
             <article class="person-card">
-              <h3>Braden Yuill</h3>
-              <p class="role">CEO / founder. Main day-to-day contact (Caitlin leave).</p>
-              <p class="email"><a href="mailto:braden@virtualcoworker.com">braden@virtualcoworker.com</a></p>
+              <h3>Braden</h3>
+              <p class="role">CEO · day-to-day contact</p>
+              <p class="email"><a href="mailto:braden@virtualcoworker.com">braden@…</a></p>
             </article>
             <article class="person-card">
-              <h3>Caitlin McCartan</h3>
-              <p class="role">Ops. May start maternity leave anytime. Still on Chat. LP copy already live.</p>
-              <p class="email"><a href="mailto:caitlin@virtualcoworker.com">caitlin@virtualcoworker.com</a></p>
+              <h3>Cheyenne</h3>
+              <p class="role">US sales · answers 888</p>
+              <p class="email"><a href="mailto:cheyenne@virtualcoworker.com">cheyenne@…</a></p>
             </article>
             <article class="person-card">
-              <h3>Raffie Ramos</h3>
-              <p class="role">PH · phone systems / IT / Zoho help. <em>Not</em> the US salesperson.</p>
-              <p class="email"><a href="mailto:raffie@virtualcoworker.com">raffie@virtualcoworker.com</a></p>
+              <h3>Holly</h3>
+              <p class="role">APAC sales · watches apac@</p>
+              <p class="email"><a href="mailto:holly@virtualcoworker.com">holly@…</a></p>
             </article>
             <article class="person-card">
-              <h3>Cheyenne Gichana</h3>
-              <p class="role">US sales owner · Regional Manager (LA area).</p>
-              <p class="email"><a href="mailto:cheyenne@virtualcoworker.com">cheyenne@virtualcoworker.com</a></p>
-            </article>
-            <article class="person-card">
-              <h3>Holly Wallace</h3>
-              <p class="role">APAC sales owner · Microsite form monitoring (Zoho + Outlook).</p>
-              <p class="email"><a href="mailto:holly@virtualcoworker.com">holly@virtualcoworker.com</a></p>
-            </article>
-            <article class="person-card">
-              <h3>Ash</h3>
-              <p class="role">Intern — got a US phone test VM. Not permanent call owner.</p>
-              <p class="email ask">email unknown — ask</p>
+              <h3>Raffie</h3>
+              <p class="role">Phones / IT / Zoho help</p>
+              <p class="email"><a href="mailto:raffie@virtualcoworker.com">raffie@…</a></p>
             </article>
           </div>
-          <p class="muted" style="margin:0.85rem 0 0;font-size:0.88rem">
-            Source: Caitlin “Who’s Who” + live VC threads. No invented addresses.
-          </p>
         </div>
       </section>
 
-      <div class="actions">
+      <div class="actions" style="margin-top:1rem">
         <a class="btn btn-primary" href="launch-control.html">Checklist</a>
         <a class="btn" href="tracking.html">Tracking</a>
       </div>

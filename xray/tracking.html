@@ -10,80 +10,18 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
   <style>
-    .scan-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin: 0 0 1rem;
-    }
-    @media (max-width: 760px) {
-      .scan-grid { grid-template-columns: 1fr; }
-    }
-    .scan-card {
-      border-radius: 8px;
-      border: 1px solid var(--edge-soft);
-      background: var(--panel);
-      padding: 0.85rem 1rem;
-      min-width: 0;
-    }
-    .scan-card.ok {
-      border-color: var(--tint-green-edge);
-      background: var(--tint-green);
-    }
-    .scan-card.open {
-      border-color: var(--tint-amber-edge);
-      background: var(--tint-amber);
-    }
-    .scan-card .k {
-      margin: 0 0 0.35rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .scan-card h2 {
-      margin: 0 0 0.45rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .scan-card ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .scan-card li {
-      padding: 0.32rem 0;
-      border-bottom: 1px solid var(--edge-soft);
-      font-size: 0.9rem;
-      line-height: 1.4;
-      color: var(--body);
-    }
-    .scan-card li:last-child { border-bottom: none; }
-    .scan-card strong { color: var(--ink); }
-    .short-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .short-list li {
-      padding: 0.4rem 0;
-      border-bottom: 1px solid var(--edge-soft);
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-    .short-list li:last-child { border-bottom: none; }
-    .short-list strong { color: var(--ink); }
+    .trk-top { margin: 0 0 1rem; }
+    .trk-top h1 { margin: 0 0 0.35rem; font-size: 1.45rem; }
+    .trk-top p { margin: 0; font-size: 1rem; color: var(--body); max-width: 36rem; }
     table.trk-tbl {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
     }
     table.trk-tbl th,
     table.trk-tbl td {
       text-align: left;
-      padding: 0.45rem 0.5rem;
+      padding: 0.55rem 0.5rem;
       border-bottom: 1px solid var(--edge-soft);
       vertical-align: top;
     }
@@ -94,120 +32,76 @@
       color: var(--muted);
       font-weight: 700;
     }
+    .ok { color: #166534; font-weight: 600; }
+    .miss { color: #92400e; font-weight: 600; }
+    .note {
+      margin: 1rem 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
   </style>
 </head>
-<body data-page="tracking.html" data-foot="Plain English<br />US vs AU · live vs missing">
+<body data-page="tracking.html" data-foot="US vs AU · what’s live">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
-
     <main class="main">
-      <header class="page-head">
-        <p class="kicker">Aug 8, 2026 · Plain English</p>
+      <header class="trk-top">
         <h1>Tracking</h1>
-        <p>
-          What tells Google “this click was worth it.” Keep US and AU separate.
-          No new conversion IDs invented here.
-        </p>
+        <p>What tells Google “this click was worth it.” US vs Australia.</p>
       </header>
 
-      <div class="scan-grid" id="at-a-glance">
-        <article class="scan-card ok">
-          <p class="k">United States</p>
-          <h2>Mostly live</h2>
-          <ul>
-            <li><strong>Site + Ads phone:</strong> 888-954-8644</li>
-            <li><strong>GTM → GA4:</strong> live on <code>/us</code></li>
-            <li><strong>Phone call conversion:</strong> guiding light (Max Clicks)</li>
-            <li><strong>Forms:</strong> deliver to <code>us@</code> (not bidding Primary)</li>
-          </ul>
-        </article>
-        <article class="scan-card open">
-          <p class="k">Australia · priority</p>
-          <h2>Enabled · tracking thin</h2>
-          <ul>
-            <li><strong>Site phone:</strong> 1300 886 740 (deployed)</li>
-            <li><strong>Ads:</strong> <code>VC_AU_*</code> Enabled (last gentle Ads read)</li>
-            <li><strong>Gap:</strong> AU GTM / GA4 / Ads conversions not at US parity</li>
-            <li><strong>Ops risk:</strong> Unkown AGs with Broad positives — cleanup</li>
-            <li><strong>Forms:</strong> deliver to <code>apac@</code> (Holly watches)</li>
-          </ul>
-        </article>
-      </div>
-
-      <section class="panel" id="matrix">
+      <section class="panel">
         <div class="panel-hd">
-          <p class="kicker">One glance</p>
-          <h2>What’s live vs missing</h2>
+          <h2>Live vs missing</h2>
         </div>
         <div class="panel-bd">
           <table class="trk-tbl">
             <thead>
               <tr>
                 <th>Thing</th>
-                <th>US</th>
-                <th>AU</th>
+                <th>United States</th>
+                <th>Australia</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Clickable phone on site</td>
-                <td>Live · 888</td>
-                <td>Live · 1300</td>
+                <td>Phone on the website</td>
+                <td class="ok">Live · 888</td>
+                <td class="ok">Live · 1300</td>
               </tr>
               <tr>
-                <td>Website tag (GTM → GA4)</td>
-                <td>Live</td>
-                <td><strong>Missing / incomplete</strong></td>
+                <td>Website tags (so we see visits)</td>
+                <td class="ok">Live</td>
+                <td class="miss">Still needed</td>
               </tr>
               <tr>
-                <td>Phone call conversion in Ads</td>
-                <td>Live (guiding light)</td>
-                <td>Not at US parity yet</td>
+                <td>Count phone calls as wins in Ads</td>
+                <td class="ok">Live</td>
+                <td class="miss">Still needed</td>
               </tr>
               <tr>
-                <td>Form email delivery</td>
-                <td>Live → us@</td>
-                <td>Live → apac@</td>
+                <td>Form emails arrive</td>
+                <td class="ok">Live → us@</td>
+                <td class="ok">Live → apac@</td>
               </tr>
               <tr>
-                <td>Site tests (A/B variants)</td>
-                <td colspan="2">Previews look good — <strong>measurement wiring still open</strong></td>
+                <td>Mark good leads in Zoho → Ads</td>
+                <td colspan="2" class="miss">Still needed (both markets)</td>
               </tr>
               <tr>
-                <td>Zoho “qualified” → Ads</td>
-                <td colspan="2">Near-term (manual mark) — not money-based yet</td>
+                <td>Site tests scoreboard</td>
+                <td colspan="2">Variants work on the site · numbers page still blank</td>
               </tr>
             </tbody>
           </table>
-        </div>
-      </section>
-
-      <section class="panel" id="simple-plan">
-        <div class="panel-hd">
-          <p class="kicker">Order of operations</p>
-          <h2>How we measure (simple)</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="short-list">
-            <li><strong>Now (AU first):</strong> Keep 1300 answered. Close AU GTM/GA4/Ads conversion gaps so spend is trustworthy. Clean Unkown AGs (Broad positives).</li>
-            <li><strong>US:</strong> Phone calls guide. Stay on Maximize Clicks. Curate keywords (ops) — no early search-term dumps on Executive.</li>
-            <li><strong>Soon:</strong> Sales marks a lead “qualified” in Zoho → light signal into Google Ads.</li>
-            <li><strong>Later:</strong> When enough deals make real money, value-based conversions (job order / placement money).</li>
-            <li><strong>Don’t:</strong> invent new conversion IDs here · reuse old Zoho/Zapier junk · triple-count one enquiry.</li>
-          </ul>
-          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
-            Detail if needed: <a href="docs/ads-launch/CONVERSION-PLAN.md">CONVERSION-PLAN.md</a> ·
+          <p class="note">
+            Don’t invent new conversion IDs. Detail if needed:
             <a href="lead-routing.html">Lead Routing</a> ·
             <a href="launch-control.html">Checklist</a>
           </p>
         </div>
       </section>
-
-      <div class="actions">
-        <a class="btn btn-primary" href="launch-control.html">Checklist</a>
-        <a class="btn" href="lead-routing.html">Lead Routing</a>
-        <a class="btn" href="executive.html">Executive</a>
-      </div>
     </main>
   </div>
   <script src="nav.js"></script>
