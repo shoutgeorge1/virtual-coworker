@@ -12,7 +12,7 @@
   <style>
     .trk-top { margin: 0 0 1rem; }
     .trk-top h1 { margin: 0 0 0.35rem; font-size: 1.45rem; }
-    .trk-top p { margin: 0; font-size: 1rem; color: var(--body); max-width: 36rem; }
+    .trk-top p { margin: 0; font-size: 1rem; color: var(--body); max-width: 40rem; }
     table.trk-tbl {
       width: 100%;
       border-collapse: collapse;
@@ -34,12 +34,22 @@
     }
     .ok { color: #166534; font-weight: 600; }
     .miss { color: #92400e; font-weight: 600; }
-    .note {
+    .order {
       margin: 1rem 0 0;
-      font-size: 0.9rem;
-      color: var(--muted);
+      padding: 0.75rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel-inset);
+      font-size: 0.92rem;
       line-height: 1.45;
+      color: var(--body);
     }
+    .order strong { color: var(--ink); }
+    .order ol {
+      margin: 0.4rem 0 0;
+      padding: 0 0 0 1.2rem;
+    }
+    .order li { margin: 0.2rem 0; }
   </style>
 </head>
 <body data-page="tracking.html" data-foot="US vs AU · what’s live">
@@ -48,12 +58,12 @@
     <main class="main">
       <header class="trk-top">
         <h1>Tracking</h1>
-        <p>What’s working so Google knows a click was useful. US vs Australia.</p>
+        <p>What’s working vs still needed — so Google knows a click was useful. US is ahead; Australia still needs phone wins + website tags.</p>
       </header>
 
       <section class="panel">
         <div class="panel-hd">
-          <h2>Live vs still needed</h2>
+          <h2>What’s working / still needed</h2>
         </div>
         <div class="panel-bd">
           <table class="trk-tbl">
@@ -73,34 +83,38 @@
               <tr>
                 <td>Count phone calls as wins in Ads</td>
                 <td class="ok">Live</td>
-                <td class="miss">Do next</td>
+                <td class="miss">Still needed</td>
               </tr>
               <tr>
-                <td>Website tags (so we see visits)</td>
-                <td class="ok">Live</td>
-                <td class="miss">Do next</td>
+                <td>Website tags (GTM / GA4)</td>
+                <td class="ok">Mostly done</td>
+                <td class="miss">Still needed</td>
               </tr>
               <tr>
                 <td>Form emails arrive</td>
-                <td class="ok">Live → us@</td>
-                <td class="ok">Live → apac@</td>
+                <td class="ok">Live → us@virtualcoworker.com</td>
+                <td class="ok">Live → apac@virtualcoworker.com</td>
               </tr>
               <tr>
                 <td>Mark good leads in Zoho → Ads</td>
-                <td colspan="2" class="miss">After AU phone + website tags</td>
-              </tr>
-              <tr>
-                <td>Site tests scoreboard</td>
-                <td colspan="2">Bottom of checklist until working · page variants already on the site</td>
+                <td colspan="2" class="miss">After AU phone wins + website tags</td>
               </tr>
             </tbody>
           </table>
-          <p class="note">
-            Order: Australia phone wins → Australia website tags → then Zoho → Ads.
-            More detail:
-            <a href="lead-routing.html">Lead Routing</a> ·
-            <a href="launch-control.html">Checklist</a>
-          </p>
+
+          <div class="order">
+            <strong>Do in this order</strong>
+            <ol>
+              <li>Australia — count phone calls as wins in Ads</li>
+              <li>Australia — website tags (GTM / GA4)</li>
+              <li>Then mark good leads in Zoho → feed Ads</li>
+            </ol>
+            <p style="margin:0.55rem 0 0;font-size:0.86rem;color:var(--muted)">
+              Site tests stay at the bottom of the menu until wired.
+              <a href="lead-routing.html">Lead Routing</a> ·
+              <a href="launch-control.html">Checklist</a>
+            </p>
+          </div>
         </div>
       </section>
     </main>

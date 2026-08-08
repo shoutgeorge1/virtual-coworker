@@ -12,7 +12,7 @@
   <style>
     .lr-top { margin: 0 0 1rem; }
     .lr-top h1 { margin: 0 0 0.35rem; font-size: 1.45rem; }
-    .lr-top p { margin: 0; font-size: 1rem; color: var(--body); max-width: 36rem; }
+    .lr-top p { margin: 0; font-size: 1rem; color: var(--body); max-width: 40rem; }
     .simple {
       list-style: none;
       margin: 0;
@@ -22,13 +22,22 @@
       padding: 0.55rem 0;
       border-bottom: 1px solid var(--edge-soft);
       font-size: 0.95rem;
-      line-height: 1.4;
+      line-height: 1.45;
     }
     .simple li:last-child { border-bottom: none; }
     .simple strong { color: var(--ink); }
+    .simple .step {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
     .people-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 0.65rem;
     }
     .person-card {
@@ -36,51 +45,80 @@
       border-radius: 8px;
       background: var(--panel-inset);
       padding: 0.7rem 0.85rem;
+      min-width: 0;
     }
     .person-card h3 { margin: 0 0 0.2rem; font-size: 0.95rem; }
     .person-card .role { margin: 0 0 0.35rem; font-size: 0.84rem; color: var(--muted); }
-    .person-card .email { margin: 0; font-size: 0.86rem; font-weight: 600; overflow-wrap: anywhere; }
+    .person-card .email {
+      margin: 0;
+      font-size: 0.86rem;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .email-full {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.88rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    @media (max-width: 420px) {
+      .email-full { white-space: normal; }
+    }
   </style>
 </head>
-<body data-page="lead-routing.html" data-foot="Who gets the lead">
+<body data-page="lead-routing.html" data-foot="Leads go to email today">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
     <main class="main">
       <header class="lr-top">
         <h1>Lead Routing</h1>
-        <p>Who gets the lead — and how Ads learns which ones were good.</p>
+        <p>
+          Right now leads go to <strong>email</strong> — not CRM yet.
+          US and Australia each have their own inbox and phone.
+        </p>
       </header>
 
       <section class="panel">
         <div class="panel-hd"><h2>Where leads go today</h2></div>
         <div class="panel-bd">
           <ul class="simple">
-            <li><strong>United States forms</strong> → us@ (Cheyenne owns sales)</li>
-            <li><strong>Australia / APAC forms</strong> → apac@ (Holly watches)</li>
+            <li>
+              <strong>United States forms</strong> →
+              <span class="email-full">us@virtualcoworker.com</span>
+              (Cheyenne)
+            </li>
+            <li>
+              <strong>Australia / APAC forms</strong> →
+              <span class="email-full">apac@virtualcoworker.com</span>
+              (Holly)
+            </li>
             <li><strong>US phone</strong> → 888-954-8644 (Cheyenne)</li>
             <li><strong>AU phone</strong> → 1300 886 740 (keep answering)</li>
-            <li><strong>Backup:</strong>
-              <a href="https://github.com/shoutgeorge1/vc-employer-leads/issues" target="_blank" rel="noopener">GitHub Issues</a>
-            </li>
           </ul>
         </div>
       </section>
 
       <section class="panel" style="margin-top:0.85rem">
-        <div class="panel-hd"><h2>How Ads gets smarter</h2></div>
+        <div class="panel-hd"><h2>Next steps (plain order)</h2></div>
         <div class="panel-bd">
           <ul class="simple">
             <li>
-              <strong>First (Australia):</strong> Count phone calls as wins in Ads, and add the same website tags the US already has.
+              <span class="step">1</span>
+              <strong>Count phone calls as wins in Ads</strong> —
+              especially Australia (still needed). US already has this.
+            </li>
+            <li>
+              <span class="step">2</span>
+              <strong>Website tags (GTM / GA4)</strong> —
+              US mostly done; Australia still needed.
               See <a href="tracking.html">Tracking</a>.
             </li>
             <li>
-              <strong>Then:</strong> Someone looks at a lead in Zoho and marks it
-              <em>qualified</em> (looks like a real employer). That mark feeds Google Ads.
-            </li>
-            <li>
-              <strong>Later:</strong> When deals actually make money, tell Ads the dollar value.
-              Not yet.
+              <span class="step">3</span>
+              <strong>Mark good leads in Zoho</strong> —
+              someone tags a real employer lead → that mark feeds Ads.
+              (CRM learning comes after email is working.)
             </li>
           </ul>
         </div>
@@ -93,22 +131,22 @@
             <article class="person-card">
               <h3>Braden</h3>
               <p class="role">CEO · day-to-day contact</p>
-              <p class="email"><a href="mailto:braden@virtualcoworker.com">braden@…</a></p>
+              <p class="email"><a href="mailto:braden@virtualcoworker.com">braden@virtualcoworker.com</a></p>
             </article>
             <article class="person-card">
               <h3>Cheyenne</h3>
-              <p class="role">US sales · answers 888</p>
-              <p class="email"><a href="mailto:cheyenne@virtualcoworker.com">cheyenne@…</a></p>
+              <p class="role">US sales · answers 888 · watches us@</p>
+              <p class="email"><a href="mailto:cheyenne@virtualcoworker.com">cheyenne@virtualcoworker.com</a></p>
             </article>
             <article class="person-card">
               <h3>Holly</h3>
               <p class="role">APAC sales · watches apac@</p>
-              <p class="email"><a href="mailto:holly@virtualcoworker.com">holly@…</a></p>
+              <p class="email"><a href="mailto:holly@virtualcoworker.com">holly@virtualcoworker.com</a></p>
             </article>
             <article class="person-card">
               <h3>Raffie</h3>
               <p class="role">Phones / IT / Zoho help</p>
-              <p class="email"><a href="mailto:raffie@virtualcoworker.com">raffie@…</a></p>
+              <p class="email"><a href="mailto:raffie@virtualcoworker.com">raffie@virtualcoworker.com</a></p>
             </article>
           </div>
         </div>

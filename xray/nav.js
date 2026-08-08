@@ -4,11 +4,11 @@
   var ITEMS = [
     { href: "executive.html", text: "Executive" },
     { href: "launch-control.html", text: "Checklist" },
-    { href: "experiments.html", text: "Site tests" },
     { href: "landing-pages.html", text: "LP previews" },
     { href: "media.html", text: "Media" },
     { href: "lead-routing.html", text: "Lead Routing" },
     { href: "tracking.html", text: "Tracking" },
+    { href: "experiments.html", text: "Site tests" },
     { label: "Archive" },
     { href: "ads-package.html", text: "Ads package", quiet: true },
     { href: "project-status.html", text: "Project Status", quiet: true },

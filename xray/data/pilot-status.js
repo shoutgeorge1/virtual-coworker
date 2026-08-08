@@ -13,7 +13,7 @@ window.PILOT_STATUS = {
   handoffNote:
     "Caitlin is ops contact + lead-quality stakeholder and may start maternity leave anytime. Braden is expected to take over day-to-day while she is out. Cheyenne owns US sales; Holly owns APAC.",
   commercialStatus: "au_priority_us_live",
-  commercialLabel: "AU PRIORITY · VC_AU_* ENABLED · SITE PHONE 1300 LIVE · US LIVE · BRAND PAUSED · AU TRACKING GAPS",
+  commercialLabel: "AU PRIORITY · VC_AU_* LIVE (WAITING ON TRAFFIC) · SITE PHONE 1300 LIVE · US LIVE · BRAND PAUSED · AU TRACKING GAPS",
   objective:
     "Can Google Search → independent US/AU employer microsites generate qualified leads at an acceptable cost? Three identities (US · AU · PH); WordPress stays as-is with zero paid egress.",
   landingPages: {
@@ -90,8 +90,8 @@ window.PILOT_STATUS = {
       finalUrls: "www.virtualcoworker.app"
     },
     au: {
-      status: "enabled_priority",
-      note: "AU jumped queue 2026-08-08. Site phone 1300 live (deployed). VC_AU_* Enabled per last gentle Ads read. Ops risk: Unkown AGs with Broad positives — cleanup landmine. Tracking (GTM/GA4/conversions) still thin vs US."
+      status: "live_waiting_on_traffic",
+      note: "AU campaigns live (George 2026-08-08) — not paused/broken; waiting on traffic/spend. Site phone 1300 live. Ops risk: Unkown AGs with Broad positives — cleanup landmine. Tracking (GTM/GA4/phone conversions) still thin vs US."
     },
     brand: "paused_deferred_2026_08_07"
   },
@@ -150,10 +150,10 @@ window.PILOT_STATUS = {
       cc: "George via LEAD_EMAIL_CC only"
     },
     githubIssues: {
-      status: "durable_backup_interim_monitor",
+      status: "internal_backup_only",
       repo: "shoutgeorge1/vc-employer-leads",
       verified: ["Caitlin test #5", "probe #6", "Resend to us@"],
-      note: "Not permanent CRM. Form can succeed if either durable path works."
+      note: "Internal durability only — do not lead with this in UI. Leads go to email today (not CRM yet)."
     },
     wordpress: {
       status: "still_emails_group_inboxes",
@@ -227,7 +227,7 @@ window.PILOT_STATUS = {
     },
     {
       id: "lead_resend_github",
-      label: "Microsite lead delivery ACTIVE — Resend → us@/apac@ (+ George CC) + GitHub Issues backup (verified #5/#6)",
+      label: "Microsite lead delivery ACTIVE — email first: Resend → us@/apac@ (+ George CC). Not CRM yet.",
       status: "complete"
     },
     {
@@ -262,7 +262,7 @@ window.PILOT_STATUS = {
     },
     {
       id: "au_campaigns_enabled",
-      label: "VC_AU_* Enabled (last gentle Ads read) — tracking parity + Unkown AG cleanup still open",
+      label: "VC_AU_* live — waiting on traffic/spend (not paused). Tracking parity + Unkown AG cleanup still open",
       status: "complete"
     },
     {
@@ -316,7 +316,7 @@ window.PILOT_STATUS = {
     },
     {
       id: "au_tracking_parity",
-      label: "AU tracking parity (GTM/GA4/Ads conversions) — VC_AU_* already Enabled",
+      label: "AU tracking parity (phone wins in Ads + GTM/GA4) — campaigns already live",
       status: "waiting"
     },
     {
@@ -396,7 +396,7 @@ window.PILOT_STATUS = {
     usPhone: "888-954-8644",
     auPhone: "1300 886 740",
     usBudget: "$125/day combined (CORE $75 + ROLES $50)",
-    auBudget: "Enabled (last gentle Ads read) — no invented AU spend figure",
+    auBudget: "Live · waiting on traffic — no invented AU spend figure",
     gtmUs: "GTM-M92DX9BJ (live on /us)",
     gtmAu: "[AU GTM — gap]",
     gtmPh: "[NEXT_PUBLIC_GTM_PH — optional later]",

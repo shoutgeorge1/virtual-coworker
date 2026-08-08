@@ -88,7 +88,7 @@
   "performance_au": {
     "window": "LAST_7_DAYS",
     "focus_day": null,
-    "focus_day_note": "No AU metric rows in LAST_7_DAYS (campaigns may be paused / not spending yet)",
+    "focus_day_note": "No AU metric rows in LAST_7_DAYS — campaigns are live; waiting on traffic/spend",
     "totals_focus_day": {
       "impressions": 0,
       "clicks": 0,
@@ -106,7 +106,7 @@
     "campaigns": [
       {
         "name": "VC_AU_S_CORE",
-        "status": "PAUSED",
+        "status": "ENABLED",
         "last_7_days": {
           "impressions": 0,
           "clicks": 0,
@@ -124,7 +124,7 @@
       },
       {
         "name": "VC_AU_S_ROLES",
-        "status": "PAUSED",
+        "status": "ENABLED",
         "last_7_days": {
           "impressions": 0,
           "clicks": 0,
@@ -142,7 +142,7 @@
       }
     ],
     "dates_in_pull": [],
-    "status_source_note": "No LAST_7_DAYS metric rows from Ads API; campaign names from package; status PAUSED per local Editor DB (not a third API call)."
+    "status_source_note": "AU campaigns live (George 2026-08-08). No LAST_7_DAYS spend/traffic yet — waiting on traffic, not paused/broken."
   },
   "performance": {
     "window": "LAST_7_DAYS",
@@ -364,7 +364,7 @@
   },
   "operator": {
     "narrative_as_of": "2026-08-08",
-    "status_banner": "US live. Australia phone on site. AU campaigns not spending this week. Still open: AU call tracking \u00b7 AU website tags \u00b7 then Zoho qualified\u2192Ads.",
+    "status_banner": "US live and spending. Australia campaigns live \u2014 waiting on traffic. Still open: AU call tracking \u00b7 AU website tags \u00b7 then Zoho qualified\u2192Ads.",
     "budgets": [
       {
         "label": "US",
@@ -374,8 +374,8 @@
       },
       {
         "label": "Australia",
-        "amount": "not spending",
-        "detail": "phone 1300 on site; ads paused / quiet",
+        "amount": "live · waiting on traffic",
+        "detail": "phone 1300 on site; campaigns on, no spend yet",
         "kind": "priority"
       }
     ],
@@ -400,7 +400,7 @@
       "US Search live \u00b7 Brand off",
       "Ads package archived"
     ],
-    "honesty": "US Search is live and spending. Australia site phone is live; AU ads show no spend in the last week (paused / not running yet).",
+    "honesty": "US Search is live and spending. Australia campaigns are live too — just waiting on traffic/spend. Still need AU phone wins in Ads and AU website tags.",
     "lp_ab_note": "Landing page A/B variants work in the site code. Site tests scoreboard is still blank."
   }
 }
