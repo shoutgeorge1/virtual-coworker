@@ -306,10 +306,10 @@
         <section class="lc-measure" id="how-we-measure" aria-labelledby="measure-hd">
           <h2 id="measure-hd">How we’ll measure success</h2>
           <ul>
-            <li><strong>AU first</strong> — site phone 1300 live; confirm <code>VC_AU_*</code> Enabled state; close AU tracking gaps</li>
+            <li><strong>AU first</strong> — site phone 1300 live; <code>VC_AU_*</code> Enabled; close AU tracking gaps + Unkown AG cleanup</li>
             <li><strong>US</strong> — phone guiding light + curated keywords (Max Clicks) · Stage 1 still live</li>
             <li><strong>Near-term:</strong> human marks qualified in Zoho → light Ads signal · <strong>Later:</strong> value when deals make money</li>
-            <li><strong>Site tests:</strong> get experiment / LP variant wiring working (GTM or GA4)</li>
+            <li><strong>Site tests:</strong> wire experiment / LP variant events (GTM or GA4 → Site tests tab)</li>
           </ul>
         </section>
 
@@ -450,7 +450,7 @@
               <input type="checkbox" id="ads30" data-todo="ads30" />
               <label for="ads30">
                 <strong>13. Australia — top of queue</strong>
-                <span class="todo-hint"><strong>Priority.</strong> Site has <code>1300 886 740</code>. Confirm whether <code>VC_AU_*</code> is Enabled in Ads UI. Close AU tracking gaps (GTM/GA4/Ads conversions) so spend is trustworthy. Keep 1300 answered.</span>
+                <span class="todo-hint"><strong>Priority.</strong> Site has <code>1300 886 740</code>. <code>VC_AU_*</code> Enabled (last gentle Ads read). Close AU tracking gaps (GTM/GA4/Ads conversions) so spend is trustworthy. Cleanup: blank/<code>Unkown</code> AGs with Broad positives. Keep 1300 answered.</span>
               </label>
             </li>
             <li data-order="13">
@@ -478,7 +478,7 @@
               <input type="checkbox" id="ads27" data-todo="ads27" />
               <label for="ads27">
                 <strong>17. Get site tests working</strong>
-                <span class="todo-hint"><strong>Active.</strong> LP previews look good — verify variants actually fire. Wire GTM/GA4 experiment events → numbers on <a href="experiments">Site tests</a>. Measurement pipeline not done yet.</span>
+                <span class="todo-hint"><strong>Active.</strong> LP previews look good. Wire GTM/GA4 experiment events → numbers on <a href="experiments">Site tests</a>. Measurement pipeline still open.</span>
               </label>
             </li>
             <li data-order="17">
@@ -492,21 +492,21 @@
               <input type="checkbox" id="ads24" data-todo="ads24" />
               <label for="ads24">
                 <strong>19. Verify Google Search Console for virtualcoworker.app</strong>
-                <span class="todo-hint">Property check — George may need to click Verify in GSC for <code>www.virtualcoworker.app</code>. Later feeds <a href="executive">Executive</a>.</span>
+                <span class="todo-hint">Property check for <code>www.virtualcoworker.app</code> in GSC. Later feeds <a href="executive">Executive</a>.</span>
               </label>
             </li>
             <li data-order="19">
               <input type="checkbox" id="ads19" data-todo="ads19" checked />
               <label for="ads19">
                 <strong>20. Australia phone on site</strong>
-                <span class="todo-hint">Done enough for site (2026-08-08). <code>1300 886 740</code> live on <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>. Remaining AU work = Ads Enabled confirm + tracking parity (step 13).</span>
+                <span class="todo-hint">Done (2026-08-08). <code>1300 886 740</code> live on <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>. Remaining AU work = tracking parity + Unkown AG cleanup (step 13).</span>
               </label>
             </li>
             <li data-order="20">
               <input type="checkbox" id="ads5" data-todo="ads5" />
               <label for="ads5">
-                <strong>21. Confirm sales watch group inboxes</strong>
-                <span class="todo-hint">Holly APAC <strong>confirmed</strong>. US awaiting Cheyenne on <code>us@</code>. See <a href="lead-routing.html">Lead Routing</a>.</span>
+                <strong>21. Sales watch group inboxes</strong>
+                <span class="todo-hint">Holly APAC watches <code>apac@</code>. US still needs Cheyenne on <code>us@</code>. See <a href="lead-routing.html">Lead Routing</a>.</span>
               </label>
             </li>
             <li data-order="21">
@@ -615,8 +615,8 @@
             <span class="st st-access">You</span>
           </div>
           <ul>
-            <li><strong>Now:</strong> Australia queue — confirm Enabled · close AU tracking gaps (step 13)</li>
-            <li><strong>Site tests:</strong> get experiment / variant wiring working (step 17)</li>
+            <li><strong>Now:</strong> Australia queue — close AU tracking gaps + Unkown AG cleanup (step 13)</li>
+            <li><strong>Site tests:</strong> wire experiment / variant events (step 17)</li>
             <li><strong>Near-term:</strong> Zoho qualified → Ads (step 15) · later = money values</li>
             <li><strong>Watch:</strong> 888 phone tree soft ask · US phone-click Verified</li>
             <li><a href="lead-routing.html">Lead Routing</a> · <a href="tracking.html">Tracking</a> (plain English)</li>
@@ -633,7 +633,7 @@
           <ul>
             <li><strong>Cheyenne:</strong> watch US form emails in <code>us@</code></li>
             <li><strong>Phones/IT:</strong> simplify 888 phone tree (soft ask still open)</li>
-            <li><strong>AU:</strong> keep 1300 answered · help with AU Ads/tracking if needed</li>
+            <li><strong>AU:</strong> keep 1300 answered · help close AU GTM/GA4/Ads conversion gaps</li>
             <li><strong>Sales / Zoho:</strong> light “qualified” mark so we can feed Ads</li>
           </ul>
         </section>
@@ -642,9 +642,9 @@
       <p class="lc-secondary" id="site-tests">
         <strong>Site tests</strong> (popup, quiz, chat, gate, density) —
         <a href="experiments">Open Site tests →</a>
-        · LP previews look good; <strong>verify variants working</strong> ·
+        · LP previews look good; <strong>wire measurement</strong> ·
         <a href="executive">Executive</a> ·
-        Ads package → <a href="ads-package.html">Archive</a>
+        Ads package → <a href="ads-package.html">Archive</a> (done)
       </p>
 
       <details class="lc-fold" id="dont-yet">

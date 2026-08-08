@@ -13,7 +13,7 @@ window.PILOT_STATUS = {
   handoffNote:
     "Caitlin is ops contact + lead-quality stakeholder and may start maternity leave anytime. Braden is expected to take over day-to-day while she is out. Cheyenne owns US sales; Holly owns APAC.",
   commercialStatus: "au_priority_us_curated",
-  commercialLabel: "AU PRIORITY · SITE PHONE 1300 LIVE · US STAGE 1 CURATED · BRAND PAUSED · AU TRACKING GAPS",
+  commercialLabel: "AU PRIORITY · VC_AU_* ENABLED · SITE PHONE 1300 LIVE · US STAGE 1 CURATED · BRAND PAUSED · AU TRACKING GAPS",
   objective:
     "Can Google Search → independent US/AU employer microsites generate qualified leads at an acceptable cost? Three identities (US · AU · PH); WordPress stays as-is with zero paid egress.",
   landingPages: {
@@ -90,8 +90,8 @@ window.PILOT_STATUS = {
       finalUrls: "www.virtualcoworker.app"
     },
     au: {
-      status: "priority_may_be_enabled",
-      note: "AU jumped queue 2026-08-08. Site phone 1300 live. VC_AU_* may be Enabled — confirm in Ads UI. Tracking (GTM/GA4/conversions) still thin vs US."
+      status: "enabled_priority",
+      note: "AU jumped queue 2026-08-08. Site phone 1300 live (deployed). VC_AU_* Enabled per last gentle Ads read. Ops risk: Unkown AGs with Broad positives — cleanup landmine. Tracking (GTM/GA4/conversions) still thin vs US."
     },
     brand: "paused_deferred_2026_08_07"
   },
@@ -137,7 +137,7 @@ window.PILOT_STATUS = {
     auDestination: {
       number: "1300 886 740",
       status: "site_live_2026_08_08",
-      note: "George-approved AU site phone. Keep answering. Ads Enabled state + AU tracking parity still to confirm/close."
+      note: "George-approved AU site phone — live on /au. Keep answering. Next: AU tracking parity (GTM/GA4/Ads conversions) + Unkown AG cleanup."
     },
     callRail: "Later — not Stage 1 operational. Tracking numbers forward to sales destinations; AU local tracking eventually."
   },
@@ -257,7 +257,12 @@ window.PILOT_STATUS = {
     },
     {
       id: "au_phone_site",
-      label: "AU site phone live — 1300 886 740 (George-approved 2026-08-08)",
+      label: "AU site phone live — 1300 886 740 (deployed 2026-08-08)",
+      status: "complete"
+    },
+    {
+      id: "au_campaigns_enabled",
+      label: "VC_AU_* Enabled (last gentle Ads read) — tracking parity + Unkown AG cleanup still open",
       status: "complete"
     },
     {
@@ -311,7 +316,12 @@ window.PILOT_STATUS = {
     },
     {
       id: "au_tracking_parity",
-      label: "AU tracking parity (GTM/GA4/Ads conversions) + confirm VC_AU_* Enabled state",
+      label: "AU tracking parity (GTM/GA4/Ads conversions) — VC_AU_* already Enabled",
+      status: "waiting"
+    },
+    {
+      id: "au_unkown_ag_cleanup",
+      label: "AU ops: delete blank/Unkown ad groups packed with Broad positives (Editor landmine)",
       status: "waiting"
     },
     { id: "qualified_def", label: "Exact definitions: qualified lead / job order / placement", status: "waiting" },
@@ -345,33 +355,33 @@ window.PILOT_STATUS = {
     "Unsafe Google auto-apply — already disabled"
   ],
   georgeHandles: [
-    "Daily search terms / spend / negatives on live VC_US_*",
-    "Phone-led conversions + shallow Zoho on VC_US_* (Max Clicks until clean; form not preferred Primary)",
-    "Push US phone routing into Cheyenne workflow + E2E",
-    "Verify Monday paid-vs-total scoreboard (attribution fields)",
-    "Keep Braden/CEO executive snapshot current",
-    "MCC + Google Ads Editor (Standard access confirmed on US + AU)",
-    "Three microsites on vision (US · AU · PH) — not WordPress; / → /us",
-    "Production host www.virtualcoworker.app + /us /au /ph paths",
-    "Separate GTM_US + GTM_AU (+ GTM_PH if needed) / GA4 / GSC / Ads conversions",
-    "Capture GCLID / GBRAID / WBRAID / UTMs / LP / referrer / timestamp + market"
+    "AU top of queue: close GTM/GA4/Ads conversion gaps + Unkown AG cleanup",
+    "Daily search terms / spend / negatives on live VC_US_* (and AU while Enabled)",
+    "Phone-led conversions + shallow Zoho (Max Clicks until clean; form not preferred Primary)",
+    "Wire site tests experiment events → dashboard",
+    "Near-term Zoho qualified → Ads; value-based later",
+    "Keep Braden/CEO executive snapshot current (keywords, not early ST dumps)",
+    "MCC + Google Ads Editor (Standard access on US + AU)",
+    "Separate GTM_US + GTM_AU (+ GTM_PH if needed) / GA4 / GSC / Ads conversions"
   ],
   majorBlockers: [
-    "AU priority: confirm Enabled + close AU tracking gaps (GTM/GA4/conversions)",
+    "AU top of queue: close GTM/GA4/Ads conversion gaps (VC_AU_* already Enabled)",
+    "AU ops risk: Unkown AGs with Broad positives — cleanup",
     "Site tests experiment / variant wiring (GTM or GA4 → dashboard)",
     "Near-term Zoho qualified → Ads; later value when deals make money",
-    "US inbox monitoring awaiting Cheyenne (APAC/Holly confirmed)"
+    "US inbox monitoring awaiting Cheyenne (APAC/Holly watches apac@)"
   ],
   nextThree: [
-    "Australia — confirm VC_AU_* Enabled + close AU tracking gaps",
+    "Australia — close AU tracking gaps (GTM/GA4/Ads conversions) + Unkown AG cleanup",
     "Get site tests working (experiment events → Site tests tab)",
     "Shallow Zoho qualified mark → Ads (near-term); money values later"
   ],
   openItemsUnresolved: [
-    "AU tracking parity + confirm Enabled state for VC_AU_*",
+    "AU GTM/GA4/Ads conversion parity (VC_AU_* Enabled; spend not trustworthy until closed)",
+    "AU Unkown AG / Broad-positive cleanup",
     "Site tests GTM/GA4 experiment wiring",
     "Near-term Zoho qualified → Ads path",
-    "Cheyenne/US microsite inbox monitoring + counting source (APAC confirmed)",
+    "Cheyenne/US microsite inbox monitoring + counting source (APAC/Holly watches)",
     "Monday paid microsite vs total inbound scoreboard verified",
     "Exact defs: qualified lead / job order / placement",
     "How Caitlin / Cheyenne / Pauly return lead-quality feedback",
@@ -385,7 +395,7 @@ window.PILOT_STATUS = {
     usPhone: "888-954-8644",
     auPhone: "1300 886 740",
     usBudget: "$125/day combined (CORE $75 + ROLES $50)",
-    auBudget: "[confirm in Ads UI — may be Enabled]",
+    auBudget: "Enabled (last gentle Ads read) — no invented AU spend figure",
     gtmUs: "GTM-M92DX9BJ (live on /us)",
     gtmAu: "[AU GTM — gap]",
     gtmPh: "[NEXT_PUBLIC_GTM_PH — optional later]",
@@ -393,6 +403,6 @@ window.PILOT_STATUS = {
     ga4Au: "[AU GA4 — gap]",
     adsConversionIdUs: "[existing US phone actions — do not invent new IDs here]",
     adsConversionIdAu: "[AU Ads conversion — do not invent; close gap carefully]",
-    qualifiedLeadDefinition: "[TO BE CONFIRMED WITH VIRTUAL COWORKER]"
+    qualifiedLeadDefinition: "[open with VC — not blocking AU tracking work]"
   }
 };

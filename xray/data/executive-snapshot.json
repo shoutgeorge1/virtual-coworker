@@ -412,12 +412,12 @@
   },
   "operator": {
     "narrative_as_of": "2026-08-08",
-    "status_banner": "<strong>AU first</strong> \u2014 site live with <code>1300 886 740</code>; <code>VC_AU_*</code> may already be Enabled (confirm in Ads UI). US Stage 1 curated \u00b7 CRO baseline shipped \u00b7 Brand paused. Gap: AU tracking (GTM/GA4/Ads conversions) still thin vs US.",
+    "status_banner": "<strong>AU first</strong> \u2014 site live with <code>1300 886 740</code>; <code>VC_AU_*</code> Enabled (last gentle Ads read). US Stage 1 curated \u00b7 CRO baseline shipped \u00b7 Brand paused. Gap: AU tracking (GTM/GA4/Ads conversions) still thin vs US. Ops risk: Unkown AGs with Broad positives.",
     "budgets": [
       {
         "label": "AU Search",
-        "amount": "Priority now",
-        "detail": "site phone 1300 live; campaigns may be Enabled \u2014 confirm in Ads UI (no invented AU spend here)",
+        "amount": "Enabled \u00b7 priority",
+        "detail": "site phone 1300 live; VC_AU_* Enabled \u2014 no invented AU spend figure; Unkown AG cleanup still open",
         "kind": "priority"
       },
       {
@@ -454,23 +454,24 @@
       "note": "Themes from live ops curation \u2014 not an Ads API ranking. LP metrics are in landing_pages."
     },
     "whats_next": [
-      "<strong>Australia</strong> \u2014 confirm Enabled state \u00b7 close AU tracking gaps (GTM/GA4/conversions) \u00b7 keep answering 1300",
-      "<strong>Site tests</strong> \u2014 get experiment / variant wiring working (GTM or GA4 \u2192 Site tests tab)",
+      "<strong>Australia</strong> \u2014 close AU tracking gaps (GTM/GA4/conversions) \u00b7 Unkown AG / Broad-positive cleanup \u00b7 keep answering 1300",
+      "<strong>Site tests</strong> \u2014 wire experiment / variant events (GTM or GA4 \u2192 Site tests tab)",
       "Near-term: sales marks \u201cqualified\u201d in Zoho \u2192 light signal into Google Ads",
       "Later (enough leads / money): value-based conversions when deals actually pay"
     ],
     "coming_soon": [
       "AU GTM / GA4 / Ads conversion parity (biggest gap vs US)",
+      "AU Unkown AG cleanup (Broad-positive landmine)",
       "Site tests experiment events \u2192 dashboard numbers",
       "Conversion / CPA reporting once phone + Zoho qualify season"
     ],
     "done_today": [
-      "AU phone on site (1300 886 740) \u00b7 AU jumped queue",
+      "AU phone on site (1300 886 740) \u00b7 AU jumped queue \u00b7 VC_AU_* Enabled",
       "US Stage 1 curated \u00b7 CRO baseline shipped",
       "Brand paused \u00b7 phone guiding light US \u00b7 GTM/GA4 on /us",
-      "Editor Ads package built \u2014 archived from active checklist"
+      "Editor Ads package done \u2014 archived from active checklist"
     ],
-    "honesty": "Australia jumped the queue. Site has AU phone live; US Search stays curated. Keywords on this page \u2014 not early search-term noise."
+    "honesty": "Australia is top of queue. Site phone 1300 live; VC_AU_* Enabled. US Search stays curated. Keywords on this page \u2014 not early search-term noise."
   },
   "search_terms_executive": {
     "surface": false,
