@@ -1,20 +1,22 @@
-/* Stage 1 shell — Checklist is the front door; everything else is Archive. */
+/* Stage 1 shell — Executive first; Checklist is the ops front door; Ads package archived. */
 (function () {
   var root = document.body.getAttribute("data-root") || "";
   var ITEMS = [
+    { href: "executive.html", text: "Executive" },
     { href: "launch-control.html", text: "Checklist" },
+    { href: "experiments.html", text: "Site tests" },
     { href: "landing-pages.html", text: "LP previews" },
-    { href: "ads-package.html", text: "Ads package" },
+    { href: "media.html", text: "Media" },
     { href: "lead-routing.html", text: "Lead Routing" },
     { href: "tracking.html", text: "Tracking" },
     { label: "Archive" },
-    { href: "index.html", text: "Pilot Overview", quiet: true },
+    { href: "ads-package.html", text: "Ads package", quiet: true },
     { href: "project-status.html", text: "Project Status", quiet: true },
     { href: "us.html", text: "US Campaign", quiet: true },
     { href: "au.html", text: "Australia Campaign", quiet: true },
     { href: "keyword-strategy.html", text: "Keyword Strategy", quiet: true },
     { href: "clean-rebuild.html", text: "Clean Rebuild docs", quiet: true },
-    { href: "results.html", text: "Results", quiet: true },
+    { href: "results.html", text: "Results (wireframe)", quiet: true },
     { href: "later.html", text: "Later Phases", quiet: true },
     { href: "archive/findings.html", text: "Archive notes", quiet: true }
   ];
@@ -28,7 +30,7 @@
     (location.pathname.split("/").pop() || "launch-control.html");
   var foot =
     body.getAttribute("data-foot") ||
-    "Stage 1 · US + AU employers<br />Work the Checklist";
+    "Stage 1 · AU priority + US live<br />Checklist = ops front door";
 
   function pageOf(href) {
     var base = (href || "").split("#")[0].split("/").pop();
@@ -41,39 +43,50 @@
     return root + href;
   }
 
-  function linkHtml(item) {
-    var cls = [];
-    if (item.quiet) cls.push("nav-quiet");
+  function isActive(item) {
     var itemPage = pageOf(item.href);
     var curPage = pageOf(current);
-    if (itemPage === curPage || item.href === current) cls.push("active");
+    if (itemPage === curPage || item.href === current) return true;
     /* Treat old checklist aliases as Checklist active state */
     if (
       itemPage === "launch-control" &&
       (curPage === "launch-checklist" || curPage === "checklist" || curPage === "action")
     ) {
-      cls.push("active");
+      return true;
     }
+    return false;
+  }
+
+  function linkHtml(item) {
+    var cls = [];
+    var active = isActive(item);
+    if (item.quiet) cls.push("nav-quiet");
+    if (active) cls.push("active");
     return (
       '<a class="' +
       cls.join(" ") +
       '" href="' +
       resolve(item.href) +
-      '">' +
+      '"' +
+      (active ? ' aria-current="page"' : "") +
+      ">" +
       item.text +
       "</a>"
     );
   }
 
   var logoSrc = root ? root + "assets/logo-vc.png" : "assets/logo-vc.png";
+  var onQuietPage = ITEMS.some(function (item) {
+    return item.quiet && isActive(item);
+  });
 
   var html =
     '<div class="brand">' +
     '<img class="brand-mark" src="' +
     logoSrc +
     '" width="168" height="52" alt="Virtual Coworker" />' +
-    '<p class="name">Stage 1 checklist</p>' +
-    '<p class="sub">US + AU · employer Search</p>' +
+    '<p class="name">Stage 1 command center</p>' +
+    '<p class="sub">AU priority · US live</p>' +
     "</div>" +
     '<nav class="nav" aria-label="Primary">';
 
@@ -82,7 +95,9 @@
     if (item.label) {
       if (inArchive) html += "</div></details>";
       html +=
-        '<details class="nav-docs">' +
+        '<details class="nav-docs"' +
+        (onQuietPage ? " open" : "") +
+        ">" +
         "<summary>" +
         item.label +
         "</summary>" +
