@@ -26,17 +26,9 @@
       padding: 0.85rem 1rem;
       min-width: 0;
     }
-    .scan-card.primary {
-      border-color: var(--tint-teal-edge);
-      background: var(--tint-teal);
-    }
-    .scan-card.secondary {
-      border-color: var(--tint-cool-edge);
-      background: var(--tint-cool);
-    }
-    .scan-card.later {
-      border-color: var(--edge-soft);
-      background: var(--panel-inset);
+    .scan-card.ok {
+      border-color: var(--tint-green-edge);
+      background: var(--tint-green);
     }
     .scan-card.open {
       border-color: var(--tint-amber-edge);
@@ -70,36 +62,6 @@
     }
     .scan-card li:last-child { border-bottom: none; }
     .scan-card strong { color: var(--ink); }
-    .ladder { margin: 0; padding: 0; list-style: none; }
-    .ladder li {
-      display: grid;
-      grid-template-columns: 5.5rem 1fr;
-      gap: 0.55rem 0.75rem;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid var(--edge-soft);
-      align-items: start;
-    }
-    .ladder li:last-child { border-bottom: none; }
-    .ladder .when {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--muted);
-      padding-top: 0.15rem;
-    }
-    .ladder .when.now { color: var(--ink); }
-    .ladder strong {
-      display: block;
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-    .ladder span {
-      display: block;
-      margin-top: 0.15rem;
-      font-size: 0.86rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
     .short-list {
       list-style: none;
       margin: 0;
@@ -113,145 +75,127 @@
     }
     .short-list li:last-child { border-bottom: none; }
     .short-list strong { color: var(--ink); }
+    table.trk-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    table.trk-tbl th,
+    table.trk-tbl td {
+      text-align: left;
+      padding: 0.45rem 0.5rem;
+      border-bottom: 1px solid var(--edge-soft);
+      vertical-align: top;
+    }
+    table.trk-tbl th {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      font-weight: 700;
+    }
   </style>
 </head>
-<body data-page="tracking.html" data-foot="Phone guiding light<br />Shallow Zoho next">
+<body data-page="tracking.html" data-foot="Plain English<br />US vs AU · live vs missing">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Aug 7, 2026 · Phone guiding light · then Zoho qualify</p>
+        <p class="kicker">Aug 8, 2026 · Plain English</p>
         <h1>Tracking</h1>
         <p>
-          Phone call conversions = initial guiding light (USA Search + Brand/accounts) + curated search terms.
-          Prefer phone over form fills. Then shallow Zoho qualify → Ads. Stay on <strong>Maximize Clicks</strong>.
+          What tells Google “this click was worth it.” Keep US and AU separate.
+          No new conversion IDs invented here.
         </p>
       </header>
 
       <div class="scan-grid" id="at-a-glance">
+        <article class="scan-card ok">
+          <p class="k">United States</p>
+          <h2>Mostly live</h2>
+          <ul>
+            <li><strong>Site + Ads phone:</strong> 888-954-8644</li>
+            <li><strong>GTM → GA4:</strong> live on <code>/us</code></li>
+            <li><strong>Phone call conversion:</strong> guiding light (Max Clicks)</li>
+            <li><strong>Forms:</strong> deliver to <code>us@</code> (not bidding Primary)</li>
+          </ul>
+        </article>
         <article class="scan-card open">
-          <p class="k">Prerequisite</p>
-          <h2>Phone routing</h2>
+          <p class="k">Australia · priority</p>
+          <h2>Phone live · tracking thin</h2>
           <ul>
-            <li><code>310-730-9126</code> → Cheyenne / US sales</li>
-            <li>Missed-call owner · hours · E2E</li>
-            <li>Don’t claim call Primary until this works</li>
-          </ul>
-        </article>
-        <article class="scan-card primary">
-          <p class="k">Primary (after routing)</p>
-          <h2>Phone call conversions</h2>
-          <ul>
-            <li><code>VC_US_Phone_Call_From_Ads</code></li>
-            <li><code>VC_US_Phone_Call_From_Website</code></li>
-            <li>60–90s · Count One · <code>VC_US_*</code> only</li>
-          </ul>
-        </article>
-        <article class="scan-card secondary">
-          <p class="k">Secondary · live delivery</p>
-          <h2>Employer form</h2>
-          <ul>
-            <li>Resend + GitHub already deliver</li>
-            <li>Ads name when mapped: <code>VC_US_Employer_Form_Submit</code></li>
-            <li>Not bidding Primary</li>
-          </ul>
-        </article>
-        <article class="scan-card later">
-          <p class="k">Next after phone</p>
-          <h2>Shallow Zoho qualify</h2>
-          <ul>
-            <li>Sales marks “decent qualified lead” → Ads</li>
-            <li>Need more signal soon — not ultra-HQ only</li>
-            <li>Not a second Primary for the same raw form</li>
+            <li><strong>Site phone:</strong> 1300 886 740 (deployed)</li>
+            <li><strong>Ads:</strong> <code>VC_AU_*</code> may be Enabled — confirm in UI</li>
+            <li><strong>Gap:</strong> AU GTM / GA4 / Ads conversions not at US parity</li>
+            <li><strong>Forms:</strong> deliver to <code>apac@</code> (Holly watches)</li>
           </ul>
         </article>
       </div>
 
-      <section class="panel" id="stack">
+      <section class="panel" id="matrix">
         <div class="panel-hd">
-          <p class="kicker">Order</p>
-          <h2>Conversion ladder</h2>
+          <p class="kicker">One glance</p>
+          <h2>What’s live vs missing</h2>
         </div>
         <div class="panel-bd">
-          <ol class="ladder">
-            <li>
-              <span class="when now">1</span>
-              <div>
-                <strong>Phone routing E2E</strong>
-                <span>Cheyenne workflow. Raffie = IT. Ash ≠ owner.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when">2</span>
-              <div>
-                <strong>Call conversions as Primary</strong>
-                <span>Prepare in Ads UI now; attach after routing works. Stay Max Clicks.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when now">3</span>
-              <div>
-                <strong>Form Secondary / observation</strong>
-                <span>dataLayer <code>form_submit_success</code> after durable delivery.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when now">4</span>
-              <div>
-                <strong>GTM + GA4 + GSC</strong>
-                <span>Today — paste US container IDs. Don’t deploy untested tags.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when now">5</span>
-              <div>
-                <strong>Shallow Zoho qualify → Ads</strong>
-                <span>Soon after phone — light “decent lead” signal, not waiting for ultra-HQ only.</span>
-              </div>
-            </li>
-            <li>
-              <span class="when">Later</span>
-              <div>
-                <strong>Maximize Conversions</strong>
-                <span>Only on new <code>VC_US_*</code> actions — never legacy Zoho/Zapier.</span>
-              </div>
-            </li>
-          </ol>
+          <table class="trk-tbl">
+            <thead>
+              <tr>
+                <th>Thing</th>
+                <th>US</th>
+                <th>AU</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Clickable phone on site</td>
+                <td>Live · 888</td>
+                <td>Live · 1300</td>
+              </tr>
+              <tr>
+                <td>Website tag (GTM → GA4)</td>
+                <td>Live</td>
+                <td><strong>Missing / incomplete</strong></td>
+              </tr>
+              <tr>
+                <td>Phone call conversion in Ads</td>
+                <td>Live (guiding light)</td>
+                <td>Not at US parity yet</td>
+              </tr>
+              <tr>
+                <td>Form email delivery</td>
+                <td>Live → us@</td>
+                <td>Live → apac@</td>
+              </tr>
+              <tr>
+                <td>Site tests (A/B variants)</td>
+                <td colspan="2">Previews look good — <strong>measurement wiring still open</strong></td>
+              </tr>
+              <tr>
+                <td>Zoho “qualified” → Ads</td>
+                <td colspan="2">Near-term (manual mark) — not money-based yet</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <section class="panel" id="gtm">
+      <section class="panel" id="simple-plan">
         <div class="panel-hd">
-          <p class="kicker">Placeholders</p>
-          <h2>GTM / GA4</h2>
+          <p class="kicker">Order of operations</p>
+          <h2>How we measure (simple)</h2>
         </div>
         <div class="panel-bd">
           <ul class="short-list">
-            <li><strong>Env empty today</strong> — paste <code>NEXT_PUBLIC_GTM_US</code> / <code>NEXT_PUBLIC_GA4_US</code> when containers exist.</li>
-            <li><strong>Separate per market</strong> — don’t share one GTM/GA4 across US + AU.</li>
-            <li><strong>dataLayer ready in vision:</strong> <code>form_submit_success</code> · <code>phone_click</code> · <code>calendly_click</code>.</li>
-            <li><strong>GSC:</strong> verify virtualcoworker.app (George click).</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="panel" id="rules">
-        <div class="panel-hd">
-          <p class="kicker">Don’t break measurement</p>
-          <h2>Rules</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="short-list">
-            <li><strong>One inquiry ≠ two Primaries</strong> — don’t triple-count form + Calendly + Zoho.</li>
-            <li><strong>Calendly secondary</strong> —
-              <a href="https://calendly.com/cheyenne-virtualcoworker/30min" target="_blank" rel="noopener">US</a> ·
-              <a href="https://calendly.com/apac-virtualcoworker/30min" target="_blank" rel="noopener">APAC</a>.</li>
-            <li><strong>Attribution must travel:</strong> <code>utm_*</code>, <code>gclid</code>, <code>gbraid</code>, <code>wbraid</code>, landing URL, referrer, market, category, variant.</li>
-            <li><strong>No legacy Zoho/Zapier</strong> actions attached to new <code>VC_US_*</code>.</li>
+            <li><strong>Now:</strong> Phone calls guide US. Stay on Maximize Clicks. Curate keywords (ops), not dump messy early search terms on the exec page.</li>
+            <li><strong>AU now:</strong> Keep 1300 answered. Close AU tag + conversion gaps so we can trust AU spend.</li>
+            <li><strong>Soon:</strong> Someone in sales marks a lead “qualified” in Zoho → light signal back into Google Ads.</li>
+            <li><strong>Later:</strong> When enough deals make real money, switch to value-based conversions (job order / placement money).</li>
+            <li><strong>Don’t:</strong> invent new conversion IDs in this dashboard · reuse old Zoho/Zapier junk · count the same enquiry three ways.</li>
           </ul>
           <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
-            Full steps: <a href="docs/ads-launch/CONVERSION-PLAN.md">CONVERSION-PLAN.md</a> ·
+            Detail if needed: <a href="docs/ads-launch/CONVERSION-PLAN.md">CONVERSION-PLAN.md</a> ·
             <a href="lead-routing.html">Lead Routing</a> ·
             <a href="launch-control.html">Checklist</a>
           </p>
@@ -260,8 +204,8 @@
 
       <div class="actions">
         <a class="btn btn-primary" href="launch-control.html">Checklist</a>
-        <a class="btn" href="docs/ads-launch/CONVERSION-PLAN.md">Conversion plan</a>
         <a class="btn" href="lead-routing.html">Lead Routing</a>
+        <a class="btn" href="executive.html">Executive</a>
       </div>
     </main>
   </div>

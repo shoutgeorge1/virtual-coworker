@@ -34,6 +34,10 @@
       border-color: var(--tint-amber-edge);
       background: var(--tint-amber);
     }
+    .scan-card.cool {
+      border-color: var(--tint-cool-edge);
+      background: var(--tint-cool);
+    }
     .scan-card h2 {
       margin: 0 0 0.45rem;
       font-size: 0.95rem;
@@ -110,71 +114,128 @@
     }
     .short-list li:last-child { border-bottom: none; }
     .short-list strong { color: var(--ink); }
-    .split-2 {
+    .ladder {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .ladder li {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.85rem;
+      grid-template-columns: 5.5rem 1fr;
+      gap: 0.55rem 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      align-items: start;
     }
-    @media (max-width: 760px) {
-      .split-2 { grid-template-columns: 1fr; }
+    .ladder li:last-child { border-bottom: none; }
+    .ladder .when {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      padding-top: 0.15rem;
     }
-    .split-2 h3 {
-      margin: 0 0 0.4rem;
-      font-size: 0.92rem;
+    .ladder .when.now { color: var(--ink); }
+    .ladder strong {
+      display: block;
+      font-size: 0.95rem;
       color: var(--ink);
+    }
+    .ladder span {
+      display: block;
+      margin-top: 0.15rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.4;
     }
   </style>
 </head>
-<body data-page="lead-routing.html" data-foot="Where leads go<br />Holly OK · Cheyenne open · phone next">
+<body data-page="lead-routing.html" data-foot="Where leads go<br />Qualified → Ads later money">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <header class="page-head">
-        <p class="kicker">Aug 7, 2026 · Forms live · phone routing open</p>
+        <p class="kicker">Aug 8, 2026 · Human version</p>
         <h1>Lead Routing</h1>
-        <p>Who owns what · where forms go · what’s confirmed vs waiting.</p>
+        <p>
+          Who gets the lead, and how Google Ads eventually learns which leads were good.
+          No jargon wall.
+        </p>
       </header>
 
       <div class="scan-grid" id="at-a-glance">
         <article class="scan-card ok">
-          <p class="k">Who owns sales</p>
-          <h2>Owners</h2>
+          <p class="k">Where forms go today</p>
+          <h2>Inbox delivery (works)</h2>
           <ul>
-            <li><strong>US</strong> — Cheyenne · <code>us@</code> · awaiting monitor confirm</li>
-            <li><strong>APAC</strong> — Holly · <code>apac@</code> · <strong>confirmed</strong></li>
-            <li>Teams distribute from group inboxes (Caitlin)</li>
-          </ul>
-        </article>
-        <article class="scan-card ok">
-          <p class="k">Where form leads go</p>
-          <h2>Delivery</h2>
-          <ul>
-            <li><strong>Resend</strong> → <code>us@</code> / <code>apac@</code></li>
-            <li><strong>Backup</strong> → GitHub Issues
+            <li><strong>US</strong> → <code>us@</code> (Cheyenne owns sales)</li>
+            <li><strong>AU / APAC</strong> → <code>apac@</code> (Holly confirmed)</li>
+            <li><strong>Backup:</strong> GitHub Issues
               <a href="https://github.com/shoutgeorge1/vc-employer-leads/issues" target="_blank" rel="noopener">vc-employer-leads</a></li>
-            <li>Form OK if <em>either</em> path works · George CC via <code>LEAD_EMAIL_CC</code></li>
           </ul>
         </article>
-        <article class="scan-card ok">
-          <p class="k">APAC</p>
-          <h2>Holly · confirmed</h2>
+        <article class="scan-card cool">
+          <p class="k">Near-term · Ads learning</p>
+          <h2>Manual “qualified” in Zoho</h2>
           <ul>
-            <li>Day-to-day via Zoho + Outlook</li>
-            <li>Calendar for cold / follow-up</li>
-            <li>No new tracker for APAC this week</li>
+            <li>Human looks at the lead</li>
+            <li>Marks it <strong>qualified</strong> (looks real — not “customer paid”)</li>
+            <li>That mark tries to feed Google Ads (integration)</li>
           </ul>
         </article>
         <article class="scan-card open">
-          <p class="k">US · still open</p>
-          <h2>Cheyenne · awaiting</h2>
+          <p class="k">Later · when money is real</p>
+          <h2>Value-based conversions</h2>
           <ul>
-            <li>Does she watch microsite msgs in <code>us@</code>?</li>
-            <li>US day-to-day counting source?</li>
-            <li>How US separates paid vs total inbound?</li>
+            <li>Only after enough leads / closed deals</li>
+            <li>Tell Ads the dollar value when a deal actually makes money</li>
+            <li>Not Stage 1 busywork — don’t invent values yet</li>
+          </ul>
+        </article>
+        <article class="scan-card ok">
+          <p class="k">Phones</p>
+          <h2>Who answers</h2>
+          <ul>
+            <li><strong>US:</strong> 888-954-8644 → Cheyenne (tree soft-ask still open)</li>
+            <li><strong>AU:</strong> 1300 886 740 on site · keep answering</li>
+            <li>Raffie = phones/IT, not the US salesperson</li>
           </ul>
         </article>
       </div>
+
+      <section class="panel" id="path">
+        <div class="panel-hd">
+          <p class="kicker">Two steps</p>
+          <h2>How Ads gets smarter over time</h2>
+        </div>
+        <div class="panel-bd">
+          <ol class="ladder">
+            <li>
+              <span class="when now">Near-term</span>
+              <div>
+                <strong>Shallow Zoho qualify → Ads</strong>
+                <span>
+                  Sales (or ops) marks a decent qualified employer lead in Zoho.
+                  We try to send that signal into Google Ads with the click ID (GCLID).
+                  Goal: Ads learns “this kind of click was good” — without waiting for a closed deal.
+                </span>
+              </div>
+            </li>
+            <li>
+              <span class="when">Later</span>
+              <div>
+                <strong>Value when money lands</strong>
+                <span>
+                  When there are enough real deals, upload or sync conversion <em>values</em>
+                  (job order / placement dollars). That’s when Maximize Conversions / value
+                  bidding can make sense. Not before.
+                </span>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
 
       <section class="panel" id="ops-notes">
         <div class="panel-hd">
@@ -183,14 +244,14 @@
         </div>
         <div class="panel-bd">
           <ul class="short-list">
-            <li><strong>WordPress still emails</strong> <code>us@</code> / <code>apac@</code> too — Monday report must split paid microsite/Ads from total inbound.</li>
-            <li><strong>Attribution on form:</strong> <code>utm_*</code>, <code>gclid</code>, <code>gbraid</code>, <code>wbraid</code>, landing URL, referrer, market, category, variant.</li>
+            <li><strong>WordPress still emails</strong> the same inboxes — Monday report must split paid microsite/Ads from total inbound.</li>
+            <li><strong>Keep click IDs on the form</strong> (utm / gclid / landing URL / market) or Zoho→Ads can’t tie back.</li>
+            <li><strong>Don’t triple-count</strong> one enquiry as form + Calendly + Zoho Primaries.</li>
             <li><strong>LPs:</strong>
               <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> ·
               <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> ·
-              <a href="https://www.virtualcoworker.app/ph" target="_blank" rel="noopener">/ph</a>
-              · <a href="landing-pages.html">previews</a></li>
-            <li><strong>Monday buckets:</strong> enquiries · sales calls booked · junk · work-seekers · Zoho + email enough for now.</li>
+              <a href="landing-pages.html">previews</a>
+              — variants look good; verify Site tests wiring on Checklist.</li>
           </ul>
         </div>
       </section>
@@ -219,12 +280,12 @@
             </article>
             <article class="person-card">
               <h3>Cheyenne Gichana</h3>
-              <p class="role">US sales owner · Regional Manager (LA area). Calendly below.</p>
+              <p class="role">US sales owner · Regional Manager (LA area).</p>
               <p class="email"><a href="mailto:cheyenne@virtualcoworker.com">cheyenne@virtualcoworker.com</a></p>
             </article>
             <article class="person-card">
               <h3>Holly Wallace</h3>
-              <p class="role">APAC sales owner · Regional Manager. Microsite form monitoring <strong>confirmed</strong> (Zoho + Outlook).</p>
+              <p class="role">APAC sales owner · Microsite form monitoring <strong>confirmed</strong> (Zoho + Outlook).</p>
               <p class="email"><a href="mailto:holly@virtualcoworker.com">holly@virtualcoworker.com</a></p>
             </article>
             <article class="person-card">
@@ -232,104 +293,10 @@
               <p class="role">Intern — got a US phone test VM. Not permanent call owner.</p>
               <p class="email ask">email unknown — ask</p>
             </article>
-            <article class="person-card">
-              <h3>Pauly</h3>
-              <p class="role">Lead quality (earlier notes).</p>
-              <p class="email ask">email unknown — ask</p>
-            </article>
-            <article class="person-card">
-              <h3>Essa</h3>
-              <p class="role">AI / internship (earlier notes).</p>
-              <p class="email ask">email unknown — ask</p>
-            </article>
           </div>
           <p class="muted" style="margin:0.85rem 0 0;font-size:0.88rem">
             Source: Caitlin “Who’s Who” + live VC threads. No invented addresses.
           </p>
-        </div>
-      </section>
-
-      <section class="panel" id="calendly">
-        <div class="panel-hd">
-          <p class="kicker">Confirmed</p>
-          <h2>Calendly (secondary only)</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="short-list">
-            <li>
-              <strong>USA:</strong>
-              <a href="https://calendly.com/cheyenne-virtualcoworker/30min" target="_blank" rel="noopener">calendly.com/cheyenne-virtualcoworker/30min</a>
-            </li>
-            <li>
-              <strong>APAC:</strong>
-              <a href="https://calendly.com/apac-virtualcoworker/30min" target="_blank" rel="noopener">calendly.com/apac-virtualcoworker/30min</a>
-            </li>
-            <li>Not a second Primary conversion for the same enquiry.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="panel" id="phones">
-        <div class="panel-hd">
-          <p class="kicker">Priority for Ads</p>
-          <h2>Phones</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="short-list">
-            <li>
-              <strong>US:</strong> <code>310-730-9126</code> → ~5–6 rings → Google Voice VM.
-              Route into Cheyenne / US sales; name missed-call owner; E2E test.
-              Raffie = IT, not US salesperson.
-            </li>
-            <li>
-              <strong>AU:</strong> Form-first. Ads paused until AU phone confirmed. No fake AU number on the LP.
-            </li>
-            <li>
-              <strong>CallRail:</strong> ~1–2 months. Until then: phone calls guide Ads; click-to-call can observe.
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="panel" id="zoho">
-        <div class="panel-hd">
-          <p class="kicker">CRM · not a traffic gate</p>
-          <h2>Zoho</h2>
-        </div>
-        <div class="panel-bd">
-          <div class="split-2">
-            <div>
-              <h3>Now</h3>
-              <ul class="short-list">
-                <li>George can sign in · browse modules</li>
-                <li>Prefer API once Recruit vs CRM is clear</li>
-                <li>Ask VC who owns CRM/admin when stuck</li>
-              </ul>
-            </div>
-            <div>
-              <h3>Later</h3>
-              <ul class="short-list">
-                <li>No live write from our code yet</li>
-                <li>Native Zoho↔Ads offline = Qualified later (not duplicate Primary)</li>
-                <li>Resend + GitHub already deliver — Zoho ≠ traffic readiness</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel" id="path">
-        <div class="panel-hd">
-          <p class="kicker">Stage 1</p>
-          <h2>What must happen</h2>
-        </div>
-        <div class="panel-bd">
-          <ul class="short-list">
-            <li><strong>Employer form or solid phone call</strong> — job seekers don’t count.</li>
-            <li><strong>Lead lands via Resend and/or GitHub</strong> — silent log ≠ paid-ready.</li>
-            <li><strong>Keep click IDs + UTMs</strong> — Monday ID + Zoho → Ads later.</li>
-            <li><strong>Don’t triple-count</strong> — phone steers; form Secondary; Calendly separate; Zoho offline later.</li>
-          </ul>
         </div>
       </section>
 

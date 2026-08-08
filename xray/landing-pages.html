@@ -71,6 +71,7 @@
           Full microsite sitemap — every real route as a clickable link.
           Host: <a href="https://www.virtualcoworker.app/" target="_blank" rel="noopener">www.virtualcoworker.app</a>
           (preview <code>vision-three-alpha.vercel.app</code> still exists).
+          Previews look good — <strong>verify variants actually work</strong> (Site tests wiring still open).
         </p>
       </header>
 
@@ -78,19 +79,23 @@
         <div class="panel-hd">
           <p class="kicker">Website tree</p>
           <h2>All landing pages</h2>
+          <span class="badge badge-ok">CRO baseline live</span>
         </div>
         <div class="panel-bd">
           <p class="muted" style="margin:0 0 0.85rem;font-size:0.88rem">
             Three sites: US employer · AU employer · PH talent. Shared hub/legal at root.
             Root <a href="https://www.virtualcoworker.app/" target="_blank" rel="noopener"><code>/</code></a> redirects to <code>/us</code>.
-            A/B is not separate URLs — add <code>?variant=a</code> or <code>?variant=b</code> on hubs and category pages.
             Hire CTA is <code>#gate</code> on the market hub (no separate <code>/hire</code> route).
-            Stage 1: copy A/B only — no hero image badge overlays.
+            US phone <code>888-954-8644</code> · AU phone <code>1300 886 740</code>.
+            <strong>Copy A/B</strong> uses <code>?variant=a|b</code> (hero/copy arms) — confirm arms fire.
+            <strong>UX Site tests</strong> (popup, quiz, chat, gate, density) use
+            <code>?vc_exp=…&amp;vc_var=…</code> — force links on
+            <a href="experiments">Site tests</a>; measurement wiring still open on Checklist.
           </p>
           <div class="sitemap">
             <div class="sitemap-branch">
               <h3>US employer</h3>
-              <p class="branch-note">Paid money path · phone <code>310-730-9126</code></p>
+              <p class="branch-note">Paid money path · phone <code>888-954-8644</code></p>
               <ul class="sitemap-tree">
                 <li><a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> <span class="dim">hub</span>
                   <ul>
@@ -112,7 +117,7 @@
 
             <div class="sitemap-branch">
               <h3>AU employer</h3>
-              <p class="branch-note">Paid money path · form-primary (no fake AU phone)</p>
+              <p class="branch-note">Paid money path · phone <code>1300 886 740</code></p>
               <ul class="sitemap-tree">
                 <li><a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> <span class="dim">hub</span>
                   <ul>
@@ -168,8 +173,8 @@
             </div>
 
             <div class="sitemap-branch sitemap-full">
-              <h3>A/B QA shortcuts</h3>
-              <p class="branch-note">Same routes — query only. Works on hubs and all category LPs. Stage 1: 2 copy variants.</p>
+              <h3>Copy A/B QA shortcuts</h3>
+              <p class="branch-note">Hero/copy arms only (<code>?variant=</code>). For popup/quiz/chat/gate tests → <a href="experiments">Site tests</a>.</p>
               <ul class="sitemap-tree">
                 <li><a href="https://www.virtualcoworker.app/us?variant=a" target="_blank" rel="noopener">/us?variant=a</a></li>
                 <li><a href="https://www.virtualcoworker.app/us?variant=b" target="_blank" rel="noopener">/us?variant=b</a></li>
@@ -188,7 +193,8 @@
       </section>
 
       <div class="actions">
-        <a class="btn btn-primary" href="launch-control.html">Checklist</a>
+        <a class="btn btn-primary" href="launch-control">Checklist</a>
+        <a class="btn" href="experiments">Site tests</a>
         <a class="btn" href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">Open US hub</a>
       </div>
     </main>

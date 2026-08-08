@@ -2,7 +2,7 @@
    Edit this file when access or approvals change.
    Do not invent account IDs, emails, phones, budgets, or conversion IDs.
    Distinguish confirmed facts vs recommendations vs unresolved.
-   Status as of Aug 7, 2026. */
+   Status as of Aug 8, 2026. */
 window.PILOT_STATUS = {
   pilotName: "Google Search proof of concept",
   fee: "$3,000",
@@ -12,8 +12,8 @@ window.PILOT_STATUS = {
   previousContact: "Caitlin",
   handoffNote:
     "Caitlin is ops contact + lead-quality stakeholder and may start maternity leave anytime. Braden is expected to take over day-to-day while she is out. Cheyenne owns US sales; Holly owns APAC.",
-  commercialStatus: "us_search_live_ops",
-  commercialLabel: "USA SEARCH LIVE · $125/DAY · BRAND ~$40/DAY · AU NOT TOUCHED",
+  commercialStatus: "au_priority_us_curated",
+  commercialLabel: "AU PRIORITY · SITE PHONE 1300 LIVE · US STAGE 1 CURATED · BRAND PAUSED · AU TRACKING GAPS",
   objective:
     "Can Google Search → independent US/AU employer microsites generate qualified leads at an acceptable cost? Three identities (US · AU · PH); WordPress stays as-is with zero paid egress.",
   landingPages: {
@@ -89,8 +89,11 @@ window.PILOT_STATUS = {
       network: "Search-only",
       finalUrls: "www.virtualcoworker.app"
     },
-    au: { status: "not_touched_paused_until_phone_confirmed" },
-    brand: "left_up_contained_~40_day_paused_weak_kws"
+    au: {
+      status: "priority_may_be_enabled",
+      note: "AU jumped queue 2026-08-08. Site phone 1300 live. VC_AU_* may be Enabled — confirm in Ads UI. Tracking (GTM/GA4/conversions) still thin vs US."
+    },
+    brand: "paused_deferred_2026_08_07"
   },
 
   /* Confirmed conversion strategy (Stage 1) — phone-first; not form Primary */
@@ -113,7 +116,8 @@ window.PILOT_STATUS = {
       jobOrder: "$200–$400 (estimate only — not approved for Ads import)",
       jobPlacement: "$500–$800 (estimate only — not approved for Ads import)"
     },
-    laterPath: "Zoho → Google Ads offline: sales tags basic-qualified employer lead → quality signal back into Ads",
+    laterPath:
+      "Near-term: human marks qualified in Zoho → light signal into Ads. Later (enough deals/money): value-based conversions when deals actually pay.",
     biddingUntilClean: "Maximize Clicks"
   },
 
@@ -131,9 +135,9 @@ window.PILOT_STATUS = {
       note: "Rings ~5–6 → Google Voice VM. Ash (intern) got test VM — not durable. Cheyenne owns US sales. Raffie = phone systems/IT, not US salesperson. Route into Cheyenne/US sales workflow + missed-call owner + E2E."
     },
     auDestination: {
-      number: null,
-      status: "unresolved_au_ads_paused",
-      note: "AU ads paused until AU phone confirmed/tested. Form-first; no fake AU number on LP."
+      number: "1300 886 740",
+      status: "site_live_2026_08_08",
+      note: "George-approved AU site phone. Keep answering. Ads Enabled state + AU tracking parity still to confirm/close."
     },
     callRail: "Later — not Stage 1 operational. Tracking numbers forward to sales destinations; AU local tracking eventually."
   },
@@ -250,6 +254,21 @@ window.PILOT_STATUS = {
       id: "apac_inbox_monitor",
       label: "APAC microsite monitoring confirmed — Holly Wallace (Zoho + Outlook; calendar for cold/follow-up; existing workflow enough for Monday; no new tracker/routing)",
       status: "complete"
+    },
+    {
+      id: "au_phone_site",
+      label: "AU site phone live — 1300 886 740 (George-approved 2026-08-08)",
+      status: "complete"
+    },
+    {
+      id: "ads_package_archived",
+      label: "Editor Ads package DONE → archived from active checklist (nav Archive)",
+      status: "complete"
+    },
+    {
+      id: "cro_baseline",
+      label: "CRO baseline shipped on employer microsite (pain→gain / conversion pass)",
+      status: "complete"
     }
   ],
   verifyNow: [
@@ -291,8 +310,8 @@ window.PILOT_STATUS = {
       status: "waiting"
     },
     {
-      id: "au_phone",
-      label: "AU business phone — confirmed/tested before AU Enable",
+      id: "au_tracking_parity",
+      label: "AU tracking parity (GTM/GA4/Ads conversions) + confirm VC_AU_* Enabled state",
       status: "waiting"
     },
     { id: "qualified_def", label: "Exact definitions: qualified lead / job order / placement", status: "waiting" },
@@ -320,7 +339,7 @@ window.PILOT_STATUS = {
     "WordPress / hosting / Shopify — stays as-is; not paid destination",
     "WordPress rebuild / SEO / remarketing",
     "Gravity Forms — existing WP process only; paid LPs must not depend on WP/GF",
-    "Brand campaigns — left up; contained at ~$40/day; paused weak keywords; secondary to VC_US_* Search",
+    "Brand campaigns — paused by George 2026-08-07; deferred; don’t re-enable",
     "Social media or SEO tool logins",
     "New lead tracker this week — Zoho + Monday email enough",
     "Unsafe Google auto-apply — already disabled"
@@ -338,43 +357,42 @@ window.PILOT_STATUS = {
     "Capture GCLID / GBRAID / WBRAID / UTMs / LP / referrer / timestamp + market"
   ],
   majorBlockers: [
-    "Phone-led conversion + shallow Zoho on VC_US_* (next big thing while spending)",
-    "US phone routing into Cheyenne/US sales (currently Google Voice VM)",
-    "US inbox monitoring awaiting Cheyenne (APAC/Holly confirmed)",
-    "AU phone confirmed/tested before AU Enable"
+    "AU priority: confirm Enabled + close AU tracking gaps (GTM/GA4/conversions)",
+    "Site tests experiment / variant wiring (GTM or GA4 → dashboard)",
+    "Near-term Zoho qualified → Ads; later value when deals make money",
+    "US inbox monitoring awaiting Cheyenne (APAC/Holly confirmed)"
   ],
   nextThree: [
-    "Manual search-term curation + Exact-query negatives (main live job)",
-    "Phone routing → Cheyenne E2E (prerequisite before call Primary)",
-    "Then create VC_US_Phone_Call_From_Ads / _From_Website (60–90s); form stays Secondary"
+    "Australia — confirm VC_AU_* Enabled + close AU tracking gaps",
+    "Get site tests working (experiment events → Site tests tab)",
+    "Shallow Zoho qualified mark → Ads (near-term); money values later"
   ],
   openItemsUnresolved: [
-    "Phone-led + shallow Zoho conversion path end-to-end on VC_US_*",
-    "US phone → Cheyenne/sales workflow + missed-call owner",
+    "AU tracking parity + confirm Enabled state for VC_AU_*",
+    "Site tests GTM/GA4 experiment wiring",
+    "Near-term Zoho qualified → Ads path",
     "Cheyenne/US microsite inbox monitoring + counting source (APAC confirmed)",
     "Monday paid microsite vs total inbound scoreboard verified",
-    "AU phone (official AU-site number) before AU Enable",
-    "Shallow Zoho handoff (deep mapping later — not traffic gate)",
     "Exact defs: qualified lead / job order / placement",
     "How Caitlin / Cheyenne / Pauly return lead-quality feedback",
     "CallRail approval / ownership",
-    "Final offline conversion values before Ads import",
+    "Final offline conversion values before Ads import (later / money stage)",
     "Official chat platform + George invite"
   ],
   placeholders: {
     usLeadEmail: "us@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
     auLeadEmail: "apac@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
-    usPhone: "310-730-9126",
-    auPhone: "[AU_BUSINESS_PHONE]",
+    usPhone: "888-954-8644",
+    auPhone: "1300 886 740",
     usBudget: "$125/day combined (CORE $75 + ROLES $50)",
-    auBudget: "[AU_MONTHLY_BUDGET — paused]",
-    gtmUs: "[NEXT_PUBLIC_GTM_US]",
-    gtmAu: "[NEXT_PUBLIC_GTM_AU]",
+    auBudget: "[confirm in Ads UI — may be Enabled]",
+    gtmUs: "GTM-M92DX9BJ (live on /us)",
+    gtmAu: "[AU GTM — gap]",
     gtmPh: "[NEXT_PUBLIC_GTM_PH — optional later]",
-    ga4Us: "[NEXT_PUBLIC_GA4_US]",
-    ga4Au: "[NEXT_PUBLIC_GA4_AU]",
-    adsConversionIdUs: "[NEW_ADS_CONVERSION_ID_US — do not reuse old Zoho/Zapier]",
-    adsConversionIdAu: "[ADS_CONVERSION_ID_AU — after AU phone]",
+    ga4Us: "G-2V3V0BS6JW (live on /us)",
+    ga4Au: "[AU GA4 — gap]",
+    adsConversionIdUs: "[existing US phone actions — do not invent new IDs here]",
+    adsConversionIdAu: "[AU Ads conversion — do not invent; close gap carefully]",
     qualifiedLeadDefinition: "[TO BE CONFIRMED WITH VIRTUAL COWORKER]"
   }
 };
