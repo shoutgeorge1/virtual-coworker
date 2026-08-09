@@ -18,7 +18,6 @@ export default async function USHome({
 }: {
   searchParams: Promise<{ variant?: string }>;
 }) {
-  const sp = await searchParams;
-  const variant = await resolveLpVariant(sp);
+  const variant = await resolveLpVariant(await searchParams);
   return <MarketLanding market="us" variant={variant} />;
 }

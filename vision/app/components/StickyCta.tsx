@@ -25,10 +25,19 @@ export default function StickyCta({
   category?: string;
   variant?: AbVariant;
 }) {
-  const goGate = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (!href.includes("#gate")) return;
-    e.preventDefault();
-    focusGate({ behavior: "smooth" });
+  const goTarget = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (href.includes("#gate")) {
+      e.preventDefault();
+      focusGate({ behavior: "smooth" });
+      return;
+    }
+    if (href.includes("#role-quiz")) {
+      e.preventDefault();
+      document.getElementById("role-quiz")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   return (
@@ -53,7 +62,7 @@ export default function StickyCta({
           <b>{phoneDisplay}</b>
         </a>
       ) : null}
-      <a className="sticky-cta-go" href={href} onClick={goGate}>
+      <a className="sticky-cta-go" href={href} onClick={goTarget}>
         {label}
       </a>
     </div>

@@ -22,6 +22,13 @@ import {
 import type { MarketId } from "../../config/markets";
 import type { AbVariant, CategorySlug } from "../../config/categories";
 import { formLabelForSlug } from "../../config/categories";
+import {
+  COMPANY_SIZE_OPTIONS,
+  POSITIONS_OPTIONS,
+  scoreLeadValue,
+  type CompanySizeId,
+  type PositionsId,
+} from "../../config/lead-value";
 
 const GATE_TITLES: Record<ExpVariant, { title: string; eyebrowSuffix: string }> = {
   a: { title: "Start Hiring — 2 minutes.", eyebrowSuffix: "2 minutes" },
@@ -120,18 +127,33 @@ export default function LeadGate({
   category,
   variant,
   preselectedRole,
+  assumeEmployer = false,
+  lpSurface = "form",
+  preselectedCompanySize = null,
+  preselectedPositions = null,
+  compactAfterQuiz = false,
+  ctaMode,
 }: {
   copy: GateCopy;
   market: MarketId;
   category?: CategorySlug | null;
   variant?: AbVariant;
   preselectedRole?: string | null;
+  /** Quiz LP follow-up: start on employer path (still allows job-seeker divert). */
+  assumeEmployer?: boolean;
+  lpSurface?: "form" | "quiz";
+  preselectedCompanySize?: CompanySizeId | string | null;
+  preselectedPositions?: PositionsId | string | null;
+  /** Quiz LP after reward: name/email/phone/company only (role + size + seats known). */
+  compactAfterQuiz?: boolean;
+  ctaMode?: "form_primary" | "quiz_lp";
 }) {
   const router = useRouter();
   const initialRole =
-    preselectedRole ||
-    (category ? formLabelForSlug(category) : null);
-  const [intent, setIntent] = useState<"employer" | "job_seeker" | null>(null);
+    preselectedRole || (category ? formLabelForSlug(category) : null);
+  const [intent, setIntent] = useState<"employer" | "job_seeker" | null>(
+    assumeEmployer ? "employer" : null,
+  );
   const [role, setRole] = useState<string | null>(initialRole);
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -141,6 +163,21 @@ export default function LeadGate({
   const startedRef = useRef(false);
   const [headlineVariant, setHeadlineVariant] = useState<ExpVariant>("a");
   const [roleEmphasize, setRoleEmphasize] = useState(false);
+  const [companySize, setCompanySize] = useState<CompanySizeId | null>(() => {
+    const id = String(preselectedCompanySize || "").trim();
+    return COMPANY_SIZE_OPTIONS.some((o) => o.id === id)
+      ? (id as CompanySizeId)
+      : null;
+  });
+  const [positionsNeeded, setPositionsNeeded] = useState<PositionsId | null>(
+    () => {
+      const id = String(preselectedPositions || "").trim();
+      return POSITIONS_OPTIONS.some((o) => o.id === id)
+        ? (id as PositionsId)
+        : null;
+    },
+  );
+  const resolvedCtaMode = ctaMode || (lpSurface === "quiz" ? "quiz_lp" : "form_primary");
 
   useEffect(() => {
     captureAttribution(market, {
@@ -169,6 +206,9 @@ export default function LeadGate({
       category: category || "",
       variant: variant || "",
       gate_variant: "inline",
+      lp_surface: lpSurface,
+      cta_mode: resolvedCtaMode,
+      landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
     });
   }
 
@@ -181,6 +221,9 @@ export default function LeadGate({
       variant: variant || "",
       gate_variant: "inline",
       intent: "employer",
+      lp_surface: lpSurface,
+      cta_mode: resolvedCtaMode,
+      landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
     });
     markStart();
   }
@@ -199,6 +242,9 @@ export default function LeadGate({
               gate_variant: "inline",
               intent: "employer",
               source: "gate_assist",
+              lp_surface: lpSurface,
+              cta_mode: resolvedCtaMode,
+              landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
             });
             markStart();
           });
@@ -214,7 +260,6 @@ export default function LeadGate({
       if (detail.emphasize === "role") {
         setRoleEmphasize(true);
         window.setTimeout(() => setRoleEmphasize(false), 2400);
-        // Wait for employer form to paint, then land on role chips
         window.setTimeout(() => {
           const gate = document.getElementById("gate");
           const selected = gate?.querySelector(
@@ -235,13 +280,11 @@ export default function LeadGate({
     };
     window.addEventListener(GATE_ASSIST_EVENT, onAssist);
     return () => window.removeEventListener(GATE_ASSIST_EVENT, onAssist);
-  }, [market, category, variant, copy.roles]);
+  }, [market, category, variant, copy.roles, lpSurface]);
 
   function onJobSeekerGate() {
     setIntent("job_seeker");
     setError(null);
-    // Interaction only — primary conversion never fires for job seekers.
-    // job_seeker_redirected fires when they click through to /ph.
   }
 
   function validateClient(fd: FormData): Record<string, string> {
@@ -267,6 +310,9 @@ export default function LeadGate({
         category: category || "",
         variant: variant || "",
         fields: Object.keys(errs).join(","),
+        lp_surface: lpSurface,
+        cta_mode: resolvedCtaMode,
+        landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
       });
       return;
     }
@@ -275,6 +321,11 @@ export default function LeadGate({
     const attr = readAttribution(market, {
       category: category || "",
       variant: variant || "",
+    });
+    const clientScored = scoreLeadValue({
+      intent: "employer",
+      companySize,
+      positionsNeeded,
     });
     const payload = {
       ...attr,
@@ -289,8 +340,14 @@ export default function LeadGate({
       website: String(fd.get("website") || ""),
       form_started_at: startedAt || Date.now(),
       market,
-      lp_version: attr.lp_version || "stage1-v7",
+      lp_version: attr.lp_version || "stage1-v8",
       submitted_at: new Date().toISOString(),
+      company_size: companySize || "",
+      positions_needed: positionsNeeded || "",
+      hiring_timeline: "",
+      lp_surface: lpSurface,
+      cta_mode: resolvedCtaMode,
+      landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
     };
 
     try {
@@ -307,6 +364,10 @@ export default function LeadGate({
         duplicate?: boolean;
         delivery?: string;
         conversion_eligible?: boolean;
+        lead_score?: number;
+        estimated_lead_value?: number;
+        value_kind?: string;
+        fit_label?: string;
       };
 
       if (!res.ok || !data.ok || !data.submission_id) {
@@ -346,6 +407,28 @@ export default function LeadGate({
         category: category || "",
         variant: variant || "",
         conversionEligible: eligible,
+        companySize: companySize || "",
+        positionsNeeded: positionsNeeded || "",
+        hiringTimeline: "",
+        leadScore: typeof data.lead_score === "number" ? data.lead_score : clientScored.lead_score,
+        estimatedLeadValue:
+          typeof data.estimated_lead_value === "number"
+            ? data.estimated_lead_value
+            : clientScored.estimated_lead_value,
+        valueKind: data.value_kind || clientScored.value_kind,
+        fitLabel: data.fit_label || clientScored.fit_label,
+        landingPage: attr.landing_page_url,
+        utmSource: attr.utm_source,
+        utmMedium: attr.utm_medium,
+        utmCampaign: attr.utm_campaign,
+        utmTerm: attr.utm_term,
+        utmContent: attr.utm_content,
+        gclid: attr.gclid,
+        gbraid: attr.gbraid,
+        wbraid: attr.wbraid,
+        submittedAt: payload.submitted_at,
+        lpSurface,
+        ctaMode: resolvedCtaMode,
       });
       if (eligible) {
         trackExperimentConvert("form_submit", {
@@ -380,18 +463,38 @@ export default function LeadGate({
   }
 
   const gateFrame = GATE_TITLES[headlineVariant] || GATE_TITLES.a;
-  // Category pages keep role-specific titles; generic LP swaps A/B headline.
   const isGenericTitle = /start hiring|tell us who you need/i.test(copy.title);
   const displayTitle = isGenericTitle ? gateFrame.title : copy.title;
   const displayEyebrow = isGenericTitle
     ? copy.eyebrow.replace(/about a minute|2 minutes/i, gateFrame.eyebrowSuffix)
     : copy.eyebrow;
 
+  const hideRoleStep = Boolean(initialRole && assumeEmployer);
+  const hideQualifyChips = compactAfterQuiz && Boolean(companySize && positionsNeeded);
+  const hideIntentStep = compactAfterQuiz && assumeEmployer;
+  const detailsStepNum = hideIntentStep
+    ? 1
+    : hideRoleStep && hideQualifyChips
+      ? 2
+      : hideRoleStep
+        ? 4
+        : hideQualifyChips
+          ? 3
+          : 5;
+
+  useEffect(() => {
+    if (compactAfterQuiz && assumeEmployer) markStart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once on reveal
+  }, [compactAfterQuiz, assumeEmployer]);
+
   return (
     <aside
-      className="gate-card anim-rise-d1"
+      className={`gate-card anim-rise-d1${compactAfterQuiz ? " gate-card-quiz-reveal" : ""}`}
       id="gate"
       data-exp-gate={headlineVariant}
+      data-cta-mode={resolvedCtaMode}
+      data-lp-surface={lpSurface}
+      data-landing-type={resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp"}
     >
       <div className="gate-card-head">
         <p className="gate-card-eyebrow">{displayEyebrow}</p>
@@ -415,6 +518,7 @@ export default function LeadGate({
         </div>
       ) : (
         <div className="gate-card-body">
+          {hideIntentStep ? null : (
           <fieldset className="gate-step">
             <legend>
               <b>1</b> {copy.intentLabel}
@@ -438,6 +542,7 @@ export default function LeadGate({
               </button>
             </div>
           </fieldset>
+          )}
 
           {intent === "job_seeker" ? (
             <div className="gate-divert">
@@ -461,6 +566,9 @@ export default function LeadGate({
                     intent: "job_seeker",
                     destination: copy.careersHref,
                     primary_eligible: false,
+                    lp_surface: lpSurface,
+                    cta_mode: resolvedCtaMode,
+                    landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
                   })
                 }
               >
@@ -471,39 +579,103 @@ export default function LeadGate({
 
           {intent === "employer" ? (
             <form onSubmit={onSubmit} noValidate>
-              <fieldset
-                className={`gate-step${roleEmphasize ? " is-role-emphasize" : ""}`}
-                data-gate-role-step
-              >
-                <legend>
-                  <b>2</b> {copy.roleLabel}
-                </legend>
-                <div className="gate-chips" role="group" aria-label={copy.roleLabel}>
-                  {copy.roles.map((o) => (
-                    <button
-                      type="button"
-                      key={o}
-                      className={role === o ? "on" : ""}
-                      aria-pressed={role === o}
-                      onClick={() => {
-                        setRole(o);
-                        markStart();
-                      }}
-                    >
-                      {o}
-                    </button>
-                  ))}
-                </div>
-                {fieldErrors.role ? (
-                  <p className="gate-field-error" role="alert">
-                    {fieldErrors.role}
-                  </p>
-                ) : null}
-              </fieldset>
+              {!hideRoleStep ? (
+                <fieldset
+                  className={`gate-step${roleEmphasize ? " is-role-emphasize" : ""}`}
+                  data-gate-role-step
+                >
+                  <legend>
+                    <b>2</b> {copy.roleLabel}
+                  </legend>
+                  <div className="gate-chips" role="group" aria-label={copy.roleLabel}>
+                    {copy.roles.map((o) => (
+                      <button
+                        type="button"
+                        key={o}
+                        className={role === o ? "on" : ""}
+                        aria-pressed={role === o}
+                        onClick={() => {
+                          setRole(o);
+                          markStart();
+                        }}
+                      >
+                        {o}
+                      </button>
+                    ))}
+                  </div>
+                  {fieldErrors.role ? (
+                    <p className="gate-field-error" role="alert">
+                      {fieldErrors.role}
+                    </p>
+                  ) : null}
+                </fieldset>
+              ) : (
+                <input type="hidden" name="role" value={role || ""} readOnly />
+              )}
+
+              {hideQualifyChips ? (
+                <>
+                  <input type="hidden" name="company_size" value={companySize || ""} readOnly />
+                  <input type="hidden" name="positions_needed" value={positionsNeeded || ""} readOnly />
+                  {role || companySize || positionsNeeded ? (
+                    <p className="gate-quiz-summary">
+                      {[role, companySize, positionsNeeded ? `${positionsNeeded} seats` : ""]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </p>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  <fieldset className="gate-step gate-qualify">
+                    <legend>
+                      <b>{hideRoleStep ? "2" : "3"}</b> Company size
+                    </legend>
+                    <div className="gate-chips" role="group" aria-label="Company size">
+                      {COMPANY_SIZE_OPTIONS.map((o) => (
+                        <button
+                          type="button"
+                          key={o.id}
+                          className={companySize === o.id ? "on" : ""}
+                          aria-pressed={companySize === o.id}
+                          onClick={() => {
+                            setCompanySize(o.id);
+                            markStart();
+                          }}
+                        >
+                          {o.label}
+                        </button>
+                      ))}
+                    </div>
+                  </fieldset>
+
+                  <fieldset className="gate-step">
+                    <legend>
+                      <b>{hideRoleStep ? "3" : "4"}</b> Positions needed
+                    </legend>
+                    <div className="gate-chips" role="group" aria-label="Positions needed">
+                      {POSITIONS_OPTIONS.map((o) => (
+                        <button
+                          type="button"
+                          key={o.id}
+                          className={positionsNeeded === o.id ? "on" : ""}
+                          aria-pressed={positionsNeeded === o.id}
+                          onClick={() => {
+                            setPositionsNeeded(o.id);
+                            markStart();
+                          }}
+                        >
+                          {o.label}
+                        </button>
+                      ))}
+                    </div>
+                  </fieldset>
+                </>
+              )}
 
               <fieldset className="gate-step">
                 <legend>
-                  <b>3</b> {copy.detailsLabel}
+                  <b>{detailsStepNum}</b> {copy.detailsLabel}
                 </legend>
                 <label className="gate-hp" aria-hidden="true">
                   Website

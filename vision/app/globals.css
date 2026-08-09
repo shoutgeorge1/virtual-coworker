@@ -441,6 +441,83 @@ button {
   color: #128f8b;
 }
 
+/* Google Business Profile — yellow Maps-style stars (US 5.0 / AU 4.8) */
+.trust-chip-google {
+  gap: 0.55rem;
+  padding-left: 0.75rem;
+  background: rgba(251, 188, 4, 0.14);
+  box-shadow: inset 0 0 0 1.5px rgba(251, 188, 4, 0.55);
+}
+
+.trust-row-light .trust-chip-google {
+  background: #fff8e6;
+  box-shadow: 0 10px 26px rgba(23, 51, 79, 0.09),
+    inset 0 0 0 1.5px rgba(232, 163, 23, 0.7);
+}
+
+.google-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.08rem;
+  color: #fbbc04;
+  line-height: 1;
+  flex: none;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.28));
+}
+
+.trust-row-light .google-stars,
+.trust-band-light .google-stars {
+  color: #e8a317;
+  filter: none;
+}
+
+.trust-chip-google b {
+  font-size: 1.2rem;
+  letter-spacing: -0.03em;
+  color: #fbbc04;
+}
+
+.trust-row-light .trust-chip-google b {
+  color: #b8860b;
+}
+
+.trust-chip-google .google-star-meta {
+  margin-top: 0.12rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-size: 0.74rem;
+  color: #f3e2a8;
+}
+
+.trust-row-light .trust-chip-google .google-star-meta {
+  color: #6b5420;
+}
+
+.trust-rating-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trust-rating-pill-google {
+  background: rgba(251, 188, 4, 0.16) !important;
+  box-shadow: inset 0 0 0 1.5px rgba(251, 188, 4, 0.55) !important;
+}
+
+.trust-band-light .trust-rating-pill-google {
+  background: #fff8e6 !important;
+  box-shadow: inset 0 0 0 1.5px rgba(232, 163, 23, 0.65) !important;
+}
+
+.trust-rating-pill-google .google-stars {
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.2));
+}
+
+.trust-band-light .trust-rating-pill-google .google-stars {
+  filter: none;
+}
+
 /* ═══════ Featured VA card — the person, never covered by a form ═══════ */
 .va-card {
   position: relative;
@@ -1218,8 +1295,100 @@ a.gate-call:hover {
   font-weight: 600;
 }
 
+.gate-call-note {
+  display: block;
+  margin-top: 0.35rem;
+  font-style: normal;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--g-mute);
+  font-weight: 500;
+}
+
 .gate-call-solo {
   margin-top: 1.1rem;
+}
+
+.gate-qualify {
+  margin-top: 0.15rem;
+}
+
+.quiz-lp-jobseeker {
+  margin: 0.75rem 0 0;
+  font-size: 0.82rem;
+  color: rgba(234, 243, 251, 0.78);
+}
+
+.au .quiz-lp-jobseeker {
+  color: rgba(23, 50, 79, 0.72);
+}
+
+.quiz-lp-jobseeker a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.quiz-followup {
+  padding: 2.5rem 1.25rem 2.75rem;
+  background: #0e1f33;
+  color: #eaf3fb;
+}
+
+.quiz-followup-light {
+  background: #eaf4fb;
+  color: #17324f;
+}
+
+.quiz-followup-inner {
+  width: min(100%, 40rem);
+  margin: 0 auto;
+}
+
+.quiz-followup-lead {
+  margin: 0 0 1.15rem;
+  max-width: 36rem;
+  line-height: 1.5;
+  opacity: 0.88;
+}
+
+.quiz-gate-reveal {
+  margin-top: 1rem;
+  animation: quiz-gate-boom 0.55s cubic-bezier(0.2, 1.2, 0.35, 1) both;
+}
+
+@keyframes quiz-gate-boom {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-gate-reveal {
+    animation: none;
+  }
+}
+
+.gate-quiz-summary {
+  margin: 0 0 0.85rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.7rem;
+  background: rgba(51, 222, 216, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(51, 222, 216, 0.28);
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: #17324f;
+}
+
+.gate-card-quiz-reveal .gate-card-head h2 {
+  font-size: clamp(1.15rem, 1.4vw + 0.9rem, 1.4rem);
 }
 
 .gate-divert {
@@ -3230,6 +3399,125 @@ html.vc-popup-open .engage-chat {
 .role-quiz-note {
   margin: 0.9rem 0 0 !important;
   font-size: 0.85rem !important;
+}
+
+/* Quiz LP — sit in the gate slot; look like the hire card, not the mid-page band */
+.role-quiz.role-quiz-hero {
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  color: inherit;
+  scroll-margin-top: 5.75rem;
+}
+
+.role-quiz.role-quiz-hero .role-quiz-inner,
+.role-quiz.role-quiz-hero.role-quiz-light .role-quiz-inner {
+  width: 100%;
+  padding: 1.15rem 1.25rem 1.35rem;
+  border-radius: 18px;
+  background: #fff;
+  color: #12283f;
+  border: 0;
+  box-shadow: 0 28px 72px rgba(4, 14, 26, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.role-quiz.role-quiz-hero .role-quiz-eyebrow,
+.role-quiz.role-quiz-hero.role-quiz-light .role-quiz-eyebrow {
+  color: #4d7ca8;
+}
+
+.role-quiz.role-quiz-hero h2,
+.role-quiz.role-quiz-hero #role-quiz-title {
+  color: #12283f;
+  font-size: clamp(1.45rem, 2.2vw + 0.9rem, 1.85rem);
+}
+
+.role-quiz.role-quiz-hero .role-quiz-lead,
+.role-quiz.role-quiz-hero.role-quiz-light .role-quiz-lead {
+  color: #44607b;
+}
+
+.role-quiz.role-quiz-hero .role-quiz-card,
+.role-quiz.role-quiz-hero.role-quiz-light .role-quiz-card {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.role-quiz.role-quiz-hero .role-quiz-result,
+.role-quiz.role-quiz-hero.role-quiz-light .role-quiz-result {
+  margin-top: 0.15rem;
+  padding: 1.2rem 1.1rem 1.3rem !important;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(250, 192, 86, 0.2), rgba(51, 222, 216, 0.08));
+  border: 1px solid rgba(250, 192, 86, 0.5);
+  box-shadow: 0 12px 28px rgba(16, 40, 63, 0.12);
+}
+
+.role-quiz.role-quiz-hero .role-quiz-win {
+  color: #10283f !important;
+  font-size: clamp(1.85rem, 4.2vw + 0.55rem, 2.55rem) !important;
+}
+
+.role-quiz.role-quiz-hero .role-quiz-call,
+.role-quiz.role-quiz-hero .role-quiz-call-hero {
+  border-color: rgba(18, 40, 63, 0.28);
+  color: #17324f;
+  font-weight: 800;
+}
+
+.role-quiz-subq {
+  margin: 0.9rem 0 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4d7ca8;
+}
+
+.role-quiz-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0 0 0.35rem;
+}
+
+.role-quiz-chips.role-quiz-options {
+  display: flex;
+  grid-template-columns: none;
+}
+
+.role-quiz-chips button {
+  min-width: 4.25rem;
+  text-align: center;
+  padding: 0.7rem 0.9rem;
+}
+
+.role-quiz-chips button.on,
+.role-quiz.role-quiz-hero .role-quiz-chips button.on {
+  background: rgba(250, 192, 86, 0.38);
+  box-shadow: inset 0 0 0 1.5px rgba(196, 140, 28, 0.85);
+  color: #10283f;
+}
+
+.role-quiz-fitline {
+  margin: -0.35rem 0 1.05rem !important;
+  font-size: 0.95rem !important;
+  font-weight: 700;
+  color: #17324f !important;
+}
+
+.role-quiz.role-quiz-hero .role-quiz-options button,
+.role-quiz.role-quiz-hero.role-quiz-light .role-quiz-options button {
+  color: #33526f;
+  box-shadow: inset 0 0 0 1.5px rgba(18, 40, 63, 0.14);
+}
+
+.role-quiz.role-quiz-hero .role-quiz-note,
+.role-quiz.role-quiz-hero.role-quiz-light .role-quiz-note {
+  color: #6f8296;
 }
 
 /* Trust band — companies, happy customers, legitimacy, industry stats */

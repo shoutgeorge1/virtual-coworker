@@ -3,9 +3,11 @@
  * No hard-coded Ads conversion IDs. Map Ads goals in GTM / Ads UI.
  *
  * Conversion architecture (Aug 2026):
- * - Phone calls (duration-qualified, e.g. 60s+) = volume steering signal
- * - Zoho "Qualified lead" offline import = deeper quality signal
+ * - Phone calls (duration-qualified, e.g. 60s+) = primary volume/quality steering signal
+ * - Zoho "Qualified lead" offline import = deeper quality signal (then Job Order / Placement)
  * - Form submit = delivery / funnel observation only — NOT bidding Primary
+ * - estimated_lead_value / lead_score = modeled site estimate only (not Ads conversion value yet)
+ * - Do not over-optimize to raw form fills. Modeled $ is wired for analytics, not bidding.
  *
  * Canonical events (+ short aliases for GTM maps):
  * - employer_gate_selected
@@ -20,7 +22,7 @@
  * - job_seeker_redirected       (interaction only — never Ads conversion)
  */
 
-export const LP_VERSION = "stage1-v7";
+export const LP_VERSION = "stage1-v8";
 
 export type Attribution = {
   utm_source: string;
@@ -227,6 +229,25 @@ export function trackValidEmployerSubmit(opts: {
   category?: string;
   variant?: string;
   conversionEligible?: boolean;
+  companySize?: string;
+  positionsNeeded?: string;
+  hiringTimeline?: string;
+  leadScore?: number;
+  estimatedLeadValue?: number;
+  valueKind?: string;
+  fitLabel?: string;
+  landingPage?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmTerm?: string;
+  utmContent?: string;
+  gclid?: string;
+  gbraid?: string;
+  wbraid?: string;
+  submittedAt?: string;
+  lpSurface?: string;
+  ctaMode?: string;
 }) {
   if (opts.conversionEligible === false) {
     trackEvent("employer_inquiry_log_only", {
@@ -234,6 +255,7 @@ export function trackValidEmployerSubmit(opts: {
       submission_id: opts.submissionId,
       primary_eligible: false,
       bidding_primary: false,
+      modeled_value_for_bidding: false,
     });
     return;
   }
@@ -247,13 +269,37 @@ export function trackValidEmployerSubmit(opts: {
   markPrimaryFired(opts.submissionId);
   const payload = {
     market: opts.market,
+    country: opts.market === "au" ? "AU" : "US",
     submission_id: opts.submissionId,
     role: opts.role || "",
+    role_category: opts.category || "",
     category: opts.category || "",
     variant: opts.variant || "",
+    company_size: opts.companySize || "",
+    positions_needed: opts.positionsNeeded || "",
+    hiring_timeline: opts.hiringTimeline || "",
+    lead_score: opts.leadScore,
+    estimated_lead_value: opts.estimatedLeadValue,
+    value_kind: opts.valueKind || "estimated_modeled",
+    fit_label: opts.fitLabel || "",
+    landing_page: opts.landingPage || "",
+    utm_source: opts.utmSource || "",
+    utm_medium: opts.utmMedium || "",
+    utm_campaign: opts.utmCampaign || "",
+    utm_term: opts.utmTerm || "",
+    utm_content: opts.utmContent || "",
+    gclid: opts.gclid || "",
+    gbraid: opts.gbraid || "",
+    wbraid: opts.wbraid || "",
+    submitted_at: opts.submittedAt || "",
+    lp_surface: opts.lpSurface || "form",
+    cta_mode: opts.ctaMode || (opts.lpSurface === "quiz" ? "quiz_lp" : "form_primary"),
+    landing_type:
+      opts.ctaMode === "quiz_lp" || opts.lpSurface === "quiz" ? "quiz_lp" : "form_lp",
     /** Durable delivery succeeded — still NOT Ads bidding Primary */
     primary_eligible: true,
     bidding_primary: false,
+    modeled_value_for_bidding: false,
     funnel_step: "form_submit_success",
     is_job_order: false,
     is_placement: false,

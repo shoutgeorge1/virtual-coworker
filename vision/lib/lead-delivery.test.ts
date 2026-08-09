@@ -77,4 +77,25 @@ describe("lead delivery honesty", () => {
     expect(text).toContain("GCLID\n  abc");
     expect(text).toContain("Submission ID\n  vc_us_test");
   });
+
+  it("includes modeled lead value without calling it revenue", () => {
+    const text = formatLeadEmailText({
+      firstName: "Ada",
+      lastName: "Lovelace",
+      email: "ada@example.com",
+      company: "Analytical Engines",
+      market: "us",
+      company_size: "11-50",
+      positions_needed: "2-3",
+      lead_score: 61,
+      estimated_lead_value: 420,
+      value_kind: "estimated_modeled",
+      submission_id: "vc_us_test",
+    });
+    expect(text).toContain("Company size\n  11-50");
+    expect(text).toContain("Positions needed\n  2-3");
+    expect(text).toContain("Modeled lead score (not revenue)\n  61");
+    expect(text).toContain("website estimate only");
+    expect(text.toLowerCase()).not.toContain("revenue\n  420");
+  });
 });

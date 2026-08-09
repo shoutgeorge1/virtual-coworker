@@ -17,6 +17,13 @@ import {
   type AbVariant,
   type CategorySlug,
 } from "../../config/categories";
+import {
+  COMPANY_SIZE_OPTIONS,
+  POSITIONS_OPTIONS,
+  scoreLeadValue,
+  type CompanySizeId,
+  type PositionsId,
+} from "../../config/lead-value";
 
 /** Q1 drain → role path. One tap locks the recommendation lane. */
 type DrainKey = "admin" | "marketing" | "books" | "support" | "sales";
@@ -38,12 +45,27 @@ type Answers = {
   drain: DrainKey | "";
   focus: string;
   detail: string;
+  companySize: CompanySizeId | "";
+  positionsNeeded: PositionsId | "";
+};
+
+export type QuizCompletePayload = {
+  formRole: string;
+  trackLabel: string;
+  roleLabel: string;
+  companySize: CompanySizeId;
+  positionsNeeded: PositionsId;
+  drain: DrainKey;
+  focus: string;
+  detail: string;
+  leadScore: number;
+  estimatedLeadValue: number;
 };
 
 type QuizOption = { id: string; label: string };
 
 type QuizQuestion = {
-  key: "drain" | "focus" | "detail";
+  key: "drain" | "focus" | "detail" | "qualify";
   q: string;
   options: QuizOption[];
 };
@@ -100,8 +122,8 @@ const FRAMES_US: Record<ExpVariant, QuizFrame> = {
   a: {
     eyebrow: "Take the hiring quiz",
     title: "Who should you hire first?",
-    lead: "Three taps. We’ll name the seat that buys back your week.",
-    kicker: "Your first hire",
+    lead: "A few taps. We’ll name the seat that buys back your week.",
+    kicker: "This is the seat",
     whoLabel: "Look for",
     timeLabel: "What changes",
   },
@@ -109,15 +131,15 @@ const FRAMES_US: Record<ExpVariant, QuizFrame> = {
     eyebrow: "Take the hiring quiz",
     title: "See which teammate to hire.",
     lead: "Tap through. Get a clear answer. Then talk to a specialist.",
-    kicker: "Hire this",
+    kicker: "Your first hire",
     whoLabel: "Look for",
     timeLabel: "What changes",
   },
   c: {
     eyebrow: "Take the hiring quiz",
     title: "Find the teammate that gets you your week back.",
-    lead: "Three questions. A straight recommendation. Then talk — free, no pressure.",
-    kicker: "Your answer",
+    lead: "A few questions. A straight recommendation. Then talk — free, no pressure.",
+    kicker: "This is the seat",
     whoLabel: "Look for",
     timeLabel: "What changes",
   },
@@ -127,7 +149,7 @@ const FRAMES_AU: Record<ExpVariant, QuizFrame> = {
   a: {
     eyebrow: "Take the hiring quiz",
     title: "Who should you hire first?",
-    lead: "Three taps. We’ll name the role that takes the load.",
+    lead: "A few taps. We’ll name the role that takes the load.",
     kicker: "Your first hire",
     whoLabel: "Look for",
     timeLabel: "What changes",
@@ -136,15 +158,15 @@ const FRAMES_AU: Record<ExpVariant, QuizFrame> = {
     eyebrow: "Take the hiring quiz",
     title: "See which teammate to hire.",
     lead: "Tap through. Get a clear answer. Then have a chat.",
-    kicker: "Hire this",
+    kicker: "Your first hire",
     whoLabel: "Look for",
     timeLabel: "What changes",
   },
   c: {
     eyebrow: "Take the hiring quiz",
     title: "Find the teammate that gets you your week back.",
-    lead: "Three questions. A straight recommendation. Then have a chat — free, no pressure.",
-    kicker: "Your answer",
+    lead: "A few questions. A straight recommendation. Then have a chat — free, no pressure.",
+    kicker: "Your first hire",
     whoLabel: "Look for",
     timeLabel: "What changes",
   },
@@ -491,6 +513,9 @@ export default function RoleQuiz({
   light = false,
   phoneDisplay,
   phoneHref,
+  placement = "section",
+  onComplete,
+  onRetake,
 }: {
   market: MarketId;
   category?: string;
@@ -498,9 +523,14 @@ export default function RoleQuiz({
   light?: boolean;
   phoneDisplay?: string;
   phoneHref?: string | null;
+  /** hero = quiz LP (gate slot). section = mid-page band on form LPs. */
+  placement?: "section" | "hero";
+  onComplete?: (payload: QuizCompletePayload) => void;
+  onRetake?: () => void;
 }) {
   const enabled = flagEnabled();
   const isAu = market === "au";
+  const isHero = placement === "hero";
   const [frameVariant, setFrameVariant] = useState<ExpVariant>("a");
   const [step, setStep] = useState(0);
   const [started, setStarted] = useState(false);
@@ -508,13 +538,20 @@ export default function RoleQuiz({
     drain: "",
     focus: "",
     detail: "",
+    companySize: "",
+    positionsNeeded: "",
   });
 
   useEffect(() => {
     const v = assignExperiment("quiz_copy");
     setFrameVariant(v);
-    trackExperimentView("quiz_copy", v, { surface: "role_quiz", market });
-  }, [market]);
+    trackExperimentView("quiz_copy", v, {
+      surface: placement === "hero" ? "quiz_lp" : "role_quiz",
+      market,
+      cta_mode: placement === "hero" ? "quiz_lp" : "form_primary",
+      landing_type: placement === "hero" ? "quiz_lp" : "form_lp",
+    });
+  }, [market, placement]);
 
   const paths = useMemo(() => pathsFor(market), [market]);
   const frames = isAu ? FRAMES_AU : FRAMES_US;
@@ -523,7 +560,7 @@ export default function RoleQuiz({
   const questions = useMemo((): QuizQuestion[] => {
     const drain = answers.drain && isDrainKey(answers.drain) ? answers.drain : null;
     const path = drain ? paths[drain] : null;
-    return [
+    const roleQs: QuizQuestion[] = [
       drainQuestion(market),
       {
         key: "focus",
@@ -536,12 +573,55 @@ export default function RoleQuiz({
         options: path?.detailOptions || [],
       },
     ];
-  }, [answers.drain, paths, market, isAu]);
+    if (!isHero) return roleQs;
+    return [
+      ...roleQs,
+      {
+        key: "qualify",
+        q: isAu ? "About this hire" : "About this hire",
+        options: [],
+      },
+    ];
+  }, [answers.drain, paths, market, isAu, isHero]);
+
+  const totalSteps = questions.length;
 
   const result = useMemo(() => {
-    if (step < 3) return null;
+    if (step < totalSteps) return null;
     return buildResult(answers, market);
-  }, [answers, market, step]);
+  }, [answers, market, step, totalSteps]);
+
+  useEffect(() => {
+    if (!isHero || !result || !onComplete) return;
+    if (!answers.companySize || !answers.positionsNeeded) return;
+    if (!isDrainKey(answers.drain)) return;
+    const scored = scoreLeadValue({
+      intent: "employer",
+      companySize: answers.companySize,
+      positionsNeeded: answers.positionsNeeded,
+    });
+    onComplete({
+      formRole: result.formRole,
+      trackLabel: result.trackLabel,
+      roleLabel: result.roleLabel,
+      companySize: answers.companySize,
+      positionsNeeded: answers.positionsNeeded,
+      drain: answers.drain,
+      focus: answers.focus,
+      detail: answers.detail,
+      leadScore: scored.lead_score,
+      estimatedLeadValue: scored.estimated_lead_value,
+    });
+  }, [
+    isHero,
+    result,
+    onComplete,
+    answers.companySize,
+    answers.positionsNeeded,
+    answers.drain,
+    answers.focus,
+    answers.detail,
+  ]);
 
   if (!enabled) return null;
 
@@ -553,13 +633,17 @@ export default function RoleQuiz({
   const callHref = phoneHref || usPhoneFallback?.href || null;
   const canCall = Boolean(callHref && callDisplay);
 
-  const track = (event: string, extra: Record<string, string> = {}) => {
+  const track = (event: string, extra: Record<string, string | number> = {}) => {
     trackEvent(event, {
       market,
       category: category || "",
       variant: variant || "",
       assist_type: "role_quiz",
+      quiz_placement: placement,
       experiment_variant: frameVariant,
+      cta_mode: isHero ? "quiz_lp" : "form_primary",
+      landing_type: isHero ? "quiz_lp" : "form_lp",
+      landing_page: isHero ? `/${market}/quiz` : `/${market}`,
       ...extra,
     });
   };
@@ -569,85 +653,177 @@ export default function RoleQuiz({
     ? "A starting point, not a promise. Next: a short chat so we can shortlist real people for your Australian business — free, no pressure."
     : "A starting point, not a promise. Next: a short chat so we can shortlist real people for you.";
 
+  function markQuizStart() {
+    if (started) return;
+    setStarted(true);
+    track("quiz_started", { step: "1" });
+    trackExperimentClick("quiz_copy", frameVariant, {
+      market,
+      cta: "quiz_start",
+    });
+  }
+
+  function finishIfComplete(nextAnswers: Answers, nextStep: number) {
+    if (nextStep !== totalSteps) return;
+    const r = buildResult(nextAnswers, market);
+    const scored = scoreLeadValue({
+      intent: "employer",
+      companySize: nextAnswers.companySize || null,
+      positionsNeeded: nextAnswers.positionsNeeded || null,
+    });
+    track("quiz_completed", {
+      result: r?.trackLabel || "",
+      drain: nextAnswers.drain || "",
+      focus: nextAnswers.focus || "",
+      detail: nextAnswers.detail || "",
+      company_size: nextAnswers.companySize || "",
+      positions_needed: nextAnswers.positionsNeeded || "",
+      lead_score: scored.lead_score,
+      estimated_lead_value: scored.estimated_lead_value,
+      value_kind: scored.value_kind,
+    });
+    trackEvent("lead_magnet_completed", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      magnet: "role_quiz",
+      result_role: r?.trackLabel || "",
+      experiment_variant: frameVariant,
+      cta_mode: isHero ? "quiz_lp" : "form_primary",
+      landing_type: isHero ? "quiz_lp" : "form_lp",
+      company_size: nextAnswers.companySize || "",
+      positions_needed: nextAnswers.positionsNeeded || "",
+      lead_score: scored.lead_score,
+      estimated_lead_value: scored.estimated_lead_value,
+    });
+  }
+
+  function chooseRoleOption(opt: QuizOption) {
+    markQuizStart();
+    const nextAnswers: Answers = { ...answers };
+    if (current?.key === "drain" && isDrainKey(opt.id)) {
+      nextAnswers.drain = opt.id;
+      nextAnswers.focus = "";
+      nextAnswers.detail = "";
+    } else if (current?.key === "focus") {
+      nextAnswers.focus = opt.id;
+    } else {
+      nextAnswers.detail = opt.id;
+    }
+    setAnswers(nextAnswers);
+    const nextStep = step + 1;
+    setStep(nextStep);
+    track("quiz_step", {
+      step: String(nextStep),
+      answer: opt.id,
+      drain: nextAnswers.drain || "",
+    });
+    finishIfComplete(nextAnswers, nextStep);
+  }
+
+  function chooseQualify(
+    field: "companySize" | "positionsNeeded",
+    id: CompanySizeId | PositionsId,
+  ) {
+    markQuizStart();
+    const nextAnswers: Answers = { ...answers, [field]: id };
+    setAnswers(nextAnswers);
+    track("quiz_step", {
+      step: String(step + 1),
+      answer: id,
+      drain: nextAnswers.drain || "",
+      company_size: nextAnswers.companySize || "",
+      positions_needed: nextAnswers.positionsNeeded || "",
+    });
+    if (nextAnswers.companySize && nextAnswers.positionsNeeded) {
+      window.setTimeout(() => {
+        const nextStep = step + 1;
+        setStep(nextStep);
+        finishIfComplete(nextAnswers, nextStep);
+      }, 220);
+    }
+  }
+
+  const sizeLabel = COMPANY_SIZE_OPTIONS.find((o) => o.id === answers.companySize)?.label;
+  const seatsLabel = POSITIONS_OPTIONS.find((o) => o.id === answers.positionsNeeded)?.label;
+
   return (
     <section
       id="role-quiz"
-      className={`role-quiz${light ? " role-quiz-light" : ""}`}
+      className={`role-quiz${light ? " role-quiz-light" : ""}${
+        isHero ? " role-quiz-hero" : ""
+      }`}
       aria-labelledby="role-quiz-title"
       data-exp-quiz={frameVariant}
+      data-quiz-placement={placement}
     >
       <div className="role-quiz-inner">
-        <p className="role-quiz-eyebrow">{frame.eyebrow}</p>
-        <h2 id="role-quiz-title">{frame.title}</h2>
-        <p className="role-quiz-lead">{frame.lead}</p>
+        {!result ? (
+          <>
+            <p className="role-quiz-eyebrow">{frame.eyebrow}</p>
+            <h2 id="role-quiz-title">{frame.title}</h2>
+            <p className="role-quiz-lead">{frame.lead}</p>
+          </>
+        ) : (
+          <h2 id="role-quiz-title" className="sr-only">
+            {frame.kicker}: {result.roleLabel}
+          </h2>
+        )}
 
-        {step < 3 && current ? (
+        {step < totalSteps && current ? (
           <div className="role-quiz-card">
             <div className="role-quiz-progress" aria-hidden>
-              {[0, 1, 2].map((i) => (
+              {questions.map((_, i) => (
                 <span
                   key={i}
                   className={`role-quiz-dot${i <= step ? " is-on" : ""}`}
                 />
               ))}
             </div>
-            <p className="role-quiz-step">Question {step + 1} of 3</p>
+            <p className="role-quiz-step">
+              Question {step + 1} of {totalSteps}
+            </p>
             <h3>{current.q}</h3>
-            <div className="role-quiz-options">
-              {current.options.map((opt) => (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => {
-                    if (!started) {
-                      setStarted(true);
-                      track("quiz_started", { step: "1" });
-                      trackExperimentClick("quiz_copy", frameVariant, {
-                        market,
-                        cta: "quiz_start",
-                      });
-                    }
-                    const nextAnswers: Answers = { ...answers };
-                    if (current.key === "drain" && isDrainKey(opt.id)) {
-                      nextAnswers.drain = opt.id;
-                      nextAnswers.focus = "";
-                      nextAnswers.detail = "";
-                    } else if (current.key === "focus") {
-                      nextAnswers.focus = opt.id;
-                    } else {
-                      nextAnswers.detail = opt.id;
-                    }
-                    setAnswers(nextAnswers);
-                    const nextStep = step + 1;
-                    setStep(nextStep);
-                    track("quiz_step", {
-                      step: String(nextStep),
-                      answer: opt.id,
-                      drain: nextAnswers.drain || "",
-                    });
-                    if (nextStep === 3) {
-                      const r = buildResult(nextAnswers, market);
-                      track("quiz_completed", {
-                        result: r?.trackLabel || "",
-                        drain: nextAnswers.drain || "",
-                        focus: nextAnswers.focus || "",
-                        detail: nextAnswers.detail || "",
-                      });
-                      trackEvent("lead_magnet_completed", {
-                        market,
-                        category: category || "",
-                        variant: variant || "",
-                        magnet: "role_quiz",
-                        result_role: r?.trackLabel || "",
-                        experiment_variant: frameVariant,
-                      });
-                    }
-                  }}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
+            {current.key === "qualify" ? (
+              <>
+                <p className="role-quiz-subq">Company size</p>
+                <div className="role-quiz-options role-quiz-chips" role="group" aria-label="Company size">
+                  {COMPANY_SIZE_OPTIONS.map((o) => (
+                    <button
+                      key={o.id}
+                      type="button"
+                      className={answers.companySize === o.id ? "on" : ""}
+                      aria-pressed={answers.companySize === o.id}
+                      onClick={() => chooseQualify("companySize", o.id)}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+                <p className="role-quiz-subq">Positions needed</p>
+                <div className="role-quiz-options role-quiz-chips" role="group" aria-label="Positions needed">
+                  {POSITIONS_OPTIONS.map((o) => (
+                    <button
+                      key={o.id}
+                      type="button"
+                      className={answers.positionsNeeded === o.id ? "on" : ""}
+                      aria-pressed={answers.positionsNeeded === o.id}
+                      onClick={() => chooseQualify("positionsNeeded", o.id)}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="role-quiz-options">
+                {current.options.map((opt) => (
+                  <button key={opt.id} type="button" onClick={() => chooseRoleOption(opt)}>
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         ) : null}
 
@@ -661,6 +837,11 @@ export default function RoleQuiz({
             </p>
             <h3 className="role-quiz-win">{result.roleLabel}</h3>
             <p className="role-quiz-personalized">{result.because}</p>
+            {sizeLabel && seatsLabel ? (
+              <p className="role-quiz-fitline">
+                {sizeLabel} team · {seatsLabel} {seatsLabel === "1" ? "seat" : "seats"}
+              </p>
+            ) : null}
 
             <div className="role-quiz-reward">
               <div className="role-quiz-reward-card">
@@ -674,36 +855,36 @@ export default function RoleQuiz({
             </div>
 
             <div className="role-quiz-actions">
-              <a
-                href="#gate"
-                className="role-quiz-primary"
-                onClick={(e) => {
-                  e.preventDefault();
-                  track("conversion_assist_cta_clicked", {
-                    cta: "form",
-                    result_role: result.trackLabel,
-                    form_role: result.formRole,
-                  });
-                  trackExperimentClick("quiz_copy", frameVariant, {
-                    market,
-                    cta: "form",
-                  });
-                  // Skip “who are you?” — quiz completers are employers.
-                  // Preselect the recommended role chip on the hire form.
-                  focusGate({
-                    behavior: "smooth",
-                    selectEmployer: true,
-                    role: result.formRole,
-                    emphasize: "role",
-                  });
-                }}
-              >
-                {isAu ? "Chat about this role →" : "Hire for this role →"}
-              </a>
+              {!isHero ? (
+                <a
+                  href="#gate"
+                  className="role-quiz-primary"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    track("conversion_assist_cta_clicked", {
+                      cta: "form",
+                      result_role: result.trackLabel,
+                      form_role: result.formRole,
+                    });
+                    trackExperimentClick("quiz_copy", frameVariant, {
+                      market,
+                      cta: "form",
+                    });
+                    focusGate({
+                      behavior: "smooth",
+                      selectEmployer: true,
+                      role: result.formRole,
+                      emphasize: "role",
+                    });
+                  }}
+                >
+                  {isAu ? "Chat about this role →" : "Hire for this role →"}
+                </a>
+              ) : null}
               {canCall ? (
                 <a
                   href={callHref!}
-                  className="role-quiz-call"
+                  className={`role-quiz-call${isHero ? " role-quiz-call-hero" : ""}`}
                   onClick={() => {
                     trackPhoneClick({
                       market,
@@ -712,6 +893,8 @@ export default function RoleQuiz({
                       assist_type: "role_quiz",
                       cta: "phone",
                       result_role: result.trackLabel,
+                      cta_mode: isHero ? "quiz_lp" : "form_primary",
+                      landing_type: isHero ? "quiz_lp" : "form_lp",
                     });
                     trackExperimentClick("quiz_copy", frameVariant, {
                       market,
@@ -719,7 +902,7 @@ export default function RoleQuiz({
                     });
                     trackExperimentConvert("phone_click", {
                       market,
-                      source: "role_quiz",
+                      source: isHero ? "quiz_lp" : "role_quiz",
                     });
                   }}
                 >
@@ -732,8 +915,15 @@ export default function RoleQuiz({
                 onClick={() => {
                   setStep(0);
                   setStarted(false);
-                  setAnswers({ drain: "", focus: "", detail: "" });
+                  setAnswers({
+                    drain: "",
+                    focus: "",
+                    detail: "",
+                    companySize: "",
+                    positionsNeeded: "",
+                  });
                   track("quiz_retake");
+                  onRetake?.();
                 }}
               >
                 Retake

@@ -1,7 +1,8 @@
 /**
  * Market-specific Stage 1 config.
  * US phone: (888) 954-8644 — aligned with ads Call asset (was 310 interim).
- * AU phone: 1300 886 740 — George-approved (2026-08-08); form still primary CTA.
+ * AU phone: 1300 886 740 — George-approved (2026-08-08); GBP listing.
+ * Phone stays secondary to Start Hiring / Have a chat. Do not invent numbers.
  * Do not invent emails, budgets, conversion IDs, or guarantees.
  */
 

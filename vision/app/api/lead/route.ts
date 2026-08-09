@@ -20,6 +20,7 @@ import {
 } from "../../../lib/lead-delivery";
 import { upsertEmployerLead } from "../../../lib/zoho/client";
 import { leadLogSafe } from "../../../lib/zoho/redact";
+import { scoreLeadFromSignals } from "../../../config/lead-value";
 
 function splitName(name: string): { firstName: string; lastName: string } {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -125,6 +126,12 @@ export async function POST(req: NextRequest) {
     // Conversion-eligible if a durable traffic channel exists (log-only never is).
     // Zoho CRM alone is not the traffic gate.
     const durable = durableTrafficChannels().length > 0;
+    const dupScored = scoreLeadFromSignals({
+      intent: "employer",
+      company_size: String(body.company_size || "").trim(),
+      positions_needed: String(body.positions_needed || "").trim(),
+      hiring_timeline: String(body.hiring_timeline || body.timeline || "").trim(),
+    });
     return NextResponse.json({
       ok: true,
       stored: true,
@@ -133,6 +140,10 @@ export async function POST(req: NextRequest) {
       delivery: durable ? "durable" : "log_only",
       conversion_eligible: durable,
       lead_delivery_succeeded: durable,
+      lead_score: dupScored.lead_score,
+      estimated_lead_value: dupScored.estimated_lead_value,
+      value_kind: dupScored.value_kind,
+      fit_label: dupScored.fit_label,
     });
   }
 
@@ -152,6 +163,15 @@ export async function POST(req: NextRequest) {
   const submittedAt = body.submitted_at || new Date().toISOString();
   const submissionId = `vc_${market}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
   const cfg = configuredChannels();
+  const companySize = String(body.company_size || "").trim();
+  const positionsNeeded = String(body.positions_needed || "").trim();
+  const hiringTimeline = String(body.hiring_timeline || body.timeline || "").trim();
+  const scored = scoreLeadFromSignals({
+    intent: "employer",
+    company_size: companySize,
+    positions_needed: positionsNeeded,
+    hiring_timeline: hiringTimeline,
+  });
 
   const record = {
     submission_id: submissionId,
@@ -163,8 +183,16 @@ export async function POST(req: NextRequest) {
     role: String(body.role || "").trim(),
     category: String(body.category || "").trim(),
     variant: String(body.variant || "").trim(),
-    timeline: String(body.timeline || "").trim(),
+    timeline: hiringTimeline,
     message: String(body.message || "").trim(),
+    company_size: companySize,
+    positions_needed: positionsNeeded,
+    hiring_timeline: hiringTimeline,
+    lead_score: scored.lead_score,
+    estimated_lead_value: scored.estimated_lead_value,
+    value_kind: scored.value_kind,
+    fit_label: scored.fit_label,
+    lp_surface: String(body.lp_surface || "").trim(),
     market,
     intent: "employer" as const,
     utm_source: body.utm_source || "",
@@ -361,6 +389,10 @@ export async function POST(req: NextRequest) {
         zoho_synced: false,
         deliveries,
         warning: "log_only — not a live lead delivery channel; not conversion-eligible",
+        lead_score: scored.lead_score,
+        estimated_lead_value: scored.estimated_lead_value,
+        value_kind: scored.value_kind,
+        fit_label: scored.fit_label,
       });
     }
     console.error("[lead] BLOCKER: no durable traffic delivery channel configured");
@@ -394,6 +426,10 @@ export async function POST(req: NextRequest) {
       deliveries,
       warning:
         "zoho_crm without email/webhook/sheet — CRM READY path only; not TRAFFIC READY",
+      lead_score: scored.lead_score,
+      estimated_lead_value: scored.estimated_lead_value,
+      value_kind: scored.value_kind,
+      fit_label: scored.fit_label,
     });
   }
 
@@ -425,5 +461,9 @@ export async function POST(req: NextRequest) {
     // Paid/traffic readiness is a Launch Control verdict — not this API field.
     zoho_synced: zohoSynced,
     deliveries,
+    lead_score: scored.lead_score,
+    estimated_lead_value: scored.estimated_lead_value,
+    value_kind: scored.value_kind,
+    fit_label: scored.fit_label,
   });
 }

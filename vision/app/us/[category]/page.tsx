@@ -31,9 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function USCategoryPage({ params, searchParams }: Props) {
   const { category } = await params;
   if (!isCategorySlug(category)) notFound();
-  const sp = await searchParams;
-  const variant = await resolveLpVariant(sp);
-  return (
-    <MarketLanding market="us" category={category} variant={variant} />
-  );
+  const variant = await resolveLpVariant(await searchParams);
+  return <MarketLanding market="us" category={category} variant={variant} />;
 }

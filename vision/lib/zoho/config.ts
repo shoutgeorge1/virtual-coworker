@@ -35,6 +35,11 @@ export type ZohoFieldOverrides = {
   referrer?: string;
   role?: string;
   timeline?: string;
+  company_size?: string;
+  positions_needed?: string;
+  hiring_timeline?: string;
+  lead_score?: string;
+  estimated_lead_value?: string;
   message?: string;
 };
 
@@ -94,6 +99,11 @@ export function parseZohoCrmConfig(env: NodeJS.ProcessEnv = process.env): ZohoCr
       referrer: optField(env, "ZOHO_CRM_FIELD_REFERRER"),
       role: optField(env, "ZOHO_CRM_FIELD_ROLE"),
       timeline: optField(env, "ZOHO_CRM_FIELD_TIMELINE"),
+      company_size: optField(env, "ZOHO_CRM_FIELD_COMPANY_SIZE"),
+      positions_needed: optField(env, "ZOHO_CRM_FIELD_POSITIONS_NEEDED"),
+      hiring_timeline: optField(env, "ZOHO_CRM_FIELD_HIRING_TIMELINE"),
+      lead_score: optField(env, "ZOHO_CRM_FIELD_LEAD_SCORE"),
+      estimated_lead_value: optField(env, "ZOHO_CRM_FIELD_ESTIMATED_LEAD_VALUE"),
       message: optField(env, "ZOHO_CRM_FIELD_MESSAGE"),
     },
     timeoutMs,

@@ -17,6 +17,13 @@ export type LeadRecord = {
   category?: string;
   variant?: string;
   timeline?: string;
+  company_size?: string;
+  positions_needed?: string;
+  hiring_timeline?: string;
+  lead_score?: number | string;
+  estimated_lead_value?: number | string;
+  value_kind?: string;
+  fit_label?: string;
   message?: string;
   market: string;
   intent?: string;
@@ -130,7 +137,17 @@ export function mapLeadToCrmPayload(
 
   const descParts = [
     lead.role ? `Role: ${lead.role}` : "",
-    lead.timeline ? `Timeline: ${lead.timeline}` : "",
+    lead.company_size ? `Company size: ${lead.company_size}` : "",
+    lead.positions_needed ? `Positions needed: ${lead.positions_needed}` : "",
+    lead.hiring_timeline || lead.timeline
+      ? `Timeline: ${lead.hiring_timeline || lead.timeline}`
+      : "",
+    lead.lead_score !== undefined && lead.lead_score !== ""
+      ? `Modeled lead score: ${lead.lead_score} (website estimate — not revenue)`
+      : "",
+    lead.estimated_lead_value !== undefined && lead.estimated_lead_value !== ""
+      ? `Modeled lead value USD: ${lead.estimated_lead_value} (${lead.value_kind || "estimated_modeled"})`
+      : "",
     lead.message || "",
   ].filter(Boolean);
   if (descParts.length) {
@@ -180,7 +197,26 @@ export function mapLeadToCrmPayload(
   setIf(data, fields.landing_page_url, lead.landing_page_url, omitted, "landing_page_url", verified);
   setIf(data, fields.referrer, lead.referrer, omitted, "referrer", verified);
   setIf(data, fields.role, lead.role, omitted, "role", verified);
-  setIf(data, fields.timeline, lead.timeline, omitted, "timeline", verified);
+  setIf(data, fields.timeline, lead.hiring_timeline || lead.timeline, omitted, "timeline", verified);
+  setIf(data, fields.company_size, lead.company_size, omitted, "company_size", verified);
+  setIf(data, fields.positions_needed, lead.positions_needed, omitted, "positions_needed", verified);
+  setIf(data, fields.hiring_timeline, lead.hiring_timeline, omitted, "hiring_timeline", verified);
+  setIf(
+    data,
+    fields.lead_score,
+    lead.lead_score !== undefined ? String(lead.lead_score) : "",
+    omitted,
+    "lead_score",
+    verified,
+  );
+  setIf(
+    data,
+    fields.estimated_lead_value,
+    lead.estimated_lead_value !== undefined ? String(lead.estimated_lead_value) : "",
+    omitted,
+    "estimated_lead_value",
+    verified,
+  );
 
   // Honesty flags — only if verified custom fields exist (never invent)
   // is_job_order / is_placement intentionally not written unless schema has them later.
@@ -247,6 +283,31 @@ export function proposeMissingFields(
       required_for: "attribution",
     },
     referrer: { proposed_api_name: "VC_Referrer", purpose: "referrer", required_for: "attribution" },
+    company_size: {
+      proposed_api_name: "VC_Company_Size",
+      purpose: "employer headcount band",
+      required_for: "lead value / qualification",
+    },
+    positions_needed: {
+      proposed_api_name: "VC_Positions_Needed",
+      purpose: "seats requested",
+      required_for: "lead value / qualification",
+    },
+    hiring_timeline: {
+      proposed_api_name: "VC_Hiring_Timeline",
+      purpose: "urgency band",
+      required_for: "lead value / qualification",
+    },
+    lead_score: {
+      proposed_api_name: "VC_Lead_Score",
+      purpose: "website modeled score 0–100",
+      required_for: "history — CRM qualification supersedes",
+    },
+    estimated_lead_value: {
+      proposed_api_name: "VC_Estimated_Lead_Value",
+      purpose: "website modeled $ (not revenue, not Ads bidding)",
+      required_for: "history — CRM value supersedes",
+    },
   };
 
   const out: FieldProposal[] = [];

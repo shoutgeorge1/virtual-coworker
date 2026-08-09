@@ -36,6 +36,8 @@ const required = [
   "api/lead/route.ts",
   "us/[category]/page.tsx",
   "au/[category]/page.tsx",
+  "us/quiz/page.tsx",
+  "au/quiz/page.tsx",
 ];
 
 const missing = required.filter((p) => !existsSync(join(app, p)));
@@ -53,5 +55,6 @@ for (const m of ["us", "au"]) {
     console.log(`  /${m}/${slug}`);
   }
 }
+console.log("  /us/quiz · /au/quiz");
 console.log(`  alias: /{us|au}/human-resources → /{us|au}/hr (middleware 308)`);
 console.log(`Categories: ${CATEGORIES.length} × 2 markets`);

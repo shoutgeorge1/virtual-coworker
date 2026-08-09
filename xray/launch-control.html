@@ -306,11 +306,13 @@
         <section class="lc-measure" id="how-we-measure" aria-labelledby="measure-hd">
           <h2 id="measure-hd">How we’ll measure success</h2>
           <ul>
-            <li><strong>1 · High priority:</strong> website calls lasting 60+ seconds</li>
-            <li><strong>2 · Australia:</strong> ad-call wins + website tags (GTM/GA4)</li>
-            <li><strong>3 · Then:</strong> Zoho “qualified” → Google Ads</li>
-            <li><strong>US today:</strong> live · ~$125/day · daily search-term cleanup</li>
-            <li><strong>Later:</strong> Site tests scoreboard (GTM/GA4 wiring — Checklist step 34)</li>
+            <li><strong>North star:</strong> business value (qualified employers → Job Order → Placement) — <em>not</em> form-fill volume</li>
+            <li><strong>1 · High priority:</strong> website calls lasting 60+ seconds (bidding signal)</li>
+            <li><strong>2 · Australia:</strong> ad-call wins + website tags (GTM/GA4) · GBP 4.8★ trust on LP</li>
+            <li><strong>Now on site:</strong> form chips + modeled value live on <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> (and category LPs). Optimize qualified value, not form-fill volume. Ads bidding not using modeled $.</li>
+            <li><strong>3 · Then:</strong> Zoho “qualified” → Job Order → Placement → Ads offline (CRM value supersedes website estimate)</li>
+            <li><strong>US today:</strong> live · ~$125/day · early ~$300/inquiry is a gut check only</li>
+            <li><strong>Later (~90%) — Quiz LP:</strong> exploratory “Take the quiz / What kind of VA do you need?” · ads <strong>Paused</strong> · see Launch step 36</li>
           </ul>
         </section>
 
@@ -594,11 +596,30 @@
                 <span class="todo-hint">Done. In nav <strong>Archive → Ads package</strong>.</span>
               </label>
             </li>
+            <li data-order="32">
+              <input type="checkbox" id="ads35" data-todo="ads35" />
+              <label for="ads35">
+                <strong>34. Trust pack — US press + client logos</strong>
+                <span class="todo-hint">Open. Internet check 2026-08-09: <strong>no Inc / Entrepreneur / BI feature or display-ad placement found</strong>. Live “As featured in” = Forbes Council + Clutch + Google + VC’s published SMH/BRW/Startup Daily/Anthill row. Still need more <strong>authorized US client logos</strong> + video testimonials. Do <strong>not</strong> invent Fortune 500. See <code>vision/docs/TRUST-PROOF.md</code>.</span>
+              </label>
+            </li>
             <li data-order="99">
               <input type="checkbox" id="ads27" data-todo="ads27" />
               <label for="ads27">
-                <strong>34. Site tests — wire the scoreboard (bottom)</strong>
+                <strong>35. Site tests — wire the scoreboard (bottom)</strong>
                 <span class="todo-hint">Still open. LP A/B variants work on the site; measurement doesn’t yet. Need GTM/GA4 (or content experiments) so variant traffic shows on <a href="experiments">Site tests</a>. <a href="landing-pages">LP previews</a> look good.</span>
+              </label>
+            </li>
+            <li data-order="100">
+              <input type="checkbox" id="ads36" data-todo="ads36" />
+              <label for="ads36">
+                <strong>36. Later — Quiz LP (~90%)</strong>
+                <span class="todo-hint">
+                  Pick up later — not tonight. Exploratory RSA: “Take the quiz / What kind of VA do you need?” Homepage variation only. <strong>Do not Enable ads.</strong> Import ≠ Post ≠ Enable. Brand deferred. No API mutate.<br />
+                  <strong>LPs</strong> (noindex · not for ads until you say): local <a href="http://127.0.0.1:4321/us/quiz" target="_blank" rel="noopener">127.0.0.1:4321/us/quiz</a> · <a href="http://127.0.0.1:4321/au/quiz" target="_blank" rel="noopener">/au/quiz</a> · prod <a href="https://www.virtualcoworker.app/us/quiz" target="_blank" rel="noopener">www.virtualcoworker.app/us/quiz</a> · <a href="https://www.virtualcoworker.app/au/quiz" target="_blank" rel="noopener">/au/quiz</a> (hitchhikes on vision deploy; leftover reward contrast / don’t bump straight into the form).<br />
+                  <strong>Homepage controls</strong> (form chips live): <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>. Tracking = same GTM/dataLayer as homepage · modeled $ not Ads bidding.<br />
+                  <strong>Ads package</strong> (Paused): campaigns <code>VC_US_S_QUIZ</code> ($40/day · max CPC $10) · <code>VC_AU_S_QUIZ</code> (A$40/day · max CPC $6). Sheet: <a href="docs/ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md">docs/ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md</a> · repo <code>ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md</code>. Editor CSVs under <code>ads-launch/</code>: <code>google-ads-editor-quiz-import-us.csv</code> · <code>google-ads-editor-quiz-import-au.csv</code> (Account Import) · <code>google-ads-editor-quiz-campaign-negatives-us.csv</code> · <code>google-ads-editor-quiz-campaign-negatives-au.csv</code> (Keywords, Negative → Make multiple changes — not Account Import). Builder: <code>python3 ads-launch/build_quiz_editor_package.py</code>.
+                </span>
               </label>
             </li>
           </ul>
@@ -621,11 +642,12 @@
             <span class="st st-ready">Finished</span>
           </div>
           <ul>
-            <li>AU phone on site · 1300 886 740</li>
-            <li>US Search live · about $125/day</li>
-            <li>Brand off · Ads package archived</li>
+            <li>AU phone on site · 1300 886 740 (GBP listing)</li>
+            <li>US Search live · about $125/day · Brand off</li>
             <li>Form emails live (us@ / apac@)</li>
             <li>Website tags live on US</li>
+            <li>Lead-value chips + modeled score live on <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> forms</li>
+            <li>Quiz LP ~90% parked — Launch step 36 (ads Paused, not tonight)</li>
           </ul>
         </section>
 
@@ -638,8 +660,8 @@
             <li><strong>1.</strong> Website calls 60+ seconds — Google forwarding (step 14)</li>
             <li><strong>2.</strong> Australia ad-call conversion (step 15)</li>
             <li><strong>3.</strong> Australia website tags (step 16)</li>
-            <li><strong>4.</strong> Zoho qualified → Ads (step 17)</li>
-            <li><strong>Later:</strong> Site tests scoreboard (step 34 · bottom of list)</li>
+            <li><strong>4.</strong> Zoho qualified → Ads (step 17) — not form CPA / not modeled $</li>
+            <li><strong>Later:</strong> Quiz LP (step 36, ~90%) · US trust pack (step 34) · Site tests scoreboard (step 35)</li>
             <li><a href="tracking.html">Tracking</a></li>
             <li><strong>Every couple days:</strong> refresh <a href="executive">Executive</a></li>
           </ul>
@@ -652,14 +674,15 @@
           </div>
           <ul>
             <li><strong>Cheyenne:</strong> watch us@ · help Zoho “qualified” marks · answer US 888</li>
-            <li><strong>Holly:</strong> keep answering AU 1300 · watch apac@</li>
+            <li><strong>Holly / Chey / Raffie:</strong> fix 1300 voicemail (still says Alex)</li>
+            <li><strong>Holly:</strong> watch apac@</li>
             <li><strong>Phones/IT:</strong> help website call tracking (forwarding) · simplify 888 tree</li>
           </ul>
         </section>
       </div>
 
       <p class="lc-secondary" id="site-tests">
-        <strong>Site tests</strong> — scoreboard still blank (step 34, bottom of Checklist).
+        <strong>Site tests</strong> — scoreboard still blank (step 35, bottom of Checklist).
         LP previews look good · A/B variants work in site code · needs GTM/GA4 wiring ·
         <a href="experiments">Site tests</a> ·
         Ads package → <a href="ads-package.html">Archive</a> (done)
@@ -678,11 +701,13 @@
             <li>Use simple <code>tel:</code> click as Primary (need 60+ sec connected website calls)</li>
             <li>Buy CallRail just for this — Google website call tracking is enough</li>
             <li>Attach <code>310</code> as a competing Call asset on US CORE/ROLES (888 only)</li>
-            <li>Steer bidding on form / thank-you fills</li>
+            <li>Steer bidding on form / thank-you fills (or treat form CPA as truth)</li>
+            <li>Ship modeled lead $ into Google Ads conversion value before Zoho data</li>
+            <li>Enable <code>VC_US_S_QUIZ</code> / <code>VC_AU_S_QUIZ</code> until George says (Paused Editor package only)</li>
             <li>Wire old Zoho/Zapier conversions onto new <code>VC_*</code></li>
             <li>Build a new lead tracker this week</li>
             <li>Recreate website phone-click conversion while Unverified</li>
-            <li>Treat money/value conversions as Stage 1 busywork before enough deals</li>
+            <li>Put anyone’s personal mobile on the site or Ads call assets</li>
           </ul>
         </div>
       </details>
@@ -703,6 +728,7 @@
               <ul class="sitemap-tree">
                 <li><a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>
                   <ul>
+                    <li><a href="https://www.virtualcoworker.app/us/quiz" target="_blank" rel="noopener">/us/quiz</a> <span class="muted">noindex · later · step 36</span></li>
                     <li><a href="https://www.virtualcoworker.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
                     <li><a href="https://www.virtualcoworker.app/us/social-media" target="_blank" rel="noopener">/us/social-media</a></li>
                     <li><a href="https://www.virtualcoworker.app/us/accounting" target="_blank" rel="noopener">/us/accounting</a></li>
@@ -722,6 +748,7 @@
               <ul class="sitemap-tree">
                 <li><a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>
                   <ul>
+                    <li><a href="https://www.virtualcoworker.app/au/quiz" target="_blank" rel="noopener">/au/quiz</a> <span class="muted">noindex · later · step 36</span></li>
                     <li><a href="https://www.virtualcoworker.app/au/digital-marketing" target="_blank" rel="noopener">/au/digital-marketing</a></li>
                     <li><a href="https://www.virtualcoworker.app/au/social-media" target="_blank" rel="noopener">/au/social-media</a></li>
                     <li><a href="https://www.virtualcoworker.app/au/accounting" target="_blank" rel="noopener">/au/accounting</a></li>

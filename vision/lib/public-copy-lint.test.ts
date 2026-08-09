@@ -127,6 +127,7 @@ function extractQuotedStrings(source: string): string[] {
 const PUBLIC_SURFACE_FILES = [
   "app/components/MarketLanding.tsx",
   "app/components/TrustBand.tsx",
+  "app/components/GoogleReviewBadge.tsx",
   "app/components/PressBand.tsx",
   "app/components/TrustQuotes.tsx",
   "app/components/RoleQuiz.tsx",

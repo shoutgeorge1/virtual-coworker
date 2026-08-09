@@ -73,7 +73,9 @@ export const COMPANY_IDENTITY = {
  *
  * Clutch rating from the Clutch company profile (4.9 · 7 reviews).
  * Forbes: Braden Yuill Business Council profile.
- * Google Maps: published US office pin (badge artwork only — no invented count).
+ * Google Maps: published US office pin (provenance href only — not rendered).
+ * Google Business Profile ratings (George 2026-08-09): US West Hollywood 5.0 / 39;
+ *   AU Sydney 4.8 / 23. Stars + count only — do not swap site phones from GBP.
  * Trustpilot: live profile 2026-08-09 — 4.3 / 5 · 7 reviews (Google snippet 4.7/26 was stale).
  * Glassdoor: George live look 2026-08-09 — 4.1 / 5 · 87% would recommend · 24 reviews.
  *   On-page (2026-08-09): show recommend % + review count only — do NOT print 4.1.
@@ -95,6 +97,22 @@ export const TRUST_PROOF = {
     href: "https://goo.gl/maps/rZikUJ86PppBwULK9",
     label: "Google Maps — West Hollywood office",
   },
+  /** GBP West Hollywood. Site phone stays (888) 954-8644 — not the Maps listing. */
+  googleBusinessUs: {
+    rating: "5.0",
+    reviewCount: 39,
+    label: "Google",
+    sublabel: "39 reviews",
+    place: "West Hollywood",
+  },
+  /** GBP Sydney. Listing / site phone stays 1300 886 740. */
+  googleBusinessAu: {
+    rating: "4.8",
+    reviewCount: 23,
+    label: "Google",
+    sublabel: "23 reviews",
+    place: "Sydney",
+  },
   trustpilot: {
     href: "https://www.trustpilot.com/review/virtualcoworker.com",
     rating: "4.3",
@@ -114,6 +132,18 @@ export const TRUST_PROOF = {
   },
   sinceYear: 2011,
 } as const;
+
+export type GoogleBusinessProof = {
+  rating: string;
+  reviewCount: number;
+  label: "Google";
+  sublabel: string;
+  place: string;
+};
+
+export function googleBusinessForMarket(market: MarketId): GoogleBusinessProof {
+  return market === "au" ? TRUST_PROOF.googleBusinessAu : TRUST_PROOF.googleBusinessUs;
+}
 
 /** Trading years — the strongest honest number this business owns. */
 export function yearsTrading(now: Date = new Date()): number {

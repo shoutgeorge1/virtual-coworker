@@ -3,6 +3,7 @@ import LeadGate, { type GateCopy } from "./LeadGate";
 import StickyCta from "./StickyCta";
 import EngageChat from "./EngageChat";
 import RoleQuiz from "./RoleQuiz";
+import QuizConversionSlot from "./QuizConversionSlot";
 import QuizTeaser from "./QuizTeaser";
 import LpDensity from "./LpDensity";
 import SiteNav from "./SiteNav";
@@ -35,9 +36,11 @@ import {
 import {
   FORM_CUE,
   SITE,
+  googleBusinessForMarket,
   industryStatsForMarket,
   yearsTrading,
 } from "../../config/site";
+import GoogleReviewBadge from "./GoogleReviewBadge";
 import { StatsGrid } from "./TrustAnimated";
 import {
   breadcrumbJsonLd,
@@ -51,10 +54,13 @@ export default function MarketLanding({
   market,
   category,
   variant,
+  conversionSurface = "form",
 }: {
   market: MarketId;
   category?: CategorySlug | null;
   variant: AbVariant;
+  /** form = LeadGate in hero (default LP). quiz = RoleQuiz in hero (quiz LP). */
+  conversionSurface?: "form" | "quiz";
 }) {
   const cfg = MARKETS[market];
   const phone = resolvePhone(market);
@@ -62,10 +68,22 @@ export default function MarketLanding({
   const cat = category ? CATEGORIES[category] : null;
   const v = cat ? cat.variants[variant] : null;
   const isAu = market === "au";
+  const isQuiz = conversionSurface === "quiz";
   const years = yearsTrading();
+  const gbp = googleBusinessForMarket(market);
 
-  const h1 = v ? v.h1[market] : cfg.headline;
-  const sub = v ? v.subhead[market] : cfg.prop;
+  const quizHero = isAu
+    ? {
+        h1: "What kind of VA do you need?",
+        sub: "Take the quiz. We’ll name the role that takes the load — then you can chat or leave a brief.",
+      }
+    : {
+        h1: "What type of VA do you need?",
+        sub: "Take the quiz. We’ll name the seat that buys back your week — then talk or leave a brief.",
+      };
+
+  const h1 = isQuiz && !cat ? quizHero.h1 : v ? v.h1[market] : cfg.headline;
+  const sub = isQuiz && !cat ? quizHero.sub : v ? v.subhead[market] : cfg.prop;
   const primaryCta = primaryHireCta(market);
   const heroSrc = v
     ? v.heroImage[market]
@@ -97,7 +115,11 @@ export default function MarketLanding({
   const shell = market === "us" ? "us" : "au";
   const light = market === "au";
 
-  const formCue = FORM_CUE[market];
+  const formCue = isQuiz
+    ? isAu
+      ? { label: "Take the quiz", body: "A few taps — then have a chat." }
+      : { label: "Take the quiz", body: "A few taps — then talk to a specialist." }
+    : FORM_CUE[market];
   const industryStats = industryStatsForMarket(market);
 
   const gate: GateCopy = {
@@ -152,16 +174,23 @@ export default function MarketLanding({
         { name: "Roles", path: `/services?market=${market}` },
         { name: cat.label, path: `${cfg.landingPath}/${cat.slug}` },
       ]
-    : [
-        { name: "Home", path: cfg.landingPath },
-        { name: "How it works", path: `/how-it-works?market=${market}` },
-      ];
+    : isQuiz
+      ? [
+          { name: "Home", path: cfg.landingPath },
+          { name: "Quiz", path: `${cfg.landingPath}/quiz` },
+        ]
+      : [
+          { name: "Home", path: cfg.landingPath },
+          { name: "How it works", path: `/how-it-works?market=${market}` },
+        ];
 
   return (
     <main
       className={shell}
       data-variant={variant}
       data-category={category || "generic"}
+      data-cta-mode={isQuiz ? "quiz_lp" : "form_primary"}
+      data-lp-surface={conversionSurface}
     >
       <JsonLd
         data={[
@@ -183,6 +212,7 @@ export default function MarketLanding({
             <p className={`${shell}-kicker anim-rise`}>
               {cfg.label} · {isAu ? "Businesses" : "Employers"}
               {cat ? ` · ${cat.label}` : ""}
+              {isQuiz ? " · Take the quiz" : ""}
               {" · "}Philippines staffing
             </p>
             <h1 className="anim-rise">{h1}</h1>
@@ -219,11 +249,12 @@ export default function MarketLanding({
               {cfg.staffingExplain}
             </p>
 
-            <QuizTeaser light={light} />
+            {!isQuiz ? <QuizTeaser light={light} /> : null}
 
             <div
               className={`trust-row anim-rise-d2${light ? " trust-row-light" : ""}`}
             >
+              <GoogleReviewBadge proof={gbp} />
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -279,16 +310,31 @@ export default function MarketLanding({
                 <span>{formCue.body}</span>
               </span>
             </p>
-            <LeadGate
-              copy={gate}
-              market={market}
-              category={category}
-              variant={variant}
-              preselectedRole={cat ? cat.formLabel : null}
-            />
+            {isQuiz ? (
+              <QuizConversionSlot
+                market={market}
+                category={category || undefined}
+                variant={variant}
+                light={light}
+                phoneDisplay={showPhone ? phone.display : undefined}
+                phoneHref={showPhone ? phone.href : null}
+                careersHref={careers}
+                gate={gate}
+              />
+            ) : (
+              <LeadGate
+                copy={gate}
+                market={market}
+                category={category}
+                variant={variant}
+                preselectedRole={cat ? cat.formLabel : null}
+                lpSurface="form"
+                ctaMode="form_primary"
+              />
+            )}
             <ul className="gate-nudges">
               <li>No obligation</li>
-              <li>2-minute brief</li>
+              <li>{isQuiz ? "A few taps" : "2-minute brief"}</li>
               <li>Specialist follows up</li>
               <li>We don’t sell your info</li>
             </ul>
@@ -356,17 +402,17 @@ export default function MarketLanding({
 
       <TrustBand light={light} market={market} />
 
-      <RoleQuiz
-        market={market}
-        category={category || undefined}
-        variant={variant}
-        light={light}
-        phoneDisplay={showPhone ? phone.display : undefined}
-        phoneHref={showPhone ? phone.href : null}
-      />
+      {!isQuiz ? (
+        <RoleQuiz
+          market={market}
+          category={category || undefined}
+          variant={variant}
+          light={light}
+          phoneDisplay={showPhone ? phone.display : undefined}
+          phoneHref={showPhone ? phone.href : null}
+        />
+      ) : null}
 
-      {/* FAQ stays visible on both lp_density arms — never mark secondary.
-          Hide the whole block only if content is empty (no invented claims). */}
       {faq.length > 0 ? (
         <section className={`${shell}-sell faq-section`}>
           <div className={`${shell}-sell-inner`}>
@@ -392,6 +438,7 @@ export default function MarketLanding({
         phoneDisplay={phone.display}
         phoneHref={phone.href}
         surface={category || "home"}
+        ctaHref={isQuiz ? "#role-quiz" : "#gate"}
       />
 
       <SiteFooter
@@ -405,8 +452,8 @@ export default function MarketLanding({
       </p>
 
       <StickyCta
-        href="#gate"
-        label={primaryCta}
+        href={isQuiz ? "#role-quiz" : "#gate"}
+        label={isQuiz ? "Take the quiz" : primaryCta}
         market={market}
         phoneDisplay={showPhone ? phone.display : undefined}
         phoneHref={showPhone ? phone.href : null}

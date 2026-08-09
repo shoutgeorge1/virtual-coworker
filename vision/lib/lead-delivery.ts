@@ -118,6 +118,13 @@ type LeadEmailFields = {
   role?: string;
   category?: string;
   timeline?: string;
+  company_size?: string;
+  positions_needed?: string;
+  hiring_timeline?: string;
+  lead_score?: number | string;
+  estimated_lead_value?: number | string;
+  value_kind?: string;
+  fit_label?: string;
   message?: string;
   market?: string;
   submission_id?: string;
@@ -147,7 +154,22 @@ export function formatLeadEmailText(lead: LeadEmailFields): string {
     ["Company", lead.company || "(none)"],
     ["Market", (lead.market || "").toUpperCase() || "(none)"],
     ["Role / category", [lead.role, lead.category].filter(Boolean).join(" · ") || "(none)"],
-    ["Timeline", lead.timeline || "(none)"],
+    ["Company size", lead.company_size || "(none)"],
+    ["Positions needed", lead.positions_needed || "(none)"],
+    ["Hiring timeline", lead.hiring_timeline || lead.timeline || "(none)"],
+    [
+      "Modeled lead score (not revenue)",
+      lead.lead_score !== undefined && lead.lead_score !== ""
+        ? String(lead.lead_score)
+        : "(none)",
+    ],
+    [
+      "Modeled lead value USD (website estimate only)",
+      lead.estimated_lead_value !== undefined && lead.estimated_lead_value !== ""
+        ? `${lead.estimated_lead_value}${lead.value_kind ? ` · ${lead.value_kind}` : ""}`
+        : "(none)",
+    ],
+    ["Fit label (internal)", lead.fit_label || "(none)"],
     ["Message", lead.message || "(none)"],
     ["Landing page", lead.landing_page_url || "(none)"],
     ["Referrer", lead.referrer || "(none)"],

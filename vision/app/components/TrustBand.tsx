@@ -3,8 +3,10 @@ import {
   PUBLIC_QUOTES,
   TRUST_PROOF,
   clientMarksForMarket,
+  googleBusinessForMarket,
 } from "../../config/site";
 import QuoteBody from "./QuoteBody";
+import GoogleReviewBadge from "./GoogleReviewBadge";
 
 /**
  * Legitimacy band — recognition, client marks, reviews, stats.
@@ -26,6 +28,7 @@ export default function TrustBand({
 }) {
   const clientMarks = clientMarksForMarket(market);
   const quotes = PUBLIC_QUOTES;
+  const gbp = googleBusinessForMarket(market);
 
   return (
     <section
@@ -45,19 +48,22 @@ export default function TrustBand({
         <div className="trust-band-quotes">
           <div className="trust-band-quotes-head">
             <p className="trust-band-quotes-label">What hiring managers say</p>
-            <span
-              className="trust-rating-pill"
-              aria-label={`Clutch ${TRUST_PROOF.clutch.rating} out of 5 from ${TRUST_PROOF.clutch.reviewCount} reviews`}
-            >
-              <span aria-hidden="true">★★★★★</span>
-              <b>
-                {TRUST_PROOF.clutch.rating}
-                <i>/5</i>
-              </b>
-              <span>
-                Independent reviews · Clutch · {TRUST_PROOF.clutch.reviewCount}
+            <div className="trust-rating-pills">
+              <GoogleReviewBadge proof={gbp} variant="pill" />
+              <span
+                className="trust-rating-pill"
+                aria-label={`Clutch ${TRUST_PROOF.clutch.rating} out of 5 from ${TRUST_PROOF.clutch.reviewCount} reviews`}
+              >
+                <span aria-hidden="true">★★★★★</span>
+                <b>
+                  {TRUST_PROOF.clutch.rating}
+                  <i>/5</i>
+                </b>
+                <span>
+                  Independent reviews · Clutch · {TRUST_PROOF.clutch.reviewCount}
+                </span>
               </span>
-            </span>
+            </div>
           </div>
           <div className="trust-quotes-grid">
             {quotes.map((q) => (

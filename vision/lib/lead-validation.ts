@@ -34,6 +34,14 @@ export type LeadInput = {
   referrer?: string;
   lp_version?: string;
   captured_at?: string;
+  /** Soft qualification chips on the employer form (optional). */
+  company_size?: string;
+  positions_needed?: string;
+  hiring_timeline?: string;
+  lead_score?: number | string;
+  estimated_lead_value?: number | string;
+  value_kind?: string;
+  lp_surface?: string;
 };
 
 export type ValidationResult =
