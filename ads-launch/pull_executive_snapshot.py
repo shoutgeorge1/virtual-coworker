@@ -108,12 +108,13 @@ US_LP_CATALOG = [
 OPERATOR_NOTES = {
     "narrative_as_of": "2026-08-09",
     "status_banner": (
-        "US live and spending. Australia live — waiting on traffic. "
+        "US Stage 1 live. Australia account spending on legacy PM_AU_* "
+        "(Stage 1 VC_AU_* not the traffic yet). "
         "Hot: website calls 60+ sec · AU ad-call wins · AU website tags · then Zoho."
     ),
     "budgets": [
         {"label": "US", "amount": "~$125/day", "detail": "live", "kind": "live_test"},
-        {"label": "Australia", "amount": "live", "detail": "waiting on traffic", "kind": "priority"},
+        {"label": "Australia", "amount": "legacy spend live", "detail": "PM_AU_* in window", "kind": "priority"},
     ],
     "whats_working": {
         "ad_copy_themes": [
@@ -137,7 +138,10 @@ OPERATOR_NOTES = {
             "Almost all measurable US clicks still land on /us (CORE Final URL). "
             "Role LPs are live; per-URL spend needs Ads UI / GA4 later."
         ),
-        "Australia is Enabled with $0 in the last 7 days — campaigns are on; traffic hasn’t shown yet.",
+        (
+            "Australia account spend in the last 7 days is mostly legacy PM_AU_* Search "
+            "(Paused mid-window can still show in LAST_7_DAYS). Stage 1 VC_AU_* is not driving it."
+        ),
     ],
     "buyer_signals": [
         {
@@ -179,7 +183,7 @@ OPERATOR_NOTES = {
         },
         {
             "name": "Australia hub (/au)",
-            "why": "Live with 1300 · waiting on first Search traffic",
+            "why": "Live with 1300 · account spend is mostly legacy PM_AU_* right now",
             "url": "https://www.virtualcoworker.app/au",
         },
     ],
@@ -198,8 +202,8 @@ OPERATOR_NOTES = {
         "Ads package archived",
     ],
     "honesty": (
-        "US Search is live and spending. Australia campaigns are live — waiting on traffic. "
-        "Next: website calls 60+ sec, then AU tracking, then Zoho."
+        "US Stage 1 Search is live. Australia account is spending — mostly legacy PM_AU_* "
+        "(not Stage 1 VC_AU_*). Next: website calls 60+ sec, then AU tracking, then Zoho."
     ),
     "lp_ab_note": (
         "Copy A vs B links work on the live site (different hero/copy). "
@@ -293,6 +297,8 @@ CAMPAIGN_Q_US = """
       AND segments.date DURING LAST_7_DAYS
 """
 
+# AU account has legacy PM_AU_* spend + optional Stage 1 VC_AU_*.
+# Filter by activity (impressions > 0) — NOT VC_AU_% only (that lied at $0 while PM_AU spent).
 CAMPAIGN_Q_AU = """
     SELECT
       campaign.id,
@@ -305,14 +311,26 @@ CAMPAIGN_Q_AU = """
       metrics.average_cpc,
       metrics.ctr
     FROM campaign
-    WHERE campaign.name LIKE 'VC_AU_%'
-      AND campaign.status != 'REMOVED'
+    WHERE campaign.status != 'REMOVED'
       AND segments.date DURING LAST_7_DAYS
+      AND metrics.impressions > 0
 """
 
 
 def fetch_rows(client: Any, customer_id: str, query: str) -> list[Any]:
     return list(run_gaql(client, customer_id, query))
+
+
+def _campaign_cohort(name: str) -> str:
+    n = name or ""
+    if n.startswith("VC_AU_") or n.startswith("VC_US_"):
+        return "stage1"
+    if n.startswith("PM_AU_") or "Brand" in n:
+        # Brand deferred — still label so UI can demote, not center strategy on it
+        if "Brand" in n:
+            return "legacy_brand"
+        return "legacy"
+    return "legacy"
 
 
 def summarize_campaigns(rows: list[Any]) -> dict[str, Any]:
@@ -336,6 +354,7 @@ def summarize_campaigns(rows: list[Any]) -> dict[str, Any]:
             {
                 "name": name,
                 "status": status,
+                "cohort": _campaign_cohort(name),
                 "impressions": 0,
                 "clicks": 0,
                 "cost_usd": 0.0,
@@ -370,11 +389,12 @@ def summarize_campaigns(rows: list[Any]) -> dict[str, Any]:
     week_cost = sum(float(v["cost_usd"]) for v in by_date.values())
 
     campaigns_out = []
-    for name, slot in sorted(by_campaign.items()):
+    for name, slot in sorted(by_campaign.items(), key=lambda kv: -float(kv[1]["cost_usd"])):
         campaigns_out.append(
             {
                 "name": name,
                 "status": slot["status"],
+                "cohort": slot.get("cohort") or _campaign_cohort(name),
                 "last_7_days": _metrics_blob(
                     int(slot["impressions"]),
                     int(slot["clicks"]),
@@ -387,6 +407,14 @@ def summarize_campaigns(rows: list[Any]) -> dict[str, Any]:
                 ),
             }
         )
+
+    stage1 = [c for c in campaigns_out if c.get("cohort") == "stage1"]
+    legacy = [c for c in campaigns_out if c.get("cohort") != "stage1"]
+    def _sum_camps(camps: list[dict[str, Any]]) -> dict[str, Any]:
+        impr = sum(int((c.get("last_7_days") or {}).get("impressions") or 0) for c in camps)
+        clicks = sum(int((c.get("last_7_days") or {}).get("clicks") or 0) for c in camps)
+        cost = sum(float((c.get("last_7_days") or {}).get("cost_usd") or 0) for c in camps)
+        return _metrics_blob(impr, clicks, cost)
 
     return {
         "window": "LAST_7_DAYS",
@@ -402,6 +430,8 @@ def summarize_campaigns(rows: list[Any]) -> dict[str, Any]:
             float(today_totals["cost_usd"]),
         ),
         "totals_last_7_days": _metrics_blob(week_impr, week_clicks, week_cost),
+        "totals_stage1_last_7_days": _sum_camps(stage1),
+        "totals_legacy_last_7_days": _sum_camps(legacy),
         "campaigns": campaigns_out,
         "dates_in_pull": sorted(dates_seen),
     }
@@ -684,14 +714,14 @@ def main() -> int:
         _write_payload(started, api_calls, None, None, hard_stop=str(exc))
         return 1
 
-    # Call 2 — AU VC_* campaign metrics (status + spend). No search-term pull.
+    # Call 2 — AU account campaigns with impressions in LAST_7_DAYS (legacy PM_AU_* + any VC_AU_*).
     try:
-        print("API call 2/2: VC_AU_% campaign metrics LAST_7_DAYS …", flush=True)
+        print("API call 2/2: AU campaigns with impressions LAST_7_DAYS …", flush=True)
         au_rows = fetch_rows(client, AU_ID, CAMPAIGN_Q_AU)
         api_calls.append(
             {
                 "n": 2,
-                "name": "campaign_metrics_vc_au_last_7_days",
+                "name": "campaign_metrics_au_active_last_7_days",
                 "ok": True,
                 "row_count": len(au_rows),
             }
@@ -699,7 +729,7 @@ def main() -> int:
     except QuotaExhaustedError as exc:
         print(f"STOP quota on call 2: {exc}", file=sys.stderr)
         api_calls.append(
-            {"n": 2, "name": "campaign_metrics_vc_au_last_7_days", "ok": False, "error": str(exc)}
+            {"n": 2, "name": "campaign_metrics_au_active_last_7_days", "ok": False, "error": str(exc)}
         )
         us = summarize_campaigns(us_rows)
         _write_payload(started, api_calls, us, None, hard_stop=str(exc))
@@ -707,7 +737,7 @@ def main() -> int:
     except ApiAccessError as exc:
         print(f"STOP API on call 2: {exc}", file=sys.stderr)
         api_calls.append(
-            {"n": 2, "name": "campaign_metrics_vc_au_last_7_days", "ok": False, "error": str(exc)}
+            {"n": 2, "name": "campaign_metrics_au_active_last_7_days", "ok": False, "error": str(exc)}
         )
         us = summarize_campaigns(us_rows)
         _write_payload(started, api_calls, us, None, hard_stop=str(exc))
@@ -715,20 +745,18 @@ def main() -> int:
 
     us = summarize_campaigns(us_rows)
     au = summarize_campaigns(au_rows)
-    # If AU has no metric rows (paused / not spending), keep named shell so UI isn't empty.
+    # Do NOT fabricate fake VC_AU $0 "Enabled" shells — that hid real legacy spend.
     if not (au.get("campaigns") or []):
         zero = _metrics_blob(0, 0, 0.0)
         au = {
             "window": "LAST_7_DAYS",
             "focus_day": None,
-            "focus_day_note": "No AU metric rows in LAST_7_DAYS",
+            "focus_day_note": "No AU campaigns with impressions in LAST_7_DAYS",
             "totals_focus_day": zero,
             "totals_last_7_days": zero,
-            # Best-known: AU VC_* are Enabled; zero rows = no spend yet, not paused.
-            "campaigns": [
-                {"name": "VC_AU_S_CORE", "status": "ENABLED", "last_7_days": zero, "focus_day": zero},
-                {"name": "VC_AU_S_ROLES", "status": "ENABLED", "last_7_days": zero, "focus_day": zero},
-            ],
+            "totals_stage1_last_7_days": zero,
+            "totals_legacy_last_7_days": zero,
+            "campaigns": [],
             "dates_in_pull": [],
         }
     path = _write_payload(started, api_calls, us, au, hard_stop=None)
@@ -767,7 +795,7 @@ def _write_payload(
         "generated_at_utc": finished,
         "pull_started_utc": started,
         "customer_ids": {"us": US_ID, "au": AU_ID},
-        "filter": "VC_US_% + VC_AU_% campaigns LAST_7_DAYS",
+        "filter": "VC_US_% + AU campaigns with impressions LAST_7_DAYS",
         "api_calls_used": len(api_calls),
         "api_calls_max": 2,
         "api_calls": api_calls,

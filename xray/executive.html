@@ -319,7 +319,7 @@
               <p class="val" id="au-cpc">—</p>
             </div>
           </div>
-          <p id="au-blurb">Campaigns live — waiting on traffic. Site phone 1300 886 740.</p>
+          <p id="au-blurb">Account spend is mostly legacy PM_AU_* (not Stage 1 VC_AU). Site phone 1300 886 740.</p>
         </article>
       </div>
 
@@ -510,12 +510,21 @@
           return (c.status || "").toUpperCase() === "ENABLED";
         });
       }
-      function marketHeadline(camps, week) {
-        if (!camps || !camps.length) return "Waiting on Ads read";
-        if (anyOn(camps)) {
-          if (!week || !week.cost) return "Live · waiting on traffic";
+      function marketHeadline(camps, week, market) {
+        if (!camps || !camps.length) {
+          if (week && week.cost) return "Spending";
+          return "Waiting on Ads read";
+        }
+        if (week && week.cost > 0) {
+          if (market === "AU") {
+            var stage1 = (camps || []).some(function (c) {
+              return (c.cohort || "").indexOf("stage1") === 0 && Number((c.last_7_days || {}).cost_usd || 0) > 0;
+            });
+            return stage1 ? "On" : "Spending · legacy";
+          }
           return "On";
         }
+        if (anyOn(camps)) return "Live · waiting on traffic";
         return "Paused";
       }
 
@@ -549,13 +558,24 @@
           document.getElementById("us-clicks").textContent = num(usW.clicks);
           document.getElementById("us-ctr").textContent = pct(usW.ctr);
           document.getElementById("us-cpc").textContent = money2(usW.cpc);
-          document.getElementById("us-status").textContent = marketHeadline(usCamps, usW);
+          document.getElementById("us-status").textContent = marketHeadline(usCamps, usW, "US");
 
           document.getElementById("au-spend").textContent = money(auW.cost);
           document.getElementById("au-clicks").textContent = num(auW.clicks);
           document.getElementById("au-ctr").textContent = pct(auW.ctr);
           document.getElementById("au-cpc").textContent = money2(auW.cpc);
-          document.getElementById("au-status").textContent = marketHeadline(auCamps, auW);
+          document.getElementById("au-status").textContent = marketHeadline(auCamps, auW, "AU");
+          var auBlurb = document.getElementById("au-blurb");
+          if (auBlurb && auW.cost > 0) {
+            var leg = au.totals_legacy_last_7_days || {};
+            var s1 = au.totals_stage1_last_7_days || {};
+            auBlurb.textContent =
+              "Last 7 days on this account. Legacy ~$" +
+              Math.round(Number(leg.cost_usd || auW.cost)) +
+              " · Stage 1 VC_AU ~$" +
+              Math.round(Number(s1.cost_usd || 0)) +
+              ". Phone 1300 886 740.";
+          }
 
           if (op.insights && op.insights.length) {
             fillList(document.getElementById("insight-list"), op.insights, function (t) {

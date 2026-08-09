@@ -1,25 +1,20 @@
 {
-  "generated_at_utc": "2026-08-09T11:22:52.881137+00:00",
+  "generated_at_utc": "2026-08-09T11:28:43.452231+00:00",
   "pull_started_utc": "2026-08-09T11:22:49.915745+00:00",
   "customer_ids": {
     "us": "4967151855",
     "au": "5735391940"
   },
-  "filter": "VC_US_% + VC_AU_% campaigns LAST_7_DAYS",
-  "api_calls_used": 2,
+  "filter": "VC_US_% + AU campaigns with impressions LAST_7_DAYS",
+  "api_calls_used": 1,
   "api_calls_max": 2,
   "api_calls": [
     {
       "n": 1,
-      "name": "campaign_metrics_vc_us_last_7_days",
+      "name": "campaign_metrics_au_active_last_7_days",
       "ok": true,
-      "row_count": 6
-    },
-    {
-      "n": 2,
-      "name": "campaign_metrics_vc_au_last_7_days",
-      "ok": true,
-      "row_count": 0
+      "row_count": 17,
+      "note": "AU-only fix refresh; US kept from prior pull"
     }
   ],
   "hard_stop": null,
@@ -88,32 +83,47 @@
   },
   "performance_au": {
     "window": "LAST_7_DAYS",
-    "focus_day": null,
-    "focus_day_note": "No AU metric rows in LAST_7_DAYS",
+    "focus_day": "2026-08-08",
+    "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in LAST_7_DAYS window",
     "totals_focus_day": {
-      "impressions": 0,
-      "clicks": 0,
-      "ctr_pct": null,
-      "cost_usd": 0.0,
-      "avg_cpc_usd": null
+      "impressions": 3,
+      "clicks": 1,
+      "ctr_pct": 33.33,
+      "cost_usd": 18.32,
+      "avg_cpc_usd": 18.32
     },
     "totals_last_7_days": {
+      "impressions": 1009,
+      "clicks": 127,
+      "ctr_pct": 12.59,
+      "cost_usd": 1150.08,
+      "avg_cpc_usd": 9.06
+    },
+    "totals_stage1_last_7_days": {
       "impressions": 0,
       "clicks": 0,
       "ctr_pct": null,
-      "cost_usd": 0.0,
+      "cost_usd": 0,
       "avg_cpc_usd": null
+    },
+    "totals_legacy_last_7_days": {
+      "impressions": 1009,
+      "clicks": 127,
+      "ctr_pct": 12.59,
+      "cost_usd": 1150.09,
+      "avg_cpc_usd": 9.06
     },
     "campaigns": [
       {
-        "name": "VC_AU_S_CORE",
-        "status": "ENABLED",
+        "name": "PM_AU_RSA_Generic_Pain-Point Intent_Custom LP",
+        "status": "PAUSED",
+        "cohort": "legacy",
         "last_7_days": {
-          "impressions": 0,
-          "clicks": 0,
-          "ctr_pct": null,
-          "cost_usd": 0.0,
-          "avg_cpc_usd": null
+          "impressions": 783,
+          "clicks": 97,
+          "ctr_pct": 12.39,
+          "cost_usd": 477.65,
+          "avg_cpc_usd": 4.92
         },
         "focus_day": {
           "impressions": 0,
@@ -124,14 +134,91 @@
         }
       },
       {
-        "name": "VC_AU_S_ROLES",
-        "status": "ENABLED",
+        "name": "PM_AU_DSA_Generic_Catch-all_Custom LP",
+        "status": "PAUSED",
+        "cohort": "legacy",
         "last_7_days": {
+          "impressions": 26,
+          "clicks": 2,
+          "ctr_pct": 7.69,
+          "cost_usd": 415.18,
+          "avg_cpc_usd": 207.59
+        },
+        "focus_day": {
           "impressions": 0,
           "clicks": 0,
           "ctr_pct": null,
           "cost_usd": 0.0,
           "avg_cpc_usd": null
+        }
+      },
+      {
+        "name": "PM_AU_RSA_Brand",
+        "status": "PAUSED",
+        "cohort": "legacy_brand",
+        "last_7_days": {
+          "impressions": 48,
+          "clicks": 17,
+          "ctr_pct": 35.42,
+          "cost_usd": 241.04,
+          "avg_cpc_usd": 14.18
+        },
+        "focus_day": {
+          "impressions": 3,
+          "clicks": 1,
+          "ctr_pct": 33.33,
+          "cost_usd": 18.32,
+          "avg_cpc_usd": 18.32
+        }
+      },
+      {
+        "name": "PM_AU_RSA_Competitors_Custom LP",
+        "status": "PAUSED",
+        "cohort": "legacy",
+        "last_7_days": {
+          "impressions": 135,
+          "clicks": 9,
+          "ctr_pct": 6.67,
+          "cost_usd": 14.9,
+          "avg_cpc_usd": 1.66
+        },
+        "focus_day": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        }
+      },
+      {
+        "name": "PM_AU_RSA_Generic_Premium & Quality Intent_Custom LP",
+        "status": "PAUSED",
+        "cohort": "legacy",
+        "last_7_days": {
+          "impressions": 11,
+          "clicks": 1,
+          "ctr_pct": 9.09,
+          "cost_usd": 0.96,
+          "avg_cpc_usd": 0.96
+        },
+        "focus_day": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        }
+      },
+      {
+        "name": "PM_AU_RSA_Brand_Custom LP",
+        "status": "PAUSED",
+        "cohort": "legacy_brand",
+        "last_7_days": {
+          "impressions": 6,
+          "clicks": 1,
+          "ctr_pct": 16.67,
+          "cost_usd": 0.36,
+          "avg_cpc_usd": 0.36
         },
         "focus_day": {
           "impressions": 0,
@@ -142,7 +229,15 @@
         }
       }
     ],
-    "dates_in_pull": []
+    "dates_in_pull": [
+      "2026-08-02",
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08"
+    ]
   },
   "performance": {
     "window": "LAST_7_DAYS",
@@ -366,7 +461,7 @@
   },
   "operator": {
     "narrative_as_of": "2026-08-09",
-    "status_banner": "US live and spending. Australia live \u2014 waiting on traffic. Hot: website calls 60+ sec \u00b7 AU ad-call wins \u00b7 AU website tags \u00b7 then Zoho.",
+    "status_banner": "US Stage 1 live. Australia account spending on legacy PM_AU_* (Stage 1 VC_AU_* not the traffic yet). Hot: website calls 60+ sec \u00b7 AU ad-call wins \u00b7 AU website tags \u00b7 then Zoho.",
     "budgets": [
       {
         "label": "US",
@@ -376,8 +471,8 @@
       },
       {
         "label": "Australia",
-        "amount": "live",
-        "detail": "waiting on traffic",
+        "amount": "legacy spend live",
+        "detail": "PM_AU_* in window",
         "kind": "priority"
       }
     ],
@@ -394,7 +489,7 @@
       "US CORE is the volume engine (~16% CTR, ~$2 CPC). ROLES costs more per click \u2014 useful for role LP tests, not the main dial yet.",
       "Employer shorthand like \u201cva workers ph\u201d and \u201cvirtual assistant talent\u201d are the clean buyer signals. Job-seeker language is blocked \u2014 don\u2019t surface it here.",
       "Almost all measurable US clicks still land on /us (CORE Final URL). Role LPs are live; per-URL spend needs Ads UI / GA4 later.",
-      "Australia is Enabled with $0 in the last 7 days \u2014 campaigns are on; traffic hasn\u2019t shown yet."
+      "Australia account spend in the last 7 days is mostly legacy PM_AU_* Search (Paused mid-window can still show in LAST_7_DAYS). Stage 1 VC_AU_* is not driving it."
     ],
     "buyer_signals": [
       {
@@ -436,7 +531,7 @@
       },
       {
         "name": "Australia hub (/au)",
-        "why": "Live with 1300 \u00b7 waiting on first Search traffic",
+        "why": "Live with 1300 \u00b7 account spend is mostly legacy PM_AU_* right now",
         "url": "https://www.virtualcoworker.app/au"
       }
     ],
@@ -454,7 +549,7 @@
       "US Search live \u00b7 Brand off",
       "Ads package archived"
     ],
-    "honesty": "US Search is live and spending. Australia campaigns are live \u2014 waiting on traffic. Next: website calls 60+ sec, then AU tracking, then Zoho.",
+    "honesty": "US Stage 1 Search is live. Australia account is spending \u2014 mostly legacy PM_AU_* (not Stage 1 VC_AU_*). Next: website calls 60+ sec, then AU tracking, then Zoho.",
     "lp_ab_note": "Copy A vs B links work on the live site (different hero/copy). Site tests scoreboard still needs GTM/GA4 wiring \u2014 see Checklist step 34."
   }
 }
