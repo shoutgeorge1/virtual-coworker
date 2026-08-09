@@ -3,8 +3,9 @@
 Rule: **nothing on the page that we cannot point at a source for.** No invented
 Fortune 500 logos, no made-up counts, no star ratings we don't hold.
 
-Second rule (George, 2026-08-07): **no outbound links on any trust mark.** Clutch,
-Forbes and Google are display-only. Paid traffic stays on this host.
+Second rule (George, 2026-08-07 / 2026-08-09): **no outbound links on any trust
+mark or footer social icon.** Clutch, Forbes, Google, directories, and socials
+are display-only. Paid traffic stays on this host. No `<a href>` on those icons.
 
 Third rule (George, 2026-08-07): **client strip = image-backed logos only**, muted
 (grayscale) for privacy. No blank wordmark slots. If Virtual Coworker has not
@@ -16,6 +17,11 @@ published a logo asset for a named client, that name stays off the strip.
 |---|---|---|
 | Clutch — Top Virtual Assistant Company, US 2024 | `brand/trust/badge-clutch-us-2024.webp` | Virtual Coworker media library |
 | Clutch 4.9 / 5 · 7 reviews | text | Clutch company profile rating |
+| Trustpilot (Featured In logo) | `brand/trust/press-trustpilot.svg` | Live https://www.trustpilot.com/review/virtualcoworker.com (2026-08-09) — 4.3 / 7 verified in TRUST_PROOF; logo only in As featured in (US). No separate Reviews card. |
+| Glassdoor (footer logo only) | `brand/trust/dir-glassdoor.svg` | George live look 2026-08-09: 4.1 / 87% / 24 — **not printed on-page** (George: logos only, grayed). Footer box only. |
+| Outsource Accelerator (Featured In logo) | `brand/trust/press-outsource-accelerator.svg` | https://www.outsourceaccelerator.com/company/virtual-coworker/ — logo in As featured in (US). **Do not** print “OA 4.3”. |
+| Zoho (Featured In wordmark) | `brand/trust/press-zoho.svg` | Platform directory presence — As featured in (US), not a social box. |
+| Footer Find us on: LinkedIn, Indeed, Facebook, Instagram, ZipRecruiter, Glassdoor | `brand/trust/dir-*.svg` | Bottom boxes — **grayed logos only**, no captions, no hrefs (reads non-clickable). Provenance not rendered. No TikTok. Employer `SiteFooter` (not PH). |
 | Google 5-star reviews | `brand/trust/badge-5-star-reviews.webp` | Virtual Coworker media library |
 | Forbes Business Council | `brand/badge-forbes-*.webp` | Braden Yuill's council profile |
 | Founded 2011 badge | `brand/trust/badge-14-year.webp` | Virtual Coworker media library |
@@ -49,10 +55,12 @@ Source labels render as plain text — cited, not linked.
   Solutions / goodcompany.org) — not a Virtual Coworker client; not the US Good Co.
 - **No inventing Fortune 500.** US-native marks (College Hunks, Good Co.) on `/us`
   only; AU success-story logos on `/au` and `/us` (George: OK to share AU on US).
-- **Featured In** lives in `PressBand` below the role quiz — not inside Happy
-  customers — so logos + reviews aren’t a pile.
+- **Featured In** lives in `PressBand` (after the hero gate) — not inside Happy
+  customers. Trustpilot / OA / Zoho are US Featured In logos (no Reviews card).
+  Social/Glassdoor boxes are grayed in the footer. AU Featured In has no
+  Trustpilot / OA / Zoho.
 - **No client logos scraped beyond what George saved + VC’s published /forbes/ marks.**
-- **No review counts beyond the 7 on the Clutch profile.**
+- **No review counts beyond verified public profiles.** Clutch 4.9 / 7, Trustpilot 4.3 / 7, Glassdoor 4.1 / 87% / 24. Do not invent BBB/Yelp/Inc/Entrepreneur.
 
 ## Known staleness to fix at source
 
@@ -70,7 +78,7 @@ Tracked on Launch Control checklist (2026-08-09). Do **not** invent or scrape:
 2. **More authorized US client logos** — written OK from VC / client; prefer
    brands a US buyer recognizes in two seconds.
 3. **Video testimonials** — face + name + company + specific outcome.
-4. **Never invent Fortune 500** marks or review counts beyond Clutch’s public 7.
+4. **Never invent Fortune 500** marks or review counts. Verified only: Clutch 4.9/7, Trustpilot 4.3/7, Glassdoor 4.1 / 87% / 24. No BBB/Yelp. No Inc/Entrepreneur.
 
 ## Capacity urgency (live 2026-08-09)
 
@@ -80,11 +88,12 @@ usually same business day.” No fake countdown / invented “spots left.”
 
 ## US vs AU trust (2026-08-09 pass 2)
 
-- **As featured in (US):** Forbes Business Council, Clutch US, Google reviews,
-  plus VC’s published Featured In row (BRW, Startup Daily, StartupSmart,
-  Anthill). SMH is AU-only. Outsource Accelerator top-20 listing is real
-  (VC + EIN PR, 2026) but we have no OA logo in the brand library — do not
-  invent one. No Inc / Entrepreneur / BI editorial or display-ad placement found.
+- **As featured in (US):** Forbes, Clutch US, Google, **Trustpilot**, VC press
+  row (BRW, Startup Daily, StartupSmart, Anthill), **Outsource Accelerator**,
+  **Zoho**. SMH is AU-only. No separate Reviews card. No Inc / Entrepreneur / BI.
+- **Footer Find us on (employer SiteFooter):** LinkedIn, Indeed, Facebook,
+  Instagram, ZipRecruiter, Glassdoor — grayed logos only, zero hrefs, no
+  captions. No TikTok.
 - **US client logos in hero:** removed. Tiny grayscale marks were broken
   (College Hunks SVG illustration + AU logos filling the US strip).
 - **US TrustBand logos:** Good Co. only (Charleston, SC — published quote).

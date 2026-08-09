@@ -3,7 +3,12 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { CATEGORIES, CATEGORY_SLUGS } from "../config/categories";
 import { MARKETS } from "../config/markets";
-import { INDUSTRY_STATS, PUBLIC_QUOTES, SITE } from "../config/site";
+import {
+  FOOTER_SOCIAL_MARKS,
+  INDUSTRY_STATS,
+  PUBLIC_QUOTES,
+  SITE,
+} from "../config/site";
 
 /**
  * Public-copy lint: buyer-facing LP strings must not carry internal QA / PPC jargon.
@@ -88,6 +93,7 @@ function visibleSiteStrings(): { path: string; text: string }[] {
         body: s.body,
         sourceLabel: s.sourceLabel,
       })),
+      footerSocial: FOOTER_SOCIAL_MARKS.map((p) => p.name),
     },
     "site",
     out,
@@ -121,6 +127,7 @@ function extractQuotedStrings(source: string): string[] {
 const PUBLIC_SURFACE_FILES = [
   "app/components/MarketLanding.tsx",
   "app/components/TrustBand.tsx",
+  "app/components/PressBand.tsx",
   "app/components/TrustQuotes.tsx",
   "app/components/RoleQuiz.tsx",
   "app/components/QuizTeaser.tsx",

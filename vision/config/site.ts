@@ -74,6 +74,11 @@ export const COMPANY_IDENTITY = {
  * Clutch rating from the Clutch company profile (4.9 · 7 reviews).
  * Forbes: Braden Yuill Business Council profile.
  * Google Maps: published US office pin (badge artwork only — no invented count).
+ * Trustpilot: live profile 2026-08-09 — 4.3 / 5 · 7 reviews (Google snippet 4.7/26 was stale).
+ * Glassdoor: George live look 2026-08-09 — 4.1 / 5 · 87% would recommend · 24 reviews.
+ *   On-page (2026-08-09): show recommend % + review count only — do NOT print 4.1.
+ *   (OA’s page also prints a Glassdoor 4.3 — that is Glassdoor’s figure on OA, not OA’s score).
+ * Outsource Accelerator: Featured In logo only — do not print “OA 4.3”.
  */
 export const TRUST_PROOF = {
   clutch: {
@@ -89,6 +94,23 @@ export const TRUST_PROOF = {
   googleMapsUs: {
     href: "https://goo.gl/maps/rZikUJ86PppBwULK9",
     label: "Google Maps — West Hollywood office",
+  },
+  trustpilot: {
+    href: "https://www.trustpilot.com/review/virtualcoworker.com",
+    rating: "4.3",
+    reviewCount: 7,
+    label: "Trustpilot",
+  },
+  glassdoor: {
+    rating: "4.1",
+    recommendPct: 87,
+    reviewCount: 24,
+    label: "Glassdoor",
+  },
+  outsourceAccelerator: {
+    href: "https://www.outsourceaccelerator.com/company/virtual-coworker/",
+    label: "Outsource Accelerator",
+    note: "Listed · Directory",
   },
   sinceYear: 2011,
 } as const;
@@ -349,6 +371,23 @@ export const PRESS_MARKS: readonly PressMark[] = [
     markets: ["us", "au"],
   },
   {
+    id: "anthill",
+    src: "/brand/trust/press-anthill.svg",
+    alt: "Anthill Cool Company Awards — Top 100",
+    note: "Award",
+    markets: ["us", "au"],
+  },
+  {
+    // Logo only in Featured In (George 2026-08-09) — no separate Reviews card.
+    // Rating lives in TRUST_PROOF / docs; not printed under the mark.
+    id: "trustpilot",
+    src: "/brand/trust/press-trustpilot.svg",
+    alt: "Trustpilot",
+    note: "Reviews",
+    wide: true,
+    markets: ["us"],
+  },
+  {
     // Official VC “Featured In” row. SMH is AU-only — not a US press mark.
     id: "smh",
     src: "/brand/trust/press-smh.webp",
@@ -383,17 +422,53 @@ export const PRESS_MARKS: readonly PressMark[] = [
     markets: ["us", "au"],
   },
   {
-    id: "anthill",
-    src: "/brand/trust/press-anthill.svg",
-    alt: "Anthill Cool Company Awards — Top 100",
-    note: "Award",
-    markets: ["us", "au"],
+    // Industry directory — logo in Featured In (George 2026-08-09). US home pack.
+    id: "outsource-accelerator",
+    src: "/brand/trust/press-outsource-accelerator.svg",
+    alt: "Outsource Accelerator",
+    note: "Directory",
+    wide: true,
+    markets: ["us"],
+  },
+  {
+    // Platform directory presence — Featured In wordmark, not a social box.
+    id: "zoho",
+    src: "/brand/trust/press-zoho.svg",
+    alt: "Zoho",
+    note: "Directory",
+    wide: true,
+    markets: ["us"],
   },
 ];
 
 export function pressMarksForMarket(market: "us" | "au"): readonly PressMark[] {
   return PRESS_MARKS.filter((p) => !p.markets || p.markets.includes(market));
 }
+
+export type FooterSocialMark = {
+  id: string;
+  src: string;
+  name: string;
+};
+
+/**
+ * Footer social / directory boxes — display only. No href field on purpose.
+ * George 2026-08-09: LinkedIn, Indeed, Facebook, Instagram, ZipRecruiter, Glassdoor
+ * at the bottom — grayed logos only so they read as non-clickable.
+ * Glassdoor recommend % stays in TRUST_PROOF / docs (not on-page caption).
+ * Provenance (TRUST-PROOF.md only, never rendered):
+ *   linkedin.com/company/virtualcoworker
+ *   facebook.com/virtualcoworkerinc
+ *   instagram.com/virtualcoworker
+ */
+export const FOOTER_SOCIAL_MARKS: readonly FooterSocialMark[] = [
+  { id: "linkedin", src: "/brand/trust/dir-linkedin.svg", name: "LinkedIn" },
+  { id: "indeed", src: "/brand/trust/dir-indeed.svg", name: "Indeed" },
+  { id: "facebook", src: "/brand/trust/dir-facebook.svg", name: "Facebook" },
+  { id: "instagram", src: "/brand/trust/dir-instagram.svg", name: "Instagram" },
+  { id: "ziprecruiter", src: "/brand/trust/dir-ziprecruiter.svg", name: "ZipRecruiter" },
+  { id: "glassdoor", src: "/brand/trust/dir-glassdoor.svg", name: "Glassdoor" },
+];
 
 /**
  * Industry pain→gain stats — primary published sources only.

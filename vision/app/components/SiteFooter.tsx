@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   COMPANY_IDENTITY,
+  FOOTER_SOCIAL_MARKS,
   SITE,
   TRUST_PROOF,
   type SiteSurface,
@@ -164,6 +165,23 @@ export default function SiteFooter({
               <p key={line}>{line}</p>
             ))}
             <p className="site-footer-trademark">{SITE.trademark}</p>
+          </div>
+        ) : null}
+
+        {!isPh ? (
+          <div className="site-footer-social-wrap">
+            <p className="site-footer-label">Find us on</p>
+            <ul
+              className="site-footer-social"
+              aria-label="Social and directory profiles, display only"
+            >
+              {FOOTER_SOCIAL_MARKS.map((s) => (
+                <li key={s.id} className={`is-${s.id}`} role="img" aria-label={s.name}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={s.src} alt="" aria-hidden="true" draggable={false} />
+                </li>
+              ))}
+            </ul>
           </div>
         ) : null}
 

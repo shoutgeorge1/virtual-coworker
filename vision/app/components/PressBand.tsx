@@ -3,7 +3,8 @@ import { pressMarksForMarket } from "../../config/site";
 
 /**
  * Standalone “Featured in” press/awards strip.
- * Display-only — no outbound links.
+ * Same layout language as “Companies that hired through us” —
+ * white panel, equal flex cells, constrained width. Display-only.
  */
 export default function PressBand({
   light = false,
@@ -23,20 +24,7 @@ export default function PressBand({
         <p className="trust-press-label">As featured in</p>
         <ul className="trust-press-row">
           {marks.map((p) => (
-            <li
-              className={`trust-press-mark${p.wide ? " is-wide" : ""}${
-                p.id === "forbes"
-                  ? " is-pop is-forbes"
-                  : p.id === "clutch-us" || p.id === "google"
-                    ? " is-pop"
-                    : ""
-              }${
-                p.id === "smh" || p.id === "startupdaily" ? " is-masthead" : ""
-              }${p.id === "startupsmart" ? " is-smart" : ""}${
-                p.id === "anthill" ? " is-end" : ""
-              }`}
-              key={p.id}
-            >
+            <li className={`trust-press-mark is-${p.id}`} key={p.id}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={p.src} alt={p.alt} loading="lazy" />
             </li>
