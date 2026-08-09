@@ -1760,6 +1760,15 @@ CORE_EXACT_BY_AG: dict[str, list[str]] = {
         "offshore va agency",
         "va outsourcing philippines",
         "philippines va outsourcing",
+        # Classic 3+ word VA + PH + agency/company/firm/outsourcing (gap fill)
+        "philippines virtual assistant company",
+        "filipino virtual assistant firm",
+        "virtual assistant outsourcing philippines",
+        "philippines virtual assistant outsourcing",
+        "outsourcing virtual assistant philippines",
+        "virtual assistant outsourcing agency philippines",
+        "philippines virtual assistant outsourcing agency",
+        "hire virtual assistant agency philippines",
     ],
 }
 
