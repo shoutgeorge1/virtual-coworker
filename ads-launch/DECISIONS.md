@@ -14,13 +14,50 @@ George asked for decisive defaults so QA / deploy can proceed. These are **opera
 
 Past burn: agents launched ~8 campaigns + many AGs via API and burned developer-token quota on ELA — do not repeat. Durable agent rule: `~/.cursor/rules/google-ads-api-editor-only.mdc`.
 
-## Brand deferred (HARD — 2026-08-06)
+## Keyword intent priority — agency-hire (2026-08-09)
+
+- **Highest intent:** employer searching for a **Philippines VA / staffing agency · firm · company · outsourcing** provider (not a job board, not “I need a job”).
+- Plain **hire / hiring / recruit** stays useful as support but is messier (employer vs job-seeker). Do not lead strategy with ambiguous head terms alone.
+- Package add-on: `ads-launch/google-ads-editor-agency-intent-keywords-add.csv` (Exact, **Paused**). `va workers ph` stays watch/pause — not a claimed win.
+- Strategy = intent quality. Do **not** invent that these Exact adds are already converting without Ads evidence.
+
+## Brand deferred (HARD — 2026-08-06 · paused 2026-08-07)
 
 - Old agencies wasted money; live accounts are on **trickle mode**. Whatever is still Enabled (including Brand) is **obvious from the Ads UI** — not an agent “discovery.” Do **not** surface it unprompted.
 - Do **not** center strategy, probes, checklists, or next steps on Brand.
 - Stage 1 priority: build the real clean **`VC_*` Editor package** first. Brand = tap later after that system exists.
 - Optional API “what’s spending now” probes = **low value**; don’t push them.
 - Durable agent rule: `~/.cursor/rules/vc-ads-brand-deferred.mdc`.
+
+### Brand paused by George (2026-08-07) — DONE / deferred
+
+- George **turned Brand OFF** (paused). Cost per conversion was in the very expensive range (~**$1,000 per lead** order of magnitude). **SEO owns brand**; people searching the name usually find organic. Other advertisers may still bid brand; rebuild a clean Brand campaign later only when George asks.
+- If VC ever sees a **competitor using “Virtual Coworker” in their ads**, tell George immediately — possible policy issue.
+- **Do not re-enable** Brand. **Do not** center strategy, probes, or checklist next-steps on Brand.
+- Aligns with Brand deferred hard rule above.
+- Stakeholder follow-up email (**Brand paused + phone tracking**) **sent** 2026-08-07 to Braden / Caitlin / Cheyenne (CC George).
+
+## US phone / Call assets (LOCKED — 2026-08-07)
+
+**Phone = guiding light** until Zoho offline “qualified lead” is ready. USA Search stays **Maximize Clicks** while campaigns season. Primary: ~60s call from ads. Secondary: website phone taps. Forms useful but not driving the account (spam/bot risk).
+
+| Number | Role | Do | Do not |
+|--------|------|----|--------|
+| **888-954-8644** | US site + national Call asset (primary) | Use on website (`NEXT_PUBLIC_US_PHONE` / site defaults) **and** on `VC_US_S_CORE` / `VC_US_S_ROLES` Call assets. Google usually prefers 888 nationally. | Don’t fight for “one number everywhere” unless VC asks. |
+| **310-730-9126** | Still in account; may show for some LA traffic | Leave account-level alone for now. Easy to change if VC wants 888 only everywhere. | Do not put 310 back on the microsite or as a competing Call asset on CORE/ROLES. |
+
+### Later / ops (open)
+
+- **Remove / simplify the 888 phone tree** (soft ask — still open). Cheyenne confirmed: press 0 → sales → her; shorter path on a paid sales line helps. Route fast to sales/Cheyenne when VC is ready.
+- Stakeholder emails **sent** 2026-08-07 (phone-tree ask + clearer Brand/phone follow-up) — waiting on VC (phones/IT + Cheyenne). Tracked on Launch Control checklist #13.
+
+### Measurement (2026-08-07)
+
+- Fresh **GTM + GA4** on the new microsite so this test’s data stays separate from older WordPress/tagging. Not a judgment on the past — don’t mix signals.
+- Sniper negatives: campaign-level list **`VC_US_S_🚫_Sniper`** attached by George to CORE + ROLES (manual). Repo: `ads-launch/VC_US_S_Sniper_Negatives.*`.
+- **Next session:** site A/B tests → GA4 wiring on Site tests dashboard.
+- **Early next week (aim):** shallow Zoho “decent qualified lead” → Google Ads offline conversion (not “customer paid” — just “looks real”).
+- **Australia:** confirm/add the AU number in Ads before launch — don’t assume answering is ready.
 
 ## Conversion / CRM stack (LOCKED direction — 2026-08-06)
 
@@ -72,7 +109,8 @@ Past burn: agents launched ~8 campaigns + many AGs via API and burned developer-
 
 ### Initial bidding / activation (unchanged intent)
 
-- Keep **Maximize Clicks**; CPC US **$8** / AU **A$6**  
+- Keep **Maximize Clicks**; CPC US CORE **$12** / ROLES **$10** · AU **A$6**  
+ 
 - Exact + Phrase only; no Broad+ / PMax / DSA / Max Conv at launch  
 - Start Tier **1A** explicit hire/outsource/staffing; add reviewed Tier **1B** PH/Filipino commercial for volume  
 - Generic geo-category + generic VA Core later  
@@ -105,7 +143,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | **Measurement** | **Separate GTM + GA4 per market** | `GTM_US` / `GTM_AU` (+ `GTM_PH` if needed) even on one host — audiences/conversions must not contaminate. |
 | **Activation priority** | **PH / Filipino / offshore long-tail first** | Source of truth: `PHASED-ACTIVATION.md`. Phase by **intent quality**, not “Core then Digital/Social/Admin.” Bookkeeping/accounting with strong PH long-tail = Phase 1. Generic Core heads = Phase 3 / later. |
 | **AU phone** | Form-primary only | No `NEXT_PUBLIC_AU_PHONE`. No fake AU number. |
-| **US phone** | `310-426-8776` via `NEXT_PUBLIC_US_PHONE` | Brief NA number. |
+| **US phone (site + Ads)** | `(888) 954-8644` / `tel:8889548644` | Site + Call asset primary (2026-08-07). `310` still in account — may show for some LA traffic; Google usually prefers 888 nationally. |
 | **Careers URL** | `/ph` (PH microsite) | Internal job-seeker exit. **Never** WordPress. Env WP hosts rejected. |
 | **Lead delivery** | Real channel required for **TRAFFIC READY** | `ALLOW_LOG_ONLY_LEADS=true` = **explicit blocked mode** — QA logs only, `conversion_eligible=false`, not TRAFFIC READY. Zoho CRM = **CRM READY** parallel track (not a traffic gate). |
 | **Exit-intent** | Off unless `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true` | Frequency-capped once/session. No fake live chat. |
@@ -121,7 +159,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | **LP version** | `stage1-v7` | Core→market-home routing stamp. |
 | **US daily budgets** | Core **$75** · Roles **$50** | USD. ≈ **$125/day** ≈ **$3.8k/mo** — placeholders inside a **$10–20k/account** monthly budget story (room to scale). George-decidable. |
 | **AU daily budgets** | Core **A$75** · Roles **A$50** | AUD. Same ~60/40 split. ≈ **A$3.8k/mo** Stage 1 pace. George-decidable. |
-| **Max CPC** | US **$8** · AU **A$6** | Maximize Clicks cap. George-decidable. |
+| **Max CPC** | US CORE **$12** / ROLES **$10** · AU **A$6** both | Maximize Clicks cap (live USA Editor 2026-08-07). AU stays conservative. George-decidable. |
 | **RSA count** | **3 unique full RSAs (15H/4D) per main AG** | Distinct angles (hire-intent / role or PH-offshore / proof-speed). City-test AGs stay 1–2. No fake claims. |
 | **Google Ads Post / enable** | **Not approved** | Package ships Paused. No live campaign enable from this decision set. |
 | **Editor CSV Account column** | **Required** | Every row stamps Customer ID: USA `496-715-1855` · AU `573-539-1940`. Needed for USA+AU multi-account Editor import so rows don’t land in the wrong account. |
@@ -164,8 +202,10 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 - Thank-you → **book hiring conversation** (Calendly): Stage 1 **secondary** or separate conversion candidate — **never** Primary replacing `employer_inquiry_submitted`. Confirm URLs with VC; booked-call event when GTM ready → OPTIMIZATION READY / later. **Not** required for TRAFFIC READY.
 - CallRail / qualified-call tracking
 - GTM Ads conversion mapping (tested) → **OPTIMIZATION READY**
-- Brand Search (deferred — not in this CSV; see **Brand deferred** hard lock above — do not center Stage 1 on live Brand remnants)
-- Pause decision on legacy `PM_*` Brand campaigns: **later**, after `VC_*` exists — not a Stage 1 checklist item
+- **Remove / simplify 888 phone tree** (soft ask — still open; route fast to sales/Cheyenne) — stakeholder emails sent 2026-08-07
+- Brand Search (deferred — **paused by George 2026-08-07**; ~$1k/lead range; SEO owns brand; notify if competitor uses brand in ads; see **Brand deferred** hard lock — do not re-enable)
+- Legacy `PM_*` Brand: **paused by George 2026-08-07** — leave off; rebuild later only when George asks
+- Stakeholder follow-up (**Brand paused + phone tracking**) **sent** 2026-08-07
 
 ## Where applied
 

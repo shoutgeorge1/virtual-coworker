@@ -322,21 +322,27 @@
     "reason": "Curated employer signals only \u2014 no early junk ST dump on Executive."
   },
   "keywords": {
-    "label": "Employer-intent Exact themes",
-    "note": "Curated bidding themes \u2014 not raw search terms",
+    "label": "Employer agency-hire Exact themes",
+    "note": "Curated bidding themes \u2014 not raw search terms. Priority = agency/firm/company seekers.",
     "executive_surface": true,
     "themes": [
       {
-        "theme": "hire VA / Filipino VA",
+        "theme": "PH VA / staffing agency \u00b7 firm \u00b7 company",
         "market": "US + AU",
         "campaign": "VC_*_S_CORE",
-        "why": "Core employer hire intent"
+        "why": "Highest intent \u2014 employer shopping for an agency to staff PH remote workers"
       },
       {
-        "theme": "remote staffing / virtual staff PH",
+        "theme": "Philippines outsourcing agency",
         "market": "US + AU",
         "campaign": "VC_*_S_CORE",
-        "why": "Staffing language buyers use"
+        "why": "Outsourcing-agency language \u00b7 clear B2B provider search"
+      },
+      {
+        "theme": "hire VA / Filipino VA (supporting)",
+        "market": "US + AU",
+        "campaign": "VC_*_S_CORE",
+        "why": "Useful but messier \u2014 hire/recruit can mix employer + job-seeker"
       },
       {
         "theme": "bookkeeping / accounting hire",
@@ -487,29 +493,29 @@
     },
     "insights": [
       "US CORE is the volume engine (~16% CTR, ~$2 CPC). ROLES costs more per click \u2014 useful for role LP tests, not the main dial yet.",
-      "Trust natural employer queries a person would type \u2014 hire, talent, staffing. Odd shorthand (e.g. \u201cva workers ph\u201d) can look buyer-ish on the surface but doesn\u2019t always read human; treat as watch / pause if it starts eating spend. Job-seeker junk stays off this page.",
+      "Keyword priority = employer agency-hire intent: Philippines VA / staffing agency \u00b7 firm \u00b7 company \u00b7 outsourcing. Plain \u201chire/recruit\u201d is messier (employer vs job-seeker). Odd shorthand (e.g. \u201cva workers ph\u201d) stays watch / pause if it eats spend. Job-seeker junk stays off this page.",
       "Almost all measurable US clicks still land on /us (CORE Final URL). Role LPs are live; per-URL spend needs Ads UI / GA4 later.",
       "Australia account spend in the last 7 days is mostly legacy PM_AU_* Search (Paused mid-window can still show in LAST_7_DAYS). Stage 1 VC_AU_* is not driving it."
     ],
     "buyer_signals": [
       {
-        "term": "virtual assistant hiring",
-        "why": "Natural hire-side query \u00b7 reads like a person typed it",
+        "term": "philippines virtual assistant agency",
+        "why": "Highest-intent shape \u00b7 employer looking for a PH VA agency",
         "market": "US"
       },
       {
-        "term": "virtual assistant talent",
-        "why": "Employer talent language \u00b7 not job-board phrasing",
+        "term": "philippines outsourcing agency",
+        "why": "Agency / outsourcing buyer language \u00b7 not a job seeker",
         "market": "US"
       },
       {
         "term": "remote staffing agency / agencies",
-        "why": "Staffing wording buyers actually use",
+        "why": "Staffing-agency wording buyers actually use",
         "market": "US"
       },
       {
-        "term": "remote executive assistant",
-        "why": "Role-intent that matches ROLES LPs",
+        "term": "virtual assistant firm / company",
+        "why": "Firm/company = shopping for a provider, not a gig listing",
         "market": "US"
       },
       {

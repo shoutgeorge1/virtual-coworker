@@ -131,10 +131,10 @@ OPERATOR_NOTES = {
             "ROLES costs more per click — useful for role LP tests, not the main dial yet."
         ),
         (
-            "Trust natural employer queries a person would type — hire, talent, staffing. "
-            "Odd shorthand (e.g. “va workers ph”) can look buyer-ish on the surface but "
-            "doesn’t always read human; treat as watch / pause if it starts eating spend. "
-            "Job-seeker junk stays off this page."
+            "Keyword priority = employer agency-hire intent: Philippines VA / staffing "
+            "agency · firm · company · outsourcing. Plain “hire/recruit” is messier "
+            "(employer vs job-seeker). Odd shorthand (e.g. “va workers ph”) stays "
+            "watch / pause if it eats spend. Job-seeker junk stays off this page."
         ),
         (
             "Almost all measurable US clicks still land on /us (CORE Final URL). "
@@ -147,23 +147,23 @@ OPERATOR_NOTES = {
     ],
     "buyer_signals": [
         {
-            "term": "virtual assistant hiring",
-            "why": "Natural hire-side query · reads like a person typed it",
+            "term": "philippines virtual assistant agency",
+            "why": "Highest-intent shape · employer looking for a PH VA agency",
             "market": "US",
         },
         {
-            "term": "virtual assistant talent",
-            "why": "Employer talent language · not job-board phrasing",
+            "term": "philippines outsourcing agency",
+            "why": "Agency / outsourcing buyer language · not a job seeker",
             "market": "US",
         },
         {
             "term": "remote staffing agency / agencies",
-            "why": "Staffing wording buyers actually use",
+            "why": "Staffing-agency wording buyers actually use",
             "market": "US",
         },
         {
-            "term": "remote executive assistant",
-            "why": "Role-intent that matches ROLES LPs",
+            "term": "virtual assistant firm / company",
+            "why": "Firm/company = shopping for a provider, not a gig listing",
             "market": "US",
         },
         {
@@ -215,21 +215,27 @@ OPERATOR_NOTES = {
 
 # Curated bidding themes for Executive (never dump raw early search terms)
 KEYWORD_THEMES = {
-    "label": "Employer-intent Exact themes",
-    "note": "Curated bidding themes — not raw search terms",
+    "label": "Employer agency-hire Exact themes",
+    "note": "Curated bidding themes — not raw search terms. Priority = agency/firm/company seekers.",
     "executive_surface": True,
     "themes": [
         {
-            "theme": "hire VA / Filipino VA",
+            "theme": "PH VA / staffing agency · firm · company",
             "market": "US + AU",
             "campaign": "VC_*_S_CORE",
-            "why": "Core employer hire intent",
+            "why": "Highest intent — employer shopping for an agency to staff PH remote workers",
         },
         {
-            "theme": "remote staffing / virtual staff PH",
+            "theme": "Philippines outsourcing agency",
             "market": "US + AU",
             "campaign": "VC_*_S_CORE",
-            "why": "Staffing language buyers use",
+            "why": "Outsourcing-agency language · clear B2B provider search",
+        },
+        {
+            "theme": "hire VA / Filipino VA (supporting)",
+            "market": "US + AU",
+            "campaign": "VC_*_S_CORE",
+            "why": "Useful but messier — hire/recruit can mix employer + job-seeker",
         },
         {
             "theme": "bookkeeping / accounting hire",
