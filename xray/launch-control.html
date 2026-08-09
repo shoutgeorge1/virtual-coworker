@@ -88,6 +88,27 @@
       font-size: 1.15rem;
     }
 
+    #quiz-funnel {
+      margin: 0 0 1.35rem;
+      border: 2px solid rgba(180, 83, 9, 0.45);
+      box-shadow: 0 0 0 3px rgba(180, 83, 9, 0.08);
+    }
+    #quiz-funnel .panel-hd {
+      background: rgba(180, 83, 9, 0.08);
+    }
+    #quiz-funnel .panel-hd h2 { font-size: 1.08rem; }
+    .quiz-funnel-lede,
+    .quiz-funnel-links {
+      margin: 0 0 0.85rem;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      color: var(--body);
+    }
+    .quiz-funnel-links { font-size: 0.84rem; }
+    #quiz-funnel .todo-list li { padding: 0.4rem 0; }
+    #quiz-funnel .todo-list li.is-done { opacity: 0.72; }
+    #quiz-funnel .quiz-funnel-lock { font-weight: 600; color: var(--ink); }
+
     .lc-below {
       margin-top: 0.25rem;
       padding-top: 1rem;
@@ -312,7 +333,7 @@
             <li><strong>Now on site:</strong> form chips + modeled value live on <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> (and category LPs). Optimize qualified value, not form-fill volume. Ads bidding not using modeled $.</li>
             <li><strong>3 · Then:</strong> Zoho “qualified” → Job Order → Placement → Ads offline (CRM value supersedes website estimate)</li>
             <li><strong>US today:</strong> live · ~$125/day · early ~$300/inquiry is a gut check only</li>
-            <li><strong>Later (~90%) — Quiz LP:</strong> exploratory “Take the quiz / What kind of VA do you need?” · ads <strong>Paused</strong> · see Launch step 36</li>
+            <li><strong>Later (~70%) — Quiz Funnel:</strong> not traffic-ready · <strong>rework later</strong> · quiz not highlighted enough yet (needs quiz as the hero, not a homepage-clone widget) · ads <strong>Paused</strong> · not a controlled A/B test · see <a href="#quiz-funnel">Quiz Funnel / Quiz Ads</a> (step 36)</li>
           </ul>
         </section>
 
@@ -613,12 +634,10 @@
             <li data-order="100">
               <input type="checkbox" id="ads36" data-todo="ads36" />
               <label for="ads36">
-                <strong>36. Later — Quiz LP (~90%)</strong>
+                <strong>36. Quiz Funnel / Quiz Ads — Paused (~70%)</strong>
                 <span class="todo-hint">
-                  Pick up later — not tonight. Exploratory RSA: “Take the quiz / What kind of VA do you need?” Homepage variation only. <strong>Do not Enable ads.</strong> Import ≠ Post ≠ Enable. Brand deferred. No API mutate.<br />
-                  <strong>LPs</strong> (noindex · not for ads until you say): local <a href="http://127.0.0.1:4321/us/quiz" target="_blank" rel="noopener">127.0.0.1:4321/us/quiz</a> · <a href="http://127.0.0.1:4321/au/quiz" target="_blank" rel="noopener">/au/quiz</a> · prod <a href="https://www.virtualcoworker.app/us/quiz" target="_blank" rel="noopener">www.virtualcoworker.app/us/quiz</a> · <a href="https://www.virtualcoworker.app/au/quiz" target="_blank" rel="noopener">/au/quiz</a> (hitchhikes on vision deploy; leftover reward contrast / don’t bump straight into the form).<br />
-                  <strong>Homepage controls</strong> (form chips live): <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>. Tracking = same GTM/dataLayer as homepage · modeled $ not Ads bidding.<br />
-                  <strong>Ads package</strong> (Paused): campaigns <code>VC_US_S_QUIZ</code> ($40/day · max CPC $10) · <code>VC_AU_S_QUIZ</code> (A$40/day · max CPC $6). Sheet: <a href="docs/ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md">docs/ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md</a> · repo <code>ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md</code>. Editor CSVs under <code>ads-launch/</code>: <code>google-ads-editor-quiz-import-us.csv</code> · <code>google-ads-editor-quiz-import-au.csv</code> (Account Import) · <code>google-ads-editor-quiz-campaign-negatives-us.csv</code> · <code>google-ads-editor-quiz-campaign-negatives-au.csv</code> (Keywords, Negative → Make multiple changes — not Account Import). Builder: <code>python3 ads-launch/build_quiz_editor_package.py</code>.
+                  Exploratory employer hiring quiz. <strong>Not traffic-ready. Rework later.</strong> George review: ~70% — quiz not highlighted enough yet; likely needs a stronger/different LP (quiz as the hero, not a widget on a homepage clone). Do not start that redesign now. Not a controlled A/B test. Do <strong>not</strong> Enable. Import ≠ Post ≠ Enable. Brand deferred. No API mutate. Do not change live CORE/ROLES.<br />
+                  Work the checklist in <a href="#quiz-funnel">Quiz Funnel / Quiz Ads — Paused</a> (same page, below). Enable items are George-only and never auto-complete.
                 </span>
               </label>
             </li>
@@ -630,6 +649,143 @@
             </summary>
             <ul class="todo-list" id="todo-done" data-todo-group="ads-launch-done"></ul>
           </details>
+        </div>
+      </section>
+
+      <section class="panel" id="quiz-funnel" aria-labelledby="quiz-funnel-hd">
+        <div class="panel-hd">
+          <p class="kicker">Later · ~70% · rework</p>
+          <h2 id="quiz-funnel-hd">Quiz Funnel / Quiz Ads — Paused</h2>
+          <span class="st st-progress">Not traffic-ready</span>
+        </div>
+        <div class="panel-bd">
+          <p class="quiz-funnel-lede">
+            <strong>~70% — not traffic-ready. Rework later.</strong>
+            George looked at the quiz LP: it is not highlighted enough yet. Likely needs a stronger / different setup — <strong>quiz as the hero</strong>, not a widget on a homepage clone. George will redo later. <strong>Do not start that redesign now.</strong>
+            Quiz LP is <strong>not polished / not done</strong>. Tracking e2e is <strong>not claimed</strong>.
+            Homepage variation only. <strong>Not a statistically controlled A/B test.</strong>
+            Do not change live CORE/ROLES. Brand deferred. No Ads API mutate. Import ≠ Post ≠ Enable.
+            <strong>Enable is George-only</strong> and never auto-completes.
+          </p>
+          <p class="quiz-funnel-links">
+            <strong>LPs</strong> (noindex · prod may be stale vs local):
+            local <a href="http://127.0.0.1:4321/us/quiz" target="_blank" rel="noopener">127.0.0.1:4321/us/quiz</a>
+            · <a href="http://127.0.0.1:4321/au/quiz" target="_blank" rel="noopener">/au/quiz</a>
+            · prod <a href="https://www.virtualcoworker.app/us/quiz" target="_blank" rel="noopener">www.virtualcoworker.app/us/quiz</a>
+            · <a href="https://www.virtualcoworker.app/au/quiz" target="_blank" rel="noopener">/au/quiz</a><br />
+            <strong>Package:</strong>
+            <a href="docs/ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md">QUIZ-ADS-PACKAGE-2026-08-09.md</a>
+            · overlap <a href="docs/ads-launch/QUIZ-KEYWORD-OVERLAP-2026-08-09.md">QUIZ-KEYWORD-OVERLAP-2026-08-09.md</a>
+            · repo <code>ads-launch/</code>
+            <code>google-ads-editor-quiz-import-us.csv</code>
+            · <code>google-ads-editor-quiz-import-au.csv</code>
+            (Account Import) ·
+            <code>google-ads-editor-quiz-campaign-negatives-us.csv</code>
+            · <code>google-ads-editor-quiz-campaign-negatives-au.csv</code>
+            (Keywords, Negative → Make multiple changes — <em>not</em> Account Import).<br />
+            <strong>Campaigns:</strong> <code>VC_US_S_QUIZ</code> ($40/day · max CPC $10) · <code>VC_AU_S_QUIZ</code> (A$40/day · max CPC $6) — approve before Enable.<br />
+            <strong>Tracking:</strong> same GTM as homepage. Quiz north star = <code>employer_inquiry_submitted</code> (durable delivery). Quiz start/complete, phone click, TY view, Calendly click = secondary. Modeled $ not Ads bidding. <code>lp_variant=quiz</code>.
+          </p>
+          <ul class="todo-list" id="quiz-funnel-list" data-todo-group="quiz-funnel">
+            <li>
+              <input type="checkbox" id="quizLpUs" data-todo="quizLpUs" />
+              <label for="quizLpUs">
+                <strong>LP review US</strong>
+                <span class="todo-hint">George review 2026-08-09: ~70%, not highlighted enough, rework later — do not mark polished/done. Desk + mobile on <a href="http://127.0.0.1:4321/us/quiz" target="_blank" rel="noopener">local /us/quiz</a>. Prod may be stale.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizLpAu" data-todo="quizLpAu" />
+              <label for="quizLpAu">
+                <strong>LP review AU</strong>
+                <span class="todo-hint">Same as US: ~70%, rework later, not polished/done. Desk + mobile on <a href="http://127.0.0.1:4321/au/quiz" target="_blank" rel="noopener">local /au/quiz</a>. Understated AU voice.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizEmployerGate" data-todo="quizEmployerGate" />
+              <label for="quizEmployerGate">
+                <strong>Employer gate</strong>
+                <span class="todo-hint">Employer-first framing + assume-employer form after reward. Job seekers never become an employer lead.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizJobSeeker" data-todo="quizJobSeeker" />
+              <label for="quizJobSeeker">
+                <strong>Job-seeker divert</strong>
+                <span class="todo-hint">“Looking for a job?” → Philippines careers only. Never the employer form.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizTrackingE2e" data-todo="quizTrackingE2e" />
+              <label for="quizTrackingE2e">
+                <strong>Tracking / e2e submit</strong>
+                <span class="todo-hint">Same GTM/dataLayer. Primary observation = durable <code>employer_inquiry_submitted</code>. If inbox/creds block delivery, record the blocker here — do <strong>not</strong> claim tracking complete. <strong>E2E status: not claimed this pass</strong> (no fake live submit; local delivery depends on Resend/inbox env).</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizOverlap" data-todo="quizOverlap" />
+              <label for="quizOverlap">
+                <strong>Overlap approval</strong>
+                <span class="todo-hint">Read <a href="docs/ads-launch/QUIZ-KEYWORD-OVERLAP-2026-08-09.md">overlap report</a>. Exact CORE/ROLES clones dropped. Optional holdout: <code>how to hire a virtual assistant</code>. George approves before Enable.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizBudgetCpc" data-todo="quizBudgetCpc" />
+              <label for="quizBudgetCpc">
+                <strong>Budget / CPC approval</strong>
+                <span class="todo-hint">US $40/day Max Clicks $10 CPC · AU A$40/day Max Clicks A$6 CPC. Do not silently change. George approves before Enable.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizEditorImport" data-todo="quizEditorImport" />
+              <label for="quizEditorImport">
+                <strong>Editor Account Import</strong>
+                <span class="todo-hint">Import <code>google-ads-editor-quiz-import-us.csv</code> → USA <code>496-715-1855</code> and <code>…-au.csv</code> → AU <code>573-539-1940</code>. Review: all <strong>Paused</strong>. Do <strong>not</strong> Account Import the negatives CSVs.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizEditorPost" data-todo="quizEditorPost" />
+              <label for="quizEditorPost">
+                <strong>Post (still Paused)</strong>
+                <span class="todo-hint">Post from Editor. Entities stay Paused. Post ≠ Enable.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizNegMmc" data-todo="quizNegMmc" />
+              <label for="quizNegMmc">
+                <strong>Campaign negatives — Make multiple changes</strong>
+                <span class="todo-hint">Keywords, Negative → Make multiple changes. Use <code>google-ads-editor-quiz-campaign-negatives-us.csv</code> / <code>…-au.csv</code>. Stage 1 employer/job-seeker protections only.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizSharedLists" data-todo="quizSharedLists" />
+              <label for="quizSharedLists">
+                <strong>Attach shared lists</strong>
+                <span class="todo-hint">If George wants them on quiz too: Sniper · Competitors · Job seekers. Manual in Editor/UI — not dumped into the quiz MMC CSV.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizEnableUs" data-todo="quizEnableUs" data-george-only="1" />
+              <label for="quizEnableUs">
+                <strong>Enable US quiz ads — George only</strong>
+                <span class="todo-hint quiz-funnel-lock">Locked. Never auto-complete. <code>VC_US_S_QUIZ</code> stays Paused until George Enables.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizEnableAu" data-todo="quizEnableAu" data-george-only="1" />
+              <label for="quizEnableAu">
+                <strong>Enable AU quiz ads — George only</strong>
+                <span class="todo-hint quiz-funnel-lock">Locked. Never auto-complete. <code>VC_AU_S_QUIZ</code> stays Paused until George Enables.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="quizSearchTerms" data-todo="quizSearchTerms" />
+              <label for="quizSearchTerms">
+                <strong>Post-launch search-term watch</strong>
+                <span class="todo-hint">Only after Enable. Watch junk / job-seeker / CORE cannibalization. Do not invent an Ads Experiment.</span>
+              </label>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -647,7 +803,7 @@
             <li>Form emails live (us@ / apac@)</li>
             <li>Website tags live on US</li>
             <li>Lead-value chips + modeled score live on <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> forms</li>
-            <li>Quiz LP ~90% parked — Launch step 36 (ads Paused, not tonight)</li>
+            <li>Quiz Funnel parked ~70% — <a href="#quiz-funnel">Quiz Funnel / Quiz Ads</a> (rework later · ads Paused · not traffic-ready)</li>
           </ul>
         </section>
 
@@ -661,7 +817,7 @@
             <li><strong>2.</strong> Australia ad-call conversion (step 15)</li>
             <li><strong>3.</strong> Australia website tags (step 16)</li>
             <li><strong>4.</strong> Zoho qualified → Ads (step 17) — not form CPA / not modeled $</li>
-            <li><strong>Later:</strong> Quiz LP (step 36, ~90%) · US trust pack (step 34) · Site tests scoreboard (step 35)</li>
+            <li><strong>Later:</strong> Quiz Funnel (<a href="#quiz-funnel">section</a>, ~70%, rework later, Enable George-only) · US trust pack (step 34) · Site tests scoreboard (step 35)</li>
             <li><a href="tracking.html">Tracking</a></li>
             <li><strong>Every couple days:</strong> refresh <a href="executive">Executive</a></li>
           </ul>
@@ -728,7 +884,7 @@
               <ul class="sitemap-tree">
                 <li><a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>
                   <ul>
-                    <li><a href="https://www.virtualcoworker.app/us/quiz" target="_blank" rel="noopener">/us/quiz</a> <span class="muted">noindex · later · step 36</span></li>
+                    <li><a href="https://www.virtualcoworker.app/us/quiz" target="_blank" rel="noopener">/us/quiz</a> <span class="muted">noindex · Quiz Funnel ~70% · rework later · not traffic-ready</span></li>
                     <li><a href="https://www.virtualcoworker.app/us/digital-marketing" target="_blank" rel="noopener">/us/digital-marketing</a></li>
                     <li><a href="https://www.virtualcoworker.app/us/social-media" target="_blank" rel="noopener">/us/social-media</a></li>
                     <li><a href="https://www.virtualcoworker.app/us/accounting" target="_blank" rel="noopener">/us/accounting</a></li>
@@ -748,7 +904,7 @@
               <ul class="sitemap-tree">
                 <li><a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>
                   <ul>
-                    <li><a href="https://www.virtualcoworker.app/au/quiz" target="_blank" rel="noopener">/au/quiz</a> <span class="muted">noindex · later · step 36</span></li>
+                    <li><a href="https://www.virtualcoworker.app/au/quiz" target="_blank" rel="noopener">/au/quiz</a> <span class="muted">noindex · Quiz Funnel ~70% · rework later · not traffic-ready</span></li>
                     <li><a href="https://www.virtualcoworker.app/au/digital-marketing" target="_blank" rel="noopener">/au/digital-marketing</a></li>
                     <li><a href="https://www.virtualcoworker.app/au/social-media" target="_blank" rel="noopener">/au/social-media</a></li>
                     <li><a href="https://www.virtualcoworker.app/au/accounting" target="_blank" rel="noopener">/au/accounting</a></li>
@@ -931,6 +1087,31 @@
         });
       });
       refreshDoneChrome();
+    })();
+    (function () {
+      var KEY = "vc-launch-control-todos-v9";
+      var store = {};
+      try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { store = {}; }
+      /* Enable US/AU quiz ads — George-only; never auto-complete */
+      function save() {
+        try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {}
+      }
+      Array.prototype.slice.call(
+        document.querySelectorAll("#quiz-funnel input[type=checkbox][data-todo]")
+      ).forEach(function (box) {
+        var id = box.getAttribute("data-todo");
+        var li = box.closest("li");
+        var georgeOnly = box.getAttribute("data-george-only") === "1";
+        var checked = !!store[id];
+        if (georgeOnly && store[id] !== true) checked = false;
+        box.checked = checked;
+        if (li) li.classList.toggle("is-done", checked);
+        box.addEventListener("change", function () {
+          store[id] = !!box.checked;
+          if (li) li.classList.toggle("is-done", box.checked);
+          save();
+        });
+      });
     })();
   </script>
 </body>

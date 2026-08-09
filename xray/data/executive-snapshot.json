@@ -543,8 +543,8 @@
         "url": "https://www.virtualcoworker.app/au"
       },
       {
-        "name": "Quiz LPs (later, ~90%)",
-        "why": "Exploratory Take the quiz / What kind of VA \u2014 noindex, ads Paused. Checklist step 36. Not tonight.",
+        "name": "Quiz LPs (later, ~70%)",
+        "why": "Not traffic-ready. Rework later. Quiz not highlighted enough yet \u2014 likely needs quiz-as-hero, not a homepage-clone widget. Ads Paused. Checklist step 36.",
         "url": "https://www.virtualcoworker.app/us/quiz"
       }
     ],
@@ -552,10 +552,10 @@
       "<strong>Website calls 60+ seconds</strong> \u2014 US + AU (bidding signal)",
       "<strong>AU 1300 voicemail</strong> \u2014 fix Alex greeting (Holly / Chey / Raffie)",
       "<strong>Then Zoho qualified \u2192 Ads</strong> \u2014 modeled site value is estimate only",
-      "<strong>Later \u2014 Quiz LP (~90%)</strong> \u2014 Checklist step 36. Ads Paused. Not tonight."
+      "<strong>Later \u2014 Quiz LP (~70%)</strong> \u2014 Rework later. Not traffic-ready. Ads Paused. Checklist step 36."
     ],
     "coming_soon": [
-      "Quiz LP (~90%) \u2014 Checklist step 36 \u00b7 VC_US_S_QUIZ / VC_AU_S_QUIZ Paused",
+      "Quiz LP (~70%) \u2014 rework later \u00b7 not traffic-ready \u00b7 VC_US_S_QUIZ / VC_AU_S_QUIZ Paused",
       "Modeled lead value \u2192 CRM override ladder (not Ads bidding yet)",
       "Site tests scoreboard (GTM/GA4 wiring \u2014 still blank)"
     ],
@@ -563,9 +563,9 @@
       "AU phone on site (1300 886 740)",
       "US Search live \u00b7 Brand off",
       "Lead-value chips live on /us /au forms (analytics only)",
-      "Quiz LP parked on Checklist step 36 (Paused ads)"
+      "Quiz LP parked ~70% \u2014 rework later (Paused ads, not highlighted enough yet)"
     ],
-    "honesty": "Optimize toward qualified business value \u2014 not form-fill volume. US Stage 1 live; early ~$300/inquiry is noise. AU GBP 4.8\u2605 is real trust; 1300 listing stays, voicemail needs fix. Modeled $ on site is estimate only until Zoho. Quiz LP later (step 36) \u2014 ads still Paused.",
+    "honesty": "Optimize toward qualified business value \u2014 not form-fill volume. US Stage 1 live; early ~$300/inquiry is noise. AU GBP 4.8\u2605 is real trust; 1300 listing stays, voicemail needs fix. Modeled $ on site is estimate only until Zoho. Quiz LP ~70% \u2014 not traffic-ready, rework later (quiz not highlighted enough yet); ads still Paused.",
     "lp_ab_note": "Copy A vs B links work on the live site (different hero/copy). Site tests scoreboard still needs GTM/GA4 wiring \u2014 see Checklist step 34."
   }
 }
