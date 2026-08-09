@@ -131,8 +131,10 @@ OPERATOR_NOTES = {
             "ROLES costs more per click — useful for role LP tests, not the main dial yet."
         ),
         (
-            "Employer shorthand like “va workers ph” and “virtual assistant talent” "
-            "are the clean buyer signals. Job-seeker language is blocked — don’t surface it here."
+            "Trust natural employer queries a person would type — hire, talent, staffing. "
+            "Odd shorthand (e.g. “va workers ph”) can look buyer-ish on the surface but "
+            "doesn’t always read human; treat as watch / pause if it starts eating spend. "
+            "Job-seeker junk stays off this page."
         ),
         (
             "Almost all measurable US clicks still land on /us (CORE Final URL). "
@@ -145,28 +147,28 @@ OPERATOR_NOTES = {
     ],
     "buyer_signals": [
         {
-            "term": "va workers ph",
-            "why": "Strong employer shorthand · highest clean clicks in recent ops review",
+            "term": "virtual assistant hiring",
+            "why": "Natural hire-side query · reads like a person typed it",
             "market": "US",
         },
         {
             "term": "virtual assistant talent",
-            "why": "Hire-side wording · not a job-board phrase",
-            "market": "US",
-        },
-        {
-            "term": "virtual assistant hiring",
-            "why": "Clear employer intent",
+            "why": "Employer talent language · not job-board phrasing",
             "market": "US",
         },
         {
             "term": "remote staffing agency / agencies",
-            "why": "Staffing language buyers use",
+            "why": "Staffing wording buyers actually use",
             "market": "US",
         },
         {
             "term": "remote executive assistant",
             "why": "Role-intent that matches ROLES LPs",
+            "market": "US",
+        },
+        {
+            "term": "va workers ph",
+            "why": "Watch / pause candidate · odd shorthand, not a clean win if spend climbs",
             "market": "US",
         },
     ],

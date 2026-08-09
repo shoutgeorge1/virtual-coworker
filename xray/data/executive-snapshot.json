@@ -487,34 +487,34 @@
     },
     "insights": [
       "US CORE is the volume engine (~16% CTR, ~$2 CPC). ROLES costs more per click \u2014 useful for role LP tests, not the main dial yet.",
-      "Employer shorthand like \u201cva workers ph\u201d and \u201cvirtual assistant talent\u201d are the clean buyer signals. Job-seeker language is blocked \u2014 don\u2019t surface it here.",
+      "Trust natural employer queries a person would type \u2014 hire, talent, staffing. Odd shorthand (e.g. \u201cva workers ph\u201d) can look buyer-ish on the surface but doesn\u2019t always read human; treat as watch / pause if it starts eating spend. Job-seeker junk stays off this page.",
       "Almost all measurable US clicks still land on /us (CORE Final URL). Role LPs are live; per-URL spend needs Ads UI / GA4 later.",
       "Australia account spend in the last 7 days is mostly legacy PM_AU_* Search (Paused mid-window can still show in LAST_7_DAYS). Stage 1 VC_AU_* is not driving it."
     ],
     "buyer_signals": [
       {
-        "term": "va workers ph",
-        "why": "Strong employer shorthand \u00b7 highest clean clicks in recent ops review",
+        "term": "virtual assistant hiring",
+        "why": "Natural hire-side query \u00b7 reads like a person typed it",
         "market": "US"
       },
       {
         "term": "virtual assistant talent",
-        "why": "Hire-side wording \u00b7 not a job-board phrase",
-        "market": "US"
-      },
-      {
-        "term": "virtual assistant hiring",
-        "why": "Clear employer intent",
+        "why": "Employer talent language \u00b7 not job-board phrasing",
         "market": "US"
       },
       {
         "term": "remote staffing agency / agencies",
-        "why": "Staffing language buyers use",
+        "why": "Staffing wording buyers actually use",
         "market": "US"
       },
       {
         "term": "remote executive assistant",
         "why": "Role-intent that matches ROLES LPs",
+        "market": "US"
+      },
+      {
+        "term": "va workers ph",
+        "why": "Watch / pause candidate \u00b7 odd shorthand, not a clean win if spend climbs",
         "market": "US"
       }
     ],
