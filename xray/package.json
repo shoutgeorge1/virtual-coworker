@@ -1,0 +1,8 @@
+{
+  "name": "vc-xray",
+  "private": true,
+  "description": "Stage 1 command center — deploy from this directory only",
+  "scripts": {
+    "deploy": "npx --yes vercel@latest --prod --yes"
+  }
+}

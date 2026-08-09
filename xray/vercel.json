@@ -19,6 +19,10 @@
     { "source": "/action.html", "destination": "/launch-control", "permanent": true },
     { "source": "/index.html", "destination": "/launch-control", "permanent": false },
     { "source": "/keywords", "destination": "/keyword-strategy", "permanent": true },
-    { "source": "/keywords.html", "destination": "/keyword-strategy", "permanent": true }
+    { "source": "/keywords.html", "destination": "/keyword-strategy", "permanent": true },
+    { "source": "/leadflow", "destination": "/lead-routing", "permanent": true },
+    { "source": "/leadflow.html", "destination": "/lead-routing", "permanent": true },
+    { "source": "/site-tests", "destination": "/experiments", "permanent": false },
+    { "source": "/site-experiments", "destination": "/experiments", "permanent": false }
   ]
 }

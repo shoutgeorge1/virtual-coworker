@@ -104,32 +104,93 @@ US_LP_CATALOG = [
 ]
 
 # Qualitative operator notes (not from API) — kept honest for CEO walkthroughs
-# Executive UI shows keywords themes — not raw search-term dumps.
+# Executive shows curated buyer signals + themes — never raw early ST dumps.
 OPERATOR_NOTES = {
-    "narrative_as_of": "2026-08-08",
+    "narrative_as_of": "2026-08-09",
     "status_banner": (
-        "US live. Australia phone on site. "
-        "Still open: Zoho qualified→Ads · AU call tracking · AU website tags."
+        "US live and spending. Australia live — waiting on traffic. "
+        "Hot: website calls 60+ sec · AU ad-call wins · AU website tags · then Zoho."
     ),
     "budgets": [
         {"label": "US", "amount": "~$125/day", "detail": "live", "kind": "live_test"},
-        {"label": "Australia", "amount": "see Ads", "detail": "phone 1300 on site", "kind": "priority"},
+        {"label": "Australia", "amount": "live", "detail": "waiting on traffic", "kind": "priority"},
     ],
     "whats_working": {
         "ad_copy_themes": [
-            "Filipino / Philippines VA",
-            "Dedicated seat (not a marketplace gig)",
-            "Not Upwork — you interview the person",
+            "Hire Filipino / Philippines VA (employer path)",
+            "Dedicated seat — not a marketplace gig",
+            "You interview the shortlist before anyone joins",
+            "Staffing partner for SMBs — not a job board",
         ],
-        "note": "Ops curation — not an Ads API ranking.",
+        "note": "Ops read of live RSA themes — not an Ads asset-ranking export.",
     },
+    "insights": [
+        (
+            "US CORE is the volume engine (~16% CTR, ~$2 CPC). "
+            "ROLES costs more per click — useful for role LP tests, not the main dial yet."
+        ),
+        (
+            "Employer shorthand like “va workers ph” and “virtual assistant talent” "
+            "are the clean buyer signals. Job-seeker language is blocked — don’t surface it here."
+        ),
+        (
+            "Almost all measurable US clicks still land on /us (CORE Final URL). "
+            "Role LPs are live; per-URL spend needs Ads UI / GA4 later."
+        ),
+        "Australia is Enabled with $0 in the last 7 days — campaigns are on; traffic hasn’t shown yet.",
+    ],
+    "buyer_signals": [
+        {
+            "term": "va workers ph",
+            "why": "Strong employer shorthand · highest clean clicks in recent ops review",
+            "market": "US",
+        },
+        {
+            "term": "virtual assistant talent",
+            "why": "Hire-side wording · not a job-board phrase",
+            "market": "US",
+        },
+        {
+            "term": "virtual assistant hiring",
+            "why": "Clear employer intent",
+            "market": "US",
+        },
+        {
+            "term": "remote staffing agency / agencies",
+            "why": "Staffing language buyers use",
+            "market": "US",
+        },
+        {
+            "term": "remote executive assistant",
+            "why": "Role-intent that matches ROLES LPs",
+            "market": "US",
+        },
+    ],
+    "lp_highlights": [
+        {
+            "name": "US hub (/us)",
+            "why": "CORE Final URL — carries most US clicks and spend",
+            "url": "https://www.virtualcoworker.app/us",
+        },
+        {
+            "name": "Role LPs (admin, bookkeeping, CSR, marketing…)",
+            "why": "Live for ROLES · good for creative tests once call tracking is solid",
+            "url": "https://www.virtualcoworker.app/us/administrative-support",
+        },
+        {
+            "name": "Australia hub (/au)",
+            "why": "Live with 1300 · waiting on first Search traffic",
+            "url": "https://www.virtualcoworker.app/au",
+        },
+    ],
     "whats_next": [
-        "<strong>Mark good leads in Zoho</strong> — so Google Ads can learn which clicks were real",
-        "<strong>Australia phone tracking</strong> — count answered calls as wins in Ads",
-        "<strong>Australia website tags</strong> — same basic tracking the US already has",
+        "<strong>Website calls 60+ seconds</strong> — US + AU",
+        "<strong>Australia</strong> — ad-call wins + website tags",
+        "<strong>Then Zoho qualified → Ads</strong>",
+        "<strong>Later:</strong> wire Site tests scoreboard (GTM/GA4)",
     ],
     "coming_soon": [
-        "Site tests numbers (page variants work; scoreboard still blank)",
+        "Site tests scoreboard (GTM/GA4 wiring — still blank)",
     ],
     "done_today": [
         "AU phone on site (1300 886 740)",
@@ -137,12 +198,12 @@ OPERATOR_NOTES = {
         "Ads package archived",
     ],
     "honesty": (
-        "US Search is live. Australia site phone is live. "
-        "A few tracking pieces still need finishing."
+        "US Search is live and spending. Australia campaigns are live — waiting on traffic. "
+        "Next: website calls 60+ sec, then AU tracking, then Zoho."
     ),
     "lp_ab_note": (
-        "Landing page A/B variants work in the site code. "
-        "Site tests scoreboard is still blank."
+        "Copy A vs B links work on the live site (different hero/copy). "
+        "Site tests scoreboard still needs GTM/GA4 wiring — see Checklist step 34."
     ),
 }
 
@@ -663,9 +724,10 @@ def main() -> int:
             "focus_day_note": "No AU metric rows in LAST_7_DAYS",
             "totals_focus_day": zero,
             "totals_last_7_days": zero,
+            # Best-known: AU VC_* are Enabled; zero rows = no spend yet, not paused.
             "campaigns": [
-                {"name": "VC_AU_S_CORE", "status": "UNKNOWN", "last_7_days": zero, "focus_day": zero},
-                {"name": "VC_AU_S_ROLES", "status": "UNKNOWN", "last_7_days": zero, "focus_day": zero},
+                {"name": "VC_AU_S_CORE", "status": "ENABLED", "last_7_days": zero, "focus_day": zero},
+                {"name": "VC_AU_S_ROLES", "status": "ENABLED", "last_7_days": zero, "focus_day": zero},
             ],
             "dates_in_pull": [],
         }

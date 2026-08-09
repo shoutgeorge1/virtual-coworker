@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-07 12:54 UTC",
+  "generated_at": "2026-08-08 20:11 UTC",
   "source_files": [
     "ads-launch/google-ads-editor-import-us.csv",
     "ads-launch/google-ads-editor-import-au.csv"
@@ -110,7 +110,7 @@
   "live_ops": {
     "available": true,
     "source": "/Users/george/Library/Application Support/Google/Google-AdWords-Editor/749/ape_4967151855.db",
-    "db_mtime_utc": "2026-08-07 05:26 UTC",
+    "db_mtime_utc": "2026-08-08 19:46 UTC",
     "account": "496-715-1855",
     "market": "US",
     "campaigns": [
@@ -140,13 +140,13 @@
         "campaign": "VC_US_S_CORE",
         "match": "Exact",
         "status": "Enabled",
-        "count": 79
+        "count": 44
       },
       {
         "campaign": "VC_US_S_CORE",
         "match": "Exact",
         "status": "Paused",
-        "count": 8
+        "count": 43
       },
       {
         "campaign": "VC_US_S_ROLES",
@@ -158,26 +158,26 @@
         "campaign": "VC_US_S_ROLES",
         "match": "Exact",
         "status": "Enabled",
-        "count": 261
+        "count": 203
       },
       {
         "campaign": "VC_US_S_ROLES",
         "match": "Exact",
         "status": "Paused",
-        "count": 241
+        "count": 299
       }
     ],
     "counts": {
-      "exact_enabled": 340,
-      "exact_paused": 249,
+      "exact_enabled": 247,
+      "exact_paused": 342,
       "phrase_enabled": 0,
       "phrase_paused": 193
     },
     "policy": {
       "match": "Exact-only bidding live (all Phrase paused)",
       "au_mirror": "AU package mirrors USA pause curation (LIVE_PAUSED + PHRASE_HOLD); AU campaigns live \u2014 waiting on traffic",
-      "measurement": "Phone call conversions = guiding light (USA Search + Brand/accounts); then shallow Zoho qualify \u2192 Ads; prefer phone over form spam",
-      "brand": "Brand ~$40/day waste control \u2014 deferred as strategy center"
+      "measurement": "Phone = guiding light until Zoho offline qualify; Max Clicks meantime; prefer phone over form spam",
+      "brand": "Brand paused by George 2026-08-07 (~$1k/lead; SEO owns brand) \u2014 deferred; don\u2019t re-enable"
     }
   },
   "package_curation": {
@@ -9031,7 +9031,7 @@
           "descriptions": [
             "Outsource customer service to dedicated Philippines specialists.",
             "Keep quality standards while we recruit, vet, and support the seat.",
-            "Built for US employers scaling support without local headcount drag.",
+            "Built for US employers scaling support without local hiring overhead.",
             "Partner-led outsourcing with interview-before-placement discipline."
           ],
           "headline_count": 15,
@@ -9759,17 +9759,6 @@
         }
       ],
       "negatives": [
-        "\"customer service representative wfh\"",
-        "\"customer service work from home\"",
-        "\"customer support representative work from home\"",
-        "\"virtual assistant work from home\"",
-        "\"work as customer service from home\"",
-        "\"work as\"",
-        "\"work from home customer service representative\"",
-        "\"work from home customer service\"",
-        "\"work from home representative\"",
-        "\"work from home social media manager\"",
-        "\"work from home virtual assistant\"",
         "application",
         "apply",
         "apply as virtual assistant",
@@ -9797,6 +9786,9 @@
         "consumer",
         "course",
         "courses",
+        "customer service representative wfh",
+        "customer service work from home",
+        "customer support representative work from home",
         "cv",
         "definition",
         "diploma in digital marketing",
@@ -9920,6 +9912,7 @@
         "virtual assistant mexico",
         "virtual assistant philippines salary",
         "virtual assistant salary",
+        "virtual assistant work from home",
         "virtual staff finder",
         "virtual world assistants",
         "virtualstaff ph reviews",
@@ -9935,17 +9928,25 @@
         "what is a virtual assistant",
         "wing assistant",
         "wishup",
+        "work as",
+        "work as customer service from home",
         "work from home",
+        "work from home customer service",
+        "work from home customer service representative",
         "work from home job",
         "work from home receptionist",
+        "work from home representative",
+        "work from home social media manager",
         "work from home start today",
+        "work from home virtual assistant",
         "workathome",
         "youtube",
         "zirtual"
       ],
       "negative_row_count": 366,
       "negative_match_types": {
-        "Campaign negative": 366
+        "Broad": 344,
+        "Phrase": 22
       },
       "sitelinks": [
         {
@@ -18822,7 +18823,7 @@
           "descriptions": [
             "Outsource customer service to dedicated Philippines specialists.",
             "Keep quality standards while we recruit, vet, and support the seat.",
-            "Built for Australian employers scaling support without local headcount drag.",
+            "Built for Australian employers scaling support without local hiring overhead.",
             "Partner-led outsourcing with interview-before-placement discipline."
           ],
           "headline_count": 15,
@@ -19725,7 +19726,7 @@
       ],
       "negative_row_count": 344,
       "negative_match_types": {
-        "Campaign negative": 344
+        "Broad": 344
       },
       "sitelinks": [
         {

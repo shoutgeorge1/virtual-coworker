@@ -54,6 +54,12 @@
     .media-card:hover {
       border-color: var(--accent-hot);
     }
+    .media-card.placeholder {
+      border-style: dashed;
+      background: var(--panel);
+      cursor: default;
+      pointer-events: none;
+    }
     .media-thumb {
       display: flex;
       align-items: center;
@@ -68,6 +74,16 @@
     }
     .media-thumb.logo {
       background: #fff;
+    }
+    .media-thumb.ph {
+      background: var(--panel-inset);
+      border-bottom: 1px dashed var(--edge-soft);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 0.75rem;
+      line-height: 1.35;
     }
     .media-thumb img {
       max-width: 100%;
@@ -99,9 +115,35 @@
       font-family: "IBM Plex Mono", ui-monospace, monospace;
     }
     .panel + .panel { margin-top: 0.85rem; }
+    .trust-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    @media (max-width: 900px) {
+      .trust-split { grid-template-columns: 1fr; }
+    }
+    .trust-col {
+      border: 1px solid var(--edge-soft);
+      border-radius: 8px;
+      background: var(--panel-inset);
+      padding: 0.7rem 0.75rem 0.85rem;
+      min-width: 0;
+    }
+    .trust-col h3 {
+      margin: 0 0 0.55rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+    .trust-col .col-note {
+      margin: 0 0 0.65rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
   </style>
 </head>
-<body data-page="media.html" data-foot="Grab assets for Ads / decks<br />AU portraits + trust first">
+<body data-page="media.html" data-foot="Grab assets for Ads / decks<br />US first · trust by market">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
@@ -110,22 +152,63 @@
         <p class="kicker">Assets · Stage 1</p>
         <h1>Media</h1>
         <p class="media-lede">
-          Grab these for Ads / decks. AU portraits + trust marks first.
+          Grab these for Ads / decks. United States first, then Australia. Trust badges split by market.
         </p>
         <p class="media-note">
           Files live under <code>xray/assets/media/</code> (same set also copied to
           <code>~/Downloads/virtual-coworker-media/</code>).
-          Click any tile to open the full file. Right-click → Save As to download.
+          Click any tile to open the full file. Dashed tiles = still need a real asset.
         </p>
       </header>
 
+      <section class="panel" id="us">
+        <div class="panel-hd">
+          <p class="kicker">United States first</p>
+          <h2>US heroes &amp; marks</h2>
+        </div>
+        <div class="panel-bd">
+          <div class="media-grid wide" id="grid-us"></div>
+        </div>
+      </section>
+
       <section class="panel" id="au">
         <div class="panel-hd">
-          <p class="kicker">Australia first</p>
+          <p class="kicker">Australia</p>
           <h2>AU heroes &amp; marks</h2>
         </div>
         <div class="panel-bd">
           <div class="media-grid wide" id="grid-au"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="trust">
+        <div class="panel-hd">
+          <p class="kicker">Trust by market</p>
+          <h2>Badges, press, clients</h2>
+        </div>
+        <div class="panel-bd">
+          <div class="trust-split">
+            <div class="trust-col">
+              <h3>United States</h3>
+              <p class="col-note">Forbes / Google / Clutch US live. Placeholders mark gaps worth filling.</p>
+              <div class="media-grid" id="grid-trust-us"></div>
+            </div>
+            <div class="trust-col">
+              <h3>Australia</h3>
+              <p class="col-note">AU press + Clutch AU live. Keep AU marks off US creatives.</p>
+              <div class="media-grid" id="grid-trust-au"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="trust-shared">
+        <div class="panel-hd">
+          <p class="kicker">Shared</p>
+          <h2>Office / company photos</h2>
+        </div>
+        <div class="panel-bd">
+          <div class="media-grid" id="grid-trust-shared"></div>
         </div>
       </section>
 
@@ -139,20 +222,10 @@
         </div>
       </section>
 
-      <section class="panel" id="trust">
-        <div class="panel-hd">
-          <p class="kicker">Trust</p>
-          <h2>Press, badges, clients, office</h2>
-        </div>
-        <div class="panel-bd">
-          <div class="media-grid" id="grid-trust"></div>
-        </div>
-      </section>
-
       <section class="panel" id="brand">
         <div class="panel-hd">
           <p class="kicker">Brand &amp; site</p>
-          <h2>Logos, heroes, faces</h2>
+          <h2>Logos, faces, extras</h2>
         </div>
         <div class="panel-bd">
           <div class="media-grid wide" id="grid-brand"></div>
@@ -162,81 +235,115 @@
       <div class="actions">
         <a class="btn btn-primary" href="launch-control">Checklist</a>
         <a class="btn" href="landing-pages">LP previews</a>
-        <a class="btn" href="au">Australia Campaign</a>
+        <a class="btn" href="us">US Campaign</a>
       </div>
     </main>
   </div>
   <script>
     (function () {
       var ASSETS = {
+        us: [
+          { folder: "brand", file: "hero-us-2026.jpg", label: "US hero 2026", cover: true },
+          { folder: "brand", file: "va-us.jpg", label: "VA US portrait", cover: true },
+          { folder: "brand", file: "logo-vc.png", label: "Logo VC", logo: true },
+          { folder: "brand", file: "clutch-us.webp", label: "Clutch US 2026", logo: true },
+          { folder: "brand", file: "badge-forbes-navy.webp", label: "Forbes navy", logo: true },
+          { folder: "brand", file: "badge-google-5star.webp", label: "Google 5-star", logo: true }
+        ],
         au: [
-          { file: "hero-au-2026.jpg", label: "AU hero 2026", cover: true },
-          { file: "va-au.jpg", label: "VA AU portrait", cover: true },
-          { file: "logo-au.png", label: "Logo AU", logo: true },
-          { file: "badge-clutch-au.webp", label: "Clutch AU badge", logo: true }
+          { folder: "au", file: "hero-au-2026.jpg", label: "AU hero 2026", cover: true },
+          { folder: "au", file: "va-au.jpg", label: "VA AU portrait", cover: true },
+          { folder: "au", file: "logo-au.png", label: "Logo AU", logo: true },
+          { folder: "au", file: "badge-clutch-au.webp", label: "Clutch AU badge", logo: true }
+        ],
+        trustUs: [
+          { folder: "brand", file: "badge-forbes-navy.webp", label: "Forbes navy", logo: true },
+          { folder: "brand", file: "badge-forbes-white.webp", label: "Forbes white", logo: true },
+          { folder: "brand", file: "badge-google-5star.webp", label: "Google 5-star", logo: true },
+          { folder: "brand", file: "clutch-us.webp", label: "Clutch US 2026", logo: true },
+          { placeholder: true, label: "US client logos pack", note: "need clean US client marks" },
+          { placeholder: true, label: "US press / as-seen-in", note: "US media strip if available" },
+          { placeholder: true, label: "BBB / Trustpilot US", note: "only if real + approved" }
+        ],
+        trustAu: [
+          { folder: "au", file: "badge-clutch-au.webp", label: "Clutch AU", logo: true },
+          { folder: "trust", file: "press-smh.webp", label: "SMH", logo: true },
+          { folder: "trust", file: "press-brw.webp", label: "BRW", logo: true },
+          { folder: "trust", file: "press-anthill.webp", label: "Anthill", logo: true },
+          { folder: "trust", file: "press-startup.webp", label: "Startup", logo: true },
+          { folder: "trust", file: "press-startupdaily.webp", label: "Startup Daily", logo: true },
+          { folder: "trust", file: "press-startupsmart.webp", label: "Startup Smart", logo: true },
+          { folder: "trust", file: "client-buzinga.png", label: "Client · Buzinga", logo: true },
+          { folder: "trust", file: "client-credit-card-compare.png", label: "Client · CCC", logo: true },
+          { folder: "trust", file: "client-good-co.png", label: "Client · Good Co", logo: true },
+          { folder: "trust", file: "client-learning-deli.png", label: "Client · Learning Deli", logo: true },
+          { folder: "trust", file: "client-recruitloop.png", label: "Client · RecruitLoop", logo: true },
+          { placeholder: true, label: "AU Google reviews badge", note: "market-specific reviews mark" },
+          { placeholder: true, label: "AU industry awards", note: "if VC has current ones" }
+        ],
+        trustShared: [
+          { folder: "trust", file: "trust-team-office.png", label: "Team office", cover: true },
+          { folder: "trust", file: "trust-consult.png", label: "Consult", cover: true },
+          { folder: "trust", file: "trust-company.png", label: "Company", cover: true },
+          { folder: "trust", file: "badge-14-year.webp", label: "14-year badge", logo: true },
+          { folder: "trust", file: "badge-5-star-reviews.webp", label: "5-star reviews", logo: true },
+          { placeholder: true, label: "Fresh office / team stills", note: "newer photography when ready" }
         ],
         roles: [
-          { file: "admin-a.png", label: "Admin A" },
-          { file: "admin-b.png", label: "Admin B" },
-          { file: "bookkeeper-a.png", label: "Bookkeeper A" },
-          { file: "bookkeeper-b.png", label: "Bookkeeper B" },
-          { file: "bookkeeper-v2.png", label: "Bookkeeper v2" },
-          { file: "accounting-v2.png", label: "Accounting v2" },
-          { file: "customer-service-v2.png", label: "Customer service v2" },
-          { file: "hr-v2.png", label: "HR v2" },
-          { file: "hr-v3.png", label: "HR v3" },
-          { file: "marketing-a.png", label: "Marketing A" },
-          { file: "marketing-b.png", label: "Marketing B" },
-          { file: "marketing-v2.png", label: "Marketing v2" },
-          { file: "sales-a.png", label: "Sales A" },
-          { file: "sales-b.png", label: "Sales B" },
-          { file: "sales-v2.png", label: "Sales v2" }
-        ],
-        trust: [
-          { file: "trust-team-office.png", label: "Team office", cover: true },
-          { file: "trust-consult.png", label: "Consult", cover: true },
-          { file: "trust-company.png", label: "Company", cover: true },
-          { file: "badge-14-year.webp", label: "14-year badge", logo: true },
-          { file: "badge-5-star-reviews.webp", label: "5-star reviews", logo: true },
-          { file: "press-smh.webp", label: "SMH", logo: true },
-          { file: "press-brw.webp", label: "BRW", logo: true },
-          { file: "press-anthill.webp", label: "Anthill", logo: true },
-          { file: "press-startup.webp", label: "Startup", logo: true },
-          { file: "press-startupdaily.webp", label: "Startup Daily", logo: true },
-          { file: "press-startupsmart.webp", label: "Startup Smart", logo: true },
-          { file: "client-buzinga.png", label: "Client · Buzinga", logo: true },
-          { file: "client-credit-card-compare.png", label: "Client · CCC", logo: true },
-          { file: "client-good-co.png", label: "Client · Good Co", logo: true },
-          { file: "client-learning-deli.png", label: "Client · Learning Deli", logo: true },
-          { file: "client-recruitloop.png", label: "Client · RecruitLoop", logo: true }
+          { folder: "roles", file: "admin-a.png", label: "Admin A" },
+          { folder: "roles", file: "admin-b.png", label: "Admin B" },
+          { folder: "roles", file: "bookkeeper-a.png", label: "Bookkeeper A" },
+          { folder: "roles", file: "bookkeeper-b.png", label: "Bookkeeper B" },
+          { folder: "roles", file: "bookkeeper-v2.png", label: "Bookkeeper v2" },
+          { folder: "roles", file: "accounting-v2.png", label: "Accounting v2" },
+          { folder: "roles", file: "customer-service-v2.png", label: "Customer service v2" },
+          { folder: "roles", file: "hr-v2.png", label: "HR v2" },
+          { folder: "roles", file: "hr-v3.png", label: "HR v3" },
+          { folder: "roles", file: "marketing-a.png", label: "Marketing A" },
+          { folder: "roles", file: "marketing-b.png", label: "Marketing B" },
+          { folder: "roles", file: "marketing-v2.png", label: "Marketing v2" },
+          { folder: "roles", file: "sales-a.png", label: "Sales A" },
+          { folder: "roles", file: "sales-b.png", label: "Sales B" },
+          { folder: "roles", file: "sales-v2.png", label: "Sales v2" }
         ],
         brand: [
-          { file: "logo-vc.png", label: "Logo VC", logo: true },
-          { file: "logo-au.png", label: "Logo AU", logo: true },
-          { file: "hero-us-2026.jpg", label: "US hero 2026", cover: true },
-          { file: "va-us.jpg", label: "VA US", cover: true },
-          { file: "clutch-us.webp", label: "Clutch US 2026", logo: true },
-          { file: "badge-forbes-navy.webp", label: "Forbes navy", logo: true },
-          { file: "badge-forbes-white.webp", label: "Forbes white", logo: true },
-          { file: "badge-google-5star.webp", label: "Google 5-star", logo: true },
-          { file: "hero-hub-map-a.jpg", label: "Hub map A", cover: true },
-          { file: "hero-hub-map-b.jpg", label: "Hub map B", cover: true },
-          { file: "hero-hub-map-c.jpg", label: "Hub map C", cover: true },
-          { file: "va-ph.jpg", label: "VA PH", cover: true },
-          { file: "va-face-1.jpg", label: "VA face 1", cover: true },
-          { file: "va-face-2.jpg", label: "VA face 2", cover: true },
-          { file: "va-face-3.jpg", label: "VA face 3", cover: true },
-          { file: "va-team.webp", label: "VA team", cover: true },
-          { file: "talent-arvin.jpg", label: "Talent · Arvin", cover: true },
-          { file: "ea.jpg", label: "EA", cover: true },
-          { file: "support.jpg", label: "Support", cover: true },
-          { file: "how-it-works.webp", label: "How it works" },
-          { file: "industries.webp", label: "Industries" },
-          { file: "marketing.webp", label: "Marketing" }
+          { folder: "brand", file: "logo-vc.png", label: "Logo VC", logo: true },
+          { folder: "brand", file: "logo-au.png", label: "Logo AU", logo: true },
+          { folder: "brand", file: "hero-hub-map-a.jpg", label: "Hub map A", cover: true },
+          { folder: "brand", file: "hero-hub-map-b.jpg", label: "Hub map B", cover: true },
+          { folder: "brand", file: "hero-hub-map-c.jpg", label: "Hub map C", cover: true },
+          { folder: "brand", file: "va-ph.jpg", label: "VA PH", cover: true },
+          { folder: "brand", file: "va-face-1.jpg", label: "VA face 1", cover: true },
+          { folder: "brand", file: "va-face-2.jpg", label: "VA face 2", cover: true },
+          { folder: "brand", file: "va-face-3.jpg", label: "VA face 3", cover: true },
+          { folder: "brand", file: "va-team.webp", label: "VA team", cover: true },
+          { folder: "brand", file: "talent-arvin.jpg", label: "Talent · Arvin", cover: true },
+          { folder: "brand", file: "ea.jpg", label: "EA", cover: true },
+          { folder: "brand", file: "support.jpg", label: "Support", cover: true },
+          { folder: "brand", file: "how-it-works.webp", label: "How it works" },
+          { folder: "brand", file: "industries.webp", label: "Industries" },
+          { folder: "brand", file: "marketing.webp", label: "Marketing" }
         ]
       };
 
-      function card(folder, item) {
+      function card(item) {
+        if (item.placeholder) {
+          return (
+            '<div class="media-card placeholder" title="' +
+            (item.note || "Placeholder") +
+            '">' +
+            '<div class="media-thumb landscape ph">Need asset</div>' +
+            '<div class="media-meta">' +
+            '<p class="name">' +
+            (item.label || "Placeholder") +
+            "</p>" +
+            '<p class="cat">' +
+            (item.note || "to collect") +
+            "</p>" +
+            "</div></div>"
+          );
+        }
+        var folder = item.folder;
         var src = "assets/media/" + folder + "/" + item.file;
         var thumbCls = ["media-thumb"];
         if (item.cover) thumbCls.push("cover", "landscape");
@@ -268,20 +375,21 @@
         );
       }
 
-      function fill(id, folder, list) {
+      function fill(id, list) {
         var el = document.getElementById(id);
         if (!el) return;
-        el.innerHTML = list.map(function (item) {
-          return card(folder, item);
-        }).join("");
+        el.innerHTML = list.map(card).join("");
       }
 
-      fill("grid-au", "au", ASSETS.au);
-      fill("grid-roles", "roles", ASSETS.roles);
-      fill("grid-trust", "trust", ASSETS.trust);
-      fill("grid-brand", "brand", ASSETS.brand);
+      fill("grid-us", ASSETS.us);
+      fill("grid-au", ASSETS.au);
+      fill("grid-trust-us", ASSETS.trustUs);
+      fill("grid-trust-au", ASSETS.trustAu);
+      fill("grid-trust-shared", ASSETS.trustShared);
+      fill("grid-roles", ASSETS.roles);
+      fill("grid-brand", ASSETS.brand);
     })();
   </script>
-  <script src="nav.js"></script>
+  <script src="nav.js?v=20260809b"></script>
 </body>
 </html>

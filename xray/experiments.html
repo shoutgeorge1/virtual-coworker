@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Site tests · Virtual Coworker Search Pilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="experiments.html"] .main {
+      max-width: 1180px;
+    }
+    .exp-hero {
+      margin: 0 0 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 8px;
+      border: 1px solid var(--tint-violet-edge);
+      background: linear-gradient(135deg, var(--tint-violet) 0%, var(--panel) 72%);
+    }
+    .exp-hero .kicker {
+      margin: 0 0 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .exp-hero h1 {
+      margin: 0 0 0.4rem;
+      font-size: 1.55rem;
+      letter-spacing: -0.02em;
+    }
+    .exp-hero .lede {
+      margin: 0;
+      font-size: 0.98rem;
+      color: var(--body);
+      max-width: 44rem;
+    }
+    .exp-meta {
+      margin: 0.65rem 0 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .exp-meta strong { color: var(--ink); font-weight: 600; }
+    .exp-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin: 0 0 1rem;
+      border: 1px solid var(--tint-teal-edge);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--tint-teal-hd);
+    }
+    @media (max-width: 760px) {
+      .exp-stats { grid-template-columns: 1fr 1fr; }
+    }
+    .exp-stats .stat {
+      padding: 0.75rem 0.85rem;
+      border-right: 1px solid var(--tint-teal-edge);
+    }
+    .exp-stats .stat:last-child { border-right: none; }
+    .exp-stats .lbl {
+      margin: 0;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+    }
+    .exp-stats .val {
+      margin: 0.22rem 0 0;
+      font-size: 1.35rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .exp-stats .hint {
+      margin: 0.15rem 0 0;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .exp-banner {
+      margin: 0 0 1rem;
+      padding: 0.75rem 0.95rem;
+      border-radius: 8px;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
+      font-size: 0.9rem;
+      color: var(--body);
+    }
+    .exp-banner.live {
+      border-color: var(--tint-green-edge);
+      background: var(--tint-green);
+    }
+    .exp-banner strong { color: var(--ink); }
+    .exp-banner code {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+    .exp-card {
+      margin: 0 0 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .exp-card-hd {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--tint-cool-hd);
+      border-bottom: 1px solid var(--tint-cool-edge);
+    }
+    .exp-card-hd h2 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .exp-card-hd .id {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .exp-card-hd .surface {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .exp-card-bd { padding: 0.65rem 1rem 0.85rem; }
+    .exp-card .note {
+      margin: 0 0 0.55rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .exp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .exp-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--dim);
+      padding: 0.35rem 0.45rem;
+      border-bottom: 1px solid var(--edge);
+    }
+    .exp-table th.num,
+    .exp-table td.num {
+      text-align: right;
+    }
+    .exp-table td {
+      padding: 0.45rem;
+      border-bottom: 1px solid var(--edge-soft);
+      color: var(--body);
+      vertical-align: top;
+    }
+    .exp-table tr:last-child td { border-bottom: none; }
+    .exp-table .var-letter {
+      display: inline-block;
+      min-width: 1.35rem;
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--ink);
+    }
+    .exp-table .var-label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+    .exp-table .kpi {
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .exp-table .muted-cell { color: var(--dim); }
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.12rem 0.4rem;
+      border-radius: 4px;
+      border: 1px solid var(--tint-green-edge);
+      background: var(--tint-green-hd);
+      color: #166534;
+    }
+    .tag.warn {
+      border-color: var(--tint-amber-edge);
+      background: var(--tint-amber-hd);
+      color: #92400e;
+    }
+    .tag.cool {
+      border-color: var(--tint-cool-edge);
+      background: var(--tint-cool-hd);
+      color: #334155;
+    }
+    .exp-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin: 0 0 1rem;
+    }
+    @media (max-width: 900px) {
+      .exp-grid-2 { grid-template-columns: 1fr; }
+    }
+    .exp-side {
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      padding: 0.85rem 1rem;
+    }
+    .exp-side h2 {
+      margin: 0 0 0.45rem;
+      font-size: 0.95rem;
+    }
+    .exp-side .sub {
+      margin: 0 0 0.55rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .exp-side ul {
+      margin: 0;
+      padding: 0 0 0 1.1rem;
+      font-size: 0.88rem;
+      color: var(--body);
+    }
+    .exp-side li { margin: 0.28rem 0; }
+    .exp-side code {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+    }
+    .exp-side.place {
+      border-style: dashed;
+      background: var(--panel-inset);
+      color: var(--muted);
+    }
+    .exp-side.place strong { color: var(--ink); }
+    .exp-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.55rem;
+      align-items: center;
+      white-space: nowrap;
+    }
+    .exp-preview a {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #1d4ed8;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(29, 78, 216, 0.35);
+    }
+    .exp-preview a:hover {
+      color: #1e3a8a;
+      border-bottom-color: #1e3a8a;
+    }
+    .exp-preview .sep {
+      color: var(--dim);
+      font-size: 0.72rem;
+    }
+    .exp-force-note {
+      margin: 0 0 1rem;
+      padding: 0.7rem 0.95rem;
+      border-radius: 8px;
+      border: 1px solid var(--tint-cool-edge);
+      background: var(--tint-cool-hd);
+      font-size: 0.88rem;
+      color: var(--body);
+    }
+    .exp-force-note code {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+    }
+  </style>
+</head>
+<body data-page="experiments.html" data-foot="Archive · scoreboard still blank">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+
+    <main class="main">
+      <section class="exp-hero" aria-labelledby="exp-title">
+        <p class="kicker">Archive · not ready yet</p>
+        <h1 id="exp-title">Site tests</h1>
+        <p class="lede">
+          Scoreboard is still blank — parked here until GTM/GA4 wiring is done.
+          Preview links below can force a variant; numbers aren’t counting yet.
+          Day-to-day work stays on the Checklist.
+        </p>
+        <p class="exp-meta" id="exp-updated">Loading snapshot…</p>
+      </section>
+
+      <div class="exp-banner" id="exp-status-banner" role="status">
+        <strong>Loading…</strong>
+      </div>
+
+      <p class="exp-force-note" id="exp-force-note">
+        <strong>Preview links force the variant.</strong>
+        Each US / AU link opens the live LP with
+        <code>?vc_exp=&lt;id&gt;&amp;vc_var=&lt;letter&gt;</code>
+        — sticky for this browser (localStorage + cookie), applied before first paint
+        so you see that exact arm (no random assignment, no flash).
+      </p>
+
+      <div class="exp-stats" id="kpi-row" aria-label="Experiment KPIs">
+        <div class="stat">
+          <p class="lbl">Views</p>
+          <p class="val" id="kpi-views">—</p>
+          <p class="hint">experiment_view</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Clicks</p>
+          <p class="val" id="kpi-clicks">—</p>
+          <p class="hint">experiment_click</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">CTR</p>
+          <p class="val" id="kpi-ctr">—</p>
+          <p class="hint">Clicks ÷ views</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Converts</p>
+          <p class="val" id="kpi-converts">—</p>
+          <p class="hint">Reserved · later</p>
+        </div>
+      </div>
+
+      <div id="exp-list" aria-live="polite">
+        <!-- cards filled from snapshot -->
+      </div>
+
+      <div class="exp-grid-2">
+        <section class="exp-side" aria-labelledby="events-hd">
+          <h2 id="events-hd">Events that feed this page</h2>
+          <p class="sub">From <code>vision/lib/experiments.ts</code> → dataLayer → GTM → GA4</p>
+          <ul id="events-list">
+            <li><code>experiment_view</code> — variant shown (once per session)</li>
+            <li><code>experiment_click</code> — CTA / start / open</li>
+            <li><code>experiment_convert</code> — form success or phone click (fan-out)</li>
+          </ul>
+        </section>
+        <section class="exp-side place" aria-labelledby="later-hd">
+          <h2 id="later-hd">Conversions later</h2>
+          <p class="sub">Empty dashes below mean “not pulled yet” — not broken. Do not invent winners until volume exists.</p>
+          <ul>
+            <li><strong>form_submit</strong> / <strong>phone_click</strong> already set <code>convert_reason</code></li>
+            <li>Assist events (quiz start, chat open, form start) listed in snapshot for optional tiles</li>
+            <li>Pull script: <code>ads-launch/pull_experiments_snapshot.py</code></li>
+          </ul>
+        </section>
+      </div>
+
+      <section class="exp-side" style="margin-bottom:1.25rem" aria-labelledby="how-hd">
+        <h2 id="how-hd">How to get numbers in here</h2>
+        <ol style="margin:0;padding:0 0 0 1.2rem;font-size:0.9rem;color:var(--body)">
+          <li style="margin:0.3rem 0">Confirm events in Tag Assistant / GA4 DebugView on <code>/us</code></li>
+          <li style="margin:0.3rem 0">Either drop a GA4 event export at <code>xray/data/experiments-events.json</code>, or set <code>GA4_PROPERTY_ID</code> and run the pull script</li>
+          <li style="margin:0.3rem 0">Redeploy xray (or refresh local) — this page reads <code>data/experiments-snapshot.json</code></li>
+        </ol>
+        <p class="sub" style="margin-top:0.65rem;margin-bottom:0">
+          Doc: <code>vision/docs/SITE-EXPERIMENTS.md</code>
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script src="nav.js?v=20260809b"></script>
+  <script>
+    (function () {
+      var LP_HOST = "https://www.virtualcoworker.app";
+      var LP_MARKETS = ["us", "au"];
+
+      function num(n) {
+        if (n == null || isNaN(n)) return "—";
+        return Number(n).toLocaleString("en-US");
+      }
+      function pct(n) {
+        if (n == null || isNaN(n)) return "—";
+        return Number(n).toFixed(2) + "%";
+      }
+      function fmtWhen(iso) {
+        if (!iso) return "not pulled yet";
+        try {
+          var d = new Date(iso);
+          return d.toLocaleString("en-US", {
+            timeZone: "America/Los_Angeles",
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            timeZoneName: "short"
+          });
+        } catch (e) {
+          return iso;
+        }
+      }
+      function esc(s) {
+        return String(s == null ? "" : s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function forceUrl(market, expId, variant) {
+        return (
+          LP_HOST +
+          "/" +
+          market +
+          "?vc_exp=" +
+          encodeURIComponent(expId) +
+          "&vc_var=" +
+          encodeURIComponent(variant)
+        );
+      }
+
+      function previewLinks(expId, variant) {
+        return (
+          '<div class="exp-preview">' +
+          LP_MARKETS.map(function (m, i) {
+            var href = forceUrl(m, expId, variant);
+            return (
+              (i ? '<span class="sep">·</span>' : "") +
+              '<a href="' +
+              esc(href) +
+              '" target="_blank" rel="noopener noreferrer" title="Force ' +
+              esc(expId) +
+              " " +
+              esc(String(variant).toUpperCase()) +
+              ' on /' +
+              esc(m) +
+              '">' +
+              esc(m.toUpperCase()) +
+              "</a>"
+            );
+          }).join("") +
+          "</div>"
+        );
+      }
+
+      function renderCard(exp) {
+        var labels = exp.variant_labels || {};
+        var metrics = exp.metrics_by_variant || {};
+        var rows = (exp.variants || [])
+          .map(function (v) {
+            var m = metrics[v] || {};
+            var label = labels[v] || "";
+            return (
+              "<tr>" +
+              "<td><span class='var-letter'>" +
+              esc(String(v).toUpperCase()) +
+              "</span>" +
+              (label ? "<span class='var-label'>" + esc(label) + "</span>" : "") +
+              "</td>" +
+              "<td>" +
+              previewLinks(exp.id, v) +
+              "</td>" +
+              "<td class='num'>" +
+              num(m.views) +
+              "</td>" +
+              "<td class='num'>" +
+              num(m.clicks) +
+              "</td>" +
+              "<td class='num kpi'>" +
+              pct(m.ctr_pct) +
+              "</td>" +
+              "<td class='num muted-cell'>" +
+              num(m.converts) +
+              "</td>" +
+              "<td class='num muted-cell'>" +
+              pct(m.convert_rate_pct) +
+              "</td>" +
+              "</tr>"
+            );
+          })
+          .join("");
+
+        var statusTag = exp.winner
+          ? "<span class='tag'>Winner " + esc(String(exp.winner).toUpperCase()) + "</span>"
+          : "<span class='tag cool'>Active · TBD</span>";
+        if (exp.fires_click === false) {
+          statusTag += " <span class='tag warn'>CTR later</span>";
+        }
+
+        return (
+          '<article class="exp-card" id="exp-' +
+          esc(exp.id) +
+          '">' +
+          '<div class="exp-card-hd">' +
+          "<h2>" +
+          esc(exp.label || exp.id) +
+          "</h2>" +
+          '<span class="id">' +
+          esc(exp.id) +
+          "</span>" +
+          statusTag +
+          '<span class="surface">' +
+          esc(exp.surface || "") +
+          "</span>" +
+          "</div>" +
+          '<div class="exp-card-bd">' +
+          (exp.click_note
+            ? '<p class="note">' + esc(exp.click_note) + "</p>"
+            : "") +
+          '<table class="exp-table">' +
+          "<thead><tr>" +
+          "<th>Variant</th>" +
+          "<th>Live preview</th>" +
+          "<th class='num'>Views</th>" +
+          "<th class='num'>Clicks</th>" +
+          "<th class='num'>CTR</th>" +
+          "<th class='num'>Converts</th>" +
+          "<th class='num'>Conv %</th>" +
+          "</tr></thead>" +
+          "<tbody>" +
+          rows +
+          "</tbody></table>" +
+          "</div></article>"
+        );
+      }
+
+      fetch("data/experiments-snapshot.json", { cache: "no-store" })
+        .then(function (r) {
+          if (!r.ok) throw new Error("snapshot " + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          var live = data.data_status === "live";
+          var banner = document.getElementById("exp-status-banner");
+          banner.className = "exp-banner" + (live ? " live" : "");
+          if (live) {
+            banner.innerHTML =
+              "<strong>Live counts</strong> · source <code>" +
+              esc(data.source) +
+              "</code>" +
+              (data.window ? " · window " + esc(data.window) : "") +
+              " · " +
+              esc(data.source_note || "");
+          } else {
+            banner.innerHTML =
+              "<strong>Waiting on GA4 / event export</strong> — inventory is live; numbers stay empty until a real pull. " +
+              esc(data.source_note || "Connect GA4 or drop experiments-events.json.");
+          }
+
+          document.getElementById("exp-updated").innerHTML =
+            "Updated <strong>" +
+            esc(fmtWhen(data.generated_at_utc)) +
+            "</strong> · primary KPI <strong>CTR</strong> · " +
+            (data.docs && data.docs.module
+              ? "<code>" + esc(data.docs.module) + "</code>"
+              : "experiments.ts");
+
+          var totals = data.totals || {};
+          document.getElementById("kpi-views").textContent = num(totals.views);
+          document.getElementById("kpi-clicks").textContent = num(totals.clicks);
+          document.getElementById("kpi-ctr").textContent = pct(totals.ctr_pct);
+          document.getElementById("kpi-converts").textContent = num(totals.converts);
+
+          var list = document.getElementById("exp-list");
+          var exps = data.experiments || [];
+          if (!exps.length) {
+            list.innerHTML =
+              '<p class="exp-banner">No experiments in snapshot — check <code>vision/lib/experiments.ts</code>.</p>';
+          } else {
+            list.innerHTML = exps.map(renderCard).join("");
+          }
+
+          if (data.assist_events && data.assist_events.length) {
+            var ul = document.getElementById("events-list");
+            var assist = data.assist_events
+              .slice(0, 4)
+              .map(function (a) {
+                return (
+                  "<li><code>" +
+                  esc(a.event) +
+                  "</code> — " +
+                  esc(a.maps_to) +
+                  "</li>"
+                );
+              })
+              .join("");
+            ul.innerHTML =
+              ul.innerHTML +
+              '<li style="margin-top:0.45rem;list-style:none;margin-left:-1.1rem;color:var(--muted);font-size:0.8rem">Also useful later:</li>' +
+              assist;
+          }
+        })
+        .catch(function (err) {
+          document.getElementById("exp-status-banner").innerHTML =
+            "<strong>Could not load</strong> experiments-snapshot.json — " + esc(String(err));
+          document.getElementById("exp-updated").textContent = "Snapshot missing";
+        });
+    })();
+  </script>
+</body>
+</html>

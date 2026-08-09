@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-08-08T21:29:24.915954+00:00",
-  "pull_started_utc": "2026-08-08T21:29:21.702102+00:00",
+  "generated_at_utc": "2026-08-09T11:22:52.881137+00:00",
+  "pull_started_utc": "2026-08-09T11:22:49.915745+00:00",
   "customer_ids": {
     "us": "4967151855",
     "au": "5735391940"
@@ -13,7 +13,7 @@
       "n": 1,
       "name": "campaign_metrics_vc_us_last_7_days",
       "ok": true,
-      "row_count": 4
+      "row_count": 6
     },
     {
       "n": 2,
@@ -26,69 +26,70 @@
   "conversions_note": "Phone wins not scored as KPIs here yet.",
   "performance_us": {
     "window": "LAST_7_DAYS",
-    "focus_day": "2026-08-07",
+    "focus_day": "2026-08-08",
     "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in LAST_7_DAYS window",
     "totals_focus_day": {
-      "impressions": 510,
-      "clicks": 62,
-      "ctr_pct": 12.16,
-      "cost_usd": 164.74,
-      "avg_cpc_usd": 2.66
+      "impressions": 134,
+      "clicks": 14,
+      "ctr_pct": 10.45,
+      "cost_usd": 42.3,
+      "avg_cpc_usd": 3.02
     },
     "totals_last_7_days": {
-      "impressions": 740,
-      "clicks": 102,
-      "ctr_pct": 13.78,
-      "cost_usd": 255.34,
-      "avg_cpc_usd": 2.5
+      "impressions": 874,
+      "clicks": 116,
+      "ctr_pct": 13.27,
+      "cost_usd": 297.64,
+      "avg_cpc_usd": 2.57
     },
     "campaigns": [
       {
         "name": "VC_US_S_CORE",
         "status": "ENABLED",
         "last_7_days": {
-          "impressions": 401,
-          "clicks": 72,
-          "ctr_pct": 17.96,
-          "cost_usd": 150.63,
-          "avg_cpc_usd": 2.09
+          "impressions": 473,
+          "clicks": 78,
+          "ctr_pct": 16.49,
+          "cost_usd": 165.19,
+          "avg_cpc_usd": 2.12
         },
         "focus_day": {
-          "impressions": 246,
-          "clicks": 38,
-          "ctr_pct": 15.45,
-          "cost_usd": 73.97,
-          "avg_cpc_usd": 1.95
+          "impressions": 72,
+          "clicks": 6,
+          "ctr_pct": 8.33,
+          "cost_usd": 14.56,
+          "avg_cpc_usd": 2.43
         }
       },
       {
         "name": "VC_US_S_ROLES",
         "status": "ENABLED",
         "last_7_days": {
-          "impressions": 339,
-          "clicks": 30,
-          "ctr_pct": 8.85,
-          "cost_usd": 104.72,
+          "impressions": 401,
+          "clicks": 38,
+          "ctr_pct": 9.48,
+          "cost_usd": 132.46,
           "avg_cpc_usd": 3.49
         },
         "focus_day": {
-          "impressions": 264,
-          "clicks": 24,
-          "ctr_pct": 9.09,
-          "cost_usd": 90.78,
-          "avg_cpc_usd": 3.78
+          "impressions": 62,
+          "clicks": 8,
+          "ctr_pct": 12.9,
+          "cost_usd": 27.74,
+          "avg_cpc_usd": 3.47
         }
       }
     ],
     "dates_in_pull": [
       "2026-08-06",
-      "2026-08-07"
+      "2026-08-07",
+      "2026-08-08"
     ]
   },
   "performance_au": {
     "window": "LAST_7_DAYS",
     "focus_day": null,
-    "focus_day_note": "No AU metric rows in LAST_7_DAYS — campaigns are live; waiting on traffic/spend",
+    "focus_day_note": "No AU metric rows in LAST_7_DAYS",
     "totals_focus_day": {
       "impressions": 0,
       "clicks": 0,
@@ -141,68 +142,68 @@
         }
       }
     ],
-    "dates_in_pull": [],
-    "status_source_note": "AU campaigns live (George 2026-08-08). No LAST_7_DAYS spend/traffic yet — waiting on traffic, not paused/broken."
+    "dates_in_pull": []
   },
   "performance": {
     "window": "LAST_7_DAYS",
-    "focus_day": "2026-08-07",
+    "focus_day": "2026-08-08",
     "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in LAST_7_DAYS window",
     "totals_focus_day": {
-      "impressions": 510,
-      "clicks": 62,
-      "ctr_pct": 12.16,
-      "cost_usd": 164.74,
-      "avg_cpc_usd": 2.66
+      "impressions": 134,
+      "clicks": 14,
+      "ctr_pct": 10.45,
+      "cost_usd": 42.3,
+      "avg_cpc_usd": 3.02
     },
     "totals_last_7_days": {
-      "impressions": 740,
-      "clicks": 102,
-      "ctr_pct": 13.78,
-      "cost_usd": 255.34,
-      "avg_cpc_usd": 2.5
+      "impressions": 874,
+      "clicks": 116,
+      "ctr_pct": 13.27,
+      "cost_usd": 297.64,
+      "avg_cpc_usd": 2.57
     },
     "campaigns": [
       {
         "name": "VC_US_S_CORE",
         "status": "ENABLED",
         "last_7_days": {
-          "impressions": 401,
-          "clicks": 72,
-          "ctr_pct": 17.96,
-          "cost_usd": 150.63,
-          "avg_cpc_usd": 2.09
+          "impressions": 473,
+          "clicks": 78,
+          "ctr_pct": 16.49,
+          "cost_usd": 165.19,
+          "avg_cpc_usd": 2.12
         },
         "focus_day": {
-          "impressions": 246,
-          "clicks": 38,
-          "ctr_pct": 15.45,
-          "cost_usd": 73.97,
-          "avg_cpc_usd": 1.95
+          "impressions": 72,
+          "clicks": 6,
+          "ctr_pct": 8.33,
+          "cost_usd": 14.56,
+          "avg_cpc_usd": 2.43
         }
       },
       {
         "name": "VC_US_S_ROLES",
         "status": "ENABLED",
         "last_7_days": {
-          "impressions": 339,
-          "clicks": 30,
-          "ctr_pct": 8.85,
-          "cost_usd": 104.72,
+          "impressions": 401,
+          "clicks": 38,
+          "ctr_pct": 9.48,
+          "cost_usd": 132.46,
           "avg_cpc_usd": 3.49
         },
         "focus_day": {
-          "impressions": 264,
-          "clicks": 24,
-          "ctr_pct": 9.09,
-          "cost_usd": 90.78,
-          "avg_cpc_usd": 3.78
+          "impressions": 62,
+          "clicks": 8,
+          "ctr_pct": 12.9,
+          "cost_usd": 27.74,
+          "avg_cpc_usd": 3.47
         }
       }
     ],
     "dates_in_pull": [
       "2026-08-06",
-      "2026-08-07"
+      "2026-08-07",
+      "2026-08-08"
     ]
   },
   "customer_id": "4967151855",
@@ -221,12 +222,13 @@
     }
   },
   "search_terms_executive": {
-    "surface": false,
-    "reason": "Executive shows themes and spend only — not raw typed queries."
+    "surface": true,
+    "mode": "curated_buyer_signals_only",
+    "reason": "Curated employer signals only \u2014 no early junk ST dump on Executive."
   },
   "keywords": {
     "label": "Employer-intent Exact themes",
-    "note": "Bidding themes for the calm read \u2014 not raw typed queries",
+    "note": "Curated bidding themes \u2014 not raw search terms",
     "executive_surface": true,
     "themes": [
       {
@@ -266,8 +268,8 @@
     "source": "derived_from_campaign_final_urls",
     "source_note": "Hub metrics = VC_US_S_CORE. Role LPs are live; per-URL split skipped (API budget = US+AU campaigns only).",
     "label": "US LP catalog + CORE traffic",
-    "roles_unmapped_clicks": 30,
-    "roles_campaign_clicks": 30,
+    "roles_unmapped_clicks": 38,
+    "roles_campaign_clicks": 38,
     "pages": [
       {
         "name": "US hub",
@@ -276,18 +278,18 @@
         "why": "CORE campaign Final URL \u2014 main hire/VA traffic lands here.",
         "attribution": "VC_US_S_CORE Final URL \u2192 /us",
         "signal_terms": [],
-        "impressions": 401,
-        "clicks": 72,
-        "ctr_pct": 17.96,
-        "cost_usd": 150.63,
-        "avg_cpc_usd": 2.09
+        "impressions": 473,
+        "clicks": 78,
+        "ctr_pct": 16.49,
+        "cost_usd": 165.19,
+        "avg_cpc_usd": 2.12
       },
       {
         "name": "Admin / EA",
         "path": "/us/administrative-support",
         "url": "https://www.virtualcoworker.app/us/administrative-support",
         "why": "ROLES admin Final URL \u2014 EA / admin intent.",
-        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "attribution": "Live category LP (ROLES campaign 38 clicks / 7d \u2014 not split by URL here)",
         "signal_terms": [],
         "impressions": 0,
         "clicks": 0,
@@ -300,7 +302,7 @@
         "path": "/us/bookkeeping",
         "url": "https://www.virtualcoworker.app/us/bookkeeping",
         "why": "ROLES bookkeeping Final URL \u2014 bookkeeper searches.",
-        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "attribution": "Live category LP (ROLES campaign 38 clicks / 7d \u2014 not split by URL here)",
         "signal_terms": [],
         "impressions": 0,
         "clicks": 0,
@@ -313,7 +315,7 @@
         "path": "/us/accounting",
         "url": "https://www.virtualcoworker.app/us/accounting",
         "why": "ROLES accounting Final URL \u2014 live category LP.",
-        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "attribution": "Live category LP (ROLES campaign 38 clicks / 7d \u2014 not split by URL here)",
         "signal_terms": [],
         "impressions": 0,
         "clicks": 0,
@@ -326,7 +328,7 @@
         "path": "/us/customer-service",
         "url": "https://www.virtualcoworker.app/us/customer-service",
         "why": "ROLES CSR Final URL \u2014 support / CSR searches.",
-        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "attribution": "Live category LP (ROLES campaign 38 clicks / 7d \u2014 not split by URL here)",
         "signal_terms": [],
         "impressions": 0,
         "clicks": 0,
@@ -339,7 +341,7 @@
         "path": "/us/digital-marketing",
         "url": "https://www.virtualcoworker.app/us/digital-marketing",
         "why": "ROLES marketing Final URL \u2014 live category LP.",
-        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "attribution": "Live category LP (ROLES campaign 38 clicks / 7d \u2014 not split by URL here)",
         "signal_terms": [],
         "impressions": 0,
         "clicks": 0,
@@ -352,7 +354,7 @@
         "path": "/us/social-media",
         "url": "https://www.virtualcoworker.app/us/social-media",
         "why": "ROLES social Final URL \u2014 live category LP.",
-        "attribution": "Live category LP (ROLES campaign 30 clicks / 7d \u2014 not split by URL here)",
+        "attribution": "Live category LP (ROLES campaign 38 clicks / 7d \u2014 not split by URL here)",
         "signal_terms": [],
         "impressions": 0,
         "clicks": 0,
@@ -363,8 +365,8 @@
     ]
   },
   "operator": {
-    "narrative_as_of": "2026-08-08",
-    "status_banner": "US live and spending. Australia campaigns live \u2014 waiting on traffic. High priority: website calls 60+ sec (Google forwarding) \u00b7 AU ad-call wins \u00b7 AU website tags \u00b7 then Zoho qualified\u2192Ads.",
+    "narrative_as_of": "2026-08-09",
+    "status_banner": "US live and spending. Australia live \u2014 waiting on traffic. Hot: website calls 60+ sec \u00b7 AU ad-call wins \u00b7 AU website tags \u00b7 then Zoho.",
     "budgets": [
       {
         "label": "US",
@@ -374,33 +376,85 @@
       },
       {
         "label": "Australia",
-        "amount": "live · waiting on traffic",
-        "detail": "phone 1300 on site; campaigns on, no spend yet",
+        "amount": "live",
+        "detail": "waiting on traffic",
         "kind": "priority"
       }
     ],
     "whats_working": {
       "ad_copy_themes": [
-        "Filipino / Philippines VA",
-        "Dedicated seat (not a marketplace gig)",
-        "Not Upwork \u2014 you interview the person"
+        "Hire Filipino / Philippines VA (employer path)",
+        "Dedicated seat \u2014 not a marketplace gig",
+        "You interview the shortlist before anyone joins",
+        "Staffing partner for SMBs \u2014 not a job board"
       ],
-      "note": "Operator themes \u2014 not an Ads ranking."
+      "note": "Ops read of live RSA themes \u2014 not an Ads asset-ranking export."
     },
+    "insights": [
+      "US CORE is the volume engine (~16% CTR, ~$2 CPC). ROLES costs more per click \u2014 useful for role LP tests, not the main dial yet.",
+      "Employer shorthand like \u201cva workers ph\u201d and \u201cvirtual assistant talent\u201d are the clean buyer signals. Job-seeker language is blocked \u2014 don\u2019t surface it here.",
+      "Almost all measurable US clicks still land on /us (CORE Final URL). Role LPs are live; per-URL spend needs Ads UI / GA4 later.",
+      "Australia is Enabled with $0 in the last 7 days \u2014 campaigns are on; traffic hasn\u2019t shown yet."
+    ],
+    "buyer_signals": [
+      {
+        "term": "va workers ph",
+        "why": "Strong employer shorthand \u00b7 highest clean clicks in recent ops review",
+        "market": "US"
+      },
+      {
+        "term": "virtual assistant talent",
+        "why": "Hire-side wording \u00b7 not a job-board phrase",
+        "market": "US"
+      },
+      {
+        "term": "virtual assistant hiring",
+        "why": "Clear employer intent",
+        "market": "US"
+      },
+      {
+        "term": "remote staffing agency / agencies",
+        "why": "Staffing language buyers use",
+        "market": "US"
+      },
+      {
+        "term": "remote executive assistant",
+        "why": "Role-intent that matches ROLES LPs",
+        "market": "US"
+      }
+    ],
+    "lp_highlights": [
+      {
+        "name": "US hub (/us)",
+        "why": "CORE Final URL \u2014 carries most US clicks and spend",
+        "url": "https://www.virtualcoworker.app/us"
+      },
+      {
+        "name": "Role LPs (admin, bookkeeping, CSR, marketing\u2026)",
+        "why": "Live for ROLES \u00b7 good for creative tests once call tracking is solid",
+        "url": "https://www.virtualcoworker.app/us/administrative-support"
+      },
+      {
+        "name": "Australia hub (/au)",
+        "why": "Live with 1300 \u00b7 waiting on first Search traffic",
+        "url": "https://www.virtualcoworker.app/au"
+      }
+    ],
     "whats_next": [
-      "<strong>Website calls that last 60+ seconds</strong> \u2014 Google swaps the site number for Ads visitors (US 888 + AU 1300); not a tap on the number",
-      "<strong>Australia ad-call wins + website tags</strong> \u2014 count answered calls from ads; same visit tags the US already has",
-      "<strong>Mark good leads in Zoho</strong> \u2014 so Google Ads can learn which clicks were real"
+      "<strong>Website calls 60+ seconds</strong> \u2014 US + AU",
+      "<strong>Australia</strong> \u2014 ad-call wins + website tags",
+      "<strong>Then Zoho qualified \u2192 Ads</strong>",
+      "<strong>Later:</strong> wire Site tests scoreboard (GTM/GA4)"
     ],
     "coming_soon": [
-      "Site tests numbers (page variants work; scoreboard still blank)"
+      "Site tests scoreboard (GTM/GA4 wiring \u2014 still blank)"
     ],
     "done_today": [
       "AU phone on site (1300 886 740)",
       "US Search live \u00b7 Brand off",
       "Ads package archived"
     ],
-    "honesty": "US Search is live and spending. Australia campaigns are live too — just waiting on traffic/spend. High priority: make website calls that last 60+ seconds count as wins (Google forwarding — not a phone tap). Still need AU ad-call wins and AU website tags.",
-    "lp_ab_note": "Landing page A/B variants work in the site code. Site tests scoreboard is still blank."
+    "honesty": "US Search is live and spending. Australia campaigns are live \u2014 waiting on traffic. Next: website calls 60+ sec, then AU tracking, then Zoho.",
+    "lp_ab_note": "Copy A vs B links work on the live site (different hero/copy). Site tests scoreboard still needs GTM/GA4 wiring \u2014 see Checklist step 34."
   }
 }

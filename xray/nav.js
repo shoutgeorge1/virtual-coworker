@@ -1,4 +1,4 @@
-/* Stage 1 shell — Executive first; Checklist is the ops front door; Ads package archived. */
+/* Stage 1 shell — keep primary short; park unfinished / reference under Archive. */
 (function () {
   var root = document.body.getAttribute("data-root") || "";
   var ITEMS = [
@@ -6,10 +6,10 @@
     { href: "launch-control.html", text: "Checklist" },
     { href: "landing-pages.html", text: "LP previews" },
     { href: "media.html", text: "Media" },
-    { href: "lead-routing.html", text: "Lead Routing" },
     { href: "tracking.html", text: "Tracking" },
     { href: "experiments.html", text: "Site tests" },
     { label: "Archive" },
+    { href: "lead-routing.html", text: "Lead Routing", quiet: true },
     { href: "ads-package.html", text: "Ads package", quiet: true },
     { href: "project-status.html", text: "Project Status", quiet: true },
     { href: "us.html", text: "US Campaign", quiet: true },

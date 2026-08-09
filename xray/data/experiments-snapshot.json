@@ -1,0 +1,253 @@
+{
+  "generated_at_utc": "2026-08-07T22:48:48Z",
+  "source": "inventory_only",
+  "source_note": "No live event counts yet. Microsite already pushes experiment_view / experiment_click / experiment_convert to dataLayer. Drop a GA4 export at xray/data/experiments-events.json or set GA4_PROPERTY_ID.",
+  "primary_kpi": "ctr",
+  "primary_kpi_note": "CTR = experiment_click \u00f7 experiment_view (by experiment_id + experiment_variant). Conversions column is reserved \u2014 experiment_convert already fires on form_submit / phone_click.",
+  "window": null,
+  "data_status": "awaiting_source",
+  "events": {
+    "view": "experiment_view",
+    "click": "experiment_click",
+    "convert": "experiment_convert",
+    "payload_fields": [
+      "experiment_id",
+      "experiment_variant",
+      "convert_reason"
+    ]
+  },
+  "assist_events": [
+    {
+      "event": "exit_intent_shown",
+      "maps_to": "exit_popup view assist"
+    },
+    {
+      "event": "conversion_assist_cta_clicked",
+      "maps_to": "exit_popup click assist"
+    },
+    {
+      "event": "quiz_started",
+      "maps_to": "quiz_copy engagement"
+    },
+    {
+      "event": "lead_magnet_completed",
+      "maps_to": "quiz_copy complete"
+    },
+    {
+      "event": "chat_opened",
+      "maps_to": "chat_launcher open"
+    },
+    {
+      "event": "employer_form_started",
+      "maps_to": "gate / density form start"
+    },
+    {
+      "event": "phone_cta_clicked",
+      "maps_to": "phone click (also fans out experiment_convert)"
+    },
+    {
+      "event": "employer_inquiry_submitted",
+      "maps_to": "form success (also fans out experiment_convert)"
+    }
+  ],
+  "ga4": {
+    "connected": false,
+    "property_id": null,
+    "note": "Set GA4_PROPERTY_ID + ADC / service account, or place events at xray/data/experiments-events.json"
+  },
+  "totals": {
+    "views": null,
+    "clicks": null,
+    "ctr_pct": null,
+    "converts": null
+  },
+  "experiments": [
+    {
+      "id": "exit_popup",
+      "label": "Exit / timed popup copy",
+      "surface": "employer LP popup",
+      "variants": [
+        "a",
+        "b",
+        "c"
+      ],
+      "variant_labels": {
+        "a": "Skip Upwork roulette",
+        "b": "Tired of hiring that eats your week",
+        "c": "One clear seat"
+      },
+      "fires_click": true,
+      "click_note": "Hire / job / phone CTAs \u2192 experiment_click",
+      "status": "active",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "c": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "quiz_copy",
+      "label": "Quiz teaser + reward framing",
+      "surface": "hero teaser + role quiz",
+      "variants": [
+        "a",
+        "b",
+        "c"
+      ],
+      "variant_labels": {
+        "a": "Get your week back",
+        "b": "Stop guessing your next hire",
+        "c": "Which hire buys back the most time"
+      },
+      "fires_click": true,
+      "click_note": "Teaser tap + quiz start / CTA \u2192 experiment_click",
+      "status": "active",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "c": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "chat_launcher",
+      "label": "Chat launcher label",
+      "surface": "engage chat launcher",
+      "variants": [
+        "a",
+        "b"
+      ],
+      "variant_labels": {
+        "a": "Label A",
+        "b": "Label B"
+      },
+      "fires_click": true,
+      "click_note": "Open chat \u2192 experiment_click",
+      "status": "active",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "gate_headline",
+      "label": "Form gate headline",
+      "surface": "LeadGate card title",
+      "variants": [
+        "a",
+        "b"
+      ],
+      "variant_labels": {
+        "a": "Headline A",
+        "b": "Headline B"
+      },
+      "fires_click": false,
+      "click_note": "Views fire; no dedicated experiment_click yet \u2014 use form_start / convert once GA4 is wired",
+      "status": "active",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "lp_density",
+      "label": "Landing density \u2014 wordy (a) vs lean (b)",
+      "surface": "market landing page body",
+      "variants": [
+        "a",
+        "b"
+      ],
+      "variant_labels": {
+        "a": "wordy",
+        "b": "lean"
+      },
+      "fires_click": false,
+      "click_note": "Density test \u2014 same CTAs both arms. Primary later KPI: form_start / convert rate, not click CTR",
+      "status": "active",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    }
+  ],
+  "docs": {
+    "site": "vision/docs/SITE-EXPERIMENTS.md",
+    "module": "vision/lib/experiments.ts"
+  }
+}

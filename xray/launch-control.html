@@ -37,25 +37,25 @@
 
     .lc-measure {
       margin: 0;
-      padding: 0.65rem 0.8rem 0.7rem;
+      padding: 0.8rem 0.95rem 0.9rem;
       border-radius: 8px;
       border: 2px solid rgba(29, 78, 216, 0.45);
       background: var(--tint-cool);
     }
     .lc-measure h2 {
-      margin: 0 0 0.35rem;
-      font-size: 0.98rem;
+      margin: 0 0 0.45rem;
+      font-size: 1.12rem;
       font-weight: 700;
       color: var(--ink);
     }
     .lc-measure ul {
       margin: 0;
-      padding: 0 0 0 1.05rem;
-      font-size: 0.84rem;
-      line-height: 1.35;
+      padding: 0 0 0 1.15rem;
+      font-size: 1.02rem;
+      line-height: 1.5;
       color: var(--body);
     }
-    .lc-measure li { margin: 0.18rem 0; }
+    .lc-measure li { margin: 0.28rem 0; }
     .lc-measure strong { color: var(--ink); }
 
     #daily-checks {
@@ -306,11 +306,11 @@
         <section class="lc-measure" id="how-we-measure" aria-labelledby="measure-hd">
           <h2 id="measure-hd">How we’ll measure success</h2>
           <ul>
-            <li><strong>High priority:</strong> website calls that last <strong>60+ seconds</strong> count as wins (Google swaps the site number for Ads visitors — not a tap on the number)</li>
-            <li><strong>Australia also:</strong> count answered calls from ads · add website tags (like US)</li>
-            <li><strong>Then:</strong> mark good leads in Zoho → Ads learns</li>
-            <li><strong>US:</strong> live · ad call assets already guide · about $125/day</li>
-            <li><strong>Later:</strong> site tests scoreboard (variants work; numbers blank)</li>
+            <li><strong>1 · High priority:</strong> website calls lasting 60+ seconds</li>
+            <li><strong>2 · Australia:</strong> ad-call wins + website tags (GTM/GA4)</li>
+            <li><strong>3 · Then:</strong> Zoho “qualified” → Google Ads</li>
+            <li><strong>US today:</strong> live · ~$125/day · daily search-term cleanup</li>
+            <li><strong>Later:</strong> Site tests scoreboard (GTM/GA4 wiring — Checklist step 34)</li>
           </ul>
         </section>
 
@@ -437,7 +437,7 @@
               <input type="checkbox" id="ads17" data-todo="ads17" checked />
               <label for="ads17">
                 <strong>11. Create phone call conversions (guiding light)</strong>
-                <span class="todo-hint">Done for <strong>calls from ads</strong> (2026-08-07). Primary: <code>VC_US_Phone_Call_From_Ads</code> (60s, Count One). Secondary micro: <code>VC_US_Phone_Click_Website</code> (tel: tap — <strong>not</strong> a real connected-call win). CORE + ROLES = Phone call leads goal, Max Clicks. Old Brand/Zoho form junk left alone. <strong>Still open:</strong> real website calls by duration (step 14) — don’t treat tel: click as Primary.</span>
+                <span class="todo-hint">Done for calls from ads. Primary: <code>VC_US_Phone_Call_From_Ads</code> (60s). Tel: tap stays secondary.</span>
               </label>
             </li>
             <li data-order="12">
@@ -457,29 +457,29 @@
             <li data-order="12.75">
               <input type="checkbox" id="ads34" data-todo="ads34" />
               <label for="ads34">
-                <strong>14. Website calls that last 60+ seconds (US + AU)</strong>
-                <span class="todo-hint"><strong>High priority.</strong> Make the phone on <a href="https://www.virtualcoworker.app" target="_blank" rel="noopener">virtualcoworker.app</a> count as a real Google Ads win when someone <em>talks</em> — not when they tap the number. In Ads: create a Phone call conversion for <strong>calls to a phone number on the website</strong> · minimum length <strong>60 seconds</strong> · use Google’s website call tracking / forwarding number so Ads visitors see a swapped number · wire via GTM or the site. <strong>Do not</strong> use simple <code>tel:</code> click as Primary. Test: ad click → landing page → forwarding number shows → call connects → 60+ sec → conversion in Ads. Once verified: early Primary signal <strong>alongside</strong> 60+ sec calls from ad call assets. US site phone 888 · AU site phone 1300 — both need this where the number is on the page. No CallRail needed. Don’t invent conversion IDs in docs — create/confirm in Ads UI.</span>
+                <strong>14. Website calls 60+ seconds (US + AU)</strong>
+                <span class="todo-hint">High priority. Google forwarding number · not a tel: tap. US 888 + AU 1300.</span>
               </label>
             </li>
             <li data-order="13">
               <input type="checkbox" id="ads32" data-todo="ads32" />
               <label for="ads32">
                 <strong>15. Australia — phone call conversion from ads</strong>
-                <span class="todo-hint"><strong>Priority.</strong> Count answered AU calls from <strong>ad call assets</strong> as wins (like US <code>VC_US_Phone_Call_From_Ads</code>). Pair with step 14 (website duration). Do this before Zoho → Ads. Don’t invent an AU conversion ID here — create in Ads UI.</span>
+                <span class="todo-hint">Count answered AU calls from ad call assets (like US).</span>
               </label>
             </li>
             <li data-order="14">
               <input type="checkbox" id="ads33" data-todo="ads33" />
               <label for="ads33">
                 <strong>16. Australia — website tags (GTM + GA4)</strong>
-                <span class="todo-hint"><strong>Priority.</strong> Same basic visit tracking the US already has on <code>/au</code>. Needed for website call number swap + before Zoho → Ads.</span>
+                <span class="todo-hint">Same basic visit tracking as US, on <code>/au</code>.</span>
               </label>
             </li>
             <li data-order="15">
               <input type="checkbox" id="ads18" data-todo="ads18" />
               <label for="ads18">
                 <strong>17. Zoho “qualified” → Ads</strong>
-                <span class="todo-hint"><strong>After website call duration + AU ad-call wins + website tags.</strong> Sales marks a real employer lead in Zoho → that mark feeds Google Ads. Not “customer paid.” Later: booked consult / value when deals pay. Plain English on <a href="lead-routing.html">Lead Routing</a>.</span>
+                <span class="todo-hint">After 14–16. Sales marks a real lead in Zoho → Ads learns.</span>
               </label>
             </li>
             <li data-order="16">
@@ -493,7 +493,7 @@
               <input type="checkbox" id="ads26" data-todo="ads26" />
               <label for="ads26">
                 <strong>19. Verify US website phone-click (secondary only)</strong>
-                <span class="todo-hint">Wait/verify only — don’t recreate. Tel: tap is a micro signal, <strong>not</strong> Primary. Real website wins = step 14 (60+ sec connected calls).</span>
+                <span class="todo-hint">Tel: tap stays secondary — real wins are step 14.</span>
               </label>
             </li>
             <li data-order="18">
@@ -597,8 +597,8 @@
             <li data-order="99">
               <input type="checkbox" id="ads27" data-todo="ads27" />
               <label for="ads27">
-                <strong>34. Site tests (bottom)</strong>
-                <span class="todo-hint">Not working yet — scoreboard blank. LP A/B variants work in site code; measurement not wired. <a href="experiments">Site tests</a> · <a href="landing-pages">LP previews</a> look good.</span>
+                <strong>34. Site tests — wire the scoreboard (bottom)</strong>
+                <span class="todo-hint">Still open. LP A/B variants work on the site; measurement doesn’t yet. Need GTM/GA4 (or content experiments) so variant traffic shows on <a href="experiments">Site tests</a>. <a href="landing-pages">LP previews</a> look good.</span>
               </label>
             </li>
           </ul>
@@ -639,8 +639,8 @@
             <li><strong>2.</strong> Australia ad-call conversion (step 15)</li>
             <li><strong>3.</strong> Australia website tags (step 16)</li>
             <li><strong>4.</strong> Zoho qualified → Ads (step 17)</li>
-            <li><strong>Bottom:</strong> Site tests scoreboard (step 34)</li>
-            <li><a href="lead-routing.html">Lead Routing</a> · <a href="tracking.html">Tracking</a></li>
+            <li><strong>Later:</strong> Site tests scoreboard (step 34 · bottom of list)</li>
+            <li><a href="tracking.html">Tracking</a></li>
             <li><strong>Every couple days:</strong> refresh <a href="executive">Executive</a></li>
           </ul>
         </section>
@@ -659,8 +659,8 @@
       </div>
 
       <p class="lc-secondary" id="site-tests">
-        <strong>Site tests</strong> — scoreboard still blank (step 34, bottom of list).
-        LP previews look good · A/B variants work in site code ·
+        <strong>Site tests</strong> — scoreboard still blank (step 34, bottom of Checklist).
+        LP previews look good · A/B variants work in site code · needs GTM/GA4 wiring ·
         <a href="experiments">Site tests</a> ·
         Ads package → <a href="ads-package.html">Archive</a> (done)
       </p>
@@ -795,7 +795,7 @@
       </div><!-- /.lc-below -->
     </main>
   </div>
-  <script src="nav.js"></script>
+  <script src="nav.js?v=20260809b"></script>
   <script>
     (function () {
       /* Daily checks — stay in place; reset each local calendar day */

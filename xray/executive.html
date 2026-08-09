@@ -138,6 +138,45 @@
     }
     .exec-money strong { color: var(--ink); }
 
+    .exec-insights {
+      margin: 0 0 1.15rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .insight-card {
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      padding: 0.85rem 1rem;
+    }
+    .insight-card h2 {
+      margin: 0 0 0.45rem;
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+    .insight-card ul {
+      margin: 0;
+      padding: 0 0 0 1.15rem;
+      font-size: 0.92rem;
+      line-height: 1.45;
+      color: var(--body);
+    }
+    .insight-card li { margin: 0.28rem 0; }
+    .insight-card strong { color: var(--ink); }
+    .insight-card .muted-note {
+      margin: 0.55rem 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .insight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    @media (max-width: 720px) {
+      .insight-grid { grid-template-columns: 1fr; }
+    }
+
     .tbl-wrap { margin-top: 0.35rem; }
     table.exec-tbl {
       width: 100%;
@@ -221,7 +260,7 @@
       <header class="exec-top">
         <h1>Search ads — how we’re doing</h1>
         <p class="one-liner" id="exec-honesty">
-          US Search is live and spending. Australia campaigns are live too — waiting on traffic. A few tracking pieces still need finishing.
+          US Search is live and spending. Australia campaigns are live — waiting on traffic. Next: website calls 60+ sec, then AU tracking, then Zoho.
         </p>
         <p class="when" id="exec-updated">Loading…</p>
       </header>
@@ -229,9 +268,9 @@
       <section class="exec-open" aria-labelledby="open-hd">
         <h2 id="open-hd">Still to finish</h2>
         <ol id="next-list">
-          <li><strong>Website calls that last 60+ seconds</strong> — Google swaps the site number for Ads visitors (US 888 + AU 1300); not a tap on the number</li>
-          <li><strong>Australia ad-call wins + website tags</strong> — count answered calls from ads; same visit tags the US already has</li>
-          <li><strong>Mark good leads in Zoho</strong> — so Google Ads can learn which clicks were real</li>
+          <li><strong>Website calls 60+ seconds</strong> — US + AU</li>
+          <li><strong>Australia</strong> — ad-call wins + website tags</li>
+          <li><strong>Then Zoho qualified → Ads</strong></li>
         </ol>
       </section>
 
@@ -247,6 +286,10 @@
             <div>
               <p class="lbl">Clicks</p>
               <p class="val" id="us-clicks">—</p>
+            </div>
+            <div>
+              <p class="lbl">CTR</p>
+              <p class="val" id="us-ctr">—</p>
             </div>
             <div>
               <p class="lbl">Cost / click</p>
@@ -268,17 +311,56 @@
               <p class="val" id="au-clicks">—</p>
             </div>
             <div>
+              <p class="lbl">CTR</p>
+              <p class="val" id="au-ctr">—</p>
+            </div>
+            <div>
               <p class="lbl">Cost / click</p>
               <p class="val" id="au-cpc">—</p>
             </div>
           </div>
-          <p id="au-blurb">Campaigns live — waiting on traffic. Site phone 1300 886 740. Website call duration + ad-call wins + website tags still open.</p>
+          <p id="au-blurb">Campaigns live — waiting on traffic. Site phone 1300 886 740.</p>
         </article>
       </div>
 
       <p class="exec-money" id="money-line">
         <strong>Daily budgets:</strong> US about $125 · Australia live · waiting on traffic
       </p>
+
+      <section class="exec-insights" aria-label="Insights">
+        <article class="insight-card" id="insight-read">
+          <h2>What the numbers mean</h2>
+          <ul id="insight-list">
+            <li>Loading…</li>
+          </ul>
+        </article>
+        <div class="insight-grid">
+          <article class="insight-card">
+            <h2>Ad copy that’s working</h2>
+            <ul id="theme-list">
+              <li>Hire Filipino / Philippines VA</li>
+              <li>Dedicated seat — not a marketplace gig</li>
+              <li>You interview the shortlist</li>
+            </ul>
+            <p class="muted-note" id="theme-note">Ops read of RSA themes — not an Ads ranking export.</p>
+          </article>
+          <article class="insight-card">
+            <h2>Landing page highlights</h2>
+            <ul id="lp-highlight-list">
+              <li>Loading…</li>
+            </ul>
+          </article>
+        </div>
+        <article class="insight-card">
+          <h2>Buyer signals (search)</h2>
+          <ul id="signal-list">
+            <li>Loading…</li>
+          </ul>
+          <p class="muted-note">
+            Curated employer-intent only — early junk / job-seeker terms stay off this page.
+          </p>
+        </article>
+      </section>
 
       <!-- BELOW THE FOLD: detail -->
       <section class="panel" id="campaigns">
@@ -314,15 +396,9 @@
         <summary>More detail (optional)</summary>
         <div class="fold-bd">
           <p class="muted" style="margin:0 0 0.65rem;font-size:0.86rem">
-            Landing pages and keyword themes — for ops, not the 10-second read.
+            Campaign LP catalog + bidding themes — for ops, not the 10-second read.
           </p>
-          <h3 style="margin:0 0 0.4rem;font-size:0.92rem">What the ads say</h3>
-          <ul id="theme-list">
-            <li>Filipino / Philippines VA</li>
-            <li>Dedicated seat (not a marketplace gig)</li>
-            <li>Not Upwork — you interview the person</li>
-          </ul>
-          <h3 style="margin:0.85rem 0 0.4rem;font-size:0.92rem">Landing pages (US)</h3>
+          <h3 style="margin:0 0 0.4rem;font-size:0.92rem">Landing pages (US catalog)</h3>
           <div class="tbl-wrap">
             <table class="exec-tbl" id="lp-table">
               <thead>
@@ -354,16 +430,15 @@
             </table>
           </div>
           <p class="muted" style="margin:0.75rem 0 0;font-size:0.84rem" id="soon-note">
-            Site tests (A/B numbers) aren’t on this page yet —
-            <a href="experiments">Site tests</a> ·
-            <a href="launch-control">Checklist</a>
+            Site tests scoreboard still needs GTM/GA4 wiring (bottom of Checklist ·
+            <a href="experiments">Site tests</a>).
           </p>
         </div>
       </details>
     </main>
   </div>
 
-  <script src="nav.js"></script>
+  <script src="nav.js?v=20260809b"></script>
   <script>
     (function () {
       function money(n) {
@@ -414,6 +489,10 @@
         if (!el) return;
         el.innerHTML = (items || []).map(htmlFn).join("");
       }
+      function pct(n) {
+        if (n == null || isNaN(n)) return "—";
+        return Number(n).toFixed(1) + "%";
+      }
       function weekTotals(camps) {
         var out = { clicks: 0, cost: 0, impr: 0 };
         (camps || []).forEach(function (c) {
@@ -423,6 +502,7 @@
           out.impr += Number(m.impressions || 0);
         });
         out.cpc = out.clicks > 0 ? out.cost / out.clicks : null;
+        out.ctr = out.impr > 0 ? (100 * out.clicks) / out.impr : null;
         return out;
       }
       function anyOn(camps) {
@@ -467,13 +547,51 @@
 
           document.getElementById("us-spend").textContent = money(usW.cost);
           document.getElementById("us-clicks").textContent = num(usW.clicks);
+          document.getElementById("us-ctr").textContent = pct(usW.ctr);
           document.getElementById("us-cpc").textContent = money2(usW.cpc);
           document.getElementById("us-status").textContent = marketHeadline(usCamps, usW);
 
           document.getElementById("au-spend").textContent = money(auW.cost);
           document.getElementById("au-clicks").textContent = num(auW.clicks);
+          document.getElementById("au-ctr").textContent = pct(auW.ctr);
           document.getElementById("au-cpc").textContent = money2(auW.cpc);
           document.getElementById("au-status").textContent = marketHeadline(auCamps, auW);
+
+          if (op.insights && op.insights.length) {
+            fillList(document.getElementById("insight-list"), op.insights, function (t) {
+              return "<li>" + t + "</li>";
+            });
+          }
+
+          if (op.lp_highlights && op.lp_highlights.length) {
+            fillList(document.getElementById("lp-highlight-list"), op.lp_highlights, function (p) {
+              var label = p.url
+                ? '<a href="' + p.url + '" target="_blank" rel="noopener"><strong>' +
+                  (p.name || "") +
+                  "</strong></a>"
+                : "<strong>" + (p.name || "") + "</strong>";
+              return "<li>" + label + " — " + (p.why || "") + "</li>";
+            });
+          }
+
+          if (op.buyer_signals && op.buyer_signals.length) {
+            fillList(document.getElementById("signal-list"), op.buyer_signals, function (s) {
+              return (
+                "<li><strong>" +
+                (s.term || "") +
+                "</strong> <span class='why-cell'>(" +
+                (s.market || "US") +
+                ") — " +
+                (s.why || "") +
+                "</span></li>"
+              );
+            });
+          }
+
+          if (op.whats_working && op.whats_working.note) {
+            var tn = document.getElementById("theme-note");
+            if (tn) tn.textContent = op.whats_working.note;
+          }
 
           var moneyLine = document.getElementById("money-line");
           if (op.budgets && op.budgets.length) {

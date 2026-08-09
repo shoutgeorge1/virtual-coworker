@@ -68,10 +68,9 @@
         <p class="kicker">Production · www.virtualcoworker.app</p>
         <h1>LP previews</h1>
         <p>
-          Full microsite sitemap — every real route as a clickable link.
-          Host: <a href="https://www.virtualcoworker.app/" target="_blank" rel="noopener">www.virtualcoworker.app</a>
-          (preview <code>vision-three-alpha.vercel.app</code> still exists).
-          Previews look good — <strong>verify variants actually work</strong> (Site tests wiring still open).
+          Every live page as a clickable link —
+          <a href="https://www.virtualcoworker.app/" target="_blank" rel="noopener">www.virtualcoworker.app</a>.
+          Open any path to preview. Copy A vs B links below switch the hero/copy (confirmed working).
         </p>
       </header>
 
@@ -83,14 +82,9 @@
         </div>
         <div class="panel-bd">
           <p class="muted" style="margin:0 0 0.85rem;font-size:0.88rem">
-            Three sites: US employer · AU employer · PH talent. Shared hub/legal at root.
-            Root <a href="https://www.virtualcoworker.app/" target="_blank" rel="noopener"><code>/</code></a> redirects to <code>/us</code>.
-            Hire CTA is <code>#gate</code> on the market hub (no separate <code>/hire</code> route).
+            US employer · AU employer · PH talent.
+            Root <code>/</code> → <code>/us</code>.
             US phone <code>888-954-8644</code> · AU phone <code>1300 886 740</code>.
-            <strong>Copy A/B</strong> uses <code>?variant=a|b</code> (hero/copy arms) — confirm arms fire.
-            <strong>UX Site tests</strong> (popup, quiz, chat, gate, density) use
-            <code>?vc_exp=…&amp;vc_var=…</code> — force links on
-            <a href="experiments">Site tests</a>; measurement wiring still open on Checklist.
           </p>
           <div class="sitemap">
             <div class="sitemap-branch">
@@ -173,19 +167,17 @@
             </div>
 
             <div class="sitemap-branch sitemap-full">
-              <h3>Copy A/B QA shortcuts</h3>
-              <p class="branch-note">Hero/copy arms only (<code>?variant=</code>). For popup/quiz/chat/gate tests → <a href="experiments">Site tests</a>.</p>
+              <h3>Copy version A vs B</h3>
+              <p class="branch-note">
+                Same page, two headline/copy versions. Open A, then B — you should see different hero copy.
+                (Not the Site tests scoreboard — that’s still blank under Archive.)
+              </p>
               <ul class="sitemap-tree">
-                <li><a href="https://www.virtualcoworker.app/us?variant=a" target="_blank" rel="noopener">/us?variant=a</a></li>
-                <li><a href="https://www.virtualcoworker.app/us?variant=b" target="_blank" rel="noopener">/us?variant=b</a></li>
-                <li><a href="https://www.virtualcoworker.app/au?variant=a" target="_blank" rel="noopener">/au?variant=a</a></li>
-                <li><a href="https://www.virtualcoworker.app/au?variant=b" target="_blank" rel="noopener">/au?variant=b</a></li>
-                <li><a href="https://www.virtualcoworker.app/us/digital-marketing?variant=a" target="_blank" rel="noopener">/us/digital-marketing?variant=a</a></li>
-                <li><a href="https://www.virtualcoworker.app/us/digital-marketing?variant=b" target="_blank" rel="noopener">/us/digital-marketing?variant=b</a></li>
-                <li><a href="https://www.virtualcoworker.app/us/accounting?variant=a" target="_blank" rel="noopener">/us/accounting?variant=a</a></li>
-                <li><a href="https://www.virtualcoworker.app/us/accounting?variant=b" target="_blank" rel="noopener">/us/accounting?variant=b</a></li>
-                <li><a href="https://www.virtualcoworker.app/au/digital-marketing?variant=a" target="_blank" rel="noopener">/au/digital-marketing?variant=a</a></li>
-                <li><a href="https://www.virtualcoworker.app/au/digital-marketing?variant=b" target="_blank" rel="noopener">/au/digital-marketing?variant=b</a></li>
+                <li><a href="https://www.virtualcoworker.app/us?variant=a" target="_blank" rel="noopener">US hub · version A</a> · <a href="https://www.virtualcoworker.app/us?variant=b" target="_blank" rel="noopener">version B</a></li>
+                <li><a href="https://www.virtualcoworker.app/au?variant=a" target="_blank" rel="noopener">AU hub · version A</a> · <a href="https://www.virtualcoworker.app/au?variant=b" target="_blank" rel="noopener">version B</a></li>
+                <li><a href="https://www.virtualcoworker.app/us/digital-marketing?variant=a" target="_blank" rel="noopener">US digital marketing · A</a> · <a href="https://www.virtualcoworker.app/us/digital-marketing?variant=b" target="_blank" rel="noopener">B</a></li>
+                <li><a href="https://www.virtualcoworker.app/us/accounting?variant=a" target="_blank" rel="noopener">US accounting · A</a> · <a href="https://www.virtualcoworker.app/us/accounting?variant=b" target="_blank" rel="noopener">B</a></li>
+                <li><a href="https://www.virtualcoworker.app/au/digital-marketing?variant=a" target="_blank" rel="noopener">AU digital marketing · A</a> · <a href="https://www.virtualcoworker.app/au/digital-marketing?variant=b" target="_blank" rel="noopener">B</a></li>
               </ul>
             </div>
           </div>
@@ -194,11 +186,10 @@
 
       <div class="actions">
         <a class="btn btn-primary" href="launch-control">Checklist</a>
-        <a class="btn" href="experiments">Site tests</a>
         <a class="btn" href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">Open US hub</a>
       </div>
     </main>
   </div>
-  <script src="nav.js"></script>
+  <script src="nav.js?v=20260809b"></script>
 </body>
 </html>

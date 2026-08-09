@@ -12,16 +12,16 @@
   <style>
     .trk-top { margin: 0 0 1rem; }
     .trk-top h1 { margin: 0 0 0.35rem; font-size: 1.45rem; }
-    .trk-top p { margin: 0; font-size: 1rem; color: var(--body); max-width: 40rem; }
+    .trk-top p { margin: 0; font-size: 1rem; color: var(--body); max-width: 36rem; }
     table.trk-tbl {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
     }
     table.trk-tbl th,
     table.trk-tbl td {
       text-align: left;
-      padding: 0.55rem 0.5rem;
+      padding: 0.6rem 0.5rem;
       border-bottom: 1px solid var(--edge-soft);
       vertical-align: top;
     }
@@ -40,7 +40,7 @@
       border-radius: 8px;
       border: 1px solid var(--edge-soft);
       background: var(--panel-inset);
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       line-height: 1.45;
       color: var(--body);
     }
@@ -49,7 +49,7 @@
       margin: 0.4rem 0 0;
       padding: 0 0 0 1.2rem;
     }
-    .order li { margin: 0.2rem 0; }
+    .order li { margin: 0.22rem 0; }
   </style>
 </head>
 <body data-page="tracking.html" data-foot="US vs AU · what’s live">
@@ -58,73 +58,71 @@
     <main class="main">
       <header class="trk-top">
         <h1>Tracking</h1>
-        <p>What’s working vs still needed — so Google knows a click was useful. Top gap: website calls that last 60+ seconds (not a tap on the number).</p>
+        <p>Simple status: what’s live vs still open. Details live on the Checklist.</p>
       </header>
 
       <section class="panel">
         <div class="panel-hd">
-          <h2>What’s working / still needed</h2>
+          <h2>Status</h2>
         </div>
         <div class="panel-bd">
           <table class="trk-tbl">
             <thead>
               <tr>
                 <th>Thing</th>
-                <th>United States</th>
+                <th>US</th>
                 <th>Australia</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Phone on the website</td>
+                <td>Phone on site</td>
                 <td class="ok">Live · 888</td>
                 <td class="ok">Live · 1300</td>
               </tr>
               <tr>
-                <td>Website calls that last 60+ seconds<br /><span style="font-weight:400;color:var(--muted)">Google swaps the number for Ads visitors · not a tel: tap · no CallRail needed</span></td>
-                <td class="miss">Still needed</td>
-                <td class="miss">Still needed</td>
+                <td>Website calls 60+ sec</td>
+                <td class="miss">Open</td>
+                <td class="miss">Open</td>
               </tr>
               <tr>
-                <td>Calls from ads that last 60+ seconds<br /><span style="font-weight:400;color:var(--muted)">Call button / call asset on the ad</span></td>
+                <td>Calls from ads 60+ sec</td>
                 <td class="ok">Live</td>
-                <td class="miss">Still needed</td>
+                <td class="miss">Open</td>
               </tr>
               <tr>
                 <td>Website tags (GTM / GA4)</td>
-                <td class="ok">Mostly done</td>
-                <td class="miss">Still needed</td>
+                <td class="ok">Live</td>
+                <td class="miss">Open</td>
               </tr>
               <tr>
-                <td>Form emails arrive</td>
-                <td class="ok">Live → us@virtualcoworker.com</td>
-                <td class="ok">Live → apac@virtualcoworker.com</td>
+                <td>Form emails</td>
+                <td class="ok">Live</td>
+                <td class="ok">Live</td>
               </tr>
               <tr>
-                <td>Mark good leads in Zoho → Ads</td>
-                <td colspan="2" class="miss">After website call duration + AU ad-call wins + website tags</td>
+                <td>Zoho qualified → Ads</td>
+                <td colspan="2" class="miss">Later — after the open items above</td>
               </tr>
             </tbody>
           </table>
 
           <div class="order">
-            <strong>Do in this order</strong>
+            <strong>Do next</strong>
             <ol>
-              <li><strong>High priority</strong> — website calls that last 60+ seconds (US 888 + AU 1300; Google forwarding number)</li>
-              <li>Australia — count answered calls from ads as wins</li>
-              <li>Australia — website tags (GTM / GA4)</li>
-              <li>Then mark good leads in Zoho → feed Ads</li>
+              <li>Website calls 60+ seconds</li>
+              <li>Australia ad-call wins</li>
+              <li>Australia website tags</li>
+              <li>Then Zoho → Ads</li>
             </ol>
             <p style="margin:0.55rem 0 0;font-size:0.86rem;color:var(--muted)">
-              Site tests stay at the bottom of the menu until wired.
-              <a href="lead-routing.html">Lead Routing</a> ·
-              <a href="launch-control.html">Checklist</a>
+              Full steps → <a href="launch-control.html">Checklist</a>
             </p>
           </div>
         </div>
       </section>
     </main>
   </div>
-  <script src="nav.js"></script>
+  <script src="nav.js?v=20260809b"></script>
 </body>
 </html>
