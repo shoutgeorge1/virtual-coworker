@@ -13,7 +13,7 @@ window.PILOT_STATUS = {
   handoffNote:
     "Caitlin is ops contact + lead-quality stakeholder and may start maternity leave anytime. Braden is expected to take over day-to-day while she is out. Cheyenne owns US sales; Holly owns APAC.",
   commercialStatus: "au_priority_us_live",
-  commercialLabel: "AU PRIORITY · VC_AU_* LIVE (WAITING ON TRAFFIC) · SITE PHONE 1300 LIVE · US LIVE · BRAND PAUSED · AU TRACKING GAPS",
+  commercialLabel: "HIGH PRIORITY · WEBSITE CALLS 60s · AU TRACKING · VC_AU_* LIVE (WAITING ON TRAFFIC) · US LIVE · BRAND PAUSED",
   objective:
     "Can Google Search → independent US/AU employer microsites generate qualified leads at an acceptable cost? Three identities (US · AU · PH); WordPress stays as-is with zero paid egress.",
   landingPages: {
@@ -99,14 +99,16 @@ window.PILOT_STATUS = {
   /* Confirmed conversion strategy (Stage 1) — phone-first; not form Primary */
   conversionStrategy: {
     stage1Primary: [
-      "Phone call conversions (website + ad call extensions) after US routing works — early steering signal"
+      "HIGH PRIORITY: Website calls that last 60+ seconds (Google forwarding number on site — US 888 + AU 1300). Not a tel: tap. No CallRail required.",
+      "Calls from ad call assets that last 60+ seconds (US live; AU still needed) — early steering alongside website duration"
     ],
     stage1Secondary: [
       "Employer form delivery (Resend and/or GitHub) — observe only; not bidding Primary",
-      "Click-to-call observation",
+      "Click-to-call / tel: tap observation only — never Primary",
       "Calendly booking (secondary/separate — not second Primary)"
     ],
     stage1DoNotOptimize: [
+      "tel: click as Primary (not a connected-call win)",
       "Thank-you page / raw form fills as Primary (spam risk)",
       "Job orders / placements — need clean lead data first before Ads learns from them",
       "Old Zoho/Zapier conversion actions — do not attach to VC_US_*",
@@ -117,7 +119,18 @@ window.PILOT_STATUS = {
       jobPlacement: "$500–$800 (estimate only — not approved for Ads import)"
     },
     laterPath:
-      "After AU phone + website tags: human marks qualified in Zoho → light signal into Ads. Later (enough deals/money): value-based conversions when deals actually pay.",
+      "After website call duration + AU ad-call wins + website tags: human marks qualified in Zoho → light signal into Ads. Booked consult next. Later (enough deals/money): value-based conversions when deals actually pay.",
+    websiteCallDuration: {
+      status: "high_priority_open",
+      minSeconds: 60,
+      method: "Google Ads website phone call conversion + Google forwarding number (dynamic replace for Ads visitors)",
+      implementVia: "GTM or site tag — as appropriate",
+      markets: "US 888 on site · AU 1300 on site — both need duration tracking where the number shows",
+      notPrimary: "tel: click",
+      noCallRail: true,
+      testPath: "ad click → LP → forwarding number shows → call connects → 60+ sec → conversion in Ads",
+      note: "Do not invent conversion IDs in docs — create/confirm in Ads UI"
+    },
     biddingUntilClean: "Maximize Clicks"
   },
 
@@ -137,9 +150,10 @@ window.PILOT_STATUS = {
     auDestination: {
       number: "1300 886 740",
       status: "site_live_2026_08_08",
-      note: "George-approved AU site phone — live on /au. Keep answering. Next: AU tracking parity (GTM/GA4/Ads conversions) + Unkown AG cleanup."
+      note: "George-approved AU site phone — live on /au. Keep answering. Next: website call duration (60s + Google forwarding) + AU ad-call wins + GTM/GA4 + Unkown AG cleanup."
     },
-    callRail: "Later — not Stage 1 operational. Tracking numbers forward to sales destinations; AU local tracking eventually."
+    callRail:
+      "Not needed for Stage 1 website-call signal — Google forwarding number covers Ads visitors. CallRail later/optional if VC wants broader tracking."
   },
 
   leadDelivery: {
@@ -278,8 +292,13 @@ window.PILOT_STATUS = {
   ],
   verifyNow: [
     {
+      id: "website_call_duration",
+      label: "HIGH PRIORITY: Website calls 60+ sec via Google forwarding (US 888 + AU 1300) — not tel: click; test ad→LP→forwarding#→60s→Ads conversion; no CallRail",
+      status: "verify"
+    },
+    {
       id: "conversion_tracking",
-      label: "After routing: VC_US_Phone_Call_From_Ads/_From_Website (60–90s) Primary; form Secondary; Zoho Qualified offline later — no legacy Zoho/Zapier",
+      label: "US ad-call Primary live; finish website duration Primary alongside; form Secondary; Zoho Qualified offline later — no legacy Zoho/Zapier; don’t invent IDs",
       status: "verify"
     },
     {
@@ -316,7 +335,7 @@ window.PILOT_STATUS = {
     },
     {
       id: "au_tracking_parity",
-      label: "AU tracking parity (phone wins in Ads + GTM/GA4) — campaigns already live",
+      label: "AU tracking parity (website call duration + ad-call wins + GTM/GA4) — campaigns already live",
       status: "waiting"
     },
     {
@@ -355,38 +374,41 @@ window.PILOT_STATUS = {
     "Unsafe Google auto-apply — already disabled"
   ],
   georgeHandles: [
-    "AU top of queue: phone call conversions → GTM/GA4 → then Zoho qualified → Ads; Unkown AG cleanup",
+    "HIGH PRIORITY: website calls 60+ sec (Google forwarding) US 888 + AU 1300 — not tel: click; no CallRail required",
+    "AU: ad-call conversion wins → GTM/GA4 → then Zoho qualified → Ads; Unkown AG cleanup",
     "Daily search terms / budget spend / keywords + negatives on live VC_US_* (and AU while Enabled)",
     "Phone-led conversions + shallow Zoho (Max Clicks until clean; form not preferred Primary)",
     "Wire site tests experiment events → dashboard (bottom of list until working)",
-    "After AU tracking: Zoho qualified → Ads; value-based later",
+    "After call duration + AU tracking: Zoho qualified → Ads; value-based later",
     "Keep Braden/CEO executive snapshot calm (spend, clicks, themes — not raw typed queries)",
     "MCC + Google Ads Editor (Standard access on US + AU)",
     "Separate GTM_US + GTM_AU (+ GTM_PH if needed) / GA4 / GSC / Ads conversions"
   ],
   majorBlockers: [
-    "AU top of queue: phone call conversions + GTM/GA4 (VC_AU_* already Enabled)",
+    "HIGH PRIORITY: website call duration 60s + Google forwarding (US + AU site phones)",
+    "AU: ad-call conversion wins + GTM/GA4 (VC_AU_* already Enabled)",
     "AU ops risk: Unkown AGs with Broad positives — cleanup",
     "Site tests experiment / variant wiring (GTM or GA4 → dashboard) — bottom until working",
-    "After AU tracking: Zoho qualified → Ads; later value when deals make money",
+    "After call tracking: Zoho qualified → Ads; later value when deals make money",
     "US inbox monitoring awaiting Cheyenne (APAC/Holly watches apac@)"
   ],
   nextThree: [
-    "Australia — phone call conversions in Ads",
-    "Australia — website tags (GTM + GA4)",
+    "Website calls that last 60+ seconds (Google forwarding — US 888 + AU 1300)",
+    "Australia — ad-call conversion wins + website tags (GTM + GA4)",
     "Then Zoho qualified mark → Ads; site tests stay at the bottom until working"
   ],
   openItemsUnresolved: [
-    "AU phone call conversions in Ads (before Zoho → Ads)",
+    "Website calls 60+ sec via Google forwarding (US 888 + AU 1300) — not tel: click Primary; no CallRail needed",
+    "AU phone call conversions from ads (before Zoho → Ads)",
     "AU GTM/GA4 website tags (before Zoho → Ads)",
     "AU Unkown AG / Broad-positive cleanup",
     "Site tests GTM/GA4 experiment wiring (bottom until working)",
-    "Zoho qualified → Ads path (after AU phone + website tags)",
+    "Zoho qualified → Ads path (after website call duration + AU tracking)",
     "Cheyenne/US microsite inbox monitoring + counting source (APAC/Holly watches)",
     "Monday paid microsite vs total inbound scoreboard verified",
     "Exact defs: qualified lead / job order / placement",
     "How Caitlin / Cheyenne / Pauly return lead-quality feedback",
-    "CallRail approval / ownership",
+    "CallRail — optional later; not required for Google website call signal",
     "Final offline conversion values before Ads import (later / money stage)",
     "Official chat platform + George invite"
   ],

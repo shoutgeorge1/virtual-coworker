@@ -306,9 +306,10 @@
         <section class="lc-measure" id="how-we-measure" aria-labelledby="measure-hd">
           <h2 id="measure-hd">How we’ll measure success</h2>
           <ul>
-            <li><strong>Australia first:</strong> count phone calls as wins · add website tags (like US)</li>
+            <li><strong>High priority:</strong> website calls that last <strong>60+ seconds</strong> count as wins (Google swaps the site number for Ads visitors — not a tap on the number)</li>
+            <li><strong>Australia also:</strong> count answered calls from ads · add website tags (like US)</li>
             <li><strong>Then:</strong> mark good leads in Zoho → Ads learns</li>
-            <li><strong>US:</strong> live · phone guides quality · about $125/day</li>
+            <li><strong>US:</strong> live · ad call assets already guide · about $125/day</li>
             <li><strong>Later:</strong> site tests scoreboard (variants work; numbers blank)</li>
           </ul>
         </section>
@@ -436,160 +437,167 @@
               <input type="checkbox" id="ads17" data-todo="ads17" checked />
               <label for="ads17">
                 <strong>11. Create phone call conversions (guiding light)</strong>
-                <span class="todo-hint">Done (2026-08-07). Primary: <code>VC_US_Phone_Call_From_Ads</code> (60s, Count One). Secondary: <code>VC_US_Phone_Click_Website</code> (GTM tel: click). CORE + ROLES = Phone call leads goal, Max Clicks. Old Brand/Zoho form junk left alone. <strong>Watch:</strong> website phone-click may still show Unverified — wait/verify; don’t recreate (step 18).</span>
+                <span class="todo-hint">Done for <strong>calls from ads</strong> (2026-08-07). Primary: <code>VC_US_Phone_Call_From_Ads</code> (60s, Count One). Secondary micro: <code>VC_US_Phone_Click_Website</code> (tel: tap — <strong>not</strong> a real connected-call win). CORE + ROLES = Phone call leads goal, Max Clicks. Old Brand/Zoho form junk left alone. <strong>Still open:</strong> real website calls by duration (step 14) — don’t treat tel: click as Primary.</span>
               </label>
             </li>
             <li data-order="12">
               <input type="checkbox" id="ads16" data-todo="ads16" checked />
               <label for="ads16">
                 <strong>12. Fix US phone routing / someone answers</strong>
-                <span class="todo-hint">Done enough for measurement (2026-08-07). Call asset + site primary <strong>(888) 954-8644</strong> — <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>. 310 may still show for some LA traffic. Cheyenne confirmed 888 routes to her (via tree). Remaining ops: phone tree soft ask (step 17).</span>
+                <span class="todo-hint">Done enough for measurement (2026-08-07). Call asset + site primary <strong>(888) 954-8644</strong> — <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>. 310 may still show for some LA traffic. Cheyenne confirmed 888 routes to her (via tree). Remaining ops: phone tree soft ask (step 18).</span>
               </label>
             </li>
             <li data-order="12.5">
               <input type="checkbox" id="ads30" data-todo="ads30" checked />
               <label for="ads30">
                 <strong>13. Australia stood up</strong>
-                <span class="todo-hint">Done. Site phone <code>1300 886 740</code> live. AU campaigns live — waiting on traffic (not paused). Remaining = call tracking + website tags below.</span>
+                <span class="todo-hint">Done. Site phone <code>1300 886 740</code> live. AU campaigns live — waiting on traffic (not paused). Remaining = website call duration + ad-call wins + website tags below.</span>
+              </label>
+            </li>
+            <li data-order="12.75">
+              <input type="checkbox" id="ads34" data-todo="ads34" />
+              <label for="ads34">
+                <strong>14. Website calls that last 60+ seconds (US + AU)</strong>
+                <span class="todo-hint"><strong>High priority.</strong> Make the phone on <a href="https://www.virtualcoworker.app" target="_blank" rel="noopener">virtualcoworker.app</a> count as a real Google Ads win when someone <em>talks</em> — not when they tap the number. In Ads: create a Phone call conversion for <strong>calls to a phone number on the website</strong> · minimum length <strong>60 seconds</strong> · use Google’s website call tracking / forwarding number so Ads visitors see a swapped number · wire via GTM or the site. <strong>Do not</strong> use simple <code>tel:</code> click as Primary. Test: ad click → landing page → forwarding number shows → call connects → 60+ sec → conversion in Ads. Once verified: early Primary signal <strong>alongside</strong> 60+ sec calls from ad call assets. US site phone 888 · AU site phone 1300 — both need this where the number is on the page. No CallRail needed. Don’t invent conversion IDs in docs — create/confirm in Ads UI.</span>
               </label>
             </li>
             <li data-order="13">
               <input type="checkbox" id="ads32" data-todo="ads32" />
               <label for="ads32">
-                <strong>14. Australia — phone call conversion in Ads</strong>
-                <span class="todo-hint"><strong>Priority.</strong> Count answered AU calls as wins (call extension / phone conversion), like the US already has. Do this before Zoho → Ads.</span>
+                <strong>15. Australia — phone call conversion from ads</strong>
+                <span class="todo-hint"><strong>Priority.</strong> Count answered AU calls from <strong>ad call assets</strong> as wins (like US <code>VC_US_Phone_Call_From_Ads</code>). Pair with step 14 (website duration). Do this before Zoho → Ads. Don’t invent an AU conversion ID here — create in Ads UI.</span>
               </label>
             </li>
             <li data-order="14">
               <input type="checkbox" id="ads33" data-todo="ads33" />
               <label for="ads33">
-                <strong>15. Australia — website tags (GTM + GA4)</strong>
-                <span class="todo-hint"><strong>Priority.</strong> Same basic visit tracking the US already has on <code>/au</code>. Do this before Zoho → Ads.</span>
+                <strong>16. Australia — website tags (GTM + GA4)</strong>
+                <span class="todo-hint"><strong>Priority.</strong> Same basic visit tracking the US already has on <code>/au</code>. Needed for website call number swap + before Zoho → Ads.</span>
               </label>
             </li>
             <li data-order="15">
               <input type="checkbox" id="ads18" data-todo="ads18" />
               <label for="ads18">
-                <strong>16. Zoho “qualified” → Ads</strong>
-                <span class="todo-hint"><strong>After AU phone + website tags.</strong> Sales marks a real employer lead in Zoho → that mark feeds Google Ads. Not “customer paid.” Plain English on <a href="lead-routing.html">Lead Routing</a>.</span>
+                <strong>17. Zoho “qualified” → Ads</strong>
+                <span class="todo-hint"><strong>After website call duration + AU ad-call wins + website tags.</strong> Sales marks a real employer lead in Zoho → that mark feeds Google Ads. Not “customer paid.” Later: booked consult / value when deals pay. Plain English on <a href="lead-routing.html">Lead Routing</a>.</span>
               </label>
             </li>
             <li data-order="16">
               <input type="checkbox" id="ads25" data-todo="ads25" />
               <label for="ads25">
-                <strong>17. Remove / simplify 888 phone tree</strong>
+                <strong>18. Remove / simplify 888 phone tree</strong>
                 <span class="todo-hint">Soft ask — still open. Waiting on VC (phones/IT + Cheyenne). Call asset + site stay <code>888-954-8644</code>.</span>
               </label>
             </li>
             <li data-order="17">
               <input type="checkbox" id="ads26" data-todo="ads26" />
               <label for="ads26">
-                <strong>18. Verify US website phone-click</strong>
-                <span class="todo-hint">Wait/verify only — don’t recreate. Confirm Verified when Google finishes.</span>
+                <strong>19. Verify US website phone-click (secondary only)</strong>
+                <span class="todo-hint">Wait/verify only — don’t recreate. Tel: tap is a micro signal, <strong>not</strong> Primary. Real website wins = step 14 (60+ sec connected calls).</span>
               </label>
             </li>
             <li data-order="18">
               <input type="checkbox" id="ads28" data-todo="ads28" />
               <label for="ads28">
-                <strong>19. Optional — demote old Zoho Primary</strong>
+                <strong>20. Optional — demote old Zoho Primary</strong>
                 <span class="todo-hint">Optional. If old Zoho/Zapier junk is still Primary, demote it. Don’t delete museum actions.</span>
               </label>
             </li>
             <li data-order="19">
               <input type="checkbox" id="ads24" data-todo="ads24" />
               <label for="ads24">
-                <strong>20. Verify Google Search Console</strong>
+                <strong>21. Verify Google Search Console</strong>
                 <span class="todo-hint">Property check for <code>www.virtualcoworker.app</code>.</span>
               </label>
             </li>
             <li data-order="20">
               <input type="checkbox" id="ads19" data-todo="ads19" checked />
               <label for="ads19">
-                <strong>21. Australia phone on site</strong>
+                <strong>22. Australia phone on site</strong>
                 <span class="todo-hint">Done. <code>1300 886 740</code> live on <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>.</span>
               </label>
             </li>
             <li data-order="21">
               <input type="checkbox" id="ads5" data-todo="ads5" />
               <label for="ads5">
-                <strong>22. Sales watch group inboxes</strong>
+                <strong>23. Sales watch group inboxes</strong>
                 <span class="todo-hint">Holly watches <code>apac@</code>. Cheyenne on <code>us@</code>. See <a href="lead-routing.html">Lead Routing</a>.</span>
               </label>
             </li>
             <li data-order="22">
               <input type="checkbox" id="ads20" data-todo="ads20" />
               <label for="ads20">
-                <strong>23. Monday paid-lead scoreboard</strong>
+                <strong>24. Monday paid-lead scoreboard</strong>
                 <span class="todo-hint">Separate paid Ads leads from total inbox. Buckets: enquiries · calls booked · junk · work-seekers.</span>
               </label>
             </li>
             <li data-order="23">
               <input type="checkbox" id="ads21" data-todo="ads21" />
               <label for="ads21">
-                <strong>24. Braden / CEO meeting prep</strong>
+                <strong>25. Braden / CEO meeting prep</strong>
                 <span class="todo-hint">Basically done — leave checkable. <a href="executive">Executive</a> is the calm walkthrough.</span>
               </label>
             </li>
             <li data-order="24">
               <input type="checkbox" id="ads22" data-todo="ads22" />
               <label for="ads22">
-                <strong>25. Every couple days — refresh Executive numbers</strong>
+                <strong>26. Every couple days — refresh Executive numbers</strong>
                 <span class="todo-hint">Light Ads pull → <a href="executive">Executive</a>. Keep it calm — spend, clicks, themes.</span>
               </label>
             </li>
             <li data-order="25">
               <input type="checkbox" id="ads12" data-todo="ads12" />
               <label for="ads12">
-                <strong>26. Daily search-terms habit</strong>
+                <strong>27. Daily search-terms habit</strong>
                 <span class="todo-hint">Covered by Daily checks above. Review what people typed in Ads.</span>
               </label>
             </li>
             <li data-order="26">
               <input type="checkbox" id="ads13" data-todo="ads13" />
               <label for="ads13">
-                <strong>27. Review ad copy + combinations</strong>
+                <strong>28. Review ad copy + combinations</strong>
                 <span class="todo-hint">Polish headlines/descriptions and RSA combos after traffic is clean.</span>
               </label>
             </li>
             <li data-order="27">
               <input type="checkbox" id="ads11" data-todo="ads11" />
               <label for="ads11">
-                <strong>28. Add image assets</strong>
+                <strong>29. Add image assets</strong>
                 <span class="todo-hint">Useful polish — not required for ads to run.</span>
               </label>
             </li>
             <li data-order="28">
               <input type="checkbox" id="ads14" data-todo="ads14" />
               <label for="ads14">
-                <strong>29. Audit all assets</strong>
+                <strong>30. Audit all assets</strong>
                 <span class="todo-hint">Sitelinks, callouts, snippets. US call assets = 888 only.</span>
               </label>
             </li>
             <li data-order="29">
               <input type="checkbox" id="ads29" data-todo="ads29" checked />
               <label for="ads29">
-                <strong>30. Sniper negatives on CORE + ROLES</strong>
+                <strong>31. Sniper negatives on CORE + ROLES</strong>
                 <span class="todo-hint">Done (George 2026-08-07).</span>
               </label>
             </li>
             <li data-order="30">
               <input type="checkbox" id="ads15" data-todo="ads15" />
               <label for="ads15">
-                <strong>31. Later — grow shared negative lists</strong>
+                <strong>32. Later — grow shared negative lists</strong>
                 <span class="todo-hint">Not today. Grow as junk patterns repeat.</span>
               </label>
             </li>
             <li data-order="31">
               <input type="checkbox" id="ads31" data-todo="ads31" checked />
               <label for="ads31">
-                <strong>32. Ads package — DONE → archive</strong>
+                <strong>33. Ads package — DONE → archive</strong>
                 <span class="todo-hint">Done. In nav <strong>Archive → Ads package</strong>.</span>
               </label>
             </li>
             <li data-order="99">
               <input type="checkbox" id="ads27" data-todo="ads27" />
               <label for="ads27">
-                <strong>33. Site tests (bottom)</strong>
+                <strong>34. Site tests (bottom)</strong>
                 <span class="todo-hint">Not working yet — scoreboard blank. LP A/B variants work in site code; measurement not wired. <a href="experiments">Site tests</a> · <a href="landing-pages">LP previews</a> look good.</span>
               </label>
             </li>
@@ -627,10 +635,11 @@
             <span class="st st-access">You</span>
           </div>
           <ul>
-            <li><strong>1.</strong> Australia phone call conversion (step 14)</li>
-            <li><strong>2.</strong> Australia website tags (step 15)</li>
-            <li><strong>3.</strong> Zoho qualified → Ads (step 16)</li>
-            <li><strong>Bottom:</strong> Site tests scoreboard (step 33)</li>
+            <li><strong>1.</strong> Website calls 60+ seconds — Google forwarding (step 14)</li>
+            <li><strong>2.</strong> Australia ad-call conversion (step 15)</li>
+            <li><strong>3.</strong> Australia website tags (step 16)</li>
+            <li><strong>4.</strong> Zoho qualified → Ads (step 17)</li>
+            <li><strong>Bottom:</strong> Site tests scoreboard (step 34)</li>
             <li><a href="lead-routing.html">Lead Routing</a> · <a href="tracking.html">Tracking</a></li>
             <li><strong>Every couple days:</strong> refresh <a href="executive">Executive</a></li>
           </ul>
@@ -642,15 +651,15 @@
             <span class="st st-progress">Them</span>
           </div>
           <ul>
-            <li><strong>Cheyenne:</strong> watch us@ · help Zoho “qualified” marks</li>
+            <li><strong>Cheyenne:</strong> watch us@ · help Zoho “qualified” marks · answer US 888</li>
             <li><strong>Holly:</strong> keep answering AU 1300 · watch apac@</li>
-            <li><strong>Phones/IT:</strong> AU call tracking · simplify 888 tree</li>
+            <li><strong>Phones/IT:</strong> help website call tracking (forwarding) · simplify 888 tree</li>
           </ul>
         </section>
       </div>
 
       <p class="lc-secondary" id="site-tests">
-        <strong>Site tests</strong> — scoreboard still blank (step 33, bottom of list).
+        <strong>Site tests</strong> — scoreboard still blank (step 34, bottom of list).
         LP previews look good · A/B variants work in site code ·
         <a href="experiments">Site tests</a> ·
         Ads package → <a href="ads-package.html">Archive</a> (done)
@@ -665,7 +674,9 @@
           <ul class="glance-bullets" style="margin:0">
             <li>Re-enable Brand or treat Brand as the main campaign (paused — deferred)</li>
             <li>Put raw “what people typed” lists on the Executive page</li>
-            <li>Invent new conversion actions or change Ads via API</li>
+            <li>Invent conversion IDs in docs or change Ads via API</li>
+            <li>Use simple <code>tel:</code> click as Primary (need 60+ sec connected website calls)</li>
+            <li>Buy CallRail just for this — Google website call tracking is enough</li>
             <li>Attach <code>310</code> as a competing Call asset on US CORE/ROLES (888 only)</li>
             <li>Steer bidding on form / thank-you fills</li>
             <li>Wire old Zoho/Zapier conversions onto new <code>VC_*</code></li>
@@ -837,8 +848,10 @@
       if (store.ads29 !== true) store.ads29 = true;
       if (store.ads19 !== true) store.ads19 = true;
       if (store.ads31 !== true) store.ads31 = true;
-      /* AU stood up — remaining work is call conversion + website tags */
+      /* AU stood up — remaining work is website call duration + ad-call wins + website tags */
       if (store.ads30 !== true) store.ads30 = true;
+      /* Website call duration (ads34) stays open / unchecked */
+      if (store.ads34 === true) { /* leave if George checked */ }
       /* Site tests stay open / unchecked */
       if (store.ads27 === true) { /* leave if George checked */ }
       var activeList = document.getElementById("todo-active");

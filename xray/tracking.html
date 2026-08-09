@@ -58,7 +58,7 @@
     <main class="main">
       <header class="trk-top">
         <h1>Tracking</h1>
-        <p>What’s working vs still needed — so Google knows a click was useful. US is ahead; Australia still needs phone wins + website tags.</p>
+        <p>What’s working vs still needed — so Google knows a click was useful. Top gap: website calls that last 60+ seconds (not a tap on the number).</p>
       </header>
 
       <section class="panel">
@@ -81,7 +81,12 @@
                 <td class="ok">Live · 1300</td>
               </tr>
               <tr>
-                <td>Count phone calls as wins in Ads</td>
+                <td>Website calls that last 60+ seconds<br /><span style="font-weight:400;color:var(--muted)">Google swaps the number for Ads visitors · not a tel: tap · no CallRail needed</span></td>
+                <td class="miss">Still needed</td>
+                <td class="miss">Still needed</td>
+              </tr>
+              <tr>
+                <td>Calls from ads that last 60+ seconds<br /><span style="font-weight:400;color:var(--muted)">Call button / call asset on the ad</span></td>
                 <td class="ok">Live</td>
                 <td class="miss">Still needed</td>
               </tr>
@@ -97,7 +102,7 @@
               </tr>
               <tr>
                 <td>Mark good leads in Zoho → Ads</td>
-                <td colspan="2" class="miss">After AU phone wins + website tags</td>
+                <td colspan="2" class="miss">After website call duration + AU ad-call wins + website tags</td>
               </tr>
             </tbody>
           </table>
@@ -105,7 +110,8 @@
           <div class="order">
             <strong>Do in this order</strong>
             <ol>
-              <li>Australia — count phone calls as wins in Ads</li>
+              <li><strong>High priority</strong> — website calls that last 60+ seconds (US 888 + AU 1300; Google forwarding number)</li>
+              <li>Australia — count answered calls from ads as wins</li>
               <li>Australia — website tags (GTM / GA4)</li>
               <li>Then mark good leads in Zoho → feed Ads</li>
             </ol>

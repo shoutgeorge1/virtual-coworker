@@ -364,7 +364,7 @@
   },
   "operator": {
     "narrative_as_of": "2026-08-08",
-    "status_banner": "US live and spending. Australia campaigns live \u2014 waiting on traffic. Still open: AU call tracking \u00b7 AU website tags \u00b7 then Zoho qualified\u2192Ads.",
+    "status_banner": "US live and spending. Australia campaigns live \u2014 waiting on traffic. High priority: website calls 60+ sec (Google forwarding) \u00b7 AU ad-call wins \u00b7 AU website tags \u00b7 then Zoho qualified\u2192Ads.",
     "budgets": [
       {
         "label": "US",
@@ -388,8 +388,8 @@
       "note": "Operator themes \u2014 not an Ads ranking."
     },
     "whats_next": [
-      "<strong>Australia phone tracking</strong> \u2014 count answered calls as wins in Ads",
-      "<strong>Australia website tags</strong> \u2014 same basic tracking the US already has",
+      "<strong>Website calls that last 60+ seconds</strong> \u2014 Google swaps the site number for Ads visitors (US 888 + AU 1300); not a tap on the number",
+      "<strong>Australia ad-call wins + website tags</strong> \u2014 count answered calls from ads; same visit tags the US already has",
       "<strong>Mark good leads in Zoho</strong> \u2014 so Google Ads can learn which clicks were real"
     ],
     "coming_soon": [
@@ -400,7 +400,7 @@
       "US Search live \u00b7 Brand off",
       "Ads package archived"
     ],
-    "honesty": "US Search is live and spending. Australia campaigns are live too — just waiting on traffic/spend. Still need AU phone wins in Ads and AU website tags.",
+    "honesty": "US Search is live and spending. Australia campaigns are live too — just waiting on traffic/spend. High priority: make website calls that last 60+ seconds count as wins (Google forwarding — not a phone tap). Still need AU ad-call wins and AU website tags.",
     "lp_ab_note": "Landing page A/B variants work in the site code. Site tests scoreboard is still blank."
   }
 }
