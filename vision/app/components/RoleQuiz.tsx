@@ -94,45 +94,75 @@ type QuizFrame = {
  * "it'll change how you hire" line was too soft). Each variant leads with the
  * payoff, and `kicker` sets the tone of the win screen.
  * Logic (branching Q2/Q3) is shared — variants are copy skin only.
+ * AU frames: same quiz, understated B2B English — not US copy with hours swapped.
  */
-const FRAMES: Record<ExpVariant, QuizFrame> = {
+const FRAMES_US: Record<ExpVariant, QuizFrame> = {
   a: {
-    eyebrow: "60 seconds · free",
-    title: "Get your week back. Hire the right person first.",
-    lead: "Three taps and you’ll know exactly who to hire — before you burn another month guessing.",
+    eyebrow: "Take the hiring quiz",
+    title: "Who should you hire first?",
+    lead: "Three taps. We’ll name the seat that buys back your week.",
     kicker: "Your first hire",
     whoLabel: "Look for",
     timeLabel: "What changes",
   },
   b: {
-    eyebrow: "Free · 3 taps",
-    title: "Stop guessing your next hire.",
-    lead: "Answer three quick questions. We’ll name the job to hand off first.",
+    eyebrow: "Take the hiring quiz",
+    title: "See which teammate to hire.",
+    lead: "Tap through. Get a clear answer. Then talk to a specialist.",
     kicker: "Hire this",
     whoLabel: "Look for",
     timeLabel: "What changes",
   },
   c: {
-    eyebrow: "3 taps · no email needed",
-    title: "Which hire buys back the most time?",
-    lead: "Tap three answers. Get a straight recommendation you can act on today.",
+    eyebrow: "Take the hiring quiz",
+    title: "Find the teammate that gets you your week back.",
+    lead: "Three questions. A straight recommendation. Then talk — free, no pressure.",
     kicker: "Your answer",
     whoLabel: "Look for",
     timeLabel: "What changes",
   },
 };
 
-const DRAIN_QUESTION: QuizQuestion = {
-  key: "drain",
-  q: "What’s eating your week?",
-  options: [
-    { id: "admin", label: "Email, calendar, admin" },
-    { id: "marketing", label: "Marketing never gets done" },
-    { id: "books", label: "Invoices and bookkeeping" },
-    { id: "support", label: "Customers waiting on replies" },
-    { id: "sales", label: "Sales and follow-ups stall" },
-  ],
+const FRAMES_AU: Record<ExpVariant, QuizFrame> = {
+  a: {
+    eyebrow: "Take the hiring quiz",
+    title: "Who should you hire first?",
+    lead: "Three taps. We’ll name the role that takes the load.",
+    kicker: "Your first hire",
+    whoLabel: "Look for",
+    timeLabel: "What changes",
+  },
+  b: {
+    eyebrow: "Take the hiring quiz",
+    title: "See which teammate to hire.",
+    lead: "Tap through. Get a clear answer. Then have a chat.",
+    kicker: "Hire this",
+    whoLabel: "Look for",
+    timeLabel: "What changes",
+  },
+  c: {
+    eyebrow: "Take the hiring quiz",
+    title: "Find the teammate that gets you your week back.",
+    lead: "Three questions. A straight recommendation. Then have a chat — free, no pressure.",
+    kicker: "Your answer",
+    whoLabel: "Look for",
+    timeLabel: "What changes",
+  },
 };
+
+function drainQuestion(market: MarketId): QuizQuestion {
+  return {
+    key: "drain",
+    q: market === "au" ? "What’s chewing up the week?" : "What’s eating your week?",
+    options: [
+      { id: "admin", label: "Email, calendar, admin" },
+      { id: "marketing", label: "Marketing never gets done" },
+      { id: "books", label: "Invoices and bookkeeping" },
+      { id: "support", label: "Customers waiting on replies" },
+      { id: "sales", label: "Sales and follow-ups stall" },
+    ],
+  };
+}
 
 function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
   const isAu = market === "au";
@@ -487,13 +517,14 @@ export default function RoleQuiz({
   }, [market]);
 
   const paths = useMemo(() => pathsFor(market), [market]);
-  const frame = FRAMES[frameVariant] || FRAMES.a;
+  const frames = isAu ? FRAMES_AU : FRAMES_US;
+  const frame = frames[frameVariant] || frames.a;
 
   const questions = useMemo((): QuizQuestion[] => {
     const drain = answers.drain && isDrainKey(answers.drain) ? answers.drain : null;
     const path = drain ? paths[drain] : null;
     return [
-      DRAIN_QUESTION,
+      drainQuestion(market),
       {
         key: "focus",
         q: path?.focusQ || "What’s the biggest drag?",
@@ -505,7 +536,7 @@ export default function RoleQuiz({
         options: path?.detailOptions || [],
       },
     ];
-  }, [answers.drain, paths]);
+  }, [answers.drain, paths, market, isAu]);
 
   const result = useMemo(() => {
     if (step < 3) return null;
@@ -535,7 +566,7 @@ export default function RoleQuiz({
 
   const current = questions[step];
   const note = isAu
-    ? "A starting point, not a promise. Next: a short chat so we can shortlist real people for your Australian business."
+    ? "A starting point, not a promise. Next: a short chat so we can shortlist real people for your Australian business — free, no pressure."
     : "A starting point, not a promise. Next: a short chat so we can shortlist real people for you.";
 
   return (
@@ -667,7 +698,7 @@ export default function RoleQuiz({
                   });
                 }}
               >
-                Hire for this role →
+                {isAu ? "Chat about this role →" : "Hire for this role →"}
               </a>
               {canCall ? (
                 <a

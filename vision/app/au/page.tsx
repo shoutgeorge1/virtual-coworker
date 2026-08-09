@@ -7,7 +7,7 @@ import "./au.css";
 export const metadata: Metadata = buildPageMetadata({
   title: "Hire Dedicated Filipino Staff | Virtual Coworker AU",
   description:
-    "Add dependable capacity for Australian business hours with dedicated Filipino teammates — we recruit and shortlist, you interview and choose.",
+    "Hire a dedicated Filipino teammate for Australian hours. Free chat. We recruit. You interview. We handle employment admin. Not a gig marketplace.",
   path: "/au",
   indexable: true,
   ogImage: "/brand/hero-au-2026.jpg",

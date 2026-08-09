@@ -16,7 +16,7 @@ Like Ads — run 2–3 variants on key engagement pieces, measure, keep winners,
 |---|---|---|---|
 | `exit_popup` | A / B / C | Soft popup | Image + headline + body + CTAs |
 | `quiz_copy` | A / B / C | Hero teaser + role quiz | Benefit headline, lead, teaser, win-screen kicker |
-| `chat_launcher` | A / B | Chat bubble | Launcher label |
+| `chat_launcher` | A / B | Chat bubble | Launcher label — must say **Chat**, not live agent |
 | `gate_headline` | A / B | Form card (generic LP) | Headline + “2 minutes” framing |
 | `lp_density` | A / B | Whole market landing | A = wordy (all supporting copy), B = lean |
 | `role_imagery` | A / B | Category heroes + services + late trust | Portrait set A (defaults) vs set B |
@@ -60,15 +60,26 @@ headline / lead / teaser / win-screen kicker.
 
 | Variant | Quiz headline | Hero teaser |
 |---|---|---|
-| A | Get your week back. Hire the right person first. | Find the hire that buys back your week → |
-| B | Stop guessing your next hire. | Which job should you hand off first? → |
-| C | Which hire buys back the most time? | Stop guessing your next hire → |
+| A | Who should you hire first? | Hiring quiz · Take the hiring quiz — who should you hire first? → |
+| B | See which teammate to hire. | Take the hiring quiz · Who should you hire first? → |
+| C | Find the teammate that gets you your week back. | Hiring quiz · Take the hiring quiz → |
 
 **Branching quiz (3 taps):** Q1 picks the drain (admin / marketing /
 books / support / sales). Q2–Q3 are path-specific (e.g. marketing →
 channels + load; books → AP/AR/payroll + software). Result copy follows
 those answers. Force preview:
 `?vc_exp=quiz_copy&vc_var=a`
+
+### `chat_launcher` — must say Chat (Aug 2026)
+
+Scripted assist chat — **not a live agent**. Launcher copy has to say Chat.
+
+| Variant | Launcher |
+|---|---|
+| A | Chat with us |
+| B | Chat — hiring help |
+
+Panel header: “Chat / Quick answers · not a live agent.”
 
 ## Events
 
@@ -138,7 +149,8 @@ Arm **A** = v2 defaults (younger marketing, focused books, CS headset, dedicated
 Arm **B** = prior set (`*-a.png` / `admin-b` for HR + trust-team-office) — sole challenger.
 
 Surfaces: category LP heroes, `/services` cards, late trust photo above FAQ.  
-Relevant face → relevant role only (see `IMAGE-CHOICES.md`).
+Relevant face → relevant role only (see `IMAGE-CHOICES.md`).  
+Stop closer photo (`/brand/vc-stop-va-v2.png`) is **not** in this experiment — later A/B of closer images only if we want it.
 
 See `IMAGE-CHOICES.md` + `config/role-imagery.ts`.
 

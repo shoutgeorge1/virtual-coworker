@@ -123,18 +123,23 @@
   grid-template-areas:
     "copy"
     "va"
-    "form";
+    "form"
+    "more";
 }
 
 .au-hero-copy {
   grid-area: copy;
 }
 
+.au-hero-more {
+  grid-area: more;
+}
+
 .au-hero .va-card {
   grid-area: va;
 }
 
-.au-hero-inner .gate-card {
+.au-hero-inner .gate-wrap {
   grid-area: form;
 }
 
@@ -142,7 +147,21 @@
    so the head isn't pinned to the bottom of the mobile frame. */
 @media (max-width: 759px) {
   .au-hero .va-card img {
-    object-position: 50% 28%;
+    object-position: 50% 22%;
+    min-height: clamp(15.5rem, 64vw, 19rem);
+    aspect-ratio: 4 / 5;
+  }
+
+  .au-hero h1 {
+    font-size: clamp(2.35rem, 8.5vw, 2.85rem);
+  }
+
+  .au-lead {
+    font-size: 1.18rem;
+  }
+
+  .au-ticks li {
+    font-size: 1.12rem;
   }
 }
 
@@ -151,7 +170,8 @@
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     grid-template-areas:
       "copy copy"
-      "va   form";
+      "va   form"
+      "more form";
     align-items: start;
   }
 }
@@ -159,13 +179,16 @@
 @media (min-width: 1160px) {
   .au-hero-inner {
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr) minmax(0, 0.9fr);
-    grid-template-areas: "copy va form";
+    grid-template-areas:
+      "copy va form"
+      "more va form";
     align-items: stretch;
   }
 
-  .au-hero-inner .gate-card {
+  .au-hero-inner .gate-wrap {
     max-width: 29rem;
     justify-self: end;
+    width: 100%;
   }
 
   /* Let the VA run the full height of the row so he carries the hero. */

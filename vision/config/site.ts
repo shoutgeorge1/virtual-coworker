@@ -156,6 +156,10 @@ export type PublicQuote = {
   name: string;
   role: string;
   company?: string;
+  /** Exact phrases to bold in the quote. */
+  pop?: readonly string[];
+  /** One word to display extra-large (e.g. “loads”). */
+  boom?: string;
 };
 
 export type PublicQuoteWithLogo = PublicQuote & {
@@ -167,21 +171,25 @@ export type PublicQuoteWithLogo = PublicQuote & {
 export const PUBLIC_QUOTES: readonly PublicQuoteWithLogo[] = [
   {
     quote:
-      "They’ve exceeded our expectations. The recruiting process was well organized, and I feel we were matched very well.",
+      "They’ve exceeded our expectations! The recruiting process was well organized, and I feel we were matched very well.",
+    pop: ["exceeded our expectations"],
     name: "Kyrstin H.",
     role: "General Manager",
     company: "College Hunks",
   },
   {
     quote:
-      "I’m beyond happy with the candidate hired for the role I needed to fill. Everyone I’ve dealt with has been professional and polished.",
+      "I’m beyond happy with the candidate hired for the role I needed to fill! Everyone I’ve dealt with has been professional and polished.",
+    pop: ["I’m beyond happy"],
     name: "Laura W.",
     role: "Founder",
     company: "Good Co.",
   },
   {
     quote:
-      "They found me an awesome VA with loads of work experience in finance. Honestly, it’s something I should have done a long time ago.",
+      "They found me an awesome VA with loads of work experience in finance. Honestly, it’s something I should have done a long time ago!",
+    pop: ["awesome VA", "I should have done a long time ago"],
+    boom: "loads",
     name: "David Boyd",
     role: "Director",
     company: "Credit Card Compare",
@@ -189,6 +197,7 @@ export const PUBLIC_QUOTES: readonly PublicQuoteWithLogo[] = [
   {
     quote:
       "I have worked with a number of virtual staff services. The team at Virtual Coworker have provided me with the best value to date.",
+    pop: ["best value to date"],
     name: "Logan Merrick",
     role: "Strategic Director",
     company: "Buzinga Apps",
@@ -231,7 +240,7 @@ export const CLIENT_MARKS: readonly ClientMark[] = [
     name: "Credit Card Compare",
     src: "/brand/trust/client-credit-card-compare.png",
     alt: "Credit Card Compare",
-    // AU success story — also shown on /us to fill the US strip.
+    // AU success story — also on /us until more US marks land (George 2026-08-09).
     markets: ["au", "us"],
   },
   {
@@ -239,6 +248,14 @@ export const CLIENT_MARKS: readonly ClientMark[] = [
     name: "Buzinga Apps",
     src: "/brand/trust/client-buzinga.png",
     alt: "Buzinga Apps",
+    markets: ["au", "us"],
+  },
+  {
+    // David Krynauw / ProActive Media — Success Stories; logo George saved 2026-08-07.
+    id: "proactive-media",
+    name: "ProActive Media",
+    src: "/brand/trust/client-proactive-media.png",
+    alt: "ProActive Media",
     markets: ["au", "us"],
   },
   {
@@ -260,6 +277,32 @@ export const CLIENT_MARKS: readonly ClientMark[] = [
   },
 ];
 
+/**
+ * Form cue — point at the gate, don’t fake a countdown.
+ * George (2026-08-09): ribbon scarcity read cheap; pointer + specialist CTA is honest.
+ */
+export const FORM_CUE = {
+  us: {
+    label: "Start here",
+    body: "Talk to a specialist — usually same business day.",
+  },
+  au: {
+    label: "Start here",
+    body: "Have a chat — no obligation, no lock-in.",
+  },
+} as const;
+
+/**
+ * US media / client-logo wishlist — NOT live until verified assets land.
+ * Tracked on Launch Control checklist + TRUST-PROOF.md.
+ */
+export const TRUST_ASSET_WISHLIST = [
+  "US-recognizable press logos (Inc, Entrepreneur, Business Insider, local biz press) — only if VC was actually featured",
+  "Authorized client logos from active US accounts (written OK from VC / client)",
+  "Video testimonials with face + name + company + outcome",
+  "Any Fortune-level marks only with explicit authorization — never invent",
+] as const;
+
 export function clientMarksForMarket(market: "us" | "au"): readonly ClientMark[] {
   return CLIENT_MARKS.filter((c) => c.markets.includes(market));
 }
@@ -277,23 +320,42 @@ export type PressMark = {
   note: string;
   /** Wider marks get more grid room. */
   wide?: boolean;
+  /** Markets where this mark should appear. Default: both. */
+  markets?: readonly ("us" | "au")[];
 };
 
 export const PRESS_MARKS: readonly PressMark[] = [
   {
-    // Rebuilt crisp navy lockup (VC Featured In mark) — not the crushed 3× webp upscale.
+    // Braden Yuill — Forbes Business Council (only US-recognizable press we can verify).
+    id: "forbes",
+    src: "/brand/badge-forbes-navy.webp",
+    alt: "Forbes Business Council",
+    note: "Recognition",
+    wide: true,
+    markets: ["us", "au"],
+  },
+  {
+    id: "clutch-us",
+    src: "/brand/trust/badge-clutch-us-2024.webp",
+    alt: "Clutch top virtual assistant company — United States 2024",
+    note: "Award",
+    markets: ["us", "au"],
+  },
+  {
+    id: "google",
+    src: "/brand/badge-google-5star.webp",
+    alt: "Google Reviews",
+    note: "Reviews",
+    markets: ["us", "au"],
+  },
+  {
+    // Official VC “Featured In” row. SMH is AU-only — not a US press mark.
     id: "smh",
     src: "/brand/trust/press-smh.webp",
     alt: "The Sydney Morning Herald",
     note: "Press",
     wide: true,
-  },
-  {
-    id: "brw",
-    src: "/brand/trust/press-brw.svg",
-    alt: "BRW",
-    note: "Press",
-    wide: true,
+    markets: ["au"],
   },
   {
     // Official Startup Daily wordmark paths, recolored navy for the white strip.
@@ -302,6 +364,7 @@ export const PRESS_MARKS: readonly PressMark[] = [
     alt: "Startup Daily",
     note: "Press",
     wide: true,
+    markets: ["us", "au"],
   },
   {
     id: "startupsmart",
@@ -309,15 +372,28 @@ export const PRESS_MARKS: readonly PressMark[] = [
     alt: "StartupSmart",
     note: "Press",
     wide: true,
+    markets: ["us", "au"],
+  },
+  {
+    id: "brw",
+    src: "/brand/trust/press-brw.svg",
+    alt: "BRW",
+    note: "Press",
+    wide: true,
+    markets: ["us", "au"],
   },
   {
     id: "anthill",
     src: "/brand/trust/press-anthill.svg",
     alt: "Anthill Cool Company Awards — Top 100",
     note: "Award",
+    markets: ["us", "au"],
   },
-  // Dropped StartupSmart Awards 2014 — dated / mushy raster on the strip.
 ];
+
+export function pressMarksForMarket(market: "us" | "au"): readonly PressMark[] {
+  return PRESS_MARKS.filter((p) => !p.markets || p.markets.includes(market));
+}
 
 /**
  * Industry pain→gain stats — primary published sources only.
@@ -340,37 +416,37 @@ export const INDUSTRY_STATS: readonly IndustryStat[] = [
   {
     id: "deloitte-talent",
     figure: "42%",
-    headline: "It’s about people, not price",
-    body: "Finding good people is now the #1 reason companies hire offshore — not chasing the cheapest quote.",
+    headline: "of companies hire offshore for better people",
+    body: "That’s now the #1 reason they outsource — ahead of chasing the lowest price.",
     sourceLabel: "Deloitte Global Outsourcing Survey 2024",
   },
   {
     id: "deloitte-invest",
     figure: "80%",
-    headline: "Most keep doing it",
-    body: "Four in five companies plan to spend the same or more on outsourcing next year.",
+    headline: "plan to keep spending on outsourcing",
+    body: "Four in five companies will spend the same or more next year. This isn’t a fad.",
     sourceLabel: "Deloitte Global Outsourcing Survey 2024",
   },
   {
     id: "stanford-retention",
     figure: "33%",
-    headline: "Flexible work = fewer quits",
-    body: "A Stanford trial cut resignations by a third. Performance held up.",
+    headline: "fewer people quit with flexible work",
+    body: "A Stanford study cut resignations by a third. Performance still held up.",
     sourceLabel: "Bloom, Han & Liang, Nature 2024",
   },
   {
     id: "ph-admin-va-rate",
     figure: "~$8",
-    headline: "More left in the budget",
-    body: "Typical hourly rate for general admin VAs in the Philippines — capacity without US payroll weight.",
+    headline: "an hour for a typical admin VA",
+    body: "Serious capacity without US payroll weight. That’s the rate that changes the math.",
     sourceLabel: "Industry VA rate guides, 2025–26",
     markets: ["us"],
   },
   {
     id: "deloitte-front-office",
     figure: "50%",
-    headline: "Sales & marketing too",
-    body: "Half of companies also offshore sales, marketing, or product work — not only back-office.",
+    headline: "also send sales and marketing overseas",
+    body: "Half of companies offshore sales, marketing, or product work — not only back-office.",
     sourceLabel: "Deloitte Global Outsourcing Survey 2024",
     markets: ["au"],
   },
@@ -406,7 +482,12 @@ export function navForSurface(surface: SiteSurface): NavItem[] {
   return [
     { href: `/services${q}`, label: "Services", id: "services" },
     { href: `/how-it-works${q}`, label: "How it works", id: "how" },
-    { href: `${home}#gate`, label: "Start Hiring", id: "hire", primary: true },
+    {
+      href: `${home}#gate`,
+      label: surface === "au" ? "Have a chat" : "Start Hiring",
+      id: "hire",
+      primary: true,
+    },
   ];
 }
 

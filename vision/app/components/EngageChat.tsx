@@ -14,9 +14,9 @@ import type { MarketId } from "../../config/markets";
 import type { AbVariant } from "../../config/categories";
 
 const LAUNCHER: Record<ExpVariant, string> = {
-  a: "Need help hiring?",
-  b: "Ask a quick question",
-  c: "Need help hiring?", // unused — chat_launcher is A/B only
+  a: "Chat with us",
+  b: "Chat — hiring help",
+  c: "Chat with us", // unused — chat_launcher is A/B only
 };
 
 type StepId = "open" | "role" | "path" | "done";
@@ -131,7 +131,7 @@ export default function EngageChat({
         <div
           className="engage-chat-panel"
           role="dialog"
-          aria-label="Hiring help"
+          aria-label="Hiring chat"
           tabIndex={-1}
           ref={panelRef}
         >
@@ -139,8 +139,8 @@ export default function EngageChat({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={face} alt="" width={40} height={40} loading="lazy" decoding="async" />
             <div>
-              <strong>Hiring help</strong>
-              <span>Virtual Coworker · quick answers</span>
+              <strong>Chat</strong>
+              <span>Quick answers · not a live agent</span>
             </div>
             <button type="button" className="engage-chat-close" onClick={toggle} aria-label="Close">
               ×
@@ -220,8 +220,9 @@ export default function EngageChat({
                   {roleHint
                     ? `Thanks — ${roleHint.toLowerCase()} is a common first hire.`
                     : "Thanks."}{" "}
-                  Fastest next step: {showPhone ? "call us, or " : ""}
-                  tell us the role on the form (about a minute).
+                  {market === "au"
+                    ? `Fastest next step: ${showPhone ? "give us a call, or " : ""}tell us the role on the form (about a minute).`
+                    : `Fastest next step: ${showPhone ? "call us, or " : ""}tell us the role on the form (about a minute).`}
                 </p>
                 <div className="engage-chat-choices">
                   {showPhone ? (
@@ -265,7 +266,7 @@ export default function EngageChat({
                       );
                     }}
                   >
-                    Start Hiring
+                    {market === "au" ? "Have a chat" : "Talk to a Specialist"}
                   </a>
                 </div>
               </>
@@ -273,7 +274,9 @@ export default function EngageChat({
 
             {step === "done" ? (
               <p className="engage-chat-bubble">
-                Perfect — we’re ready when you are.
+                {market === "au"
+                  ? "Got it — have a chat when it suits. Free, no pressure."
+                  : "Got it — talk to a specialist when you like. Free, no pressure."}
               </p>
             ) : null}
           </div>
@@ -285,7 +288,7 @@ export default function EngageChat({
         className={`engage-chat-launcher${nudge && !open ? " engage-chat-launcher-nudge" : ""}`}
         onClick={toggle}
         aria-expanded={open}
-        aria-label={open ? "Close hiring help" : "Open hiring help"}
+        aria-label={open ? "Close chat" : "Open chat"}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={face} alt="" width={28} height={28} loading="lazy" decoding="async" />

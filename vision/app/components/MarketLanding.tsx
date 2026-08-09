@@ -11,6 +11,8 @@ import TrustBand from "./TrustBand";
 import PressBand from "./PressBand";
 import PainGain from "./PainGain";
 import RoleOutcomes from "./RoleOutcomes";
+import FaqAccordion from "./FaqAccordion";
+import StopCloser from "./StopCloser";
 import { RoleHeroCard } from "./RoleImagery";
 import JsonLd from "./JsonLd";
 import {
@@ -26,11 +28,17 @@ import {
   type CategorySlug,
 } from "../../config/categories";
 import {
-  PRIMARY_HIRE_CTA,
+  primaryHireCta,
   employerFaq,
   roleHeroBenefits,
 } from "../../config/employer-cro";
-import { SITE, yearsTrading } from "../../config/site";
+import {
+  FORM_CUE,
+  SITE,
+  industryStatsForMarket,
+  yearsTrading,
+} from "../../config/site";
+import { StatsGrid } from "./TrustAnimated";
 import {
   breadcrumbJsonLd,
   faqPageJsonLd,
@@ -58,7 +66,7 @@ export default function MarketLanding({
 
   const h1 = v ? v.h1[market] : cfg.headline;
   const sub = v ? v.subhead[market] : cfg.prop;
-  const primaryCta = v?.primaryCta || PRIMARY_HIRE_CTA;
+  const primaryCta = primaryHireCta(market);
   const heroSrc = v
     ? v.heroImage[market]
     : market === "us"
@@ -67,19 +75,19 @@ export default function MarketLanding({
   const heroAlt = v?.heroAlt || "Virtual Coworker team member at a desk";
 
   const benefits = category
-    ? roleHeroBenefits(category)
+    ? roleHeroBenefits(category, market)
     : isAu
       ? [
-          "Filipino talent matched to Australian business hours",
-          "You interview before anyone joins your team",
-          "We handle employment admin and ongoing support after you hire",
-          "A staffing partner — not a freelance marketplace",
+          "Dedicated Filipino teammates on Australian business hours",
+          "You interview. You choose. Nobody starts until you say yes.",
+          "Not a freelance marketplace — a staffing partner for Australian businesses.",
+          "We handle employment admin after you hire. You stay on the work.",
         ]
       : [
-          "Dedicated Filipino coworkers for US business ops",
-          "We recruit and vet — you interview and decide",
-          "We handle payroll and account support after you hire",
-          "A staffing partner — not a freelance marketplace",
+          "Dedicated Filipino teammates — on your US hours",
+          "You interview. You pick. Nobody starts until you say yes.",
+          "Not Upwork. Not a job board. A real staffing partner.",
+          "We handle payroll and paperwork after you hire.",
         ];
 
   const faq = employerFaq(market, cat?.label || null, category);
@@ -89,9 +97,18 @@ export default function MarketLanding({
   const shell = market === "us" ? "us" : "au";
   const light = market === "au";
 
+  const formCue = FORM_CUE[market];
+  const industryStats = industryStatsForMarket(market);
+
   const gate: GateCopy = {
     eyebrow: isAu ? "Businesses only · 2 minutes" : "Employers only · 2 minutes",
-    title: cat ? `Hire ${cat.label}` : "Start Hiring — 2 minutes.",
+    title: cat
+      ? isAu
+        ? `Chat about ${cat.label}`
+        : `Hire ${cat.label}`
+      : isAu
+        ? "Have a chat — no obligation."
+        : "Talk to a staffing specialist.",
     intentLabel: "First — who are you?",
     intentPrimary: "I’m hiring for a business.",
     intentSecondary: "I’m looking for a job.",
@@ -113,14 +130,20 @@ export default function MarketLanding({
     companyPlaceholder: "Company name",
     submit: primaryCta,
     reassure: isAu
-      ? "Businesses only. This starts a conversation — not an instant hire. By submitting you agree to our privacy notice."
-      : "Employers only. This starts a conversation — not an instant hire. By submitting you agree to our privacy notice.",
-    callLabel: showPhone ? "Prefer to call?" : "",
+      ? "No obligation. No lock-in. Businesses only. We’ll follow up for a short chat — this is not an instant hire. We don’t sell your information. Privacy notice applies."
+      : "No obligation. Employers only. A specialist follows up — usually within one business day. We don’t sell your information. Privacy notice applies.",
+    callLabel: showPhone
+      ? isAu
+        ? "Prefer to give us a call?"
+        : "Prefer to call?"
+      : "",
     phoneDisplay: phone.display,
     phoneHref: phone.href,
     showPhone,
     doneTitle: "Got it — thanks.",
-    doneBody: "A teammate will follow up to talk through the role and next steps.",
+    doneBody: isAu
+      ? "A teammate will follow up for a short chat about the role and next steps."
+      : "A teammate will follow up to talk through the role and next steps.",
   };
 
   const breadcrumbs = cat
@@ -160,11 +183,28 @@ export default function MarketLanding({
             <p className={`${shell}-kicker anim-rise`}>
               {cfg.label} · {isAu ? "Businesses" : "Employers"}
               {cat ? ` · ${cat.label}` : ""}
-              {" · "}Filipino talent
+              {" · "}Philippines staffing
             </p>
             <h1 className="anim-rise">{h1}</h1>
             <p className={`${shell}-lead anim-rise-d1`}>{sub}</p>
+          </div>
 
+          <RoleHeroCard
+            category={category}
+            market={market}
+            fallbackSrc={heroSrc}
+            fallbackAlt={heroAlt}
+            shell={shell}
+            shortLabel={cat ? cat.shortLabel : "Dedicated hire"}
+            captionTitle={cat ? cat.label : "Matched to your role"}
+            captionSub={
+              isAu
+                ? "Australian business hours · Filipino talent"
+                : "US business hours · Filipino talent"
+            }
+          />
+
+          <div className={`${shell}-hero-more`}>
             <ul className={`${shell}-ticks anim-rise-d1`}>
               {benefits.map((b) => (
                 <li key={b}>{b}</li>
@@ -191,16 +231,23 @@ export default function MarketLanding({
                   alt="Clutch"
                 />
                 <span>
-                  <b>Clutch</b>
-                  <span>{isAu ? "Recognised" : "Recognized"}</span>
+                  <b>Clutch 4.9</b>
+                  <span>{isAu ? "Recognised" : "US recognized"}</span>
                 </span>
               </span>
               <span className="trust-chip">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/brand/badge-google-5star.webp" alt="Google Reviews" />
+                <img
+                  src={
+                    light
+                      ? "/brand/badge-forbes-navy.webp"
+                      : "/brand/badge-forbes-white.webp"
+                  }
+                  alt="Forbes Business Council"
+                />
                 <span>
-                  <b>Google</b>
-                  <span>Reviews</span>
+                  <b>Forbes</b>
+                  <span>Business Council</span>
                 </span>
               </span>
               <span className="trust-chip trust-chip-stat">
@@ -224,30 +271,52 @@ export default function MarketLanding({
             </p>
           </div>
 
-          <RoleHeroCard
-            category={category}
-            market={market}
-            fallbackSrc={heroSrc}
-            fallbackAlt={heroAlt}
-            shell={shell}
-            shortLabel={cat ? cat.shortLabel : "Dedicated hire"}
-            captionTitle={cat ? cat.label : "Matched to your role"}
-            captionSub={
-              isAu
-                ? "Australian business hours · Filipino talent"
-                : "US business hours · Filipino talent"
-            }
-          />
-
-          <LeadGate
-            copy={gate}
-            market={market}
-            category={category}
-            variant={variant}
-            preselectedRole={cat ? cat.formLabel : null}
-          />
+          <div className="gate-wrap">
+            <p className="form-cue" aria-hidden="true">
+              <span className="form-cue-arrow">↓</span>
+              <span className="form-cue-copy">
+                <b>{formCue.label}</b>
+                <span>{formCue.body}</span>
+              </span>
+            </p>
+            <LeadGate
+              copy={gate}
+              market={market}
+              category={category}
+              variant={variant}
+              preselectedRole={cat ? cat.formLabel : null}
+            />
+            <ul className="gate-nudges">
+              <li>No obligation</li>
+              <li>2-minute brief</li>
+              <li>Specialist follows up</li>
+              <li>We don’t sell your info</li>
+            </ul>
+          </div>
         </div>
       </section>
+
+      <PressBand light={light} market={market} />
+
+      {industryStats.length > 0 ? (
+        <section
+          className={`industry-band${light ? " industry-band-light" : ""}`}
+          aria-labelledby="industry-stats-title"
+        >
+          <div className="industry-band-inner">
+            <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
+              Why businesses hire offshore
+            </p>
+            <h2 id="industry-stats-title">
+              The #1 reason isn’t cheaper. It’s better people.
+            </h2>
+            <p className="industry-band-lead">
+              Published research — not our marketing.
+            </p>
+            <StatsGrid stats={industryStats} />
+          </div>
+        </section>
+      ) : null}
 
       <PainGain market={market} light={light} />
 
@@ -261,15 +330,11 @@ export default function MarketLanding({
             <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
               How hiring works
             </p>
-            <h2>
-              {isAu
-                ? "From first chat to a teammate on your hours."
-                : "From first call to a teammate on your hours."}
-            </h2>
+            <h2>We find them. You pick. They start.</h2>
             <p className={`${shell}-sell-sub`} data-lp="secondary">
               {isAu
-                ? "For Australian businesses that want to own the hire — not rent freelancers. "
-                : "For US employers that want to own the hire — not rent freelancers. "}
+                ? "Free chat. We recruit. You interview. We handle employment admin — including Australian hours. "
+                : "Free consult. We recruit. You interview. We handle payroll and paperwork. "}
               <Link href={`/how-it-works?market=${market}`}>
                 See the full process →
               </Link>
@@ -300,48 +365,34 @@ export default function MarketLanding({
         phoneHref={showPhone ? phone.href : null}
       />
 
-      {/* Featured In sits below quiz — keeps Happy customers (logos + reviews) uncluttered. */}
-      <PressBand light={light} />
-
-      <section className={`${shell}-sell faq-section`}>
-        <div className={`${shell}-sell-inner`}>
-          <div className={`${shell}-sell-head`}>
-            <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
-              Questions
-            </p>
-            <h2>Straight answers before you start.</h2>
+      {/* FAQ stays visible on both lp_density arms — never mark secondary.
+          Hide the whole block only if content is empty (no invented claims). */}
+      {faq.length > 0 ? (
+        <section className={`${shell}-sell faq-section`}>
+          <div className={`${shell}-sell-inner`}>
+            <div className={`${shell}-sell-head`}>
+              <p
+                className={
+                  market === "us" ? "us-proof-label" : "au-proof-label"
+                }
+              >
+                Quick answers
+              </p>
+              <h2>Tap a question.</h2>
+            </div>
+            <FaqAccordion items={faq} light={light} />
           </div>
-          {/* FAQ stays visible on both lp_density arms — never mark secondary. */}
-          <div
-            className={`sell-grid faq-grid${light ? " sell-grid-light" : ""}`}
-          >
-            {faq.map((item) => (
-              <div className="sell-card sell-card-faq" key={item.q}>
-                <strong>{item.q}</strong>
-                <p>{item.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
-      <section className={`${shell}-cta-bar`}>
-        <p>
-          {showPhone
-            ? "Ready to hire — or prefer to talk?"
-            : "Ready to hire Filipino staff for your business?"}
-        </p>
-        <div className={`${shell}-cta-bar-actions`}>
-          <a href="#gate" className={`${shell}-btn ${shell}-btn-primary`}>
-            {PRIMARY_HIRE_CTA}
-          </a>
-          {showPhone ? (
-            <a href={phone.href!} className={`${shell}-btn ${shell}-btn-ghost`}>
-              Call Our Team · {phone.display}
-            </a>
-          ) : null}
-        </div>
-      </section>
+      <StopCloser
+        market={market}
+        light={light}
+        showPhone={showPhone}
+        phoneDisplay={phone.display}
+        phoneHref={phone.href}
+        surface={category || "home"}
+      />
 
       <SiteFooter
         tone={light ? "light" : "dark"}
@@ -350,12 +401,12 @@ export default function MarketLanding({
       />
 
       <p className="sr-only">
-        {SITE.copyright}. Offices: {SITE.addressUs}; {SITE.addressAu}.
+        {SITE.copyright} Offices: {SITE.addressUs}; {SITE.addressAu}.
       </p>
 
       <StickyCta
         href="#gate"
-        label={PRIMARY_HIRE_CTA}
+        label={primaryCta}
         market={market}
         phoneDisplay={showPhone ? phone.display : undefined}
         phoneHref={showPhone ? phone.href : null}

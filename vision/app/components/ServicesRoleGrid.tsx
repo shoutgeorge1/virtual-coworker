@@ -7,7 +7,7 @@ import {
 } from "./RoleImagery";
 import { CATEGORY_SLUGS, CATEGORIES } from "../../config/categories";
 import type { CategorySlug } from "../../config/categories";
-import { PRIMARY_HIRE_CTA, ROLE_OUTCOMES } from "../../config/employer-cro";
+import { primaryHireCta, roleOutcomes } from "../../config/employer-cro";
 import type { MarketId } from "../../config/markets";
 
 /**
@@ -51,10 +51,10 @@ export default function ServicesRoleGrid({ market }: { market: MarketId }) {
             <div className="services-card-body">
               <em>{c.shortLabel}</em>
               <h2>{c.label}</h2>
-              <p>{ROLE_OUTCOMES[slug].problem}</p>
-              <p className="services-card-gain">{ROLE_OUTCOMES[slug].gain}</p>
+              <p>{roleOutcomes(slug, market).problem}</p>
+              <p className="services-card-gain">{roleOutcomes(slug, market).gain}</p>
               <div className="services-card-links">
-                <Link href={`/${market}/${slug}#gate`}>{PRIMARY_HIRE_CTA} →</Link>
+                <Link href={`/${market}/${slug}#gate`}>{primaryHireCta(market)} →</Link>
                 <Link href={`/${market}/${slug}`}>Role details</Link>
               </div>
             </div>

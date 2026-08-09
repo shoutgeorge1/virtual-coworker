@@ -121,25 +121,68 @@
   grid-template-areas:
     "copy"
     "va"
-    "form";
+    "form"
+    "more";
 }
 
 .us-hero-copy {
   grid-area: copy;
 }
 
+.us-hero-more {
+  grid-area: more;
+}
+
 .us-hero .va-card {
   grid-area: va;
 }
 
-.us-hero-inner .gate-card {
+.us-hero-inner .gate-wrap {
   grid-area: form;
 }
 
 /* Face sits high in the US portrait — keep upper body in the mobile crop. */
 @media (max-width: 759px) {
   .us-hero .va-card img {
-    object-position: 50% 16%;
+    object-position: 50% 10%;
+    min-height: clamp(15.5rem, 64vw, 19rem);
+    aspect-ratio: 4 / 5;
+  }
+
+  .us-hero h1 {
+    font-size: clamp(2.55rem, 9.2vw, 3rem);
+  }
+
+  .us-kicker {
+    font-size: 0.9rem;
+  }
+
+  .us-lead {
+    font-size: 1.22rem;
+  }
+
+  .us-ticks li {
+    font-size: 1.18rem;
+  }
+
+  .us-sell-sub {
+    font-size: 1.1rem;
+  }
+
+  .us-proof-label {
+    font-size: 0.9rem;
+  }
+
+  .us-stats strong {
+    font-size: 1.85rem;
+  }
+
+  .us-stats span {
+    font-size: 0.95rem;
+  }
+
+  .us-btn {
+    font-size: 1.05rem;
   }
 }
 
@@ -148,7 +191,8 @@
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     grid-template-areas:
       "copy copy"
-      "va   form";
+      "va   form"
+      "more form";
     align-items: start;
   }
 }
@@ -156,13 +200,16 @@
 @media (min-width: 1160px) {
   .us-hero-inner {
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr) minmax(0, 0.9fr);
-    grid-template-areas: "copy va form";
+    grid-template-areas:
+      "copy va form"
+      "more va form";
     align-items: stretch;
   }
 
-  .us-hero-inner .gate-card {
+  .us-hero-inner .gate-wrap {
     max-width: 29rem;
     justify-self: end;
+    width: 100%;
   }
 
   /* Let the VA run the full height of the row so she carries the hero. */

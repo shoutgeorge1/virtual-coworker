@@ -2,6 +2,9 @@
  * Data-driven category LP config for paid Search.
  * Nine employer service lines only — no medical/tech/job-seeker verticals.
  * Do not hard-code pricing, testimonials, or Ads goal values here.
+ *
+ * Voice: US = punchy RSA. AU = same logic, understated B2B English —
+ * not US copy with “Australian hours” swapped in. No USD ~$8 on AU.
  */
 
 import type { MarketId } from "./markets";
@@ -93,33 +96,33 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Digital Marketing Staff | Virtual Coworker AU",
     },
     description: {
-      us: "Hire dedicated Philippines digital marketing staff for your US business.",
-      au: "Hire dedicated Philippines digital marketing staff for your Australian business.",
+      us: "Campaigns stalling? Hire a dedicated Filipino marketer for US hours — we shortlist, you interview, we handle payroll.",
+      au: "Marketing still slipping? Hire a dedicated Filipino marketer for Australian hours — you interview, we handle employment admin.",
     },
     variants: {
       a: {
         h1: {
-          us: "Hire Philippines digital marketing staff for your US business.",
-          au: "Hire Philippines digital marketing staff for your Australian business.",
+          us: "Your marketing is stalled. Hire a dedicated Filipino marketer.",
+          au: "Marketing still slipping? Get dedicated Filipino marketing support.",
         },
         subhead: {
-          us: "Campaigns, reporting, and content ops keep slipping? Get a dedicated Filipino marketing teammate for US hours — we shortlist, you interview.",
-          au: "Campaigns, reporting, and content ops keep slipping? Get a dedicated Filipino marketing teammate for Australian hours — we shortlist, you interview.",
+          us: "Campaigns, reporting, and content ops need an owner. We shortlist. You interview. We handle payroll.",
+          au: "Campaigns, reporting and content ops need an owner. We shortlist. You interview. Australian hours — no lock-in from the first chat.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/marketing-v2.png", au: "/roles/marketing-v2.png" },
         heroAlt: "Filipino digital marketing professional at a desk",
       },
       b: {
         h1: {
-          us: "Staff your digital marketing seat with a dedicated Filipino hire.",
-          au: "Staff your digital marketing seat with a dedicated Filipino hire.",
+          us: "Staff your marketing seat with a dedicated Filipino hire.",
+          au: "A dedicated Filipino marketer — Australian hours, you choose who joins.",
         },
         subhead: {
-          us: "Add marketing capacity without building another local department — you interview before anyone joins.",
-          au: "Add marketing capacity without building another local department — you interview before anyone joins.",
+          us: "Strategists stay on judgment work. We recruit the day-to-day owner — you interview before anyone joins.",
+          au: "Your strategists stay on the work that needs judgment. We recruit the day-to-day owner. You interview before anyone starts.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/marketing-v2.png", au: "/roles/marketing-v2.png" },
         heroAlt: "Dedicated Philippines hire — professional portrait",
       },
@@ -137,7 +140,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       },
       {
         q: "What happens after I submit?",
-        a: "Our team follows up for a short hiring conversation, then we take your brief and shortlist screened candidates for you to interview.",
+        a: "We follow up for a short hiring consult — free, no pressure. Then we take your brief and shortlist screened candidates for you to interview.",
       },
       {
         q: "Do you list pricing here?",
@@ -155,33 +158,33 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Social Media Staff | Virtual Coworker AU",
     },
     description: {
-      us: "Hire a dedicated Philippines social media teammate for your US brand.",
-      au: "Hire a dedicated Philippines social media teammate for your Australian brand.",
+      us: "Channels going quiet? Hire a dedicated Filipino social teammate for US hours — you interview and choose.",
+      au: "Social gone quiet? Hire a dedicated Filipino social teammate for Australian hours — you interview and choose.",
     },
     variants: {
       a: {
         h1: {
-          us: "Hire a Philippines social media teammate for your US brand.",
-          au: "Hire a Philippines social media teammate for your Australian brand.",
+          us: "Brand going quiet? Hire a dedicated Filipino social teammate.",
+          au: "Social gone quiet? A dedicated Filipino teammate can run the channels.",
         },
         subhead: {
-          us: "Keep channels active without turning your week into a content firefight. Dedicated Filipino social support — you interview and choose.",
-          au: "Keep channels active without turning your week into a content firefight. Dedicated Filipino social support for Australian hours — you interview and choose.",
+          us: "Keep channels active without turning your week into a content firefight. You interview. We handle payroll.",
+          au: "Keep channels active without the week becoming a content scramble. You interview. Australian hours. We handle employment admin.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/marketing-a.png", au: "/roles/marketing-a.png" },
         heroAlt: "Filipino social media professional at work",
       },
       b: {
         h1: {
           us: "Get dedicated social media capacity from a Filipino teammate.",
-          au: "Get dedicated social media capacity from a Filipino teammate.",
+          au: "Dedicated social support from a Filipino teammate — Australian hours.",
         },
         subhead: {
           us: "Scheduling, community, and asset coordination — staffing for US brands, not a gig platform.",
-          au: "Scheduling, community, and asset coordination — staffing for Australian brands, not a gig platform.",
+          au: "Scheduling, community and asset coordination — staffing for Australian brands, not a gig platform.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/marketing-a.png", au: "/roles/marketing-a.png" },
         heroAlt: "Dedicated Philippines social media teammate",
       },
@@ -199,7 +202,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       },
       {
         q: "Is submitting the form a hire?",
-        a: "No. It starts a conversation with our team. You interview before anyone joins.",
+        a: "No. It starts a conversation. You interview before anyone joins.",
       },
       {
         q: "Looking for a job?",
@@ -217,33 +220,33 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Accounting Staff | Virtual Coworker AU",
     },
     description: {
-      us: "Hire dedicated Philippines accounting support for your US business.",
-      au: "Hire dedicated Philippines accounting support for your Australian business.",
+      us: "Month-end piling up? Hire dedicated Filipino accounting support — we shortlist, you interview.",
+      au: "Month-end still a scramble? Hire dedicated Filipino accounting support — you interview, we handle employment admin.",
     },
     variants: {
       a: {
         h1: {
-          us: "Hire Philippines accounting staff for your US business.",
-          au: "Hire Philippines accounting staff for your Australian business.",
+          us: "Month-end piling up? Hire dedicated Filipino accounting support.",
+          au: "Month-end still a scramble? Add dedicated Filipino accounting support.",
         },
         subhead: {
-          us: "Month-end and recurring accounting support stacking up? Add a dedicated Filipino accounting seat — we shortlist, you interview.",
-          au: "Month-end and recurring accounting support stacking up? Add a dedicated Filipino accounting seat — we shortlist, you interview.",
+          us: "Recurring accounting work stacking up? We shortlist. You interview. Extra capacity — not licensed advice.",
+          au: "Recurring accounting work stacking up? We shortlist. You interview. Extra capacity — not a substitute for your accountant.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/bookkeeper-a.png", au: "/roles/bookkeeper-a.png" },
         heroAlt: "Philippines accounting professional",
       },
       b: {
         h1: {
           us: "Add offshore accounting capacity with a staffing partner.",
-          au: "Add offshore accounting capacity with a staffing partner.",
+          au: "Offshore accounting capacity — Australian hours, you choose who joins.",
         },
         subhead: {
-          us: "For US businesses — we recruit and screen, you interview, then hire with support.",
-          au: "For Australian businesses — we recruit and screen, you interview, then hire with support.",
+          us: "For US businesses — we recruit and screen, you interview, then hire with payroll support.",
+          au: "For Australian businesses — we recruit and screen, you interview, then hire with employment admin sorted.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/bookkeeper-a.png", au: "/roles/bookkeeper-a.png" },
         heroAlt: "Dedicated Philippines hire at a workstation",
       },
@@ -279,33 +282,33 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Bookkeeping Staff | Virtual Coworker AU",
     },
     description: {
-      us: "Hire dedicated Philippines bookkeeping support for your US business.",
-      au: "Hire dedicated Philippines bookkeeping support for your Australian business.",
+      us: "Invoices stacking up? Hire a dedicated Filipino bookkeeper — we recruit, you decide.",
+      au: "Books falling behind? Hire a dedicated Filipino bookkeeper — you interview, we handle employment admin.",
     },
     variants: {
       a: {
         h1: {
-          us: "Hire a Philippines bookkeeper for your US business.",
-          au: "Hire a Philippines bookkeeper for your Australian business.",
+          us: "Invoices stacking up? Hire a dedicated Filipino bookkeeper.",
+          au: "Books falling behind? Hire a dedicated Filipino bookkeeper.",
         },
         subhead: {
-          us: "Invoices, reconciliations, and routine reporting waiting on you? Hire a dedicated Filipino bookkeeper — we recruit, you decide.",
-          au: "Invoices, reconciliations, and routine reporting waiting on you? Hire a dedicated Filipino bookkeeper — we recruit, you decide.",
+          us: "Invoices, reconciliations, and routine reporting waiting on you? We recruit. You interview. We handle payroll.",
+          au: "Invoices, reconciliations and routine reporting still on your desk? We recruit. You interview. Australian hours.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/bookkeeper-v2.png", au: "/roles/bookkeeper-v2.png" },
         heroAlt: "Filipino bookkeeping professional",
       },
       b: {
         h1: {
           us: "Get dedicated bookkeeping capacity from a Filipino teammate.",
-          au: "Get dedicated bookkeeping capacity from a Filipino teammate.",
+          au: "Dedicated books support from a Filipino teammate — Australian hours.",
         },
         subhead: {
           us: "Reliable remote books support for US teams — without a freelance marketplace.",
           au: "Reliable remote books support for Australian teams — without a freelance marketplace.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/bookkeeper-v2.png", au: "/roles/bookkeeper-v2.png" },
         heroAlt: "Dedicated remote books support professional",
       },
@@ -341,33 +344,33 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Administrative Support | Virtual Coworker AU",
     },
     description: {
-      us: "Hire a dedicated Philippines virtual assistant or admin teammate for US business ops.",
-      au: "Hire a dedicated Philippines virtual assistant or admin teammate for your Australian business.",
+      us: "Inbox eating your week? Hire a dedicated Filipino VA or EA for US hours — typical admin around $8/hr. You interview.",
+      au: "Still doing the admin yourself? Hire a dedicated Filipino VA for Australian hours — you interview, we handle employment admin.",
     },
     variants: {
       a: {
         h1: {
-          us: "Hire a Philippines virtual assistant for your US business.",
-          au: "Hire a Philippines virtual assistant for your Australian business.",
+          us: "Inbox eating your week? Hire a dedicated Filipino VA.",
+          au: "Still doing the admin yourself? Hire a dedicated Filipino VA.",
         },
         subhead: {
-          us: "Inbox, scheduling, and follow-ups eating your week? Hire a dedicated Filipino admin or EA for US ops — we recruit and vet; you interview.",
-          au: "Inbox, scheduling, and follow-ups eating your week? Hire a dedicated Filipino admin or EA for Australian hours — we recruit; you interview.",
+          us: "Inbox, scheduling, and follow-ups eating leadership hours? We recruit and vet. You interview. Typical admin VA around $8 an hour.",
+          au: "Inbox, scheduling and follow-ups still landing back on you? We recruit. You interview. Australian hours — no lock-in from the first chat.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/admin-a.png", au: "/roles/admin-a.png" },
         heroAlt: "Filipino administrative professional at desk",
       },
       b: {
         h1: {
           us: "Hire a dedicated Filipino virtual assistant.",
-          au: "Hire a dedicated Filipino virtual assistant.",
+          au: "A dedicated Filipino VA — Australian hours, you choose who joins.",
         },
         subhead: {
           us: "Dependable capacity for US businesses — not a freelance marketplace. We recruit and vet; you interview and decide.",
-          au: "Dependable capacity for Australian businesses — not a freelance marketplace. You interview; we recruit, screen, and support the hire.",
+          au: "Dependable capacity for Australian businesses — not a freelance marketplace. You interview. We recruit, screen and support the hire.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/admin-a.png", au: "/roles/admin-a.png" },
         heroAlt: "Dedicated Philippines virtual assistant",
       },
@@ -403,33 +406,33 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Customer Service Staff | Virtual Coworker AU",
     },
     description: {
-      us: "Hire dedicated Philippines customer service staff for your US business.",
-      au: "Hire dedicated Philippines customer service staff for your Australian business.",
+      us: "Customers waiting too long? Hire dedicated Filipino support for US hours — we shortlist, you interview.",
+      au: "Customers waiting on replies? Hire dedicated Filipino support for Australian hours — you interview, we handle employment admin.",
     },
     variants: {
       a: {
         h1: {
-          us: "Hire Philippines customer service staff for your US business.",
-          au: "Hire Philippines customer service staff for your Australian business.",
+          us: "Customers waiting too long? Hire dedicated Filipino support.",
+          au: "Customers waiting on replies? Add dedicated Filipino support.",
         },
         subhead: {
-          us: "Customer questions waiting too long? Add a dedicated Filipino support teammate for US hours — we shortlist, you interview.",
-          au: "Customer questions waiting too long? Add a dedicated Filipino support teammate for Australian hours — we shortlist, you interview.",
+          us: "Questions sitting in the queue? We shortlist. You interview. Dedicated support on your hours — we handle payroll.",
+          au: "Questions sitting in the queue? We shortlist. You interview. Dedicated support on Australian hours — we handle employment admin.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/customer-service-v2.png", au: "/roles/customer-service-v2.png" },
         heroAlt: "Filipino customer support professional",
       },
       b: {
         h1: {
           us: "Get dedicated customer service capacity from a Filipino teammate.",
-          au: "Get dedicated customer service capacity from a Filipino teammate.",
+          au: "Dedicated customer support from a Filipino teammate — Australian hours.",
         },
         subhead: {
           us: "Reliable remote support seats for US businesses — not freelance gigs.",
           au: "Reliable remote support seats for Australian teams — not freelance gigs.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/customer-service-v2.png", au: "/roles/customer-service-v2.png" },
         heroAlt: "Dedicated Philippines support teammate",
       },
@@ -465,33 +468,33 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines HR Support | Virtual Coworker AU",
     },
     description: {
-      us: "Hire dedicated Philippines HR support staff for your US business.",
-      au: "Hire dedicated Philippines HR support staff for your Australian business.",
+      us: "People admin stacking up? Hire dedicated Filipino HR support — businesses only, you interview first.",
+      au: "People ops still on managers? Hire dedicated Filipino HR support — businesses only, you interview first.",
     },
     variants: {
       a: {
         h1: {
-          us: "Hire Philippines HR support for your US business.",
-          au: "Hire Philippines HR support for your Australian business.",
+          us: "People admin stacking up? Hire dedicated Filipino HR support.",
+          au: "People ops still on managers? Hire dedicated Filipino HR support.",
         },
         subhead: {
-          us: "People admin and onboarding stacking up? Hire dedicated Filipino HR support — businesses only, you interview first.",
-          au: "People admin and onboarding stacking up? Hire dedicated Filipino HR support — businesses only, you interview first.",
+          us: "Records, onboarding, and scheduling defaulting to managers? We shortlist. You interview. Businesses only.",
+          au: "Records, onboarding and scheduling still defaulting to managers? We shortlist. You interview. Businesses only.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/hr-v2.png", au: "/roles/hr-v2.png" },
         heroAlt: "Philippines HR support professional",
       },
       b: {
         h1: {
           us: "Add offshore HR capacity with clear hiring support.",
-          au: "Add offshore HR capacity with clear hiring support.",
+          au: "Offshore HR capacity — Australian hours, you choose who joins.",
         },
         subhead: {
           us: "For US employers — send the role, we recruit, you interview.",
-          au: "For Australian businesses — send the role, we recruit, you interview.",
+          au: "For Australian businesses — tell us the role, we recruit, you interview.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/hr-v2.png", au: "/roles/hr-v2.png" },
         heroAlt: "Dedicated Philippines HR teammate",
       },
@@ -509,7 +512,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       },
       {
         q: "What does submitting mean?",
-        a: "You start a conversation with our team. Nothing is hired until you say yes.",
+        a: "You start a conversation. Nothing is hired until you say yes.",
       },
       {
         q: "Looking for a job?",
@@ -527,33 +530,33 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Recruitment Support | Virtual Coworker AU",
     },
     description: {
-      us: "Hire dedicated Philippines recruitment support for your US hiring pipeline.",
-      au: "Hire dedicated Philippines recruitment support for your Australian business.",
+      us: "Hiring pipeline slowing? Hire dedicated Filipino recruiting support — you keep final hire decisions.",
+      au: "Hiring stuck in the admin? Hire dedicated Filipino recruiting support — you keep final hire decisions.",
     },
     variants: {
       a: {
         h1: {
-          us: "Hire Philippines recruitment support for your US business.",
-          au: "Hire Philippines recruitment support for your Australian business.",
+          us: "Hiring pipeline slowing? Hire dedicated Filipino recruiting support.",
+          au: "Hiring stalled in the admin? Add dedicated Filipino recruiting support.",
         },
         subhead: {
-          us: "Sourcing and interview scheduling slowing your pipeline? Add Filipino recruitment support — you keep final hire decisions.",
-          au: "Sourcing and interview scheduling slowing your pipeline? Add Filipino recruitment support — you keep final hire decisions.",
+          us: "Sourcing and interview scheduling eating the week? We shortlist TA support. You interview. You keep final hire decisions.",
+          au: "Sourcing and interview scheduling slowing things down? We shortlist TA support. You interview. You keep final hire decisions.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/sales-a.png", au: "/roles/sales-a.png" },
         heroAlt: "Filipino recruitment support professional",
       },
       b: {
         h1: {
           us: "Get dedicated recruitment capacity from a Filipino teammate.",
-          au: "Get dedicated recruitment capacity from a Filipino teammate.",
+          au: "Dedicated recruiting support from a Filipino teammate — Australian hours.",
         },
         subhead: {
           us: "Hiring capacity for US employers — a staffing partner, not a job board. We shortlist; you decide.",
-          au: "Hiring capacity for Australian businesses — a staffing partner, not a job board.",
+          au: "Hiring capacity for Australian businesses — a staffing partner, not a job board. We shortlist; you decide.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/sales-a.png", au: "/roles/sales-a.png" },
         heroAlt: "Dedicated Philippines recruiting support teammate",
       },
@@ -589,42 +592,42 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Sales Support | Virtual Coworker AU",
     },
     description: {
-      us: "Hire dedicated Philippines sales support for your US business.",
-      au: "Hire dedicated Philippines sales support for your Australian business.",
+      us: "Need a setter or sales support? Hire dedicated Filipino talent — you interview before anyone joins.",
+      au: "Follow-ups falling through? Hire dedicated Filipino sales support — you interview, we handle employment admin.",
     },
     variants: {
       a: {
         h1: {
-          us: "Hire Philippines sales support for your US business.",
-          au: "Hire Philippines sales support for your Australian business.",
+          us: "Need a setter? Hire dedicated Filipino sales support.",
+          au: "Follow-ups falling through? Hire dedicated Filipino sales support.",
         },
         subhead: {
-          us: "Prospect research, CRM hygiene, and follow-ups slipping? Hire dedicated Filipino sales support — we shortlist, you interview.",
-          au: "Prospect research, CRM hygiene, and follow-ups slipping? Hire dedicated Filipino sales support — we shortlist, you interview.",
+          us: "Appointment setting or sales support without another US full-time hire. We shortlist. You interview. We handle payroll.",
+          au: "Research, CRM hygiene and follow-ups still sitting with closers? We shortlist. You interview. Australian hours.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/sales-v2.png", au: "/roles/sales-v2.png" },
         heroAlt: "Filipino sales support professional",
       },
       b: {
         h1: {
-          us: "Get dedicated sales support capacity from a Filipino teammate.",
-          au: "Get dedicated sales support capacity from a Filipino teammate.",
+          us: "Fill your setter or sales-support seat with dedicated Filipino talent.",
+          au: "Dedicated sales support from a Filipino teammate — Australian hours.",
         },
         subhead: {
-          us: "Vetted remote sales support for US businesses — not a gig platform.",
-          au: "Vetted remote sales support for Australian businesses — not a gig platform.",
+          us: "Vetted remote appointment setting and sales support for US businesses — staffing partner, not a gig platform.",
+          au: "Vetted remote sales support for Australian businesses — staffing partner, not a gig platform.",
         },
-        primaryCta: "Start Hiring",
+        primaryCta: "Talk to a Specialist",
         heroImage: { us: "/roles/sales-v2.png", au: "/roles/sales-v2.png" },
         heroAlt: "Dedicated Philippines sales teammate",
       },
     },
     benefits: [
-      "Prospect research, CRM hygiene, and follow-ups stop slipping",
+      "Appointment setting, research, CRM hygiene, and follow-ups stop slipping",
       "A dedicated sales support seat protects pipeline basics",
       "Sellers spend more time talking to buyers",
-      "You interview before anyone joins — staffing, not software",
+      "You interview before anyone joins — staffing, not a job board",
     ],
     faq: [
       {
@@ -633,7 +636,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       },
       {
         q: "What happens when I submit?",
-        a: "Our team follows up to talk through the role and next steps.",
+        a: "We follow up to talk through the role and next steps — free, no pressure.",
       },
       {
         q: "Looking for a job?",

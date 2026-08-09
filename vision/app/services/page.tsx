@@ -7,8 +7,8 @@ import HubMapHero from "../components/HubMapHero";
 import JsonLd from "../components/JsonLd";
 import ServicesRoleGrid from "../components/ServicesRoleGrid";
 import PainGain from "../components/PainGain";
-import type { MarketId } from "../../config/markets";
-import { PRIMARY_HIRE_CTA } from "../../config/employer-cro";
+import { resolvePhone, type MarketId } from "../../config/markets";
+import { primaryHireCta } from "../../config/employer-cro";
 import type { SiteSurface } from "../../config/site";
 import { breadcrumbJsonLd, buildPageMetadata } from "../../lib/seo";
 
@@ -38,9 +38,13 @@ export default async function ServicesPage({
   const home = market === "au" ? "/au" : "/us";
   const other: MarketId = market === "au" ? "us" : "au";
   const otherLabel = other === "au" ? "Australia" : "United States";
+  const isAu = market === "au";
+  const cta = primaryHireCta(market);
+  const phone = resolvePhone(market);
+  const showPhone = phone.configured && Boolean(phone.href);
 
   return (
-    <main className={`micro${market === "au" ? " micro-light" : ""}`}>
+    <main className={`micro${isAu ? " micro-light" : ""}`}>
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: home },
@@ -49,29 +53,28 @@ export default async function ServicesPage({
       />
       <MarketGtm surface={surface} />
       <SiteNav
-        tone={market === "au" ? "light" : "dark"}
+        tone={isAu ? "light" : "dark"}
         market={surface}
         active="services"
       />
 
       <HubMapHero market={market}>
         <p className="micro-kicker">
-          Roles · {market === "au" ? "Australia" : "United States"} · Businesses
+          Roles · {isAu ? "Australia" : "United States"} · Businesses
         </p>
         <h1>
-          {market === "au"
-            ? "Hand off the work slowing your Australian business down."
-            : "Hand off the work slowing your US business down."}
+          {isAu
+            ? "Pick the role. We’ll match a dedicated Filipino teammate."
+            : "Pick the seat. We’ll match a dedicated Filipino teammate."}
         </h1>
         <p className="micro-lead">
-          Pick the seat you need filled — admin, books, support, marketing, HR,
-          sales, and more. Every page is for{" "}
-          {market === "au" ? "Australian" : "US"} businesses hiring dedicated
-          Filipino staff. Job seekers choose the job-seeker option in the form.
+          {isAu
+            ? "Admin, books, support, marketing, HR, sales and more. Every page is for Australian businesses hiring dedicated Filipino staff on Australian hours. Job seekers choose the job-seeker option in the form."
+            : "Admin, books, support, marketing, HR, sales, and more. Every page is for US businesses hiring dedicated Filipino staff. Job seekers choose the job-seeker option in the form."}
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-            {PRIMARY_HIRE_CTA}
+            {cta}
           </Link>
           <Link
             href={`/how-it-works?market=${market}`}
@@ -80,25 +83,35 @@ export default async function ServicesPage({
             How it works
           </Link>
         </div>
+        <p className="micro-lead" style={{ marginTop: "1rem" }}>
+          <a href={`${home}#role-quiz`}>
+            {isAu
+              ? "Not sure which role? Take the hiring quiz →"
+              : "Not sure which seat? Take the hiring quiz →"}
+          </a>
+        </p>
       </HubMapHero>
 
-      <PainGain market={market} light={market === "au"} ctaHref={`${home}#gate`} />
+      <PainGain market={market} light={isAu} ctaHref={`${home}#gate`} />
 
       <section className="micro-section">
         <ServicesRoleGrid market={market} />
       </section>
 
       <section className="micro-cta">
-        <h2>Not sure which role fits?</h2>
+        <h2>
+          {isAu ? "Not sure which role fits?" : "Not sure which seat fits?"}
+        </h2>
         <p>
-          Start on the hiring page and pick the closest option
-          {market === "us"
-            ? " — or call us if you’d rather talk it through."
-            : " — we’ll sort the details with you."}
+          {isAu
+            ? "Take the hiring quiz, or have a chat and we’ll sort it with you."
+            : showPhone
+              ? "Take the hiring quiz — or call us if you’d rather talk it through."
+              : "Take the hiring quiz, or talk to a specialist and we’ll sort it with you."}
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-            {PRIMARY_HIRE_CTA}
+            {cta}
           </Link>
         </div>
         <p className="micro-cross">
@@ -108,7 +121,7 @@ export default async function ServicesPage({
       </section>
 
       <SiteFooter
-        tone={market === "au" ? "light" : "dark"}
+        tone={isAu ? "light" : "dark"}
         market={surface}
       />
     </main>

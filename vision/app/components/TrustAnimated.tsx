@@ -4,17 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import type { IndustryStat, ProofFigure } from "../../config/site";
 
 /**
- * Scroll-triggered number animation for the trust band.
- * Counters run once when the card enters view; `prefers-reduced-motion` and
- * no-IntersectionObserver both fall through to the final value immediately.
+ * Scroll-triggered trust-band reveals.
+ * Final proof figures always paint (SSR + client) — never count up from 0
+ * (that flashed "0+", "0.0/5", "0" while the card faded in).
+ * Entrance motion is CSS (.proof-figure.is-in / .trust-stat-card.is-in).
  */
-
-const DURATION_MS = 1100;
-
-function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined" || !window.matchMedia) return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
 
 /** Fires once when the element first scrolls into view. */
 function useInView<T extends HTMLElement>() {
@@ -44,62 +38,13 @@ function useInView<T extends HTMLElement>() {
   return { ref, seen };
 }
 
-function easeOutCubic(t: number): number {
-  return 1 - Math.pow(1 - t, 3);
-}
-
-function useCountUp(target: number, run: boolean, decimals: number): number {
-  // Always paint the approved figure first (SSR + delayed JS + never-in-view).
-  // Animation is progressive enhancement once the card is seen.
-  const [value, setValue] = useState(target);
-
-  useEffect(() => {
-    if (!run) {
-      setValue(target);
-      return;
-    }
-    if (prefersReducedMotion()) {
-      setValue(target);
-      return;
-    }
-    let raf = 0;
-    setValue(0);
-    const start = performance.now();
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - start) / DURATION_MS);
-      const next = target * easeOutCubic(p);
-      setValue(Number(next.toFixed(decimals)));
-      if (p < 1) raf = requestAnimationFrame(tick);
-      else setValue(target);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [run, target, decimals]);
-
-  return value;
-}
-
-function Counter({
-  value,
+function formatFigure(
+  value: number,
   prefix = "",
   suffix = "",
   decimals = 0,
-  run,
-}: {
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  decimals?: number;
-  run: boolean;
-}) {
-  const shown = useCountUp(value, run, decimals);
-  return (
-    <>
-      {prefix}
-      {shown.toFixed(decimals)}
-      {suffix}
-    </>
-  );
+): string {
+  return `${prefix}${value.toFixed(decimals)}${suffix}`;
 }
 
 /** Big legitimacy numbers — years trading, rating, offices. */
@@ -110,19 +55,10 @@ export function ProofRow({ figures }: { figures: ProofFigure[] }) {
     <div className="proof-row" ref={ref} aria-label="Company track record">
       {figures.map((f) => {
         const decimals = f.decimals || 0;
-        const fallback = `${f.prefix || ""}${f.value.toFixed(decimals)}${f.suffix || ""}`;
+        const text = formatFigure(f.value, f.prefix, f.suffix, decimals);
         return (
           <div className={`proof-figure${seen ? " is-in" : ""}`} key={f.id}>
-            <p className="proof-figure-value" data-fallback={fallback}>
-              <noscript>{fallback}</noscript>
-              <Counter
-                value={f.value}
-                prefix={f.prefix}
-                suffix={f.suffix}
-                decimals={decimals}
-                run={seen}
-              />
-            </p>
+            <p className="proof-figure-value">{text}</p>
             <p className="proof-figure-label">{f.label}</p>
             <p className="proof-figure-note">{f.note}</p>
           </div>
@@ -157,18 +93,16 @@ function parseFigure(figure: string): {
 function StatCard({ stat }: { stat: IndustryStat }) {
   const { ref, seen } = useInView<HTMLElement>();
   const parsed = parseFigure(stat.figure);
+  const text = formatFigure(
+    parsed.value,
+    parsed.prefix,
+    parsed.suffix,
+    parsed.decimals,
+  );
 
   return (
     <article className={`trust-stat-card${seen ? " is-in" : ""}`} ref={ref}>
-      <p className="trust-stat-figure">
-        <Counter
-          value={parsed.value}
-          prefix={parsed.prefix}
-          suffix={parsed.suffix}
-          decimals={parsed.decimals}
-          run={seen}
-        />
-      </p>
+      <p className="trust-stat-figure">{text}</p>
       {parsed.percent !== null ? (
         <div
           className="trust-stat-bar"

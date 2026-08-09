@@ -1,6 +1,6 @@
 import type { CategorySlug } from "../../config/categories";
 import { CATEGORIES } from "../../config/categories";
-import { ROLE_OUTCOMES, PRIMARY_HIRE_CTA } from "../../config/employer-cro";
+import { roleOutcomes, primaryHireCta } from "../../config/employer-cro";
 import type { MarketId } from "../../config/markets";
 
 /**
@@ -16,8 +16,9 @@ export default function RoleOutcomes({
   light?: boolean;
 }) {
   const cat = CATEGORIES[category];
-  const outcome = ROLE_OUTCOMES[category];
+  const outcome = roleOutcomes(category, market);
   const shell = market === "us" ? "us" : "au";
+  const isAu = market === "au";
 
   return (
     <section
@@ -27,17 +28,23 @@ export default function RoleOutcomes({
       <div className="role-outcomes-inner">
         <header className="role-outcomes-head">
           <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
-            {cat.label} outcomes
+            {cat.label}
           </p>
           <h2 id="role-outcomes-title">
-            Business problem → work handed off → operational gain
+            {isAu
+              ? "What this role actually takes off you"
+              : "What this seat actually takes off you"}
           </h2>
           <p className="role-outcomes-lead">{outcome.problem}</p>
         </header>
 
         <div className="role-outcomes-body">
           <div className="role-outcomes-tasks">
-            <h3>What a dedicated coworker can take over</h3>
+            <h3>
+              {isAu
+                ? "What a dedicated coworker can take on"
+                : "What a dedicated coworker can take over"}
+            </h3>
             <ul>
               {outcome.tasks.map((t) => (
                 <li key={t}>{t}</li>
@@ -45,10 +52,10 @@ export default function RoleOutcomes({
             </ul>
           </div>
           <div className="role-outcomes-gain">
-            <h3>What you gain</h3>
+            <h3>{isAu ? "What you get" : "What you gain"}</h3>
             <p>{outcome.gain}</p>
             <a href="#gate" className={`${shell}-btn ${shell}-btn-primary`}>
-              {PRIMARY_HIRE_CTA}
+              {primaryHireCta(market)}
             </a>
           </div>
         </div>

@@ -48,16 +48,17 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: DEFAULT_CAREERS_URL,
     headline:
-      "Free your team from work that keeps slipping — with a dedicated Filipino coworker.",
-    prop: "Recover time for customers and growth. Virtual Coworker matches Filipino professionals to your US role, you interview and choose, and we support payroll and employment admin after you hire. Dedicated staffing — not a freelance marketplace.",
+      "Your week is full. Hire a dedicated Filipino teammate.",
+    prop: "We recruit and screen. You interview and pick. We handle payroll. Dedicated seats on your hours — not a gig marketplace.",
     staffingExplain:
-      "Tell us the role. We follow up for a short hiring conversation, take your brief, and shortlist screened Filipino talent. You interview and decide before anyone starts. We handle payroll and account support after you hire. Rates are discussed once we understand the seat — transparent for the role, not a one-size price tag.",
+      "Tell us the role. Free consult — no pressure. We recruit and shortlist. You interview and pick. We handle payroll and paperwork. Rates depend on the seat — we’ll talk through them once we understand what you need.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
-      "hire virtual assistant philippines",
+      "remote staffing agency",
+      "virtual assistant agency",
+      "hire virtual staff",
+      "philippines staffing agency",
       "hire filipino virtual assistant",
-      "virtual assistant for business",
-      "hiring a virtual assistant",
       "virtual assistant company",
     ],
     negativeThemes: [
@@ -85,10 +86,10 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: DEFAULT_CAREERS_URL,
     headline:
-      "Add dependable capacity for Australian business hours — without building another local department.",
-    prop: "Hand off the work that keeps slipping to a dedicated Filipino teammate. We recruit and shortlist for your role, you interview and choose, and we support employment admin after you hire. Staffing for Australian businesses — not a gig marketplace.",
+      "Your week is full. A dedicated Filipino teammate takes the load.",
+    prop: "We recruit and shortlist. You interview and choose. We handle employment admin. Dedicated teammates on Australian hours — not a gig marketplace.",
     staffingExplain:
-      "Send the role you need filled. Our team follows up for a hiring conversation, takes your brief, and shortlists screened candidates. You interview before anyone starts. We handle employment admin so you stay focused on the work. Rates depend on the role and seniority — we’ll talk through them once we understand what you need.",
+      "Tell us the role. We’ll have a short chat — free, no pressure. We recruit and shortlist. You interview and pick. We handle employment admin so you stay on the work. Rates depend on the role — we’ll talk them through once we understand what you need.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",
@@ -204,5 +205,5 @@ export const PILOT = {
     "Can Google Search generate qualified US and Australian employer inquiries at an acceptable cost?",
   primaryContact: "Braden",
   gateVariant: "inline",
-  lpVersion: "stage1-v8",
+  lpVersion: "stage1-v9",
 } as const;

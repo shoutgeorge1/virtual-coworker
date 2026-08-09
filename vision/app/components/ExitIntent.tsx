@@ -42,7 +42,7 @@ const VARIANTS: PopupVariant[] = [
     id: "b",
     image: "/brand/va-face-2.jpg",
     eyebrow: "Dedicated teammate",
-    title: "Tired of hiring that eats your week?",
+    title: "Tired of hiring eating the week?",
     body: "Quick check first — hiring for a company, or looking for work?",
     phoneCta: "Talk to us",
   },
@@ -330,7 +330,7 @@ export default function ExitIntent({
                 });
               }}
             >
-              ☎ {popup.phoneCta}
+              ☎ {market === "au" ? "Give us a call" : popup.phoneCta}
             </a>
           ) : null}
           <button type="button" className="exit-intent-ghost" onClick={dismiss}>

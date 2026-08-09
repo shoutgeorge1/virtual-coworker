@@ -130,6 +130,9 @@ const PUBLIC_SURFACE_FILES = [
   "app/components/SiteFooter.tsx",
   "app/components/SiteNav.tsx",
   "app/components/StickyCta.tsx",
+  "app/components/StopCloser.tsx",
+  "app/components/PainGain.tsx",
+  "app/components/RoleOutcomes.tsx",
   "app/how-it-works/page.tsx",
   "app/thank-you/page.tsx",
   "app/services/page.tsx",
@@ -138,6 +141,8 @@ const PUBLIC_SURFACE_FILES = [
   "app/privacy/page.tsx",
   "app/terms/page.tsx",
   "app/layout.tsx",
+  "config/employer-cro.ts",
+  "config/hiring-process.ts",
 ];
 
 function visibleSurfaceFileStrings(): { path: string; text: string }[] {

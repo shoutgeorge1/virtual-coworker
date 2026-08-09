@@ -1,5 +1,6 @@
 import { PUBLIC_QUOTES } from "../../config/site";
 import type { MarketId } from "../../config/markets";
+import QuoteBody from "./QuoteBody";
 
 /**
  * Standalone quote band — kept for reuse.
@@ -26,7 +27,11 @@ export default function TrustQuotes({
         <div className="trust-quotes-grid">
           {PUBLIC_QUOTES.map((q) => (
             <figure className="trust-quote-card" key={q.name}>
-              <blockquote>“{q.quote}”</blockquote>
+              <blockquote>
+                “
+                <QuoteBody quote={q.quote} pop={q.pop} boom={q.boom} />
+                ”
+              </blockquote>
               <figcaption>
                 <b>{q.name}</b>
                 <span>

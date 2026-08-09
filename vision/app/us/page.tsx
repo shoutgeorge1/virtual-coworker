@@ -7,7 +7,7 @@ import "./us.css";
 export const metadata: Metadata = buildPageMetadata({
   title: "Hire Dedicated Filipino Staff | Virtual Coworker US",
   description:
-    "Free your team from work that keeps slipping. Hire dedicated Filipino coworkers for your US business — we recruit and vet, you interview and decide.",
+    "Hire a dedicated Filipino teammate for your US business. Free consult. We recruit. You interview. We handle payroll. Not a gig marketplace.",
   path: "/us",
   indexable: true,
   ogImage: "/brand/hero-us-2026.jpg",

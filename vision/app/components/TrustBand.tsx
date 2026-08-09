@@ -3,21 +3,17 @@ import {
   PUBLIC_QUOTES,
   TRUST_PROOF,
   clientMarksForMarket,
-  industryStatsForMarket,
-  proofFigures,
 } from "../../config/site";
-import { ProofRow, StatsGrid } from "./TrustAnimated";
+import QuoteBody from "./QuoteBody";
 
 /**
  * Legitimacy band — recognition, client marks, reviews, stats.
  *
- * Hierarchy (designer pass 2026-08-07):
- *  1. Track-record figures
- *  2. Reviews + Clutch rating (human proof — must breathe; no logos on cards)
- *  3. Client logo strip (companies only)
- *  4. Slim recognition row (not four fat badge cards)
- *  5. Industry stats
- *  6. Trust chips (people/process — addresses live in footer only)
+ * Hierarchy (2026-08-09):
+ *  1. Reviews + Clutch rating
+ *  2. Client logo strip
+ *  3. Trust chips (people/process)
+ * Industry stats + Featured In live outside this band.
  *
  * No outbound links on marks. Reviews stay on both lp_density arms.
  */
@@ -28,38 +24,8 @@ export default function TrustBand({
   market: MarketId;
   light?: boolean;
 }) {
-  const stats = industryStatsForMarket(market);
-  const figures = proofFigures();
   const clientMarks = clientMarksForMarket(market);
   const quotes = PUBLIC_QUOTES;
-
-  /** Slim recognition — Clutch + Forbes + tenure. Google lives in hero chips. */
-  const recog = [
-    {
-      src:
-        market === "us"
-          ? "/brand/trust/badge-clutch-us-2024.webp"
-          : "/brand/badge-clutch-au.webp",
-      alt:
-        market === "us"
-          ? "Clutch top virtual assistant company — United States 2024"
-          : "Clutch top virtual assistant company — Australia",
-      label: "Clutch",
-    },
-    {
-      src:
-        market === "us"
-          ? "/brand/badge-forbes-white.webp"
-          : "/brand/badge-forbes-navy.webp",
-      alt: "Forbes Business Council",
-      label: "Forbes",
-    },
-    {
-      src: "/brand/trust/badge-14-year.webp",
-      alt: `Founded ${TRUST_PROOF.sinceYear}`,
-      label: `Since ${TRUST_PROOF.sinceYear}`,
-    },
-  ];
 
   return (
     <section
@@ -70,11 +36,10 @@ export default function TrustBand({
         <header className="trust-band-head">
           <p className="trust-band-label">Happy customers</p>
           <h2 id="trust-band-title">
-            Since {TRUST_PROOF.sinceYear}. Real reviews. Real hires.
+            Since {TRUST_PROOF.sinceYear}. Real reviews. Real hires — still
+            filling seats.
           </h2>
         </header>
-
-        <ProofRow figures={figures} />
 
         {/* Reviews lead — quotes need air, not a badge pile above them */}
         <div className="trust-band-quotes">
@@ -89,13 +54,19 @@ export default function TrustBand({
                 {TRUST_PROOF.clutch.rating}
                 <i>/5</i>
               </b>
-              <span>Clutch · {TRUST_PROOF.clutch.reviewCount} reviews</span>
+              <span>
+                Independent reviews · Clutch · {TRUST_PROOF.clutch.reviewCount}
+              </span>
             </span>
           </div>
           <div className="trust-quotes-grid">
             {quotes.map((q) => (
               <figure className="trust-quote-card" key={q.name}>
-                <blockquote>“{q.quote}”</blockquote>
+                <blockquote>
+                  “
+                  <QuoteBody quote={q.quote} pop={q.pop} boom={q.boom} />
+                  ”
+                </blockquote>
                 <figcaption>
                   <b>{q.name}</b>
                   <span>
@@ -119,7 +90,9 @@ export default function TrustBand({
                 const label = c.alt || c.name;
                 return (
                   <li
-                    className={`trust-client-mark${c.caption ? " has-caption" : ""}`}
+                    className={`trust-client-mark${c.caption ? " has-caption" : ""}${
+                      c.id === "proactive-media" ? " is-proactive" : ""
+                    }`}
                     key={c.id}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -141,34 +114,6 @@ export default function TrustBand({
           </div>
         ) : null}
 
-        <div className="trust-recog" aria-label="Recognition">
-          <p className="trust-press-label">Recognition</p>
-          <ul className="trust-recog-row">
-            {recog.map((b) => (
-              <li className="trust-recog-item" key={b.src}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={b.src} alt={b.alt} width={72} height={72} />
-                <span>{b.label}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div
-          className="trust-band-stats"
-          aria-labelledby="trust-stats-title"
-          data-lp="secondary"
-        >
-          <p className="trust-band-stats-label">What you gain offshore</p>
-          <h3 id="trust-stats-title">
-            Good people. Your hours. More left in the budget.
-          </h3>
-          <p className="trust-band-stats-lead">
-            Published research — not our marketing claims.
-          </p>
-          <StatsGrid stats={stats} />
-        </div>
-
         <div className="trust-band-legit" aria-label="Company legitimacy">
           <div className="trust-legit-item">
             <span className="trust-legit-icon" aria-hidden="true">
@@ -183,7 +128,7 @@ export default function TrustBand({
             </span>
             <div>
               <strong>Since {TRUST_PROOF.sinceYear}</strong>
-              <span>Filipino staffing partner — still here</span>
+              <span>Still placing Filipino staff. Still here.</span>
             </div>
           </div>
           <div className="trust-legit-item">
@@ -206,7 +151,11 @@ export default function TrustBand({
             </span>
             <div>
               <strong>US &amp; Australia</strong>
-              <span>Built for both markets’ business hours</span>
+              <span>
+                {market === "au"
+                  ? "Offices in both markets. Australian hours."
+                  : "Offices in both markets. Your hours."}
+              </span>
             </div>
           </div>
           <div className="trust-legit-item">
@@ -232,8 +181,8 @@ export default function TrustBand({
               </svg>
             </span>
             <div>
-              <strong>You interview first</strong>
-              <span>Nobody joins your team before you meet them</span>
+              <strong>You say yes first</strong>
+              <span>Nobody starts until you meet them and pick.</span>
             </div>
           </div>
         </div>

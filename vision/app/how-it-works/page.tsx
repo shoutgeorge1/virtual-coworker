@@ -9,14 +9,14 @@ import PainGain from "../components/PainGain";
 import { HOW_STEP_ICONS } from "../components/MicroIcons";
 import type { MarketId } from "../../config/markets";
 import { hiringProcessSteps } from "../../config/hiring-process";
-import { PRIMARY_HIRE_CTA } from "../../config/employer-cro";
+import { primaryHireCta } from "../../config/employer-cro";
 import type { SiteSurface } from "../../config/site";
 import { breadcrumbJsonLd, buildPageMetadata } from "../../lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "How Hiring Works | Virtual Coworker",
   description:
-    "How Virtual Coworker helps US and Australian businesses hire dedicated Filipino staff — conversation, brief, interview, onboard.",
+    "Free consult. We recruit. You interview. We handle payroll or employment admin. How Virtual Coworker helps US and Australian businesses hire dedicated Filipino staff.",
   path: "/how-it-works",
   indexable: true,
 });
@@ -37,6 +37,7 @@ export default async function HowItWorksPage({
   const home = market === "au" ? "/au" : "/us";
   const isAu = market === "au";
   const steps = hiringProcessSteps(market);
+  const cta = primaryHireCta(market);
 
   return (
     <main className={`micro${isAu ? " micro-light" : ""}`}>
@@ -57,19 +58,15 @@ export default async function HowItWorksPage({
         <p className="micro-kicker">
           {isAu ? "Australia" : "United States"} · Businesses · Filipino talent
         </p>
-        <h1>
-          {isAu
-            ? "How hiring works for Australian businesses."
-            : "How hiring works with Virtual Coworker."}
-        </h1>
+        <h1>We find them. You pick. They start.</h1>
         <p className="micro-lead">
           {isAu
-            ? "Four clear steps. Tell us what you need, we identify suitable Filipino candidates, you interview and choose, and we support onboarding and employment admin afterward — including Australian business hours."
-            : "Four clear steps. Tell us what you need, we identify suitable Filipino candidates, you interview and choose, and we support onboarding, payroll, and the ongoing relationship."}
+            ? "Free chat. We recruit in the Philippines. You interview on video. We handle employment admin — including Australian hours. You just hire good people."
+            : "Free consult. We recruit in the Philippines. You interview on video. We handle payroll and paperwork. You just hire great people."}
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-            {PRIMARY_HIRE_CTA}
+            {cta}
           </Link>
           <Link
             href={`/services?market=${market}`}
@@ -78,6 +75,13 @@ export default async function HowItWorksPage({
             Browse roles
           </Link>
         </div>
+        <p className="micro-lead" style={{ marginTop: "1rem" }}>
+          <a href={`${home}#role-quiz`}>
+            {isAu
+              ? "Not sure which role? Take the hiring quiz →"
+              : "Not sure which seat? Take the hiring quiz →"}
+          </a>
+        </p>
       </HubMapHero>
 
       <PainGain market={market} light={isAu} ctaHref={`${home}#gate`} />
@@ -97,20 +101,6 @@ export default async function HowItWorksPage({
               </article>
             );
           })}
-        </div>
-      </section>
-
-      <section className="micro-cta">
-        <h2>Ready to free your team from work that keeps slipping?</h2>
-        <p>
-          {isAu
-            ? "Start a hiring request for your Australian business. Looking for work? Choose the job-seeker option in the form."
-            : "Start a hiring request for your US business. Looking for work? Choose the job-seeker option in the form."}
-        </p>
-        <div className="micro-actions">
-          <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">
-            {PRIMARY_HIRE_CTA}
-          </Link>
         </div>
       </section>
 

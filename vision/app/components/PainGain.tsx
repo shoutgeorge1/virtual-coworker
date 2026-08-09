@@ -1,5 +1,9 @@
 import type { MarketId } from "../../config/markets";
-import { painGainCopy, PRIMARY_HIRE_CTA } from "../../config/employer-cro";
+import {
+  painGainCopy,
+  painGainBooms,
+  primaryHireCta,
+} from "../../config/employer-cro";
 
 /**
  * Compact pain → relief comparison for employer landings.
@@ -16,6 +20,7 @@ export default function PainGain({
   ctaHref?: string;
 }) {
   const copy = painGainCopy(market);
+  const booms = painGainBooms(market);
   const shell = market === "us" ? "us" : "au";
 
   return (
@@ -51,11 +56,17 @@ export default function PainGain({
           </div>
         </div>
 
+        <ul className="pain-gain-booms">
+          {booms.map((b) => (
+            <li key={b.title}>
+              <b>{b.title}</b>
+              {b.body}
+            </li>
+          ))}
+        </ul>
         <p className="pain-gain-foot">
-          Dedicated Filipino professionals. You interview. We support payroll and
-          the ongoing relationship.{" "}
           <a href={ctaHref} className={`${shell}-inline-cta`}>
-            {PRIMARY_HIRE_CTA}
+            {primaryHireCta(market)} →
           </a>
         </p>
       </div>

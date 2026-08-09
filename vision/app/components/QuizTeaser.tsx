@@ -8,22 +8,22 @@ import {
   type ExpVariant,
 } from "../../lib/experiments";
 
-/** Benefit-led teasers — each leads with what the reader gets, not the quiz. */
+/** Benefit-led teasers — “take the hiring quiz”, not “free 60 sec / stop guessing”. */
 const TEASERS: Record<
   ExpVariant,
   { kicker: string; label: string }
 > = {
   a: {
-    kicker: "Free · 60 sec",
-    label: "Find the hire that buys back your week →",
+    kicker: "Hiring quiz",
+    label: "Take the hiring quiz — who should you hire first? →",
   },
   b: {
-    kicker: "Free · 3 taps",
-    label: "Which job should you hand off first? →",
+    kicker: "Take the hiring quiz",
+    label: "Who should you hire first? →",
   },
   c: {
-    kicker: "Free · 60 sec",
-    label: "Stop guessing your next hire →",
+    kicker: "Hiring quiz",
+    label: "Take the hiring quiz →",
   },
 };
 

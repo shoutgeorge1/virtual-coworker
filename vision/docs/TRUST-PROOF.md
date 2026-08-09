@@ -19,7 +19,7 @@ published a logo asset for a named client, that name stays off the strip.
 | Google 5-star reviews | `brand/trust/badge-5-star-reviews.webp` | Virtual Coworker media library |
 | Forbes Business Council | `brand/badge-forbes-*.webp` | Braden Yuill's council profile |
 | Founded 2011 badge | `brand/trust/badge-14-year.webp` | Virtual Coworker media library |
-| Press: SMH, BRW, Startup Daily, StartupSmart | `brand/trust/press-*.webp` | "Featured In" row on virtualcoworker.com |
+| Press: SMH (AU only), BRW, Startup Daily, StartupSmart | `brand/trust/press-*.webp` | "Featured In" row on virtualcoworker.com |
 | Awards: Anthill Cool Company Top 100, StartupSmart Awards 2014 | `brand/trust/press-*.webp` | Same "Featured In" row |
 | Client logo — College Hunks (muted, US) | `brand/trust/client-college-hunks.svg` | Client logo published on virtualcoworker.com/forbes/; US franchise (VA) |
 | Client logo — Good Co. (muted, US) | `brand/trust/client-good-co.png` | Same forbes page; Laura W. / GOODco. — Charleston, SC |
@@ -60,3 +60,37 @@ The "14 Years / Founded 2011" badge is the company's own 2025 artwork. The live
 counter derives from the founding year, so it reads **15+** in 2026 while the
 badge art still says 14. Worth asking the designer for a refreshed badge — the
 copy around it uses "Since 2011", which does not go stale.
+
+## Wishlist (not live until verified)
+
+Tracked on Launch Control checklist (2026-08-09). Do **not** invent or scrape:
+
+1. **US-recognizable press** — Inc, Entrepreneur, Business Insider, major US biz
+   press — only if Virtual Coworker was actually featured (need article + logo OK).
+2. **More authorized US client logos** — written OK from VC / client; prefer
+   brands a US buyer recognizes in two seconds.
+3. **Video testimonials** — face + name + company + specific outcome.
+4. **Never invent Fortune 500** marks or review counts beyond Clutch’s public 7.
+
+## Capacity urgency (live 2026-08-09)
+
+Page-top “limited onboarding” ribbon was pulled — read cheap on desktop.
+Live cue is a **red arrow pointing at the form** + “Talk to a specialist —
+usually same business day.” No fake countdown / invented “spots left.”
+
+## US vs AU trust (2026-08-09 pass 2)
+
+- **As featured in (US):** Forbes Business Council, Clutch US, Google reviews,
+  plus VC’s published Featured In row (BRW, Startup Daily, StartupSmart,
+  Anthill). SMH is AU-only. Outsource Accelerator top-20 listing is real
+  (VC + EIN PR, 2026) but we have no OA logo in the brand library — do not
+  invent one. No Inc / Entrepreneur / BI editorial or display-ad placement found.
+- **US client logos in hero:** removed. Tiny grayscale marks were broken
+  (College Hunks SVG illustration + AU logos filling the US strip).
+- **US TrustBand logos:** Good Co. only (Charleston, SC — published quote).
+  College Hunks stays as a **named quote**, not a logo (illustration doesn’t
+  read as a US brand mark).
+- **AU logos** (Credit Card Compare, Buzinga, ProActive Media, Learning Deli,
+  RecruitLoop) stay on `/au` only.
+- **Track record stats** (15+ years, Clutch 4.9, 3 offices) sit directly under
+  the hero again.

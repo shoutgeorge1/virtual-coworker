@@ -6,7 +6,7 @@ import {
   type NavId,
   type SiteSurface,
 } from "../../config/site";
-import { PRIMARY_HIRE_CTA } from "../../config/employer-cro";
+import { primaryHireCta } from "../../config/employer-cro";
 import { resolvePhone, type MarketId } from "../../config/markets";
 
 export default function SiteNav({
@@ -28,6 +28,9 @@ export default function SiteNav({
   const showPhone = Boolean(phone?.configured && phone.href);
   const hireHref =
     surface === "au" ? "/au#gate" : surface === "ph" ? "/ph/apply" : "/us#gate";
+  // Employer nav already includes Start Hiring → #gate. Without a phone, the
+  // right-slot CTA was a second identical link (AU desktop + mobile).
+  const hireAlreadyInNav = items.some((item) => item.id === "hire");
 
   return (
     <nav className={`site-nav site-nav-${tone}`} aria-label="Primary">
@@ -70,11 +73,11 @@ export default function SiteNav({
           <Link href="/ph/apply" className="site-nav-call">
             Apply
           </Link>
-        ) : (
+        ) : !hireAlreadyInNav ? (
           <a href={hireHref} className="site-nav-call">
-            {PRIMARY_HIRE_CTA}
+            {employerMarket ? primaryHireCta(employerMarket) : "Talk to a Specialist"}
           </a>
-        )}
+        ) : null}
         <span className="site-nav-tag">{SITE.tagline}</span>
       </div>
     </nav>

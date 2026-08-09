@@ -41,31 +41,31 @@ export default async function ThankYouPage({
   const steps = [
     {
       k: "01",
-      t: "Hiring conversation",
+      t: "Free hiring consult",
       d: calendlyUrl
         ? isAu
-          ? "Book a time below, or wait — a teammate will follow up about the role and Australian business hours."
-          : "Book a time below, or wait — a teammate will follow up about the role, hours, and tools."
+          ? "Book a time below, or wait — a teammate will follow up for a short chat about the role and Australian hours."
+          : "Book a time below, or wait — a teammate will follow up about the role and hours."
         : isAu
-          ? "A teammate follows up to talk through the role, Australian business hours, and whether we’re a fit."
-          : "A teammate follows up to talk through the role, hours, tools, and whether we’re a fit.",
+          ? "A teammate follows up about the role and Australian hours — free, no pressure."
+          : "A teammate follows up about the role and hours — free, no pressure.",
     },
     {
       k: "02",
-      t: "We recruit and screen",
-      d: "Share your job brief — our Filipino recruitment team sources and screens a ready-made shortlist, not a pile of resumes.",
+      t: "We recruit. You get the shortlist.",
+      d: "Our Philippines team finds and screens people. You get strong candidates handed over — not a pile of random resumes.",
     },
     {
       k: "03",
-      t: "You interview and decide",
-      d: "Meet your shortlist on video and decide on your own schedule — with no pressure to hire.",
+      t: "You pick who you want",
+      d: "Meet them on video. Screen who you like. These candidates are that good — you’re going to find someone fast.",
     },
     {
       k: "04",
-      t: "Onboard with support",
+      t: "Forget the paperwork",
       d: isAu
-        ? "Once you hire, we handle onboarding, employment ops, and account support so your new teammate settles in from day one."
-        : "Once you hire, we handle onboarding, payroll, and account support so your new teammate settles in from day one.",
+        ? "Onboarding, employment admin, emails — we handle it. Teammate ready to work Australian hours. You’re sorted."
+        : "Onboarding, payroll, emails — we handle it. Gift-wrapped teammate, on your desk, ready to go.",
     },
   ];
 
@@ -87,14 +87,16 @@ export default async function ThankYouPage({
         <p className="micro-kicker">Virtual Coworker · {marketLabel}</p>
         <h1>
           {conversionEligible
-            ? "Thanks — we got your request."
+            ? isAu
+              ? "Thanks — we’ve got your request."
+              : "Thanks — you’re in."
             : "Thanks — this was a test submission."}
         </h1>
         {conversionEligible ? (
           <p className="micro-lead thank-you-lead">
             {isAu
-              ? "We’ve received your hiring request. A teammate will follow up to talk through the role and next steps for your Australian business."
-              : "We’ve received your hiring request. A teammate will follow up to talk through the role and next steps for your US business."}
+              ? "A teammate will follow up for a short chat about the role and Australian hours. Free, no pressure."
+              : "A teammate will follow up to talk through the role and next steps. Free consult, no pressure."}
           </p>
         ) : (
           <p className="micro-lead thank-you-lead">
@@ -117,11 +119,15 @@ export default async function ThankYouPage({
         >
           <div className="thank-you-book-inner">
             <p className="thank-you-book-eyebrow">Optional next step</p>
-            <h2 id="ty-book">Want to move faster? Book a hiring conversation</h2>
+            <h2 id="ty-book">
+              {isAu
+                ? "Want to talk sooner? Book a time"
+                : "Want to move faster? Book a hiring conversation"}
+            </h2>
             <p>
               {isAu
-                ? "Optional — pick a time that suits Australian business hours. Or skip booking and wait for email follow-up from your request."
-                : "Optional — pick a time that works for you. Or skip booking and wait for email follow-up from your request."}
+                ? "Optional — pick a time that suits Australian business hours. Or skip booking and wait for email follow-up. Still free, no lock-in."
+                : "Optional — pick a time that works for you. Or skip booking and wait for email follow-up. Still free, no obligation."}
             </p>
             <div className="thank-you-book-actions">
               <a
