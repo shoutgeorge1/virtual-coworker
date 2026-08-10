@@ -4,6 +4,7 @@
   var ITEMS = [
     { href: "executive.html", text: "Executive" },
     { href: "launch-control.html", text: "Checklist" },
+    { href: "conversion-path.html", text: "Conversion path" },
     { href: "landing-pages.html", text: "LP previews" },
     { href: "keyword-strategy.html", text: "Keyword Strategy" },
     { href: "media.html", text: "Media" },

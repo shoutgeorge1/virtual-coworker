@@ -28,11 +28,13 @@ Landing pages (production): https://www.virtualcoworker.app/us · [/au](https://
 
 | Page | Job |
 |------|-----|
-| **Checklist** (`/launch-control`) | **THE work list** — numbered do-this-now steps, gates, path markets + GTM |
-| LP previews | Microsite URLs |
-| Lead Routing | Email/webhook Stage 1 |
-| Tracking | Minimal events |
-| Archive (collapsed) | Overview, campaign pages, keywords, rebuild docs, later |
+| **Executive** | Calm spend/status read |
+| **Checklist** (`/launch-control`) | **THE work list** |
+| **Conversion path** (`/conversion-path`) | Employer flowchart: dump vs call vs form → Zoho |
+| LP previews | Microsite URLs + copy A vs B |
+| Media | Logos / role images |
+| Tracking | US vs AU what’s live |
+| Archive (collapsed) | Site tests · Lead Routing · Ads package · campaign docs |
 
 Old checklist / overview URLs redirect to `/launch-control`.
 

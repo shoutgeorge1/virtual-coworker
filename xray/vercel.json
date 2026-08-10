@@ -23,6 +23,8 @@
     { "source": "/leadflow", "destination": "/lead-routing", "permanent": true },
     { "source": "/leadflow.html", "destination": "/lead-routing", "permanent": true },
     { "source": "/site-tests", "destination": "/experiments", "permanent": false },
-    { "source": "/site-experiments", "destination": "/experiments", "permanent": false }
+    { "source": "/site-experiments", "destination": "/experiments", "permanent": false },
+    { "source": "/funnel", "destination": "/conversion-path", "permanent": false },
+    { "source": "/funnel.html", "destination": "/conversion-path", "permanent": false }
   ]
 }
