@@ -108,9 +108,10 @@ US_LP_CATALOG = [
 OPERATOR_NOTES = {
     "narrative_as_of": "2026-08-09",
     "status_banner": (
-        "US Stage 1 live. Australia account spending on legacy PM_AU_* "
-        "(Stage 1 VC_AU_* not the traffic yet). "
-        "Hot: website calls 60+ sec · AU ad-call wins · AU website tags · then Zoho."
+        "North star = qualified business value — not form-fill volume. "
+        "Phone is Ads conversion north star for now; consult booking later; Max Conv later. "
+        "US Stage 1 live (~$298 early window for 1 employer + 1 job-seeker; not real CPA). "
+        "Hot: website calls 60+ sec · AU GTM still a gap · modeled lead score on form (analytics only) · Zoho qualify later."
     ),
     "budgets": [
         {"label": "US", "amount": "~$125/day", "detail": "live", "kind": "live_test"},
@@ -143,6 +144,27 @@ OPERATOR_NOTES = {
         (
             "Australia account spend in the last 7 days is mostly legacy PM_AU_* Search "
             "(Paused mid-window can still show in LAST_7_DAYS). Stage 1 VC_AU_* is not driving it."
+        ),
+        (
+            "Conversion posture: do not train bidding on raw form fills. "
+            "Phone is Ads conversion north star for now; consult booking later; Max Conv later. "
+            "Early US ~$300 per unknown-quality inquiry is a gut check only. "
+            "Website now captures company size × positions → modeled lead_score / $ for analytics (not Ads bidding). "
+            "Zoho Qualified → Job Order → Placement is the truth ladder; CRM value supersedes the site estimate."
+        ),
+        (
+            "AU phone: GBP / listing stays 1300 886 740 (4.8★ / 23 Sydney). "
+            "US Google 5.0★ / 39 + Clutch on LP (yellow stars, not yellow boxes). "
+            "1300 voicemail still says Alex — Holly / Chey / Raffie. "
+            "Public dial stays 1300 — not a personal mobile. AU GTM/GA4 still a gap; US GTM/GA4 live."
+        ),
+        (
+            "Thank-you: Call still conversion lead (888 / 1300). "
+            "Bordered booking overlay auto-opens on eligible TY "
+            "(US “Book your 30-minute hiring consult” / AU “Book a 30-minute hiring chat”) + Call. "
+            "Close + Pick a time reopens. Not Ads primary. "
+            "Job seeker tap → location.replace(https://virtualcoworker.com.ph) so Back stays off the employer LP. "
+            "Homepage H1 locked (“Your week is full…”) unless George asks."
         ),
     ],
     "buyer_signals": [
@@ -185,31 +207,51 @@ OPERATOR_NOTES = {
         },
         {
             "name": "Australia hub (/au)",
-            "why": "Live with 1300 · account spend is mostly legacy PM_AU_* right now",
+            "why": "Live with 1300 · GBP 4.8★ / 23 + Clutch · form chips (size + positions) · Caitlin copy",
             "url": "https://www.virtualcoworker.app/au",
+        },
+        {
+            "name": "Quiz LPs (later, ~70%)",
+            "why": "Not traffic-ready. Rework later. Quiz not highlighted enough yet — likely needs quiz-as-hero, not a homepage-clone widget. Ads Paused. Enable George-only (never auto-complete). Checklist step 36.",
+            "url": "https://www.virtualcoworker.app/us/quiz",
         },
     ],
     "whats_next": [
-        "<strong>Website calls 60+ seconds</strong> — US + AU",
-        "<strong>Australia</strong> — ad-call wins + website tags",
-        "<strong>Then Zoho qualified → Ads</strong>",
-        "<strong>Later:</strong> wire Site tests scoreboard (GTM/GA4)",
+        "<strong>Website calls 60+ seconds</strong> — US + AU (bidding signal)",
+        "<strong>AU GTM/GA4 + ad-call wins</strong> — still a gap vs US",
+        "<strong>Review thank-you overlay US/AU</strong> — Call + book · not Ads primary (Checklist step 37)",
+        "<strong>AU 1300 voicemail</strong> — fix Alex greeting (Holly / Chey / Raffie)",
+        "<strong>Then Zoho qualified → Ads</strong> — modeled site value is estimate only",
+        "<strong>Later — Quiz LP (~70%)</strong> — Rework later. Not traffic-ready. Ads Paused. Enable George-only. Checklist step 36.",
     ],
     "coming_soon": [
-        "Site tests scoreboard (GTM/GA4 wiring — still blank)",
+        "Quiz LP (~70%) — rework later · not traffic-ready · VC_US_S_QUIZ / VC_AU_S_QUIZ Paused · Enable George-only",
+        "Consult booking as Ads signal later · Max Conv later (phone north star for now)",
+        "Modeled lead value → CRM override ladder (not Ads bidding yet)",
+        "Site tests scoreboard (GTM/GA4 wiring — still blank) · messaging A/B later (H1 locked)",
     ],
     "done_today": [
         "AU phone on site (1300 886 740)",
-        "US Search live · Brand off",
-        "Ads package archived",
+        "US Search live · Brand off · US GTM/GA4 live",
+        "Form chips (company size + positions) + modeled $ on /us /au (analytics only)",
+        "Google stars US 5.0/39 · AU 4.8/23 + Clutch (yellow stars, not boxes)",
+        "Caitlin copy live · job-seeker hard redirect to virtualcoworker.com.ph",
+        "Thank-you overlay live (Call + book · not Ads primary) — review US/AU still open",
+        "Team updated (Holly + Caitlin threads)",
+        "Quiz LP parked ~70% — rework later (Paused ads, not highlighted enough yet)",
     ],
     "honesty": (
-        "US Stage 1 Search is live. Australia account is spending — mostly legacy PM_AU_* "
-        "(not Stage 1 VC_AU_*). Next: website calls 60+ sec, then AU tracking, then Zoho."
+        "Optimize toward qualified business value — not form-fill volume. "
+        "Phone is Ads conversion north star for now; consult booking later; Max Conv later. "
+        "US Stage 1 live; early ~$300/inquiry is noise. AU GBP 4.8★/23 + US 5.0★/39 + Clutch on LP. "
+        "1300 listing stays, voicemail still Alex. AU GTM still a gap. "
+        "Modeled $ on site is estimate only until Zoho. Thank-you: Call + booking overlay (not Ads primary). "
+        "Quiz LP ~70% — not traffic-ready, rework later; ads still Paused. "
+        "Homepage H1 locked unless George asks."
     ),
     "lp_ab_note": (
-        "Copy A vs B links work on the live site (different hero/copy). "
-        "Site tests scoreboard still needs GTM/GA4 wiring — see Checklist step 34."
+        "Homepage H1 locked (“Your week is full…”) unless George asks. Messaging A/B later. "
+        "Site tests scoreboard still needs GTM/GA4 wiring — see Checklist step 35."
     ),
 }
 

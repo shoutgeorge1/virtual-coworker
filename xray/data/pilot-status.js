@@ -22,7 +22,7 @@ window.PILOT_STATUS = {
     au: "https://www.virtualcoworker.app/au",
     ph: "https://www.virtualcoworker.app/ph",
     copyNote:
-      "Caitlin LP copy already live (demo removed, Filipino terms, US hero, master 4-step, transparent rates, AU footer, thank-you aligned) — not pending rewrite."
+      "Caitlin LP copy live (no em dashes; “A member of our team…”; “Obligation free, at no cost”). Homepage H1 locked (“Your week is full…”) unless George asks — messaging A/B later. Thank-you: Call + bordered booking overlay (not Ads primary). Job seeker → location.replace(https://virtualcoworker.com.ph)."
   },
   /** Domains + measurement — separate per employer market; PH can hang for Stage 1. */
   micrositeInfra: {
@@ -40,8 +40,8 @@ window.PILOT_STATUS = {
     },
     measurement: {
       rule: "Do not share one GTM/GA4 across US+AU",
-      us: ["GTM container", "GA4 property", "Search Console on US domain", "Ads conversions → US microsite only"],
-      au: ["GTM container", "GA4 property", "Search Console on AU domain", "Ads conversions → AU microsite only"],
+      us: ["GTM container LIVE (GTM-M92DX9BJ → GA4 G-2V3V0BS6JW)", "Search Console on US domain", "Ads conversions → US microsite only"],
+      au: ["GTM/GA4 still a gap on /au", "Search Console on AU domain", "Ads conversions → AU microsite only"],
       ph: "optional_later",
       envPlaceholders: [
         "NEXT_PUBLIC_GTM_US",
@@ -105,7 +105,7 @@ window.PILOT_STATUS = {
     stage1Secondary: [
       "Employer form delivery (Resend and/or GitHub) — observe only; not bidding Primary",
       "Click-to-call / tel: tap observation only — never Primary",
-      "Calendly booking (secondary/separate — not second Primary)"
+      "Thank-you booking overlay / Calendly (secondary/separate — auto-opens on eligible TY; not Ads Primary; consult booking later)"
     ],
     stage1DoNotOptimize: [
       "tel: click as Primary (not a connected-call win)",
@@ -119,7 +119,7 @@ window.PILOT_STATUS = {
       jobPlacement: "$500–$800 (estimate only — not approved for Ads import)"
     },
     laterPath:
-      "After website call duration + AU ad-call wins + website tags: human marks qualified in Zoho → light signal into Ads. Booked consult next. Later (enough deals/money): value-based conversions when deals actually pay.",
+      "Phone is Ads conversion north star for now. After website call duration + AU ad-call wins + website tags: human marks qualified in Zoho → light signal into Ads. Consult booking later (overlay is live, not bidding Primary). Later (enough deals/money): Max Conv / value-based when deals actually pay.",
     websiteCallDuration: {
       status: "high_priority_open",
       minSeconds: 60,
@@ -137,7 +137,9 @@ window.PILOT_STATUS = {
   calendly: {
     us: "https://calendly.com/cheyenne-virtualcoworker/30min",
     apac: "https://calendly.com/apac-virtualcoworker/30min",
-    role: "secondary_separate_not_second_primary"
+    role: "secondary_separate_not_second_primary",
+    thankYou:
+      "Eligible thank-you auto-opens bordered overlay (US “Book your 30-minute hiring consult” / AU “Book a 30-minute hiring chat”) + Call. Inline embed was janky — dropped. Close + Pick a time reopens. Not Ads primary."
   },
 
   /* Confirmed phone routing */
@@ -150,7 +152,7 @@ window.PILOT_STATUS = {
     auDestination: {
       number: "1300 886 740",
       status: "site_live_2026_08_08",
-      note: "George-approved AU site phone — live on /au. Keep answering. Next: website call duration (60s + Google forwarding) + AU ad-call wins + GTM/GA4 + Unkown AG cleanup."
+      note: "George-approved AU site phone — live on /au. Keep answering. 1300 voicemail still says Alex (Holly / Chey / Raffie). Next: website call duration (60s + Google forwarding) + AU ad-call wins + GTM/GA4 + Unkown AG cleanup."
     },
     callRail:
       "Not needed for Stage 1 website-call signal — Google forwarding number covers Ads visitors. CallRail later/optional if VC wants broader tracking."
@@ -246,12 +248,37 @@ window.PILOT_STATUS = {
     },
     {
       id: "calendly_confirmed",
-      label: "Calendly confirmed (US Cheyenne + APAC) — secondary/separate, not second Primary",
+      label: "Calendly overlay on thank-you (US Cheyenne + APAC) — auto-open eligible TY; secondary, not Ads Primary",
       status: "complete"
     },
     {
       id: "lp_copy_live",
-      label: "Caitlin LP copy live on www — not pending rewrite",
+      label: "Caitlin LP copy live on www — no em dashes; member of our team; obligation free; H1 locked unless George asks",
+      status: "complete"
+    },
+    {
+      id: "form_chips_modeled_value",
+      label: "Employer form chips live (company size + positions) — modeled $ analytics only, not Ads bidding",
+      status: "complete"
+    },
+    {
+      id: "gbp_clutch_stars",
+      label: "Google stars live (US 5.0/39 · AU 4.8/23) + Clutch — yellow stars, not yellow boxes",
+      status: "complete"
+    },
+    {
+      id: "job_seeker_hard_redirect",
+      label: "Job-seeker tap → location.replace(https://virtualcoworker.com.ph) — Back does not return to employer LP",
+      status: "complete"
+    },
+    {
+      id: "thankyou_booking_overlay",
+      label: "Thank-you bordered booking overlay live (auto-open eligible TY) — Call still conversion lead; not Ads primary; George review US/AU open",
+      status: "complete"
+    },
+    {
+      id: "team_updated_2026_08_09",
+      label: "Team updated — Holly microsite thread + Caitlin Quick update thread sent (no PII in dash)",
       status: "complete"
     },
     {
