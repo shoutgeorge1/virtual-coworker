@@ -108,10 +108,8 @@ US_LP_CATALOG = [
 OPERATOR_NOTES = {
     "narrative_as_of": "2026-08-09",
     "status_banner": (
-        "North star = qualified business value — not form-fill volume. "
-        "Phone is Ads conversion north star for now; consult booking later; Max Conv later. "
-        "US Stage 1 live (~$298 early window for 1 employer + 1 job-seeker; not real CPA). "
-        "Hot: website calls 60+ sec · AU GTM still a gap · modeled lead score on form (analytics only) · Zoho qualify later."
+        "Get onto conversions soon. Early: phone click · 60s+ call · employer form (size/seats value). "
+        "Job seekers never count. Then Zoho → Job Order → Placement."
     ),
     "budgets": [
         {"label": "US", "amount": "~$125/day", "detail": "live", "kind": "live_test"},
@@ -127,45 +125,14 @@ OPERATOR_NOTES = {
         "note": "Ops read of live RSA themes — not an Ads asset-ranking export.",
     },
     "insights": [
-        (
-            "US CORE is the volume engine (~16% CTR, ~$2 CPC). "
-            "ROLES costs more per click — useful for role LP tests, not the main dial yet."
-        ),
-        (
-            "Keyword priority = employer agency-hire intent: Philippines VA / staffing "
-            "agency · firm · company · outsourcing. Plain “hire/recruit” is messier "
-            "(employer vs job-seeker). Odd shorthand (e.g. “va workers ph”) stays "
-            "watch / pause if it eats spend. Job-seeker junk stays off this page."
-        ),
-        (
-            "Almost all measurable US clicks still land on /us (CORE Final URL). "
-            "Role LPs are live; per-URL spend needs Ads UI / GA4 later."
-        ),
-        (
-            "Australia account spend in the last 7 days is mostly legacy PM_AU_* Search "
-            "(Paused mid-window can still show in LAST_7_DAYS). Stage 1 VC_AU_* is not driving it."
-        ),
-        (
-            "Conversion posture: do not train bidding on raw form fills. "
-            "Phone is Ads conversion north star for now; consult booking later; Max Conv later. "
-            "Early US ~$300 per unknown-quality inquiry is a gut check only. "
-            "Website now captures company size × positions → modeled lead_score / $ for analytics (not Ads bidding). "
-            "Zoho Qualified → Job Order → Placement is the truth ladder; CRM value supersedes the site estimate."
-        ),
-        (
-            "AU phone: GBP / listing stays 1300 886 740 (4.8★ / 23 Sydney). "
-            "US Google 5.0★ / 39 + Clutch on LP (yellow stars, not yellow boxes). "
-            "1300 voicemail still says Alex — Holly / Chey / Raffie. "
-            "Public dial stays 1300 — not a personal mobile. AU GTM/GA4 still a gap; US GTM/GA4 live."
-        ),
-        (
-            "Thank-you: Call still conversion lead (888 / 1300). "
-            "Bordered booking overlay auto-opens on eligible TY "
-            "(US “Book your 30-minute hiring consult” / AU “Book a 30-minute hiring chat”) + Call. "
-            "Close + Pick a time reopens. Not Ads primary. "
-            "Job seeker tap → location.replace(https://virtualcoworker.com.ph) so Back stays off the employer LP. "
-            "Homepage H1 locked (“Your week is full…”) unless George asks."
-        ),
+        "US CORE drives volume (~16% CTR, ~$2 CPC). ROLES costs more per click.",
+        "Buy agency-hire language (PH VA / staffing / firm / company). Odd shorthand = watch.",
+        "Almost all US clicks still land on /us. Role LPs are live.",
+        "AU last-7 spend is mostly legacy PM_AU_*. Stage 1 VC_AU_* isn’t driving it.",
+        "Get onto conversions soon: phone click (fastest) · 60s+ call (better) · employer form with size/seats value. Spam risk on forms. Job seekers never count.",
+        "AU 1300 voicemail still says Alex. ~1 human answering — phone-click can lie if nobody picks up.",
+        "Thank-you: Call or book consult. Click ≠ booked. Booked = later, stronger.",
+        "Then Zoho → Job Order → Placement. CRM value overrides the site estimate.",
     ],
     "buyer_signals": [
         {
@@ -212,23 +179,22 @@ OPERATOR_NOTES = {
         },
         {
             "name": "Quiz LPs (later, ~70%)",
-            "why": "Not traffic-ready. Rework later. Quiz not highlighted enough yet — likely needs quiz-as-hero, not a homepage-clone widget. Ads Paused. Enable George-only (never auto-complete). Checklist step 36.",
+            "why": "Quiz ~70% · not on live path · ads Paused",
             "url": "https://www.virtualcoworker.app/us/quiz",
         },
     ],
     "whats_next": [
-        "<strong>Website calls 60+ seconds</strong> — US + AU (bidding signal)",
-        "<strong>AU GTM/GA4 + ad-call wins</strong> — still a gap vs US",
-        "<strong>Review thank-you overlay US/AU</strong> — Call + book · not Ads primary (Checklist step 37)",
-        "<strong>AU 1300 voicemail</strong> — fix Alex greeting (Holly / Chey / Raffie)",
-        "<strong>Then Zoho qualified → Ads</strong> — modeled site value is estimate only",
-        "<strong>Later — Quiz LP (~70%)</strong> — Rework later. Not traffic-ready. Ads Paused. Enable George-only. Checklist step 36.",
+        "<strong>Get onto conversions soon</strong> — phone click · 60s+ · employer form (size/seats)",
+        "<strong>AU GTM/GA4 + ad-call</strong> — still a gap vs US",
+        "<strong>AU 1300 voicemail</strong> — still says Alex",
+        "<strong>Then Zoho</strong> → Job Order → Placement (CRM value wins)",
+        "<strong>Later</strong> — Quiz ~70%, not on live path",
     ],
     "coming_soon": [
-        "Quiz LP (~70%) — rework later · not traffic-ready · VC_US_S_QUIZ / VC_AU_S_QUIZ Paused · Enable George-only",
-        "Consult booking as Ads signal later · Max Conv later (phone north star for now)",
-        "Modeled lead value → CRM override ladder (not Ads bidding yet)",
-        "Site tests scoreboard (GTM/GA4 wiring — still blank) · messaging A/B later (H1 locked)",
+        "Quiz ~70% · not on live path · ads Paused",
+        "Booked consult as a stronger later signal (click ≠ booked)",
+        "Zoho → Job Order → Placement (CRM value overrides site $)",
+        "Site tests scoreboard still blank",
     ],
     "done_today": [
         "AU phone on site (1300 886 740)",
@@ -241,17 +207,11 @@ OPERATOR_NOTES = {
         "Quiz LP parked ~70% — rework later (Paused ads, not highlighted enough yet)",
     ],
     "honesty": (
-        "Optimize toward qualified business value — not form-fill volume. "
-        "Phone is Ads conversion north star for now; consult booking later; Max Conv later. "
-        "US Stage 1 live; early ~$300/inquiry is noise. AU GBP 4.8★/23 + US 5.0★/39 + Clutch on LP. "
-        "1300 listing stays, voicemail still Alex. AU GTM still a gap. "
-        "Modeled $ on site is estimate only until Zoho. Thank-you: Call + booking overlay (not Ads primary). "
-        "Quiz LP ~70% — not traffic-ready, rework later; ads still Paused. "
-        "Homepage H1 locked unless George asks."
+        "US Search live. AU waiting on traffic. Get onto conversions soon — "
+        "phone click, 60s+ call, or employer form (size/seats value). Job seekers never count."
     ),
     "lp_ab_note": (
-        "Homepage H1 locked (“Your week is full…”) unless George asks. Messaging A/B later. "
-        "Site tests scoreboard still needs GTM/GA4 wiring — see Checklist step 35."
+        "Homepage H1 locked unless George asks. Site tests scoreboard still blank."
     ),
 }
 
@@ -850,7 +810,7 @@ def _write_payload(
         "api_calls_max": 2,
         "api_calls": api_calls,
         "hard_stop": hard_stop,
-        "conversions_note": "Phone wins not scored as KPIs here yet.",
+        "conversions_note": "Get onto conversions soon. Phone click · 60s+ · employer form (size/seats). Job seekers never count.",
         "performance_us": performance_us,
         "performance_au": performance_au,
         # Backward compat for older UI readers

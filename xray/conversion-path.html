@@ -10,17 +10,15 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
   <style>
-    body[data-page="conversion-path.html"] .main {
-      max-width: 1180px;
-    }
+    body[data-page="conversion-path.html"] .main { max-width: 1080px; }
 
     .cp-head {
-      margin: 0 0 0.85rem;
-      padding: 0 0 0.85rem;
+      margin: 0 0 0.75rem;
+      padding: 0 0 0.7rem;
       border-bottom: 1px solid var(--edge);
     }
     .cp-head .kicker {
-      margin: 0 0 0.3rem;
+      margin: 0 0 0.25rem;
       font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
@@ -29,27 +27,29 @@
     }
     .cp-head h1 {
       margin: 0;
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       letter-spacing: -0.02em;
       font-weight: 700;
     }
     .cp-head p {
-      margin: 0.4rem 0 0;
-      font-size: 1rem;
+      margin: 0.35rem 0 0;
+      font-size: 0.98rem;
       color: var(--body);
-      max-width: 40rem;
-      line-height: 1.45;
+      max-width: 36rem;
+      line-height: 1.4;
     }
 
     .cp-legend {
+      list-style: none;
+      margin: 0 0 0.85rem;
+      padding: 0;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.45rem 1.1rem;
-      margin: 0 0 0.9rem;
-      font-size: 0.78rem;
-      color: var(--muted);
+      gap: 0.35rem 1.1rem;
+      font-size: 0.8rem;
+      color: var(--body);
     }
-    .cp-legend span {
+    .cp-legend li {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
@@ -61,73 +61,49 @@
       border: 1px solid var(--edge);
       flex-shrink: 0;
     }
-    .cp-swatch.live { background: var(--tint-green-hd); border-color: var(--tint-green-edge); }
+    .cp-swatch.soon { background: var(--tint-green-hd); border-color: var(--tint-green-edge); }
+    .cp-swatch.better { background: #cfe8d6; border-color: #3d9a62; }
+    .cp-swatch.spam { background: var(--tint-amber-hd); border-color: var(--tint-amber-edge); }
+    .cp-swatch.later { background: var(--tint-cool-hd); border-color: var(--tint-cool-edge); }
     .cp-swatch.dump { background: var(--tint-rose-hd); border-color: var(--tint-rose-edge); }
-    .cp-swatch.later { background: var(--tint-amber-hd); border-color: var(--tint-amber-edge); }
-    .cp-swatch.form { background: var(--tint-cool-hd); border-color: var(--tint-cool-edge); }
-
-    .cp-fine {
-      margin: 0 0 1rem;
-      font-size: 0.78rem;
-      color: var(--dim);
-      font-family: var(--mono);
-      line-height: 1.45;
-    }
 
     .flow-board {
       background: #fff;
       border: 1px solid var(--edge);
       border-radius: 10px;
-      padding: 1.15rem 1rem 1.35rem;
+      padding: 1.05rem 0.9rem 1.2rem;
       overflow-x: auto;
     }
-
     .flow-center {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* —— Boxes —— */
     .fbox {
       width: 100%;
-      max-width: 28rem;
+      max-width: 26rem;
       border-radius: 9px;
       border: 2px solid var(--edge);
       background: var(--panel-inset);
-      padding: 0.72rem 0.85rem 0.8rem;
+      padding: 0.6rem 0.75rem 0.68rem;
       min-width: 0;
     }
-    .fbox.live {
-      border-color: #8fbf9a;
-      background: var(--tint-green);
-    }
+    .fbox.live { border-color: #8fbf9a; background: var(--tint-green); }
     .fbox.star {
       border-color: #3d9a62;
       background: var(--tint-green);
       box-shadow: 0 0 0 3px rgba(45, 138, 78, 0.1);
     }
-    .fbox.dump {
-      border-color: #d4a8ae;
-      background: var(--tint-rose);
-    }
-    .fbox.form {
-      border-color: var(--tint-cool-edge);
-      background: var(--tint-cool);
-    }
-    .fbox.later {
-      border-color: var(--tint-amber-edge);
-      background: var(--tint-amber);
-    }
-    .fbox.stop {
-      border-style: dashed;
-      opacity: 0.95;
-    }
+    .fbox.dump { border-color: #d4a8ae; background: var(--tint-rose); }
+    .fbox.form { border-color: var(--tint-cool-edge); background: var(--tint-cool); }
+    .fbox.later { border-color: var(--tint-amber-edge); background: var(--tint-amber); }
+    .fbox.stop { border-style: dashed; }
 
     .fbox .role {
       margin: 0;
       font-family: var(--mono);
-      font-size: 0.66rem;
+      font-size: 0.64rem;
       font-weight: 600;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -137,74 +113,78 @@
     .fbox.star .role { color: #166534; }
     .fbox.dump .role { color: #9f2d2d; }
     .fbox.later .role { color: #92400e; }
-    .fbox.star .role { font-weight: 700; }
 
     .fbox h2 {
-      margin: 0.18rem 0 0.28rem;
-      font-size: 1.02rem;
+      margin: 0.12rem 0 0.2rem;
+      font-size: 0.98rem;
       font-weight: 700;
       letter-spacing: -0.01em;
       line-height: 1.25;
       color: var(--ink);
     }
-    .fbox p {
+    .fbox ul {
       margin: 0;
-      font-size: 0.84rem;
-      line-height: 1.4;
+      padding: 0 0 0 1.05rem;
+      font-size: 0.82rem;
+      line-height: 1.35;
       color: var(--body);
     }
-    .fbox p + p { margin-top: 0.28rem; }
+    .fbox li { margin: 0.12rem 0; }
     .fbox strong { color: var(--ink); }
-
-    .fbox .risk {
-      margin: 0.5rem 0 0;
-      padding: 0.45rem 0.55rem;
-      border-radius: 6px;
-      border: 1px solid var(--tint-amber-edge);
-      background: var(--tint-amber);
-      font-size: 0.8rem;
-      line-height: 1.4;
-      color: var(--body);
-    }
-    .fbox .risk strong { color: #92400e; }
-
     .fbox .links {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.3rem 0.55rem;
-      margin: 0.45rem 0 0;
-      font-size: 0.8rem;
+      gap: 0.25rem 0.5rem;
+      margin: 0.4rem 0 0;
+      font-size: 0.78rem;
       font-weight: 600;
     }
     .fbox .links a { color: var(--link); }
 
-    /* —— Vertical arrow —— */
+    .chip {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 0.08rem 0.35rem;
+      border-radius: 4px;
+      border: 1px solid var(--edge);
+      background: var(--panel);
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .chip.soon { border-color: var(--tint-green-edge); background: var(--tint-green-hd); color: #166534; }
+    .chip.better { border-color: #3d9a62; background: #dff0e5; color: #14532d; }
+    .chip.spam { border-color: var(--tint-amber-edge); background: var(--tint-amber-hd); color: #92400e; }
+    .chip.later { border-color: var(--tint-cool-edge); background: var(--tint-cool-hd); color: #334155; }
+
+    .risk-line {
+      margin: 0.4rem 0 0;
+      font-size: 0.76rem;
+      line-height: 1.35;
+      color: #92400e;
+    }
+
     .farrow {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 100%;
-      padding: 0.2rem 0 0.15rem;
+      padding: 0.15rem 0 0.1rem;
       color: var(--muted);
     }
-    .farrow .shaft {
-      width: 2px;
-      height: 1.15rem;
-      background: currentColor;
-    }
+    .farrow .shaft { width: 2px; height: 0.95rem; background: currentColor; }
     .farrow .cap {
       font-family: var(--mono);
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 500;
-      letter-spacing: 0.01em;
       text-align: center;
       line-height: 1.25;
-      max-width: 16rem;
-      padding: 0.12rem 0.3rem;
+      padding: 0.08rem 0.25rem;
     }
     .farrow .head {
-      width: 0;
-      height: 0;
+      width: 0; height: 0;
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
       border-top: 8px solid currentColor;
@@ -214,35 +194,28 @@
     .farrow.later { color: #b45309; }
     .farrow.form { color: #4a5568; }
     .farrow.dash .shaft {
-      background: repeating-linear-gradient(
-        to bottom,
-        currentColor 0 4px,
-        transparent 4px 8px
-      );
+      background: repeating-linear-gradient(to bottom, currentColor 0 4px, transparent 4px 8px);
     }
 
-    /* —— 3-way fork from LP —— */
     .fork {
       position: relative;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.85rem;
+      gap: 0.75rem;
       width: 100%;
-      min-height: 5.6rem;
-      margin-top: 0.15rem;
+      min-height: 4.8rem;
+      margin-top: 0.1rem;
     }
     .fork-stem {
       position: absolute;
-      left: 50%;
-      top: 0;
-      width: 2px;
-      height: 1.05rem;
+      left: 50%; top: 0;
+      width: 2px; height: 0.9rem;
       background: var(--muted);
       transform: translateX(-50%);
     }
     .fork-bar {
       position: absolute;
-      top: 1.05rem;
+      top: 0.9rem;
       left: calc(16.666% - 1px);
       right: calc(16.666% - 1px);
       height: 2px;
@@ -252,26 +225,21 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 1.05rem;
+      padding-top: 0.9rem;
       min-width: 0;
     }
-    .fork-leg .shaft {
-      width: 2px;
-      height: 1.85rem;
-      background: currentColor;
-    }
+    .fork-leg .shaft { width: 2px; height: 1.5rem; background: currentColor; }
     .fork-leg .cap {
       font-family: var(--mono);
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 600;
       text-align: center;
       line-height: 1.25;
-      padding: 0.2rem 0.35rem 0.15rem;
+      padding: 0.15rem 0.3rem 0.1rem;
       max-width: 11rem;
     }
     .fork-leg .head {
-      width: 0;
-      height: 0;
+      width: 0; height: 0;
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
       border-top: 8px solid currentColor;
@@ -280,11 +248,10 @@
     .fork-leg.live { color: #2d8a4e; }
     .fork-leg.form { color: #4a5568; }
 
-    /* —— Three branches —— */
     .trio {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.85rem;
+      gap: 0.75rem;
       width: 100%;
       align-items: stretch;
     }
@@ -298,176 +265,39 @@
     .farrow.grow {
       flex: 1;
       justify-content: flex-end;
-      min-height: 2.75rem;
+      min-height: 2.2rem;
     }
-    .farrow.grow .shaft {
-      flex: 1;
-      min-height: 1.4rem;
-    }
+    .farrow.grow .shaft { flex: 1; min-height: 1.1rem; }
 
-    .mini-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.45rem;
-      width: 100%;
-    }
-    .mini-split .fbox { padding: 0.55rem 0.6rem; }
-    .mini-split h2 { font-size: 0.88rem; }
-
-    .mini-fork {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.45rem;
-      width: 100%;
-      min-height: 3.4rem;
-      position: relative;
-    }
-    .mini-fork::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 0;
-      width: 2px;
-      height: 0.7rem;
-      background: var(--muted);
-      transform: translateX(-50%);
-    }
-    .mini-fork::after {
-      content: "";
-      position: absolute;
-      top: 0.7rem;
-      left: 25%;
-      right: 25%;
-      height: 2px;
-      background: var(--muted);
-    }
-    .mini-fork .mf {
+    .later-row {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 0.7rem;
-      color: var(--muted);
+      margin-top: 0.15rem;
     }
-    .mini-fork .mf .shaft {
-      width: 2px;
-      height: 1.1rem;
-      background: currentColor;
-    }
-    .mini-fork .mf .cap {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      font-weight: 600;
-      text-align: center;
-      padding: 0.12rem 0.2rem;
-      line-height: 1.2;
-    }
-    .mini-fork .mf .head {
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 7px solid currentColor;
-    }
-    .mini-fork .mf.later { color: #b45309; }
-
-    /* —— Join call + form → Zoho —— */
-    .join {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 0.85rem;
-      width: 100%;
-      margin-top: 0.1rem;
-    }
-    .join-body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 0;
-    }
-    .join-fork {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      width: 100%;
-      min-height: 3.6rem;
-    }
-    .join-fork .jleg {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #b45309;
-    }
-    .join-fork .jleg .shaft {
-      width: 2px;
-      height: 1.15rem;
-      background: repeating-linear-gradient(
-        to bottom,
-        currentColor 0 4px,
-        transparent 4px 8px
-      );
-    }
-    .join-bar {
-      position: absolute;
-      top: 1.15rem;
-      left: 25%;
-      right: 25%;
-      height: 2px;
-      background: #b45309;
-    }
-    .join-down {
-      position: absolute;
-      left: 50%;
-      top: 1.15rem;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #b45309;
-    }
-    .join-down .shaft {
-      width: 2px;
-      height: 0.85rem;
-      background: repeating-linear-gradient(
-        to bottom,
-        currentColor 0 4px,
-        transparent 4px 8px
-      );
-    }
-    .join-down .cap {
-      font-family: var(--mono);
-      font-size: 0.66rem;
-      font-weight: 600;
-      padding: 0.1rem 0.3rem;
-    }
-    .join-down .head {
-      width: 0;
-      height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 8px solid currentColor;
-    }
-    .join-body .fbox { max-width: 28rem; }
+    .later-row .fbox { max-width: 28rem; }
 
     .offpath {
-      margin: 1rem 0 0;
-      padding: 0.7rem 0.9rem;
+      margin: 0.9rem 0 0;
+      padding: 0.6rem 0.85rem;
       border-radius: 8px;
       border: 1px dashed var(--edge);
       background: var(--panel-inset);
-      font-size: 0.86rem;
-      line-height: 1.45;
+      font-size: 0.84rem;
+      line-height: 1.4;
       color: var(--body);
     }
+    .offpath ul {
+      margin: 0;
+      padding: 0 0 0 1.1rem;
+    }
+    .offpath li { margin: 0.15rem 0; }
     .offpath strong { color: var(--ink); }
-    .offpath p { margin: 0; }
-    .offpath p + p { margin-top: 0.35rem; }
 
     .sr-only {
       position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
       overflow: hidden;
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;
@@ -475,69 +305,60 @@
     }
 
     @media (max-width: 860px) {
-      .fork-stem,
-      .fork-bar { display: none; }
+      .fork-stem, .fork-bar { display: none; }
       .fork {
         grid-template-columns: 1fr;
         min-height: 0;
-        gap: 0.15rem;
+        gap: 0.1rem;
       }
       .fork-leg { padding-top: 0; }
-      .fork-leg .shaft { height: 0.9rem; }
-      .trio,
-      .join {
-        grid-template-columns: 1fr;
-      }
-      .join-fork { display: none; }
-      .col { margin-bottom: 0.35rem; }
+      .fork-leg .shaft { height: 0.8rem; }
+      .trio { grid-template-columns: 1fr; }
+      .col { margin-bottom: 0.3rem; }
     }
   </style>
 </head>
-<body data-page="conversion-path.html" data-foot="Flowchart · employer path<br />Call is Ads north star now">
+<body data-page="conversion-path.html" data-foot="Flowchart · get onto conversions soon">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
     <main class="main">
       <header class="cp-head">
-        <p class="kicker">Path / strategy · not a KPI board</p>
+        <p class="kicker">Strategy · not a live Ads change</p>
         <h1>Conversion path</h1>
-        <p>
-          Goal: more <strong>real employer signups and calls</strong> — not form-fill volume, not job seekers.
-        </p>
+        <p>Get onto conversions soon. Real employers only — not job seekers.</p>
       </header>
 
       <p class="sr-only">
-        Paid Search VC_US and VC_AU goes to employer landing pages /us and /au.
-        Job seeker tap redirects to virtualcoworker.com.ph — dead end, not a conversion.
-        Call to 888 US or 1300 AU lasting 60 seconds or more is the Ads north star now.
-        Risk: may be about one human answering; AU 1300 voicemail still says Alex; if nobody picks up Google learns voicemail.
-        Employer form with optional size and seats is analytics only, not Ads bidding, then thank-you auto overlay to book a 30-minute consult or call again.
-        Calendly click is not a conversion; a booked consult is later qualified demo.
-        Zoho qualify to Job Order to Placement are later offline Ads signals.
-        Brand is deferred. Quiz landing page is paused and not on this live path.
+        Paid Search VC_US and VC_AU goes to employer landing pages. Switch bidding to conversions soon.
+        Early signals: phone click (weakest, fastest), 60 second plus call (better), employer form with size and seats value (spam risk).
+        Job seekers dump to virtualcoworker.com.ph and never count.
+        Thank-you is call or book consult. Click is not booked. Booked consult is later and stronger.
+        Then Zoho qualify to Job Order to Placement. CRM value overrides website estimate.
+        Risk: about one human answering. AU 1300 still says Alex. If nobody answers, phone-click conversions can lie.
+        Brand deferred. Quiz about 70 percent not on this live path.
       </p>
 
-      <div class="cp-legend" aria-label="Legend">
-        <span><i class="cp-swatch live" aria-hidden="true"></i> Live money</span>
-        <span><i class="cp-swatch dump" aria-hidden="true"></i> Dump</span>
-        <span><i class="cp-swatch form" aria-hidden="true"></i> Form / analytics</span>
-        <span><i class="cp-swatch later" aria-hidden="true"></i> Later</span>
-      </div>
-      <p class="cp-fine">
-        modeled $ ≠ revenue · click ≠ booked · call 60s+ ≠ voicemail
-      </p>
+      <ul class="cp-legend" aria-label="Legend">
+        <li><i class="cp-swatch soon" aria-hidden="true"></i> Ads counts this soon</li>
+        <li><i class="cp-swatch better" aria-hidden="true"></i> better signal</li>
+        <li><i class="cp-swatch spam" aria-hidden="true"></i> spam risk</li>
+        <li><i class="cp-swatch later" aria-hidden="true"></i> later</li>
+        <li><i class="cp-swatch dump" aria-hidden="true"></i> never / dump</li>
+      </ul>
 
       <section class="flow-board" aria-label="Conversion path flowchart">
         <div class="flow-center">
           <article class="fbox live">
-            <p class="role">Now clicks · later max conv</p>
+            <p class="role">Now clicks · switch soon</p>
             <h2>Paid Search</h2>
-            <p>
-              <strong>VC_US_*</strong> / <strong>VC_AU_*</strong> —
-              Maximize Clicks now. Max Conversions later, after call tracking is clean.
-            </p>
+            <ul>
+              <li><strong>VC_US_*</strong> / <strong>VC_AU_*</strong></li>
+              <li>Max Clicks now</li>
+              <li>Switch bidding to conversions soon</li>
+            </ul>
             <p class="links">
               <a href="launch-control.html">Checklist</a>
-              · Brand deferred (not on this path)
+              · Brand deferred
             </p>
           </article>
 
@@ -548,9 +369,11 @@
           </div>
 
           <article class="fbox live">
-            <p class="role">Now · traffic</p>
+            <p class="role">Traffic</p>
             <h2>Employer LP</h2>
-            <p>Hire-side pages only. Homepage H1 locked unless George asks.</p>
+            <ul>
+              <li>Hire-side pages only</li>
+            </ul>
             <p class="links">
               <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>
               ·
@@ -566,31 +389,30 @@
           <div class="fork-bar"></div>
           <div class="fork-leg dump">
             <i class="shaft"></i>
-            <span class="cap">not a conversion</span>
+            <span class="cap">never</span>
             <i class="head"></i>
           </div>
           <div class="fork-leg live">
             <i class="shaft"></i>
-            <span class="cap">Ads primary NOW</span>
+            <span class="cap">Ads counts this soon</span>
             <i class="head"></i>
           </div>
           <div class="fork-leg form">
             <i class="shaft"></i>
-            <span class="cap">never bid on modeled $</span>
+            <span class="cap">early + spam risk</span>
             <i class="head"></i>
           </div>
         </div>
 
         <div class="trio">
-          <!-- DUMP -->
           <div class="col">
             <article class="fbox dump">
               <p class="role">Never</p>
-              <h2>Job seeker tap</h2>
-              <p>
-                <code>location.replace</code> → careers site.
-                Dead end. Not a lead. Not a conversion.
-              </p>
+              <h2>Job seeker</h2>
+              <ul>
+                <li>Dump to <code>.ph</code></li>
+                <li>Never a conversion</li>
+              </ul>
             </article>
             <div class="farrow dump">
               <i class="shaft" aria-hidden="true"></i>
@@ -600,60 +422,44 @@
             <article class="fbox dump stop">
               <p class="role">Dump</p>
               <h2>virtualcoworker.com.ph</h2>
-              <p>Back does not return to the employer LP.</p>
+              <ul>
+                <li>Back does not return to LP</li>
+              </ul>
               <p class="links">
-                <a href="https://virtualcoworker.com.ph" target="_blank" rel="noopener">Open careers .ph</a>
+                <a href="https://virtualcoworker.com.ph" target="_blank" rel="noopener">Open .ph</a>
               </p>
             </article>
           </div>
 
-          <!-- CALL -->
           <div class="col">
             <article class="fbox star">
-              <p class="role">Now ★ Ads north star</p>
-              <h2>CALL</h2>
-              <p>
-                <strong>(888) 954-8644</strong> US ·
-                <strong>1300 886 740</strong> AU
-              </p>
-              <p>60s+ website / ad calls. Connected duration — not a <code>tel:</code> click.</p>
-              <div class="risk">
-                <strong>Risk:</strong> may be ~1 human answering.
-                AU 1300 voicemail still says Alex.
-                If nobody picks up, Google learns voicemail.
-              </div>
+              <p class="role">Call</p>
+              <h2>Phone</h2>
+              <ul>
+                <li><span class="chip soon">Ads counts this soon</span> Phone click — weakest, fastest</li>
+                <li><span class="chip better">better signal</span> 60s+ connected call</li>
+              </ul>
+              <p class="risk-line">Risk: ~1 human · AU 1300 still Alex · if nobody answers, phone-click can lie</p>
               <p class="links">
-                <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">US LP</a>
-                ·
-                <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">AU LP</a>
+                <strong>888</strong> US · <strong>1300</strong> AU
               </p>
-            </article>
-            <div class="farrow live">
-              <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">60s+ connect</span>
-              <i class="head" aria-hidden="true"></i>
-            </div>
-            <article class="fbox live">
-              <p class="role">Now · Ads win</p>
-              <h2>Connected call</h2>
-              <p>This is the conversion Google should learn. Voicemail ≠ win.</p>
             </article>
             <div class="farrow later dash grow">
               <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">later · if they qualify</span>
+              <span class="cap">later if they qualify</span>
               <i class="head" aria-hidden="true"></i>
             </div>
           </div>
 
-          <!-- FORM -->
           <div class="col">
             <article class="fbox form">
-              <p class="role">Never bid · analytics only</p>
-              <h2>FORM (employer)</h2>
-              <p>
-                Optional size / seats chips.
-                Modeled lead_score / estimated_$ = analytics — <strong>not</strong> Ads bidding.
-              </p>
+              <p class="role">Early conversion</p>
+              <h2>Employer form</h2>
+              <ul>
+                <li>Size + seats chips → modeled value</li>
+                <li>Not flat $1</li>
+                <li><span class="chip spam">spam risk</span> still usable early</li>
+              </ul>
               <p class="links">
                 <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us#gate</a>
                 ·
@@ -666,91 +472,52 @@
               <i class="head" aria-hidden="true"></i>
             </div>
             <article class="fbox form">
-              <p class="role">Never · overlay ≠ conversion</p>
-              <h2>/thank-you</h2>
-              <p>Eligible: auto-open bordered overlay — Book 30-min consult <strong>or</strong> Call again.</p>
+              <p class="role">Thank-you</p>
+              <h2>Call or book</h2>
+              <ul>
+                <li>Call again — same phone rules</li>
+                <li>Book consult — <strong>click ≠ booked</strong></li>
+                <li><span class="chip later">later</span> booked = stronger</li>
+              </ul>
               <p class="links">
-                <a href="https://www.virtualcoworker.app/thank-you?market=us&amp;eligible=1" target="_blank" rel="noopener">TY US eligible</a>
+                <a href="https://www.virtualcoworker.app/thank-you?market=us&amp;eligible=1" target="_blank" rel="noopener">TY US</a>
                 ·
                 <a href="https://www.virtualcoworker.app/thank-you?au" target="_blank" rel="noopener">TY AU</a>
               </p>
             </article>
-
-            <div class="mini-fork" aria-hidden="true">
-              <div class="mf later">
-                <i class="shaft"></i>
-                <span class="cap">click ≠ conversion</span>
-                <i class="head"></i>
-              </div>
-              <div class="mf">
-                <i class="shaft"></i>
-                <span class="cap">call again</span>
-                <i class="head"></i>
-              </div>
-            </div>
-
-            <div class="mini-split">
-              <article class="fbox later">
-                <p class="role">Later</p>
-                <h2>Book consult</h2>
-                <p>Calendly click ≠ conversion. <strong>BOOKED</strong> = later “qualified demo.”</p>
-              </article>
-              <article class="fbox live">
-                <p class="role">Now · same 60s+ rule</p>
-                <h2>Call again</h2>
-                <p>Same north star as the LP call.</p>
-              </article>
-            </div>
             <div class="farrow later dash grow">
               <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">booked → later demo</span>
+              <span class="cap">booked → later</span>
               <i class="head" aria-hidden="true"></i>
             </div>
           </div>
         </div>
 
-        <div class="join">
-          <div></div>
-          <div class="join-body">
-            <div class="join-fork" aria-hidden="true">
-              <div class="jleg"><i class="shaft"></i></div>
-              <div class="jleg"><i class="shaft"></i></div>
-              <div class="join-bar"></div>
-              <div class="join-down">
-                <i class="shaft"></i>
-                <span class="cap">later · offline Ads</span>
-                <i class="head"></i>
-              </div>
-            </div>
-            <article class="fbox later">
-              <p class="role">Later · higher confidence than website</p>
-              <h2>Zoho qualify → Job Order → Placement</h2>
-              <p>
-                Manual qualify. Future offline Ads signals — not live yet.
-                CRM value beats modeled $ on the form.
-              </p>
-              <p class="links">
-                <a href="lead-routing.html">Lead routing</a>
-                ·
-                <a href="tracking.html">Tracking</a>
-                ·
-                <a href="launch-control.html">Checklist</a>
-              </p>
-            </article>
-          </div>
+        <div class="later-row">
+          <article class="fbox later">
+            <p class="role">Later · higher confidence</p>
+            <h2>Zoho → Job Order → Placement</h2>
+            <ul>
+              <li>Offline Ads signals — not live yet</li>
+              <li>CRM value overrides website estimate</li>
+            </ul>
+            <p class="links">
+              <a href="lead-routing.html">Lead routing</a>
+              ·
+              <a href="tracking.html">Tracking</a>
+              ·
+              <a href="launch-control.html">Checklist</a>
+            </p>
+          </article>
         </div>
       </section>
 
       <div class="offpath">
-        <p>
-          <strong>Not on this live path:</strong> Brand (deferred) ·
-          Quiz LP ~70%, Paused, rework later ·
-          Homepage H1 locked (“Your week is full…”) unless George asks.
-        </p>
-        <p>
-          <strong>Tags:</strong> US GTM/GA4 on · AU GTM still a gap.
-          No invented conversion counts on this page.
-        </p>
+        <ul>
+          <li><strong>Not on this path:</strong> Brand (deferred) · Quiz ~70%, paused, rework later</li>
+          <li><strong>Tags:</strong> US GTM/GA4 on · AU GTM still a gap</li>
+          <li>No invented conversion counts. Editor / George Enable only — not API.</li>
+        </ul>
       </div>
 
       <div class="actions">
@@ -761,6 +528,6 @@
       </div>
     </main>
   </div>
-  <script src="nav.js?v=20260809c"></script>
+  <script src="nav.js?v=20260809d"></script>
 </body>
 </html>

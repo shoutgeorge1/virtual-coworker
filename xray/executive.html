@@ -260,7 +260,7 @@
       <header class="exec-top">
         <h1>Search ads — how we’re doing</h1>
         <p class="one-liner" id="exec-honesty">
-          US Search is live and spending. Australia campaigns are live — waiting on traffic. Next: website calls 60+ sec, then AU tracking, then Zoho.
+          US Search is live. AU waiting on traffic. Next: get onto conversions soon.
         </p>
         <p class="when" id="exec-updated">Loading…</p>
       </header>
@@ -268,9 +268,9 @@
       <section class="exec-open" aria-labelledby="open-hd">
         <h2 id="open-hd">Still to finish</h2>
         <ol id="next-list">
-          <li><strong>Website calls 60+ seconds</strong> — US + AU</li>
-          <li><strong>Australia</strong> — ad-call wins + website tags</li>
-          <li><strong>Then Zoho qualified → Ads</strong></li>
+          <li><strong>Get onto conversions soon</strong> — phone click · 60s+ · employer form</li>
+          <li><strong>Australia</strong> — ad-call + GTM/GA4 still a gap</li>
+          <li><strong>Then Zoho</strong> → Job Order → Placement</li>
         </ol>
       </section>
 
@@ -296,7 +296,7 @@
               <p class="val" id="us-cpc">—</p>
             </div>
           </div>
-          <p id="us-blurb">About $125/day. Phone conversations guide quality — not form CPA. Brand ads are off.</p>
+          <p id="us-blurb">~$125/day. Brand off. Get onto conversions soon.</p>
         </article>
         <article class="market open" id="market-au">
           <p class="where">Australia</p>
@@ -319,12 +319,12 @@
               <p class="val" id="au-cpc">—</p>
             </div>
           </div>
-          <p id="au-blurb">GBP 4.8★ · listing 1300 886 740 (voicemail fix pending). Form + size/seats chips live. Optimize calls + qualify — not form-fill volume.</p>
+          <p id="au-blurb">1300 886 740 · GBP 4.8★. Voicemail still Alex. Form chips live.</p>
         </article>
       </div>
 
       <p class="exec-money" id="money-line">
-        <strong>Daily budgets:</strong> US about $125 · Australia live · waiting on traffic
+        <strong>Daily budgets:</strong> US ~$125 · Australia live · waiting on traffic
       </p>
 
       <section class="exec-insights" aria-label="Insights">
@@ -357,8 +357,7 @@
             <li>Loading…</li>
           </ul>
           <p class="muted-note">
-            Prefer natural hire / talent / staffing queries. Odd shorthand is a watch, not a win.
-            Early junk / job-seeker terms stay off this page.
+            Hire / staffing queries. Odd shorthand = watch. Job-seeker junk stays off this page.
           </p>
         </article>
       </section>
@@ -371,7 +370,7 @@
         </div>
         <div class="panel-bd">
           <p class="muted" style="margin:0 0 0.55rem;font-size:0.86rem" id="camp-window">
-            From Google Ads (read-only). Phone wins not shown as a score yet.
+            Last 7 days from Google Ads. Conversion scores not here yet.
           </p>
           <div class="tbl-wrap">
             <table class="exec-tbl" id="camp-table">
@@ -397,7 +396,7 @@
         <summary>More detail (optional)</summary>
         <div class="fold-bd">
           <p class="muted" style="margin:0 0 0.65rem;font-size:0.86rem">
-            Campaign LP catalog + bidding themes — for ops, not the 10-second read.
+            LP catalog + keyword themes — ops only.
           </p>
           <h3 style="margin:0 0 0.4rem;font-size:0.92rem">Landing pages (US catalog)</h3>
           <div class="tbl-wrap">
@@ -431,15 +430,14 @@
             </table>
           </div>
           <p class="muted" style="margin:0.75rem 0 0;font-size:0.84rem" id="soon-note">
-            Site tests scoreboard still needs GTM/GA4 wiring (bottom of Checklist ·
-            <a href="experiments">Site tests</a>).
+            Site tests scoreboard still blank · <a href="experiments">Site tests</a>
           </p>
         </div>
       </details>
     </main>
   </div>
 
-  <script src="nav.js?v=20260809c"></script>
+  <script src="nav.js?v=20260809d"></script>
   <script>
     (function () {
       function money(n) {
@@ -571,11 +569,11 @@
             var leg = au.totals_legacy_last_7_days || {};
             var s1 = au.totals_stage1_last_7_days || {};
             auBlurb.textContent =
-              "Last 7 days on this account. Legacy ~$" +
+              "Last 7d: legacy ~$" +
               Math.round(Number(leg.cost_usd || auW.cost)) +
               " · Stage 1 VC_AU ~$" +
               Math.round(Number(s1.cost_usd || 0)) +
-              ". Phone 1300 886 740.";
+              ". 1300 still Alex.";
           }
 
           if (op.insights && op.insights.length) {
@@ -626,7 +624,7 @@
           }
 
           document.getElementById("camp-window").textContent =
-            "Last 7 days from Google Ads. Phone wins aren’t scored as a number here yet.";
+            "Last 7 days from Google Ads. Conversion scores not here yet.";
 
           var allCamps = []
             .concat(usCamps.map(function (c) { return Object.assign({ _market: "US" }, c); }))

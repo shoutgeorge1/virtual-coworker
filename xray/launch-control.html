@@ -104,7 +104,16 @@
       line-height: 1.45;
       color: var(--body);
     }
-    .quiz-funnel-links { font-size: 0.84rem; }
+    .quiz-funnel-lede {
+      padding: 0 0 0 1.15rem;
+    }
+    .quiz-funnel-lede li { margin: 0.22rem 0; }
+    .quiz-funnel-links {
+      list-style: none;
+      padding: 0;
+      font-size: 0.84rem;
+    }
+    .quiz-funnel-links li { margin: 0.22rem 0; }
     #quiz-funnel .todo-list li { padding: 0.4rem 0; }
     #quiz-funnel .todo-list li.is-done { opacity: 0.72; }
     #quiz-funnel .quiz-funnel-lock { font-weight: 600; color: var(--ink); }
@@ -327,15 +336,13 @@
         <section class="lc-measure" id="how-we-measure" aria-labelledby="measure-hd">
           <h2 id="measure-hd">How we’ll measure success</h2>
           <ul>
-            <li><strong>North star:</strong> business value (qualified employers → Job Order → Placement) — <em>not</em> form-fill volume · flowchart: <a href="conversion-path.html">Conversion path</a></li>
-            <li><strong>Ads conversion now:</strong> phone (website calls 60+ sec + ad-call wins). Consult booking later. Max Conv later.</li>
-            <li><strong>1 · High priority:</strong> website calls lasting 60+ seconds (bidding signal)</li>
-            <li><strong>2 · Australia:</strong> ad-call wins + website tags (<strong>GTM/GA4 still a gap</strong>) · GBP 4.8★ / 23 on LP · US Google 5.0★ / 39 + Clutch (yellow stars, not yellow boxes)</li>
-            <li><strong>Now on site:</strong> form chips (company size + positions) + modeled value on <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> (analytics only — not Ads bidding). Caitlin copy live. Thank-you: Call (888 / 1300) + bordered booking overlay on eligible TY (review US/AU). Job seeker → <code>virtualcoworker.com.ph</code> (hard replace).</li>
-            <li><strong>3 · Then:</strong> Zoho “qualified” → Job Order → Placement → Ads offline (CRM value supersedes website estimate)</li>
-            <li><strong>US today:</strong> live · ~$125/day · GTM/GA4 live · early ~$300/inquiry is a gut check only</li>
-            <li><strong>Later (~70%) — Quiz Funnel:</strong> not traffic-ready · <strong>rework later</strong> · quiz not highlighted enough yet (needs quiz as the hero, not a homepage-clone widget) · ads <strong>Paused</strong> · Enable is George-only (never auto-complete) · not a controlled A/B test · see <a href="#quiz-funnel">Quiz Funnel / Quiz Ads</a> (step 36)</li>
-            <li><strong>Homepage H1 locked</strong> (“Your week is full…”) unless George asks. Messaging A/B later. Initiative OK — loop George via this checklist; don’t silently change LP H1s.</li>
+            <li><strong>Get onto conversions soon</strong> — not Max Clicks forever · <a href="conversion-path.html">flowchart</a></li>
+            <li><strong>Early signals:</strong> phone click (fastest, weakest) · 60s+ call (better) · employer form with size/seats value (spam risk)</li>
+            <li><strong>Never count:</strong> job seekers → <code>.ph</code></li>
+            <li><strong>Thank-you:</strong> Call or book · click ≠ booked · booked consult later = stronger</li>
+            <li><strong>Then:</strong> Zoho → Job Order → Placement · CRM value overrides site $</li>
+            <li><strong>US:</strong> ~$125/day · GTM/GA4 live · <strong>AU:</strong> GTM still a gap · 1300 still Alex</li>
+            <li><strong>Off path:</strong> Brand deferred · Quiz ~70% · H1 locked unless George asks</li>
           </ul>
         </section>
 
@@ -696,33 +703,26 @@
           <span class="st st-progress">Not traffic-ready</span>
         </div>
         <div class="panel-bd">
-          <p class="quiz-funnel-lede">
-            <strong>~70% — not traffic-ready. Rework later.</strong>
-            George looked at the quiz LP: it is not highlighted enough yet. Likely needs a stronger / different setup — <strong>quiz as the hero</strong>, not a widget on a homepage clone. George will redo later. <strong>Do not start that redesign now.</strong>
-            Quiz LP is <strong>not polished / not done</strong>. Tracking e2e is <strong>not claimed</strong>.
-            Homepage variation only. <strong>Not a statistically controlled A/B test.</strong>
-            Do not change live CORE/ROLES. Brand deferred. No Ads API mutate. Import ≠ Post ≠ Enable.
-            <strong>Enable is George-only</strong> and <strong>never auto-completes</strong>.
-          </p>
-          <p class="quiz-funnel-links">
-            <strong>LPs</strong> (noindex · prod may be stale vs local):
-            local <a href="http://127.0.0.1:4321/us/quiz" target="_blank" rel="noopener">127.0.0.1:4321/us/quiz</a>
-            · <a href="http://127.0.0.1:4321/au/quiz" target="_blank" rel="noopener">/au/quiz</a>
-            · prod <a href="https://www.virtualcoworker.app/us/quiz" target="_blank" rel="noopener">www.virtualcoworker.app/us/quiz</a>
-            · <a href="https://www.virtualcoworker.app/au/quiz" target="_blank" rel="noopener">/au/quiz</a><br />
-            <strong>Package:</strong>
-            <a href="docs/ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md">QUIZ-ADS-PACKAGE-2026-08-09.md</a>
-            · overlap <a href="docs/ads-launch/QUIZ-KEYWORD-OVERLAP-2026-08-09.md">QUIZ-KEYWORD-OVERLAP-2026-08-09.md</a>
-            · repo <code>ads-launch/</code>
-            <code>google-ads-editor-quiz-import-us.csv</code>
-            · <code>google-ads-editor-quiz-import-au.csv</code>
-            (Account Import) ·
-            <code>google-ads-editor-quiz-campaign-negatives-us.csv</code>
-            · <code>google-ads-editor-quiz-campaign-negatives-au.csv</code>
-            (Keywords, Negative → Make multiple changes — <em>not</em> Account Import).<br />
-            <strong>Campaigns:</strong> <code>VC_US_S_QUIZ</code> ($40/day · max CPC $10) · <code>VC_AU_S_QUIZ</code> (A$40/day · max CPC $6) — approve before Enable.<br />
-            <strong>Tracking:</strong> same GTM as homepage. Quiz north star = <code>employer_inquiry_submitted</code> (durable delivery). Quiz start/complete, phone click, TY view, Calendly click = secondary. Modeled $ not Ads bidding. <code>lp_variant=quiz</code>.
-          </p>
+          <ul class="quiz-funnel-lede">
+            <li><strong>~70% — not on live path.</strong> Rework later. Don’t start that redesign now.</li>
+            <li>Quiz as the hero later — not a homepage-clone widget.</li>
+            <li>Not a controlled A/B. Tracking e2e not claimed.</li>
+            <li>Enable is George-only. Never auto-completes. No Ads API mutate.</li>
+          </ul>
+          <ul class="quiz-funnel-links">
+            <li><strong>LPs</strong> (noindex):
+              <a href="http://127.0.0.1:4321/us/quiz" target="_blank" rel="noopener">local /us/quiz</a>
+              · <a href="http://127.0.0.1:4321/au/quiz" target="_blank" rel="noopener">/au/quiz</a>
+              · <a href="https://www.virtualcoworker.app/us/quiz" target="_blank" rel="noopener">prod /us/quiz</a>
+              · <a href="https://www.virtualcoworker.app/au/quiz" target="_blank" rel="noopener">/au/quiz</a>
+            </li>
+            <li><strong>Package:</strong>
+              <a href="docs/ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md">quiz ads</a>
+              · <a href="docs/ads-launch/QUIZ-KEYWORD-OVERLAP-2026-08-09.md">overlap</a>
+              · Editor CSVs in <code>ads-launch/</code>
+            </li>
+            <li><strong>Campaigns:</strong> <code>VC_US_S_QUIZ</code> $40/day · <code>VC_AU_S_QUIZ</code> A$40/day — Paused until George Enables</li>
+          </ul>
           <ul class="todo-list" id="quiz-funnel-list" data-todo-group="quiz-funnel">
             <li>
               <input type="checkbox" id="quizLpUs" data-todo="quizLpUs" />
@@ -853,14 +853,12 @@
             <span class="st st-access">You</span>
           </div>
           <ul>
-            <li><strong>1.</strong> Website calls 60+ seconds — Google forwarding (step 14)</li>
-            <li><strong>2.</strong> Australia ad-call conversion (step 15)</li>
-            <li><strong>3.</strong> Australia website tags — GTM/GA4 still a gap (step 16)</li>
-            <li><strong>4.</strong> Review thank-you overlay US/AU (step 37) — not Ads primary</li>
-            <li><strong>5.</strong> Zoho qualified → Ads (step 17) — not form CPA / not modeled $</li>
-            <li><strong>Later:</strong> Quiz Funnel (<a href="#quiz-funnel">section</a>, ~70%, rework later, Enable George-only · never auto-complete) · US trust pack (step 34) · Site tests scoreboard (step 35) · messaging A/B (H1 locked)</li>
-            <li><a href="tracking.html">Tracking</a></li>
-            <li><strong>Every couple days:</strong> refresh <a href="executive">Executive</a></li>
+            <li><strong>1.</strong> Get onto conversions soon — phone click · 60s+ · employer form (steps 14–19)</li>
+            <li><strong>2.</strong> Australia ad-call + GTM/GA4 (steps 15–16)</li>
+            <li><strong>3.</strong> Review thank-you overlay US/AU (step 37)</li>
+            <li><strong>4.</strong> Then Zoho → Job Order → Placement (step 17)</li>
+            <li><strong>Later:</strong> Quiz ~70% · trust pack · site tests · H1 locked</li>
+            <li><a href="tracking.html">Tracking</a> · refresh <a href="executive">Executive</a></li>
           </ul>
         </section>
 
@@ -879,10 +877,9 @@
       </div>
 
       <p class="lc-secondary" id="site-tests">
-        <strong>Site tests</strong> — scoreboard still blank (step 35, bottom of Checklist).
-        LP previews look good · A/B variants work in site code · needs GTM/GA4 wiring ·
+        <strong>Site tests</strong> — scoreboard still blank ·
         <a href="experiments">Site tests</a> ·
-        Ads package → <a href="ads-package.html">Archive</a> (done)
+        Ads package → <a href="ads-package.html">Archive</a>
       </p>
 
       <details class="lc-fold" id="dont-yet">
@@ -895,12 +892,12 @@
             <li>Re-enable Brand or treat Brand as the main campaign (paused — deferred)</li>
             <li>Put raw “what people typed” lists on the Executive page</li>
             <li>Invent conversion IDs in docs or change Ads via API</li>
-            <li>Use simple <code>tel:</code> click as Primary (need 60+ sec connected website calls)</li>
+            <li>Treat phone-click as equal to 60s+ (click is weaker; 60s+ still better)</li>
             <li>Buy CallRail just for this — Google website call tracking is enough</li>
             <li>Attach <code>310</code> as a competing Call asset on US CORE/ROLES (888 only)</li>
-            <li>Steer bidding on form / thank-you fills (or treat form CPA as truth)</li>
-            <li>Treat thank-you booking overlay as Ads Primary (Call stays conversion lead; consult booking later)</li>
-            <li>Ship modeled lead $ into Google Ads conversion value before Zoho data</li>
+            <li>Count job-seeker / spam form fills · job seekers never count</li>
+            <li>Treat Calendly click as booked (click ≠ booked · booked = later, stronger)</li>
+            <li>Let website $ override Zoho later — CRM value wins when it’s there</li>
             <li>Enable <code>VC_US_S_QUIZ</code> / <code>VC_AU_S_QUIZ</code> until George says (Paused Editor package only — never auto-complete)</li>
             <li>Change homepage H1 (“Your week is full…”) unless George asks — messaging A/B later</li>
             <li>Silently ship LP/copy without updating this checklist (initiative OK — loop George here)</li>
@@ -1023,7 +1020,7 @@
       </div><!-- /.lc-below -->
     </main>
   </div>
-  <script src="nav.js?v=20260809c"></script>
+  <script src="nav.js?v=20260809d"></script>
   <script>
     (function () {
       /* Daily checks — stay in place; reset each local calendar day */

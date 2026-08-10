@@ -295,11 +295,7 @@
       <section class="exp-hero" aria-labelledby="exp-title">
         <p class="kicker">Archive · not ready yet</p>
         <h1 id="exp-title">Site tests</h1>
-        <p class="lede">
-          Scoreboard is still blank — parked here until GTM/GA4 wiring is done.
-          Preview links below can force a variant; numbers aren’t counting yet.
-          Day-to-day work stays on the Checklist.
-        </p>
+        <p class="lede">Scoreboard still blank. Preview links force a variant. Day-to-day = Checklist.</p>
         <p class="exp-meta" id="exp-updated">Loading snapshot…</p>
       </section>
 
@@ -308,11 +304,9 @@
       </div>
 
       <p class="exp-force-note" id="exp-force-note">
-        <strong>Preview links force the variant.</strong>
-        Each US / AU link opens the live LP with
+        <strong>Preview links force the variant</strong> —
         <code>?vc_exp=&lt;id&gt;&amp;vc_var=&lt;letter&gt;</code>
-        — sticky for this browser (localStorage + cookie), applied before first paint
-        so you see that exact arm (no random assignment, no flash).
+        (sticky in this browser).
       </p>
 
       <div class="exp-stats" id="kpi-row" aria-label="Experiment KPIs">
@@ -377,7 +371,7 @@
     </main>
   </div>
 
-  <script src="nav.js?v=20260809c"></script>
+  <script src="nav.js?v=20260809d"></script>
   <script>
     (function () {
       var LP_HOST = "https://www.virtualcoworker.app";
