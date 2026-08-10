@@ -25,9 +25,9 @@ export const SITE = {
     "A form starts a hiring conversation — not an instant hire or contract. Placement, rates, and terms are confirmed separately.",
     "Site content is general information only — not legal, tax, or employment advice. Results vary by role and business.",
   ] as const,
-  /** US site + ads Call asset (aligned 2026-08-07). Prefer resolvePhone("us"). */
-  usPhoneDisplay: "(888) 954-8644",
-  usPhoneHref: "tel:8889548644",
+  /** US site + ads Call (George 2026-08-10: 310 primary; 888 paused). Prefer resolvePhone("us"). */
+  usPhoneDisplay: "(310) 730-9126",
+  usPhoneHref: "tel:3107309126",
   /** AU site + ads Call asset (George-approved 2026-08-08). Prefer resolvePhone("au"). */
   auPhoneDisplay: "1300 886 740",
   auPhoneHref: "tel:+611300886740",
@@ -97,7 +97,7 @@ export const TRUST_PROOF = {
     href: "https://goo.gl/maps/rZikUJ86PppBwULK9",
     label: "Google Maps — West Hollywood office",
   },
-  /** GBP West Hollywood. Site phone stays (888) 954-8644 — not the Maps listing. */
+  /** GBP West Hollywood. Site phone stays (310) 730-9126 - not the Maps listing. */
   googleBusinessUs: {
     rating: "5.0",
     reviewCount: 39,

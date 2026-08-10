@@ -37,19 +37,23 @@ Past burn: agents launched ~8 campaigns + many AGs via API and burned developer-
 - Aligns with Brand deferred hard rule above.
 - Stakeholder follow-up email (**Brand paused + phone tracking**) **sent** 2026-08-07 to Braden / Caitlin / Cheyenne (CC George).
 
-## US phone / Call assets (LOCKED — 2026-08-07)
+## US phone / Call assets (LOCKED — 2026-08-10 · George override)
 
 **Phone = guiding light** until Zoho offline “qualified lead” is ready. USA Search stays **Maximize Clicks** while campaigns season. Primary: ~60s call from ads. Secondary: website phone taps. Forms useful but not driving the account (spam/bot risk).
 
+**George override 2026-08-10:** pause **888**. Microsite + US Call use **310-730-9126**. The 2026-08-07 888-954 lock is **superseded**.
+
 | Number | Role | Do | Do not |
 |--------|------|----|--------|
-| **888-954-8644** | US site + national Call asset (primary) | Use on website (`NEXT_PUBLIC_US_PHONE` / site defaults) **and** on `VC_US_S_CORE` / `VC_US_S_ROLES` Call assets. Google usually prefers 888 nationally. | Don’t fight for “one number everywhere” unless VC asks. |
-| **310-730-9126** | Still in account; may show for some LA traffic | Leave account-level alone for now. Easy to change if VC wants 888 only everywhere. | Do not put 310 back on the microsite or as a competing Call asset on CORE/ROLES. |
+| **310-730-9126** | US site + Call asset (**primary**, George 2026-08-10) | Use on website (`NEXT_PUBLIC_US_PHONE` / site defaults `(310) 730-9126` / `tel:3107309126`) **and** on `VC_US_S_CORE` / `VC_US_S_ROLES` Call assets. | Do not put 888 back on the microsite. |
+| **888-954-8644** | **Paused** (was site + Ads Call 2026-08-07) | Pause 888 in Ads. Leave off microsite. | Do not treat as the live buyer number. |
+| **888-964-8644** | **WP landmine** | Still on WordPress `virtualcoworker.com` contact (we don’t own that deploy). Routes to a **medical-alert IVR**. | Do not use on microsite or Ads. Do not “fix” WP from this repo. |
 
 ### Later / ops (open)
 
-- **Remove / simplify the 888 phone tree** (soft ask — still open). Cheyenne confirmed: press 0 → sales → her; shorter path on a paid sales line helps. Route fast to sales/Cheyenne when VC is ready.
-- Stakeholder emails **sent** 2026-08-07 (phone-tree ask + clearer Brand/phone follow-up) — waiting on VC (phones/IT + Cheyenne). Tracked on Launch Control checklist #13.
+- **888 paused** on pages we control (George 2026-08-10). WP **964** landmine remains until VC owns that deploy.
+- Phone-tree soft ask on 888 is moot for the microsite; **310** is the live US line.
+- Stakeholder emails **sent** 2026-08-07 (phone-tree ask + Brand/phone follow-up) — historical; 888 no longer the microsite number.
 
 ### Measurement (2026-08-07)
 
@@ -143,7 +147,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | **Measurement** | **Separate GTM + GA4 per market** | `GTM_US` / `GTM_AU` (+ `GTM_PH` if needed) even on one host — audiences/conversions must not contaminate. |
 | **Activation priority** | **PH / Filipino / offshore long-tail first** | Source of truth: `PHASED-ACTIVATION.md`. Phase by **intent quality**, not “Core then Digital/Social/Admin.” Bookkeeping/accounting with strong PH long-tail = Phase 1. Generic Core heads = Phase 3 / later. |
 | **AU phone** | Form-primary only | No `NEXT_PUBLIC_AU_PHONE`. No fake AU number. |
-| **US phone (site + Ads)** | `(888) 954-8644` / `tel:8889548644` | Site + Call asset primary (2026-08-07). `310` still in account — may show for some LA traffic; Google usually prefers 888 nationally. |
+| **US phone (site + Ads)** | `(310) 730-9126` / `tel:3107309126` | **Primary (George 2026-08-10).** 888 paused. 888-964 is a WP landmine (medical-alert IVR) — we don’t own `virtualcoworker.com` deploy. AU stays **1300 886 740**. |
 | **Careers URL** | `/ph` (PH microsite) | Internal job-seeker exit. **Never** WordPress. Env WP hosts rejected. |
 | **Lead delivery** | Real channel required for **TRAFFIC READY** | `ALLOW_LOG_ONLY_LEADS=true` = **explicit blocked mode** — QA logs only, `conversion_eligible=false`, not TRAFFIC READY. Zoho CRM = **CRM READY** parallel track (not a traffic gate). |
 | **Exit-intent** | Off unless `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true` | Frequency-capped once/session. No fake live chat. |
@@ -202,7 +206,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 - Thank-you → **book hiring conversation** (Calendly): Stage 1 **secondary** or separate conversion candidate — **never** Primary replacing `employer_inquiry_submitted`. Confirm URLs with VC; booked-call event when GTM ready → OPTIMIZATION READY / later. **Not** required for TRAFFIC READY.
 - CallRail / qualified-call tracking
 - GTM Ads conversion mapping (tested) → **OPTIMIZATION READY**
-- **Remove / simplify 888 phone tree** (soft ask — still open; route fast to sales/Cheyenne) — stakeholder emails sent 2026-08-07
+- **888 paused** on microsite (George 2026-08-10). WP 964 landmine remains (medical-alert IVR). Phone-tree ask on 888 is moot for pages we control.
 - Brand Search (deferred — **paused by George 2026-08-07**; ~$1k/lead range; SEO owns brand; notify if competitor uses brand in ads; see **Brand deferred** hard lock — do not re-enable)
 - Legacy `PM_*` Brand: **paused by George 2026-08-07** — leave off; rebuild later only when George asks
 - Stakeholder follow-up (**Brand paused + phone tracking**) **sent** 2026-08-07

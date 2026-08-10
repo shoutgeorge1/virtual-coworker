@@ -132,7 +132,7 @@ Set values via environment variables (see `.env.example`). Never commit secrets.
 | `LEAD_SINK_SECRET` / `GITHUB_LEADS_TOKEN` | Pilot GitHub Issues sink |
 | `ZOHO_WEBHOOK_URL` | Optional later Zoho endpoint — only after access confirmed |
 | `LEAD_SHEET_WEBHOOK_URL` | Optional spreadsheet / Zapier / Make |
-| `NEXT_PUBLIC_US_PHONE` | NA dest: `310-730-9126` (routing still open) |
+| `NEXT_PUBLIC_US_PHONE` | Site default: `310-730-9126` (George 2026-08-10; 888 paused) |
 | `NEXT_PUBLIC_AU_PHONE` | Official AU-site number — unresolved / AU ads paused |
 
 If delivery is not configured, the API returns a clear error and the UI shows a graceful failure — it does not pretend the lead was sent.

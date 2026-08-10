@@ -99,7 +99,7 @@ window.PILOT_STATUS = {
   /* Confirmed conversion strategy (Stage 1) — phone-first; not form Primary */
   conversionStrategy: {
     stage1Primary: [
-      "HIGH PRIORITY: Website calls that last 60+ seconds (Google forwarding number on site — US 888 + AU 1300). Not a tel: tap. No CallRail required.",
+      "HIGH PRIORITY: Website calls that last 60+ seconds (Google forwarding number on site — US 310 + AU 1300). Not a tel: tap. No CallRail required.",
       "Calls from ad call assets that last 60+ seconds (US live; AU still needed) — early steering alongside website duration"
     ],
     stage1Secondary: [
@@ -125,7 +125,7 @@ window.PILOT_STATUS = {
       minSeconds: 60,
       method: "Google Ads website phone call conversion + Google forwarding number (dynamic replace for Ads visitors)",
       implementVia: "GTM or site tag — as appropriate",
-      markets: "US 888 on site · AU 1300 on site — both need duration tracking where the number shows",
+      markets: "US 310 on site · AU 1300 on site — both need duration tracking where the number shows",
       notPrimary: "tel: click",
       noCallRail: true,
       testPath: "ad click → LP → forwarding number shows → call connects → 60+ sec → conversion in Ads",
@@ -320,7 +320,7 @@ window.PILOT_STATUS = {
   verifyNow: [
     {
       id: "website_call_duration",
-      label: "HIGH PRIORITY: Website calls 60+ sec via Google forwarding (US 888 + AU 1300) — not tel: click; test ad→LP→forwarding#→60s→Ads conversion; no CallRail",
+      label: "HIGH PRIORITY: Website calls 60+ sec via Google forwarding (US 310 + AU 1300) — not tel: click; test ad→LP→forwarding#→60s→Ads conversion; no CallRail",
       status: "verify"
     },
     {
@@ -401,7 +401,7 @@ window.PILOT_STATUS = {
     "Unsafe Google auto-apply — already disabled"
   ],
   georgeHandles: [
-    "HIGH PRIORITY: website calls 60+ sec (Google forwarding) US 888 + AU 1300 — not tel: click; no CallRail required",
+    "HIGH PRIORITY: website calls 60+ sec (Google forwarding) US 310 + AU 1300 — not tel: click; no CallRail required",
     "AU: ad-call conversion wins → GTM/GA4 → then Zoho qualified → Ads; Unkown AG cleanup",
     "Daily search terms / budget spend / keywords + negatives on live VC_US_* (and AU while Enabled)",
     "Phone-led conversions + shallow Zoho (Max Clicks until clean; form not preferred Primary)",
@@ -420,12 +420,12 @@ window.PILOT_STATUS = {
     "US inbox monitoring awaiting Cheyenne (APAC/Holly watches apac@)"
   ],
   nextThree: [
-    "Website calls that last 60+ seconds (Google forwarding — US 888 + AU 1300)",
+    "Website calls that last 60+ seconds (Google forwarding — US 310 + AU 1300)",
     "Australia — ad-call conversion wins + website tags (GTM + GA4)",
     "Then Zoho qualified mark → Ads; site tests stay at the bottom until working"
   ],
   openItemsUnresolved: [
-    "Website calls 60+ sec via Google forwarding (US 888 + AU 1300) — not tel: click Primary; no CallRail needed",
+    "Website calls 60+ sec via Google forwarding (US 310 + AU 1300) — not tel: click Primary; no CallRail needed",
     "AU phone call conversions from ads (before Zoho → Ads)",
     "AU GTM/GA4 website tags (before Zoho → Ads)",
     "AU Unkown AG / Broad-positive cleanup",
@@ -442,7 +442,7 @@ window.PILOT_STATUS = {
   placeholders: {
     usLeadEmail: "us@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
     auLeadEmail: "apac@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
-    usPhone: "888-954-8644",
+    usPhone: "310-730-9126",
     auPhone: "1300 886 740",
     usBudget: "$125/day combined (CORE $75 + ROLES $50)",
     auBudget: "Live · waiting on traffic — no invented AU spend figure",

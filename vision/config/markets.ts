@@ -1,6 +1,6 @@
 /**
  * Market-specific Stage 1 config.
- * US phone: (888) 954-8644 — aligned with ads Call asset (was 310 interim).
+ * US phone: (310) 730-9126 - George 2026-08-10 (888 paused; 964 is WP landmine).
  * AU phone: 1300 886 740 — George-approved (2026-08-08); GBP listing.
  * Phone stays secondary to Start Hiring / Have a chat. Do not invent numbers.
  * Do not invent emails, budgets, conversion IDs, or guarantees.
@@ -45,7 +45,7 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     landingPath: "/us",
     leadEmailEnv: "LEAD_EMAIL_US",
     phoneEnv: "NEXT_PUBLIC_US_PHONE",
-    knownPhone: "(888) 954-8644",
+    knownPhone: "(310) 730-9126",
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: DEFAULT_CAREERS_URL,
     headline:
