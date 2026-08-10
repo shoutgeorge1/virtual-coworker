@@ -323,7 +323,7 @@
     .lc-secondary a:hover { text-decoration: underline; }
   </style>
 </head>
-<body data-page="launch-control.html" data-foot="Checklist<br />AU priority · US live · site tests">
+<body data-page="launch-control.html" data-foot="Checklist<br />US + AU Search live">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
@@ -336,13 +336,12 @@
         <section class="lc-measure" id="how-we-measure" aria-labelledby="measure-hd">
           <h2 id="measure-hd">How we’ll measure success</h2>
           <ul>
-            <li><strong>Get onto conversions soon</strong> — not Max Clicks forever · <a href="conversion-path.html">flowchart</a></li>
-            <li><strong>Early signals:</strong> phone click (fastest, weakest) · 60s+ call (better) · employer form with size/seats value (spam risk)</li>
-            <li><strong>Never count:</strong> job seekers → <code>.ph</code></li>
-            <li><strong>Thank-you:</strong> Call or book · click ≠ booked · booked consult later = stronger</li>
-            <li><strong>Then:</strong> Zoho → Job Order → Placement · CRM value overrides site $</li>
-            <li><strong>US:</strong> ~$125/day · GTM/GA4 live · <strong>AU:</strong> GTM still a gap · 1300 still Alex</li>
-            <li><strong>Off path:</strong> Brand deferred · Quiz ~70% · H1 locked unless George asks</li>
+            <li><strong>Now:</strong> pay per click until call tracking is trusted · <a href="conversion-path.html">flowchart</a></li>
+            <li><strong>Daily first:</strong> <strong>Review recommendations</strong> (clear the list) + search terms + spend vs budget</li>
+            <li><strong>Phones:</strong> US 888-964-8644 · Australia 1300 · never 888-864 or 888-954</li>
+            <li><strong>Wins:</strong> a real call 60+ seconds beats a tap · forms can be spam · job seekers never count</li>
+            <li><strong>Next:</strong> site tests + GA · Australia visit tags · then CRM</li>
+            <li><strong>Not now:</strong> Brand ads · quiz ads · homepage headline test</li>
           </ul>
         </section>
 
@@ -355,17 +354,17 @@
           <div class="panel-bd">
             <ul class="todo-list" id="daily-todo-list" data-todo-group="daily-checks">
               <li>
+                <input type="checkbox" id="daily5" data-todo="daily5" />
+                <label for="daily5">
+                  <strong>Review recommendations</strong>
+                  <span class="todo-hint">Do this first, every day. Ads → Recommendations. Clear the list. Dismiss Broad, extra budget, PMax, junk. Apply only if it actually helps. Auto-apply stays off. Google’s Optimization Score / account health depends on this at the start of an account.</span>
+                </label>
+              </li>
+              <li>
                 <input type="checkbox" id="daily1" data-todo="daily1" />
                 <label for="daily1">
                   <strong>Search terms</strong>
                   <span class="todo-hint">What people actually typed — cut junk in Ads.</span>
-                </label>
-              </li>
-              <li>
-                <input type="checkbox" id="daily2" data-todo="daily2" />
-                <label for="daily2">
-                  <strong>Ad copy + combinations</strong>
-                  <span class="todo-hint">Headlines/descriptions and which combos get clicks.</span>
                 </label>
               </li>
               <li>
@@ -380,6 +379,13 @@
                 <label for="daily4">
                   <strong>Keywords + negatives</strong>
                   <span class="todo-hint">Agency-hire Exact preferred · pause odd shorthand (e.g. va workers ph) · junk blocked?</span>
+                </label>
+              </li>
+              <li>
+                <input type="checkbox" id="daily2" data-todo="daily2" />
+                <label for="daily2">
+                  <strong>Ad copy + combinations</strong>
+                  <span class="todo-hint">Headlines/descriptions and which combos get clicks.</span>
                 </label>
               </li>
             </ul>
@@ -476,7 +482,7 @@
               <input type="checkbox" id="ads16" data-todo="ads16" checked />
               <label for="ads16">
                 <strong>12. Fix US phone routing / someone answers</strong>
-                <span class="todo-hint">Done enough for measurement (2026-08-07). Call asset + site primary <strong>(888) 954-8644</strong> — <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>. 310 may still show for some LA traffic. Cheyenne confirmed 888 routes to her (via tree). Remaining ops: phone tree soft ask (step 18).</span>
+                <span class="todo-hint">Restored 2026-08-10. Site + Call = <strong>(888) 964-8644</strong> / <code>tel:+18889648644</code> — <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>. 310 unlinked from VC_US_*. Never 888-864 or 888-954.</span>
               </label>
             </li>
             <li data-order="12.5">
@@ -490,7 +496,7 @@
               <input type="checkbox" id="ads34" data-todo="ads34" />
               <label for="ads34">
                 <strong>14. Website calls 60+ seconds (US + AU)</strong>
-                <span class="todo-hint">High priority. Google forwarding number · not a tel: tap. US 888 + AU 1300.</span>
+                <span class="todo-hint">High priority. Google forwarding number · not a tel: tap. US 888-964 + AU 1300.</span>
               </label>
             </li>
             <li data-order="13">
@@ -515,10 +521,10 @@
               </label>
             </li>
             <li data-order="16">
-              <input type="checkbox" id="ads25" data-todo="ads25" />
+              <input type="checkbox" id="ads25" data-todo="ads25" checked />
               <label for="ads25">
-                <strong>18. Remove / simplify 888 phone tree</strong>
-                <span class="todo-hint">Soft ask — still open. Waiting on VC (phones/IT + Cheyenne). Call asset + site stay <code>888-954-8644</code>.</span>
+                <strong>18. 888 off new ads + microsite</strong>
+                <span class="todo-hint">Superseded 2026-08-10 later: verified <strong>888-964-8644</strong> restored on site + VC_US_* Call. 310 unlinked from those scopes. Never publish 888-864 or 888-954.</span>
               </label>
             </li>
             <li data-order="17">
@@ -563,11 +569,11 @@
                 <span class="todo-hint">Separate paid Ads leads from total inbox. Buckets: enquiries · calls booked · junk · work-seekers.</span>
               </label>
             </li>
-            <li data-order="23">
+            <li data-order="12.15">
               <input type="checkbox" id="ads21" data-todo="ads21" />
               <label for="ads21">
-                <strong>25. Braden / CEO meeting prep</strong>
-                <span class="todo-hint">Basically done — leave checkable. <a href="executive">Executive</a> is the calm walkthrough.</span>
+                <strong>25. Share Executive snapshot with leadership</strong>
+                <span class="todo-hint">Walk <a href="executive">Executive</a> — spend, clicks, US + Australia. New Search only. Don’t open the raw Ads account in the meeting.</span>
               </label>
             </li>
             <li data-order="24">
@@ -599,10 +605,10 @@
               </label>
             </li>
             <li data-order="28">
-              <input type="checkbox" id="ads14" data-todo="ads14" />
+              <input type="checkbox" id="ads14" data-todo="ads14" checked />
               <label for="ads14">
                 <strong>30. Audit all assets</strong>
-                <span class="todo-hint">Sitelinks, callouts, snippets. US call assets = 888 only.</span>
+                <span class="todo-hint">VC_US_* Call restored to 888-964-8644 (2026-08-10). Sitelink junk paused. Callouts + Types snippet already good. AU glance later. No lead forms / prices / images.</span>
               </label>
             </li>
             <li data-order="29">
@@ -633,11 +639,11 @@
                 <span class="todo-hint">Open. Google stars + Clutch stars already live (US 5.0 / 39 · AU 4.8 / 23 — yellow stars, not yellow boxes). Internet check 2026-08-09: <strong>no Inc / Entrepreneur / BI feature or display-ad placement found</strong>. Live “As featured in” = Forbes Council + Clutch + Google + VC’s published SMH/BRW/Startup Daily/Anthill row. Still need more <strong>authorized US client logos</strong> + video testimonials. Do <strong>not</strong> invent Fortune 500. See <code>vision/docs/TRUST-PROOF.md</code>.</span>
               </label>
             </li>
-            <li data-order="99">
+            <li data-order="12.05">
               <input type="checkbox" id="ads27" data-todo="ads27" />
               <label for="ads27">
-                <strong>35. Site tests — wire the scoreboard (bottom)</strong>
-                <span class="todo-hint">Still open. Measurement doesn’t yet. Need GTM/GA4 (or content experiments) so variant traffic shows on <a href="experiments">Site tests</a>. <strong>Homepage H1 locked</strong> (“Your week is full…”) unless George asks — messaging A/B later. Don’t silently change LP H1s. <a href="landing-pages">LP previews</a> look good.</span>
+                <strong>4b. Site tests + GA — wire the scoreboard</strong>
+                <span class="todo-hint"><strong>Priority.</strong> A/B page versions exist on the microsite. Scoreboard on <a href="experiments">Site tests</a> is still blank until GA is connected. US GTM/GA4 is live — confirm experiment events fire. Australia GTM still missing. Homepage headline stays locked until we choose to test it. See <a href="landing-pages">LP previews</a> for A vs B links.</span>
               </label>
             </li>
             <li data-order="100">
@@ -654,7 +660,7 @@
               <input type="checkbox" id="ads37" data-todo="ads37" />
               <label for="ads37">
                 <strong>37. Thank-you auto booking overlay — review US/AU</strong>
-                <span class="todo-hint">Live, not Ads primary. Call still conversion lead (888 / 1300). Inline Calendly embed was janky — dropped. Now our bordered overlay auto-opens on eligible thank-you: US “Book your 30-minute hiring consult” · AU “Book a 30-minute hiring chat” + Call. Close + Pick a time reopens. Review <a href="https://www.virtualcoworker.app/thank-you?market=us" target="_blank" rel="noopener">/thank-you?market=us</a> · <a href="https://www.virtualcoworker.app/thank-you?market=au" target="_blank" rel="noopener">/thank-you?market=au</a>.</span>
+                <span class="todo-hint">Live, not Ads primary. Call still conversion lead (888-964 / 1300). Inline Calendly embed was janky — dropped. Now our bordered overlay auto-opens on eligible thank-you: US “Book your 30-minute hiring consult” · AU “Book a 30-minute hiring chat” + Call. Close + Pick a time reopens. Review <a href="https://www.virtualcoworker.app/thank-you?market=us" target="_blank" rel="noopener">/thank-you?market=us</a> · <a href="https://www.virtualcoworker.app/thank-you?market=au" target="_blank" rel="noopener">/thank-you?market=au</a>.</span>
               </label>
             </li>
             <li data-order="32.2">
@@ -835,30 +841,31 @@
             <span class="st st-ready">Finished</span>
           </div>
           <ul>
-            <li>AU phone on site · 1300 886 740 (GBP listing · voicemail still Alex)</li>
             <li>US Search live · about $125/day · Brand off · US GTM/GA4 live</li>
+            <li>US phone 888-964-8644 on site + Call · 310 unlinked from VC_US_*</li>
+            <li>US sitelinks cleaned · callouts/snippet already good</li>
+            <li>AU phone on site · 1300 886 740 (GBP listing · voicemail still Alex)</li>
             <li>Form emails live (us@ / apac@)</li>
-            <li>Form chips (company size + positions) + modeled score on <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a> (analytics only)</li>
-            <li>Google stars US 5.0 / 39 · AU 4.8 / 23 + Clutch (yellow stars, not boxes)</li>
-            <li>Caitlin copy live · job-seeker → <code>virtualcoworker.com.ph</code> (hard replace)</li>
-            <li>Thank-you overlay live (Call + book · not Ads primary) — review US/AU step 37</li>
-            <li>Team updated (Holly + Caitlin threads)</li>
-            <li>Quiz Funnel parked ~70% — <a href="#quiz-funnel">Quiz Funnel / Quiz Ads</a> (rework later · ads Paused · not traffic-ready)</li>
+            <li>Form chips + modeled score on <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a> · <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a></li>
+            <li>Google stars US 5.0 / 39 · AU 4.8 / 23 + Clutch</li>
+            <li>Caitlin copy live · job-seeker → <code>virtualcoworker.com.ph</code></li>
+            <li>Thank-you overlay live (Call + book · not Ads primary)</li>
+            <li>Quiz Funnel parked ~70% — rework later · ads Paused</li>
           </ul>
         </section>
 
         <section class="lc-bucket george" aria-labelledby="george-hd">
           <div class="lc-bucket-hd">
-            <h2 id="george-hd">George — do these</h2>
-            <span class="st st-access">You</span>
+            <h2 id="george-hd">Next up</h2>
+            <span class="st st-access">Order</span>
           </div>
           <ul>
-            <li><strong>1.</strong> Get onto conversions soon — phone click · 60s+ · employer form (steps 14–19)</li>
-            <li><strong>2.</strong> Australia ad-call + GTM/GA4 (steps 15–16)</li>
-            <li><strong>3.</strong> Review thank-you overlay US/AU (step 37)</li>
-            <li><strong>4.</strong> Then Zoho → Job Order → Placement (step 17)</li>
-            <li><strong>Later:</strong> Quiz ~70% · trust pack · site tests · H1 locked</li>
-            <li><a href="tracking.html">Tracking</a> · refresh <a href="executive">Executive</a></li>
+            <li><strong>1.</strong> Daily: <strong>Review recommendations</strong> + search terms + spend vs budget</li>
+            <li><strong>2.</strong> Site tests + GA scoreboard (step 4b) — A/B pages can’t be measured yet</li>
+            <li><strong>3.</strong> Australia visit tags + calls from ads</li>
+            <li><strong>4.</strong> Website calls 60+ seconds</li>
+            <li><strong>5.</strong> Then CRM (Zoho)</li>
+            <li><strong>Later:</strong> quiz · trust pack · homepage headline test</li>
           </ul>
         </section>
 
@@ -868,10 +875,11 @@
             <span class="st st-progress">Them</span>
           </div>
           <ul>
-            <li><strong>Cheyenne:</strong> watch us@ · help Zoho “qualified” marks · answer US 888</li>
-            <li><strong>Holly / Chey / Raffie:</strong> fix 1300 voicemail (still says Alex) — still open</li>
+            <li><strong>Cheyenne:</strong> watch us@ · answer US 888-964-8644</li>
+            <li><strong>Team:</strong> confirmed live US number is 888-964-8644 (George dialed 2026-08-10)</li>
+            <li><strong>Holly / Chey / Raffie:</strong> 1300 voicemail still says Alex</li>
             <li><strong>Holly:</strong> watch apac@</li>
-            <li><strong>Phones/IT:</strong> help website call tracking (forwarding) · simplify 888 tree</li>
+            <li><strong>Phones/IT:</strong> website call tracking (forwarding) when we’re ready</li>
           </ul>
         </section>
       </div>
@@ -890,11 +898,13 @@
         <div class="fold-bd">
           <ul class="glance-bullets" style="margin:0">
             <li>Re-enable Brand or treat Brand as the main campaign (paused — deferred)</li>
+            <li>Scale spend or switch to Max Conversions this week</li>
             <li>Put raw “what people typed” lists on the Executive page</li>
             <li>Invent conversion IDs in docs or change Ads via API</li>
             <li>Treat phone-click as equal to 60s+ (click is weaker; 60s+ still better)</li>
             <li>Buy CallRail just for this — Google website call tracking is enough</li>
-            <li>Attach <code>310</code> as a competing Call asset on US CORE/ROLES (888 only)</li>
+            <li>Put 888 back on the microsite or as the US Call primary until they confirm</li>
+            <li>Walk leadership through the raw Ads account — use Executive instead</li>
             <li>Count job-seeker / spam form fills · job seekers never count</li>
             <li>Treat Calendly click as booked (click ≠ booked · booked = later, stronger)</li>
             <li>Let website $ override Zoho later — CRM value wins when it’s there</li>
@@ -921,7 +931,7 @@
           <div class="sitemap">
             <div class="sitemap-branch">
               <h3>US employer</h3>
-              <p class="branch-note">Phone <code>888-954-8644</code></p>
+              <p class="branch-note">Phone <code>888-964-8644</code></p>
               <ul class="sitemap-tree">
                 <li><a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>
                   <ul>
@@ -989,6 +999,7 @@
             <h3 style="margin:0 0 0.4rem;font-size:0.95rem">Watch</h3>
             <ul class="glance-bullets">
               <li>Search terms → cut junk fast</li>
+              <li>Review recommendations → clear the list every morning; dismiss Broad / budget / PMax</li>
               <li>Job-seeker / spam</li>
               <li>Leads in <code>us@</code> Resend <em>and</em> GitHub Issues</li>
               <li>Cost per click vs $12 CORE / $10 ROLES caps</li>
@@ -1020,7 +1031,7 @@
       </div><!-- /.lc-below -->
     </main>
   </div>
-  <script src="nav.js?v=20260809d"></script>
+  <script src="nav.js?v=20260810b"></script>
   <script>
     (function () {
       /* Daily checks — stay in place; reset each local calendar day */
@@ -1080,6 +1091,8 @@
       if (store.ads39 !== true) store.ads39 = true; /* Caitlin copy */
       if (store.ads40 !== true) store.ads40 = true; /* Google + Clutch stars */
       if (store.ads41 !== true) store.ads41 = true; /* team updated */
+      if (store.ads25 !== true) store.ads25 = true; /* 888 off new ads + microsite */
+      if (store.ads14 !== true) store.ads14 = true; /* US asset audit */
       /* Thank-you overlay review (ads37) stays open — George reviews US/AU */
       /* Website call duration (ads34) stays open / unchecked */
       if (store.ads34 === true) { /* leave if George checked */ }

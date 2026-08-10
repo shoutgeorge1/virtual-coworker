@@ -69,7 +69,7 @@ Events (same stack homepage + quiz LP):
 ## Quiz LPs
 
 - `/us/quiz` · `/au/quiz` — homepage chrome, quiz in the form slot. **noindex** until ads use them.
-- Quiz is the hero. No employer form on first paint. Size + seats inside the quiz. Big reward, then form reveals (role/size/seats prefilled). Call still available (888 / 1300).
+- Quiz is the hero. No employer form on first paint. Size + seats inside the quiz. Big reward, then form reveals (role/size/seats prefilled). Call still available (888-964 / 1300).
 - Job-seeker: footer link to PH careers (not a first-screen “who are you?”).
 
 ## Zoho / offline (interface only)
@@ -81,4 +81,4 @@ No Zoho API writes from this work. No modeled $ into Ads bidding.
 ## Phones (do not change)
 
 - AU **1300 886 740**
-- US **(888) 954-8644**
+- US **(888) 964-8644** / `tel:+18889648644` (George 2026-08-10 restore; never 888-864 or 888-954)

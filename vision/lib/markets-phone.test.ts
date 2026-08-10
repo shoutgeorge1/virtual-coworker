@@ -10,8 +10,9 @@ describe("AU / US phone resolution", () => {
     expect(phoneTelHref("1300 886 740", "au")).toBe("tel:+611300886740");
   });
 
-  it("keeps US national digits in tel href", () => {
-    expect(phoneTelHref("(310) 730-9126", "us")).toBe("tel:3107309126");
+  it("builds US tel href as +1 E.164", () => {
+    expect(phoneTelHref("(888) 964-8644", "us")).toBe("tel:+18889648644");
+    expect(phoneTelHref("888-964-8644", "us")).toBe("tel:+18889648644");
   });
 
   it("resolvePhone(au) is configured without env", () => {
@@ -24,7 +25,7 @@ describe("AU / US phone resolution", () => {
   it("resolvePhone(us) still uses known US line", () => {
     const phone = resolvePhone("us");
     expect(phone.configured).toBe(true);
-    expect(phone.display).toBe("(310) 730-9126");
-    expect(phone.href).toBe("tel:3107309126");
+    expect(phone.display).toBe("(888) 964-8644");
+    expect(phone.href).toBe("tel:+18889648644");
   });
 });

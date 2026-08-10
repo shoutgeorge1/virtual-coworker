@@ -10,7 +10,7 @@
 
 | Route | Market | Category | Form preselect | Phone |
 |-------|--------|----------|----------------|-------|
-| `/us` | US | generic (all roles) | none | **310-730-9126** (brief NA / env override) |
+| `/us` | US | generic (all roles) | none | **888-964-8644** (verified VC US line) |
 | `/au` | AU | generic (all roles) | none | **None** — form primary |
 | `/us/digital-marketing` | US | digital-marketing | Digital marketing support | US phone |
 | `/us/social-media` | US | social-media | Social media support | US phone |

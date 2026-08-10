@@ -1,7 +1,8 @@
 /**
  * Market-specific Stage 1 config.
- * US phone: (310) 730-9126 - George 2026-08-10 (888 paused; 964 is WP landmine).
- * AU phone: 1300 886 740 — George-approved (2026-08-08); GBP listing.
+ * US phone: (888) 964-8644 - verified VC US line (George 2026-08-10 restore).
+ *   Never publish 888-864-8644 or 888-954-8644. tel:+18889648644.
+ * AU phone: 1300 886 740 - George-approved (2026-08-08); GBP listing.
  * Phone stays secondary to Start Hiring / Have a chat. Do not invent numbers.
  * Do not invent emails, budgets, conversion IDs, or guarantees.
  */
@@ -45,14 +46,14 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     landingPath: "/us",
     leadEmailEnv: "LEAD_EMAIL_US",
     phoneEnv: "NEXT_PUBLIC_US_PHONE",
-    knownPhone: "(310) 730-9126",
+    knownPhone: "(888) 964-8644",
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: DEFAULT_CAREERS_URL,
     headline:
       "Your week is full. Hire a dedicated Filipino teammate.",
-    prop: "We recruit and screen. You interview and pick. We handle payroll. Dedicated seats on your hours — not a gig marketplace.",
+    prop: "We recruit and screen. You interview and pick. We handle payroll. Dedicated seats on your hours - not a gig marketplace.",
     staffingExplain:
-      "Tell us the role. Free consult — no pressure. We recruit and shortlist. You interview and pick. We handle payroll and paperwork. Rates depend on the seat — we’ll talk through them once we understand what you need.",
+      "Tell us the role. Obligation-free consult, at no cost. We recruit and shortlist. You interview and pick. We handle payroll and paperwork. Rates depend on the seat - we’ll talk through them once we understand what you need.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "remote staffing agency",
@@ -88,9 +89,9 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     careersUrlFallback: DEFAULT_CAREERS_URL,
     headline:
       "Your week is full. A dedicated Filipino teammate takes the load.",
-    prop: "We recruit and shortlist. You interview and choose. We handle employment admin. Dedicated teammates on Australian hours — not a gig marketplace.",
+    prop: "We recruit and shortlist. You interview and choose. We handle employment admin. Dedicated teammates on Australian hours - not a gig marketplace.",
     staffingExplain:
-      "Tell us the role. We’ll have a short chat — free, no pressure. We recruit and shortlist. You interview and pick. We handle employment admin so you stay on the work. Rates depend on the role — we’ll talk them through once we understand what you need.",
+      "Tell us the role. We’ll have a short chat - obligation free, at no cost. We recruit and shortlist. You interview and pick. We handle employment admin so you stay on the work. Rates depend on the role - we’ll talk them through once we understand what you need.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",
@@ -114,7 +115,7 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
   },
 };
 
-/** Build a dialable tel: href. AU 13/1300/1800 → +61; US keeps national digits. */
+/** Build a dialable tel: href. AU 13/1300/1800 → +61; US → +1 E.164. */
 export function phoneTelHref(display: string, market: MarketId): string {
   const trimmed = display.trim();
   if (!trimmed) return "";
@@ -129,7 +130,9 @@ export function phoneTelHref(display: string, market: MarketId): string {
     const national = digits.startsWith("0") ? digits.slice(1) : digits;
     return `tel:+61${national}`;
   }
-  return `tel:${digits}`;
+  if (digits.length === 11 && digits.startsWith("1")) return `tel:+${digits}`;
+  if (digits.length === 10) return `tel:+1${digits}`;
+  return `tel:+${digits}`;
 }
 
 export function resolvePhone(market: MarketId): {
@@ -154,7 +157,7 @@ export function resolvePhone(market: MarketId): {
   };
 }
 
-/** Employer WordPress hosts — never use these as the job-seeker careers exit. */
+/** Employer WordPress hosts - never use these as the job-seeker careers exit. */
 const EMPLOYER_WP_HOST_RE =
   /^https?:\/\/(www\.)?virtualcoworker\.com(\.au)?(\/|$)/i;
 
@@ -181,7 +184,7 @@ export function resolveCareersUrl(): string {
   if (configured) {
     if (EMPLOYER_WP_HOST_RE.test(configured) && !isPhCareersUrl(configured)) {
       console.error(
-        "[careers] NEXT_PUBLIC_CAREERS_URL points at employer WordPress — falling back to PH careers",
+        "[careers] NEXT_PUBLIC_CAREERS_URL points at employer WordPress - falling back to PH careers",
       );
       return DEFAULT_CAREERS_URL;
     }

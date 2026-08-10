@@ -31,7 +31,7 @@ Review the new Exact keywords (Comment = agency-intent). **Keyword Status stays 
 | RSAs | 116 (full 15/4 — no blanks) |
 | Unique negatives | 183 curated Broad (+ US-only `VC_Neg_JobSeekers_Live` Phrase) |
 | Final URLs | `www.virtualcoworker.app/us\|au` + `/us\|au/{category}` (no WP) |
-| US phone (site + Call asset ops) | **310-730-9126** primary (George 2026-08-10; 888 paused — see `DECISIONS.md`) |
+| US phone (site + Call asset ops) | **888-964-8644** primary (George 2026-08-10 restore — see `DECISIONS.md`) |
 | AU phone | **None** — form primary (locked; no Call asset in AU CSV) |
 | Careers URL | `/ph` via `NEXT_PUBLIC_CAREERS_URL` (locked for Stage 1) |
 | Lead QA | `ALLOW_LOG_ONLY_LEADS=true` — TEMPORARY logs only; Zoho access ≠ integration |

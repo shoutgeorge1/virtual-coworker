@@ -145,7 +145,7 @@ window.PILOT_STATUS = {
   /* Confirmed phone routing */
   phones: {
     naDestination: {
-      number: "310-730-9126",
+      number: "888-964-8644",
       status: "rings_to_google_voice_vm",
       note: "Rings ~5–6 → Google Voice VM. Ash (intern) got test VM — not durable. Cheyenne owns US sales. Raffie = phone systems/IT, not US salesperson. Route into Cheyenne/US sales workflow + missed-call owner + E2E."
     },
@@ -283,7 +283,7 @@ window.PILOT_STATUS = {
     },
     {
       id: "na_phone_dest",
-      label: "US phone number confirmed: 310-730-9126 (routing to Cheyenne/sales workflow still open; Raffie ≠ salesperson)",
+      label: "US phone number confirmed: 888-964-8644 (verified VC US line; Raffie ≠ salesperson)",
       status: "complete"
     },
     {
@@ -352,7 +352,7 @@ window.PILOT_STATUS = {
   waitingOnVc: [
     {
       id: "phone_routing_us",
-      label: "Route 310-730-9126 into Cheyenne/US sales workflow + missed-call owner + E2E (not Google Voice dump)",
+      label: "Route 888-964-8644 into Cheyenne/US sales workflow + missed-call owner + E2E",
       status: "waiting"
     },
     {
@@ -442,7 +442,7 @@ window.PILOT_STATUS = {
   placeholders: {
     usLeadEmail: "us@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
     auLeadEmail: "apac@virtualcoworker.com (Resend ACTIVE; WP also emails here)",
-    usPhone: "310-730-9126",
+    usPhone: "888-964-8644",
     auPhone: "1300 886 740",
     usBudget: "$125/day combined (CORE $75 + ROLES $50)",
     auBudget: "Live · waiting on traffic — no invented AU spend figure",

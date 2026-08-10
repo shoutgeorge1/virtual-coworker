@@ -1,11 +1,11 @@
 /**
  * Public trust / legal facts for this Virtual Coworker website.
  * Addresses sourced from published Virtual Coworker contact details (2026-08-05).
- * Quotes sourced from published client stories — rendered as text only (no WP links).
+ * Quotes sourced from published client stories - rendered as text only (no WP links).
  *
- * IA (George): market surfaces — /us, /au; job seekers exit to PH WordPress careers.
+ * IA (George): market surfaces - /us, /au; job seekers exit to PH WordPress careers.
  * Root `/` redirects to `/us` (primary hiring market). No corporate hub.
- * Keep paid employer traffic on this host — only intentional job-seeker egress
+ * Keep paid employer traffic on this host - only intentional job-seeker egress
  * is virtualcoworker.com.ph (see resolveCareersUrl).
  */
 
@@ -17,17 +17,17 @@ export const SITE = {
   tagline: "Filipino staffing",
   disclaimer: "Hire dedicated Filipino staff for your business.",
   /**
-   * Short footer legal lines — paraphrased from our Terms + Privacy
+   * Short footer legal lines - paraphrased from our Terms + Privacy
    * (employer microsite). Keep readable; not a wall of text.
    */
   footerLegal: [
-    "For businesses hiring staff — not a job board. Job seekers use our Philippines careers site.",
-    "A form starts a hiring conversation — not an instant hire or contract. Placement, rates, and terms are confirmed separately.",
-    "Site content is general information only — not legal, tax, or employment advice. Results vary by role and business.",
+    "For businesses hiring staff - not a job board. Job seekers use our Philippines careers site.",
+    "A form starts a hiring conversation - not an instant hire or contract. Placement, rates, and terms are confirmed separately.",
+    "Site content is general information only - not legal, tax, or employment advice. Results vary by role and business.",
   ] as const,
-  /** US site + ads Call (George 2026-08-10: 310 primary; 888 paused). Prefer resolvePhone("us"). */
-  usPhoneDisplay: "(310) 730-9126",
-  usPhoneHref: "tel:3107309126",
+  /** US site + ads Call (George 2026-08-10 restore: verified 888-964). Prefer resolvePhone("us"). */
+  usPhoneDisplay: "(888) 964-8644",
+  usPhoneHref: "tel:+18889648644",
   /** AU site + ads Call asset (George-approved 2026-08-08). Prefer resolvePhone("au"). */
   auPhoneDisplay: "1300 886 740",
   auPhoneHref: "tel:+611300886740",
@@ -47,13 +47,13 @@ export const SITE = {
 } as const;
 
 /**
- * Verifiable company identity for the footer — the stuff Google and cautious
+ * Verifiable company identity for the footer - the stuff Google and cautious
  * buyers look for (NAP, registered entities, a named human).
  *
  * Every value below is evidenced in this repo or on published Virtual Coworker
  * pages: the AU entity + ABN come from our own privacy page, the founder name
  * from the About page and the Forbes Business Council profile title.
- * Rendered as plain text — no outbound profile links (George, 2026-08-07).
+ * Rendered as plain text - no outbound profile links (George, 2026-08-07).
  */
 export const COMPANY_IDENTITY = {
   entityUs: "Virtual Coworker Inc.",
@@ -66,21 +66,21 @@ export const COMPANY_IDENTITY = {
 /**
  * Public directory / recognition proof.
  *
- * The `href` values are PROVENANCE ONLY — they record where each claim can be
+ * The `href` values are PROVENANCE ONLY - they record where each claim can be
  * verified and are deliberately **not rendered anywhere on the site**. George's
  * rule (2026-08-07): trust marks never link out, so paid visitors are not handed
  * off to Clutch, Forbes or Google. Do not wire these into an `<a>`.
  *
  * Clutch rating from the Clutch company profile (4.9 · 7 reviews).
  * Forbes: Braden Yuill Business Council profile.
- * Google Maps: published US office pin (provenance href only — not rendered).
+ * Google Maps: published US office pin (provenance href only - not rendered).
  * Google Business Profile ratings (George 2026-08-09): US West Hollywood 5.0 / 39;
- *   AU Sydney 4.8 / 23. Stars + count only — do not swap site phones from GBP.
- * Trustpilot: live profile 2026-08-09 — 4.3 / 5 · 7 reviews (Google snippet 4.7/26 was stale).
- * Glassdoor: George live look 2026-08-09 — 4.1 / 5 · 87% would recommend · 24 reviews.
- *   On-page (2026-08-09): show recommend % + review count only — do NOT print 4.1.
- *   (OA’s page also prints a Glassdoor 4.3 — that is Glassdoor’s figure on OA, not OA’s score).
- * Outsource Accelerator: Featured In logo only — do not print “OA 4.3”.
+ *   AU Sydney 4.8 / 23. Stars + count only - do not swap site phones from GBP.
+ * Trustpilot: live profile 2026-08-09 - 4.3 / 5 · 7 reviews (Google snippet 4.7/26 was stale).
+ * Glassdoor: George live look 2026-08-09 - 4.1 / 5 · 87% would recommend · 24 reviews.
+ *   On-page (2026-08-09): show recommend % + review count only - do NOT print 4.1.
+ *   (OA’s page also prints a Glassdoor 4.3 - that is Glassdoor’s figure on OA, not OA’s score).
+ * Outsource Accelerator: Featured In logo only - do not print “OA 4.3”.
  */
 export const TRUST_PROOF = {
   clutch: {
@@ -95,9 +95,9 @@ export const TRUST_PROOF = {
   },
   googleMapsUs: {
     href: "https://goo.gl/maps/rZikUJ86PppBwULK9",
-    label: "Google Maps — West Hollywood office",
+    label: "Google Maps - West Hollywood office",
   },
-  /** GBP West Hollywood. Site phone stays (310) 730-9126 - not the Maps listing. */
+  /** GBP West Hollywood. Site phone stays (888) 964-8644 - not the Maps listing. */
   googleBusinessUs: {
     rating: "5.0",
     reviewCount: 39,
@@ -145,14 +145,14 @@ export function googleBusinessForMarket(market: MarketId): GoogleBusinessProof {
   return market === "au" ? TRUST_PROOF.googleBusinessAu : TRUST_PROOF.googleBusinessUs;
 }
 
-/** Trading years — the strongest honest number this business owns. */
+/** Trading years - the strongest honest number this business owns. */
 export function yearsTrading(now: Date = new Date()): number {
   return now.getFullYear() - TRUST_PROOF.sinceYear;
 }
 
 /**
  * Headline legitimacy figures for the animated counter row.
- * Every value is either arithmetic on the founding year or a published figure —
+ * Every value is either arithmetic on the founding year or a published figure -
  * nothing estimated. `suffix`/`prefix` keep the counter animation numeric.
  */
 export type ProofFigure = {
@@ -193,14 +193,14 @@ export function proofFigures(now: Date = new Date()): ProofFigure[] {
 }
 
 /**
- * Short client quotes — text only; do not link out.
+ * Short client quotes - text only; do not link out.
  * Sourced from the published Virtual Coworker Success Stories page
  * (virtualcoworker.com/success-stories, captured in raw/success.html).
  *
  * Roster rule (George, 2026-08-07): prefer fewer strong, still-trading businesses
  * over a long list of no-name or dead brands. Every company below was checked to
  * still resolve as a live business site. Do NOT add Fortune 500 or unverified marks.
- * Dropped from the old roster: GiggedIn (domain sold — now an unrelated site),
+ * Dropped from the old roster: GiggedIn (domain sold - now an unrelated site),
  * My Nappies and Allara Support Services (domains no longer resolve).
  */
 export type PublicQuote = {
@@ -266,7 +266,7 @@ export const PUBLIC_QUOTES: readonly PublicQuoteWithLogo[] = [
 export type ClientMark = {
   id: string;
   name: string;
-  /** Required — strip only shows image-backed marks. */
+  /** Required - strip only shows image-backed marks. */
   src: string;
   alt?: string;
   /**
@@ -280,7 +280,7 @@ export type ClientMark = {
 
 export const CLIENT_MARKS: readonly ClientMark[] = [
   {
-    // Laura W. / GOODco. — Charleston, SC (US). Logo published on virtualcoworker.com/forbes/.
+    // Laura W. / GOODco. - Charleston, SC (US). Logo published on virtualcoworker.com/forbes/.
     id: "good-co",
     name: "Good Co.",
     src: "/brand/trust/client-good-co.png",
@@ -292,7 +292,7 @@ export const CLIENT_MARKS: readonly ClientMark[] = [
     name: "Credit Card Compare",
     src: "/brand/trust/client-credit-card-compare.png",
     alt: "Credit Card Compare",
-    // AU success story — also on /us until more US marks land (George 2026-08-09).
+    // AU success story - also on /us until more US marks land (George 2026-08-09).
     markets: ["au", "us"],
   },
   {
@@ -303,7 +303,7 @@ export const CLIENT_MARKS: readonly ClientMark[] = [
     markets: ["au", "us"],
   },
   {
-    // David Krynauw / ProActive Media — Success Stories; logo George saved 2026-08-07.
+    // David Krynauw / ProActive Media - Success Stories; logo George saved 2026-08-07.
     id: "proactive-media",
     name: "ProActive Media",
     src: "/brand/trust/client-proactive-media.png",
@@ -315,12 +315,12 @@ export const CLIENT_MARKS: readonly ClientMark[] = [
     name: "The Learning Deli",
     src: "/brand/trust/client-learning-deli.png",
     alt: "The Learning Deli",
-    // Icon-only (cube in yellow teardrop) — caption so the strip isn’t nameless.
+    // Icon-only (cube in yellow teardrop) - caption so the strip isn’t nameless.
     caption: "The Learning Deli",
     markets: ["au", "us"],
   },
   {
-    // Paul Slezak / RecruitLoop — Success Stories; AU-origin, global ops.
+    // Paul Slezak / RecruitLoop - Success Stories; AU-origin, global ops.
     id: "recruitloop",
     name: "RecruitLoop",
     src: "/brand/trust/client-recruitloop.png",
@@ -330,29 +330,29 @@ export const CLIENT_MARKS: readonly ClientMark[] = [
 ];
 
 /**
- * Form cue — point at the gate, don’t fake a countdown.
+ * Form cue - point at the gate, don’t fake a countdown.
  * George (2026-08-09): ribbon scarcity read cheap; pointer + specialist CTA is honest.
  */
 export const FORM_CUE = {
   us: {
     label: "Start here",
-    body: "Talk to a specialist — usually same business day.",
+    body: "Talk to a specialist - usually same business day.",
   },
   au: {
     label: "Start here",
-    body: "Have a chat — no obligation, no lock-in.",
+    body: "Have a chat - obligation free, no lock-in.",
   },
 } as const;
 
 /**
- * US media / client-logo wishlist — NOT live until verified assets land.
+ * US media / client-logo wishlist - NOT live until verified assets land.
  * Tracked on Launch Control checklist + TRUST-PROOF.md.
  */
 export const TRUST_ASSET_WISHLIST = [
-  "US-recognizable press logos (Inc, Entrepreneur, Business Insider, local biz press) — only if VC was actually featured",
+  "US-recognizable press logos (Inc, Entrepreneur, Business Insider, local biz press) - only if VC was actually featured",
   "Authorized client logos from active US accounts (written OK from VC / client)",
   "Video testimonials with face + name + company + outcome",
-  "Any Fortune-level marks only with explicit authorization — never invent",
+  "Any Fortune-level marks only with explicit authorization - never invent",
 ] as const;
 
 export function clientMarksForMarket(market: "us" | "au"): readonly ClientMark[] {
@@ -362,7 +362,7 @@ export function clientMarksForMarket(market: "us" | "au"): readonly ClientMark[]
 /**
  * Press + awards actually claimed on virtualcoworker.com ("Featured In:").
  * Artwork mirrored into /public/brand/trust from the company's own media library.
- * Display-only — no outbound links (George: keep visitors on this host).
+ * Display-only - no outbound links (George: keep visitors on this host).
  */
 export type PressMark = {
   id: string;
@@ -378,7 +378,7 @@ export type PressMark = {
 
 export const PRESS_MARKS: readonly PressMark[] = [
   {
-    // Braden Yuill — Forbes Business Council (only US-recognizable press we can verify).
+    // Braden Yuill - Forbes Business Council (only US-recognizable press we can verify).
     id: "forbes",
     src: "/brand/badge-forbes-navy.webp",
     alt: "Forbes Business Council",
@@ -389,7 +389,7 @@ export const PRESS_MARKS: readonly PressMark[] = [
   {
     id: "clutch-us",
     src: "/brand/trust/badge-clutch-us-2024.webp",
-    alt: "Clutch top virtual assistant company — United States 2024",
+    alt: "Clutch top virtual assistant company - United States 2024",
     note: "Award",
     markets: ["us", "au"],
   },
@@ -403,12 +403,12 @@ export const PRESS_MARKS: readonly PressMark[] = [
   {
     id: "anthill",
     src: "/brand/trust/press-anthill.svg",
-    alt: "Anthill Cool Company Awards — Top 100",
+    alt: "Anthill Cool Company Awards - Top 100",
     note: "Award",
     markets: ["us", "au"],
   },
   {
-    // Logo only in Featured In (George 2026-08-09) — no separate Reviews card.
+    // Logo only in Featured In (George 2026-08-09) - no separate Reviews card.
     // Rating lives in TRUST_PROOF / docs; not printed under the mark.
     id: "trustpilot",
     src: "/brand/trust/press-trustpilot.svg",
@@ -418,7 +418,7 @@ export const PRESS_MARKS: readonly PressMark[] = [
     markets: ["us"],
   },
   {
-    // Official VC “Featured In” row. SMH is AU-only — not a US press mark.
+    // Official VC “Featured In” row. SMH is AU-only - not a US press mark.
     id: "smh",
     src: "/brand/trust/press-smh.webp",
     alt: "The Sydney Morning Herald",
@@ -452,7 +452,7 @@ export const PRESS_MARKS: readonly PressMark[] = [
     markets: ["us", "au"],
   },
   {
-    // Industry directory — logo in Featured In (George 2026-08-09). US home pack.
+    // Industry directory - logo in Featured In (George 2026-08-09). US home pack.
     id: "outsource-accelerator",
     src: "/brand/trust/press-outsource-accelerator.svg",
     alt: "Outsource Accelerator",
@@ -461,7 +461,7 @@ export const PRESS_MARKS: readonly PressMark[] = [
     markets: ["us"],
   },
   {
-    // Platform directory presence — Featured In wordmark, not a social box.
+    // Platform directory presence - Featured In wordmark, not a social box.
     id: "zoho",
     src: "/brand/trust/press-zoho.svg",
     alt: "Zoho",
@@ -482,9 +482,9 @@ export type FooterSocialMark = {
 };
 
 /**
- * Footer social / directory boxes — display only. No href field on purpose.
+ * Footer social / directory boxes - display only. No href field on purpose.
  * George 2026-08-09: LinkedIn, Indeed, Facebook, Instagram, ZipRecruiter, Glassdoor
- * at the bottom — grayed logos only so they read as non-clickable.
+ * at the bottom - grayed logos only so they read as non-clickable.
  * Glassdoor recommend % stays in TRUST_PROOF / docs (not on-page caption).
  * Provenance (TRUST-PROOF.md only, never rendered):
  *   linkedin.com/company/virtualcoworker
@@ -501,7 +501,7 @@ export const FOOTER_SOCIAL_MARKS: readonly FooterSocialMark[] = [
 ];
 
 /**
- * Industry pain→gain stats — primary published sources only.
+ * Industry pain→gain stats - primary published sources only.
  * Numbers checked against Deloitte GOS 2024 PDF, Stanford/Nature 2024, BLS OOH May 2024.
  */
 export type IndustryStat = {
@@ -522,7 +522,7 @@ export const INDUSTRY_STATS: readonly IndustryStat[] = [
     id: "deloitte-talent",
     figure: "42%",
     headline: "of companies hire offshore for better people",
-    body: "That’s now the #1 reason they outsource — ahead of chasing the lowest price.",
+    body: "That’s now the #1 reason they outsource - ahead of chasing the lowest price.",
     sourceLabel: "Deloitte Global Outsourcing Survey 2024",
   },
   {
@@ -551,7 +551,7 @@ export const INDUSTRY_STATS: readonly IndustryStat[] = [
     id: "deloitte-front-office",
     figure: "50%",
     headline: "also send sales and marketing overseas",
-    body: "Half of companies offshore sales, marketing, or product work — not only back-office.",
+    body: "Half of companies offshore sales, marketing, or product work - not only back-office.",
     sourceLabel: "Deloitte Global Outsourcing Survey 2024",
     markets: ["au"],
   },
@@ -574,7 +574,7 @@ export type NavItem = {
   primary?: boolean;
 };
 
-/** Market-scoped primary nav — never US · AU · Careers as peer equals. */
+/** Market-scoped primary nav - never US · AU · Careers as peer equals. */
 export function navForSurface(surface: SiteSurface): NavItem[] {
   if (surface === "ph") {
     return [

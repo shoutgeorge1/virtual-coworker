@@ -9,15 +9,27 @@
 
 ## Next Editor step (after Get recent changes)
 
-**USA — agency-intent Exact adds (one step):**
+**Sitelinks — US + AU (2026-08-10): DONE via API** (6 calls). Do not re-import the sitelink CSVs.
 
-In Google Ads Editor, select the **USA** account (`496-715-1855`), then **Import** → choose file:
+Walkthrough / record: `ads-launch/SITELINK-ADD-2026-08-10.md`
 
-`/Users/george/Developer/virtual-coworker/ads-launch/google-ads-editor-agency-intent-keywords-add.csv`
+**USA — semantic Exact ad groups (2026-08-09):**
 
-Review the new Exact keywords (Comment = agency-intent). **Keyword Status stays Paused.** Campaign/Ad Group Status columns are blank on purpose so live Enabled campaigns are not paused. Do **not** Enable keywords until George says.
+Full walkthrough: `ads-launch/SEMANTIC-ADGROUPS-2026-08-09.md`
 
-(AU rows are in the same file — import AU later the same way if you want parity.)
+1. Import `google-ads-editor-semantic-adgroups-add-us.csv` (4 new Paused AGs + Exact + RSAs)
+2. Import `google-ads-editor-semantic-adgroups-pause-dupes-us.csv` (pause overlapping Exact in old AGs)
+3. Review locally → Post (still Paused) → Enable one AG at a time (`Staffing_Agency_PH` first)
+
+Campaign Status blank on purpose (live-US-safe). Exact only. No wipe of existing inventory.
+
+**Quiz LP Search (2026-08-09, Paused — review before Import):**
+
+Sheet: `ads-launch/QUIZ-ADS-PACKAGE-2026-08-09.md`  
+CSVs: `google-ads-editor-quiz-import-us.csv` / `-au.csv` + quiz campaign-negatives MMC.  
+Campaigns: `VC_US_S_QUIZ` / `VC_AU_S_QUIZ` → Final URL `/us/quiz` `/au/quiz`. Enable only when George says.
+
+**Prior add (still valid if not posted):** agency-intent Exact keywords → `google-ads-editor-agency-intent-keywords-add.csv` (many of those terms are now concentrated into the new semantic AGs — prefer the semantic package).
 
 ---
 
@@ -31,7 +43,7 @@ Review the new Exact keywords (Comment = agency-intent). **Keyword Status stays 
 | RSAs | 116 (full 15/4 — no blanks) |
 | Unique negatives | 183 curated Broad (+ US-only `VC_Neg_JobSeekers_Live` Phrase) |
 | Final URLs | `www.virtualcoworker.app/us\|au` + `/us\|au/{category}` (no WP) |
-| US phone (site + Call asset ops) | **310-730-9126** primary (George 2026-08-10; 888 paused — see `DECISIONS.md`) |
+| US phone (site + Call asset ops) | **888-964-8644** primary (George 2026-08-10 restore — see `DECISIONS.md`) |
 | AU phone | **None** — form primary (locked; no Call asset in AU CSV) |
 | Careers URL | `/ph` via `NEXT_PUBLIC_CAREERS_URL` (locked for Stage 1) |
 | Lead QA | `ALLOW_LOG_ONLY_LEADS=true` — TEMPORARY logs only; Zoho access ≠ integration |

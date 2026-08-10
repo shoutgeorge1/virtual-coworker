@@ -32,8 +32,16 @@
       color: var(--muted);
       font-weight: 700;
     }
-    .ok { color: #166534; font-weight: 600; }
-    .miss { color: #92400e; font-weight: 600; }
+    .ok, .miss {
+      display: inline-block;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+    }
+    .ok { color: #14532d; background: #bbf7d0; border: 1px solid #16a34a; }
+    .miss { color: #9a3412; background: #fed7aa; border: 1px solid #ea580c; }
     .order {
       margin: 1rem 0 0;
       padding: 0.75rem 0.9rem;
@@ -58,7 +66,7 @@
     <main class="main">
       <header class="trk-top">
         <h1>Tracking</h1>
-        <p>What’s live vs still open. Details on the Checklist.</p>
+        <p>What’s live vs still open. Don’t jump to CRM first. Full list on the Checklist.</p>
       </header>
 
       <section class="panel">
@@ -76,8 +84,8 @@
             </thead>
             <tbody>
               <tr>
-                <td>Phone on site</td>
-                <td class="ok">Live · 888</td>
+                <td>Phone on site + Call ads</td>
+                <td class="ok">Live · 888-964-8644</td>
                 <td class="ok">Live · 1300</td>
               </tr>
               <tr>
@@ -110,9 +118,10 @@
           <div class="order">
             <strong>Do next</strong>
             <ol>
-              <li>Get onto conversions soon — phone click · 60s+ · employer form</li>
-              <li>Australia ad-call + GTM/GA4</li>
-              <li>Then Zoho → Job Order → Placement</li>
+              <li>Daily: clear Google Ads recommendations + search terms</li>
+              <li>Site tests + GA so A/B pages can be measured</li>
+              <li>Australia visit tags + calls from ads</li>
+              <li>Then website calls 60+ seconds · then CRM</li>
             </ol>
             <p style="margin:0.55rem 0 0;font-size:0.86rem;color:var(--muted)">
               Full steps → <a href="launch-control.html">Checklist</a>
@@ -122,6 +131,6 @@
       </section>
     </main>
   </div>
-  <script src="nav.js?v=20260809d"></script>
+  <script src="nav.js?v=20260810b"></script>
 </body>
 </html>

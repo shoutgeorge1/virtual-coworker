@@ -260,17 +260,18 @@
       <header class="exec-top">
         <h1>Search ads — how we’re doing</h1>
         <p class="one-liner" id="exec-honesty">
-          US Search is live. AU waiting on traffic. Next: get onto conversions soon.
+          US and Australia Search are live. Paying per click until call tracking is trusted.
         </p>
         <p class="when" id="exec-updated">Loading…</p>
       </header>
 
       <section class="exec-open" aria-labelledby="open-hd">
-        <h2 id="open-hd">Still to finish</h2>
+        <h2 id="open-hd">Priorities</h2>
         <ol id="next-list">
-          <li><strong>Get onto conversions soon</strong> — phone click · 60s+ · employer form</li>
-          <li><strong>Australia</strong> — ad-call + GTM/GA4 still a gap</li>
-          <li><strong>Then Zoho</strong> → Job Order → Placement</li>
+          <li><strong>Daily</strong> — clear Google Ads recommendations + review search terms</li>
+          <li><strong>Site tests</strong> — connect GA so A/B pages can be measured</li>
+          <li><strong>Australia</strong> — visit tags + calls from ads</li>
+          <li><strong>Then</strong> website calls 60+ seconds · then CRM</li>
         </ol>
       </section>
 
@@ -296,7 +297,7 @@
               <p class="val" id="us-cpc">—</p>
             </div>
           </div>
-          <p id="us-blurb">~$125/day. Brand off. Get onto conversions soon.</p>
+          <p id="us-blurb">About $125/day plan. Phone 888-964. Brand ads off.</p>
         </article>
         <article class="market open" id="market-au">
           <p class="where">Australia</p>
@@ -319,17 +320,17 @@
               <p class="val" id="au-cpc">—</p>
             </div>
           </div>
-          <p id="au-blurb">1300 886 740 · GBP 4.8★. Voicemail still Alex. Form chips live.</p>
+          <p id="au-blurb">Phone 1300. New Search live.</p>
         </article>
       </div>
 
       <p class="exec-money" id="money-line">
-        <strong>Daily budgets:</strong> US ~$125 · Australia live · waiting on traffic
+        <strong>Daily budgets:</strong> US ~$125 · Australia live
       </p>
 
       <section class="exec-insights" aria-label="Insights">
         <article class="insight-card" id="insight-read">
-          <h2>What the numbers mean</h2>
+          <h2>Insights</h2>
           <ul id="insight-list">
             <li>Loading…</li>
           </ul>
@@ -338,11 +339,12 @@
           <article class="insight-card">
             <h2>Ad copy that’s working</h2>
             <ul id="theme-list">
-              <li>Hire Filipino / Philippines VA</li>
-              <li>Dedicated seat — not a marketplace gig</li>
-              <li>You interview the shortlist</li>
+              <li>Hire a Filipino / Philippines VA — employer copy</li>
+              <li>You interview. You pick.</li>
+              <li>Dedicated teammate, not a gig marketplace</li>
+              <li>Agency / firm / company</li>
             </ul>
-            <p class="muted-note" id="theme-note">Ops read of RSA themes — not an Ads ranking export.</p>
+            <p class="muted-note" id="theme-note">What’s in the live US ads.</p>
           </article>
           <article class="insight-card">
             <h2>Landing page highlights</h2>
@@ -370,7 +372,7 @@
         </div>
         <div class="panel-bd">
           <p class="muted" style="margin:0 0 0.55rem;font-size:0.86rem" id="camp-window">
-            Last 7 days from Google Ads. Conversion scores not here yet.
+            New Search only (VC_*). Last 7 days. Conversion scores not here yet.
           </p>
           <div class="tbl-wrap">
             <table class="exec-tbl" id="camp-table">
@@ -437,7 +439,7 @@
     </main>
   </div>
 
-  <script src="nav.js?v=20260809d"></script>
+  <script src="nav.js?v=20260810b"></script>
   <script>
     (function () {
       function money(n) {
@@ -536,8 +538,11 @@
           var op = data.operator || {};
           var us = data.performance_us || data.performance || {};
           var au = data.performance_au || {};
-          var usCamps = us.campaigns || [];
-          var auCamps = au.campaigns || [];
+          function isVc(c) {
+            return /^VC_(US|AU)_/.test((c && c.name) || "");
+          }
+          var usCamps = (us.campaigns || []).filter(isVc);
+          var auCamps = (au.campaigns || []).filter(isVc);
           var usW = weekTotals(usCamps);
           var auW = weekTotals(auCamps);
 
@@ -566,14 +571,7 @@
           document.getElementById("au-status").textContent = marketHeadline(auCamps, auW, "AU");
           var auBlurb = document.getElementById("au-blurb");
           if (auBlurb && auW.cost > 0) {
-            var leg = au.totals_legacy_last_7_days || {};
-            var s1 = au.totals_stage1_last_7_days || {};
-            auBlurb.textContent =
-              "Last 7d: legacy ~$" +
-              Math.round(Number(leg.cost_usd || auW.cost)) +
-              " · Stage 1 VC_AU ~$" +
-              Math.round(Number(s1.cost_usd || 0)) +
-              ". 1300 still Alex.";
+            auBlurb.textContent = "Phone 1300. New Search live.";
           }
 
           if (op.insights && op.insights.length) {
@@ -624,7 +622,7 @@
           }
 
           document.getElementById("camp-window").textContent =
-            "Last 7 days from Google Ads. Conversion scores not here yet.";
+            "New Search only (VC_*). Last 7 days. Conversion scores not here yet.";
 
           var allCamps = []
             .concat(usCamps.map(function (c) { return Object.assign({ _market: "US" }, c); }))
@@ -637,6 +635,10 @@
               .map(function (c) {
                 var m = c.last_7_days || {};
                 var nice = (c.name || "")
+                  .replace(/^VC_US_S_CORE$/, "US Core Search")
+                  .replace(/^VC_US_S_ROLES$/, "US Role Search")
+                  .replace(/^VC_AU_S_CORE$/, "AU Core Search")
+                  .replace(/^VC_AU_S_ROLES$/, "AU Role Search")
                   .replace(/^VC_US_S_/, "US ")
                   .replace(/^VC_AU_S_/, "AU ");
                 return (

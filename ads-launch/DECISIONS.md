@@ -37,23 +37,22 @@ Past burn: agents launched ~8 campaigns + many AGs via API and burned developer-
 - Aligns with Brand deferred hard rule above.
 - Stakeholder follow-up email (**Brand paused + phone tracking**) **sent** 2026-08-07 to Braden / Caitlin / Cheyenne (CC George).
 
-## US phone / Call assets (LOCKED — 2026-08-10 · George override)
+## US phone / Call assets (LOCKED — 2026-08-10 · George restore)
 
 **Phone = guiding light** until Zoho offline “qualified lead” is ready. USA Search stays **Maximize Clicks** while campaigns season. Primary: ~60s call from ads. Secondary: website phone taps. Forms useful but not driving the account (spam/bot risk).
 
-**George override 2026-08-10:** pause **888**. Microsite + US Call use **310-730-9126**. The 2026-08-07 888-954 lock is **superseded**.
+**George restore 2026-08-10 (later):** verified US line is **888-964-8644** / `tel:+18889648644`. The same-day 310 swap is **superseded**. 888-954 and 888-864 are wrong — never publish.
 
 | Number | Role | Do | Do not |
 |--------|------|----|--------|
-| **310-730-9126** | US site + Call asset (**primary**, George 2026-08-10) | Use on website (`NEXT_PUBLIC_US_PHONE` / site defaults `(310) 730-9126` / `tel:3107309126`) **and** on `VC_US_S_CORE` / `VC_US_S_ROLES` Call assets. | Do not put 888 back on the microsite. |
-| **888-954-8644** | **Paused** (was site + Ads Call 2026-08-07) | Pause 888 in Ads. Leave off microsite. | Do not treat as the live buyer number. |
-| **888-964-8644** | **WP landmine** | Still on WordPress `virtualcoworker.com` contact (we don’t own that deploy). Routes to a **medical-alert IVR**. | Do not use on microsite or Ads. Do not “fix” WP from this repo. |
+| **888-964-8644** | US site + Call asset (**primary**, George 2026-08-10 restore) | Use on website (`NEXT_PUBLIC_US_PHONE` / site defaults `(888) 964-8644` / `tel:+18889648644`) **and** on `VC_US_S_CORE` / `VC_US_S_ROLES` Call assets. Reuse existing asset `49435983302`. | Do not publish 888-864-8644 or 888-954-8644. |
+| **310-730-9126** | **Not public** (mistaken morning swap) | Leave library asset; unlink from VC_US_* serving scopes. | Do not use as the public US number on microsite or ads. |
+| **888-954-8644** | **Wrong — never publish** | Leave unlinked. | Do not treat as the live buyer number. |
 
 ### Later / ops (open)
 
-- **888 paused** on pages we control (George 2026-08-10). WP **964** landmine remains until VC owns that deploy.
-- Phone-tree soft ask on 888 is moot for the microsite; **310** is the live US line.
-- Stakeholder emails **sent** 2026-08-07 (phone-tree ask + Brand/phone follow-up) — historical; 888 no longer the microsite number.
+- **888-964-8644** is the live US line on pages we control (George 2026-08-10 restore).
+- Stakeholder emails **sent** 2026-08-07 (phone-tree ask + Brand/phone follow-up) — historical.
 
 ### Measurement (2026-08-07)
 
@@ -147,7 +146,7 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | **Measurement** | **Separate GTM + GA4 per market** | `GTM_US` / `GTM_AU` (+ `GTM_PH` if needed) even on one host — audiences/conversions must not contaminate. |
 | **Activation priority** | **PH / Filipino / offshore long-tail first** | Source of truth: `PHASED-ACTIVATION.md`. Phase by **intent quality**, not “Core then Digital/Social/Admin.” Bookkeeping/accounting with strong PH long-tail = Phase 1. Generic Core heads = Phase 3 / later. |
 | **AU phone** | Form-primary only | No `NEXT_PUBLIC_AU_PHONE`. No fake AU number. |
-| **US phone (site + Ads)** | `(310) 730-9126` / `tel:3107309126` | **Primary (George 2026-08-10).** 888 paused. 888-964 is a WP landmine (medical-alert IVR) — we don’t own `virtualcoworker.com` deploy. AU stays **1300 886 740**. |
+| **US phone (site + Ads)** | `(888) 964-8644` / `tel:+18889648644` | **Primary (George 2026-08-10 restore).** Never 888-864 or 888-954. 310 is not the public US number. AU stays **1300 886 740**. |
 | **Careers URL** | `/ph` (PH microsite) | Internal job-seeker exit. **Never** WordPress. Env WP hosts rejected. |
 | **Lead delivery** | Real channel required for **TRAFFIC READY** | `ALLOW_LOG_ONLY_LEADS=true` = **explicit blocked mode** — QA logs only, `conversion_eligible=false`, not TRAFFIC READY. Zoho CRM = **CRM READY** parallel track (not a traffic gate). |
 | **Exit-intent** | Off unless `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true` | Frequency-capped once/session. No fake live chat. |

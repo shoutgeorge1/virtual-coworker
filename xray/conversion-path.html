@@ -61,11 +61,11 @@
       border: 1px solid var(--edge);
       flex-shrink: 0;
     }
-    .cp-swatch.soon { background: var(--tint-green-hd); border-color: var(--tint-green-edge); }
-    .cp-swatch.better { background: #cfe8d6; border-color: #3d9a62; }
-    .cp-swatch.spam { background: var(--tint-amber-hd); border-color: var(--tint-amber-edge); }
-    .cp-swatch.later { background: var(--tint-cool-hd); border-color: var(--tint-cool-edge); }
-    .cp-swatch.dump { background: var(--tint-rose-hd); border-color: var(--tint-rose-edge); }
+    .cp-swatch.soon { background: #86efac; border-color: #16a34a; }
+    .cp-swatch.better { background: #4ade80; border-color: #15803d; }
+    .cp-swatch.spam { background: #fdba74; border-color: #ea580c; }
+    .cp-swatch.later { background: #fcd34d; border-color: #d97706; }
+    .cp-swatch.dump { background: #f87171; border-color: #dc2626; }
 
     .flow-board {
       background: #fff;
@@ -89,15 +89,15 @@
       padding: 0.6rem 0.75rem 0.68rem;
       min-width: 0;
     }
-    .fbox.live { border-color: #8fbf9a; background: var(--tint-green); }
+    .fbox.live { border-color: #16a34a; background: #dcfce7; }
     .fbox.star {
-      border-color: #3d9a62;
-      background: var(--tint-green);
-      box-shadow: 0 0 0 3px rgba(45, 138, 78, 0.1);
+      border-color: #15803d;
+      background: #bbf7d0;
+      box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.22);
     }
-    .fbox.dump { border-color: #d4a8ae; background: var(--tint-rose); }
-    .fbox.form { border-color: var(--tint-cool-edge); background: var(--tint-cool); }
-    .fbox.later { border-color: var(--tint-amber-edge); background: var(--tint-amber); }
+    .fbox.dump { border-color: #dc2626; background: #fecaca; }
+    .fbox.form { border-color: #2563eb; background: #dbeafe; }
+    .fbox.later { border-color: #d97706; background: #fde68a; }
     .fbox.stop { border-style: dashed; }
 
     .fbox .role {
@@ -154,10 +154,10 @@
       color: var(--ink);
       white-space: nowrap;
     }
-    .chip.soon { border-color: var(--tint-green-edge); background: var(--tint-green-hd); color: #166534; }
-    .chip.better { border-color: #3d9a62; background: #dff0e5; color: #14532d; }
-    .chip.spam { border-color: var(--tint-amber-edge); background: var(--tint-amber-hd); color: #92400e; }
-    .chip.later { border-color: var(--tint-cool-edge); background: var(--tint-cool-hd); color: #334155; }
+    .chip.soon { border-color: #16a34a; background: #bbf7d0; color: #14532d; }
+    .chip.better { border-color: #15803d; background: #86efac; color: #14532d; }
+    .chip.spam { border-color: #ea580c; background: #fed7aa; color: #9a3412; }
+    .chip.later { border-color: #d97706; background: #fde68a; color: #92400e; }
 
     .risk-line {
       margin: 0.4rem 0 0;
@@ -318,47 +318,46 @@
     }
   </style>
 </head>
-<body data-page="conversion-path.html" data-foot="Flowchart · get onto conversions soon">
+<body data-page="conversion-path.html" data-foot="How a click becomes a hire">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
     <main class="main">
       <header class="cp-head">
-        <p class="kicker">Strategy · not a live Ads change</p>
-        <h1>Conversion path</h1>
-        <p>Get onto conversions soon. Real employers only — not job seekers.</p>
+        <p class="kicker">Plain English · not a bidding change</p>
+        <h1>How a click becomes a hire</h1>
+        <p>Someone searches. They land on our hiring pages. We only count real employers. Job seekers go elsewhere. We’re still paying for clicks until phone conversations are trustworthy.</p>
       </header>
 
       <p class="sr-only">
-        Paid Search VC_US and VC_AU goes to employer landing pages. Switch bidding to conversions soon.
-        Early signals: phone click (weakest, fastest), 60 second plus call (better), employer form with size and seats value (spam risk).
-        Job seekers dump to virtualcoworker.com.ph and never count.
-        Thank-you is call or book consult. Click is not booked. Booked consult is later and stronger.
-        Then Zoho qualify to Job Order to Placement. CRM value overrides website estimate.
-        Risk: about one human answering. AU 1300 still says Alex. If nobody answers, phone-click conversions can lie.
-        Brand deferred. Quiz about 70 percent not on this live path.
+        Google ads send employers to hiring pages. Stay on pay-per-click until real phone conversations are trusted.
+        A tap on the number is a weak signal. A call over 60 seconds is better. A form can be spam.
+        Job seekers go to the Philippines careers site and never count as a win.
+        Thank-you page: call again or book a chat. Opening the calendar is not a booked meeting.
+        Later, sales marks a real lead in Zoho, then job order, then hire.
+        US phone is 888-964. Australia is 1300. If nobody answers, tap-to-call can lie.
       </p>
 
       <ul class="cp-legend" aria-label="Legend">
-        <li><i class="cp-swatch soon" aria-hidden="true"></i> Ads counts this soon</li>
-        <li><i class="cp-swatch better" aria-hidden="true"></i> better signal</li>
-        <li><i class="cp-swatch spam" aria-hidden="true"></i> spam risk</li>
-        <li><i class="cp-swatch later" aria-hidden="true"></i> later</li>
-        <li><i class="cp-swatch dump" aria-hidden="true"></i> never / dump</li>
+        <li><i class="cp-swatch soon" aria-hidden="true"></i> We can count this soon</li>
+        <li><i class="cp-swatch better" aria-hidden="true"></i> Better (a real conversation)</li>
+        <li><i class="cp-swatch spam" aria-hidden="true"></i> Spam risk</li>
+        <li><i class="cp-swatch later" aria-hidden="true"></i> Later</li>
+        <li><i class="cp-swatch dump" aria-hidden="true"></i> Never a win</li>
       </ul>
 
       <section class="flow-board" aria-label="Conversion path flowchart">
         <div class="flow-center">
           <article class="fbox live">
-            <p class="role">Now clicks · switch soon</p>
-            <h2>Paid Search</h2>
+            <p class="role">Right now</p>
+            <h2>They click a Google ad</h2>
             <ul>
-              <li><strong>VC_US_*</strong> / <strong>VC_AU_*</strong></li>
-              <li>Max Clicks now</li>
-              <li>Switch bidding to conversions soon</li>
+              <li>US + Australia Search</li>
+              <li>We pay per click for now</li>
+              <li>Don’t switch to “optimize for conversions” until phone is trusted</li>
             </ul>
             <p class="links">
               <a href="launch-control.html">Checklist</a>
-              · Brand deferred
+              · Brand ads are off
             </p>
           </article>
 
@@ -369,17 +368,18 @@
           </div>
 
           <article class="fbox live">
-            <p class="role">Traffic</p>
-            <h2>Employer LP</h2>
+            <p class="role">They land here</p>
+            <h2>Hiring pages</h2>
             <ul>
-              <li>Hire-side pages only</li>
+              <li>Pages for businesses hiring a VA</li>
+              <li>Not the old WordPress site</li>
             </ul>
             <p class="links">
-              <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us</a>
+              <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">US</a>
               ·
-              <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>
+              <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">Australia</a>
               ·
-              <a href="landing-pages.html">all LPs</a>
+              <a href="landing-pages.html">all pages</a>
             </p>
           </article>
         </div>
@@ -394,7 +394,7 @@
           </div>
           <div class="fork-leg live">
             <i class="shaft"></i>
-            <span class="cap">Ads counts this soon</span>
+            <span class="cap">call or form</span>
             <i class="head"></i>
           </div>
           <div class="fork-leg form">
@@ -407,87 +407,87 @@
         <div class="trio">
           <div class="col">
             <article class="fbox dump">
-              <p class="role">Never</p>
-              <h2>Job seeker</h2>
+              <p class="role">Wrong person</p>
+              <h2>Looking for a job?</h2>
               <ul>
-                <li>Dump to <code>.ph</code></li>
-                <li>Never a conversion</li>
+                <li>Sent to the PH careers site</li>
+                <li>Never a win for ads</li>
               </ul>
             </article>
             <div class="farrow dump">
               <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">DEAD END</span>
+              <span class="cap">STOP</span>
               <i class="head" aria-hidden="true"></i>
             </div>
             <article class="fbox dump stop">
-              <p class="role">Dump</p>
+              <p class="role">Careers site</p>
               <h2>virtualcoworker.com.ph</h2>
               <ul>
-                <li>Back does not return to LP</li>
+                <li>Back button doesn’t return them here</li>
               </ul>
               <p class="links">
-                <a href="https://virtualcoworker.com.ph" target="_blank" rel="noopener">Open .ph</a>
+                <a href="https://virtualcoworker.com.ph" target="_blank" rel="noopener">Open careers</a>
               </p>
             </article>
           </div>
 
           <div class="col">
             <article class="fbox star">
-              <p class="role">Call</p>
-              <h2>Phone</h2>
+              <p class="role">Best early win</p>
+              <h2>They call</h2>
               <ul>
-                <li><span class="chip soon">Ads counts this soon</span> Phone click — weakest, fastest</li>
-                <li><span class="chip better">better signal</span> 60s+ connected call</li>
+                <li><span class="chip soon">We can count this soon</span> Tap the number — fast, weak</li>
+                <li><span class="chip better">Better</span> Real conversation, 60+ seconds</li>
               </ul>
-              <p class="risk-line">Risk: ~1 human · AU 1300 still Alex · if nobody answers, phone-click can lie</p>
+              <p class="risk-line">If nobody answers, a tap still “counts.” AU 1300 voicemail still says Alex.</p>
               <p class="links">
-                <strong>888</strong> US · <strong>1300</strong> AU
+                US <strong>888-964</strong> · AU <strong>1300</strong>
               </p>
             </article>
             <div class="farrow later dash grow">
               <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">later if they qualify</span>
+              <span class="cap">later if they’re real</span>
               <i class="head" aria-hidden="true"></i>
             </div>
           </div>
 
           <div class="col">
             <article class="fbox form">
-              <p class="role">Early conversion</p>
-              <h2>Employer form</h2>
+              <p class="role">Also useful early</p>
+              <h2>They fill the form</h2>
               <ul>
-                <li>Size + seats chips → modeled value</li>
-                <li>Not flat $1</li>
-                <li><span class="chip spam">spam risk</span> still usable early</li>
+                <li>Company size + how many seats</li>
+                <li>Goes to us@ / apac@</li>
+                <li><span class="chip spam">Spam risk</span> still worth watching</li>
               </ul>
               <p class="links">
-                <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">/us#gate</a>
+                <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">US form</a>
                 ·
-                <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au#gate</a>
+                <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">AU form</a>
               </p>
             </article>
             <div class="farrow form">
               <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">submit</span>
+              <span class="cap">thanks</span>
               <i class="head" aria-hidden="true"></i>
             </div>
             <article class="fbox form">
-              <p class="role">Thank-you</p>
-              <h2>Call or book</h2>
+              <p class="role">Thank-you page</p>
+              <h2>Call or book a chat</h2>
               <ul>
-                <li>Call again — same phone rules</li>
-                <li>Book consult — <strong>click ≠ booked</strong></li>
-                <li><span class="chip later">later</span> booked = stronger</li>
+                <li>Call again — same 888-964 / 1300 rules</li>
+                <li>Open the calendar ≠ they booked</li>
+                <li><span class="chip later">Later</span> a real booked meeting is stronger</li>
               </ul>
               <p class="links">
-                <a href="https://www.virtualcoworker.app/thank-you?market=us&amp;eligible=1" target="_blank" rel="noopener">TY US</a>
+                <a href="https://www.virtualcoworker.app/thank-you?market=us&amp;eligible=1" target="_blank" rel="noopener">Thank-you US</a>
                 ·
-                <a href="https://www.virtualcoworker.app/thank-you?au" target="_blank" rel="noopener">TY AU</a>
+                <a href="https://www.virtualcoworker.app/thank-you?au" target="_blank" rel="noopener">Thank-you AU</a>
               </p>
             </article>
             <div class="farrow later dash grow">
               <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">booked → later</span>
+              <span class="cap">if they book</span>
               <i class="head" aria-hidden="true"></i>
             </div>
           </div>
@@ -495,14 +495,15 @@
 
         <div class="later-row">
           <article class="fbox later">
-            <p class="role">Later · higher confidence</p>
-            <h2>Zoho → Job Order → Placement</h2>
+            <p class="role">Later · when sales is sure</p>
+            <h2>Real lead → job order → hire</h2>
             <ul>
-              <li>Offline Ads signals — not live yet</li>
-              <li>CRM value overrides website estimate</li>
+              <li>Someone in Zoho marks “this is a real employer”</li>
+              <li>That dollar amount beats the website guess</li>
+              <li>Not live yet — after phone + Australia tags</li>
             </ul>
             <p class="links">
-              <a href="lead-routing.html">Lead routing</a>
+              <a href="lead-routing.html">Who gets the lead</a>
               ·
               <a href="tracking.html">Tracking</a>
               ·
@@ -514,9 +515,9 @@
 
       <div class="offpath">
         <ul>
-          <li><strong>Not on this path:</strong> Brand (deferred) · Quiz ~70%, paused, rework later</li>
-          <li><strong>Tags:</strong> US GTM/GA4 on · AU GTM still a gap</li>
-          <li>No invented conversion counts. Editor / George Enable only — not API.</li>
+          <li><strong>Not this path:</strong> Brand ads (off) · the quiz (paused, ~70%) · 888 on their old website (we asked)</li>
+          <li><strong>Tracking:</strong> US visit tags on · Australia visit tags still missing</li>
+          <li>We don’t invent conversion counts. George turns ads on — not the API.</li>
         </ul>
       </div>
 
@@ -528,6 +529,6 @@
       </div>
     </main>
   </div>
-  <script src="nav.js?v=20260809d"></script>
+  <script src="nav.js?v=20260810b"></script>
 </body>
 </html>
