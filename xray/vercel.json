@@ -25,6 +25,8 @@
     { "source": "/site-tests", "destination": "/experiments", "permanent": false },
     { "source": "/site-experiments", "destination": "/experiments", "permanent": false },
     { "source": "/funnel", "destination": "/conversion-path", "permanent": false },
-    { "source": "/funnel.html", "destination": "/conversion-path", "permanent": false }
+    { "source": "/funnel.html", "destination": "/conversion-path", "permanent": false },
+    { "source": "/os", "destination": "/growth-os", "permanent": false },
+    { "source": "/growth", "destination": "/growth-os", "permanent": false }
   ]
 }

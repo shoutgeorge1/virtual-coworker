@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Daily watch · Virtual Coworker Search Pilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="daily-watch.html"] .main { max-width: 720px; }
+
+    .dw-status {
+      margin: 0 0 1.1rem;
+      padding: 1rem 1.15rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+    }
+    .dw-status.ok {
+      border-color: var(--tint-green-edge);
+      background: var(--tint-green);
+    }
+    .dw-status.attn {
+      border-color: var(--tint-amber-edge);
+      background: var(--tint-amber);
+    }
+    .dw-status.warn {
+      border-color: var(--tint-rose-edge);
+      background: var(--tint-rose);
+    }
+    .dw-status .kicker {
+      margin: 0 0 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .dw-status h2 {
+      margin: 0 0 0.55rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .dw-status .quiet {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: var(--body);
+    }
+    .dw-status ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .dw-status li {
+      position: relative;
+      margin: 0 0 0.4rem;
+      padding: 0.45rem 0.65rem 0.45rem 1.35rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      font-size: 0.93rem;
+      line-height: 1.4;
+      color: var(--body);
+    }
+    .dw-status li:last-child { margin-bottom: 0; }
+    .dw-status li::before {
+      content: "";
+      position: absolute;
+      left: 0.55rem;
+      top: 0.85rem;
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 50%;
+      background: #c47a1a;
+    }
+    .dw-status.ok li::before { background: #2f7a4a; }
+    .dw-status.warn li::before { background: #b34a55; }
+
+    .dw-check {
+      margin: 0 0 1.1rem;
+      padding: 0.85rem 1.05rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel-inset);
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: var(--body);
+    }
+    .dw-check strong { color: var(--ink); }
+    .dw-check .lbl {
+      margin: 0 0 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .dw-notes {
+      margin: 0 0 1.1rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .dw-notes .panel-hd {
+      margin: 0;
+      padding: 0.85rem 1.05rem;
+      border-bottom: 1px solid var(--edge-soft);
+      background: var(--panel-inset);
+    }
+    .dw-notes .panel-hd .kicker {
+      margin: 0 0 0.2rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .dw-notes .panel-hd h2 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .dw-notes .panel-hd p {
+      margin: 0.35rem 0 0;
+      font-size: 0.85rem;
+      color: var(--body);
+      line-height: 1.4;
+    }
+
+    .dw-term-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .dw-term {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.35rem 1rem;
+      align-items: start;
+      padding: 0.75rem 1.05rem;
+      border-bottom: 1px solid var(--edge-soft);
+    }
+    .dw-term:last-child { border-bottom: 0; }
+    .dw-term .term {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+    .dw-term .meta {
+      margin: 0.25rem 0 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .dw-term .action {
+      margin: 0.3rem 0 0;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #92400e;
+    }
+    .dw-term .spend {
+      margin: 0;
+      text-align: right;
+      font-size: 1.02rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .dw-term .clicks {
+      margin: 0.15rem 0 0;
+      text-align: right;
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .dw-empty {
+      margin: 0;
+      padding: 1rem 1.05rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .dw-brand {
+      margin: 0 0 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .dw-meta {
+      margin: 0;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--edge-soft);
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body data-page="daily-watch.html" data-foot="Ops check · ≤4 GAQL">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">Ops · not Executive</p>
+        <h1>Daily watch</h1>
+        <p>
+          Cheap second pair of eyes: spend blowups and negatives to add.
+          Spend totals live on Executive — this page stays thin on purpose.
+        </p>
+        <p class="when" id="dw-updated" style="margin:0.55rem 0 0;font-size:0.82rem;color:var(--muted);font-variant-numeric:tabular-nums;">
+          Loading…
+        </p>
+      </header>
+
+      <section class="dw-status" id="dw-status" aria-live="polite">
+        <p class="kicker" id="dw-kicker">Digest</p>
+        <h2 id="dw-summary">…</h2>
+        <p class="quiet" id="dw-quiet" hidden>Quiet pull.</p>
+        <ul id="dw-bullets" hidden></ul>
+      </section>
+
+      <section class="dw-check" id="dw-va-check" hidden>
+        <p class="lbl">Check · va workers ph</p>
+        <p id="dw-va-body"></p>
+      </section>
+
+      <section class="dw-notes" aria-label="Operator notes">
+        <div class="panel-hd">
+          <p class="kicker">Search terms</p>
+          <h2>Operator notes</h2>
+          <p>Add-negative suggestions and “still spending” confirms. Not a conversion scoreboard — phone tracking isn’t trusted yet.</p>
+        </div>
+        <div id="dw-terms-body">
+          <p class="dw-empty">No pull yet.</p>
+        </div>
+      </section>
+
+      <p class="dw-brand">Brand ads deferred (Stage 1 VC_* first).</p>
+      <p class="dw-meta" id="dw-meta"></p>
+    </main>
+  </div>
+  <script src="nav.js?v=20260812-os1"></script>
+  <script>
+    (function () {
+      function money2(n) {
+        if (n == null || isNaN(n)) return "—";
+        return "$" + Number(n).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      }
+      function esc(s) {
+        return String(s == null ? "" : s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+      function fmtWhen(iso) {
+        if (!iso) return "—";
+        try {
+          var d = new Date(iso);
+          return d.toLocaleString(undefined, {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+          });
+        } catch (e) {
+          return iso;
+        }
+      }
+      function campaignShort(name) {
+        return String(name || "")
+          .replace(/^VC_(US|AU)_S_/, "")
+          .replace(/_/g, " ");
+      }
+      function noteAction(t) {
+        var kind = t.note_kind || "";
+        if (kind === "still_spending_confirm") {
+          return "Still spending on latest day — confirm pause / negative";
+        }
+        if (kind === "add_negative" || t.job_seeker_like) {
+          return "Add negative";
+        }
+        return "";
+      }
+
+      fetch("data/daily-watch.json", { cache: "no-store" })
+        .then(function (r) {
+          if (!r.ok) throw new Error("daily-watch " + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          var dig = data.digest || {};
+          var status = dig.status || "unknown";
+          var box = document.getElementById("dw-status");
+          box.classList.remove("ok", "attn", "warn");
+          if (status === "nothing_on_fire") box.classList.add("ok");
+          else if (data.hard_stop) box.classList.add("warn");
+          else box.classList.add("attn");
+
+          document.getElementById("dw-kicker").textContent =
+            data.hard_stop
+              ? "Stopped"
+              : status === "nothing_on_fire"
+                ? "Quiet"
+                : "Notes";
+          document.getElementById("dw-summary").textContent =
+            dig.summary || "No digest";
+          document.getElementById("dw-updated").innerHTML =
+            "Last pull <strong style=\"color:var(--ink);font-weight:600\">" +
+            esc(fmtWhen(data.generated_at_utc)) +
+            "</strong>";
+
+          var bullets = dig.bullets || [];
+          var ul = document.getElementById("dw-bullets");
+          var quiet = document.getElementById("dw-quiet");
+          if (bullets.length) {
+            quiet.hidden = true;
+            ul.hidden = false;
+            ul.innerHTML = bullets.map(function (b) {
+              return "<li>" + esc(b) + "</li>";
+            }).join("");
+          } else {
+            ul.hidden = true;
+            quiet.hidden = false;
+            quiet.textContent =
+              "Quiet pull. No spend blowups or open negatives on this check. " +
+              "(Thin is fine — Executive has the spend rollup.)";
+          }
+
+          var va = (data.checks || {}).va_workers_ph;
+          var vaBox = document.getElementById("dw-va-check");
+          var vaBody = document.getElementById("dw-va-body");
+          if (va) {
+            vaBox.hidden = false;
+            var bits = [];
+            if (va.verdict === "already_excluded_historical") {
+              bits.push(
+                "<strong>Already excluded</strong> — $" +
+                esc(String(va.cost_usd_7d)) +
+                " is 7-day history, not an active fire. $0 on " +
+                esc(va.focus_day || "latest day") +
+                "."
+              );
+            } else if (va.verdict === "still_spending_confirm") {
+              bits.push(
+                "<strong>Still spending</strong> on " +
+                esc(va.focus_day || "latest day") +
+                " ($" +
+                esc(String(va.cost_today)) +
+                ") — confirm pause / negative."
+              );
+            } else {
+              bits.push(
+                "Present · status " + esc(va.status || "?") +
+                " · $" + esc(String(va.cost_usd_7d)) + " 7d."
+              );
+            }
+            bits.push(
+              "Campaign " +
+              esc(campaignShort(va.campaign)) +
+              " (" +
+              esc(va.campaign_status || "?") +
+              ")."
+            );
+            vaBody.innerHTML = bits.join(" ");
+          } else {
+            vaBox.hidden = true;
+          }
+
+          var notes = [];
+          ["US", "AU"].forEach(function (code) {
+            var t = ((data.markets || {})[code] || {}).search_terms || {};
+            var list = t.operator_notes || t.flagged || [];
+            list.forEach(function (row) {
+              notes.push(row);
+            });
+          });
+          notes.sort(function (a, b) {
+            return (b.cost_usd || 0) - (a.cost_usd || 0);
+          });
+
+          var body = document.getElementById("dw-terms-body");
+          if (!notes.length) {
+            body.innerHTML =
+              '<p class="dw-empty">No operator notes on this pull.</p>';
+          } else {
+            var rows = notes.slice(0, 12).map(function (t) {
+              var action = noteAction(t);
+              var metaBits = [
+                esc(t.market),
+                esc(campaignShort(t.campaign)),
+                esc(t.status || ""),
+              ].filter(Boolean);
+              return (
+                '<li class="dw-term">' +
+                "<div>" +
+                '<p class="term">“' +
+                esc(t.search_term) +
+                "”</p>" +
+                '<p class="meta">' +
+                metaBits.join(" · ") +
+                "</p>" +
+                (action
+                  ? '<p class="action">' + esc(action) + "</p>"
+                  : "") +
+                "</div>" +
+                "<div>" +
+                '<p class="spend">' +
+                money2(t.cost_usd) +
+                "</p>" +
+                '<p class="clicks">' +
+                (t.clicks != null ? t.clicks + " clicks · 7d" : "—") +
+                "</p>" +
+                "</div>" +
+                "</li>"
+              );
+            }).join("");
+            body.innerHTML =
+              '<ul class="dw-term-list">' + rows + "</ul>";
+          }
+
+          var meta = [];
+          meta.push(data.scope || "VC_*");
+          meta.push(data.window || "LAST_7_DAYS");
+          if (data.hard_stop) meta.push("Hard stop: " + data.hard_stop);
+          meta.push(
+            (data.api_calls_used || 0) +
+              "/" +
+              (data.api_call_cap || "?") +
+              " API calls"
+          );
+          document.getElementById("dw-meta").textContent = meta.join(" · ");
+        })
+        .catch(function (err) {
+          document.getElementById("dw-updated").textContent =
+            "Could not load daily-watch.json — run pull_daily_watch.py";
+          document.getElementById("dw-kicker").textContent = "No data";
+          document.getElementById("dw-summary").textContent = "No data yet";
+          document.getElementById("dw-quiet").hidden = false;
+          document.getElementById("dw-quiet").textContent = String(
+            err.message || err
+          );
+        });
+    })();
+  </script>
+</body>
+</html>

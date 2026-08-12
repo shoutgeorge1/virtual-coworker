@@ -10,127 +10,187 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
   <style>
+    body[data-page="tracking.html"] .main { max-width: 720px; }
     .trk-top { margin: 0 0 1rem; }
-    .trk-top h1 { margin: 0 0 0.35rem; font-size: 1.45rem; }
-    .trk-top p { margin: 0; font-size: 1rem; color: var(--body); max-width: 36rem; }
-    table.trk-tbl {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-    }
-    table.trk-tbl th,
-    table.trk-tbl td {
-      text-align: left;
-      padding: 0.6rem 0.5rem;
-      border-bottom: 1px solid var(--edge-soft);
-      vertical-align: top;
-    }
-    table.trk-tbl th {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-      font-weight: 700;
-    }
-    .ok, .miss {
-      display: inline-block;
-      font-weight: 700;
-      font-size: 0.82rem;
-      letter-spacing: 0.02em;
-      padding: 0.22rem 0.55rem;
-      border-radius: 999px;
-    }
-    .ok { color: #14532d; background: #bbf7d0; border: 1px solid #16a34a; }
-    .miss { color: #9a3412; background: #fed7aa; border: 1px solid #ea580c; }
-    .order {
-      margin: 1rem 0 0;
-      padding: 0.75rem 0.9rem;
+    .trk-top h1 { margin: 0 0 0.35rem; font-size: 1.4rem; }
+    .trk-top p { margin: 0; font-size: 0.98rem; color: var(--body); max-width: 36rem; }
+
+    .trk-sec {
+      margin: 0 0 1rem;
       border-radius: 8px;
       border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .trk-sec-hd {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--edge-soft);
       background: var(--panel-inset);
+    }
+    .trk-sec-hd h2 {
+      margin: 0;
       font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .trk-sec-hd p {
+      margin: 0.2rem 0 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .trk-sec.live .trk-sec-hd {
+      background: var(--tint-green);
+      border-bottom-color: var(--tint-green-edge);
+    }
+    .trk-sec.open .trk-sec-hd {
+      background: var(--tint-amber);
+      border-bottom-color: var(--tint-amber-edge);
+    }
+    .trk-sec.next .trk-sec-hd {
+      background: var(--tint-cool-hd);
+      border-bottom-color: var(--tint-cool-edge);
+    }
+    .trk-sec ul {
+      margin: 0;
+      padding: 0.55rem 1rem 0.75rem;
+      list-style: none;
+    }
+    .trk-sec li {
+      margin: 0;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      font-size: 0.93rem;
+      line-height: 1.4;
+      color: var(--body);
+    }
+    .trk-sec li:last-child { border-bottom: 0; }
+    .trk-sec li strong { color: var(--ink); font-weight: 600; }
+    .trk-sec li .m {
+      display: block;
+      margin-top: 0.15rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .trk-sec.next ol {
+      margin: 0;
+      padding: 0.55rem 1rem 0.85rem 1.9rem;
+      font-size: 0.93rem;
       line-height: 1.45;
       color: var(--body);
     }
-    .order strong { color: var(--ink); }
-    .order ol {
-      margin: 0.4rem 0 0;
-      padding: 0 0 0 1.2rem;
+    .trk-sec.next li { margin: 0.35rem 0; padding: 0; border: 0; }
+    .trk-foot {
+      margin: 0.5rem 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
     }
-    .order li { margin: 0.22rem 0; }
   </style>
 </head>
-<body data-page="tracking.html" data-foot="US vs AU · what’s live">
+<body data-page="tracking.html" data-foot="Live · open · next">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
     <main class="main">
       <header class="trk-top">
         <h1>Tracking</h1>
-        <p>What’s live vs still open. Don’t jump to CRM first. Full list on the Checklist.</p>
+        <p>What’s live, what’s still open, what to do next. Full steps on Checklist.</p>
       </header>
 
-      <section class="panel">
-        <div class="panel-hd">
-          <h2>Status</h2>
+      <section class="trk-sec live" aria-labelledby="live-hd">
+        <div class="trk-sec-hd">
+          <h2 id="live-hd">Live</h2>
+          <p>Working now</p>
         </div>
-        <div class="panel-bd">
-          <table class="trk-tbl">
-            <thead>
-              <tr>
-                <th>Thing</th>
-                <th>US</th>
-                <th>Australia</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Phone on site + Call ads</td>
-                <td class="ok">Live · 888-964-8644</td>
-                <td class="ok">Live · 1300</td>
-              </tr>
-              <tr>
-                <td>Website calls 60+ sec</td>
-                <td class="miss">Open</td>
-                <td class="miss">Open</td>
-              </tr>
-              <tr>
-                <td>Calls from ads 60+ sec</td>
-                <td class="ok">Live</td>
-                <td class="miss">Open</td>
-              </tr>
-              <tr>
-                <td>Website tags (GTM / GA4)</td>
-                <td class="ok">Live</td>
-                <td class="miss">Open</td>
-              </tr>
-              <tr>
-                <td>Form emails</td>
-                <td class="ok">Live</td>
-                <td class="ok">Live</td>
-              </tr>
-              <tr>
-                <td>Zoho qualified → Ads</td>
-                <td colspan="2" class="miss">Later — after the open items above</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="order">
-            <strong>Do next</strong>
-            <ol>
-              <li>Daily: clear Google Ads recommendations + search terms</li>
-              <li>Site tests + GA so A/B pages can be measured</li>
-              <li>Australia visit tags + calls from ads</li>
-              <li>Then website calls 60+ seconds · then CRM</li>
-            </ol>
-            <p style="margin:0.55rem 0 0;font-size:0.86rem;color:var(--muted)">
-              Full steps → <a href="launch-control.html">Checklist</a>
-            </p>
-          </div>
-        </div>
+        <ul>
+          <li>
+            <strong>Phone on site + Call ads</strong>
+            <span class="m">US 888-964-8644 · AU 1300 886 740 (public numbers — leave these)</span>
+          </li>
+          <li>
+            <strong>Calls from ads (60+ sec)</strong>
+            <span class="m">US live (<code>VC_US_Phone_Call_From_Ads</code>) · AU still open</span>
+          </li>
+          <li>
+            <strong>US website tags</strong>
+            <span class="m">GTM-M92DX9BJ → G-2V3V0BS6JW · AW-962672995 + website-call label Sf71CJSQr98cEOPyhMsD (published)</span>
+          </li>
+          <li>
+            <strong>US website calls 60+ sec</strong>
+            <span class="m">
+              Live: <code>VC_US_Phone_Call_From_Website</code> · Primary · 60s · $100.
+              Tag fires on /us. Number swap needs real ad click (public # stays 888-964-8644 otherwise).
+            </span>
+          </li>
+          <li>
+            <strong>US site-test events</strong>
+            <span class="m">dataLayer + GA4 collect beacon</span>
+          </li>
+          <li>
+            <strong>Form emails</strong>
+            <span class="m">US + AU → us@ / apac@</span>
+          </li>
+        </ul>
       </section>
+
+      <section class="trk-sec open" aria-labelledby="open-hd">
+        <div class="trk-sec-hd">
+          <h2 id="open-hd">Still open</h2>
+          <p>Not done — don’t optimize ads for these yet</p>
+        </div>
+        <ul>
+          <li>
+            <strong>Australia visit tags (GTM + GA4)</strong>
+            <span class="m">
+              Prerequisite. Need new AU GTM + GA4 IDs for the microsite — paste into Vercel.
+              Do this before AU website-call forwarding. Not the same as call conversions.
+            </span>
+          </li>
+          <li>
+            <strong>AU website calls 60+ sec</strong>
+            <span class="m">
+              Later step — after AU GTM exists. Create AU Ads “Calls from website” + publish forwarding tag.
+              US already live (see Live). Not Call ads · not a tel: tap. Public # stays 1300 886 740.
+            </span>
+          </li>
+          <li>
+            <strong>AU calls from ads 60+ sec</strong>
+            <span class="m">Separate. Call asset is on CORE/ROLES · conversion action still missing</span>
+          </li>
+          <li>
+            <strong>Site tests scoreboard numbers</strong>
+            <span class="m">US wired · waiting on traffic / fresh GA pull</span>
+          </li>
+          <li>
+            <strong>Zoho qualified → Ads</strong>
+            <span class="m">Later — after AU GTM + AU call conversions</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="trk-sec next" aria-labelledby="next-hd">
+        <div class="trk-sec-hd">
+          <h2 id="next-hd">Do next</h2>
+          <p>One list</p>
+        </div>
+        <ol>
+          <li>Daily: clear Google Ads recommendations + search terms</li>
+          <li>
+            <strong>Australia GTM + GA4 first:</strong> create new AU containers · paste
+            <code>NEXT_PUBLIC_GTM_AU</code> + <code>NEXT_PUBLIC_GA4_AU</code> on Vercel
+          </li>
+          <li>
+            <strong>Then AU website calls 60+ sec:</strong> create AU “Calls from website” (60s) +
+            publish forwarding tag (public # stays 1300)
+          </li>
+          <li><strong>Then AU calls from ads 60+ sec</strong> · then CRM</li>
+        </ol>
+      </section>
+
+      <p class="trk-foot">
+        Brand ads deferred (Stage 1 first). Full list →
+        <a href="launch-control.html">Checklist</a>
+      </p>
     </main>
   </div>
-  <script src="nav.js?v=20260810b"></script>
+  <script src="nav.js?v=20260812-os1"></script>
 </body>
 </html>

@@ -118,6 +118,56 @@
     #quiz-funnel .todo-list li.is-done { opacity: 0.72; }
     #quiz-funnel .quiz-funnel-lock { font-weight: 600; color: var(--ink); }
 
+    #cro-backlog {
+      margin: 0 0 1.35rem;
+      border: 2px solid rgba(14, 116, 144, 0.4);
+      box-shadow: 0 0 0 3px rgba(14, 116, 144, 0.07);
+    }
+    #cro-backlog .panel-hd {
+      background: rgba(14, 116, 144, 0.07);
+    }
+    #cro-backlog .panel-hd h2 { font-size: 1.08rem; }
+    #cro-backlog .todo-list li { padding: 0.4rem 0; }
+    #cro-backlog .todo-list li.is-done { opacity: 0.72; }
+
+    /* Later expansion — parked at bottom; not Stage 1 work */
+    #ads-launch-checklist .todo-later-banner {
+      display: block;
+      grid-template-columns: none;
+      margin-top: 1.1rem;
+      padding: 0.85rem 0.95rem 0.9rem;
+      border: 1px dashed rgba(100, 116, 139, 0.55);
+      border-radius: 8px;
+      background: rgba(148, 163, 184, 0.1);
+    }
+    #ads-launch-checklist .todo-later-banner strong {
+      display: block;
+      font-size: 1.05rem;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+    #ads-launch-checklist .todo-later-banner .todo-hint {
+      margin-top: 0.2rem;
+    }
+    #ads-launch-checklist .todo-later-sub {
+      display: block;
+      grid-template-columns: none;
+      margin-top: 0.55rem;
+      padding: 0.55rem 0 0.2rem;
+      border-bottom: none;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    #ads-launch-checklist li[data-order^="20"] .todo-hint,
+    #ads-launch-checklist li[data-order^="21"] .todo-hint,
+    #ads-launch-checklist li[data-order^="22"] .todo-hint {
+      color: var(--muted);
+    }
+
     .lc-below {
       margin-top: 0.25rem;
       padding-top: 1rem;
@@ -340,7 +390,7 @@
             <li><strong>Daily first:</strong> <strong>Review recommendations</strong> (clear the list) + search terms + spend vs budget</li>
             <li><strong>Phones:</strong> US 888-964-8644 · Australia 1300 · never 888-864 or 888-954</li>
             <li><strong>Wins:</strong> a real call 60+ seconds beats a tap · forms can be spam · job seekers never count</li>
-            <li><strong>Next:</strong> site tests + GA · Australia visit tags · then CRM</li>
+            <li><strong>Next:</strong> Australia GTM + GA4 first · then AU call conversions · then CRM</li>
             <li><strong>Not now:</strong> Brand ads · quiz ads · homepage headline test</li>
           </ul>
         </section>
@@ -489,153 +539,166 @@
               <input type="checkbox" id="ads30" data-todo="ads30" checked />
               <label for="ads30">
                 <strong>13. Australia stood up</strong>
-                <span class="todo-hint">Done. Site phone <code>1300 886 740</code> live. AU campaigns live — waiting on traffic (not paused). Remaining = website call duration + ad-call wins + website tags below.</span>
+                <span class="todo-hint">Done. Site phone <code>1300 886 740</code> live. AU campaigns live — waiting on traffic (not paused). Next open steps: AU GTM/GA4 first, then AU call conversions below.</span>
               </label>
             </li>
             <li data-order="12.75">
-              <input type="checkbox" id="ads34" data-todo="ads34" />
+              <input type="checkbox" id="ads34" data-todo="ads34" checked />
               <label for="ads34">
-                <strong>14. Website calls 60+ seconds (US + AU)</strong>
-                <span class="todo-hint">High priority. Google forwarding number · not a tel: tap. US 888-964 + AU 1300.</span>
+                <strong>14. US website calls 60+ seconds</strong>
+                <span class="todo-hint">
+                  Done (verified 2026-08-10). Ads <code>VC_US_Phone_Call_From_Website</code> · Primary · $100 · 60s.
+                  GTM-M92DX9BJ published (<code>AW-962672995</code> + label <code>Sf71CJSQr98cEOPyhMsD</code>,
+                  <code>phone_conversion_number</code> = (888) 964-8644). Tags fire on <code>/us</code>.
+                  Public number stays <strong>(888) 964-8644</strong>; Google swap needs a real ad-click cookie.
+                  Tel: tap stays secondary. Australia website calls are a separate later step (after AU GTM).
+                </span>
+              </label>
+            </li>
+            <li data-order="12.8">
+              <input type="checkbox" id="ads33" data-todo="ads33" />
+              <label for="ads33">
+                <strong>15. Australia — website tags (GTM + GA4)</strong>
+                <span class="todo-hint"><strong>Do this before AU call conversions.</strong> Create a new AU GTM container + GA4 property for the microsite, then paste <code>NEXT_PUBLIC_GTM_AU</code> and <code>NEXT_PUBLIC_GA4_AU</code> on Vercel (vision). Do not reuse US <code>GTM-M92DX9BJ</code> or legacy WP <code>GTM-KNDLKVW</code>. Until then <code>/au</code> has no visit tags — and AU website-call forwarding cannot publish.</span>
+              </label>
+            </li>
+            <li data-order="12.9">
+              <input type="checkbox" id="ads42" data-todo="ads42" />
+              <label for="ads42">
+                <strong>16. Australia — website calls 60+ seconds</strong>
+                <span class="todo-hint">After step 15 (AU GTM exists). Create AU “Calls from website” (60s) in the AU Ads account + publish the forwarding tag in AU GTM. Not Call ads · not a tel: tap. Public number stays <strong>1300 886 740</strong>.</span>
               </label>
             </li>
             <li data-order="13">
               <input type="checkbox" id="ads32" data-todo="ads32" />
               <label for="ads32">
-                <strong>15. Australia — phone call conversion from ads</strong>
-                <span class="todo-hint">Count answered AU calls from ad call assets (like US).</span>
-              </label>
-            </li>
-            <li data-order="14">
-              <input type="checkbox" id="ads33" data-todo="ads33" />
-              <label for="ads33">
-                <strong>16. Australia — website tags (GTM + GA4)</strong>
-                <span class="todo-hint">Same basic visit tracking as US, on <code>/au</code>.</span>
+                <strong>17. Australia — phone call conversion from ads</strong>
+                <span class="todo-hint">Separate from website calls. Count answered AU calls from ad call assets (60s+), like US <code>VC_US_Phone_Call_From_Ads</code>. Call asset is already on CORE/ROLES — conversion action still missing.</span>
               </label>
             </li>
             <li data-order="15">
               <input type="checkbox" id="ads18" data-todo="ads18" />
               <label for="ads18">
-                <strong>17. Zoho “qualified” → Ads</strong>
-                <span class="todo-hint">After 14–16. Sales marks a real lead in Zoho → Ads learns.</span>
+                <strong>18. Zoho “qualified” → Ads</strong>
+                <span class="todo-hint">After AU GTM (15) + AU call conversions (16–17). Sales marks a real lead in Zoho → Ads learns.</span>
               </label>
             </li>
             <li data-order="16">
               <input type="checkbox" id="ads25" data-todo="ads25" checked />
               <label for="ads25">
-                <strong>18. 888 off new ads + microsite</strong>
+                <strong>19. 888 off new ads + microsite</strong>
                 <span class="todo-hint">Superseded 2026-08-10 later: verified <strong>888-964-8644</strong> restored on site + VC_US_* Call. 310 unlinked from those scopes. Never publish 888-864 or 888-954.</span>
               </label>
             </li>
             <li data-order="17">
               <input type="checkbox" id="ads26" data-todo="ads26" />
               <label for="ads26">
-                <strong>19. Verify US website phone-click (secondary only)</strong>
-                <span class="todo-hint">Tel: tap stays secondary — real wins are step 14.</span>
+                <strong>20. Verify US website phone-click (secondary only)</strong>
+                <span class="todo-hint">Tel: tap stays secondary — real US win is step 14 (already done).</span>
               </label>
             </li>
             <li data-order="18">
               <input type="checkbox" id="ads28" data-todo="ads28" />
               <label for="ads28">
-                <strong>20. Optional — demote old Zoho Primary</strong>
+                <strong>21. Optional — demote old Zoho Primary</strong>
                 <span class="todo-hint">Optional. If old Zoho/Zapier junk is still Primary, demote it. Don’t delete museum actions.</span>
               </label>
             </li>
             <li data-order="19">
               <input type="checkbox" id="ads24" data-todo="ads24" />
               <label for="ads24">
-                <strong>21. Verify Google Search Console</strong>
+                <strong>22. Verify Google Search Console</strong>
                 <span class="todo-hint">Property check for <code>www.virtualcoworker.app</code>.</span>
               </label>
             </li>
             <li data-order="20">
               <input type="checkbox" id="ads19" data-todo="ads19" checked />
               <label for="ads19">
-                <strong>22. Australia phone on site</strong>
+                <strong>23. Australia phone on site</strong>
                 <span class="todo-hint">Done. <code>1300 886 740</code> live on <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">/au</a>.</span>
               </label>
             </li>
             <li data-order="21">
               <input type="checkbox" id="ads5" data-todo="ads5" />
               <label for="ads5">
-                <strong>23. Sales watch group inboxes</strong>
+                <strong>24. Sales watch group inboxes</strong>
                 <span class="todo-hint">Holly watches <code>apac@</code>. Cheyenne on <code>us@</code>. See <a href="lead-routing.html">Lead Routing</a>.</span>
               </label>
             </li>
             <li data-order="22">
               <input type="checkbox" id="ads20" data-todo="ads20" />
               <label for="ads20">
-                <strong>24. Monday paid-lead scoreboard</strong>
+                <strong>25. Monday paid-lead scoreboard</strong>
                 <span class="todo-hint">Separate paid Ads leads from total inbox. Buckets: enquiries · calls booked · junk · work-seekers.</span>
               </label>
             </li>
             <li data-order="12.15">
               <input type="checkbox" id="ads21" data-todo="ads21" />
               <label for="ads21">
-                <strong>25. Share Executive snapshot with leadership</strong>
+                <strong>26. Share Executive snapshot with leadership</strong>
                 <span class="todo-hint">Walk <a href="executive">Executive</a> — spend, clicks, US + Australia. New Search only. Don’t open the raw Ads account in the meeting.</span>
               </label>
             </li>
             <li data-order="24">
               <input type="checkbox" id="ads22" data-todo="ads22" />
               <label for="ads22">
-                <strong>26. Every couple days — refresh Executive numbers</strong>
+                <strong>27. Every couple days — refresh Executive numbers</strong>
                 <span class="todo-hint">Light Ads pull → <a href="executive">Executive</a>. Keep it calm — spend, clicks, themes.</span>
               </label>
             </li>
             <li data-order="25">
               <input type="checkbox" id="ads12" data-todo="ads12" />
               <label for="ads12">
-                <strong>27. Daily search-terms habit</strong>
+                <strong>28. Daily search-terms habit</strong>
                 <span class="todo-hint">Covered by Daily checks above. Review what people typed in Ads.</span>
               </label>
             </li>
             <li data-order="26">
               <input type="checkbox" id="ads13" data-todo="ads13" />
               <label for="ads13">
-                <strong>28. Review ad copy + combinations</strong>
+                <strong>29. Review ad copy + combinations</strong>
                 <span class="todo-hint">Polish headlines/descriptions and RSA combos after traffic is clean.</span>
               </label>
             </li>
             <li data-order="27">
               <input type="checkbox" id="ads11" data-todo="ads11" />
               <label for="ads11">
-                <strong>29. Add image assets</strong>
+                <strong>30. Add image assets</strong>
                 <span class="todo-hint">Useful polish — not required for ads to run.</span>
               </label>
             </li>
             <li data-order="28">
               <input type="checkbox" id="ads14" data-todo="ads14" checked />
               <label for="ads14">
-                <strong>30. Audit all assets</strong>
+                <strong>31. Audit all assets</strong>
                 <span class="todo-hint">VC_US_* Call restored to 888-964-8644 (2026-08-10). Sitelink junk paused. Callouts + Types snippet already good. AU glance later. No lead forms / prices / images.</span>
               </label>
             </li>
             <li data-order="29">
               <input type="checkbox" id="ads29" data-todo="ads29" checked />
               <label for="ads29">
-                <strong>31. Sniper negatives on CORE + ROLES</strong>
+                <strong>32. Sniper negatives on CORE + ROLES</strong>
                 <span class="todo-hint">Done (George 2026-08-07).</span>
               </label>
             </li>
             <li data-order="30">
               <input type="checkbox" id="ads15" data-todo="ads15" />
               <label for="ads15">
-                <strong>32. Later — grow shared negative lists</strong>
+                <strong>33. Later — grow shared negative lists</strong>
                 <span class="todo-hint">Not today. Grow as junk patterns repeat.</span>
               </label>
             </li>
             <li data-order="31">
               <input type="checkbox" id="ads31" data-todo="ads31" checked />
               <label for="ads31">
-                <strong>33. Ads package — DONE → archive</strong>
+                <strong>34. Ads package — DONE → archive</strong>
                 <span class="todo-hint">Done. In nav <strong>Archive → Ads package</strong>.</span>
               </label>
             </li>
             <li data-order="32">
               <input type="checkbox" id="ads35" data-todo="ads35" />
               <label for="ads35">
-                <strong>34. Trust pack — US press + client logos</strong>
+                <strong>35. Trust pack — US press + client logos</strong>
                 <span class="todo-hint">Open. Google stars + Clutch stars already live (US 5.0 / 39 · AU 4.8 / 23 — yellow stars, not yellow boxes). Internet check 2026-08-09: <strong>no Inc / Entrepreneur / BI feature or display-ad placement found</strong>. Live “As featured in” = Forbes Council + Clutch + Google + VC’s published SMH/BRW/Startup Daily/Anthill row. Still need more <strong>authorized US client logos</strong> + video testimonials. Do <strong>not</strong> invent Fortune 500. See <code>vision/docs/TRUST-PROOF.md</code>.</span>
               </label>
             </li>
@@ -643,13 +706,26 @@
               <input type="checkbox" id="ads27" data-todo="ads27" />
               <label for="ads27">
                 <strong>4b. Site tests + GA — wire the scoreboard</strong>
-                <span class="todo-hint"><strong>Priority.</strong> A/B page versions exist on the microsite. Scoreboard on <a href="experiments">Site tests</a> is still blank until GA is connected. US GTM/GA4 is live — confirm experiment events fire. Australia GTM still missing. Homepage headline stays locked until we choose to test it. See <a href="landing-pages">LP previews</a> for A vs B links.</span>
+                <span class="todo-hint"><strong>Done for US path.</strong> Property <code>549075481</code> (G-2V3V0BS6JW) via Viewer SA <code>ga4-viewer@…</code> + <code>GOOGLE_APPLICATION_CREDENTIALS</code> / <code>GA4_PROPERTY_ID</code>. Pull is <code>live</code> — <a href="experiments">Site tests</a> scoreboard connected (0 experiment_* events in current window; not broken). Optional next: register <code>experiment_id</code> / <code>experiment_variant</code> as GA4 custom dimensions for variant breakdown. <strong>Australia GTM still missing</strong> — paste new <code>NEXT_PUBLIC_GTM_AU</code> + <code>NEXT_PUBLIC_GA4_AU</code> (not US, not legacy WP). Homepage headline stays locked. LP creative A/B = <code>?variant=</code>; site tests = <code>?vc_exp=</code>.</span>
+              </label>
+            </li>
+            <li data-order="12.08">
+              <input type="checkbox" id="ads43" data-todo="ads43" />
+              <label for="ads43">
+                <strong>4c. Thank-you booking — A/B CTA wording &amp; layout</strong>
+                <span class="todo-hint">
+                  Employers often won’t book a consult on their own — push harder on the thank-you / Calendly step so more people schedule.
+                  Thank-you / booking only (overlay + CTA). Homepage H1 stays locked (“Your week is full…”).
+                  <strong>Test ideas (don’t build yet):</strong> (1) wording / layout pressure — different CTA copy and look vs today’s generic push;
+                  (2) role-customized CTA — use the role from quiz/form (admin, bookkeeping, sales, etc.) so it says e.g. “Book a chat about your bookkeeping hire” instead of generic.
+                  Run via existing <a href="experiments">Site tests</a> (<code>?vc_exp=</code>); scoreboard once experiment_* events show up. Not Ads primary · click ≠ booked.
+                </span>
               </label>
             </li>
             <li data-order="100">
               <input type="checkbox" id="ads36" data-todo="ads36" />
               <label for="ads36">
-                <strong>36. Quiz Funnel / Quiz Ads — Paused (~70%)</strong>
+                <strong>37. Quiz Funnel / Quiz Ads — Paused (~70%)</strong>
                 <span class="todo-hint">
                   Exploratory employer hiring quiz. <strong>Not traffic-ready. Rework later.</strong> George review: ~70% — quiz not highlighted enough yet; likely needs a stronger/different LP (quiz as the hero, not a widget on a homepage clone). Do not start that redesign now. Not a controlled A/B test. Do <strong>not</strong> Enable. Import ≠ Post ≠ Enable. Brand deferred. No API mutate. Do not change live CORE/ROLES.<br />
                   Work the checklist in <a href="#quiz-funnel">Quiz Funnel / Quiz Ads — Paused</a> (same page, below). Enable items are George-only and <strong>never auto-complete</strong>.
@@ -659,36 +735,206 @@
             <li data-order="12.6">
               <input type="checkbox" id="ads37" data-todo="ads37" />
               <label for="ads37">
-                <strong>37. Thank-you auto booking overlay — review US/AU</strong>
+                <strong>38. Thank-you auto booking overlay — review US/AU</strong>
                 <span class="todo-hint">Live, not Ads primary. Call still conversion lead (888-964 / 1300). Inline Calendly embed was janky — dropped. Now our bordered overlay auto-opens on eligible thank-you: US “Book your 30-minute hiring consult” · AU “Book a 30-minute hiring chat” + Call. Close + Pick a time reopens. Review <a href="https://www.virtualcoworker.app/thank-you?market=us" target="_blank" rel="noopener">/thank-you?market=us</a> · <a href="https://www.virtualcoworker.app/thank-you?market=au" target="_blank" rel="noopener">/thank-you?market=au</a>.</span>
               </label>
             </li>
             <li data-order="32.2">
               <input type="checkbox" id="ads38" data-todo="ads38" checked />
               <label for="ads38">
-                <strong>38. Job-seeker hard redirect to .ph</strong>
-                <span class="todo-hint">Done. “Looking for a job?” → <code>location.replace(https://virtualcoworker.com.ph)</code> so Back does not return to the employer LP. Never an employer lead. Never Ads conversion.</span>
+                <strong>39. Job-seeker hard redirect to .ph</strong>
+                <span class="todo-hint">Done. Gate / chat / quiz link → <code>location.replace(https://virtualcoworker.com.ph)</code> so Back does not return to the LP gate. Never an employer lead. Never Ads conversion. 2026-08-11: PH interstitial + footer no longer invite “back to US/AU employer form.” Detail: <code>vision/docs/CRO-BACKLOG-2026-08-11.md</code> · <a href="#cro-backlog">CRO / lead quality</a>.</span>
               </label>
             </li>
             <li data-order="32.3">
               <input type="checkbox" id="ads39" data-todo="ads39" checked />
               <label for="ads39">
-                <strong>39. Caitlin copy live</strong>
+                <strong>40. Caitlin copy live</strong>
                 <span class="todo-hint">Done. No em dashes (lint). “A member of our team…”. “Obligation free, at no cost”. Homepage H1 stays “Your week is full…” unless George asks — messaging A/B later.</span>
               </label>
             </li>
             <li data-order="32.4">
               <input type="checkbox" id="ads40" data-todo="ads40" checked />
               <label for="ads40">
-                <strong>40. Google + Clutch stars live</strong>
-                <span class="todo-hint">Done. US Google 5.0★ / 39 · AU Google 4.8★ / 23 + Clutch. Yellow stars, not yellow boxes. More US client logos still step 34.</span>
+                <strong>41. Google + Clutch stars live</strong>
+                <span class="todo-hint">Done. US Google 5.0★ / 39 · AU Google 4.8★ / 23 + Clutch. Yellow stars, not yellow boxes. More US client logos still step 35.</span>
               </label>
             </li>
             <li data-order="32.5">
               <input type="checkbox" id="ads41" data-todo="ads41" checked />
               <label for="ads41">
-                <strong>41. Team updated</strong>
+                <strong>42. Team updated</strong>
                 <span class="todo-hint">Done (optional). Holly microsite thread + Caitlin Quick update thread sent. No PII here.</span>
+              </label>
+            </li>
+            <li data-order="33">
+              <input type="checkbox" id="ads44" data-todo="ads44" />
+              <label for="ads44">
+                <strong>43. CRO / lead quality backlog</strong>
+                <span class="todo-hint">
+                  Buyer purity before volume. Spec: <code>vision/docs/CRO-BACKLOG-2026-08-11.md</code>.
+                  Work the checklist in <a href="#cro-backlog">CRO / lead quality</a> (same page, below).
+                  Priority: job-seeker hygiene → quiz experiments → cost-tool MVP → sales video → Veo.
+                  Do <strong>not</strong> ship ten lead magnets or remount the exit popup without George review.
+                </span>
+              </label>
+            </li>
+
+            <!-- Later account expansion — high data-order keeps these at the bottom; not Stage 1 -->
+            <li class="todo-later-banner" id="later-expansion" data-order="200">
+              <strong>Later — after conversions are working</strong>
+              <span class="todo-hint">
+                Parking lot only. Do <strong>not</strong> start until Primary call conversions are firing and trusted
+                (rough gate: ~30 conversions per campaign, plus confidence that junk is under control).
+                Editor CSV when you build — no Ads API mutate. <code>Brand_VC</code> is already live inside CORE — scale that AG later only if needed; this list is not a Brand fight.
+              </span>
+            </li>
+
+            <li class="todo-later-sub" data-order="201">Prerequisites</li>
+            <li data-order="202">
+              <input type="checkbox" id="ads50" data-todo="ads50" />
+              <label for="ads50">
+                <strong>L1. Gate — ~30 conversions / campaign + trusted 60s</strong>
+                <span class="todo-hint">Prove US (then AU) Primary call signal is real before any expansion below. Stay on Max Clicks / Exact until that confidence exists.</span>
+              </label>
+            </li>
+            <li data-order="203">
+              <input type="checkbox" id="ads51" data-todo="ads51" />
+              <label for="ads51">
+                <strong>L2. Smart bidding path ready</strong>
+                <span class="todo-hint">Only after the gate: enough trusted conversions to consider Max Conversions (or similar). Broad / partners / PMax wait on this path — not before.</span>
+              </label>
+            </li>
+
+            <li class="todo-later-sub" data-order="210">Search expansion</li>
+            <li data-order="211">
+              <input type="checkbox" id="ads52" data-todo="ads52" />
+              <label for="ads52">
+                <strong>L3. New campaign — sure-fire / high-intent keyword groups</strong>
+                <span class="todo-hint">Separate campaign (not stuffed into live CORE/ROLES) once ~30 conv/campaign. Tight Exact themes that already convert.</span>
+              </label>
+            </li>
+            <li data-order="212">
+              <input type="checkbox" id="ads53" data-todo="ads53" />
+              <label for="ads53">
+                <strong>L4. Lower-intent / research ad groups</strong>
+                <span class="todo-hint">Earlier-stage queries than current CORE/ROLES (learning, “how to hire…”, light research). Own budget + expectations — don’t poison the live campaigns.</span>
+              </label>
+            </li>
+            <li data-order="213">
+              <input type="checkbox" id="ads54" data-todo="ads54" />
+              <label for="ads54">
+                <strong>L5. Geo modifiers (city / state)</strong>
+                <span class="todo-hint">e.g. hire VA Texas, virtual assistant Sydney — only where search-term evidence shows real employer volume.</span>
+              </label>
+            </li>
+            <li data-order="214">
+              <input type="checkbox" id="ads55" data-todo="ads55" />
+              <label for="ads55">
+                <strong>L6. Problem / symptom queries</strong>
+                <span class="todo-hint">Overwhelmed ops, back-office backlog, need admin help remote — match to plain employer pain, then hard negatives for job seekers.</span>
+              </label>
+            </li>
+            <li data-order="215">
+              <input type="checkbox" id="ads56" data-todo="ads56" />
+              <label for="ads56">
+                <strong>L7. Comparison / vs / alternative themes</strong>
+                <span class="todo-hint">“X vs Philippines VA”, “Belay alternative”, agency-vs-freelancer — needs honest LP copy, not bait.</span>
+              </label>
+            </li>
+            <li data-order="216">
+              <input type="checkbox" id="ads57" data-todo="ads57" />
+              <label for="ads57">
+                <strong>L8. Role ladder — “hire [role] remote Philippines”</strong>
+                <span class="todo-hint">Beyond current ROLES: bookkeeper, receptionist, EA, SDR, marketing coordinator, etc. One theme per AG when volume appears.</span>
+              </label>
+            </li>
+            <li data-order="217">
+              <input type="checkbox" id="ads58" data-todo="ads58" />
+              <label for="ads58">
+                <strong>L9. Exact harvest from search terms → new themes</strong>
+                <span class="todo-hint">Weekly ST review: promoting winners into Exact AGs; parking losers. The cleanest expansion source.</span>
+              </label>
+            </li>
+            <li data-order="218">
+              <input type="checkbox" id="ads59" data-todo="ads59" />
+              <label for="ads59">
+                <strong>L10. Soft-intent “what is a VA” (careful)</strong>
+                <span class="todo-hint">Often junk / browsers. Tiny test budget only, or skip — content/SEO may own this better than paid.</span>
+              </label>
+            </li>
+            <li data-order="219">
+              <input type="checkbox" id="ads60" data-todo="ads60" />
+              <label for="ads60">
+                <strong>L11. Seasonal / hiring-surge themes</strong>
+                <span class="todo-hint">Jan planning, Q4 cover, tax-season bookkeeping — time-boxed budgets when the calendar is real.</span>
+              </label>
+            </li>
+
+            <li class="todo-later-sub" data-order="230">Capture &amp; defend</li>
+            <li data-order="231">
+              <input type="checkbox" id="ads61" data-todo="ads61" />
+              <label for="ads61">
+                <strong>L12. Competitor campaign + dedicated landing pages</strong>
+                <span class="todo-hint">Own campaign. Hyper-optimized LPs per rival (fair comparison, proof, clear CTA). High CPC — only after core intent converts.</span>
+              </label>
+            </li>
+            <li data-order="232">
+              <input type="checkbox" id="ads62" data-todo="ads62" />
+              <label for="ads62">
+                <strong>L13. RLSA / audience overlays on Search</strong>
+                <span class="todo-hint">Bid up site visitors / engagers on Search. Observation first, then targeting when lists are large enough.</span>
+              </label>
+            </li>
+            <li data-order="233">
+              <input type="checkbox" id="ads63" data-todo="ads63" />
+              <label for="ads63">
+                <strong>L14. Brand_VC — scale only if needed</strong>
+                <span class="todo-hint"><code>Brand_VC</code> already live inside CORE. Not deferred cleanup work. Expand brand coverage later only if SEO/misses justify it.</span>
+              </label>
+            </li>
+            <li data-order="234">
+              <input type="checkbox" id="ads64" data-todo="ads64" />
+              <label for="ads64">
+                <strong>L15. Call-only / call-focused experiments</strong>
+                <span class="todo-hint">Once 60s website + ad-call Primary are trusted — small Call-focused or call-heavy tests. Don’t invent new numbers.</span>
+              </label>
+            </li>
+
+            <li class="todo-later-sub" data-order="240">Scale channels</li>
+            <li data-order="241">
+              <input type="checkbox" id="ads65" data-todo="ads65" />
+              <label for="ads65">
+                <strong>L16. Search partners on</strong>
+                <span class="todo-hint">Flip Search partners only after conversion quality is proven on Google Search alone. Watch partner junk closely.</span>
+              </label>
+            </li>
+            <li data-order="242">
+              <input type="checkbox" id="ads66" data-todo="ads66" />
+              <label for="ads66">
+                <strong>L17. Broad match (after conv + smart bidding)</strong>
+                <span class="todo-hint">Not on Max Clicks Exact. Only with a real conversion + smart-bidding path and heavy negatives. Separate test campaign preferred.</span>
+              </label>
+            </li>
+            <li data-order="243">
+              <input type="checkbox" id="ads67" data-todo="ads67" />
+              <label for="ads67">
+                <strong>L18. Display expansion / A-B style duplicates</strong>
+                <span class="todo-hint">When conversions kick: duplicate structure for Display tests (or parallel creative tests). Keep Search as the control.</span>
+              </label>
+            </li>
+            <li data-order="244">
+              <input type="checkbox" id="ads68" data-todo="ads68" />
+              <label for="ads68">
+                <strong>L19. PMax layer (after Search is solid)</strong>
+                <span class="todo-hint">Display/YouTube-ish feed after Search CPA is trusted. Tight asset groups + brand exclusions. Not a shortcut around Search.</span>
+              </label>
+            </li>
+            <li data-order="245">
+              <input type="checkbox" id="ads69" data-todo="ads69" />
+              <label for="ads69">
+                <strong>L20. Then — remarketing, Demand Gen, YouTube alone</strong>
+                <span class="todo-hint">Brief next horizon only: site remarketing, Demand Gen, standalone YouTube. Separate conversation after Search + one scale channel work.</span>
               </label>
             </li>
           </ul>
@@ -832,6 +1078,65 @@
         </div>
       </section>
 
+      <section class="panel" id="cro-backlog" aria-labelledby="cro-backlog-hd">
+        <div class="panel-hd">
+          <p class="kicker">Site · purity</p>
+          <h2 id="cro-backlog-hd">CRO / lead quality</h2>
+          <span class="st st-deferred">Backlog</span>
+        </div>
+        <div class="panel-bd">
+          <p class="quiz-funnel-lede" style="margin:0 0 0.75rem">
+            Spec: <code>vision/docs/CRO-BACKLOG-2026-08-11.md</code>.
+            Live filter today = LeadGate + chat + quiz link (<code>location.replace</code>).
+            Exit popup component exists but is <strong>not mounted</strong> — review before remount.
+          </p>
+          <ul class="todo-list" id="cro-backlog-list" data-todo-group="cro-backlog">
+            <li>
+              <input type="checkbox" id="croPhReentry" data-todo="croPhReentry" />
+              <label for="croPhReentry">
+                <strong>PH re-entry soften</strong>
+                <span class="todo-hint">Done in code 2026-08-11 — verify on deploy: <code>/ph</code> · <code>/ph/apply</code> have no “US/AU employers” footer cross-links or “use footer” copy. Careers CTA only.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="croExitPopup" data-todo="croExitPopup" />
+              <label for="croExitPopup">
+                <strong>Exit popup remount decision</strong>
+                <span class="todo-hint">George review. <code>ExitIntent.tsx</code> + <code>exit_popup</code> A/B ready but unmounted. Remount behind <code>NEXT_PUBLIC_ENABLE_EXIT_INTENT</code> only if we want a second filter layer; else keep gate-only and stop listing popup as “active.” Add Escape + focus trap before prod-on.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="croQuizExp" data-todo="croQuizExp" />
+              <label for="croQuizExp">
+                <strong>Quiz experiments (not rewrite)</strong>
+                <span class="todo-hint">Do not replace live quiz. Outline when capacity: (1) 3–4 step vs short 2-step · (2) optional urgency chips from <code>HIRING_TIMELINE_OPTIONS</code> · (3) in-quiz hire/job gate vs link-only. Quiz ads stay Paused. See Quiz Funnel section.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="croCostTool" data-todo="croCostTool" />
+              <label for="croCostTool">
+                <strong>Lead-magnet MVP #1 — cost comparison tool</strong>
+                <span class="todo-hint">Interactive US/AU vs PH seat estimate (role + seats → on-page result → email after). Not a gated PDF. Events observation-only. Zoho: <code>source=cost_calculator</code>. Mockup / proposal before site-wide. Spec in CRO doc §2A.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="croSalesVideo" data-todo="croSalesVideo" />
+              <label for="croSalesVideo">
+                <strong>Sales video — brief → asset → optional embed</strong>
+                <span class="todo-hint">60–75s employer explainer. No autoplay. No fake testimonials. Track start/25/50/75/complete + CTA — not Ads Primary. Produce asset first; thumbnail test vs no video. Brief in CRO doc §5.</span>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="croVeo" data-todo="croVeo" />
+              <label for="croVeo">
+                <strong>Veo / AI video — investigate only</strong>
+                <span class="todo-hint">No credentials in repo. Needs API access, cost cap, CDN, human approval. MVP = non-human B-roll / motion for ads — never fake staff/customers. After sales-video path exists.</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <div class="lc-below" id="status-and-reference">
       <p class="lc-below-label">Status board · reference (scroll past Launch steps)</p>
       <div class="lc-board" id="status-board">
@@ -842,6 +1147,7 @@
           </div>
           <ul>
             <li>US Search live · about $125/day · Brand off · US GTM/GA4 live</li>
+            <li>US website calls 60s live (<code>VC_US_Phone_Call_From_Website</code> · GTM published)</li>
             <li>US phone 888-964-8644 on site + Call · 310 unlinked from VC_US_*</li>
             <li>US sitelinks cleaned · callouts/snippet already good</li>
             <li>AU phone on site · 1300 886 740 (GBP listing · voicemail still Alex)</li>
@@ -851,6 +1157,7 @@
             <li>Caitlin copy live · job-seeker → <code>virtualcoworker.com.ph</code></li>
             <li>Thank-you overlay live (Call + book · not Ads primary)</li>
             <li>Quiz Funnel parked ~70% — rework later · ads Paused</li>
+            <li>CRO backlog documented · PH job-seeker re-entry softened (2026-08-11)</li>
           </ul>
         </section>
 
@@ -861,11 +1168,11 @@
           </div>
           <ul>
             <li><strong>1.</strong> Daily: <strong>Review recommendations</strong> + search terms + spend vs budget</li>
-            <li><strong>2.</strong> Site tests + GA scoreboard (step 4b) — A/B pages can’t be measured yet</li>
-            <li><strong>3.</strong> Australia visit tags + calls from ads</li>
-            <li><strong>4.</strong> Website calls 60+ seconds</li>
+            <li><strong>2.</strong> Australia GTM + GA4 (step 15) — prerequisite before AU call conversions</li>
+            <li><strong>3.</strong> Australia website calls 60+ sec (step 16) — after AU GTM exists</li>
+            <li><strong>4.</strong> Australia calls from ads 60s (step 17)</li>
             <li><strong>5.</strong> Then CRM (Zoho)</li>
-            <li><strong>Later:</strong> quiz · trust pack · homepage headline test</li>
+            <li><strong>Later:</strong> quiz · CRO / lead quality · trust pack · homepage headline test · <a href="#later-expansion">account expansion</a> (bottom of checklist — after conversions)</li>
           </ul>
         </section>
 
@@ -879,13 +1186,14 @@
             <li><strong>Team:</strong> confirmed live US number is 888-964-8644 (George dialed 2026-08-10)</li>
             <li><strong>Holly / Chey / Raffie:</strong> 1300 voicemail still says Alex</li>
             <li><strong>Holly:</strong> watch apac@</li>
-            <li><strong>Phones/IT:</strong> website call tracking (forwarding) when we’re ready</li>
+            <li><strong>Phones/IT:</strong> confirm Google forwarding # (ad visitors) still rings to 888-964 / 1300 when swap appears</li>
           </ul>
         </section>
       </div>
 
       <p class="lc-secondary" id="site-tests">
-        <strong>Site tests</strong> — scoreboard still blank ·
+        <strong>Site tests</strong> — US GA pull live · 0 in window ·
+        next priority: thank-you booking A/B (checklist 4c) ·
         <a href="experiments">Site tests</a> ·
         Ads package → <a href="ads-package.html">Archive</a>
       </p>
@@ -915,6 +1223,10 @@
             <li>Build a new lead tracker this week</li>
             <li>Recreate website phone-click conversion while Unverified</li>
             <li>Put anyone’s personal mobile on the site or Ads call assets</li>
+            <li>Remount exit popup / ship cost-calculator / embed sales video without George review</li>
+            <li>Build ten lead magnets or gated PDF downloads for PPC</li>
+            <li>Publish AI-generated people as real staff/customers (Veo or otherwise)</li>
+            <li>Count video complete or tool-only email as Ads Primary</li>
           </ul>
         </div>
       </details>
@@ -1031,7 +1343,7 @@
       </div><!-- /.lc-below -->
     </main>
   </div>
-  <script src="nav.js?v=20260810b"></script>
+  <script src="nav.js?v=20260812-os1"></script>
   <script>
     (function () {
       /* Daily checks — stay in place; reset each local calendar day */
@@ -1084,7 +1396,7 @@
       if (store.ads29 !== true) store.ads29 = true;
       if (store.ads19 !== true) store.ads19 = true;
       if (store.ads31 !== true) store.ads31 = true;
-      /* AU stood up — remaining work is website call duration + ad-call wins + website tags */
+      /* AU stood up — remaining = AU GTM first, then AU call conversions */
       if (store.ads30 !== true) store.ads30 = true;
       /* Live site work — keep George in the loop via Done fold */
       if (store.ads38 !== true) store.ads38 = true; /* job-seeker hard redirect */
@@ -1094,10 +1406,12 @@
       if (store.ads25 !== true) store.ads25 = true; /* 888 off new ads + microsite */
       if (store.ads14 !== true) store.ads14 = true; /* US asset audit */
       /* Thank-you overlay review (ads37) stays open — George reviews US/AU */
-      /* Website call duration (ads34) stays open / unchecked */
-      if (store.ads34 === true) { /* leave if George checked */ }
-      /* Site tests stay open / unchecked */
-      if (store.ads27 === true) { /* leave if George checked */ }
+      /* US website calls 60s (ads34) — done; AU website calls are ads42 (never auto-complete) */
+      if (store.ads34 !== true) store.ads34 = true;
+      /* AU GTM (ads33) · AU website calls (ads42) · AU ad-call (ads32) — never auto-complete */
+      /* Site tests US scoreboard wire done (SA pull live) */
+      if (store.ads27 !== true) store.ads27 = true;
+      /* Thank-you booking A/B (ads43) — open CRO priority; never auto-complete */
       /* Quiz Enable US/AU — George-only; never auto-complete */
       if (store.quizEnableUs === true) { /* leave only if George checked */ }
       if (store.quizEnableAu === true) { /* leave only if George checked */ }
@@ -1129,6 +1443,9 @@
         li.classList.toggle("is-done", checked);
         if (checked) doneList.appendChild(li);
         else activeList.appendChild(li);
+        /* Keep later-expansion banners/subheads in the active list (no checkbox) */
+        Array.prototype.slice.call(doneList.querySelectorAll(".todo-later-banner, .todo-later-sub"))
+          .forEach(function (el) { activeList.appendChild(el); });
         sortList(activeList);
         sortList(doneList);
         refreshDoneChrome();
@@ -1168,6 +1485,20 @@
         var georgeOnly = box.getAttribute("data-george-only") === "1";
         var checked = !!store[id];
         if (georgeOnly && store[id] !== true) checked = false;
+        box.checked = checked;
+        if (li) li.classList.toggle("is-done", checked);
+        box.addEventListener("change", function () {
+          store[id] = !!box.checked;
+          if (li) li.classList.toggle("is-done", box.checked);
+          save();
+        });
+      });
+      Array.prototype.slice.call(
+        document.querySelectorAll("#cro-backlog input[type=checkbox][data-todo]")
+      ).forEach(function (box) {
+        var id = box.getAttribute("data-todo");
+        var li = box.closest("li");
+        var checked = !!store[id];
         box.checked = checked;
         if (li) li.classList.toggle("is-done", checked);
         box.addEventListener("change", function () {

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Growth OS · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="growth-os.html"] .main { max-width: 920px; }
+    .os-hero {
+      margin: 0 0 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
+    }
+    .os-hero .kicker {
+      margin: 0 0 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .os-hero h1 { margin: 0 0 0.4rem; font-size: 1.4rem; letter-spacing: -0.02em; }
+    .os-hero .thesis { margin: 0; font-size: 1.02rem; line-height: 1.5; max-width: 40rem; }
+    .os-status {
+      display: inline-block;
+      margin: 0.65rem 0 0;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber-hd);
+      color: #92400e;
+    }
+    .os-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin: 0 0 1rem;
+    }
+    @media (max-width: 760px) { .os-grid { grid-template-columns: 1fr; } }
+    .os-card {
+      margin: 0 0 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .os-card h2 {
+      margin: 0;
+      padding: 0.7rem 1rem;
+      font-size: 1rem;
+      border-bottom: 1px solid var(--edge-soft);
+      background: var(--panel-inset);
+    }
+    .os-card .bd { padding: 0.85rem 1rem 1rem; font-size: 0.95rem; line-height: 1.5; color: var(--body); }
+    .os-card .bd p { margin: 0 0 0.55rem; }
+    .os-card .bd p:last-child { margin-bottom: 0; }
+    .os-card ul { margin: 0; padding: 0 0 0 1.15rem; }
+    .os-card li { margin: 0.25rem 0; }
+    .os-card.us { border-color: var(--tint-green-edge); background: var(--tint-green); }
+    .os-card.au { border-color: var(--tint-cool-edge); background: var(--tint-cool); }
+    .gap {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      border: 1px dashed var(--edge);
+      color: var(--muted);
+      background: var(--panel-inset);
+    }
+    .gap.building { border-color: var(--tint-amber-edge); color: #92400e; background: var(--tint-amber-hd); border-style: solid; }
+    .gap.live { border-color: var(--tint-green-edge); color: #166534; background: var(--tint-green-hd); border-style: solid; }
+    .gap.not_ready, .gap.not_connected { border-color: var(--tint-rose-edge); color: #9f2d2d; background: var(--tint-rose); }
+    .act { list-style: none; margin: 0; padding: 0; }
+    .act li {
+      margin: 0 0 0.65rem;
+      padding: 0.7rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel-inset);
+    }
+    .act li:last-child { margin-bottom: 0; }
+    .act strong { color: var(--ink); }
+    .act .meta { display: block; margin-top: 0.2rem; font-size: 0.8rem; color: var(--muted); }
+    .funnel { list-style: none; margin: 0; padding: 0; }
+    .funnel li {
+      display: grid;
+      grid-template-columns: 10.5rem 1fr;
+      gap: 0.65rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--edge-soft);
+      align-items: start;
+    }
+    .funnel li:last-child { border-bottom: 0; }
+    .os-card details { margin: 0.35rem 0 0; }
+    .os-card summary { cursor: pointer; font-weight: 600; color: var(--ink); }
+    .warn-band {
+      margin: 0 0 1rem;
+      padding: 0.75rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid var(--tint-rose-edge);
+      background: var(--tint-rose);
+      font-size: 0.92rem;
+    }
+    table.os-tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    table.os-tbl th, table.os-tbl td {
+      text-align: left;
+      padding: 0.4rem 0.45rem;
+      border-bottom: 1px solid var(--edge-soft);
+      vertical-align: top;
+      line-height: 1.4;
+    }
+    table.os-tbl th {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body data-page="growth-os.html" data-foot="Decision system<br />Not a widget wall">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <header class="os-hero">
+        <p class="kicker">Operating system</p>
+        <h1>Are we closer to a predictable client-acquisition machine?</h1>
+        <p class="thesis" id="os-thesis"></p>
+        <span class="os-status" id="os-readiness"></span>
+      </header>
+
+      <section class="os-card" id="strategy">
+        <h2>North star</h2>
+        <div class="bd" id="os-strategy"></div>
+      </section>
+
+      <div class="os-grid">
+        <section class="os-card us">
+          <h2>United States</h2>
+          <div class="bd" id="os-us"></div>
+        </section>
+        <section class="os-card au">
+          <h2>Australia</h2>
+          <div class="bd" id="os-au"></div>
+        </section>
+      </div>
+
+      <section class="os-card" id="next">
+        <h2>This week — next best actions</h2>
+        <div class="bd">
+          <ol class="act" id="os-actions"></ol>
+        </div>
+      </section>
+
+      <section class="os-card" id="readiness">
+        <h2>Conversion readiness</h2>
+        <div class="bd" id="os-stages"></div>
+      </section>
+
+      <section class="os-card" id="funnel">
+        <h2>Funnel — real process, honest gaps</h2>
+        <div class="bd"><ol class="funnel" id="os-funnel"></ol></div>
+      </section>
+
+      <section class="os-card" id="phone">
+        <h2>Phone tracking</h2>
+        <div class="bd" id="os-phone"></div>
+      </section>
+
+      <section class="os-card" id="lead-quality">
+        <h2>Lead quality / CRM</h2>
+        <div class="bd" id="os-leads"></div>
+      </section>
+
+      <section class="os-card" id="money-keywords">
+        <h2>High-value Philippines / virtual assistant intent</h2>
+        <div class="bd" id="os-money"></div>
+      </section>
+
+      <section class="os-card" id="leakage">
+        <h2>Search quality / leakage</h2>
+        <div class="bd" id="os-leakage"></div>
+      </section>
+
+      <section class="os-card" id="value">
+        <h2>Value scoring (provisional)</h2>
+        <div class="bd" id="os-value"></div>
+      </section>
+
+      <section class="os-card" id="competitors">
+        <h2>Competitors</h2>
+        <div class="bd" id="os-competitors"></div>
+      </section>
+
+      <section class="os-card" id="brand">
+        <h2>Brand defense</h2>
+        <div class="bd" id="os-brand"></div>
+      </section>
+
+      <section class="os-card" id="architecture">
+        <h2>Paid acquisition architecture</h2>
+        <div class="bd" id="os-arch"></div>
+      </section>
+
+      <section class="os-card" id="experiments">
+        <h2>Experiment register</h2>
+        <div class="bd" id="os-exp"></div>
+      </section>
+
+      <section class="os-card" id="trust">
+        <h2>Trust asset register</h2>
+        <div class="bd" id="os-trust"></div>
+      </section>
+
+      <section class="os-card" id="roadmap">
+        <h2>30 / 60 / 90</h2>
+        <div class="bd" id="os-roadmap"></div>
+      </section>
+
+      <section class="os-card" id="wordpress">
+        <h2>Organic / WordPress — Phase 2</h2>
+        <div class="bd" id="os-wp"></div>
+      </section>
+
+      <section class="os-card" id="cadence">
+        <h2>Reporting cadence</h2>
+        <div class="bd" id="os-cadence"></div>
+      </section>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="executive.html">Executive</a>
+        <a class="btn" href="conversion-path.html">Conversion path</a>
+        <a class="btn" href="tracking.html">Tracking</a>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js?v=20260812-os1"></script>
+  <script src="data/growth-os.js"></script>
+  <script>
+    (function () {
+      var G = window.GROWTH_OS;
+      if (!G) return;
+      function el(id) { return document.getElementById(id); }
+      function esc(s) {
+        return String(s || "").replace(/[&<>"]/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+        });
+      }
+      function pill(status) {
+        var map = {
+          live: "live",
+          building: "building",
+          not_connected: "not_connected",
+          not_ready: "not_ready",
+          open: "building",
+          blocked_unverified: "not_connected",
+        };
+        var cls = map[status] || "not_connected";
+        var label = String(status || "not connected").replace(/_/g, " ");
+        return '<span class="gap ' + cls + '">' + esc(label) + "</span>";
+      }
+
+      el("os-thesis").textContent = G.thesis;
+      el("os-readiness").textContent = G.overallReadiness.label;
+      el("os-strategy").innerHTML =
+        "<p><strong>Offer.</strong> " + esc(G.offer.staff) + " Since " + esc(G.offer.since) + ". " +
+        esc(G.offer.billing) + " " + esc(G.offer.model) + "</p>" +
+        "<p><strong>Ideal client.</strong> " + esc(G.icp.who) + " Not: " + esc(G.icp.not) + "</p>" +
+        "<p><strong>Primary conversion.</strong> " + esc(G.offer.conversion) + " Forms and phone clicks are not a sale.</p>" +
+        "<p><strong>Markets.</strong> " + esc(G.markets.rule) + "</p>";
+      el("os-us").innerHTML = "<p>" + esc(G.markets.us) + "</p><p>Live spend/clicks live on <a href='executive.html'>Executive</a>. Qualified CPL: " + pill("not_connected") + "</p>";
+      el("os-au").innerHTML = "<p>" + esc(G.markets.au) + "</p><p>Do not blend with US. Qualified CPL: " + pill("not_connected") + "</p>";
+
+      el("os-actions").innerHTML = G.nextActions.map(function (a, i) {
+        return "<li><strong>" + (i + 1) + ". " + esc(a.title) + "</strong>" +
+          "<span class='meta'>" + esc(a.owner) + " · " + esc(a.due) + " · " + pill(a.status) + "</span>" +
+          "<span class='meta'>" + esc(a.why) + " · <a href='" + esc(a.href) + "'>Open</a></span></li>";
+      }).join("");
+
+      el("os-stages").innerHTML = "<ol>" + G.readinessStages.map(function (s) {
+        return "<li>" + pill(s.status) + " <strong>" + esc(s.name) + "</strong> — " + esc(s.detail) + "</li>";
+      }).join("") + "</ol><p style='margin-top:0.7rem'>" + esc(G.overallReadiness.note) + "</p>";
+
+      el("os-funnel").innerHTML = G.funnel.map(function (f) {
+        return "<li><div>" + pill(f.status) + "<br><strong>" + esc(f.stage) + "</strong></div><div>" + esc(f.note) + "</div></li>";
+      }).join("");
+
+      var ph = G.phone;
+      el("os-phone").innerHTML =
+        "<p><strong>A phone click is not a consultation.</strong> Qualified = connected call " +
+        esc(String(ph.minSeconds)) + "+ seconds (when the conversion exists).</p>" +
+        "<p><strong>US</strong> " + esc(ph.us.site) + " · website-call 60s " + pill(ph.us.websiteCall60s) +
+        " · ad-call 60s " + pill(ph.us.adCall60s) + " · qualified calls " + pill("not_connected") +
+        " · missed " + pill("not_connected") + "</p>" +
+        "<p><strong>AU</strong> " + esc(ph.au.site) + " · website-call " + pill(ph.au.websiteCall60s) +
+        " · ad-call " + pill(ph.au.adCall60s) + " · GTM " + pill(ph.au.gtm) + "</p>" +
+        "<p>DNI: " + esc(ph.dni) + "</p>";
+
+      el("os-leads").innerHTML =
+        "<p>" + pill("not_connected") + " No Zoho feed on this page. Do not display a fake zero.</p>" +
+        "<p><strong>Good lead (working):</strong> " + G.goodLead.must.map(esc).join(" · ") +
+        ". Stronger: " + G.goodLead.stronger.map(esc).join(" · ") + "</p>" +
+        "<p>Score inputs when present: " + G.goodLead.scoreInputs.map(esc).join(", ") +
+        ". " + esc(G.goodLead.label) + "</p>" +
+        "<p>Reconcile when Holly reviews: search term · keyword · campaign · LP · conversion type · company · role · seats · FT/PT · qualified / job seeker / spam / solo · job order · placement · value.</p>" +
+        "<p><a href='conversion-path.html'>Conversion path</a> holds the same loop.</p>";
+
+      el("os-money").innerHTML =
+        "<p class='warn-band' style='margin:0 0 0.7rem'>" + esc(G.moneyKeywords.warning) + "</p>" +
+        "<p>" + esc(G.moneyKeywords.vaRule) + "</p><ul>" +
+        G.moneyKeywords.examples.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") +
+        "</ul><p>Spend / CPC / conversions for this cluster: " + pill("not_connected") +
+        " — " + esc(G.moneyKeywords.metrics) + "</p>";
+
+      el("os-leakage").innerHTML =
+        "<p>" + esc(G.leakage.note) + " Lists in play: " + G.leakage.lists.map(esc).join(", ") + ".</p><ul>" +
+        G.leakage.segments.map(function (s) {
+          return "<li><strong>" + esc(s.name) + "</strong> — " + esc(s.treatment) + " · wasted spend " + pill("not_connected") + "</li>";
+        }).join("") + "</ul>";
+
+      el("os-value").innerHTML =
+        "<p>" + pill("provisional") + " Production bidding: no.</p>" +
+        "<p>Job order: " + esc(G.valueAssumptions.jobOrder) + "</p>" +
+        "<p>Placement: " + esc(G.valueAssumptions.placement) + "</p>" +
+        "<p>Qualified lead value: " + esc(G.valueAssumptions.qualifiedLead) + "</p>" +
+        "<p>Offline import: " + pill("not_connected") + "</p>";
+
+      el("os-competitors").innerHTML =
+        "<p>Public positioning only. Auction Insights " + pill("not_connected") + ". Do not invent overlap rates.</p>" +
+        G.competitors.map(function (c) {
+          return "<details><summary>" + esc(c.name) + " · " + esc(c.markets) + "</summary>" +
+            "<p>" + esc(c.positioning) + "</p><p>CTA: " + esc(c.cta) + " · Pricing: " + esc(c.pricing) +
+            "</p><p>" + esc(c.pattern) + "</p><p>Auction Insights: " + esc(c.auction) + "</p></details>";
+        }).join("");
+
+      el("os-brand").innerHTML =
+        "<p>Campaign: " + esc(G.brandDefense.campaign) + "</p>" +
+        "<p>Impression share " + pill("not_connected") + " · Auction Insights " + pill("not_connected") + "</p>" +
+        "<p>" + esc(G.brandDefense.note) + "</p>";
+
+      el("os-arch").innerHTML =
+        "<p>Paid stays on <strong>" + esc(G.paidArchitecture.host) + "</strong>. " +
+        esc(G.paidArchitecture.wordpress) + "</p><ul>" +
+        G.paidArchitecture.why.map(function (w) { return "<li>" + esc(w) + "</li>"; }).join("") +
+        "</ul><p>" + esc(G.paidArchitecture.rule) + " Later: " + esc(G.paidArchitecture.later) + "</p>";
+
+      el("os-exp").innerHTML =
+        "<p class='warn-band' style='margin:0 0 0.7rem'>" + esc(G.experimentsWarning) + "</p>" +
+        "<table class='os-tbl'><thead><tr><th>Test</th><th>Status</th><th>KPI</th></tr></thead><tbody>" +
+        G.experiments.map(function (e) {
+          return "<tr><td>" + esc(e.name) + " · " + esc(e.market) + "</td><td>" + esc(e.status) + "</td><td>" + esc(e.kpi) + "</td></tr>";
+        }).join("") + "</tbody></table>" +
+        "<p style='margin-top:0.6rem'><a href='experiments.html'>Site tests</a> is the live register. Landing-page sessions / CWV: " +
+        pill("not_connected") + " on this page.</p>";
+
+      el("os-trust").innerHTML = "<table class='os-tbl'><thead><tr><th>Asset</th><th>Status</th><th>Paid use</th></tr></thead><tbody>" +
+        G.trustAssets.map(function (t) {
+          var danger = /VERIFY/.test(t.status);
+          return "<tr><td>" + esc(t.asset) + "</td><td>" + (danger ? pill("blocked_unverified") + " " : "") +
+            esc(t.status) + "</td><td>" + esc(t.paid) + "</td></tr>";
+        }).join("") + "</tbody></table>";
+
+      el("os-roadmap").innerHTML =
+        "<p><strong>30 days — foundation.</strong> " + G.roadmap.d30.map(esc).join(" · ") + "</p>" +
+        "<p><strong>60 days — structure.</strong> " + G.roadmap.d60.map(esc).join(" · ") + "</p>" +
+        "<p><strong>90 days — only if signal is trusted.</strong> " + G.roadmap.d90.map(esc).join(" · ") + "</p>";
+
+      el("os-wp").innerHTML =
+        "<p><strong>" + esc(G.wpPhase2.label) + "</strong></p><p>" + esc(G.wpPhase2.rule) + "</p>" +
+        "<p>Technical WP, Search Console, content refresh, and off-page sit here when PPC is a machine. Not this week.</p>";
+
+      el("os-cadence").innerHTML =
+        "<p><strong>Weekly.</strong> " + G.cadence.weekly.map(esc).join(" · ") + "</p>" +
+        "<p><strong>Monthly.</strong> " + G.cadence.monthly.map(esc).join(" · ") + "</p>" +
+        "<p>" + esc(G.cadence.source) + "</p>";
+    })();
+  </script>
+</body>
+</html>

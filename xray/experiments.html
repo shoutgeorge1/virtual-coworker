@@ -287,15 +287,15 @@
     }
   </style>
 </head>
-<body data-page="experiments.html" data-foot="Archive · scoreboard still blank">
+<body data-page="experiments.html" data-foot="Archive · US events fire · counts pending">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
 
     <main class="main">
       <section class="exp-hero" aria-labelledby="exp-title">
-        <p class="kicker">Archive · not ready yet</p>
+        <p class="kicker">US wired · waiting on traffic</p>
         <h1 id="exp-title">Site tests</h1>
-        <p class="lede">Scoreboard still blank. Preview links force a variant. Day-to-day = Checklist.</p>
+        <p class="lede">Events are wired on the live US site. Empty counts mean waiting on traffic or a fresh GA pull — not broken. Homepage headline stays locked. Next CRO to try: thank-you / Calendly push — A/B wording &amp; layout pressure, plus role-customized CTA copy (admin / bookkeeping / sales from quiz or form) so more employers actually schedule. See Checklist 4c.</p>
         <p class="exp-meta" id="exp-updated">Loading snapshot…</p>
       </section>
 
@@ -303,10 +303,23 @@
         <strong>Loading…</strong>
       </div>
 
+      <div class="exp-grid-2" id="exp-wiring-row" style="display:none">
+        <section class="exp-side" aria-labelledby="wire-us-hd">
+          <h2 id="wire-us-hd">US wiring</h2>
+          <p class="sub" id="wire-us-sub">Loading…</p>
+          <ul id="wire-us-list"></ul>
+        </section>
+        <section class="exp-side place" aria-labelledby="wire-au-hd">
+          <h2 id="wire-au-hd">Australia — blocked</h2>
+          <p class="sub" id="wire-au-sub">Loading…</p>
+          <ul id="wire-au-list"></ul>
+        </section>
+      </div>
+
       <p class="exp-force-note" id="exp-force-note">
         <strong>Preview links force the variant</strong> —
         <code>?vc_exp=&lt;id&gt;&amp;vc_var=&lt;letter&gt;</code>
-        (sticky in this browser).
+        (sticky in this browser). Separate from LP creative <code>?variant=a|b</code>.
       </p>
 
       <div class="exp-stats" id="kpi-row" aria-label="Experiment KPIs">
@@ -328,18 +341,16 @@
         <div class="stat">
           <p class="lbl">Converts</p>
           <p class="val" id="kpi-converts">—</p>
-          <p class="hint">Reserved · later</p>
+          <p class="hint">form / phone fan-out</p>
         </div>
       </div>
 
-      <div id="exp-list" aria-live="polite">
-        <!-- cards filled from snapshot -->
-      </div>
+      <div id="exp-list" aria-live="polite"></div>
 
       <div class="exp-grid-2">
         <section class="exp-side" aria-labelledby="events-hd">
           <h2 id="events-hd">Events that feed this page</h2>
-          <p class="sub">From <code>vision/lib/experiments.ts</code> → dataLayer → GTM → GA4</p>
+          <p class="sub">From <code>vision/lib/experiments.ts</code> → dataLayer + GA4 collect beacon</p>
           <ul id="events-list">
             <li><code>experiment_view</code> — variant shown (once per session)</li>
             <li><code>experiment_click</code> — CTA / start / open</li>
@@ -347,22 +358,22 @@
           </ul>
         </section>
         <section class="exp-side place" aria-labelledby="later-hd">
-          <h2 id="later-hd">Conversions later</h2>
-          <p class="sub">Empty dashes below mean “not pulled yet” — not broken. Do not invent winners until volume exists.</p>
+          <h2 id="later-hd">How to fill the numbers</h2>
+          <p class="sub" id="scoreboard-next">Empty dashes mean “not pulled yet” — not broken.</p>
           <ul>
-            <li><strong>form_submit</strong> / <strong>phone_click</strong> already set <code>convert_reason</code></li>
-            <li>Assist events (quiz start, chat open, form start) listed in snapshot for optional tiles</li>
-            <li>Pull script: <code>ads-launch/pull_experiments_snapshot.py</code></li>
+            <li>See events in GA4 DebugView / Realtime (property for <code>G-2V3V0BS6JW</code>)</li>
+            <li>Drop export at <code>xray/data/experiments-events.json</code> <em>or</em> set <code>GA4_PROPERTY_ID</code></li>
+            <li>Run <code>python3 ads-launch/pull_experiments_snapshot.py</code> → redeploy xray</li>
           </ul>
         </section>
       </div>
 
       <section class="exp-side" style="margin-bottom:1.25rem" aria-labelledby="how-hd">
-        <h2 id="how-hd">How to get numbers in here</h2>
+        <h2 id="how-hd">See it in GA4 (no API needed)</h2>
         <ol style="margin:0;padding:0 0 0 1.2rem;font-size:0.9rem;color:var(--body)">
-          <li style="margin:0.3rem 0">Confirm events in Tag Assistant / GA4 DebugView on <code>/us</code></li>
-          <li style="margin:0.3rem 0">Either drop a GA4 event export at <code>xray/data/experiments-events.json</code>, or set <code>GA4_PROPERTY_ID</code> and run the pull script</li>
-          <li style="margin:0.3rem 0">Redeploy xray (or refresh local) — this page reads <code>data/experiments-snapshot.json</code></li>
+          <li style="margin:0.3rem 0">Open <code>/us</code> (optionally with <code>?vc_exp=…&amp;vc_var=…</code>)</li>
+          <li style="margin:0.3rem 0">GA4 → Admin → DebugView (or Realtime → Events)</li>
+          <li style="margin:0.3rem 0">Confirm <code>experiment_view</code> / <code>experiment_click</code> with <code>experiment_id</code> + <code>experiment_variant</code></li>
         </ol>
         <p class="sub" style="margin-top:0.65rem;margin-bottom:0">
           Doc: <code>vision/docs/SITE-EXPERIMENTS.md</code>
@@ -371,7 +382,7 @@
     </main>
   </div>
 
-  <script src="nav.js?v=20260809d"></script>
+  <script src="nav.js?v=20260812-os1"></script>
   <script>
     (function () {
       var LP_HOST = "https://www.virtualcoworker.app";
@@ -527,6 +538,37 @@
         );
       }
 
+      function renderWiring(data) {
+        var w = data.wiring || {};
+        var row = document.getElementById("exp-wiring-row");
+        if (!row) return;
+        row.style.display = "grid";
+        document.getElementById("wire-us-sub").textContent =
+          "GTM + GA4 live. Experiment events confirmed on dataLayer; collect beacon ships them to GA4.";
+        document.getElementById("wire-us-list").innerHTML =
+          "<li>GTM <code>" +
+          esc(w.us_gtm || "GTM-M92DX9BJ") +
+          "</code></li>" +
+          "<li>GA4 <code>" +
+          esc(w.us_ga4_measurement || "G-2V3V0BS6JW") +
+          "</code></li>" +
+          "<li>Property <code>" +
+          esc(w.us_ga4_property_id || (data && data.ga4 && data.ga4.property_id) || "549075481") +
+          "</code></li>" +
+          "<li>dataLayer + collect beacon experiment_* · <strong>confirmed</strong></li>" +
+          "<li>Homepage H1 · <strong>locked</strong></li>";
+        document.getElementById("wire-au-sub").textContent =
+          w.au_blocker ||
+          "Need AU GTM + GA4 IDs on Vercel (NEXT_PUBLIC_GTM_AU / NEXT_PUBLIC_GA4_AU).";
+        document.getElementById("wire-au-list").innerHTML =
+          "<li>GTM · <strong>missing</strong></li>" +
+          "<li>GA4 · <strong>missing</strong></li>" +
+          "<li>Do not reuse US or legacy WP containers</li>";
+        if (w.scoreboard_next) {
+          document.getElementById("scoreboard-next").textContent = w.scoreboard_next;
+        }
+      }
+
       fetch("data/experiments-snapshot.json", { cache: "no-store" })
         .then(function (r) {
           if (!r.ok) throw new Error("snapshot " + r.status);
@@ -534,9 +576,19 @@
         })
         .then(function (data) {
           var live = data.data_status === "live";
+          var totals = data.totals || {};
           var banner = document.getElementById("exp-status-banner");
           banner.className = "exp-banner" + (live ? " live" : "");
-          if (live) {
+          var ga4 = data.ga4 || {};
+          if (live && data.source === "ga4" && (totals.views === 0 || totals.views == null)) {
+            banner.innerHTML =
+              "<strong>Wired · waiting on traffic</strong> · property <code>" +
+              esc(ga4.property_id || (data.wiring && data.wiring.us_ga4_property_id) || "") +
+              "</code>" +
+              (data.window ? " · " + esc(data.window) : "") +
+              " — " +
+              esc(data.source_note || "GA4 connected; no experiment_* rows in this window yet.");
+          } else if (live) {
             banner.innerHTML =
               "<strong>Live counts</strong> · source <code>" +
               esc(data.source) +
@@ -546,9 +598,17 @@
               esc(data.source_note || "");
           } else {
             banner.innerHTML =
-              "<strong>Waiting on GA4 / event export</strong> — inventory is live; numbers stay empty until a real pull. " +
-              esc(data.source_note || "Connect GA4 or drop experiments-events.json.");
+              "<strong>Events fire · counts not pulled yet</strong> — " +
+              esc(
+                data.source_note ||
+                  "US is wired; set GA4_PROPERTY_ID + ADC, then re-run the pull script."
+              ) +
+              (ga4.note
+                ? " <span style='color:var(--muted)'>(" + esc(ga4.note) + ")</span>"
+                : "");
           }
+
+          renderWiring(data);
 
           document.getElementById("exp-updated").innerHTML =
             "Updated <strong>" +
@@ -558,7 +618,6 @@
               ? "<code>" + esc(data.docs.module) + "</code>"
               : "experiments.ts");
 
-          var totals = data.totals || {};
           document.getElementById("kpi-views").textContent = num(totals.views);
           document.getElementById("kpi-clicks").textContent = num(totals.clicks);
           document.getElementById("kpi-ctr").textContent = pct(totals.ctr_pct);

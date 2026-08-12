@@ -1,21 +1,28 @@
 /* Stage 1 shell — keep primary short; park unfinished / reference under Archive. */
 (function () {
   var root = document.body.getAttribute("data-root") || "";
+  /* Stakeholder front → path → tools → ops. Daily watch + Keyword/Media lower. Brand deferred. */
   var ITEMS = [
-    { href: "executive.html", text: "Executive" },
     { href: "launch-control.html", text: "Checklist" },
+    { href: "executive.html", text: "Executive" },
+    { href: "growth-os.html", text: "Growth OS" },
     { href: "conversion-path.html", text: "Conversion path" },
+    { href: "tracking.html", text: "Tracking" },
+    { href: "experiments.html", text: "Site tests" },
     { href: "landing-pages.html", text: "LP previews" },
     { href: "keyword-strategy.html", text: "Keyword Strategy" },
     { href: "media.html", text: "Media" },
-    { href: "tracking.html", text: "Tracking" },
-    { href: "experiments.html", text: "Site tests" },
+    { href: "daily-watch.html", text: "Daily watch" },
     { label: "Archive" },
     { href: "lead-routing.html", text: "Lead Routing", quiet: true },
     { href: "ads-package.html", text: "Ads package", quiet: true },
     { href: "project-status.html", text: "Project Status", quiet: true },
     { href: "us.html", text: "US Campaign", quiet: true },
     { href: "au.html", text: "Australia Campaign", quiet: true },
+    { href: "au-rsa-review.html", text: "AU RSA review", quiet: true },
+    { href: "us-brand-ag-review.html", text: "US Brand AG", quiet: true },
+    { href: "au-brand-ag-review.html", text: "AU Brand AG", quiet: true },
+    { href: "assets-audit.html", text: "Assets audit", quiet: true },
     { href: "clean-rebuild.html", text: "Clean Rebuild docs", quiet: true },
     { href: "results.html", text: "Results (wireframe)", quiet: true },
     { href: "later.html", text: "Later Phases", quiet: true },
@@ -31,7 +38,7 @@
     (location.pathname.split("/").pop() || "launch-control.html");
   var foot =
     body.getAttribute("data-foot") ||
-    "Stage 1 · AU priority + US live<br />Checklist = ops front door";
+    "US + AU Search live<br />Checklist first";
 
   function pageOf(href) {
     var base = (href || "").split("#")[0].split("/").pop();
@@ -87,7 +94,7 @@
     logoSrc +
     '" width="168" height="52" alt="Virtual Coworker" />' +
     '<p class="name">Stage 1 command center</p>' +
-    '<p class="sub">AU priority · US live</p>' +
+    '<p class="sub">US + AU Search live</p>' +
     "</div>" +
     '<nav class="nav" aria-label="Primary">';
 
