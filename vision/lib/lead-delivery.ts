@@ -120,6 +120,7 @@ type LeadEmailFields = {
   timeline?: string;
   company_size?: string;
   positions_needed?: string;
+  schedule?: string;
   hiring_timeline?: string;
   lead_score?: number | string;
   estimated_lead_value?: number | string;
@@ -156,6 +157,7 @@ export function formatLeadEmailText(lead: LeadEmailFields): string {
     ["Role / category", [lead.role, lead.category].filter(Boolean).join(" · ") || "(none)"],
     ["Company size", lead.company_size || "(none)"],
     ["Positions needed", lead.positions_needed || "(none)"],
+    ["Schedule", lead.schedule || "(none)"],
     ["Hiring timeline", lead.hiring_timeline || lead.timeline || "(none)"],
     [
       "Modeled lead score (not revenue)",

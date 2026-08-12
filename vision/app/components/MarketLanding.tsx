@@ -4,7 +4,6 @@ import StickyCta from "./StickyCta";
 import EngageChat from "./EngageChat";
 import RoleQuiz from "./RoleQuiz";
 import QuizConversionSlot from "./QuizConversionSlot";
-import QuizTeaser from "./QuizTeaser";
 import LpDensity from "./LpDensity";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
@@ -36,11 +35,12 @@ import {
 import {
   FORM_CUE,
   SITE,
+  TRUST_PROOF,
   googleBusinessForMarket,
   industryStatsForMarket,
   yearsTrading,
 } from "../../config/site";
-import GoogleReviewBadge from "./GoogleReviewBadge";
+import GoogleReviewBadge, { RatingStars } from "./GoogleReviewBadge";
 import { StatsGrid } from "./TrustAnimated";
 import {
   breadcrumbJsonLd,
@@ -74,12 +74,12 @@ export default function MarketLanding({
 
   const quizHero = isAu
     ? {
-        h1: "What kind of VA do you need?",
-        sub: "Take the quiz. We’ll name the role that takes the load — then you can chat or leave a brief.",
+        h1: "Find the right virtual assistant for your business",
+        sub: "Take the employer hiring quiz. We’ll name the role that takes the load - then you can book a free consultation.",
       }
     : {
-        h1: "What type of VA do you need?",
-        sub: "Take the quiz. We’ll name the seat that buys back your week — then talk or leave a brief.",
+        h1: "Find the right virtual assistant for your business",
+        sub: "Take the employer hiring quiz. A few taps - we’ll name the seat that buys back your week.",
       };
 
   const h1 = isQuiz && !cat ? quizHero.h1 : v ? v.h1[market] : cfg.headline;
@@ -96,16 +96,16 @@ export default function MarketLanding({
     ? roleHeroBenefits(category, market)
     : isAu
       ? [
-          "Dedicated Filipino teammates on Australian business hours",
-          "You interview. You choose. Nobody starts until you say yes.",
-          "Not a freelance marketplace — a staffing partner for Australian businesses.",
-          "We handle employment admin after you hire. You stay on the work.",
+          "Dedicated full-time or part-time professionals from the Philippines",
+          "They work Australian hours - your time zone, not theirs",
+          "Recruiting, vetting, employment admin, and ongoing support handled for you",
+          "Serving businesses since 2011 - not a gig marketplace",
         ]
       : [
-          "Dedicated Filipino teammates — on your US hours",
-          "You interview. You pick. Nobody starts until you say yes.",
-          "Not Upwork. Not a job board. A real staffing partner.",
-          "We handle payroll and paperwork after you hire.",
+          "Dedicated full-time or part-time professionals from the Philippines",
+          "They work your time zone - not a night shift",
+          "Recruiting, vetting, payroll, and ongoing support handled for you",
+          "Serving businesses since 2011 - not a gig marketplace",
         ];
 
   const faq = employerFaq(market, cat?.label || null, category);
@@ -117,8 +117,8 @@ export default function MarketLanding({
 
   const formCue = isQuiz
     ? isAu
-      ? { label: "Take the quiz", body: "A few taps — then have a chat." }
-      : { label: "Take the quiz", body: "A few taps — then talk to a specialist." }
+      ? { label: "Take the quiz", body: "A few taps - then book a free consultation." }
+      : { label: "Take the quiz", body: "A few taps - then book a free consultation." }
     : FORM_CUE[market];
   const industryStats = industryStatsForMarket(market);
 
@@ -129,14 +129,14 @@ export default function MarketLanding({
         ? `Chat about ${cat.label}`
         : `Hire ${cat.label}`
       : isAu
-        ? "Have a chat — no obligation."
-        : "Talk to a staffing specialist.",
-    intentLabel: "First — who are you?",
+        ? "Book a free consultation - obligation free, at no cost."
+        : "Book your free consultation.",
+    intentLabel: "First - who are you?",
     intentPrimary: "I’m hiring for a business.",
     intentSecondary: "I’m looking for a job.",
     divertTitle: "Looking for work?",
     divertBody:
-      "This page is for businesses hiring staff. Job applications open on our Philippines careers site — not this form.",
+      "This page is for businesses hiring staff. Job applications open on our Philippines careers site - not this form.",
     divertCta: "Go to Philippines careers →",
     careersHref: careers,
     roleLabel: "What do you need help with?",
@@ -147,13 +147,13 @@ export default function MarketLanding({
     emailLabel: "Work email",
     emailPlaceholder: "Work email",
     phoneLabel: "Business phone",
-    phonePlaceholder: "Business phone",
+    phonePlaceholder: isAu ? "0400 000 000" : "(201) 555-0123",
     companyLabel: "Company",
     companyPlaceholder: "Company name",
     submit: primaryCta,
     reassure: isAu
-      ? "No obligation. No lock-in. Businesses only. We’ll follow up for a short chat — this is not an instant hire. We don’t sell your information. Privacy notice applies."
-      : "No obligation. Employers only. A specialist follows up — usually within one business day. We don’t sell your information. Privacy notice applies.",
+      ? "Obligation free, at no cost. No lock-in. Businesses only. A member of our team will follow up for a short chat - this is not an instant hire. We don’t sell your information. Privacy notice applies."
+      : "Obligation free, at no cost. Employers only. A member of our team follows up - usually within one business day. We don’t sell your information. Privacy notice applies.",
     callLabel: showPhone
       ? isAu
         ? "Prefer to give us a call?"
@@ -162,10 +162,10 @@ export default function MarketLanding({
     phoneDisplay: phone.display,
     phoneHref: phone.href,
     showPhone,
-    doneTitle: "Got it — thanks.",
+    doneTitle: "Got it - thanks.",
     doneBody: isAu
-      ? "A teammate will follow up for a short chat about the role and next steps."
-      : "A teammate will follow up to talk through the role and next steps.",
+      ? "A member of our team will follow up for a short chat about the role and next steps."
+      : "A member of our team will call you to talk through the role and next steps.",
   };
 
   const breadcrumbs = cat
@@ -186,7 +186,7 @@ export default function MarketLanding({
 
   return (
     <main
-      className={shell}
+      className={`${shell}${isQuiz ? " quiz-lp" : ""}`}
       data-variant={variant}
       data-category={category || "generic"}
       data-cta-mode={isQuiz ? "quiz_lp" : "form_primary"}
@@ -212,7 +212,7 @@ export default function MarketLanding({
             <p className={`${shell}-kicker anim-rise`}>
               {cfg.label} · {isAu ? "Businesses" : "Employers"}
               {cat ? ` · ${cat.label}` : ""}
-              {isQuiz ? " · Take the quiz" : ""}
+              {isQuiz ? " · Employer hiring quiz" : ""}
               {" · "}Philippines staffing
             </p>
             <h1 className="anim-rise">{h1}</h1>
@@ -249,21 +249,27 @@ export default function MarketLanding({
               {cfg.staffingExplain}
             </p>
 
-            {!isQuiz ? <QuizTeaser light={light} /> : null}
-
             <div
               className={`trust-row anim-rise-d2${light ? " trust-row-light" : ""}`}
             >
               <GoogleReviewBadge proof={gbp} />
-              <span className="trust-chip">
+              <span
+                className="trust-chip"
+                aria-label={`Clutch ${TRUST_PROOF.clutch.rating} out of 5 from ${TRUST_PROOF.clutch.reviewCount} reviews`}
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={market === "us" ? "/brand/clutch-us.webp" : "/brand/badge-clutch-au.webp"}
-                  alt="Clutch"
+                  alt=""
                 />
                 <span>
-                  <b>Clutch 4.9</b>
-                  <span>{isAu ? "Recognised" : "US recognized"}</span>
+                  <b className="trust-chip-rating-line">
+                    <RatingStars size={13} />
+                    {TRUST_PROOF.clutch.rating}
+                  </b>
+                  <span>
+                    Clutch · {TRUST_PROOF.clutch.reviewCount} reviews
+                  </span>
                 </span>
               </span>
               <span className="trust-chip">
@@ -298,7 +304,7 @@ export default function MarketLanding({
             </div>
 
             <p className={`${shell}-rate-note anim-rise-d2`}>
-              Rates discussed once we understand the role — not buried in fine print.
+              Rates discussed once we understand the role - not buried in fine print.
             </p>
           </div>
 
@@ -333,7 +339,7 @@ export default function MarketLanding({
               />
             )}
             <ul className="gate-nudges">
-              <li>No obligation</li>
+              <li>Obligation free</li>
               <li>{isQuiz ? "A few taps" : "2-minute brief"}</li>
               <li>Specialist follows up</li>
               <li>We don’t sell your info</li>
@@ -357,7 +363,7 @@ export default function MarketLanding({
               The #1 reason isn’t cheaper. It’s better people.
             </h2>
             <p className="industry-band-lead">
-              Published research — not our marketing.
+              Published research - not our marketing.
             </p>
             <StatsGrid stats={industryStats} />
           </div>
@@ -376,11 +382,11 @@ export default function MarketLanding({
             <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
               How hiring works
             </p>
-            <h2>We find them. You pick. They start.</h2>
+            <h2>White-glove hiring. Not a freelancer marketplace.</h2>
             <p className={`${shell}-sell-sub`} data-lp="secondary">
               {isAu
-                ? "Free chat. We recruit. You interview. We handle employment admin — including Australian hours. "
-                : "Free consult. We recruit. You interview. We handle payroll and paperwork. "}
+                ? "Free consultation. Job description. We recruit and vet. You get profiles with hourly rates, then you interview. We handle employment admin and stay on after they start. "
+                : "Free consultation. Job description. We recruit and vet. You get profiles with hourly rates, then you interview. We handle payroll, HR, and time tracking. "}
               <Link href={`/how-it-works?market=${market}`}>
                 See the full process →
               </Link>

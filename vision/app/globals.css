@@ -441,56 +441,61 @@ button {
   color: #128f8b;
 }
 
-/* Google Business Profile — yellow Maps-style stars (US 5.0 / AU 4.8) */
-.trust-chip-google {
-  gap: 0.55rem;
-  padding-left: 0.75rem;
-  background: rgba(251, 188, 4, 0.14);
-  box-shadow: inset 0 0 0 1.5px rgba(251, 188, 4, 0.55);
-}
-
-.trust-row-light .trust-chip-google {
-  background: #fff8e6;
-  box-shadow: 0 10px 26px rgba(23, 51, 79, 0.09),
-    inset 0 0 0 1.5px rgba(232, 163, 23, 0.7);
-}
-
-.google-stars {
+/* Classic Google review gold — never inherit muted chip grey. */
+.rating-stars {
   display: inline-flex;
   align-items: center;
   gap: 0.08rem;
   color: #fbbc04;
   line-height: 1;
   flex: none;
-  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.28));
+  margin-top: 0;
 }
 
-.trust-row-light .google-stars,
-.trust-band-light .google-stars {
-  color: #e8a317;
-  filter: none;
-}
-
-.trust-chip-google b {
-  font-size: 1.2rem;
-  letter-spacing: -0.03em;
+.rating-stars svg,
+.trust-chip .rating-stars svg,
+.trust-rating-pill .rating-stars svg,
+.trust-row-light .trust-chip .rating-stars svg,
+.trust-band-light .trust-chip .rating-stars svg,
+.trust-row-light .trust-rating-pill .rating-stars svg,
+.trust-band-light .trust-rating-pill .rating-stars svg {
   color: #fbbc04;
 }
 
-.trust-row-light .trust-chip-google b {
-  color: #b8860b;
+.rating-stars svg path,
+.trust-chip .rating-stars svg path,
+.trust-rating-pill .rating-stars svg path,
+.trust-row-light .trust-chip .rating-stars svg path,
+.trust-band-light .trust-chip .rating-stars svg path,
+.trust-row-light .trust-rating-pill .rating-stars svg path,
+.trust-band-light .trust-rating-pill .rating-stars svg path {
+  fill: #fbbc04;
 }
 
-.trust-chip-google .google-star-meta {
-  margin-top: 0.12rem;
-  letter-spacing: 0.04em;
+.trust-chip .rating-stars,
+.trust-rating-pill .rating-stars,
+.trust-row-light .trust-chip .rating-stars,
+.trust-row-light .trust-rating-pill .rating-stars,
+.trust-band-light .trust-chip .rating-stars,
+.trust-band-light .trust-rating-pill .rating-stars {
+  display: inline-flex;
+  margin-top: 0;
   text-transform: none;
-  font-size: 0.74rem;
-  color: #f3e2a8;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: #fbbc04;
 }
 
-.trust-row-light .trust-chip-google .google-star-meta {
-  color: #6b5420;
+.trust-chip-rating-line {
+  display: flex !important;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.trust-chip:has(> .rating-stars) > span > b,
+.trust-chip-rating-line {
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
 }
 
 .trust-rating-pills {
@@ -498,24 +503,6 @@ button {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-}
-
-.trust-rating-pill-google {
-  background: rgba(251, 188, 4, 0.16) !important;
-  box-shadow: inset 0 0 0 1.5px rgba(251, 188, 4, 0.55) !important;
-}
-
-.trust-band-light .trust-rating-pill-google {
-  background: #fff8e6 !important;
-  box-shadow: inset 0 0 0 1.5px rgba(232, 163, 23, 0.65) !important;
-}
-
-.trust-rating-pill-google .google-stars {
-  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.2));
-}
-
-.trust-band-light .trust-rating-pill-google .google-stars {
-  filter: none;
 }
 
 /* ═══════ Featured VA card — the person, never covered by a form ═══════ */
@@ -1315,6 +1302,18 @@ a.gate-call:hover {
   margin-top: 0.15rem;
 }
 
+.gate-sublabel {
+  margin: 0.65rem 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #5a738a;
+}
+
+.gate-sublabel:first-of-type {
+  margin-top: 0;
+}
+
 .quiz-lp-jobseeker {
   margin: 0.75rem 0 0;
   font-size: 0.82rem;
@@ -1329,6 +1328,24 @@ a.gate-call:hover {
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+
+/* Quiz LP only — employer gate + job-seeker divert on first paint */
+.quiz-lp .quiz-lp-jobseeker-top {
+  margin: 0 0 0.85rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.7rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #17324f;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 0 0 1px rgba(18, 40, 63, 0.12);
+}
+
+.quiz-lp .quiz-lp-jobseeker-top a {
+  color: #0d5f9c;
+  font-weight: 700;
 }
 
 .quiz-followup {
@@ -3520,6 +3537,69 @@ html.vc-popup-open .engage-chat {
   color: #6f8296;
 }
 
+/*
+ * Quiz LP only (.quiz-lp / .role-quiz-lp / .quiz-lp-*).
+ * Do not touch TrustBand / hero trust-row rating-star rules.
+ */
+.quiz-lp .role-quiz-lp .role-quiz-reward-card {
+  background: #fff8e6;
+  border: 1px solid rgba(196, 140, 28, 0.45);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+.quiz-lp .role-quiz-lp .role-quiz-reward-card span {
+  color: #8a5a00;
+}
+
+.quiz-lp .role-quiz-lp .role-quiz-reward-card p {
+  color: #10283f !important;
+  font-weight: 650;
+}
+
+.quiz-lp .role-quiz-lp .role-quiz-win {
+  color: #10283f !important;
+}
+
+.quiz-lp .role-quiz-lp .role-quiz-personalized {
+  color: #24384c !important;
+}
+
+.quiz-lp .role-quiz-lp .role-quiz-options button {
+  min-height: 48px;
+  color: #17324f;
+}
+
+.quiz-lp .role-quiz-lp .role-quiz-chips button {
+  min-height: 44px;
+}
+
+.quiz-lp .role-quiz-lp .role-quiz-progress {
+  gap: 0.4rem;
+}
+
+.quiz-lp .role-quiz-lp .role-quiz-dot {
+  height: 0.38rem;
+  background: rgba(18, 40, 63, 0.14);
+}
+
+.quiz-lp .role-quiz-lp .role-quiz-dot.is-on {
+  background: #c48c1c;
+}
+
+@media (max-width: 759px) {
+  .quiz-lp {
+    padding-bottom: 5.75rem;
+  }
+
+  .quiz-lp .role-quiz-lp .role-quiz-actions {
+    padding-bottom: 0.25rem;
+  }
+
+  .quiz-lp .quiz-gate-reveal {
+    margin-bottom: 1.25rem;
+  }
+}
+
 /* Trust band — companies, happy customers, legitimacy, industry stats */
 .trust-band {
   padding: clamp(3.25rem, 6.5vw, 5rem) var(--shell);
@@ -4322,7 +4402,7 @@ html.vc-popup-open .engage-chat {
   color: #10283f;
 }
 
-.trust-rating-pill > span:first-child {
+.trust-rating-pill > span:first-child:not(.rating-stars) {
   color: #f5c542;
   letter-spacing: 0.04em;
   font-size: 0.95rem;
@@ -4673,7 +4753,7 @@ html.vc-popup-open .engage-chat {
 
 @media (min-width: 800px) {
   .trust-band-legit {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
 }
@@ -5695,7 +5775,7 @@ html.vc-popup-open .engage-chat {
 /* ═══════ Thank-you ═══════ */
 .thank-you {
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .thank-you-us {
@@ -5714,10 +5794,16 @@ html.vc-popup-open .engage-chat {
     linear-gradient(195deg, #07141f 0%, #124066 44%, #0c1826 100%);
 }
 
+.thank-you-atmosphere,
+.thank-you-orb,
+.thank-you-grid,
+.thank-you-hero-glow {
+  pointer-events: none !important;
+}
+
 .thank-you-atmosphere {
   position: absolute;
   inset: 0;
-  pointer-events: none;
   z-index: 0;
 }
 
@@ -5784,9 +5870,17 @@ html.vc-popup-open .engage-chat {
   }
 }
 
-.thank-you > *:not(.thank-you-atmosphere) {
+.thank-you > *:not(.thank-you-atmosphere):not(.site-nav) {
   position: relative;
   z-index: 1;
+}
+
+.thank-you > .thank-you-book {
+  z-index: 4;
+}
+
+html.vc-popup-open .thank-you > .thank-you-book {
+  z-index: 40;
 }
 
 .thank-you-hero {
@@ -5860,6 +5954,8 @@ html.vc-popup-open .engage-chat {
 
 .thank-you-book {
   padding: 0 var(--shell) clamp(1.5rem, 3vw, 2.25rem);
+  z-index: 4;
+  pointer-events: auto;
 }
 
 .thank-you-book-inner {
@@ -5916,15 +6012,215 @@ html.vc-popup-open .engage-chat {
   align-items: center;
 }
 
-.thank-you-book-primary {
+.thank-you-book-primary,
+.thank-you-book-secondary {
   font-size: 1.05rem;
   padding-inline: 1.35rem;
 }
 
 .thank-you-book-note {
-  margin: 1rem 0 0 !important;
+  margin: -0.25rem 0 1rem !important;
   font-size: 0.9rem !important;
   color: #9bb0c4 !important;
+}
+
+.thank-you.micro-light .thank-you-book-note {
+  color: #3a5166 !important;
+}
+
+/* Calendly popup overlay is appended to body - keep clicks working on dark pages */
+.calendly-overlay,
+.calendly-overlay iframe,
+.calendly-popup-content,
+.calendly-popup-content iframe {
+  color-scheme: light;
+  pointer-events: auto;
+}
+
+/* Our thank-you booking overlay (headline + Call + inline Calendly) */
+.ty-cal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  padding-top: max(1rem, env(safe-area-inset-top));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  overflow: auto;
+  pointer-events: auto;
+}
+
+.ty-cal-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(6, 14, 24, 0.72);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.ty-cal-overlay-au .ty-cal-scrim {
+  background: rgba(20, 50, 82, 0.48);
+}
+
+.ty-cal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 36rem);
+  margin: auto;
+  flex: 0 0 auto;
+  padding: 1.35rem 1.2rem 1.15rem;
+  border-radius: 1.15rem;
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+.ty-cal-overlay-us .ty-cal-panel {
+  background:
+    linear-gradient(135deg, rgba(51, 222, 216, 0.12), transparent 42%),
+    linear-gradient(160deg, #143252, #0c2238);
+  box-shadow:
+    inset 0 0 0 2px #33ded8,
+    0 24px 60px rgba(0, 0, 0, 0.45);
+  color: #f4f8fc;
+}
+
+.ty-cal-overlay-au .ty-cal-panel {
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 2px #214873,
+    0 24px 60px rgba(23, 51, 79, 0.18);
+  color: #143252;
+}
+
+.ty-cal-close {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.7rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.ty-cal-overlay-au .ty-cal-close {
+  background: rgba(20, 50, 82, 0.08);
+  color: #143252;
+}
+
+.ty-cal-eyebrow {
+  margin: 0 0 0.4rem;
+  padding-right: 2.4rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--vc-cyan);
+}
+
+.ty-cal-overlay-au .ty-cal-eyebrow {
+  color: #0d7a76;
+}
+
+.ty-cal-panel h2 {
+  margin: 0 0 0.45rem;
+  padding-right: 2.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 1.4vw + 1rem, 1.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.ty-cal-sub {
+  margin: 0 0 0.7rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  max-width: 48ch;
+}
+
+.ty-cal-overlay-us .ty-cal-sub {
+  color: #d0e0ef;
+}
+
+.ty-cal-overlay-au .ty-cal-sub {
+  color: #3a5166;
+}
+
+.ty-cal-call {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  pointer-events: auto;
+}
+
+.ty-cal-overlay-us .ty-cal-call {
+  color: #33ded8;
+}
+
+.ty-cal-overlay-au .ty-cal-call {
+  color: #0d5f9c;
+}
+
+.ty-cal-box {
+  width: 100%;
+  min-width: 0;
+  height: 660px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+  pointer-events: auto !important;
+  color-scheme: light;
+}
+
+.ty-cal-box .calendly-inline-widget {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  pointer-events: auto !important;
+  color-scheme: light;
+}
+
+.ty-cal-box iframe,
+.ty-cal-box .calendly-inline-widget iframe {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  pointer-events: auto !important;
+  color-scheme: light;
+}
+
+@media (max-width: 759px) {
+  .ty-cal-panel {
+    padding: 1.1rem 0.8rem 0.9rem;
+    width: min(100%, 36rem);
+  }
+
+  .ty-cal-box {
+    width: 100%;
+    height: min(68vh, 620px);
+  }
+}
+
+@media (max-width: 759px) {
+  .thank-you-book {
+    padding-bottom: 1.5rem;
+  }
 }
 
 .thank-you-next {
@@ -6081,6 +6377,66 @@ html.vc-popup-open .engage-chat {
 
 .thank-you.micro-light .thank-you-step p {
   color: #3a5166;
+}
+
+.thank-you.micro-light .thank-you-book-inner {
+  background:
+    linear-gradient(135deg, rgba(13, 122, 118, 0.08), transparent 45%),
+    #fff;
+  box-shadow:
+    0 18px 40px rgba(23, 51, 79, 0.08),
+    inset 0 0 0 1px rgba(13, 122, 118, 0.22);
+}
+
+.thank-you.micro-light .thank-you-book-eyebrow {
+  color: #0d7a76;
+}
+
+.thank-you.micro-light .thank-you-book h2 {
+  color: #143252;
+}
+
+.thank-you.micro-light .thank-you-book p {
+  color: #3a5166;
+}
+
+.thank-you.micro-light .thank-you-book-secondary,
+.thank-you.micro-light .thank-you-book .micro-btn-ghost {
+  color: #143252;
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px rgba(20, 50, 82, 0.28);
+}
+
+.thank-you.micro-light .thank-you-book-secondary:hover,
+.thank-you.micro-light .thank-you-book .micro-btn-ghost:hover {
+  background: rgba(13, 122, 118, 0.1);
+  color: #0d4f4c;
+}
+
+.thank-you.micro-light .thank-you-aside-inner {
+  background: #fff;
+  box-shadow:
+    0 12px 30px rgba(23, 51, 79, 0.08),
+    inset 0 0 0 1px rgba(33, 72, 115, 0.1);
+}
+
+.thank-you.micro-light .thank-you-aside h2 {
+  color: #143252;
+}
+
+.thank-you.micro-light .thank-you-aside p {
+  color: #3a5166;
+}
+
+.thank-you.micro-light .thank-you-links a {
+  color: #143252;
+  background: rgba(13, 122, 118, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(13, 122, 118, 0.18);
+}
+
+.thank-you.micro-light .thank-you-links a:hover {
+  background: rgba(13, 122, 118, 0.16);
+  color: #0d4f4c;
 }
 
 .thank-you-aside {

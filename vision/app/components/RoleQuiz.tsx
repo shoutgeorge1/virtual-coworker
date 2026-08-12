@@ -72,7 +72,7 @@ type QuizQuestion = {
 
 type RoleResult = {
   roleKey: DrainKey;
-  /** Big bold payoff line — this is the whole result screen. */
+  /** Big bold payoff line - this is the whole result screen. */
   roleLabel: string;
   /** Reporting label (kept stable for dataLayer history where possible). */
   trackLabel: string;
@@ -92,10 +92,10 @@ type DetailPack = {
 };
 
 type PathConfig = {
-  /** Q2 — specific to this drain. */
+  /** Q2 - specific to this drain. */
   focusQ: string;
   focusOptions: QuizOption[];
-  /** Q3 — still specific; shapes coverage / software / load. */
+  /** Q3 - still specific; shapes coverage / software / load. */
   detailQ: string;
   detailOptions: QuizOption[];
   focusCopy: Record<string, FocusPack>;
@@ -112,15 +112,15 @@ type QuizFrame = {
 };
 
 /**
- * quiz_copy A/B — benefit-led headline framing (George: the old
+ * quiz_copy A/B - benefit-led headline framing (George: the old
  * "it'll change how you hire" line was too soft). Each variant leads with the
  * payoff, and `kicker` sets the tone of the win screen.
- * Logic (branching Q2/Q3) is shared — variants are copy skin only.
- * AU frames: same quiz, understated B2B English — not US copy with hours swapped.
+ * Logic (branching Q2/Q3) is shared - variants are copy skin only.
+ * AU frames: same quiz, understated B2B English - not US copy with hours swapped.
  */
 const FRAMES_US: Record<ExpVariant, QuizFrame> = {
   a: {
-    eyebrow: "Take the hiring quiz",
+    eyebrow: "Employer hiring quiz",
     title: "Who should you hire first?",
     lead: "A few taps. We’ll name the seat that buys back your week.",
     kicker: "This is the seat",
@@ -128,7 +128,7 @@ const FRAMES_US: Record<ExpVariant, QuizFrame> = {
     timeLabel: "What changes",
   },
   b: {
-    eyebrow: "Take the hiring quiz",
+    eyebrow: "Employer hiring quiz",
     title: "See which teammate to hire.",
     lead: "Tap through. Get a clear answer. Then talk to a specialist.",
     kicker: "Your first hire",
@@ -136,9 +136,9 @@ const FRAMES_US: Record<ExpVariant, QuizFrame> = {
     timeLabel: "What changes",
   },
   c: {
-    eyebrow: "Take the hiring quiz",
-    title: "Find the teammate that gets you your week back.",
-    lead: "A few questions. A straight recommendation. Then talk — free, no pressure.",
+    eyebrow: "Take the employer quiz",
+    title: "Who should you hire first?",
+    lead: "A few questions. A straight recommendation. Then talk - obligation free, at no cost.",
     kicker: "This is the seat",
     whoLabel: "Look for",
     timeLabel: "What changes",
@@ -147,7 +147,7 @@ const FRAMES_US: Record<ExpVariant, QuizFrame> = {
 
 const FRAMES_AU: Record<ExpVariant, QuizFrame> = {
   a: {
-    eyebrow: "Take the hiring quiz",
+    eyebrow: "Hiring quiz for businesses",
     title: "Who should you hire first?",
     lead: "A few taps. We’ll name the role that takes the load.",
     kicker: "Your first hire",
@@ -155,7 +155,7 @@ const FRAMES_AU: Record<ExpVariant, QuizFrame> = {
     timeLabel: "What changes",
   },
   b: {
-    eyebrow: "Take the hiring quiz",
+    eyebrow: "Hiring quiz for businesses",
     title: "See which teammate to hire.",
     lead: "Tap through. Get a clear answer. Then have a chat.",
     kicker: "Your first hire",
@@ -163,9 +163,9 @@ const FRAMES_AU: Record<ExpVariant, QuizFrame> = {
     timeLabel: "What changes",
   },
   c: {
-    eyebrow: "Take the hiring quiz",
-    title: "Find the teammate that gets you your week back.",
-    lead: "A few questions. A straight recommendation. Then have a chat — free, no pressure.",
+    eyebrow: "Hiring quiz for businesses",
+    title: "Who should you hire first?",
+    lead: "A few questions. A straight recommendation. Then have a chat - obligation free, at no cost.",
     kicker: "Your first hire",
     whoLabel: "Look for",
     timeLabel: "What changes",
@@ -202,14 +202,14 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
       detailQ: "How should they work?",
       detailOptions: isAu
         ? [
-            { id: "overlap", label: "Online when I am — Australian hours" },
+            { id: "overlap", label: "Online when I am - Australian hours" },
             { id: "full", label: "Full-time, just for my business" },
-            { id: "flex", label: "Flexible — just get it done" },
+            { id: "flex", label: "Flexible - just get it done" },
           ]
         : [
-            { id: "overlap", label: "Online when I am — my hours" },
+            { id: "overlap", label: "Online when I am - my hours" },
             { id: "full", label: "Full-time, just for my business" },
-            { id: "flex", label: "Flexible — just get it done" },
+            { id: "flex", label: "Flexible - just get it done" },
           ],
       focusCopy: {
         inbox: {
@@ -217,7 +217,7 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
           profileTip: "A steady organiser who triages mail without being asked.",
         },
         calendar: {
-          because: "Meetings get booked — you just show up.",
+          because: "Meetings get booked - you just show up.",
           profileTip: "Someone sharp with calendars who protects your focus time.",
         },
         docs: {
@@ -249,7 +249,7 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
       ],
       detailQ: "How much do you want off your plate?",
       detailOptions: [
-        { id: "rhythm", label: "A few hours a week — keep the rhythm" },
+        { id: "rhythm", label: "A few hours a week - keep the rhythm" },
         { id: "most", label: "Most of the weekly marketing load" },
         { id: "seat", label: "Own the whole marketing seat" },
       ],
@@ -259,7 +259,7 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
           profileTip: "A doer who drafts, schedules, and keeps the feed alive.",
         },
         ads: {
-          because: "Campaigns get built and checked — not stuck in drafts.",
+          because: "Campaigns get built and checked - not stuck in drafts.",
           profileTip: "Someone who can set up ads and report what worked.",
         },
         content: {
@@ -273,7 +273,7 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
       },
       detailCopy: {
         rhythm: {
-          change: "A light weekly cadence — enough to stay visible without owning it.",
+          change: "A light weekly cadence - enough to stay visible without owning it.",
         },
         most: {
           change: "Most of the weekly marketing load leaves your calendar.",
@@ -300,7 +300,7 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
       ],
       focusCopy: {
         ar: {
-          because: "Invoices go out and payments get chased — not ignored.",
+          because: "Invoices go out and payments get chased - not ignored.",
           profileTip: "A detail person who owns AR follow-ups every week.",
         },
         ap: {
@@ -320,7 +320,7 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
         qb: { change: "They work inside QuickBooks so your numbers stay in one place." },
         xero: { change: "They work inside Xero so your numbers stay in one place." },
         sheets: {
-          change: "They tidy what you have now — then help you pick a cleaner system.",
+          change: "They tidy what you have now - then help you pick a cleaner system.",
         },
         unsure: {
           change: "We match someone who can work in common tools and help you choose.",
@@ -338,14 +338,14 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
       detailQ: "When do you need coverage?",
       detailOptions: isAu
         ? [
-            { id: "overlap", label: "Overlap with me — Australian hours" },
+            { id: "overlap", label: "Overlap with me - Australian hours" },
             { id: "biz", label: "Business hours, full coverage" },
-            { id: "flex", label: "Flexible — just clear the queue" },
+            { id: "flex", label: "Flexible - just clear the queue" },
           ]
         : [
-            { id: "overlap", label: "Overlap with me — my hours" },
+            { id: "overlap", label: "Overlap with me - my hours" },
             { id: "biz", label: "Business hours, full coverage" },
-            { id: "flex", label: "Flexible — just clear the queue" },
+            { id: "flex", label: "Flexible - just clear the queue" },
           ],
       focusCopy: {
         tickets: {
@@ -353,7 +353,7 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
           profileTip: "A calm communicator who owns first replies end to end.",
         },
         repeats: {
-          because: "Repeat questions get a playbook — and someone to run it.",
+          because: "Repeat questions get a playbook - and someone to run it.",
           profileTip: "Someone who learns your FAQs and answers without pinging you.",
         },
         after: {
@@ -389,7 +389,7 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
       ],
       focusCopy: {
         outbound: {
-          because: "Outreach happens on a schedule — not when you remember.",
+          because: "Outreach happens on a schedule - not when you remember.",
           profileTip: "A hunter who can run lists, opens, and first touches daily.",
         },
         followups: {
@@ -406,7 +406,7 @@ function pathsFor(market: MarketId): Record<DrainKey, PathConfig> {
         },
       },
       detailCopy: {
-        top: { change: "More first touches every week — without you writing every email." },
+        top: { change: "More first touches every week - without you writing every email." },
         pipeline: {
           change: "Deals keep moving because follow-ups and CRM hygiene are owned.",
         },
@@ -434,7 +434,7 @@ function baseResults(): Record<DrainKey, RoleResult> {
       trackLabel: "marketing / social support",
       because: "Content actually ships instead of sitting in drafts.",
       profileTip: "A doer who keeps posts moving on a weekly rhythm.",
-      changeDefault: "Marketing leaves your plate — you only approve.",
+      changeDefault: "Marketing leaves your plate - you only approve.",
     },
     books: {
       roleKey: "books",
@@ -448,7 +448,7 @@ function baseResults(): Record<DrainKey, RoleResult> {
       roleKey: "support",
       roleLabel: "A customer support assistant",
       trackLabel: "customer support",
-      because: "Customers get answers fast — without waiting on you.",
+      because: "Customers get answers fast - without waiting on you.",
       profileTip: "A calm communicator who owns the first reply.",
       changeDefault: "Response times stay protected without you on every thread.",
     },
@@ -456,7 +456,7 @@ function baseResults(): Record<DrainKey, RoleResult> {
       roleKey: "sales",
       roleLabel: "A sales support assistant",
       trackLabel: "sales support",
-      because: "Pipeline work happens daily — not when you have a spare hour.",
+      because: "Pipeline work happens daily - not when you have a spare hour.",
       profileTip: "A closer’s helper who owns outreach, follow-ups, and CRM.",
       changeDefault: "Sales busywork leaves your week so you can sell.",
     },
@@ -516,6 +516,7 @@ export default function RoleQuiz({
   placement = "section",
   onComplete,
   onRetake,
+  onRevealForm,
 }: {
   market: MarketId;
   category?: string;
@@ -526,6 +527,8 @@ export default function RoleQuiz({
   /** hero = quiz LP (gate slot). section = mid-page band on form LPs. */
   placement?: "section" | "hero";
   onComplete?: (payload: QuizCompletePayload) => void;
+  /** Quiz LP: show the employer form under the reward (no auto-scroll). */
+  onRevealForm?: () => void;
   onRetake?: () => void;
 }) {
   const enabled = flagEnabled();
@@ -644,13 +647,14 @@ export default function RoleQuiz({
       cta_mode: isHero ? "quiz_lp" : "form_primary",
       landing_type: isHero ? "quiz_lp" : "form_lp",
       landing_page: isHero ? `/${market}/quiz` : `/${market}`,
+      lp_variant: isHero ? "quiz" : "",
       ...extra,
     });
   };
 
   const current = questions[step];
   const note = isAu
-    ? "A starting point, not a promise. Next: a short chat so we can shortlist real people for your Australian business — free, no pressure."
+    ? "A starting point, not a promise. Next: a short chat so we can shortlist real people for your Australian business - obligation free, at no cost."
     : "A starting point, not a promise. Next: a short chat so we can shortlist real people for you.";
 
   function markQuizStart() {
@@ -751,7 +755,7 @@ export default function RoleQuiz({
     <section
       id="role-quiz"
       className={`role-quiz${light ? " role-quiz-light" : ""}${
-        isHero ? " role-quiz-hero" : ""
+        isHero ? " role-quiz-hero role-quiz-lp" : ""
       }`}
       aria-labelledby="role-quiz-title"
       data-exp-quiz={frameVariant}
@@ -839,7 +843,7 @@ export default function RoleQuiz({
             <p className="role-quiz-personalized">{result.because}</p>
             {sizeLabel && seatsLabel ? (
               <p className="role-quiz-fitline">
-                {sizeLabel} team · {seatsLabel} {seatsLabel === "1" ? "seat" : "seats"}
+                {sizeLabel} · {seatsLabel}
               </p>
             ) : null}
 
@@ -855,7 +859,26 @@ export default function RoleQuiz({
             </div>
 
             <div className="role-quiz-actions">
-              {!isHero ? (
+              {isHero ? (
+                <button
+                  type="button"
+                  className="role-quiz-primary"
+                  onClick={() => {
+                    track("conversion_assist_cta_clicked", {
+                      cta: "form",
+                      result_role: result.trackLabel,
+                      form_role: result.formRole,
+                    });
+                    trackExperimentClick("quiz_copy", frameVariant, {
+                      market,
+                      cta: "form",
+                    });
+                    onRevealForm?.();
+                  }}
+                >
+                  {isAu ? "Book a free consultation →" : "Book Your Free Consultation →"}
+                </button>
+              ) : (
                 <a
                   href="#gate"
                   className="role-quiz-primary"
@@ -880,7 +903,7 @@ export default function RoleQuiz({
                 >
                   {isAu ? "Chat about this role →" : "Hire for this role →"}
                 </a>
-              ) : null}
+              )}
               {canCall ? (
                 <a
                   href={callHref!}

@@ -6,10 +6,10 @@ import {
   googleBusinessForMarket,
 } from "../../config/site";
 import QuoteBody from "./QuoteBody";
-import GoogleReviewBadge from "./GoogleReviewBadge";
+import GoogleReviewBadge, { RatingStars } from "./GoogleReviewBadge";
 
 /**
- * Legitimacy band — recognition, client marks, reviews, stats.
+ * Legitimacy band - recognition, client marks, reviews, stats.
  *
  * Hierarchy (2026-08-09):
  *  1. Reviews + Clutch rating
@@ -39,12 +39,12 @@ export default function TrustBand({
         <header className="trust-band-head">
           <p className="trust-band-label">Happy customers</p>
           <h2 id="trust-band-title">
-            Since {TRUST_PROOF.sinceYear}. Real reviews. Real hires — still
+            Since {TRUST_PROOF.sinceYear}. Real reviews. Real hires - still
             filling seats.
           </h2>
         </header>
 
-        {/* Reviews lead — quotes need air, not a badge pile above them */}
+        {/* Reviews lead - quotes need air, not a badge pile above them */}
         <div className="trust-band-quotes">
           <div className="trust-band-quotes-head">
             <p className="trust-band-quotes-label">What hiring managers say</p>
@@ -54,7 +54,7 @@ export default function TrustBand({
                 className="trust-rating-pill"
                 aria-label={`Clutch ${TRUST_PROOF.clutch.rating} out of 5 from ${TRUST_PROOF.clutch.reviewCount} reviews`}
               >
-                <span aria-hidden="true">★★★★★</span>
+                <RatingStars size={14} />
                 <b>
                   {TRUST_PROOF.clutch.rating}
                   <i>/5</i>
@@ -189,6 +189,23 @@ export default function TrustBand({
             <div>
               <strong>You say yes first</strong>
               <span>Nobody starts until you meet them and pick.</span>
+            </div>
+          </div>
+          <div className="trust-legit-item">
+            <span className="trust-legit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+                <path
+                  d="M5 12.5l4 4 10-10"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+            <div>
+              <strong>No recruitment fees</strong>
+              <span>Background checks before placement. Staff work your time zone.</span>
             </div>
           </div>
         </div>

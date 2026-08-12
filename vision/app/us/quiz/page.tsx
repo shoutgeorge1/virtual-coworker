@@ -5,9 +5,9 @@ import { buildPageMetadata } from "../../../lib/seo";
 import "../us.css";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "What type of VA do you need? | Virtual Coworker US",
+  title: "Employer hiring quiz | Find the right virtual assistant | Virtual Coworker US",
   description:
-    "Take the quiz. We’ll name the dedicated Filipino teammate that buys back your week. For US businesses hiring staff — not job seekers.",
+    "Take the employer hiring quiz. We’ll name the dedicated Filipino teammate that buys back your week. For US businesses hiring staff - not job seekers.",
   path: "/us/quiz",
   indexable: false,
   ogImage: "/brand/hero-us-2026.jpg",

@@ -131,6 +131,17 @@ export const TRUST_PROOF = {
     note: "Listed · Directory",
   },
   sinceYear: 2011,
+  /**
+   * Social reach — do not print on the microsite until a live count is verified.
+   * CEO (2026-08-11): LinkedIn 450,000+ / Facebook 290,000+.
+   * Company press (Mar 2026): LinkedIn 360,000 / Facebook 257,000.
+   * Third-party LinkedIn listings ~348,000. Treat as unverified.
+   */
+  socialReach: {
+    linkedinFollowers: null,
+    facebookFollowers: null,
+    verifiedAt: null,
+  },
 } as const;
 
 export type GoogleBusinessProof = {
@@ -335,12 +346,12 @@ export const CLIENT_MARKS: readonly ClientMark[] = [
  */
 export const FORM_CUE = {
   us: {
-    label: "Start here",
-    body: "Talk to a specialist - usually same business day.",
+    label: "Book a consult",
+    body: "Free consultation - usually same business day.",
   },
   au: {
-    label: "Start here",
-    body: "Have a chat - obligation free, no lock-in.",
+    label: "Book a consult",
+    body: "Free consultation - obligation free, no lock-in.",
   },
 } as const;
 
@@ -542,9 +553,9 @@ export const INDUSTRY_STATS: readonly IndustryStat[] = [
   {
     id: "ph-admin-va-rate",
     figure: "~$8",
-    headline: "an hour for a typical admin VA",
+    headline: "an hour for a typical admin virtual assistant",
     body: "Serious capacity without US payroll weight. That’s the rate that changes the math.",
-    sourceLabel: "Industry VA rate guides, 2025–26",
+    sourceLabel: "Industry virtual assistant rate guides, 2025–26",
     markets: ["us"],
   },
   {
@@ -589,7 +600,7 @@ export function navForSurface(surface: SiteSurface): NavItem[] {
     { href: `/how-it-works${q}`, label: "How it works", id: "how" },
     {
       href: `${home}#gate`,
-      label: surface === "au" ? "Have a chat" : "Start Hiring",
+      label: "Free consultation",
       id: "hire",
       primary: true,
     },

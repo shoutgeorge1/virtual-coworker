@@ -9,6 +9,7 @@ import {
   trackPhoneClick,
   trackValidEmployerSubmit,
 } from "../../lib/tracking";
+import { exitToCareers } from "../../lib/job-seeker-exit";
 import {
   assignExperiment,
   trackExperimentConvert,
@@ -25,15 +26,21 @@ import { formLabelForSlug } from "../../config/categories";
 import {
   COMPANY_SIZE_OPTIONS,
   POSITIONS_OPTIONS,
+  SCHEDULE_OPTIONS,
   scoreLeadValue,
   type CompanySizeId,
   type PositionsId,
+  type ScheduleId,
 } from "../../config/lead-value";
+import {
+  formatPhoneInput,
+  normalizePhoneForStorage,
+} from "../../lib/phone-format";
 
 const GATE_TITLES: Record<ExpVariant, { title: string; eyebrowSuffix: string }> = {
-  a: { title: "Start Hiring — 2 minutes.", eyebrowSuffix: "2 minutes" },
-  b: { title: "Start Hiring — short form.", eyebrowSuffix: "about a minute" },
-  c: { title: "Start Hiring — 2 minutes.", eyebrowSuffix: "2 minutes" },
+  a: { title: "Start Hiring - 2 minutes.", eyebrowSuffix: "2 minutes" },
+  b: { title: "Start Hiring - short form.", eyebrowSuffix: "about a minute" },
+  c: { title: "Start Hiring - 2 minutes.", eyebrowSuffix: "2 minutes" },
 };
 
 export type GateCopy = {
@@ -161,6 +168,7 @@ export default function LeadGate({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const startedRef = useRef(false);
+  const exitingSeeker = useRef(false);
   const [headlineVariant, setHeadlineVariant] = useState<ExpVariant>("a");
   const [roleEmphasize, setRoleEmphasize] = useState(false);
   const [companySize, setCompanySize] = useState<CompanySizeId | null>(() => {
@@ -177,14 +185,17 @@ export default function LeadGate({
         : null;
     },
   );
+  const [schedule, setSchedule] = useState<ScheduleId | null>(null);
+  const [phone, setPhone] = useState("");
   const resolvedCtaMode = ctaMode || (lpSurface === "quiz" ? "quiz_lp" : "form_primary");
 
   useEffect(() => {
     captureAttribution(market, {
       category: category || "",
       variant: variant || "",
+      lp_variant: lpSurface === "quiz" ? "quiz" : "",
     });
-  }, [market, category, variant]);
+  }, [market, category, variant, lpSurface]);
 
   useEffect(() => {
     const v = assignExperiment("gate_headline");
@@ -283,15 +294,28 @@ export default function LeadGate({
   }, [market, category, variant, copy.roles, lpSurface]);
 
   function onJobSeekerGate() {
-    setIntent("job_seeker");
+    if (exitingSeeker.current) return;
+    exitingSeeker.current = true;
     setError(null);
+    exitToCareers(copy.careersHref, {
+      market,
+      category: category || "",
+      variant: variant || "",
+      gate_variant: "inline",
+      source: "lead_gate",
+      lp_surface: lpSurface,
+      cta_mode: resolvedCtaMode,
+      landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
+    });
   }
 
   function validateClient(fd: FormData): Record<string, string> {
     const errs: Record<string, string> = {};
     if (!String(fd.get("name") || "").trim()) errs.name = "Enter your name.";
     if (!String(fd.get("email") || "").trim()) errs.email = "Enter your work email.";
-    if (!String(fd.get("phone") || "").trim()) errs.phone = "Enter a business phone.";
+    if (!phone.trim() && !String(fd.get("phone") || "").trim()) {
+      errs.phone = "Enter a business phone.";
+    }
     if (!String(fd.get("company") || "").trim()) errs.company = "Enter your company name.";
     if (!role) errs.role = "Select what you need help with.";
     return errs;
@@ -321,6 +345,7 @@ export default function LeadGate({
     const attr = readAttribution(market, {
       category: category || "",
       variant: variant || "",
+      lp_variant: lpSurface === "quiz" ? "quiz" : "",
     });
     const clientScored = scoreLeadValue({
       intent: "employer",
@@ -331,7 +356,9 @@ export default function LeadGate({
       ...attr,
       name: String(fd.get("name") || ""),
       email: String(fd.get("email") || ""),
-      phone: String(fd.get("phone") || ""),
+      phone:
+        normalizePhoneForStorage(phone || String(fd.get("phone") || ""), market) ||
+        String(fd.get("phone") || "").trim(),
       company: String(fd.get("company") || ""),
       role: role || "",
       category: category || "",
@@ -344,10 +371,12 @@ export default function LeadGate({
       submitted_at: new Date().toISOString(),
       company_size: companySize || "",
       positions_needed: positionsNeeded || "",
+      schedule: schedule || "",
       hiring_timeline: "",
       lp_surface: lpSurface,
       cta_mode: resolvedCtaMode,
       landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
+      lp_variant: lpSurface === "quiz" ? "quiz" : attr.lp_variant || "",
     };
 
     try {
@@ -429,6 +458,7 @@ export default function LeadGate({
         submittedAt: payload.submitted_at,
         lpSurface,
         ctaMode: resolvedCtaMode,
+        lpVariant: lpSurface === "quiz" ? "quiz" : attr.lp_variant || "",
       });
       if (eligible) {
         trackExperimentConvert("form_submit", {
@@ -455,7 +485,7 @@ export default function LeadGate({
         code: "network_error",
       });
       setError(
-        "Network error — your request was not sent. Please try again" +
+        "Network error - your request was not sent. Please try again" +
           (copy.phoneHref ? ", or call us." : "."),
       );
       setSubmitting(false);
@@ -472,15 +502,19 @@ export default function LeadGate({
   const hideRoleStep = Boolean(initialRole && assumeEmployer);
   const hideQualifyChips = compactAfterQuiz && Boolean(companySize && positionsNeeded);
   const hideIntentStep = compactAfterQuiz && assumeEmployer;
+  const roleStepNum = hideIntentStep ? 1 : 2;
+  const qualifyStepNum = hideIntentStep ? (hideRoleStep ? 1 : 2) : hideRoleStep ? 2 : 3;
   const detailsStepNum = hideIntentStep
-    ? 1
+    ? hideRoleStep && hideQualifyChips
+      ? 1
+      : hideRoleStep || hideQualifyChips
+        ? 2
+        : 3
     : hideRoleStep && hideQualifyChips
       ? 2
-      : hideRoleStep
-        ? 4
-        : hideQualifyChips
-          ? 3
-          : 5;
+      : hideRoleStep || hideQualifyChips
+        ? 3
+        : 4;
 
   useEffect(() => {
     if (compactAfterQuiz && assumeEmployer) markStart();
@@ -544,39 +578,6 @@ export default function LeadGate({
           </fieldset>
           )}
 
-          {intent === "job_seeker" ? (
-            <div className="gate-divert">
-              <strong>{copy.divertTitle}</strong>
-              <p>{copy.divertBody}</p>
-              <a
-                href={copy.careersHref}
-                className="gate-submit"
-                {...(/^https?:\/\//i.test(copy.careersHref)
-                  ? {
-                      target: "_blank",
-                      rel: "noopener noreferrer",
-                    }
-                  : {})}
-                onClick={() =>
-                  trackEvent("job_seeker_redirected", {
-                    market,
-                    category: category || "",
-                    variant: variant || "",
-                    gate_variant: "inline",
-                    intent: "job_seeker",
-                    destination: copy.careersHref,
-                    primary_eligible: false,
-                    lp_surface: lpSurface,
-                    cta_mode: resolvedCtaMode,
-                    landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
-                  })
-                }
-              >
-                {copy.divertCta}
-              </a>
-            </div>
-          ) : null}
-
           {intent === "employer" ? (
             <form onSubmit={onSubmit} noValidate>
               {!hideRoleStep ? (
@@ -585,7 +586,7 @@ export default function LeadGate({
                   data-gate-role-step
                 >
                   <legend>
-                    <b>2</b> {copy.roleLabel}
+                    <b>{roleStepNum}</b> {copy.roleLabel}
                   </legend>
                   <div className="gate-chips" role="group" aria-label={copy.roleLabel}>
                     {copy.roles.map((o) => (
@@ -617,60 +618,77 @@ export default function LeadGate({
                 <>
                   <input type="hidden" name="company_size" value={companySize || ""} readOnly />
                   <input type="hidden" name="positions_needed" value={positionsNeeded || ""} readOnly />
-                  {role || companySize || positionsNeeded ? (
+                  <input type="hidden" name="schedule" value={schedule || ""} readOnly />
+                  {role || companySize || positionsNeeded || schedule ? (
                     <p className="gate-quiz-summary">
-                      {[role, companySize, positionsNeeded ? `${positionsNeeded} seats` : ""]
+                      {[
+                        role,
+                        companySize,
+                        positionsNeeded,
+                        schedule,
+                      ]
                         .filter(Boolean)
                         .join(" · ")}
                     </p>
                   ) : null}
                 </>
               ) : (
-                <>
-                  <fieldset className="gate-step gate-qualify">
-                    <legend>
-                      <b>{hideRoleStep ? "2" : "3"}</b> Company size
-                    </legend>
-                    <div className="gate-chips" role="group" aria-label="Company size">
-                      {COMPANY_SIZE_OPTIONS.map((o) => (
-                        <button
-                          type="button"
-                          key={o.id}
-                          className={companySize === o.id ? "on" : ""}
-                          aria-pressed={companySize === o.id}
-                          onClick={() => {
-                            setCompanySize(o.id);
-                            markStart();
-                          }}
-                        >
-                          {o.label}
-                        </button>
-                      ))}
-                    </div>
-                  </fieldset>
-
-                  <fieldset className="gate-step">
-                    <legend>
-                      <b>{hideRoleStep ? "3" : "4"}</b> Positions needed
-                    </legend>
-                    <div className="gate-chips" role="group" aria-label="Positions needed">
-                      {POSITIONS_OPTIONS.map((o) => (
-                        <button
-                          type="button"
-                          key={o.id}
-                          className={positionsNeeded === o.id ? "on" : ""}
-                          aria-pressed={positionsNeeded === o.id}
-                          onClick={() => {
-                            setPositionsNeeded(o.id);
-                            markStart();
-                          }}
-                        >
-                          {o.label}
-                        </button>
-                      ))}
-                    </div>
-                  </fieldset>
-                </>
+                <fieldset className="gate-step gate-qualify">
+                  <legend>
+                    <b>{qualifyStepNum}</b> About the hire
+                  </legend>
+                  <p className="gate-sublabel">Company size</p>
+                  <div className="gate-chips" role="group" aria-label="Company size">
+                    {COMPANY_SIZE_OPTIONS.map((o) => (
+                      <button
+                        type="button"
+                        key={o.id}
+                        className={companySize === o.id ? "on" : ""}
+                        aria-pressed={companySize === o.id}
+                        onClick={() => {
+                          setCompanySize(o.id);
+                          markStart();
+                        }}
+                      >
+                        {o.label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="gate-sublabel">How many positions?</p>
+                  <div className="gate-chips" role="group" aria-label="Positions needed">
+                    {POSITIONS_OPTIONS.map((o) => (
+                      <button
+                        type="button"
+                        key={o.id}
+                        className={positionsNeeded === o.id ? "on" : ""}
+                        aria-pressed={positionsNeeded === o.id}
+                        onClick={() => {
+                          setPositionsNeeded(o.id);
+                          markStart();
+                        }}
+                      >
+                        {o.label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="gate-sublabel">Full-time or part-time?</p>
+                  <div className="gate-chips" role="group" aria-label="Full-time or part-time">
+                    {SCHEDULE_OPTIONS.map((o) => (
+                      <button
+                        type="button"
+                        key={o.id}
+                        className={schedule === o.id ? "on" : ""}
+                        aria-pressed={schedule === o.id}
+                        onClick={() => {
+                          setSchedule(o.id);
+                          markStart();
+                        }}
+                      >
+                        {o.label}
+                      </button>
+                    ))}
+                  </div>
+                </fieldset>
               )}
 
               <fieldset className="gate-step">
@@ -726,10 +744,18 @@ export default function LeadGate({
                     <input
                       type="tel"
                       name="phone"
+                      inputMode="tel"
                       autoComplete="tel"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      value={phone}
                       placeholder={copy.phonePlaceholder}
                       aria-invalid={Boolean(fieldErrors.phone)}
                       aria-describedby={fieldErrors.phone ? "err-phone" : undefined}
+                      onChange={(e) => {
+                        setPhone(formatPhoneInput(e.target.value, market));
+                        markStart();
+                      }}
                     />
                     {fieldErrors.phone ? (
                       <span id="err-phone" className="gate-field-error" role="alert">

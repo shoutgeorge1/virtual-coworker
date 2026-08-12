@@ -141,12 +141,17 @@ describe("scoreLeadValue", () => {
 
   it("exposes short tap chip labels", () => {
     expect(COMPANY_SIZE_OPTIONS.map((o) => o.label)).toEqual([
-      "1–10",
-      "11–50",
-      "51–200",
-      "201+",
+      "1–10 people",
+      "11–50 people",
+      "51–200 people",
+      "201+ people",
     ]);
-    expect(POSITIONS_OPTIONS.map((o) => o.label)).toEqual(["1", "2–3", "4–10", "11+"]);
+    expect(POSITIONS_OPTIONS.map((o) => o.label)).toEqual([
+      "1 role",
+      "2–3 roles",
+      "4–10 roles",
+      "11+ roles",
+    ]);
   });
 });
 

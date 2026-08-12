@@ -11,6 +11,7 @@ import {
   type ExpVariant,
 } from "../../lib/experiments";
 import { DEFAULT_CAREERS_URL } from "../../config/markets";
+import { exitToCareers } from "../../lib/job-seeker-exit";
 import type { MarketId } from "../../config/markets";
 import type { AbVariant } from "../../config/categories";
 
@@ -25,7 +26,7 @@ type PopupVariant = {
   phoneCta: string;
 };
 
-/** Shared 2-step choices — copy variants only change the intro. */
+/** Shared 2-step choices - copy variants only change the intro. */
 const HIRE_CTA = "I’m hiring for a business";
 const JOB_CTA = "I’m looking for a job";
 
@@ -34,7 +35,7 @@ const VARIANTS: PopupVariant[] = [
     id: "a",
     image: "/brand/va-face-1.jpg",
     eyebrow: "Skip Upwork roulette",
-    title: "Want someone who sticks — not another freelancer?",
+    title: "Want someone who sticks - not another freelancer?",
     body: "One quick question so we send you the right way.",
     phoneCta: "Call now",
   },
@@ -43,22 +44,22 @@ const VARIANTS: PopupVariant[] = [
     image: "/brand/va-face-2.jpg",
     eyebrow: "Dedicated teammate",
     title: "Tired of hiring eating the week?",
-    body: "Quick check first — hiring for a company, or looking for work?",
+    body: "Quick check first - hiring for a company, or looking for work?",
     phoneCta: "Talk to us",
   },
   {
     id: "c",
     image: "/brand/va-face-3.jpg",
-    eyebrow: "Filipino VA, your way",
+    eyebrow: "Filipino virtual assistant, your way",
     title: "One clear seat. People you actually meet.",
-    body: "Before we point you anywhere — are you hiring, or looking for a job?",
+    body: "Before we point you anywhere - are you hiring, or looking for a job?",
     phoneCta: "Call the team",
   },
 ];
 
 /**
  * Opt-in only. Auto timed / exit / scroll popups interrupt reading and
- * duplicate the inline employer/job-seeker gate — default OFF (CRO pass 2026-08).
+ * duplicate the inline employer/job-seeker gate - default OFF (CRO pass 2026-08).
  * Set NEXT_PUBLIC_ENABLE_EXIT_INTENT=true only if deliberately re-enabling.
  */
 function flagEnabled(): boolean {
@@ -76,7 +77,7 @@ function isCoarsePointer(): boolean {
 }
 
 /**
- * Soft offer popup — exit-intent on desktop; scroll-depth or long wait on mobile.
+ * Soft offer popup - exit-intent on desktop; scroll-depth or long wait on mobile.
  * Light 2-step gate: hiring vs job seeker → form or PH careers egress.
  * Never immediate. 3 creative A/B/C variants via experiments.ts.
  */
@@ -251,18 +252,14 @@ export default function ExitIntent({
       market,
       cta: "job_seeker",
     });
-    trackEvent("job_seeker_redirected", {
+    exitToCareers(careers, {
       market,
       category: category || "",
       variant: variant || "",
       gate_variant: "exit_intent",
-      intent: "job_seeker",
-      destination: careers,
-      primary_eligible: false,
+      source: "exit_intent",
       popup_variant: popup.id,
     });
-    dismiss();
-    window.open(careers, "_blank", "noopener,noreferrer");
   };
 
   return (

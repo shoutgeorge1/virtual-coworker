@@ -10,11 +10,11 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
   <style>
-    body[data-page="conversion-path.html"] .main { max-width: 1080px; }
+    body[data-page="conversion-path.html"] .main { max-width: 640px; }
 
     .cp-head {
-      margin: 0 0 0.75rem;
-      padding: 0 0 0.7rem;
+      margin: 0 0 1rem;
+      padding: 0 0 0.75rem;
       border-bottom: 1px solid var(--edge);
     }
     .cp-head .kicker {
@@ -27,508 +27,182 @@
     }
     .cp-head h1 {
       margin: 0;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       letter-spacing: -0.02em;
       font-weight: 700;
     }
     .cp-head p {
       margin: 0.35rem 0 0;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       color: var(--body);
-      max-width: 36rem;
       line-height: 1.4;
     }
 
-    .cp-legend {
-      list-style: none;
-      margin: 0 0 0.85rem;
+    .cp-steps {
+      margin: 0 0 1.1rem;
       padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem 1.1rem;
-      font-size: 0.8rem;
-      color: var(--body);
+      list-style: none;
+      counter-reset: step;
     }
-    .cp-legend li {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .cp-swatch {
-      width: 0.7rem;
-      height: 0.7rem;
-      border-radius: 2px;
-      border: 1px solid var(--edge);
-      flex-shrink: 0;
-    }
-    .cp-swatch.soon { background: #86efac; border-color: #16a34a; }
-    .cp-swatch.better { background: #4ade80; border-color: #15803d; }
-    .cp-swatch.spam { background: #fdba74; border-color: #ea580c; }
-    .cp-swatch.later { background: #fcd34d; border-color: #d97706; }
-    .cp-swatch.dump { background: #f87171; border-color: #dc2626; }
-
-    .flow-board {
-      background: #fff;
-      border: 1px solid var(--edge);
-      border-radius: 10px;
-      padding: 1.05rem 0.9rem 1.2rem;
-      overflow-x: auto;
-    }
-    .flow-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .fbox {
-      width: 100%;
-      max-width: 26rem;
-      border-radius: 9px;
+    .cp-steps li {
+      position: relative;
+      margin: 0 0 0.65rem;
+      padding: 0.85rem 1rem 0.85rem 3rem;
+      border-radius: 8px;
       border: 2px solid var(--edge);
       background: var(--panel-inset);
-      padding: 0.6rem 0.75rem 0.68rem;
-      min-width: 0;
     }
-    .fbox.live { border-color: #16a34a; background: #dcfce7; }
-    .fbox.star {
-      border-color: #15803d;
-      background: #bbf7d0;
-      box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.22);
-    }
-    .fbox.dump { border-color: #dc2626; background: #fecaca; }
-    .fbox.form { border-color: #2563eb; background: #dbeafe; }
-    .fbox.later { border-color: #d97706; background: #fde68a; }
-    .fbox.stop { border-style: dashed; }
-
-    .fbox .role {
-      margin: 0;
-      font-family: var(--mono);
-      font-size: 0.64rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--dim);
-    }
-    .fbox.live .role,
-    .fbox.star .role { color: #166534; }
-    .fbox.dump .role { color: #9f2d2d; }
-    .fbox.later .role { color: #92400e; }
-
-    .fbox h2 {
-      margin: 0.12rem 0 0.2rem;
-      font-size: 0.98rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      line-height: 1.25;
-      color: var(--ink);
-    }
-    .fbox ul {
-      margin: 0;
-      padding: 0 0 0 1.05rem;
-      font-size: 0.82rem;
-      line-height: 1.35;
-      color: var(--body);
-    }
-    .fbox li { margin: 0.12rem 0; }
-    .fbox strong { color: var(--ink); }
-    .fbox .links {
+    .cp-steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0.75rem;
+      top: 0.9rem;
+      width: 1.55rem;
+      height: 1.55rem;
+      border-radius: 50%;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.25rem 0.5rem;
-      margin: 0.4rem 0 0;
-      font-size: 0.78rem;
-      font-weight: 600;
-    }
-    .fbox .links a { color: var(--link); }
-
-    .chip {
-      display: inline-block;
+      align-items: center;
+      justify-content: center;
       font-family: var(--mono);
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      padding: 0.08rem 0.35rem;
-      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: #fff;
       border: 1px solid var(--edge);
-      background: var(--panel);
       color: var(--ink);
-      white-space: nowrap;
     }
-    .chip.soon { border-color: #16a34a; background: #bbf7d0; color: #14532d; }
-    .chip.better { border-color: #15803d; background: #86efac; color: #14532d; }
-    .chip.spam { border-color: #ea580c; background: #fed7aa; color: #9a3412; }
-    .chip.later { border-color: #d97706; background: #fde68a; color: #92400e; }
-
-    .risk-line {
-      margin: 0.4rem 0 0;
-      font-size: 0.76rem;
-      line-height: 1.35;
+    .cp-steps li.live {
+      border-color: #16a34a;
+      background: #dcfce7;
+    }
+    .cp-steps li.live::before {
+      background: #bbf7d0;
+      border-color: #16a34a;
+      color: #14532d;
+    }
+    .cp-steps li.dump {
+      border-color: #dc2626;
+      background: #fecaca;
+    }
+    .cp-steps li.dump::before {
+      background: #fecaca;
+      border-color: #dc2626;
+      color: #9f2d2d;
+    }
+    .cp-steps li.later {
+      border-color: #d97706;
+      background: #fde68a;
+    }
+    .cp-steps li.later::before {
+      background: #fde68a;
+      border-color: #d97706;
       color: #92400e;
     }
-
-    .farrow {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      padding: 0.15rem 0 0.1rem;
-      color: var(--muted);
+    .cp-steps h2 {
+      margin: 0 0 0.25rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
     }
-    .farrow .shaft { width: 2px; height: 0.95rem; background: currentColor; }
-    .farrow .cap {
-      font-family: var(--mono);
-      font-size: 0.66rem;
-      font-weight: 500;
-      text-align: center;
-      line-height: 1.25;
-      padding: 0.08rem 0.25rem;
+    .cp-steps p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--body);
     }
-    .farrow .head {
-      width: 0; height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 8px solid currentColor;
-    }
-    .farrow.live { color: #2d8a4e; }
-    .farrow.dump { color: #c24141; }
-    .farrow.later { color: #b45309; }
-    .farrow.form { color: #4a5568; }
-    .farrow.dash .shaft {
-      background: repeating-linear-gradient(to bottom, currentColor 0 4px, transparent 4px 8px);
-    }
-
-    .fork {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.75rem;
-      width: 100%;
-      min-height: 4.8rem;
-      margin-top: 0.1rem;
-    }
-    .fork-stem {
-      position: absolute;
-      left: 50%; top: 0;
-      width: 2px; height: 0.9rem;
-      background: var(--muted);
-      transform: translateX(-50%);
-    }
-    .fork-bar {
-      position: absolute;
-      top: 0.9rem;
-      left: calc(16.666% - 1px);
-      right: calc(16.666% - 1px);
-      height: 2px;
-      background: var(--muted);
-    }
-    .fork-leg {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 0.9rem;
-      min-width: 0;
-    }
-    .fork-leg .shaft { width: 2px; height: 1.5rem; background: currentColor; }
-    .fork-leg .cap {
-      font-family: var(--mono);
-      font-size: 0.66rem;
+    .cp-steps .links {
+      margin: 0.4rem 0 0;
+      font-size: 0.8rem;
       font-weight: 600;
-      text-align: center;
-      line-height: 1.25;
-      padding: 0.15rem 0.3rem 0.1rem;
-      max-width: 11rem;
     }
-    .fork-leg .head {
-      width: 0; height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 8px solid currentColor;
-    }
-    .fork-leg.dump { color: #c24141; }
-    .fork-leg.live { color: #2d8a4e; }
-    .fork-leg.form { color: #4a5568; }
+    .cp-steps .links a { color: var(--link); }
 
-    .trio {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.75rem;
-      width: 100%;
-      align-items: stretch;
-    }
-    .col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 0;
-    }
-    .col .fbox { max-width: none; }
-    .farrow.grow {
-      flex: 1;
-      justify-content: flex-end;
-      min-height: 2.2rem;
-    }
-    .farrow.grow .shaft { flex: 1; min-height: 1.1rem; }
-
-    .later-row {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 0.15rem;
-    }
-    .later-row .fbox { max-width: 28rem; }
-
-    .offpath {
-      margin: 0.9rem 0 0;
-      padding: 0.6rem 0.85rem;
+    .cp-foot {
+      margin: 0 0 1rem;
+      padding: 0.7rem 0.9rem;
       border-radius: 8px;
       border: 1px dashed var(--edge);
       background: var(--panel-inset);
-      font-size: 0.84rem;
-      line-height: 1.4;
+      font-size: 0.85rem;
+      line-height: 1.45;
       color: var(--body);
     }
-    .offpath ul {
-      margin: 0;
-      padding: 0 0 0 1.1rem;
-    }
-    .offpath li { margin: 0.15rem 0; }
-    .offpath strong { color: var(--ink); }
-
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    @media (max-width: 860px) {
-      .fork-stem, .fork-bar { display: none; }
-      .fork {
-        grid-template-columns: 1fr;
-        min-height: 0;
-        gap: 0.1rem;
-      }
-      .fork-leg { padding-top: 0; }
-      .fork-leg .shaft { height: 0.8rem; }
-      .trio { grid-template-columns: 1fr; }
-      .col { margin-bottom: 0.3rem; }
-    }
+    .cp-foot strong { color: var(--ink); }
   </style>
 </head>
-<body data-page="conversion-path.html" data-foot="How a click becomes a hire">
+<body data-page="conversion-path.html" data-foot="Click → hire">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
     <main class="main">
       <header class="cp-head">
-        <p class="kicker">Plain English · not a bidding change</p>
+        <p class="kicker">Short path</p>
         <h1>How a click becomes a hire</h1>
-        <p>Someone searches. They land on our hiring pages. We only count real employers. Job seekers go elsewhere. We’re still paying for clicks until phone conversations are trustworthy.</p>
+        <p>Stay on pay-per-click until phone conversations are trusted.</p>
       </header>
 
-      <p class="sr-only">
-        Google ads send employers to hiring pages. Stay on pay-per-click until real phone conversations are trusted.
-        A tap on the number is a weak signal. A call over 60 seconds is better. A form can be spam.
-        Job seekers go to the Philippines careers site and never count as a win.
-        Thank-you page: call again or book a chat. Opening the calendar is not a booked meeting.
-        Later, sales marks a real lead in Zoho, then job order, then hire.
-        US phone is 888-964. Australia is 1300. If nobody answers, tap-to-call can lie.
-      </p>
+      <ol class="cp-steps">
+        <li class="live">
+          <h2>Google ad click</h2>
+          <p>US + AU Search. We pay per click for now.</p>
+          <p class="links"><a href="launch-control.html">Checklist</a></p>
+        </li>
+        <li class="live">
+          <h2>Hiring page</h2>
+          <p>Businesses hiring a virtual assistant — not the old WordPress site.</p>
+          <p class="links">
+            <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">US</a>
+            ·
+            <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">AU</a>
+          </p>
+        </li>
+        <li class="dump">
+          <h2>Job seeker → careers site</h2>
+          <p>Sent to virtualcoworker.com.ph. Never a win for ads.</p>
+        </li>
+        <li class="later">
+          <h2>Call or form</h2>
+          <p>
+            Numbers on the page: US 888-964 · AU 1300.
+            <strong>Win we want:</strong> ad click → Google shows a forwarding number → connected call 60+ seconds.
+            Call-from-ad button (US) already counts 60s. Tel: tap does not count as that win.
+            Form goes to us@ / apac@ (spam risk — still useful).
+          </p>
+          <p class="links"><a href="tracking.html">Tracking</a> · <a href="launch-control.html">Checklist #14</a></p>
+        </li>
+        <li class="live">
+          <h2>Thank-you</h2>
+          <p>Call again or book a free consultation. Opening the calendar ≠ booked.</p>
+          <p class="links">
+            <a href="https://www.virtualcoworker.app/thank-you?market=us&amp;eligible=1" target="_blank" rel="noopener">Thank-you US</a>
+          </p>
+        </li>
+        <li class="later">
+          <h2>Later: real lead → hire</h2>
+          <p>Zoho marks a real employer, then job order, then hire. Not live yet.</p>
+          <p class="links"><a href="tracking.html">Tracking</a></p>
+        </li>
+      </ol>
 
-      <ul class="cp-legend" aria-label="Legend">
-        <li><i class="cp-swatch soon" aria-hidden="true"></i> We can count this soon</li>
-        <li><i class="cp-swatch better" aria-hidden="true"></i> Better (a real conversation)</li>
-        <li><i class="cp-swatch spam" aria-hidden="true"></i> Spam risk</li>
-        <li><i class="cp-swatch later" aria-hidden="true"></i> Later</li>
-        <li><i class="cp-swatch dump" aria-hidden="true"></i> Never a win</li>
-      </ul>
+      <div class="cp-foot">
+        <strong>Holly loop (needed before Maximize Conversions):</strong>
+        search term · keyword · campaign/ad group · landing page · conversion type ·
+        company · role · seats needed · qualified / unqualified · job seeker · spam ·
+        solo / too small · job order · placement · assigned value.
+        Form fills are not automatically valuable. Stay on Maximize Clicks until this
+        loop has enough trusted signal.
+      </div>
 
-      <section class="flow-board" aria-label="Conversion path flowchart">
-        <div class="flow-center">
-          <article class="fbox live">
-            <p class="role">Right now</p>
-            <h2>They click a Google ad</h2>
-            <ul>
-              <li>US + Australia Search</li>
-              <li>We pay per click for now</li>
-              <li>Don’t switch to “optimize for conversions” until phone is trusted</li>
-            </ul>
-            <p class="links">
-              <a href="launch-control.html">Checklist</a>
-              · Brand ads are off
-            </p>
-          </article>
-
-          <div class="farrow live">
-            <i class="shaft" aria-hidden="true"></i>
-            <span class="cap">ad click</span>
-            <i class="head" aria-hidden="true"></i>
-          </div>
-
-          <article class="fbox live">
-            <p class="role">They land here</p>
-            <h2>Hiring pages</h2>
-            <ul>
-              <li>Pages for businesses hiring a VA</li>
-              <li>Not the old WordPress site</li>
-            </ul>
-            <p class="links">
-              <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">US</a>
-              ·
-              <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">Australia</a>
-              ·
-              <a href="landing-pages.html">all pages</a>
-            </p>
-          </article>
-        </div>
-
-        <div class="fork" aria-hidden="true">
-          <div class="fork-stem"></div>
-          <div class="fork-bar"></div>
-          <div class="fork-leg dump">
-            <i class="shaft"></i>
-            <span class="cap">never</span>
-            <i class="head"></i>
-          </div>
-          <div class="fork-leg live">
-            <i class="shaft"></i>
-            <span class="cap">call or form</span>
-            <i class="head"></i>
-          </div>
-          <div class="fork-leg form">
-            <i class="shaft"></i>
-            <span class="cap">early + spam risk</span>
-            <i class="head"></i>
-          </div>
-        </div>
-
-        <div class="trio">
-          <div class="col">
-            <article class="fbox dump">
-              <p class="role">Wrong person</p>
-              <h2>Looking for a job?</h2>
-              <ul>
-                <li>Sent to the PH careers site</li>
-                <li>Never a win for ads</li>
-              </ul>
-            </article>
-            <div class="farrow dump">
-              <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">STOP</span>
-              <i class="head" aria-hidden="true"></i>
-            </div>
-            <article class="fbox dump stop">
-              <p class="role">Careers site</p>
-              <h2>virtualcoworker.com.ph</h2>
-              <ul>
-                <li>Back button doesn’t return them here</li>
-              </ul>
-              <p class="links">
-                <a href="https://virtualcoworker.com.ph" target="_blank" rel="noopener">Open careers</a>
-              </p>
-            </article>
-          </div>
-
-          <div class="col">
-            <article class="fbox star">
-              <p class="role">Best early win</p>
-              <h2>They call</h2>
-              <ul>
-                <li><span class="chip soon">We can count this soon</span> Tap the number — fast, weak</li>
-                <li><span class="chip better">Better</span> Real conversation, 60+ seconds</li>
-              </ul>
-              <p class="risk-line">If nobody answers, a tap still “counts.” AU 1300 voicemail still says Alex.</p>
-              <p class="links">
-                US <strong>888-964</strong> · AU <strong>1300</strong>
-              </p>
-            </article>
-            <div class="farrow later dash grow">
-              <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">later if they’re real</span>
-              <i class="head" aria-hidden="true"></i>
-            </div>
-          </div>
-
-          <div class="col">
-            <article class="fbox form">
-              <p class="role">Also useful early</p>
-              <h2>They fill the form</h2>
-              <ul>
-                <li>Company size + how many seats</li>
-                <li>Goes to us@ / apac@</li>
-                <li><span class="chip spam">Spam risk</span> still worth watching</li>
-              </ul>
-              <p class="links">
-                <a href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">US form</a>
-                ·
-                <a href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">AU form</a>
-              </p>
-            </article>
-            <div class="farrow form">
-              <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">thanks</span>
-              <i class="head" aria-hidden="true"></i>
-            </div>
-            <article class="fbox form">
-              <p class="role">Thank-you page</p>
-              <h2>Call or book a chat</h2>
-              <ul>
-                <li>Call again — same 888-964 / 1300 rules</li>
-                <li>Open the calendar ≠ they booked</li>
-                <li><span class="chip later">Later</span> a real booked meeting is stronger</li>
-              </ul>
-              <p class="links">
-                <a href="https://www.virtualcoworker.app/thank-you?market=us&amp;eligible=1" target="_blank" rel="noopener">Thank-you US</a>
-                ·
-                <a href="https://www.virtualcoworker.app/thank-you?au" target="_blank" rel="noopener">Thank-you AU</a>
-              </p>
-            </article>
-            <div class="farrow later dash grow">
-              <i class="shaft" aria-hidden="true"></i>
-              <span class="cap">if they book</span>
-              <i class="head" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-
-        <div class="later-row">
-          <article class="fbox later">
-            <p class="role">Later · when sales is sure</p>
-            <h2>Real lead → job order → hire</h2>
-            <ul>
-              <li>Someone in Zoho marks “this is a real employer”</li>
-              <li>That dollar amount beats the website guess</li>
-              <li>Not live yet — after phone + Australia tags</li>
-            </ul>
-            <p class="links">
-              <a href="lead-routing.html">Who gets the lead</a>
-              ·
-              <a href="tracking.html">Tracking</a>
-              ·
-              <a href="launch-control.html">Checklist</a>
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <div class="offpath">
-        <ul>
-          <li><strong>Not this path:</strong> Brand ads (off) · the quiz (paused, ~70%) · 888 on their old website (we asked)</li>
-          <li><strong>Tracking:</strong> US visit tags on · Australia visit tags still missing</li>
-          <li>We don’t invent conversion counts. George turns ads on — not the API.</li>
-        </ul>
+      <div class="cp-foot">
+        <strong>Not this path:</strong> Brand ads deferred (Stage 1 first) · quiz paused · wrong 888s (864/954).
+        Website 60s US live (tag fires; swap needs ad click) — Checklist #14 AU still open. AU visit tags still open — see Tracking.
       </div>
 
       <div class="actions">
         <a class="btn btn-primary" href="launch-control.html">Checklist</a>
-        <a class="btn" href="https://www.virtualcoworker.app/us" target="_blank" rel="noopener">Open /us</a>
-        <a class="btn" href="https://www.virtualcoworker.app/au" target="_blank" rel="noopener">Open /au</a>
-        <a class="btn" href="https://www.virtualcoworker.app/thank-you?market=us&amp;eligible=1" target="_blank" rel="noopener">Thank-you overlay</a>
+        <a class="btn" href="tracking.html">Tracking</a>
       </div>
     </main>
   </div>
-  <script src="nav.js?v=20260810b"></script>
+  <script src="nav.js?v=20260810-ops1"></script>
 </body>
 </html>

@@ -27,24 +27,31 @@
 
 export const COMPANY_SIZE_OPTIONS = [
   /** Modest base. Real SMB, smaller wallet / fewer seats later. */
-  { id: "1-10", label: "1–10", score: 10, valueMult: 1.0 },
-  /** Sweet zone — budget + still a fit for dedicated VA seats. */
-  { id: "11-50", label: "11–50", score: 24, valueMult: 1.25 },
+  { id: "1-10", label: "1–10 people", score: 10, valueMult: 1.0 },
+  /** Sweet zone — budget + still a fit for dedicated seats. */
+  { id: "11-50", label: "11–50 people", score: 24, valueMult: 1.25 },
   /** Sweet zone — more budget, still SMB-shaped. */
-  { id: "51-200", label: "51–200", score: 30, valueMult: 1.45 },
+  { id: "51-200", label: "51–200 people", score: 30, valueMult: 1.45 },
   /**
    * Larger can mean more seats later, but do NOT 3× this.
    * Longer cycle, maybe worse ICP fit than 51–200.
    */
-  { id: "201+", label: "201+", score: 18, valueMult: 1.28 },
+  { id: "201+", label: "201+ people", score: 18, valueMult: 1.28 },
 ] as const;
 
 export const POSITIONS_OPTIONS = [
-  { id: "1", label: "1", score: 12, valueMult: 1.0 },
-  { id: "2-3", label: "2–3", score: 30, valueMult: 2.0 },
-  { id: "4-10", label: "4–10", score: 44, valueMult: 3.5 },
+  { id: "1", label: "1 role", score: 12, valueMult: 1.0 },
+  { id: "2-3", label: "2–3 roles", score: 30, valueMult: 2.0 },
+  { id: "4-10", label: "4–10 roles", score: 44, valueMult: 3.5 },
   /** Big dial, but $ is still capped — no pretend $10k until sales data. */
-  { id: "11+", label: "11+", score: 54, valueMult: 5.0 },
+  { id: "11+", label: "11+ roles", score: 54, valueMult: 5.0 },
+] as const;
+
+/** Optional. CEO ICP is established companies needing dedicated seats, FT or PT. */
+export const SCHEDULE_OPTIONS = [
+  { id: "full-time", label: "Full-time" },
+  { id: "part-time", label: "Part-time" },
+  { id: "mix", label: "A mix" },
 ] as const;
 
 /** Optional timeline — not shown on form yet; scoring uses it if present. */
@@ -57,6 +64,7 @@ export const HIRING_TIMELINE_OPTIONS = [
 
 export type CompanySizeId = (typeof COMPANY_SIZE_OPTIONS)[number]["id"];
 export type PositionsId = (typeof POSITIONS_OPTIONS)[number]["id"];
+export type ScheduleId = (typeof SCHEDULE_OPTIONS)[number]["id"];
 export type HiringTimelineId = (typeof HIRING_TIMELINE_OPTIONS)[number]["id"];
 
 /** Editable coefficients — expected-value sketch, not accounting. */

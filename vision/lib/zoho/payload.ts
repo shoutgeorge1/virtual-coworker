@@ -19,6 +19,7 @@ export type LeadRecord = {
   timeline?: string;
   company_size?: string;
   positions_needed?: string;
+  schedule?: string;
   hiring_timeline?: string;
   lead_score?: number | string;
   estimated_lead_value?: number | string;
@@ -139,6 +140,7 @@ export function mapLeadToCrmPayload(
     lead.role ? `Role: ${lead.role}` : "",
     lead.company_size ? `Company size: ${lead.company_size}` : "",
     lead.positions_needed ? `Positions needed: ${lead.positions_needed}` : "",
+    lead.schedule ? `Schedule: ${lead.schedule}` : "",
     lead.hiring_timeline || lead.timeline
       ? `Timeline: ${lead.hiring_timeline || lead.timeline}`
       : "",

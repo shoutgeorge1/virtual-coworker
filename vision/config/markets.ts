@@ -3,7 +3,7 @@
  * US phone: (888) 964-8644 - verified VC US line (George 2026-08-10 restore).
  *   Never publish 888-864-8644 or 888-954-8644. tel:+18889648644.
  * AU phone: 1300 886 740 - George-approved (2026-08-08); GBP listing.
- * Phone stays secondary to Start Hiring / Have a chat. Do not invent numbers.
+ * Phone stays secondary to Free consultation. Do not invent numbers.
  * Do not invent emails, budgets, conversion IDs, or guarantees.
  */
 
@@ -21,7 +21,7 @@ export type MarketConfig = {
   phoneEnv: "NEXT_PUBLIC_US_PHONE" | "NEXT_PUBLIC_AU_PHONE";
   /**
    * Known public business line when env empty.
-   * US / AU: George-approved public lines. Phone stays secondary to Start Hiring.
+   * US / AU: George-approved public lines. Phone stays secondary to consultation.
    */
   knownPhone: string | null;
   careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL";
@@ -49,11 +49,10 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     knownPhone: "(888) 964-8644",
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: DEFAULT_CAREERS_URL,
-    headline:
-      "Your week is full. Hire a dedicated Filipino teammate.",
-    prop: "We recruit and screen. You interview and pick. We handle payroll. Dedicated seats on your hours - not a gig marketplace.",
+    headline: "Hire Dedicated Virtual Assistants from the Philippines",
+    prop: "Full-time or part-time dedicated professionals who work your hours. We recruit, vet, handle payroll, and stay with you after they start. Serving businesses since 2011.",
     staffingExplain:
-      "Tell us the role. Obligation-free consult, at no cost. We recruit and shortlist. You interview and pick. We handle payroll and paperwork. Rates depend on the seat - we’ll talk through them once we understand what you need.",
+      "Book a free consultation. We recruit and shortlist. You interview and pick. We handle payroll, HR, and time tracking. Hourly rates depend on the seat - we talk through them once we understand the role.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "remote staffing agency",
@@ -87,11 +86,10 @@ export const MARKETS: Record<MarketId, MarketConfig> = {
     knownPhone: "1300 886 740",
     careersUrlEnv: "NEXT_PUBLIC_CAREERS_URL",
     careersUrlFallback: DEFAULT_CAREERS_URL,
-    headline:
-      "Your week is full. A dedicated Filipino teammate takes the load.",
-    prop: "We recruit and shortlist. You interview and choose. We handle employment admin. Dedicated teammates on Australian hours - not a gig marketplace.",
+    headline: "Hire dedicated virtual assistants from the Philippines",
+    prop: "Full-time or part-time dedicated professionals on Australian hours. We recruit, vet, handle employment admin, and stay with you after they start. Serving businesses since 2011.",
     staffingExplain:
-      "Tell us the role. We’ll have a short chat - obligation free, at no cost. We recruit and shortlist. You interview and pick. We handle employment admin so you stay on the work. Rates depend on the role - we’ll talk them through once we understand what you need.",
+      "Book a free consultation. We recruit and shortlist. You interview and pick. We handle employment admin and time tracking. Hourly rates depend on the role - we talk them through once we understand what you need.",
     servicesProposed: allFormRoleLabels(),
     keywordThemes: [
       "hire virtual assistant philippines",

@@ -8,14 +8,16 @@ Like Ads — run 2–3 variants on key engagement pieces, measure, keep winners,
 - Assignment: sticky in `localStorage` (`vc_exp_<id>`) + cookie (90 days)
 - Force override: `?vc_exp=<id>&vc_var=<a|b|c>` (Site tests preview links) — sticky, before first paint
 - Same visitor keeps the same letter until storage is cleared
-- No stats backend — events go to `dataLayer` for GTM → GA4 (when wired)
+- Events go to `dataLayer` (GTM) **and** a GA4 collect beacon (`MarketGtm`
+  `__vcSendExpGa4`) so `experiment_*` reaches GA4 even when GTM Event tags are
+  not mapped (gtag `event` is swallowed when GTM owns the same measurement ID)
 
 ## Active experiments (Aug 2026)
 
 | ID | Variants | Surface | What changes |
 |---|---|---|---|
-| `exit_popup` | A / B / C | Soft popup | Image + headline + body + CTAs |
-| `quiz_copy` | A / B / C | Hero teaser + role quiz | Benefit headline, lead, teaser, win-screen kicker |
+| `exit_popup` | A / B / C | Soft popup | Image + headline + body + CTAs — **component unmounted** (2026-08); gate/chat do live filter. Remount only after George OK — see `CRO-BACKLOG-2026-08-11.md` |
+| `quiz_copy` | A / B / C | Role quiz (mid-page on form LPs) | Benefit headline, lead, teaser, win-screen kicker. Hero quiz teaser removed from form LPs 2026-08-11 so the form is the one obvious action. |
 | `chat_launcher` | A / B | Chat bubble | Launcher label — must say **Chat**, not live agent |
 | `gate_headline` | A / B | Form card (generic LP) | Headline + “2 minutes” framing |
 | `lp_density` | A / B | Whole market landing | A = wordy (all supporting copy), B = lean |
@@ -129,7 +131,8 @@ Force role imagery B: `?vc_exp=role_imagery&vc_var=b`
 - Snapshot: `xray/data/experiments-snapshot.json`
 - Pull stub: `ads-launch/pull_experiments_snapshot.py`
   - Local: drop events at `xray/data/experiments-events.json`, then run the script
-  - Or set `GA4_PROPERTY_ID` (+ ADC) for a GA4 Data API pull
+  - Or set `GA4_PROPERTY_ID=549075481` (US / G-2V3V0BS6JW; script default) + ADC for a GA4 Data API pull
+    (`gcloud auth application-default login`)
 - Primary KPI now: **clicks / CTR** (`experiment_click` ÷ `experiment_view`)
 - Converts column is reserved (`experiment_convert`) — no fake winners
 
@@ -156,10 +159,16 @@ See `IMAGE-CHOICES.md` + `config/role-imagery.ts`.
 
 ## Popup timing (not an experiment — product rule)
 
+**Status:** `ExitIntent` is coded + CSS’d but **not mounted** on `MarketLanding`. Live employer/job-seeker split is the **inline LeadGate** (and chat / quiz link). Rules below apply only if remounted behind `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true`.
+
 - Desktop: exit-intent after ~12s settle; timed fallback ~90s; scroll ~50% also OK after settle
 - Mobile: scroll ~50% **or** ~75s timed — never immediate
 - Form busy / already filling → don’t show
 - CTA → light binary (hiring vs job) → hirers scroll to `#gate` with employer path open on **What do you need help with?** + gold flash (`focusGate`); job seekers leave to `virtualcoworker.com.ph`
+
+## CRO backlog
+
+Lead magnets, quiz experiments, sales video, Veo: `vision/docs/CRO-BACKLOG-2026-08-11.md` + Launch Control **CRO / lead quality**.
 
 ## Related
 

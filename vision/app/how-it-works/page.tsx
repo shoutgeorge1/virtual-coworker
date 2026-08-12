@@ -16,7 +16,7 @@ import { breadcrumbJsonLd, buildPageMetadata } from "../../lib/seo";
 export const metadata: Metadata = buildPageMetadata({
   title: "How Hiring Works | Virtual Coworker",
   description:
-    "Free consult. We recruit. You interview. We handle payroll or employment admin. How Virtual Coworker helps US and Australian businesses hire dedicated Filipino staff.",
+    "Free consultation. We recruit and vet in the Philippines. You interview. We handle payroll or employment admin, time tracking, and ongoing support.",
   path: "/how-it-works",
   indexable: true,
 });
@@ -58,11 +58,11 @@ export default async function HowItWorksPage({
         <p className="micro-kicker">
           {isAu ? "Australia" : "United States"} · Businesses · Filipino talent
         </p>
-        <h1>We find them. You pick. They start.</h1>
+        <h1>White-glove hiring. Not a freelancer marketplace.</h1>
         <p className="micro-lead">
           {isAu
-            ? "Free chat. We recruit in the Philippines. You interview on video. We handle employment admin — including Australian hours. You just hire good people."
-            : "Free consult. We recruit in the Philippines. You interview on video. We handle payroll and paperwork. You just hire great people."}
+            ? "Free consultation. We write the job description with you, recruit and vet in the Philippines, and send profiles with hourly rates. You interview on video. We handle employment admin, time tracking, and stay on after they start."
+            : "Free consultation. We write the job description with you, recruit and vet in the Philippines, and send profiles with hourly rates. You interview on video. We handle payroll, HR, time tracking, and stay on after they start."}
         </p>
         <div className="micro-actions">
           <Link href={`${home}#gate`} className="micro-btn micro-btn-primary">

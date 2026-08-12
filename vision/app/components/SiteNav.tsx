@@ -28,7 +28,7 @@ export default function SiteNav({
   const showPhone = Boolean(phone?.configured && phone.href);
   const hireHref =
     surface === "au" ? "/au#gate" : surface === "ph" ? "/ph/apply" : "/us#gate";
-  // Employer nav already includes Start Hiring → #gate. Without a phone, the
+  // Employer nav already includes Free consultation → #gate. Without a phone, the
   // right-slot CTA was a second identical link (AU desktop + mobile).
   const hireAlreadyInNav = items.some((item) => item.id === "hire");
 
@@ -75,7 +75,7 @@ export default function SiteNav({
           </Link>
         ) : !hireAlreadyInNav ? (
           <a href={hireHref} className="site-nav-call">
-            {employerMarket ? primaryHireCta(employerMarket) : "Talk to a Specialist"}
+            {employerMarket ? primaryHireCta(employerMarket) : "Book Your Free Consultation"}
           </a>
         ) : null}
         <span className="site-nav-tag">{SITE.tagline}</span>

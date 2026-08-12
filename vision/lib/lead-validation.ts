@@ -33,10 +33,12 @@ export type LeadInput = {
   landing_page_url?: string;
   referrer?: string;
   lp_version?: string;
+  lp_variant?: string;
   captured_at?: string;
   /** Soft qualification chips on the employer form (optional). */
   company_size?: string;
   positions_needed?: string;
+  schedule?: string;
   hiring_timeline?: string;
   lead_score?: number | string;
   estimated_lead_value?: number | string;

@@ -21,6 +21,7 @@ import {
 import { upsertEmployerLead } from "../../../lib/zoho/client";
 import { leadLogSafe } from "../../../lib/zoho/redact";
 import { scoreLeadFromSignals } from "../../../config/lead-value";
+import { normalizePhoneForStorage } from "../../../lib/phone-format";
 
 function splitName(name: string): { firstName: string; lastName: string } {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -165,7 +166,10 @@ export async function POST(req: NextRequest) {
   const cfg = configuredChannels();
   const companySize = String(body.company_size || "").trim();
   const positionsNeeded = String(body.positions_needed || "").trim();
+  const schedule = String(body.schedule || "").trim();
   const hiringTimeline = String(body.hiring_timeline || body.timeline || "").trim();
+  const phoneRaw = String(body.phone || "").trim();
+  const phone = normalizePhoneForStorage(phoneRaw, market) || phoneRaw;
   const scored = scoreLeadFromSignals({
     intent: "employer",
     company_size: companySize,
@@ -178,7 +182,7 @@ export async function POST(req: NextRequest) {
     firstName: names.firstName,
     lastName: names.lastName,
     email,
-    phone: String(body.phone || "").trim(),
+    phone,
     company: String(body.company || "").trim(),
     role: String(body.role || "").trim(),
     category: String(body.category || "").trim(),
@@ -187,6 +191,7 @@ export async function POST(req: NextRequest) {
     message: String(body.message || "").trim(),
     company_size: companySize,
     positions_needed: positionsNeeded,
+    schedule,
     hiring_timeline: hiringTimeline,
     lead_score: scored.lead_score,
     estimated_lead_value: scored.estimated_lead_value,
@@ -206,6 +211,7 @@ export async function POST(req: NextRequest) {
     landing_page_url: body.landing_page_url || "",
     referrer: body.referrer || "",
     lp_version: body.lp_version || "",
+    lp_variant: body.lp_variant || "",
     captured_at: body.captured_at || "",
     submitted_at: submittedAt,
     // Honesty: never imply CRM/job-order success

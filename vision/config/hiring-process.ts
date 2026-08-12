@@ -1,6 +1,10 @@
 /**
  * Master 4-step hiring process copy.
  * Used by How it works + Start hiring (market landing) so wording cannot drift.
+ *
+ * Maps the CEO / WordPress white-glove flow into four scannable cards:
+ * consult + job description → recruit/vet → profiles + hourly rates + interviews
+ * → onboarding, payroll/HR, time tracking, ongoing support.
  */
 
 import type { MarketId } from "./markets";
@@ -18,27 +22,27 @@ export function hiringProcessSteps(market: MarketId): HiringProcessStep[] {
   return [
     {
       k: "01 · Talk",
-      t: "Free hiring consult",
+      t: "Free consultation",
       d: isAu
-        ? "Tell us the role. We’ll have a short chat, talk through Australian hours, and map the seat — free, no pressure."
-        : "Tell us the role. We jump on a short call, share what works, and map the seat — free, no pressure.",
+        ? "A short chat to understand your company, the role, and how many people you need. Then we write the job description with you - obligation free, at no cost."
+        : "A short call to understand your company, the role, and how many people you need. Then we write the job description with you - obligation free, at no cost.",
     },
     {
       k: "02 · Hunt",
-      t: "We recruit. You get the shortlist.",
-      d: "Our Philippines team finds and screens people. Huge English-speaking talent pool. You get strong candidates handed over — not a pile of random resumes.",
+      t: "We recruit and rigorously vet",
+      d: "Our Philippines team sources and screens candidates. You get a curated shortlist - not a pile of random resumes, and not a freelancer marketplace.",
     },
     {
       k: "03 · Pick",
-      t: "You pick who you want",
-      d: "Meet them on video. Screen who you like. These candidates are that good — you’re going to find someone fast.",
+      t: "Profiles, interviews, you choose",
+      d: "You receive candidate profiles with transparent hourly rates. Meet them on video. Nobody starts until you say yes.",
     },
     {
       k: "04 · Go",
-      t: "Forget the paperwork",
+      t: "We stay on after they start",
       d: isAu
-        ? "Onboarding, employment admin, emails — we handle it. Teammate ready to work Australian hours. You’re sorted."
-        : "Onboarding, payroll, emails — we handle it. Gift-wrapped teammate, on your desk, ready to go.",
+        ? "Onboarding, employment admin, and our time tracker. Ongoing support so the seat keeps working on Australian hours."
+        : "Onboarding, payroll, HR, and our time tracker. Ongoing support so the seat keeps working on your hours.",
     },
   ];
 }

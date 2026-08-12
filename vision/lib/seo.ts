@@ -117,8 +117,8 @@ export function professionalServiceJsonLd(market: "us" | "au") {
     "@type": "ProfessionalService",
     name: `${SITE.name} · ${isAu ? "Australia" : "United States"}`,
     description: isAu
-      ? "Hire dedicated Filipino staff for Australian businesses — recruit, screen, interview, and hire."
-      : "Hire dedicated Filipino VAs and remote staff for US businesses — recruit, vet, you interview and decide.",
+      ? "Hire dedicated Filipino staff for Australian businesses - recruit, screen, interview, and hire."
+      : "Hire dedicated Filipino virtual assistants and remote staff for US businesses - recruit, vet, you interview and decide.",
     url: absoluteUrl(isAu ? "/au" : "/us"),
     telephone: isAu ? undefined : SITE.usPhoneDisplay,
     image: absoluteUrl(isAu ? "/brand/hero-au-2026.jpg" : "/brand/hero-us-2026.jpg"),

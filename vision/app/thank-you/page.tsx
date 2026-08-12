@@ -5,14 +5,21 @@ import SiteFooter from "../components/SiteFooter";
 import MarketGtm from "../components/MarketGtm";
 import { type SiteSurface } from "../../config/site";
 import { resolvePhone, type MarketId } from "../../config/markets";
-import { calendlyUrlForMarket } from "../../lib/calendly";
+import { hiringProcessStrip } from "../../config/hiring-process";
+import {
+  calendlyEmbedDomain,
+  calendlyPopupUrl,
+  calendlyUrlForMarket,
+  THANK_YOU_BOOKING_COPY,
+} from "../../lib/calendly";
+import CalendlyPopup from "./CalendlyPopup";
 import ThankYouClient from "./ThankYouClient";
 
 import { buildPageMetadata } from "../../lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Thank you · Virtual Coworker",
-  description: "Thanks — we got your hiring request.",
+  description: "Thanks - we got your hiring request.",
   path: "/thank-you",
   indexable: false,
 });
@@ -32,46 +39,37 @@ export default async function ThankYouPage({
   const marketLabel = isAu ? "Australia" : "United States";
   const calendlyUrl =
     market === "us" || market === "au" ? calendlyUrlForMarket(market) : null;
+  const calendlyWidgetUrl = calendlyUrl
+    ? calendlyPopupUrl(calendlyUrl, { embedDomain: calendlyEmbedDomain() })
+    : null;
   const phone =
     market === "us" || market === "au"
       ? resolvePhone(market as MarketId)
       : { display: "", href: null, configured: false };
   const showPhone = phone.configured && Boolean(phone.href);
+  const showBook = Boolean(calendlyUrl && calendlyWidgetUrl);
+  const bookingCopy = isAu ? THANK_YOU_BOOKING_COPY.au : THANK_YOU_BOOKING_COPY.us;
 
+  const process = hiringProcessStrip(market === "au" || market === "us" ? market : "us");
   const steps = [
     {
       k: "01",
-      t: "Free hiring consult",
+      t: "Free consultation",
       d: calendlyUrl
         ? isAu
-          ? "Book a time below, or wait — a teammate will follow up for a short chat about the role and Australian hours."
-          : "Book a time below, or wait — a teammate will follow up about the role and hours."
+          ? "A member of our team will follow up about the role and Australian hours. You can also pick a time, or call."
+          : "A member of our team will call you about the role and hours. You can also pick a time, or call."
         : isAu
-          ? "A teammate follows up about the role and Australian hours — free, no pressure."
-          : "A teammate follows up about the role and hours — free, no pressure.",
+          ? "A member of our team follows up about the role and Australian hours. Obligation free, at no cost."
+          : "A member of our team will call you about the role and hours. Obligation free, at no cost.",
     },
-    {
-      k: "02",
-      t: "We recruit. You get the shortlist.",
-      d: "Our Philippines team finds and screens people. You get strong candidates handed over — not a pile of random resumes.",
-    },
-    {
-      k: "03",
-      t: "You pick who you want",
-      d: "Meet them on video. Screen who you like. These candidates are that good — you’re going to find someone fast.",
-    },
-    {
-      k: "04",
-      t: "Forget the paperwork",
-      d: isAu
-        ? "Onboarding, employment admin, emails — we handle it. Teammate ready to work Australian hours. You’re sorted."
-        : "Onboarding, payroll, emails — we handle it. Gift-wrapped teammate, on your desk, ready to go.",
-    },
+    ...process.slice(1),
   ];
 
   return (
     <main
       className={`micro thank-you thank-you-${market}${isAu ? " micro-light" : ""}`}
+      {...(sid ? { "data-submission-id": sid } : {})}
     >
       <MarketGtm surface={market} />
       <SiteNav tone={isAu ? "light" : "dark"} market={market} />
@@ -88,71 +86,74 @@ export default async function ThankYouPage({
         <h1>
           {conversionEligible
             ? isAu
-              ? "Thanks — we’ve got your request."
-              : "Thanks — you’re in."
-            : "Thanks — this was a test submission."}
+              ? "Thanks - we’ve got your request."
+              : "Thanks - you’re in."
+            : "Thanks - this was a test submission."}
         </h1>
         {conversionEligible ? (
           <p className="micro-lead thank-you-lead">
             {isAu
-              ? "A teammate will follow up for a short chat about the role and Australian hours. Free, no pressure."
-              : "A teammate will follow up to talk through the role and next steps. Free consult, no pressure."}
+              ? "A member of our team will follow up for a short chat about the role and Australian hours. Obligation free, at no cost."
+              : "A member of our team will call you to talk through the role and next steps. Obligation free, at no cost."}
           </p>
         ) : (
           <p className="micro-lead thank-you-lead">
             Our hiring team was not notified. If you meant to send a real
-            request, please try again from the hiring page — or contact us if
+            request, please try again from the hiring page - or contact us if
             something looks wrong.
           </p>
         )}
-        {sid ? (
-          <p className="thank-you-ref">
-            Reference <code>{sid}</code>
-          </p>
-        ) : null}
       </header>
 
-      {conversionEligible && calendlyUrl ? (
-        <section
-          className="thank-you-book"
-          aria-labelledby="ty-book"
-        >
+      {conversionEligible && (showPhone || showBook) ? (
+        <section className="thank-you-book" aria-labelledby="ty-book">
           <div className="thank-you-book-inner">
-            <p className="thank-you-book-eyebrow">Optional next step</p>
+            <p className="thank-you-book-eyebrow">
+              {showBook
+                ? bookingCopy.eyebrow
+                : showPhone
+                  ? "Talk now"
+                  : "Hiring chat"}
+            </p>
             <h2 id="ty-book">
-              {isAu
-                ? "Want to talk sooner? Book a time"
-                : "Want to move faster? Book a hiring conversation"}
+              {showBook
+                ? bookingCopy.headline
+                : isAu
+                  ? "Prefer to talk now?"
+                  : "Want to talk now?"}
             </h2>
             <p>
-              {isAu
-                ? "Optional — pick a time that suits Australian business hours. Or skip booking and wait for email follow-up. Still free, no lock-in."
-                : "Optional — pick a time that works for you. Or skip booking and wait for email follow-up. Still free, no obligation."}
+              {showBook
+                ? bookingCopy.sub
+                : "Call the business line. Obligation free, at no cost."}
             </p>
-            <div className="thank-you-book-actions">
-              <a
-                href={calendlyUrl}
-                className="micro-btn micro-btn-primary thank-you-book-primary"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-track="calendly_cta_clicked"
-              >
-                Schedule a call
-              </a>
-              {showPhone ? (
-                <a
-                  href={phone.href!}
-                  className="micro-btn micro-btn-ghost"
-                  data-track="phone_cta_clicked"
-                >
-                  Or call {phone.display}
-                </a>
-              ) : null}
-            </div>
-            <p className="thank-you-book-note">
-              Prefer email follow-up? No need to book — we’ll reach out from your
-              request.
-            </p>
+            {showPhone && showBook ? (
+              <p className="thank-you-book-note">{bookingCopy.micro}</p>
+            ) : null}
+            {showPhone || showBook ? (
+              <div className="thank-you-book-actions">
+                {showPhone ? (
+                  <a
+                    href={phone.href!}
+                    className="micro-btn micro-btn-primary thank-you-book-primary"
+                    data-track="phone_cta_clicked"
+                  >
+                    Call {phone.display}
+                  </a>
+                ) : null}
+                {showBook && calendlyUrl && calendlyWidgetUrl ? (
+                  <CalendlyPopup
+                    widgetUrl={calendlyWidgetUrl}
+                    bookUrl={calendlyUrl}
+                    market={market}
+                    label="Pick a time"
+                    autoOpen
+                    phoneDisplay={phone.display}
+                    phoneHref={phone.href}
+                  />
+                ) : null}
+              </div>
+            ) : null}
           </div>
         </section>
       ) : null}
@@ -178,17 +179,17 @@ export default async function ThankYouPage({
         <div className="thank-you-aside-inner">
           {conversionEligible ? (
             <>
-              <h2 id="ty-help">While you wait</h2>
+              <h2 id="ty-help">More about hiring</h2>
               <p>
                 {calendlyUrl
                   ? showPhone
-                    ? "Browse how hiring works, explore role categories, or call the business line if you’d rather talk sooner."
-                    : "Browse how hiring works or explore role categories — useful context before your conversation."
+                    ? "Browse how hiring works or explore role categories. Prefer a call? Use the business line."
+                    : "Browse how hiring works or explore role categories - useful context before your conversation."
                   : showPhone
-                    ? "Calendar booking link coming from Virtual Coworker — we’ll reach out directly. Prefer a call first? Use the business line below."
+                    ? "Calendar booking link coming from Virtual Coworker - we’ll reach out directly. Prefer a call first? Use the business line below."
                     : isAu
-                      ? "Calendar booking link coming from Virtual Coworker — a teammate will follow up directly to talk through the role."
-                      : "Calendar booking link coming from Virtual Coworker — we’ll reach out directly."}
+                      ? "Calendar booking link coming from Virtual Coworker - a member of our team will follow up directly to talk through the role."
+                      : "Calendar booking link coming from Virtual Coworker - we’ll reach out directly."}
               </p>
             </>
           ) : (
@@ -212,22 +213,23 @@ export default async function ThankYouPage({
 
           {!calendlyUrl && conversionEligible ? (
             <div className="micro-actions thank-you-placeholder-cta">
-              <span
-                className="micro-btn micro-btn-primary"
-                aria-disabled="true"
-                title="Booking link pending from Virtual Coworker"
-              >
-                Book a hiring conversation — link coming from Virtual Coworker
-              </span>
               {showPhone ? (
                 <a
                   href={phone.href!}
-                  className="micro-btn micro-btn-ghost"
+                  className="micro-btn micro-btn-primary"
                   data-track="phone_cta_clicked"
                 >
                   Call {phone.display}
                 </a>
-              ) : null}
+              ) : (
+                <span
+                  className="micro-btn micro-btn-primary"
+                  aria-disabled="true"
+                  title="Booking link pending from Virtual Coworker"
+                >
+                  Book a hiring chat - link coming from Virtual Coworker
+                </span>
+              )}
             </div>
           ) : null}
 

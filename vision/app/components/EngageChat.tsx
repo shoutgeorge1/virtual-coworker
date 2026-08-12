@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { trackEvent } from "../../lib/tracking";
+import { exitToCareers } from "../../lib/job-seeker-exit";
 import { focusGate } from "../../lib/focus-gate";
 import {
   assignExperiment,
@@ -15,8 +16,8 @@ import type { AbVariant } from "../../config/categories";
 
 const LAUNCHER: Record<ExpVariant, string> = {
   a: "Chat with us",
-  b: "Chat — hiring help",
-  c: "Chat with us", // unused — chat_launcher is A/B only
+  b: "Chat - hiring help",
+  c: "Chat with us", // unused - chat_launcher is A/B only
 };
 
 type StepId = "open" | "role" | "path" | "done";
@@ -47,7 +48,7 @@ function pickFace(): string {
 }
 
 /**
- * Lightweight scripted chat — opt-in launcher only (never auto-opens).
+ * Lightweight scripted chat - opt-in launcher only (never auto-opens).
  * Not live AI. Employer LPs only. Exit-intent popup stays separate.
  */
 export default function EngageChat({
@@ -67,7 +68,7 @@ export default function EngageChat({
   gateHref?: string;
   careersHref: string;
 }) {
-  // Opt-in only — do not auto-open (avoids stacking on exit popup)
+  // Opt-in only - do not auto-open (avoids stacking on exit popup)
   const [open, setOpen] = useState(false);
   const [nudge, setNudge] = useState(true);
   const [step, setStep] = useState<StepId>("open");
@@ -151,7 +152,7 @@ export default function EngageChat({
             {step === "open" ? (
               <>
                 <p className="engage-chat-bubble">
-                  Hi — are you hiring staff for a business, or looking for a job?
+                  Hi - are you hiring staff for a business, or looking for a job?
                 </p>
                 <div className="engage-chat-choices">
                   <button
@@ -165,19 +166,15 @@ export default function EngageChat({
                   </button>
                   <a
                     href={careersHref}
-                    {...(/^https?:\/\//i.test(careersHref)
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                    onClick={() =>
-                      trackEvent("job_seeker_redirected", {
+                    onClick={(e) => {
+                      e.preventDefault();
+                      exitToCareers(careersHref, {
                         market,
                         category: category || "",
                         variant: variant || "",
-                        destination: careersHref,
                         source: "chat",
-                        primary_eligible: false,
-                      })
-                    }
+                      });
+                    }}
                   >
                     I’m looking for a job →
                   </a>
@@ -218,7 +215,7 @@ export default function EngageChat({
               <>
                 <p className="engage-chat-bubble">
                   {roleHint
-                    ? `Thanks — ${roleHint.toLowerCase()} is a common first hire.`
+                    ? `Thanks - ${roleHint.toLowerCase()} is a common first hire.`
                     : "Thanks."}{" "}
                   {market === "au"
                     ? `Fastest next step: ${showPhone ? "give us a call, or " : ""}tell us the role on the form (about a minute).`
@@ -266,7 +263,7 @@ export default function EngageChat({
                       );
                     }}
                   >
-                    {market === "au" ? "Have a chat" : "Talk to a Specialist"}
+                    {market === "au" ? "Book a free consultation" : "Book Your Free Consultation"}
                   </a>
                 </div>
               </>
@@ -275,8 +272,8 @@ export default function EngageChat({
             {step === "done" ? (
               <p className="engage-chat-bubble">
                 {market === "au"
-                  ? "Got it — have a chat when it suits. Free, no pressure."
-                  : "Got it — talk to a specialist when you like. Free, no pressure."}
+                  ? "Got it - have a chat when it suits. Obligation free, at no cost."
+                  : "Got it - talk to a specialist when you like. Obligation free, at no cost."}
               </p>
             ) : null}
           </div>
