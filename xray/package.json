@@ -3,6 +3,9 @@
   "private": true,
   "description": "Stage 1 command center — deploy from this directory only",
   "scripts": {
-    "deploy": "npx --yes vercel@latest --prod --yes"
+    "bake": "python3 ../ads-launch/bake_xray_pages.py",
+    "smoke": "node smoke-live.mjs",
+    "predeploy": "python3 ../ads-launch/bake_xray_pages.py",
+    "deploy": "npx --yes vercel@latest --prod --yes && node smoke-live.mjs"
   }
 }

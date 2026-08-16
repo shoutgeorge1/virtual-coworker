@@ -1,0 +1,96 @@
+{
+  "generated_at_utc": "2026-08-16T18:42:31.635166+00:00",
+  "window_start": "2026-08-10T00:00:00+00:00",
+  "window_end_exclusive": "2026-08-17T00:00:00+00:00",
+  "api_calls": 1,
+  "stopped": null,
+  "leads_in_window": 38,
+  "usa": {
+    "n": 20,
+    "with_utm_gclid": 0,
+    "googleish_no_gclid": 6,
+    "utm_medium_or_campaign_organic": 5,
+    "looks_vc_campaign": 0,
+    "discovery_scheduled": 2,
+    "by_source": {
+      "Website": 15,
+      "Google": 2,
+      "Phone": 1,
+      "Referral Partner": 1,
+      "Forbes": 1
+    },
+    "by_utm_source": {
+      "(blank)": 8,
+      "(direct)": 5,
+      "google": 4,
+      "facebook.com": 2,
+      "bing": 1
+    },
+    "by_utm_medium": {
+      "(blank)": 8,
+      "(none)": 5,
+      "organic": 5,
+      "referral": 2
+    },
+    "by_status": {
+      "Information Brochure Sent": 6,
+      "Junk Lead": 4,
+      "Decided Against / Not a Fit": 3,
+      "New Enquiry (Auto)": 2,
+      "Discovery Scheduled": 2,
+      "Job Order Submitted": 1,
+      "Not Ready - 1 Month": 1,
+      "Unresponsive Clients": 1
+    },
+    "by_utm_campaign": {
+      "(blank)": 8,
+      "(direct)": 5,
+      "organic: google": 4,
+      "referral: facebook.com": 2,
+      "organic: bing": 1
+    }
+  },
+  "au": {
+    "n": 14,
+    "with_utm_gclid": 0,
+    "googleish_no_gclid": 0,
+    "utm_medium_or_campaign_organic": 0,
+    "looks_vc_campaign": 0,
+    "discovery_scheduled": 2,
+    "by_source": {
+      "Website": 9,
+      "(blank)": 3,
+      "Phone": 1,
+      "Cold Call": 1
+    },
+    "by_utm_source": {
+      "(blank)": 11,
+      "chatgpt.com": 2,
+      "(direct)": 1
+    },
+    "by_utm_medium": {
+      "(blank)": 13,
+      "(none)": 1
+    },
+    "by_status": {
+      "Job Order Submitted": 3,
+      "New Enquiry (Auto)": 2,
+      "Discovery Scheduled": 2,
+      "Decided Against / Not a Fit": 2,
+      "Attempted to Contact 1 (Auto)": 1,
+      "Information Brochure Sent": 1,
+      "Sales Call Follow Up 1": 1,
+      "Junk Lead": 1,
+      "No Shows": 1
+    },
+    "by_utm_campaign": {
+      "(blank)": 13,
+      "(direct)": 1
+    }
+  },
+  "all_regions": {
+    "USA": 20,
+    "AU": 14,
+    "(blank)": 4
+  }
+}

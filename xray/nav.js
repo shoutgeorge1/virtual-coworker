@@ -1,19 +1,22 @@
 /* Stage 1 shell — keep primary short; park unfinished / reference under Archive. */
 (function () {
   var root = document.body.getAttribute("data-root") || "";
-  /* Stakeholder front → path → tools → ops. Daily watch + Keyword/Media lower. Brand deferred. */
+  /* Stakeholder front: Checklist + Executive. Tools stay primary. Ops reference → Archive. */
   var ITEMS = [
     { href: "launch-control.html", text: "Checklist" },
     { href: "executive.html", text: "Executive" },
-    { href: "growth-os.html", text: "Growth OS" },
-    { href: "conversion-path.html", text: "Conversion path" },
-    { href: "tracking.html", text: "Tracking" },
-    { href: "experiments.html", text: "Site tests" },
+    { href: "attribution.html", text: "Funnel & CRM" },
     { href: "landing-pages.html", text: "LP previews" },
-    { href: "keyword-strategy.html", text: "Keyword Strategy" },
+    { href: "rsa-review.html", text: "RSA review" },
     { href: "media.html", text: "Media" },
-    { href: "daily-watch.html", text: "Daily watch" },
     { label: "Archive" },
+    { href: "experiments.html", text: "Experiments (parked)", quiet: true },
+    { href: "recovery-audit.html", text: "Recovery audit", quiet: true },
+    { href: "growth-os.html", text: "Growth OS", quiet: true },
+    { href: "conversion-path.html", text: "Conversion path", quiet: true },
+    { href: "tracking.html", text: "Tracking", quiet: true },
+    { href: "keyword-strategy.html", text: "Keyword Strategy", quiet: true },
+    { href: "daily-watch.html", text: "Daily watch", quiet: true },
     { href: "lead-routing.html", text: "Lead Routing", quiet: true },
     { href: "ads-package.html", text: "Ads package", quiet: true },
     { href: "project-status.html", text: "Project Status", quiet: true },

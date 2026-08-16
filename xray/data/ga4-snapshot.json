@@ -1,0 +1,798 @@
+{
+  "generated_at_utc": "2026-08-16T18:41:16Z",
+  "api": "ga4_data_api",
+  "api_note": "GA4 Data API (analyticsdata.googleapis.com) \u2014 NOT Google Ads API. Does not consume the Ads developer-token ops budget.",
+  "metric_labels": {
+    "ad_ctr": "Ad CTR \u2014 clicks \u00f7 impressions in Google Ads",
+    "stayed_and_looked": "Stayed and looked around \u2014 engaged sessions \u00f7 sessions",
+    "left_right_away": "Left right away \u2014 sessions that were not engaged"
+  },
+  "property_id": "549075481",
+  "measurement_id_us": "G-2V3V0BS6JW",
+  "window": "2026-08-10 \u2192 2026-08-16",
+  "run_report_requests": 5,
+  "run_report_max": 5,
+  "api_calls": [
+    {
+      "n": 1,
+      "name": "overview_engagement_conversions",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "name": "landing_pages_engagement",
+      "ok": true
+    },
+    {
+      "n": 3,
+      "name": "channels_engagement",
+      "ok": true
+    },
+    {
+      "n": 4,
+      "name": "device_by_channel",
+      "ok": true
+    },
+    {
+      "n": 5,
+      "name": "top_events",
+      "ok": true
+    }
+  ],
+  "quota_note": "GA4 standard properties typically allow on the order of 25k\u2013200k tokens/day (property-dependent). A few small RunReport calls are negligible. Separate from Google Ads API quota (~15k ops/day).",
+  "totals_last_7_days": {
+    "sessions": 554,
+    "users": 584,
+    "engaged_sessions": 217,
+    "engagement_rate_pct": 39.2,
+    "bounce_rate_pct": 60.8,
+    "conversions": 0.0,
+    "avg_session_seconds": 143.9
+  },
+  "market_from_landing_path": {
+    "US": 521,
+    "AU": 0,
+    "PH": 0,
+    "other": 50
+  },
+  "path_kind_sessions": {
+    "us_home": 397,
+    "role_lp": 124,
+    "quiz": 0,
+    "au": 0,
+    "thank_you": 4,
+    "other_site": 8,
+    "other": 0,
+    "unknown": 38
+  },
+  "landing_compare": {
+    "us_home_sessions": 397,
+    "role_lp_sessions": 124,
+    "quiz_sessions": 0,
+    "thank_you_sessions": 4,
+    "note": "Path buckets from landingPage dimension. Role LPs = /us/* except home/quiz."
+  },
+  "top_landing_pages": [
+    {
+      "path": "/us",
+      "path_display": "/us",
+      "path_kind": "us_home",
+      "sessions": 397,
+      "users": 351,
+      "engaged_sessions": 158,
+      "engagement_rate_pct": 39.8,
+      "bounce_rate_pct": 60.2,
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/bookkeeping",
+      "path_display": "/us/bookkeeping",
+      "path_kind": "role_lp",
+      "sessions": 36,
+      "users": 36,
+      "engaged_sessions": 16,
+      "engagement_rate_pct": 44.4,
+      "bounce_rate_pct": 55.6,
+      "market_guess": "US"
+    },
+    {
+      "path": "(empty path)",
+      "path_display": "untagged",
+      "path_kind": "unknown",
+      "sessions": 22,
+      "users": 24,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 100.0,
+      "market_guess": "other"
+    },
+    {
+      "path": "/us/sales",
+      "path_display": "/us/sales",
+      "path_kind": "role_lp",
+      "sessions": 19,
+      "users": 19,
+      "engaged_sessions": 12,
+      "engagement_rate_pct": 63.2,
+      "bounce_rate_pct": 36.8,
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/digital-marketing",
+      "path_display": "/us/digital-marketing",
+      "path_kind": "role_lp",
+      "sessions": 17,
+      "users": 16,
+      "engaged_sessions": 4,
+      "engagement_rate_pct": 23.5,
+      "bounce_rate_pct": 76.5,
+      "market_guess": "US"
+    },
+    {
+      "path": "(not set)",
+      "path_display": "untagged",
+      "path_kind": "unknown",
+      "sessions": 16,
+      "users": 147,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 100.0,
+      "market_guess": "other"
+    },
+    {
+      "path": "/us/social-media",
+      "path_display": "/us/social-media",
+      "path_kind": "role_lp",
+      "sessions": 15,
+      "users": 15,
+      "engaged_sessions": 5,
+      "engagement_rate_pct": 33.3,
+      "bounce_rate_pct": 66.7,
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/customer-service",
+      "path_display": "/us/customer-service",
+      "path_kind": "role_lp",
+      "sessions": 14,
+      "users": 14,
+      "engaged_sessions": 5,
+      "engagement_rate_pct": 35.7,
+      "bounce_rate_pct": 64.3,
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/administrative-support",
+      "path_display": "/us/administrative-support",
+      "path_kind": "role_lp",
+      "sessions": 13,
+      "users": 13,
+      "engaged_sessions": 3,
+      "engagement_rate_pct": 23.1,
+      "bounce_rate_pct": 76.9,
+      "market_guess": "US"
+    },
+    {
+      "path": "/how-it-works",
+      "path_display": "/how-it-works",
+      "path_kind": "other_site",
+      "sessions": 6,
+      "users": 6,
+      "engaged_sessions": 4,
+      "engagement_rate_pct": 66.7,
+      "bounce_rate_pct": 33.3,
+      "market_guess": "other"
+    },
+    {
+      "path": "/thank-you",
+      "path_display": "/thank-you",
+      "path_kind": "thank_you",
+      "sessions": 4,
+      "users": 2,
+      "engaged_sessions": 4,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "market_guess": "other"
+    },
+    {
+      "path": "/us/hr",
+      "path_display": "/us/hr",
+      "path_kind": "role_lp",
+      "sessions": 4,
+      "users": 4,
+      "engaged_sessions": 3,
+      "engagement_rate_pct": 75.0,
+      "bounce_rate_pct": 25.0,
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/recruitment",
+      "path_display": "/us/recruitment",
+      "path_kind": "role_lp",
+      "sessions": 4,
+      "users": 3,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 100.0,
+      "market_guess": "US"
+    },
+    {
+      "path": "/services",
+      "path_display": "/services",
+      "path_kind": "other_site",
+      "sessions": 2,
+      "users": 2,
+      "engaged_sessions": 2,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "market_guess": "other"
+    },
+    {
+      "path": "/us/accounting",
+      "path_display": "/us/accounting",
+      "path_kind": "role_lp",
+      "sessions": 2,
+      "users": 2,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 100.0,
+      "market_guess": "US"
+    }
+  ],
+  "channels": [
+    {
+      "channel": "Paid Search",
+      "sessions": 384,
+      "users": 361,
+      "engaged_sessions": 161,
+      "engagement_rate_pct": 41.9
+    },
+    {
+      "channel": "Direct",
+      "sessions": 106,
+      "users": 85,
+      "engaged_sessions": 28,
+      "engagement_rate_pct": 26.4
+    },
+    {
+      "channel": "Referral",
+      "sessions": 27,
+      "users": 3,
+      "engaged_sessions": 19,
+      "engagement_rate_pct": 70.4
+    },
+    {
+      "channel": "Unassigned",
+      "sessions": 23,
+      "users": 162,
+      "engaged_sessions": 1,
+      "engagement_rate_pct": 4.3
+    },
+    {
+      "channel": "Cross-network",
+      "sessions": 21,
+      "users": 21,
+      "engaged_sessions": 2,
+      "engagement_rate_pct": 9.5
+    },
+    {
+      "channel": "Organic Search",
+      "sessions": 12,
+      "users": 7,
+      "engaged_sessions": 6,
+      "engagement_rate_pct": 50.0
+    }
+  ],
+  "devices": [
+    {
+      "device": "desktop",
+      "sessions": 306,
+      "engaged_sessions": 126,
+      "engagement_rate_pct": 41.2
+    },
+    {
+      "device": "mobile",
+      "sessions": 262,
+      "engaged_sessions": 91,
+      "engagement_rate_pct": 34.7
+    },
+    {
+      "device": "tablet",
+      "sessions": 5,
+      "engaged_sessions": 1,
+      "engagement_rate_pct": 20.0
+    }
+  ],
+  "devices_by_channel": [
+    {
+      "device": "mobile",
+      "channel": "Paid Search",
+      "sessions": 215,
+      "engaged_sessions": 81,
+      "engagement_rate_pct": 37.7
+    },
+    {
+      "device": "desktop",
+      "channel": "Paid Search",
+      "sessions": 163,
+      "engaged_sessions": 79,
+      "engagement_rate_pct": 48.5
+    },
+    {
+      "device": "desktop",
+      "channel": "Direct",
+      "sessions": 91,
+      "engaged_sessions": 24,
+      "engagement_rate_pct": 26.4
+    },
+    {
+      "device": "desktop",
+      "channel": "Referral",
+      "sessions": 24,
+      "engaged_sessions": 17,
+      "engagement_rate_pct": 70.8
+    },
+    {
+      "device": "mobile",
+      "channel": "Direct",
+      "sessions": 15,
+      "engaged_sessions": 4,
+      "engagement_rate_pct": 26.7
+    },
+    {
+      "device": "desktop",
+      "channel": "Cross-network",
+      "sessions": 12,
+      "engaged_sessions": 2,
+      "engagement_rate_pct": 16.7
+    },
+    {
+      "device": "mobile",
+      "channel": "Unassigned",
+      "sessions": 12,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0
+    },
+    {
+      "device": "desktop",
+      "channel": "Unassigned",
+      "sessions": 11,
+      "engaged_sessions": 1,
+      "engagement_rate_pct": 9.1
+    },
+    {
+      "device": "mobile",
+      "channel": "Cross-network",
+      "sessions": 9,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0
+    },
+    {
+      "device": "mobile",
+      "channel": "Organic Search",
+      "sessions": 7,
+      "engaged_sessions": 3,
+      "engagement_rate_pct": 42.9
+    },
+    {
+      "device": "desktop",
+      "channel": "Organic Search",
+      "sessions": 5,
+      "engaged_sessions": 3,
+      "engagement_rate_pct": 60.0
+    },
+    {
+      "device": "tablet",
+      "channel": "Paid Search",
+      "sessions": 5,
+      "engaged_sessions": 1,
+      "engagement_rate_pct": 20.0
+    },
+    {
+      "device": "mobile",
+      "channel": "Referral",
+      "sessions": 4,
+      "engaged_sessions": 3,
+      "engagement_rate_pct": 75.0
+    }
+  ],
+  "device_finding": {
+    "site_desktop": 306,
+    "site_mobile": 262,
+    "paid_search_mobile": 215,
+    "paid_search_desktop": 163,
+    "paid_search_mobile_pct": 57,
+    "verdict": "early",
+    "note": "Paid Search 57% mobile \u2014 closer to normal, not yet ~80%. Small pilot."
+  },
+  "events_top": [
+    {
+      "event": "experiment_view",
+      "event_count": 947,
+      "conversions": 0.0,
+      "users": 135,
+      "is_noise": false
+    },
+    {
+      "event": "page_view",
+      "event_count": 923,
+      "conversions": 0.0,
+      "users": 472,
+      "is_noise": true
+    },
+    {
+      "event": "session_start",
+      "event_count": 556,
+      "conversions": 0.0,
+      "users": 473,
+      "is_noise": true
+    },
+    {
+      "event": "first_visit",
+      "event_count": 466,
+      "conversions": 0.0,
+      "users": 464,
+      "is_noise": true
+    },
+    {
+      "event": "user_engagement",
+      "event_count": 443,
+      "conversions": 0.0,
+      "users": 290,
+      "is_noise": true
+    },
+    {
+      "event": "scroll",
+      "event_count": 132,
+      "conversions": 0.0,
+      "users": 71,
+      "is_noise": true
+    },
+    {
+      "event": "experiment_convert",
+      "event_count": 61,
+      "conversions": 0.0,
+      "users": 6,
+      "is_noise": false
+    },
+    {
+      "event": "experiment_click",
+      "event_count": 18,
+      "conversions": 0.0,
+      "users": 6,
+      "is_noise": false
+    },
+    {
+      "event": "form_start",
+      "event_count": 16,
+      "conversions": 0.0,
+      "users": 13,
+      "is_noise": false
+    },
+    {
+      "event": "lp_micro_quiz_start",
+      "event_count": 4,
+      "conversions": 0.0,
+      "users": 4,
+      "is_noise": false
+    },
+    {
+      "event": "lp_micro_role_tile",
+      "event_count": 3,
+      "conversions": 0.0,
+      "users": 3,
+      "is_noise": false
+    },
+    {
+      "event": "click",
+      "event_count": 2,
+      "conversions": 0.0,
+      "users": 2,
+      "is_noise": false
+    }
+  ],
+  "events_interesting": [
+    {
+      "event": "experiment_view",
+      "event_count": 947,
+      "conversions": 0.0,
+      "users": 135,
+      "is_noise": false
+    },
+    {
+      "event": "experiment_convert",
+      "event_count": 61,
+      "conversions": 0.0,
+      "users": 6,
+      "is_noise": false
+    },
+    {
+      "event": "experiment_click",
+      "event_count": 18,
+      "conversions": 0.0,
+      "users": 6,
+      "is_noise": false
+    },
+    {
+      "event": "form_start",
+      "event_count": 16,
+      "conversions": 0.0,
+      "users": 13,
+      "is_noise": false
+    },
+    {
+      "event": "lp_micro_quiz_start",
+      "event_count": 4,
+      "conversions": 0.0,
+      "users": 4,
+      "is_noise": false
+    },
+    {
+      "event": "lp_micro_role_tile",
+      "event_count": 3,
+      "conversions": 0.0,
+      "users": 3,
+      "is_noise": false
+    },
+    {
+      "event": "click",
+      "event_count": 2,
+      "conversions": 0.0,
+      "users": 2,
+      "is_noise": false
+    }
+  ],
+  "insights": [
+    "Most paid clicks still open the US home page \u2014 role ads exist, but Final URLs haven\u2019t shifted traffic onto role pages yet.",
+    "/us/sales: 63% stayed and looked around (19 visits) vs /us at 40% \u2014 maybe the sales pitch matches the search better. Tiny sample; not \u201cretention.\u201d",
+    "\u201cDirect\u201d is 106 sessions (Paid Search 384): typed URL, bookmarks, team checks, and some paid clicks that lose the ad tag \u2014 not mysterious organic growth.",
+    "About 39% stayed and looked around; 61% left right away. (Website behavior \u2014 not Ad CTR.)",
+    "Paid Search is 57% mobile (215 vs 163 desktop) \u2014 closer to normal search mix than site-wide, but not the ~80% we\u2019d expect yet. Small pilot; watch next week.",
+    "This US property has no /au landings \u2014 Australia tags go to a separate AU property."
+  ],
+  "notes": [
+    "US site tags only. Australia is a separate GA4 property \u2014 see the AU block."
+  ],
+  "summary_plain": "Last 7 days (US site tags): 554 sessions \u00b7 584 users. About 39% stayed and looked around. Top landings: /us, /us/bookkeeping, /us/sales, /us/digital-marketing. Traffic: Paid Search, Direct, Referral. US site tags only. Australia is a separate GA4 property \u2014 see the AU block.",
+  "au": {
+    "ok": true,
+    "property_id": "549811743",
+    "measurement_id": "G-7X1K9V2LFE",
+    "window": "2026-08-10 \u2192 2026-08-16",
+    "tags_live_since": "2026-08-12",
+    "run_report_requests": 3,
+    "api_calls": [
+      {
+        "n": 1,
+        "name": "au_overview",
+        "ok": true
+      },
+      {
+        "n": 2,
+        "name": "au_landing_pages",
+        "ok": true
+      },
+      {
+        "n": 3,
+        "name": "au_channels",
+        "ok": true
+      }
+    ],
+    "totals_last_7_days": {
+      "sessions": 149,
+      "users": 132,
+      "engaged_sessions": 63,
+      "engagement_rate_pct": 42.3,
+      "bounce_rate_pct": 57.7,
+      "conversions": 0.0,
+      "avg_session_seconds": 93.9
+    },
+    "paid_search_sessions": 109,
+    "paid_search_engagement_rate_pct": 49.5,
+    "au_path_sessions": 138,
+    "thank_you_sessions": 4,
+    "top_landing_pages": [
+      {
+        "path": "/au",
+        "path_display": "/au",
+        "path_kind": "au",
+        "sessions": 88,
+        "users": 79,
+        "engaged_sessions": 39,
+        "engagement_rate_pct": 44.3,
+        "bounce_rate_pct": 55.7,
+        "market_guess": "AU"
+      },
+      {
+        "path": "(empty path)",
+        "path_display": "untagged",
+        "path_kind": "unknown",
+        "sessions": 14,
+        "users": 12,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 100.0,
+        "market_guess": "other"
+      },
+      {
+        "path": "/au/administrative-support",
+        "path_display": "/au/administrative-support",
+        "path_kind": "au",
+        "sessions": 13,
+        "users": 12,
+        "engaged_sessions": 5,
+        "engagement_rate_pct": 38.5,
+        "bounce_rate_pct": 61.5,
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/recruitment",
+        "path_display": "/au/recruitment",
+        "path_kind": "au",
+        "sessions": 12,
+        "users": 12,
+        "engaged_sessions": 6,
+        "engagement_rate_pct": 50.0,
+        "bounce_rate_pct": 50.0,
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/customer-service",
+        "path_display": "/au/customer-service",
+        "path_kind": "au",
+        "sessions": 7,
+        "users": 7,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 57.1,
+        "bounce_rate_pct": 42.9,
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/social-media",
+        "path_display": "/au/social-media",
+        "path_kind": "au",
+        "sessions": 7,
+        "users": 7,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 28.6,
+        "bounce_rate_pct": 71.4,
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/accounting",
+        "path_display": "/au/accounting",
+        "path_kind": "au",
+        "sessions": 4,
+        "users": 4,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 25.0,
+        "bounce_rate_pct": 75.0,
+        "market_guess": "AU"
+      },
+      {
+        "path": "/thank-you",
+        "path_display": "/thank-you",
+        "path_kind": "thank_you",
+        "sessions": 4,
+        "users": 4,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 50.0,
+        "bounce_rate_pct": 50.0,
+        "market_guess": "other"
+      },
+      {
+        "path": "(not set)",
+        "path_display": "untagged",
+        "path_kind": "unknown",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0,
+        "bounce_rate_pct": 50.0,
+        "market_guess": "other"
+      },
+      {
+        "path": "/au/bookkeeping",
+        "path_display": "/au/bookkeeping",
+        "path_kind": "au",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 100.0,
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/digital-marketing",
+        "path_display": "/au/digital-marketing",
+        "path_kind": "au",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0,
+        "bounce_rate_pct": 50.0,
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/hr",
+        "path_display": "/au/hr",
+        "path_kind": "au",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0,
+        "bounce_rate_pct": 50.0,
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/sales",
+        "path_display": "/au/sales",
+        "path_kind": "au",
+        "sessions": 1,
+        "users": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "bounce_rate_pct": 0.0,
+        "market_guess": "AU"
+      },
+      {
+        "path": "/how-it-works",
+        "path_display": "/how-it-works",
+        "path_kind": "other_site",
+        "sessions": 1,
+        "users": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 100.0,
+        "market_guess": "other"
+      }
+    ],
+    "channels": [
+      {
+        "channel": "Paid Search",
+        "sessions": 109,
+        "users": 104,
+        "engaged_sessions": 54,
+        "engagement_rate_pct": 49.5
+      },
+      {
+        "channel": "Direct",
+        "sessions": 18,
+        "users": 9,
+        "engaged_sessions": 6,
+        "engagement_rate_pct": 33.3
+      },
+      {
+        "channel": "Cross-network",
+        "sessions": 17,
+        "users": 17,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 11.8
+      },
+      {
+        "channel": "Unassigned",
+        "sessions": 15,
+        "users": 13,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0
+      },
+      {
+        "channel": "Organic Search",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0
+      }
+    ],
+    "insights": [
+      "About 42% stayed and looked around (149 visits)."
+    ],
+    "notes": [
+      "/au pages received 138 landing visits \u2014 tags are firing on the Australia microsite.",
+      "Paid Google ads visits: 109 (the useful volume). Thank-you / form hits are likely internal testing, not leads.",
+      "4 thank-you landings \u2014 treat as George/sales/agent tests, not leads."
+    ],
+    "summary_plain": "Last 7 days (AU site tags): 149 sessions \u00b7 132 users. Paid Google ads visits: 109. About 42% stayed and looked around. Top landings: /au, /au/administrative-support, /au/recruitment, /au/customer-service. /au pages received 138 landing visits \u2014 tags are firing on the Australia microsite."
+  },
+  "run_report_requests_total": 8
+}

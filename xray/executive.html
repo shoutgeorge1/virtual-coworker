@@ -4,1341 +4,849 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>Executive · Virtual Coworker Search Pilot</title>
+  <title>Executive · Virtual Coworker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
   <style>
-    body[data-page="executive.html"] .main { max-width: 980px; }
-
-    .exec-priorities {
-      margin: 0 0 1.35rem;
-      padding: 1.05rem 1.15rem 1.1rem;
-      border-radius: 10px;
-      border: 1px solid var(--tint-amber-edge);
-      background: var(--tint-amber);
-    }
-    .exec-priorities h1 {
-      margin: 0 0 0.65rem;
-      font-size: 1.45rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      line-height: 1.3;
-      color: var(--ink);
-    }
-    .exec-priorities ol {
-      margin: 0;
-      padding: 0 0 0 1.35rem;
-      font-size: 1rem;
-      line-height: 1.55;
-      color: var(--body);
-    }
-    .exec-priorities li {
-      margin: 0.4rem 0;
-      padding-left: 0.15rem;
-    }
-    .exec-priorities strong { color: var(--ink); font-weight: 650; }
-
-    .exec-meta {
-      margin: 0 0 1.25rem;
-    }
-    .exec-meta .honesty {
-      margin: 0;
-      font-size: 0.98rem;
-      line-height: 1.55;
-      letter-spacing: 0.01em;
-      color: var(--body);
-      max-width: 42rem;
-    }
-    .exec-meta .when {
-      margin: 0.55rem 0 0;
-      font-size: 0.84rem;
-      line-height: 1.45;
-      color: var(--muted);
+    body[data-page="executive.html"] .main {
+      max-width: 1120px;
       font-variant-numeric: tabular-nums;
     }
-    .exec-meta .when strong { color: var(--ink); font-weight: 600; }
-
-    .mkt-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin: 0 0 1.25rem;
-    }
-    @media (max-width: 820px) {
-      .mkt-grid { grid-template-columns: 1fr; }
-    }
-    .mkt {
+    .dash-head { margin: 0 0 0.65rem; }
+    .dash-head h1 { margin: 0; font-size: 1.3rem; }
+    .dash-head .asof { margin: 0.25rem 0 0; font-size: 0.8rem; color: var(--muted); }
+    .mkt-block {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem 1rem;
       border-radius: 10px;
       border: 1px solid var(--edge-soft);
       background: var(--panel);
-      overflow: hidden;
+    }
+    .mkt-block.us { border-color: var(--tint-green-edge); background: var(--tint-green); }
+    .mkt-block.au { border-color: var(--tint-cool-edge); background: var(--tint-cool); }
+    .mkt-block .mkt-hd {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.35rem 1rem;
+      margin: 0 0 0.55rem;
     }
-    .mkt.us {
-      border-color: var(--tint-green-edge);
-      background: var(--tint-green);
-    }
-    .mkt.au {
-      border-color: var(--tint-cool-edge);
-      background: var(--tint-cool);
-    }
-    .mkt-hd {
-      padding: 0.95rem 1.05rem 0.7rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    }
-    .mkt-hd .where {
-      margin: 0 0 0.2rem;
-      font-size: 0.72rem;
-      font-weight: 700;
+    .mkt-block h2 {
+      margin: 0;
+      font-size: 0.78rem;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--muted);
     }
-    .mkt-hd h2 {
+    .mkt-block .bud {
       margin: 0;
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      line-height: 1.3;
-    }
-    .mkt-hd .sub {
-      margin: 0.3rem 0 0;
-      font-size: 0.84rem;
-      line-height: 1.4;
-      color: var(--muted);
-    }
-    .mkt-bd { padding: 0.85rem 1.05rem 1rem; flex: 1; }
-
-    .mkt-nums {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.7rem 0.75rem;
-      margin: 0 0 0.85rem;
-    }
-    @media (max-width: 420px) {
-      .mkt-nums { grid-template-columns: repeat(2, 1fr); }
-    }
-    .mkt-nums .lbl {
-      margin: 0;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      line-height: 1.35;
-    }
-    .mkt-nums .val {
-      margin: 0.2rem 0 0;
-      font-size: 1.2rem;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -0.015em;
-      line-height: 1.25;
+      font-size: 0.82rem;
       color: var(--ink);
+      font-variant-numeric: tabular-nums;
     }
-    .mkt-nums .hint {
-      margin: 0.15rem 0 0;
+    .period {
+      margin: 0 0 0.55rem;
+    }
+    .period:last-child { margin-bottom: 0; }
+    .period h3 {
+      margin: 0 0 0.35rem;
       font-size: 0.72rem;
-      line-height: 1.35;
-      color: var(--muted);
-    }
-
-    .mkt-cpl {
-      margin: 0;
-      padding: 0.75rem 0.85rem;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.55);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-    .mkt-cpl .cpl-label {
-      margin: 0 0 0.5rem;
-      font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--muted);
-      line-height: 1.35;
     }
-    .mkt-cpl .cpl-row {
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+    @media (max-width: 900px) {
+      .kpi-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .kpi {
+      min-width: 0;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem 1.25rem;
-      margin: 0 0 0.55rem;
+      flex-direction: column;
+      box-sizing: border-box;
+      min-height: 100%;
+      padding: 0.55rem 0.55rem 0.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.72);
     }
-    .mkt-cpl .cpl-row .val {
-      margin: 0.15rem 0 0;
-      font-size: 1.15rem;
+    .kpi.kpi-emph {
+      border: 2px solid var(--accent-hot);
+      background: var(--tint-teal);
+      box-shadow: inset 3px 0 0 var(--accent-hot);
+      padding: 0.55rem 0.55rem 0.5rem;
+    }
+    .kpi.kpi-emph .k {
+      font-size: 0.74rem;
+      color: var(--accent-hot);
+    }
+    .kpi.kpi-emph .v {
+      font-size: 1.48rem;
+    }
+    .kpi .k {
+      display: block;
+      font-size: 0.68rem;
       font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      line-height: 1.25;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+      line-height: 1.2;
+      min-height: 1.55em;
+    }
+    .kpi .v {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
       color: var(--ink);
     }
-    .mkt-cpl .cpl-row .val.pending {
-      font-size: 0.95rem;
+    .kpi .sub {
+      display: block;
+      margin-top: 0.22rem;
+      font-size: 0.72rem;
       font-weight: 600;
       color: var(--muted);
+      line-height: 1.3;
+      white-space: normal;
+    }
+    .mkt-note {
+      margin: 0.55rem 0 0;
+      font-size: 0.84rem;
       line-height: 1.4;
+      color: var(--ink);
     }
-    .mkt-cpl ul {
-      margin: 0 0 0.45rem;
-      padding: 0 0 0 1.15rem;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: var(--body);
+    .mkt-note .mute, .mkt-note.mute { font-size: 0.8rem; color: var(--muted); }
+    .why {
+      margin: 0.4rem 0 0;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: var(--ink);
     }
-    .mkt-cpl li { margin: 0.2rem 0; }
-    .mkt-cpl .caveat {
+    .cmp7 {
+      margin: 0.35rem 0 0;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+    .week-group { margin: 0 0 0.45rem; }
+    .kpi-row.week-costs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 0.4rem;
+    }
+    .kpi-row.week-ads {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .week-costs .kpi,
+    .week-ads .kpi {
+      min-height: 4.85rem;
+    }
+    .week-costs .kpi-emph .k { font-size: 0.68rem; }
+    .week-costs .kpi-emph .v { font-size: 1.35rem; }
+    .week-ads .kpi .v { font-size: 1.18rem; }
+    @media (max-width: 900px) {
+      .kpi-row.week-ads { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .kpi-row.week-costs { grid-template-columns: 1fr; }
+      .kpi-row.week-ads { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .lead-cost { margin: 0.55rem 0 0.35rem; }
+    .lead-cost h3 {
+      margin: 0 0 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .src-chips {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.18rem 0.28rem;
+      margin: 0.28rem 0 0.05rem;
+    }
+    .src-chips-k {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.1rem;
+    }
+    .src-chip {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.28rem;
+      max-width: 11rem;
+      padding: 0.1rem 0.38rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.07);
+      background: rgba(255,255,255,0.58);
+      font-size: 0.68rem;
+      line-height: 1.2;
+    }
+    .src-chip .src-l {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .src-chip .src-n { font-weight: 700; font-variant-numeric: tabular-nums; }
+    .prior-line { margin: 0.2rem 0 0; }
+    .zoho-census { margin: 0.2rem 0 0; }
+    .kpi-row.lead-kpi { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .kpi-row.lead-kpi.lead-kpi-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    @media (max-width: 900px) {
+      .kpi-row.lead-kpi.lead-kpi-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .kpi-row.lead-kpi { grid-template-columns: 1fr; }
+    }
+    details.today-demote {
+      margin: 0.35rem 0 0;
+      border: 1px dashed rgba(100,116,139,0.4);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.35);
+    }
+    details.today-demote > summary {
+      cursor: pointer;
+      padding: 0.4rem 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      list-style: none;
+    }
+    details.today-demote > summary::-webkit-details-marker { display: none; }
+    details.today-demote .bd { padding: 0 0.55rem 0.55rem; }
+    .baseline {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
+    }
+    /* Every section below the market cards wears the same header as the
+       market cards: small uppercase title left, quiet window right. */
+    .sec-hd {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.25rem 1rem;
+      margin: 0 0 0.6rem;
+    }
+    .sec-hd h2 {
+      margin: 0;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .sec-hd .sec-meta {
       margin: 0;
       font-size: 0.8rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .baseline .cmp {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .baseline .cmp th, .baseline .cmp td {
+      text-align: left;
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      vertical-align: top;
+    }
+    .baseline .cmp th {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .baseline .cmp th.num,
+    .baseline .cmp td.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+    .baseline .cmp td:first-child { font-weight: 600; white-space: nowrap; }
+    .baseline .note { margin: 0.45rem 0 0; font-size: 0.8rem; color: var(--muted); }
+    .legacy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+    }
+    .legacy-box {
+      margin: 0;
+      padding: 0.65rem 0.75rem 0.55rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.72);
+    }
+    .legacy-box h3 {
+      margin: 0 0 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .legacy-box table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .legacy-box th, .legacy-box td {
+      padding: 0.28rem 0.2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .legacy-box thead th {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+    }
+    .legacy-box thead th:first-child { text-align: left; }
+    .legacy-box th[scope="row"] {
+      text-align: left;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .legacy-box .num { text-align: right; }
+    .legacy-box td.this-w { font-weight: 700; color: var(--ink); }
+    .legacy-box td.leg-n { font-weight: 400; color: var(--muted); }
+    /* Legacy agency comparison — one column template for every band, so
+       This week / Legacy week / Δ stay in the same place all the way down. */
+    .baseline {
+      --cmp-cols: minmax(5rem, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .cmp-band { margin: 0 0 0.5rem; }
+    .cmp-band + .cmp-note + .cmp-band {
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid rgba(0,0,0,0.12);
+    }
+    .cmp-band-hd {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.2rem 1rem;
+      margin: 0 0 0.3rem;
+      padding: 0 0.05rem;
+    }
+    .cmp-band-hd h3 {
+      margin: 0;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .cmp-band-note { font-size: 0.72rem; color: var(--muted); }
+    .cmp-sheet {
+      display: grid;
+      grid-template-columns: var(--cmp-cols);
+      align-items: baseline;
+      column-gap: 0.75rem;
+      padding: 0.45rem 0.85rem 0.55rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.72);
+      font-size: 0.88rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .cmp-sheet .cell { padding: 0.16rem 0; min-width: 0; }
+    .cmp-sheet .num { text-align: right; }
+    .cmp-sheet .hd {
+      padding-bottom: 0.3rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .cmp-sheet .grp {
+      grid-column: 1 / -1;
+      margin-top: 0.4rem;
+      padding: 0.35rem 0 0.1rem;
+      border-top: 1px solid rgba(0,0,0,0.07);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cmp-sheet .hd + .grp { margin-top: 0; border-top: none; }
+    .cmp-sheet .cm { font-weight: 600; color: var(--ink); }
+    .cmp-sheet .tw { font-weight: 700; color: var(--ink); }
+    .cmp-sheet .lg { font-weight: 400; color: var(--muted); }
+    .cmp-note {
+      margin: 0.3rem 0 0.75rem;
+      padding: 0 0.05rem;
+      font-size: 0.76rem;
       line-height: 1.45;
       color: var(--muted);
     }
-    .mkt-ft {
-      margin: 0.75rem 0 0;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: var(--body);
+    @media (max-width: 560px) {
+      .baseline { --cmp-cols: 4.2rem minmax(0, 1fr) minmax(0, 1fr) 5.4rem; }
+      .cmp-sheet { column-gap: 0.4rem; font-size: 0.82rem; }
     }
-    .mkt-ft strong { color: var(--ink); }
-
-    .exec-money {
-      margin: 0 0 1.25rem;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      border: 1px solid var(--edge-soft);
-      background: var(--panel-inset);
-      font-size: 0.92rem;
-      line-height: 1.5;
-      color: var(--body);
+    .legacy-grid.ga4-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.4rem;
     }
-    .exec-money strong { color: var(--ink); }
-
-    .web {
-      margin: 0 0 1.25rem;
-      border-radius: 10px;
-      border: 1px solid var(--tint-cool-edge, #c5d4e8);
-      background: var(--tint-cool, #f0f5fb);
-      overflow: hidden;
+    .ga4-grid .legacy-box {
+      padding: 0.55rem 0.6rem 0.45rem;
+      border-color: rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.72);
     }
-    .web-hd {
-      padding: 0.95rem 1.05rem 0.75rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    .ga4-grid .legacy-box h3 {
+      margin: 0 0 0.2rem;
+      font-size: 0.68rem;
+      min-height: 1.55em;
     }
-    .web-hd h2 {
-      margin: 0 0 0.25rem;
-      font-size: 1.08rem;
+    .ga4-grid .legacy-box table { font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+    .ga4-grid .legacy-box th,
+    .ga4-grid .legacy-box td { padding: 0.16rem 0; border-bottom: none; }
+    .ga4-grid .legacy-box tr + tr th,
+    .ga4-grid .legacy-box tr + tr td { border-top: 1px solid rgba(0,0,0,0.06); }
+    .ga4-grid .legacy-box th[scope="row"] {
+      font-size: 0.68rem;
       font-weight: 700;
-      line-height: 1.3;
+      letter-spacing: 0.04em;
+      color: var(--muted);
     }
-    .web-hd .meta {
+    .ga4-now {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+    }
+    .windows {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.45rem 1rem;
+      margin: 1rem 0 0;
+      padding: 0.7rem 0 0;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    .windows div { margin: 0; }
+    .windows dt {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .windows dd {
+      margin: 0.15rem 0 0;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    @media (max-width: 900px) {
+      .legacy-grid.ga4-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .legacy-grid { grid-template-columns: 1fr; }
+      .legacy-grid.sales-vol { grid-template-columns: 1fr; }
+      .legacy-grid.ga4-grid { grid-template-columns: 1fr 1fr; }
+      .windows { grid-template-columns: 1fr; }
+    }
+    .baseline .agency-econ { margin: 0 0 0.65rem; }
+    .baseline .agency-econ h3 { color: var(--ink); }
+    .halo {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--tint-cool-edge);
+      background: var(--tint-cool);
+    }
+    .halo-frame {
+      margin: 0 0 0.4rem;
+      font-size: 0.8rem;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+    .kpi-row.halo-kpi {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       margin: 0;
-      font-size: 0.84rem;
+    }
+    .halo-kpi .kpi { min-height: 4.85rem; }
+    @media (max-width: 900px) {
+      .kpi-row.halo-kpi { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .kpi-row.halo-kpi { grid-template-columns: 1fr; }
+    }
+    .kpi.kpi-halo .v { font-size: 1.4rem; }
+    .halo .cmp, .halo-cmp {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .halo .cmp th, .halo .cmp td,
+    .halo-cmp th, .halo-cmp td {
+      text-align: left;
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      vertical-align: top;
+    }
+    .halo .cmp th, .halo-cmp th {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .halo .cmp th.num, .halo .cmp td.num,
+    .halo-cmp th.num, .halo-cmp td.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+    .halo .cmp td:first-child, .halo-cmp td:first-child { font-weight: 600; white-space: nowrap; }
+    .halo .note { margin: 0.45rem 0 0; font-size: 0.8rem; color: var(--muted); }
+    .ga4-foot { margin: 0.55rem 0 0; }
+    details.calc-how {
+      margin: 0.7rem 0 0;
+      border: 1px dashed rgba(100,116,139,0.45);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.35);
+    }
+    details.calc-how > summary {
+      cursor: pointer;
+      padding: 0.45rem 0.65rem;
+      font-weight: 600;
+      font-size: 0.82rem;
+      list-style: none;
+      color: var(--muted);
+    }
+    details.calc-how > summary::-webkit-details-marker { display: none; }
+    details.calc-how .bd { padding: 0 0.65rem 0.55rem; }
+    .delta-good { color: #166534; font-weight: 700; }
+    .delta-bad { color: #9f1239; font-weight: 700; }
+    .delta-flat { color: var(--muted); font-weight: 600; }
+    .mute { color: var(--muted); font-size: 0.8rem; }
+    details.ev {
+      margin: 0.5rem 0 0;
+      border: 1px dashed rgba(100,116,139,0.55);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+    details.ev > summary {
+      cursor: pointer;
+      padding: 0.65rem 0.85rem;
+      font-weight: 700;
+      font-size: 0.92rem;
+      list-style: none;
+    }
+    details.ev > summary::-webkit-details-marker { display: none; }
+    details.ev .bd { padding: 0 0.85rem 0.85rem; border-top: 1px solid rgba(0,0,0,0.06); }
+    table.ev-t { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 0.45rem 0; }
+    table.ev-t th, table.ev-t td {
+      text-align: left; padding: 0.28rem 0.2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06); vertical-align: top;
+    }
+    table.ev-t th {
+      font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted);
+    }
+    .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .conf {
+      display: inline-block;
+      margin-left: 0.28rem;
+      padding: 0.02rem 0.32rem;
+      border-radius: 999px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      vertical-align: 0.12em;
+      line-height: 1.4;
+    }
+    .conf-v { background: #dcfce7; color: #166534; }
+    .conf-d { background: #e0e7ff; color: #3730a3; }
+    .conf-i { background: #fef3c7; color: #92400e; }
+    .conf-u { background: #f1f5f9; color: #475569; }
+    .conf-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.7rem;
+      margin: 0.35rem 0 0.55rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .disclose {
+      margin: 0 0 0.65rem;
+      font-size: 0.78rem;
       line-height: 1.4;
       color: var(--muted);
     }
-    .web-bd { padding: 0.9rem 1.05rem 1.05rem; }
-
-    .web-nums {
+    .exec-sum {
+      margin: 0 0 0.75rem;
+      padding: 0.55rem 0.85rem 0.55rem 1.2rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+    .exec-sum li { margin: 0 0 0.28rem; }
+    .exec-sum li:last-child { margin-bottom: 0; }
+    .funnel-k {
+      margin: 0.55rem 0 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .funnel {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.85rem 1.5rem;
-      margin: 0 0 0.9rem;
-    }
-    .web-nums .lbl {
-      margin: 0;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      line-height: 1.35;
-    }
-    .web-nums .val {
-      margin: 0.2rem 0 0;
-      font-size: 1.2rem;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      line-height: 1.25;
-      color: var(--ink);
-    }
-    .web-nums .hint {
-      margin: 0.15rem 0 0;
-      font-size: 0.72rem;
-      line-height: 1.35;
-      color: var(--muted);
-    }
-
-    .web-split {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 0.9rem;
-      margin: 0 0 0.85rem;
-    }
-    @media (max-width: 720px) {
-      .web-split { grid-template-columns: 1fr; }
-    }
-    .web-pane {
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.55);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      padding: 0.75rem 0.85rem;
-      min-width: 0;
-    }
-    .web-pane h3 {
-      margin: 0 0 0.5rem;
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--muted);
-      line-height: 1.35;
-    }
-    .web-pane ul {
+      gap: 0.3rem;
       margin: 0;
       padding: 0;
       list-style: none;
     }
-    .web-pane li {
-      margin: 0 0 0.45rem;
-      font-size: 0.92rem;
-      line-height: 1.45;
-      color: var(--body);
-      display: flex;
-      justify-content: space-between;
-      gap: 0.75rem;
-      align-items: baseline;
-    }
-    .web-pane li:last-child { margin-bottom: 0; }
-    .web-pane .path {
-      font-weight: 600;
-      color: var(--ink);
-      word-break: break-word;
-    }
-    .web-pane .stat {
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-      font-size: 0.84rem;
-      color: var(--muted);
-    }
-    .web-pane .stat strong {
-      color: var(--ink);
-      font-weight: 700;
-    }
-
-    .web-callout {
-      margin: 0 0 0.75rem;
-      padding: 0.7rem 0.85rem;
+    .funnel li {
+      flex: 1 1 5.6rem;
+      min-width: 5.4rem;
+      padding: 0.35rem 0.4rem;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.65);
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.7);
+    }
+    .funnel .fn-k {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+    .funnel .fn-n {
+      display: block;
       font-size: 0.92rem;
-      line-height: 1.5;
-      color: var(--body);
-    }
-    .web-callout strong { color: var(--ink); }
-    .web .muted-note {
-      margin: 0.5rem 0 0;
-      font-size: 0.8rem;
-      line-height: 1.45;
-      color: var(--muted);
-    }
-
-    .insight-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.85rem;
-      margin: 0 0 1rem;
-    }
-    @media (max-width: 720px) {
-      .insight-grid { grid-template-columns: 1fr; }
-    }
-    .insight-card {
-      border-radius: 10px;
-      border: 1px solid var(--edge-soft);
-      background: var(--panel);
-      padding: 0.9rem 1.05rem;
-      margin: 0;
-    }
-    .insight-card h2 {
-      margin: 0 0 0.55rem;
-      font-size: 1rem;
       font-weight: 700;
-      line-height: 1.3;
+      margin: 0.1rem 0;
     }
-    .insight-card ul {
-      margin: 0;
-      padding: 0 0 0 1.2rem;
-      font-size: 0.94rem;
-      line-height: 1.55;
-      color: var(--body);
+    .funnel .fn-miss { background: #f8fafc; }
+    .funnel .fn-inc { background: #fffbeb; }
+    .funnel .fn-dir { background: #eef2ff; }
+    .funnel-note { margin: 0.28rem 0 0; }
+    .crm-ready .st-ok { color: #166534; font-weight: 700; }
+    .crm-ready .st-rev { color: #92400e; font-weight: 700; }
+    .crm-ready .st-miss, .crm-ready .st-test { color: #475569; font-weight: 700; }
+    @media (max-width: 520px) {
+      .funnel li { flex: 1 1 46%; }
+      .conf { margin-left: 0.12rem; }
     }
-    .insight-card li { margin: 0.35rem 0; }
-    .insight-card strong { color: var(--ink); }
-    .insight-card .muted-note {
-      margin: 0.6rem 0 0;
-      font-size: 0.8rem;
-      line-height: 1.45;
-      color: var(--muted);
-    }
-    .insight-card .kpi {
-      font-size: 0.82rem;
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .bottom-insights {
-      margin: 0 0 1.25rem;
-      border-radius: 10px;
-      border: 1px solid var(--edge-soft);
-      background: var(--panel);
-      padding: 0.95rem 1.1rem 1.05rem;
-    }
-    .bottom-insights h2 {
-      margin: 0 0 0.6rem;
-      font-size: 1.05rem;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-    .bottom-insights ul {
-      margin: 0;
-      padding: 0 0 0 1.25rem;
-      font-size: 0.96rem;
-      line-height: 1.55;
-      color: var(--body);
-    }
-    .bottom-insights li { margin: 0.4rem 0; }
-    .bottom-insights strong { color: var(--ink); }
-
-    .tbl-wrap { margin-top: 0.35rem; overflow-x: auto; }
-    table.exec-tbl {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-    table.exec-tbl th,
-    table.exec-tbl td {
-      text-align: left;
-      padding: 0.45rem 0.55rem;
-      border-bottom: 1px solid var(--edge-soft);
-      vertical-align: top;
-      line-height: 1.4;
-    }
-    table.exec-tbl th {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-      font-weight: 700;
-    }
-    table.exec-tbl td.num {
-      font-variant-numeric: tabular-nums;
-      text-align: right;
-      white-space: nowrap;
-    }
-    table.exec-tbl th.num { text-align: right; }
-    .tag {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 0.12rem 0.4rem;
-      border-radius: 4px;
-      border: 1px solid var(--tint-green-edge);
-      background: var(--tint-green-hd);
-      color: #166534;
-    }
-    .tag.warn {
-      border-color: var(--tint-amber-edge);
-      background: var(--tint-amber-hd);
-      color: #92400e;
-    }
-    .why-cell {
-      font-size: 0.84rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-    .more-fold {
-      margin: 0 0 1rem;
-      border: 1px solid var(--edge-soft);
-      border-radius: 10px;
-      background: var(--panel);
-      overflow: hidden;
-    }
-    .more-fold > summary {
-      cursor: pointer;
-      list-style: none;
-      padding: 0.75rem 1.05rem;
-      font-weight: 600;
-      color: var(--ink);
-      background: var(--panel-inset);
-      line-height: 1.4;
-    }
-    .more-fold > summary::-webkit-details-marker { display: none; }
-    .more-fold .fold-bd { padding: 0.8rem 1.05rem 1.05rem; border-top: 1px solid var(--edge-soft); }
   </style>
 </head>
-<body data-page="executive.html" data-foot="Simple leadership view">
+<body data-page="executive.html" data-foot="US · AU · baseline · baked">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
-
     <main class="main">
-      <section class="exec-priorities" aria-labelledby="open-hd">
-        <h1 id="open-hd">Priorities</h1>
-        <p class="honesty" id="exec-thesis" style="margin:0 0 0.65rem;max-width:40rem">
-          Control traffic, establish trustworthy conversion signal, connect sales outcomes, then scale.
-        </p>
-        <p id="exec-signal" style="margin:0 0 0.65rem;font-size:0.9rem">
-          Signal: <strong>Building</strong> — Maximize Clicks on purpose. Qualified leads / job orders / placements are not connected.
-        </p>
-        <ol id="next-list">
-          <li><strong>Holly</strong> — review latest leads (form fills are not automatically valuable)</li>
-          <li><strong>Australia GTM + GA4</strong> — visit tags first, then AU phone 60s</li>
-          <li><strong>Philippines / virtual assistant terms</strong> — expensive; protect budget until signal is trusted</li>
-        </ol>
-        <p style="margin:0.7rem 0 0;font-size:0.88rem">
-          <a href="growth-os.html"><strong>Growth OS</strong></a> — strategy, funnel gaps, lead quality, 30/60/90.
-        </p>
-      </section>
+      <header class="dash-head">
+        <h1>Executive</h1>
+        <p class="asof" id="asof">Mon Aug 10 – Sun Aug 16 · US $ · AU A$</p>
+      </header>
 
-      <div class="exec-meta">
-        <p class="honesty" id="exec-honesty">
-          US and Australia are separate economies. Paying per click until consultations are trusted. Do not blend the two markets into one optimization story.
-        </p>
-        <p class="when" id="exec-updated">Loading…</p>
-      </div>
-
-      <div class="mkt-grid" id="markets" aria-label="Market performance">
-        <article class="mkt us" id="market-us">
-          <div class="mkt-hd">
-            <p class="where">United States</p>
-            <h2 id="us-status">On</h2>
-            <p class="sub" id="us-window">Last 7 days · VC_* Search</p>
-          </div>
-          <div class="mkt-bd">
-            <div class="mkt-nums">
-              <div>
-                <p class="lbl">Spend</p>
-                <p class="val" id="us-spend">—</p>
-              </div>
-              <div>
-                <p class="lbl">Clicks</p>
-                <p class="val" id="us-clicks">—</p>
-              </div>
-              <div>
-                <p class="lbl">Ad CTR</p>
-                <p class="val" id="us-ctr">—</p>
-              </div>
-              <div>
-                <p class="lbl">Cost / click</p>
-                <p class="val" id="us-cpc">—</p>
-              </div>
-              <div>
-                <p class="lbl">Daily plan</p>
-                <p class="val" id="us-budget">~$125</p>
-                <p class="hint">About $125/day planned</p>
-              </div>
-            </div>
-            <div class="mkt-cpl" id="us-cpl-block">
-              <p class="cpl-label" id="cpl-window">Early cost · Sat Aug 8 – Mon Aug 10</p>
-              <div class="cpl-row">
-                <div>
-                  <p class="lbl">Cost per enquiry</p>
-                  <p class="val" id="cpl-enquiry">—</p>
-                </div>
-                <div>
-                  <p class="lbl">Cost per booked call</p>
-                  <p class="val" id="cpl-booked">—</p>
-                </div>
-              </div>
-              <ul id="cpl-breakdown">
-                <li>4 enquiries</li>
-                <li>2 sales calls booked</li>
-                <li>1 junk (job seeker)</li>
-                <li>1 not a fit (project-based)</li>
-              </ul>
-              <p class="caveat" id="cpl-caveat">
-                Early / small sample. Job-seeker junk never counts as a win.
-              </p>
-            </div>
-            <p class="mkt-ft" id="us-blurb">
-              Core Search is cheaper and busier. Role Search is more specific and costs more.
-            </p>
-          </div>
-        </article>
-
-        <article class="mkt au" id="market-au">
-          <div class="mkt-hd">
-            <p class="where">Australia</p>
-            <h2 id="au-status">On</h2>
-            <p class="sub" id="au-window">Last 7 days · VC_* Search</p>
-          </div>
-          <div class="mkt-bd">
-            <div class="mkt-nums">
-              <div>
-                <p class="lbl">Spend</p>
-                <p class="val" id="au-spend">—</p>
-              </div>
-              <div>
-                <p class="lbl">Clicks</p>
-                <p class="val" id="au-clicks">—</p>
-              </div>
-              <div>
-                <p class="lbl">Ad CTR</p>
-                <p class="val" id="au-ctr">—</p>
-              </div>
-              <div>
-                <p class="lbl">Cost / click</p>
-                <p class="val" id="au-cpc">—</p>
-              </div>
-            </div>
-            <div class="mkt-cpl" id="au-cpl-block">
-              <p class="cpl-label" id="cpl-au-window">Early cost · waiting on lead counts</p>
-              <div class="cpl-row">
-                <div>
-                  <p class="lbl">Cost per enquiry</p>
-                  <p class="val pending" id="cpl-au-enquiry">Not yet</p>
-                </div>
-              </div>
-              <p class="caveat" id="cpl-au-caveat">
-                Cost per enquiry: not yet (no AU lead report in email).
-              </p>
-            </div>
-            <p class="mkt-ft" id="au-blurb">
-              Clicks cost more than the US — smaller auction, competitive VA terms.
-            </p>
-          </div>
-        </article>
-      </div>
-
-      <p class="exec-money" id="money-line">
-        <strong>About $125/day planned</strong> for US (Core + Roles). Australia Search is live on its own budget.
-      </p>
-
-      <section class="web" id="website-ga4" aria-labelledby="ga4-hd">
-        <div class="web-hd">
-          <h2 id="ga4-hd">Website (US)</h2>
-          <p class="meta" id="ga4-window">Last 7 days · US site tags</p>
+      <section class="mkt-block us" id="market-us" aria-label="United States">
+        <div class="mkt-hd">
+          <h2>United States</h2>
+          <p class="bud">Core $150 + Roles $100/day · Exact/Phrase · Max Clicks</p>
         </div>
-        <div class="web-bd">
-          <div class="web-nums" id="ga4-nums">
-            <div>
-              <p class="lbl">Visits (7d)</p>
-              <p class="val" id="ga4-sessions">—</p>
-            </div>
-            <div>
-              <p class="lbl">People</p>
-              <p class="val" id="ga4-users">—</p>
-            </div>
-            <div>
-              <p class="lbl">Stayed &amp; looked around</p>
-              <p class="val" id="ga4-engage">—</p>
-              <p class="hint">vs left right away</p>
-            </div>
-            <div>
-              <p class="lbl">Left right away</p>
-              <p class="val" id="ga4-bounce">—</p>
-            </div>
+        <div class="period week-group">
+          <h3>Mon Aug 10 – Sun Aug 16</h3>
+          <div class="kpi-row week-costs">
+          <div class="kpi kpi-emph"><span class="k">Cost / enquiry</span><span class="v num">$92.80</span><span class="sub">estimated</span></div>
+          <div class="kpi kpi-emph"><span class="k">Cost / completed call</span><span class="v num">$144.36</span><span class="sub">estimated</span></div>
+          <div class="kpi kpi-emph"><span class="k">Cost / JO</span><span class="v num">—</span><span class="sub">&nbsp;</span></div>
           </div>
-
-          <p class="web-callout" id="ga4-device-note">Checking desktop vs mobile…</p>
-
-          <div class="web-split">
-            <div class="web-pane">
-              <h3>Top landing pages</h3>
-              <ul id="ga4-landings">
-                <li>Loading…</li>
-              </ul>
-            </div>
-            <div class="web-pane">
-              <h3>Where traffic came from</h3>
-              <ul id="ga4-channels">
-                <li>Loading…</li>
-              </ul>
-              <h3 style="margin-top:0.85rem">Device (all site)</h3>
-              <ul id="ga4-devices">
-                <li>Loading…</li>
-              </ul>
-            </div>
+          <div class="kpi-row week-ads">
+          <div class="kpi"><span class="k">Spend</span><span class="v num" id="us-spend">$1,299</span></div>
+          <div class="kpi"><span class="k">Clicks</span><span class="v num">444</span></div>
+          <div class="kpi"><span class="k">Impr.</span><span class="v num">4,123</span></div>
+          <div class="kpi"><span class="k">CTR</span><span class="v num">10.8%</span></div>
+          <div class="kpi"><span class="k">CPC</span><span class="v num">$2.93</span></div>
+          <div class="kpi"><span class="k">Ads conv</span><span class="v num">1</span></div>
           </div>
-
-          <p class="muted-note" id="ga4-note">
-            US site tags only. Australia website tags are a separate gap — AU spend shows in Ads above.
-          </p>
+          <p class="mkt-note mute">14 enquiries · 9 completed calls · 4 looking for work · 2 not a fit · 1 PH job-seeker.</p>
+          <div class='src-chips' aria-label='Enquiry sources'><span class='src-chips-k'>Sources</span><span class='src-chip'><span class='src-l'>Google Organic</span><span class='src-n num'>8</span></span><span class='src-chip'><span class='src-l'>Bing Organic</span><span class='src-n num'>1</span></span><span class='src-chip'><span class='src-l'>Facebook</span><span class='src-n num'>2</span></span><span class='src-chip'><span class='src-l'>Referral Partner</span><span class='src-n num'>1</span></span><span class='src-chip'><span class='src-l'>Phone Call</span><span class='src-n num'>1</span></span><span class='src-chip'><span class='src-l'>Forbes</span><span class='src-n num'>1</span></span></div><p class='mute zoho-census'>Zoho census, same dates: 20 rows — a wider net over the same people, not extra enquiries.</p>
         </div>
       </section>
 
-      <div class="insight-grid">
-        <article class="insight-card">
-          <h2>Ad copy that’s working</h2>
-          <ul id="theme-list">
-            <li>Loading live RSAs…</li>
-          </ul>
-          <p class="muted-note" id="theme-note">From live US ads (last 7 days).</p>
-        </article>
-        <article class="insight-card">
-          <h2>Buyer signals (search)</h2>
-          <ul id="signal-list">
-            <li>Loading…</li>
-          </ul>
-          <p class="muted-note">
-            Recent search terms with spend. Job-seeker junk flagged when it shows up.
-          </p>
-        </article>
-      </div>
-
-      <section class="panel" id="campaigns">
-        <div class="panel-hd">
-          <p class="kicker">Last 7 days</p>
-          <h2>Campaigns</h2>
+      <section class="mkt-block au" id="market-au" aria-label="Australia">
+        <div class="mkt-hd">
+          <h2>Australia</h2>
+          <p class="bud">Core A$75 + Roles A$50/day</p>
         </div>
-        <div class="panel-bd">
-          <p class="muted" style="margin:0 0 0.55rem;font-size:0.88rem;line-height:1.45" id="camp-window">
-            New Search only (VC_*).
-          </p>
-          <div class="tbl-wrap">
-            <table class="exec-tbl" id="camp-table">
+        <div class="period week-group">
+          <h3>Mon Aug 10 – Sun Aug 16</h3>
+          <div class="kpi-row week-costs">
+          <div class="kpi kpi-emph"><span class="k">Cost / enquiry</span><span class="v num">A$63.16</span><span class="sub">estimated</span></div>
+          <div class="kpi kpi-emph"><span class="k">Cost / booked call</span><span class="v num">A$442.10</span><span class="sub">estimated</span></div>
+          <div class="kpi kpi-emph"><span class="k">Cost / JO</span><span class="v num">A$294.73</span><span class="sub">estimated</span></div>
+          </div>
+          <div class="kpi-row week-ads">
+          <div class="kpi"><span class="k">Spend</span><span class="v num" id="au-spend">A$884</span></div>
+          <div class="kpi"><span class="k">Clicks</span><span class="v num">250</span></div>
+          <div class="kpi"><span class="k">Impr.</span><span class="v num">1,925</span></div>
+          <div class="kpi"><span class="k">CTR</span><span class="v num">13.0%</span></div>
+          <div class="kpi"><span class="k">CPC</span><span class="v num">A$3.54</span></div>
+          <div class="kpi"><span class="k">Ads conv</span><span class="v num">—</span></div>
+          </div>
+          <p class="mkt-note mute">14 enquiries · 2 discovery scheduled · 3 job orders.</p>
+          
+        </div>
+      </section>
+
+
+      <section class="halo" id="crm-activity" aria-label="Zoho this week">
+        <div class="sec-hd">
+          <h2>Zoho this week</h2>
+          <p class="sec-meta">Mon Aug 10 – Sun Aug 16 · every row Zoho created this week</p>
+        </div>
+        <div class="kpi-row halo-kpi">
+          <div class="kpi kpi-halo">
+            <span class="k">Sales Enquiries</span>
+            <span class="v num">38</span>
+            <span class="sub">US 20 · AU 14</span>
+          </div>
+          <div class="kpi kpi-halo">
+            <span class="k">Job Orders</span>
+            <span class="v num">4</span>
+            <span class="sub">US 1 · AU 3</span>
+          </div>
+          <div class="kpi kpi-halo">
+            <span class="k">Discovery scheduled</span>
+            <span class="v num">4</span>
+            <span class="sub">US 2 · AU 2</span>
+          </div>
+        </div>
+        <details class="calc-how">
+          <summary>July comparison (old)</summary>
+          <div class="bd">
+            <p class="note">July is older bookkeeping — not a fair before/after.</p>
+            <table class="cmp halo-cmp">
               <thead>
                 <tr>
-                  <th>Market</th>
-                  <th>Campaign</th>
-                  <th>Status</th>
-                  <th class="num">Clicks</th>
-                  <th class="num">Spend</th>
-                  <th class="num">Ad CTR</th>
-                  <th class="num">Cost / click</th>
+                  <th>Metric</th>
+                  <th class="num">This flight</th>
+                  <th class="num">July</th>
                 </tr>
               </thead>
-              <tbody id="camp-body">
-                <tr><td colspan="7">Loading…</td></tr>
+              <tbody>
+                <tr>
+                  <td>Sales Enquiries</td>
+                  <td class="num">51</td>
+                  <td class="num mute">53</td>
+                </tr>
+                <tr>
+                  <td>Job Orders</td>
+                  <td class="num">18</td>
+                  <td class="num mute">26</td>
+                </tr>
               </tbody>
             </table>
           </div>
+        </details>
+      </section>
+
+
+      <details class="ev" id="crm-readiness">
+        <summary>CRM setup</summary>
+        <div class="bd">
+          <p class="mute">A named Zoho field is not the same as done.</p>
+          <table class="ev-t crm-ready">
+            <thead><tr><th>Check</th><th>Status</th><th>Evidence</th></tr></thead>
+            <tbody>
+              <tr><td>Destination CRM module</td><td class="st-rev">Needs review</td><td class="mute">Live CRM is WordPress + Zapier + humans. .app forms email us@ / apac@ — not writing to Zoho.</td></tr><tr><td>Employer vs job-seeker classification</td><td class="st-rev">Needs review</td><td class="mute">Cheyenne labels looking-for-work / PH job-seeker in email. Form gate exists in spec; not proven on every CRM row.</td></tr><tr><td>Persistent GCLID field</td><td class="st-miss">Missing</td><td class="mute">Dictionary has utm_gclid. Stage 1: 0 of 51 Sales Enquiries store a click ID. After ~5 Aug new Zoho rows stopped storing it.</td></tr><tr><td>Persistent GBRAID / WBRAID</td><td class="st-miss">Missing</td><td class="mute">No Zoho fields. Parked until writes turn on.</td></tr><tr><td>UTM fields</td><td class="st-test">Not tested</td><td class="mute">utm_source / medium / campaign exist in the dictionary. Stage 1 Zoho rows are mostly blank.</td></tr><tr><td>Original landing page</td><td class="st-test">Not tested</td><td class="mute">Mapped to Referring_URL in the draft. Not proven on Stage 1 rows.</td></tr><tr><td>Lead-created timestamp</td><td class="st-ok">Confirmed</td><td class="mute">Zoho Created_Time is what the halo census uses.</td></tr><tr><td>Deduplication rule</td><td class="st-miss">Missing</td><td class="mute">VC_Submission_ID does not exist yet.</td></tr><tr><td>Lifecycle stage definitions</td><td class="st-rev">Needs review</td><td class="mute">Zoho statuses exist (Discovery Scheduled, Job Order Submitted, etc.). Not a locked Stage 1 contract.</td></tr><tr><td>Sales ownership</td><td class="st-ok">Confirmed</td><td class="mute">Cheyenne Gichana = US. Holly Wallace = APAC / AU.</td></tr><tr><td>Qualified-lead definition</td><td class="st-rev">Needs review</td><td class="mute">No single documented qualified-employer definition on this scoreboard.</td></tr><tr><td>Job-order definition</td><td class="st-rev">Needs review</td><td class="mute">AU uses Zoho Job Order Submitted for the week. US JO was not named this week.</td></tr><tr><td>Placement definition</td><td class="st-miss">Missing</td><td class="mute">Not on the scoreboard. Do not treat JO as placement.</td></tr><tr><td>Offline conversion action mapping</td><td class="st-miss">Missing</td><td class="mute">Deferred during cold start. Do not import CRM outcomes into Ads yet.</td></tr><tr><td>Click-ID retention tested</td><td class="st-test">Not tested</td><td class="mute">0 gclid on Stage 1 Sales Enquiries.</td></tr><tr><td>Google Ads import tested</td><td class="st-test">Not tested</td><td class="mute">Offline import deferred. Not a green check because a Zapier action exists.</td></tr><tr><td>Legacy Zapier uploads audited</td><td class="st-rev">Needs review</td><td class="mute">Known inflated / thin JO upload vs real CRM job orders. Not a complete audit.</td></tr><tr><td>Documentation and owner assigned</td><td class="st-rev">Needs review</td><td class="mute">Field-map draft is parked. Writes remain OFF.</td></tr>
+            </tbody>
+          </table>
         </div>
+      </details>
+
+      <section class="baseline" id="agency-baseline">
+        <div class="sec-hd">
+          <h2>Legacy agency comparison</h2>
+          <p class="sec-meta">This week vs their typical 7-day week</p>
+        </div>
+        <div class='cmp-band'><div class='cmp-band-hd'><h3>Ads</h3><span class='cmp-band-note'>Google Ads · both accounts</span></div><div class='cmp-sheet'><span class='cell hd'></span><span class='cell hd num'>This week</span><span class='cell hd num'>Legacy week</span><span class='cell hd num'>Δ</span><span class='cell grp'>CTR</span><span class='cell cm'>US</span><span class='cell num tw'>10.8%</span><span class='cell num lg'>1.6%</span><span class='cell num delta-good'>6.8×</span><span class='cell cm'>AU</span><span class='cell num tw'>13.0%</span><span class='cell num lg'>1.4%</span><span class='cell num delta-good'>9.0×</span><span class='cell grp'>CPC</span><span class='cell cm'>US</span><span class='cell num tw'>$2.93</span><span class='cell num lg'>$8.29</span><span class='cell num delta-good'>65% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$3.54</span><span class='cell num lg'>A$9.24</span><span class='cell num delta-good'>62% lower</span><span class='cell grp'>Spend</span><span class='cell cm'>US</span><span class='cell num tw'>$1,299</span><span class='cell num lg'>$6,913</span><span class='cell num delta-good'>81% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$884</span><span class='cell num lg'>A$4,369</span><span class='cell num delta-good'>80% lower</span><span class='cell grp'>Cost / JO</span><span class='cell cm'>US</span><span class='cell num tw'>—</span><span class='cell num lg'>$10,819</span><span class='cell num delta-flat'>—</span><span class='cell cm'>AU</span><span class='cell num tw'>A$294.73</span><span class='cell num lg'>A$12,727</span><span class='cell num delta-good'>98% lower</span></div></div>
+        <p class="cmp-note">Legacy cost / JO is agency spend ÷ the job orders in the Zapier CRM extract (67 US · 36 AU) — the whole extract we hold for those years, not a paid-only slice. US cost / JO this week is blank because ops did not name a US job order.</p>
+        <div class='cmp-band'><div class='cmp-band-hd'><h3>Sales</h3><span class='cmp-band-note'>Zoho rows · same week as the cards</span></div><div class='cmp-sheet'><span class='cell hd'></span><span class='cell hd num'>This week</span><span class='cell hd num'>Legacy week</span><span class='cell hd num'>Δ</span><span class='cell grp'>Enquiries</span><span class='cell cm'>US</span><span class='cell num tw'>20</span><span class='cell num lg'>9.8</span><span class='cell num delta-good'>2.0×</span><span class='cell cm'>AU</span><span class='cell num tw'>14</span><span class='cell num lg'>8.9</span><span class='cell num delta-good'>1.6×</span><span class='cell grp'>Job orders</span><span class='cell cm'>US</span><span class='cell num tw'>1</span><span class='cell num lg'>0.6</span><span class='cell num delta-good'>1.6×</span><span class='cell cm'>AU</span><span class='cell num tw'>3</span><span class='cell num lg'>0.3</span><span class='cell num delta-good'>8.7×</span><span class='cell grp'>Discovery</span><span class='cell cm'>US</span><span class='cell num tw'>2</span><span class='cell num lg'>0.3</span><span class='cell num delta-good'>6.4×</span><span class='cell cm'>AU</span><span class='cell num tw'>2</span><span class='cell num lg'>0.5</span><span class='cell num delta-good'>4.4×</span></div></div>
+        <p class="cmp-note">This-week Enquiries are the Zoho census (US 20 · AU 14) — same numbers as the Zoho box. Cheyenne’s 14 stays on the US card. Legacy enquiries are the agency&#x27;s own Google Ads lead-form conversions (Free Consultation Form Submitted [Original]), averaged over their run — Zoho has no Sales Enquiry history for most of that period.</p>
+        <dl class="windows">
+          <div><dt>This week</dt><dd>Mon Aug 10 – Sun Aug 16</dd></div>
+          <div><dt>Legacy agency</dt><dd>Aug 1, 2024 – Aug 4, 2026</dd></div>
+          <div><dt>GA4</dt><dd>Aug 10, 2026 – Aug 16, 2026</dd></div>
+        </dl>
       </section>
 
-      <section class="bottom-insights" aria-labelledby="insights-hd">
-        <h2 id="insights-hd">Insights</h2>
-        <ul id="bottom-insights-list">
-          <li>Loading…</li>
-        </ul>
+      <section class="ga4-now" id="ga4" aria-label="Google Analytics">
+        <div class="sec-hd">
+          <h2>Google Analytics</h2>
+          <p class="sec-meta">Aug 10, 2026 – Aug 16, 2026</p>
+        </div>
+        <div class="legacy-grid ga4-grid"><div class="legacy-box"><h3>Sessions</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>554</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>149</td></tr></tbody></table></div><div class="legacy-box"><h3>Users</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>584</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>132</td></tr></tbody></table></div><div class="legacy-box"><h3>Stayed</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>39.2%</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>42.3%</td></tr></tbody></table></div><div class="legacy-box"><h3>Bounce</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>60.8%</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>57.7%</td></tr></tbody></table></div><div class="legacy-box"><h3>Paid search</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>384</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>109</td></tr></tbody></table></div><div class="legacy-box"><h3>Thank-you</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>4</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>4</td></tr></tbody></table></div><div class="legacy-box"><h3>Mobile</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>262</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—</td></tr></tbody></table></div><div class="legacy-box"><h3>Desktop</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>306</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—</td></tr></tbody></table></div><div class="legacy-box"><h3>Time on site</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>2m 23s</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>1m 33s</td></tr></tbody></table></div></div>
+        <p class="mute ga4-foot">No old-agency GA4 to compare.</p>
       </section>
 
-      <details class="more-fold" id="more-detail">
-        <summary>More detail (optional)</summary>
-        <div class="fold-bd">
-          <h3 style="margin:0 0 0.4rem;font-size:0.95rem">Landing pages (US catalog)</h3>
-          <div class="tbl-wrap">
-            <table class="exec-tbl" id="lp-table">
-              <thead>
-                <tr>
-                  <th>Page</th>
-                  <th class="num">Clicks</th>
-                  <th class="num">Spend</th>
-                  <th>Why</th>
-                </tr>
-              </thead>
-              <tbody id="lp-body">
-                <tr><td colspan="4">Loading…</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <h3 style="margin:0.85rem 0 0.4rem;font-size:0.95rem">Keyword themes</h3>
-          <div class="tbl-wrap">
-            <table class="exec-tbl">
-              <thead>
-                <tr>
-                  <th>Theme</th>
-                  <th>Market</th>
-                  <th>Why</th>
-                </tr>
-              </thead>
-              <tbody id="kw-body">
-                <tr><td colspan="3">Loading…</td></tr>
-              </tbody>
-            </table>
-          </div>
+      <p class="mute"><a href="launch-control.html">Checklist → Launch steps</a></p>
+
+      <details class="ev" id="evidence">
+        <summary>Evidence (IS windows · JSON)</summary>
+        <div class="bd">
+          <h3 style="margin:0.55rem 0 0.25rem;font-size:0.88rem">US Search IS by window</h3>
+          <table class="ev-t">
+            <thead><tr><th>Window</th><th>Campaign</th><th class="num">IS</th><th class="num">Lost rank</th><th class="num">Lost budget</th><th class="num">Top</th><th class="num">Abs top</th></tr></thead>
+            <tbody><tr><td>last 2 complete days</td><td>VC_US_S_CORE</td><td class='num'>29.6%</td><td class='num'>58.7%</td><td class='num'>11.7%</td><td class='num'>20.0%</td><td class='num'>10.9%</td></tr>
+<tr><td>last 2 complete days</td><td>VC_US_S_ROLES</td><td class='num'>26.9%</td><td class='num'>67.5%</td><td class='num'>5.6%</td><td class='num'>17.1%</td><td class='num'>10.0%</td></tr>
+<tr><td>last 3 complete days</td><td>VC_US_S_CORE</td><td class='num'>29.2%</td><td class='num'>50.6%</td><td class='num'>20.2%</td><td class='num'>20.0%</td><td class='num'>10.9%</td></tr>
+<tr><td>last 3 complete days</td><td>VC_US_S_ROLES</td><td class='num'>26.0%</td><td class='num'>66.8%</td><td class='num'>7.1%</td><td class='num'>16.7%</td><td class='num'>10.0%</td></tr>
+<tr><td>last 7 complete days</td><td>VC_US_S_CORE</td><td class='num'>29.9%</td><td class='num'>38.8%</td><td class='num'>31.3%</td><td class='num'>19.9%</td><td class='num'>10.6%</td></tr>
+<tr><td>last 7 complete days</td><td>VC_US_S_ROLES</td><td class='num'>22.4%</td><td class='num'>66.8%</td><td class='num'>10.8%</td><td class='num'>13.7%</td><td class='num'>10.0%</td></tr></tbody>
+          </table>
+          <h3 style="margin:0.55rem 0 0.25rem;font-size:0.88rem">AU Search IS by window</h3>
+          <table class="ev-t">
+            <thead><tr><th>Window</th><th>Campaign</th><th class="num">IS</th><th class="num">Lost rank</th><th class="num">Lost budget</th><th class="num">Top</th><th class="num">Abs top</th></tr></thead>
+            <tbody><tr><td>last 2 complete days</td><td>VC_AU_S_CORE</td><td class='num'>34.5%</td><td class='num'>50.1%</td><td class='num'>15.4%</td><td class='num'>24.9%</td><td class='num'>14.4%</td></tr>
+<tr><td>last 2 complete days</td><td>VC_AU_S_ROLES</td><td class='num'>35.2%</td><td class='num'>58.8%</td><td class='num'>6.0%</td><td class='num'>24.1%</td><td class='num'>13.1%</td></tr>
+<tr><td>last 3 complete days</td><td>VC_AU_S_CORE</td><td class='num'>34.6%</td><td class='num'>38.1%</td><td class='num'>27.4%</td><td class='num'>25.1%</td><td class='num'>14.8%</td></tr>
+<tr><td>last 3 complete days</td><td>VC_AU_S_ROLES</td><td class='num'>30.0%</td><td class='num'>50.0%</td><td class='num'>20.0%</td><td class='num'>19.9%</td><td class='num'>11.9%</td></tr>
+<tr><td>last 7 complete days</td><td>VC_AU_S_CORE</td><td class='num'>33.2%</td><td class='num'>35.0%</td><td class='num'>31.8%</td><td class='num'>24.4%</td><td class='num'>14.6%</td></tr>
+<tr><td>last 7 complete days</td><td>VC_AU_S_ROLES</td><td class='num'>26.6%</td><td class='num'>46.9%</td><td class='num'>26.6%</td><td class='num'>17.6%</td><td class='num'>11.3%</td></tr></tbody>
+          </table>
+          <p class="mute">
+            <a href="data/executive-snapshot.json">executive-snapshot.json</a> ·
+            <a href="data/impression-share.json">impression-share.json</a> ·
+            <a href="recovery-audit">Recovery audit</a>
+          </p>
         </div>
       </details>
     </main>
   </div>
-
-  <script src="nav.js?v=20260812-os1"></script>
-  <script src="data/growth-os.js"></script>
-  <script>
-    (function () {
-      (function fillOsPriorities() {
-        var G = window.GROWTH_OS;
-        var list = document.getElementById("next-list");
-        var thesis = document.getElementById("exec-thesis");
-        var signal = document.getElementById("exec-signal");
-        if (!G || !list) return;
-        if (thesis) thesis.textContent = G.thesis;
-        if (signal) {
-          signal.innerHTML =
-            "Signal: <strong>" +
-            G.overallReadiness.label +
-            "</strong> — " +
-            G.overallReadiness.note;
-        }
-        list.innerHTML = G.nextActions.slice(0, 3).map(function (a) {
-          return (
-            "<li><strong>" +
-            a.title +
-            "</strong> — " +
-            a.why +
-            " <a href='" +
-            a.href +
-            "'>Open</a></li>"
-          );
-        }).join("");
-      })();
-
-      function money(n) {
-        if (n == null || isNaN(n)) return "—";
-        return "$" + Number(n).toLocaleString("en-US", {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0
-        });
-      }
-      function money2(n) {
-        if (n == null || isNaN(n)) return "—";
-        return "$" + Number(n).toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        });
-      }
-      function num(n) {
-        if (n == null || isNaN(n)) return "—";
-        return Number(n).toLocaleString("en-US");
-      }
-      function pct(n) {
-        if (n == null || isNaN(n)) return "—";
-        return Number(n).toFixed(1) + "%";
-      }
-      function fmtWhen(iso) {
-        if (!iso) return "—";
-        try {
-          return new Date(iso).toLocaleString("en-US", {
-            timeZone: "America/Los_Angeles",
-            month: "short",
-            day: "numeric",
-            hour: "numeric",
-            minute: "2-digit",
-            timeZoneName: "short"
-          });
-        } catch (e) {
-          return iso;
-        }
-      }
-      function statusTag(s) {
-        var u = (s || "").toUpperCase();
-        if (u === "ENABLED") return "<span class='tag'>On</span>";
-        if (u === "PAUSED") return "<span class='tag warn'>Paused</span>";
-        return "<span class='tag warn'>" + (s || "—") + "</span>";
-      }
-      function marketLabel(name) {
-        if ((name || "").indexOf("VC_AU_") === 0) return "AU";
-        if ((name || "").indexOf("VC_US_") === 0) return "US";
-        return "—";
-      }
-      function fillList(el, items, htmlFn) {
-        if (!el) return;
-        el.innerHTML = (items || []).map(htmlFn).join("");
-      }
-      function weekTotals(camps) {
-        var out = { clicks: 0, cost: 0, impr: 0 };
-        (camps || []).forEach(function (c) {
-          var m = c.last_7_days || {};
-          out.clicks += Number(m.clicks || 0);
-          out.cost += Number(m.cost_usd || 0);
-          out.impr += Number(m.impressions || 0);
-        });
-        out.cpc = out.clicks > 0 ? out.cost / out.clicks : null;
-        out.ctr = out.impr > 0 ? (100 * out.clicks) / out.impr : null;
-        return out;
-      }
-      function anyOn(camps) {
-        return (camps || []).some(function (c) {
-          return (c.status || "").toUpperCase() === "ENABLED";
-        });
-      }
-      function marketHeadline(camps, week, market) {
-        if (!camps || !camps.length) {
-          if (week && week.cost) return "Spending";
-          return "Waiting on Ads read";
-        }
-        if (week && week.cost > 0) {
-          if (market === "AU") {
-            var stage1 = (camps || []).some(function (c) {
-              return (c.cohort || "").indexOf("stage1") === 0 && Number((c.last_7_days || {}).cost_usd || 0) > 0;
-            });
-            return stage1 ? "On" : "Spending · legacy";
-          }
-          return "On";
-        }
-        if (anyOn(camps)) return "Live · waiting on traffic";
-        return "Paused";
-      }
-      function esc(s) {
-        return String(s || "")
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
-      }
-      function isGarbagePath(p) {
-        var s = String(p || "").toLowerCase();
-        return (
-          !s ||
-          s === "(empty path)" ||
-          s === "(not set)" ||
-          s === "(empty / unknown)" ||
-          s === "untagged"
-        );
-      }
-      function channelLabel(ch) {
-        if (ch === "Direct") return "Direct (typed URL / bookmark / lost ad tag)";
-        if (ch === "Paid Search") return "Paid Search";
-        return ch || "?";
-      }
-
-      fetch("data/executive-snapshot.json", { cache: "no-store" })
-        .then(function (r) {
-          if (!r.ok) throw new Error("snapshot " + r.status);
-          return r.json();
-        })
-        .then(function (data) {
-          var op = data.operator || {};
-          var us = data.performance_us || data.performance || {};
-          var au = data.performance_au || {};
-          function isVc(c) {
-            return /^VC_(US|AU)_/.test((c && c.name) || "");
-          }
-          var usCamps = (us.campaigns || []).filter(isVc);
-          var auCamps = (au.campaigns || []).filter(isVc);
-          var usW = weekTotals(usCamps);
-          var auW = weekTotals(auCamps);
-
-          document.getElementById("exec-honesty").textContent =
-            op.honesty ||
-            "US and Australia Search are live. Paying per click until call tracking is trusted.";
-
-          if (op.whats_next && op.whats_next.length) {
-            fillList(document.getElementById("next-list"), op.whats_next, function (t) {
-              return "<li>" + t + "</li>";
-            });
-          }
-
-          var whenBits = "Ads updated <strong>" + fmtWhen(data.generated_at_utc) + "</strong>";
-          if (data.ga4_merged_at_utc) {
-            whenBits += " · website <strong>" + fmtWhen(data.ga4_merged_at_utc) + "</strong>";
-          }
-          if (data.creative_merged_at_utc) {
-            whenBits += " · ads copy <strong>" + fmtWhen(data.creative_merged_at_utc) + "</strong>";
-          }
-          document.getElementById("exec-updated").innerHTML = whenBits;
-
-          document.getElementById("us-spend").textContent = money(usW.cost);
-          document.getElementById("us-clicks").textContent = num(usW.clicks);
-          document.getElementById("us-ctr").textContent = pct(usW.ctr);
-          document.getElementById("us-cpc").textContent = money2(usW.cpc);
-          document.getElementById("us-status").textContent = marketHeadline(usCamps, usW, "US");
-          if (us.window) {
-            document.getElementById("us-window").textContent =
-              us.window.replace(/_/g, " ") + " · VC_* Search";
-          }
-
-          document.getElementById("au-spend").textContent = money(auW.cost);
-          document.getElementById("au-clicks").textContent = num(auW.clicks);
-          document.getElementById("au-ctr").textContent = pct(auW.ctr);
-          document.getElementById("au-cpc").textContent = money2(auW.cpc);
-          document.getElementById("au-status").textContent = marketHeadline(auCamps, auW, "AU");
-
-          var moneyLine = document.getElementById("money-line");
-          moneyLine.innerHTML =
-            "<strong>About $125/day planned</strong> for US (Core + Roles). Australia Search is live on its own budget.";
-
-          /* —— US early CPL —— */
-          var cpl = data.early_cpl_us || {};
-          if (cpl.label) {
-            document.getElementById("cpl-window").textContent =
-              "Early cost · " + cpl.label;
-          }
-          document.getElementById("cpl-enquiry").textContent = money2(
-            cpl.cost_per_enquiry_usd
-          );
-          document.getElementById("cpl-booked").textContent = money2(
-            cpl.cost_per_sales_call_booked_usd
-          );
-          var bd = document.getElementById("cpl-breakdown");
-          if (bd) {
-            bd.innerHTML =
-              "<li><strong>" +
-              (cpl.enquiries != null ? cpl.enquiries : 4) +
-              "</strong> enquiries</li>" +
-              "<li><strong>" +
-              (cpl.sales_calls_booked != null ? cpl.sales_calls_booked : 2) +
-              "</strong> sales calls booked</li>" +
-              "<li><strong>" +
-              (cpl.junk_job_seeker != null ? cpl.junk_job_seeker : 1) +
-              "</strong> junk (job seeker)</li>" +
-              "<li><strong>" +
-              (cpl.not_a_fit != null ? cpl.not_a_fit : 1) +
-              "</strong> not a fit" +
-              (cpl.not_a_fit_detail ? " (" + esc(cpl.not_a_fit_detail) + ")" : "") +
-              "</li>";
-          }
-          if (cpl.caveat) {
-            document.getElementById("cpl-caveat").textContent = cpl.caveat;
-          }
-          document.getElementById("us-blurb").innerHTML =
-            "Core Search is cheaper and busier. Role Search is more specific and costs more.";
-
-          /* —— AU early CPL —— */
-          var cplAu = data.early_cpl_au || {};
-          var auWin = document.getElementById("cpl-au-window");
-          if (auWin) {
-            auWin.textContent =
-              "Early cost · " + (cplAu.label || "Aug 8–10");
-          }
-          var auEnqEl = document.getElementById("cpl-au-enquiry");
-          if (auEnqEl) {
-            if (cplAu.cost_per_enquiry_usd != null) {
-              auEnqEl.classList.remove("pending");
-              auEnqEl.textContent = money2(cplAu.cost_per_enquiry_usd);
-            } else {
-              auEnqEl.classList.add("pending");
-              auEnqEl.textContent =
-                "not yet (no AU lead report in email)";
-            }
-          }
-          var auCaveat = document.getElementById("cpl-au-caveat");
-          if (auCaveat) {
-            auCaveat.textContent =
-              cplAu.caveat ||
-              "Cost per enquiry: not yet (no AU lead report in email).";
-          }
-          var auBlurb = document.getElementById("au-blurb");
-          if (auBlurb) {
-            var usCpc = usW.cpc;
-            var auCpc = auW.cpc;
-            var line =
-              "Clicks cost more than the US — smaller auction, competitive VA terms.";
-            if (auCpc != null && usCpc != null && auCpc > usCpc) {
-              line =
-                "Cost per click is higher than the US (~" +
-                money2(auCpc) +
-                " vs ~" +
-                money2(usCpc) +
-                ") — smaller auction and competitive VA terms.";
-            }
-            auBlurb.textContent = line;
-          }
-
-          /* —— Live ad copy —— */
-          var ww = op.whats_working || {};
-          if (ww.note) {
-            var tn = document.getElementById("theme-note");
-            if (tn) tn.textContent = ww.note;
-          }
-          if (ww.ad_copy_themes && ww.ad_copy_themes.length) {
-            fillList(document.getElementById("theme-list"), ww.ad_copy_themes, function (t) {
-              return "<li>" + esc(t) + "</li>";
-            });
-          } else if (ww.top_rsas && ww.top_rsas.length) {
-            fillList(document.getElementById("theme-list"), ww.top_rsas, function (a) {
-              return (
-                "<li><strong>" +
-                esc(a.sample || a.ad_group || "RSA") +
-                "</strong> <span class='kpi'>" +
-                num(a.impressions) +
-                " impr · " +
-                num(a.clicks) +
-                " clicks · " +
-                pct(a.ctr_pct) +
-                " CTR</span></li>"
-              );
-            });
-          }
-
-          /* —— Buyer signals —— */
-          if (op.buyer_signals && op.buyer_signals.length) {
-            fillList(document.getElementById("signal-list"), op.buyer_signals, function (s) {
-              var kpi = "";
-              if (s.clicks != null || s.cost_usd != null) {
-                kpi =
-                  " <span class='kpi'>(" +
-                  esc(s.market || "US") +
-                  (s.clicks != null ? " · " + num(s.clicks) + " clicks" : "") +
-                  (s.ctr_pct != null ? " · " + pct(s.ctr_pct) + " CTR" : "") +
-                  (s.cost_usd != null ? " · " + money2(s.cost_usd) : "") +
-                  ")</span>";
-              } else {
-                kpi =
-                  " <span class='kpi'>(" +
-                  esc(s.market || "US") +
-                  " — " +
-                  esc(s.why || "") +
-                  ")</span>";
-              }
-              return (
-                "<li><strong>" +
-                esc(s.term || "") +
-                "</strong>" +
-                kpi +
-                (s.why && (s.clicks != null || s.cost_usd != null)
-                  ? "<div class='why-cell'>" + esc(s.why) + "</div>"
-                  : "") +
-                "</li>"
-              );
-            });
-          }
-
-          /* —— Campaigns —— */
-          var allCamps = []
-            .concat(usCamps.map(function (c) { return Object.assign({ _market: "US" }, c); }))
-            .concat(auCamps.map(function (c) { return Object.assign({ _market: "AU" }, c); }));
-          var campBody = document.getElementById("camp-body");
-          if (!allCamps.length) {
-            campBody.innerHTML = "<tr><td colspan='7'>No campaign rows in this pull.</td></tr>";
-          } else {
-            campBody.innerHTML = allCamps
-              .map(function (c) {
-                var m = c.last_7_days || {};
-                var nice = (c.name || "")
-                  .replace(/^VC_US_S_CORE$/, "US Core Search")
-                  .replace(/^VC_US_S_ROLES$/, "US Role Search")
-                  .replace(/^VC_AU_S_CORE$/, "AU Core Search")
-                  .replace(/^VC_AU_S_ROLES$/, "AU Role Search")
-                  .replace(/^VC_US_S_/, "US ")
-                  .replace(/^VC_AU_S_/, "AU ");
-                return (
-                  "<tr>" +
-                  "<td>" + (c._market || marketLabel(c.name)) + "</td>" +
-                  "<td><strong>" + esc(nice) + "</strong></td>" +
-                  "<td>" + statusTag(c.status) + "</td>" +
-                  "<td class='num'>" + num(m.clicks) + "</td>" +
-                  "<td class='num'>" + money2(m.cost_usd) + "</td>" +
-                  "<td class='num'>" + pct(m.ctr_pct) + "</td>" +
-                  "<td class='num'>" + money2(m.avg_cpc_usd) + "</td>" +
-                  "</tr>"
-                );
-              })
-              .join("");
-          }
-
-          var lpPages = (data.landing_pages && data.landing_pages.pages) || [];
-          var lpBody = document.getElementById("lp-body");
-          if (!lpPages.length) {
-            lpBody.innerHTML = "<tr><td colspan='4'>No landing-page rows.</td></tr>";
-          } else {
-            lpBody.innerHTML = lpPages
-              .map(function (p) {
-                return (
-                  "<tr>" +
-                  "<td><a href=\"" + esc(p.url) + "\" target=\"_blank\" rel=\"noopener\"><strong>" +
-                  esc(p.name || p.path) + "</strong></a></td>" +
-                  "<td class='num'>" + num(p.clicks) + "</td>" +
-                  "<td class='num'>" + money2(p.cost_usd) + "</td>" +
-                  "<td class='why-cell'>" + esc(p.why || "") + "</td>" +
-                  "</tr>"
-                );
-              })
-              .join("");
-          }
-
-          var keywords = (data.keywords && data.keywords.themes) || [];
-          var kwBody = document.getElementById("kw-body");
-          if (!keywords.length) {
-            kwBody.innerHTML = "<tr><td colspan='3'>No keyword themes.</td></tr>";
-          } else {
-            kwBody.innerHTML = keywords
-              .map(function (k) {
-                return (
-                  "<tr>" +
-                  "<td><strong>" + esc(k.theme || "") + "</strong></td>" +
-                  "<td>" + esc(k.market || "") + "</td>" +
-                  "<td class='why-cell'>" + esc(k.why || "") + "</td>" +
-                  "</tr>"
-                );
-              })
-              .join("");
-          }
-
-          /* —— GA4 website —— */
-          var ga4 = data.ga4 || null;
-          var bottomBits = [];
-
-          if (!ga4) {
-            document.getElementById("ga4-device-note").textContent =
-              "No website pull yet.";
-            document.getElementById("ga4-landings").innerHTML = "";
-            document.getElementById("ga4-channels").innerHTML = "";
-            document.getElementById("ga4-devices").innerHTML = "";
-          } else {
-            var t7 = ga4.totals_last_7_days || {};
-            document.getElementById("ga4-window").textContent =
-              "Last 7 days · US property " + (ga4.property_id || "549075481");
-            document.getElementById("ga4-sessions").textContent = num(t7.sessions);
-            document.getElementById("ga4-users").textContent = num(t7.users);
-            document.getElementById("ga4-engage").textContent = pct(
-              t7.engagement_rate_pct
-            );
-            document.getElementById("ga4-bounce").textContent = pct(t7.bounce_rate_pct);
-
-            var df = ga4.device_finding || {};
-            var deviceEl = document.getElementById("ga4-device-note");
-            if (df.note) {
-              deviceEl.innerHTML = "<strong>Desktop vs mobile:</strong> " + esc(df.note);
-            } else {
-              deviceEl.textContent =
-                "Site-wide desktop can look high because Direct/team traffic skews that way — check Paid Search split.";
-            }
-
-            var landings = (ga4.top_landing_pages || [])
-              .filter(function (p) {
-                return (
-                  p &&
-                  p.sessions &&
-                  !isGarbagePath(p.path) &&
-                  !isGarbagePath(p.path_display) &&
-                  p.path_kind !== "unknown"
-                );
-              })
-              .slice(0, 6);
-            var untagged = (ga4.top_landing_pages || [])
-              .filter(function (p) {
-                return p && p.sessions && (isGarbagePath(p.path) || p.path_kind === "unknown");
-              })
-              .reduce(function (n, p) { return n + Number(p.sessions || 0); }, 0);
-            var landEl = document.getElementById("ga4-landings");
-            if (!landings.length) {
-              landEl.innerHTML = "<li>No landing rows</li>";
-            } else {
-              landEl.innerHTML = landings
-                .map(function (p) {
-                  var path = p.path_display || p.path || "untagged";
-                  var eng =
-                    p.engagement_rate_pct != null
-                      ? " · " + pct(p.engagement_rate_pct) + " stayed"
-                      : "";
-                  return (
-                    "<li><span class='path'>" +
-                    esc(path) +
-                    "</span><span class='stat'><strong>" +
-                    num(p.sessions) +
-                    "</strong>" +
-                    eng +
-                    "</span></li>"
-                  );
-                })
-                .join("");
-              if (untagged > 0) {
-                landEl.innerHTML +=
-                  "<li><span class='path'>untagged</span><span class='stat'><strong>" +
-                  num(untagged) +
-                  "</strong></span></li>";
-              }
-            }
-
-            var channels = (ga4.channels || []).slice(0, 5);
-            var chEl = document.getElementById("ga4-channels");
-            if (!channels.length) {
-              chEl.innerHTML = "<li>No channel rows</li>";
-            } else {
-              chEl.innerHTML = channels
-                .map(function (c) {
-                  return (
-                    "<li><span class='path'>" +
-                    esc(channelLabel(c.channel)) +
-                    "</span><span class='stat'><strong>" +
-                    num(c.sessions) +
-                    "</strong></span></li>"
-                  );
-                })
-                .join("");
-            }
-
-            var devices = (ga4.devices || []).slice(0, 4);
-            var devEl = document.getElementById("ga4-devices");
-            if (!devices.length) {
-              devEl.innerHTML = "<li>—</li>";
-            } else {
-              devEl.innerHTML = devices
-                .map(function (d) {
-                  return (
-                    "<li><span class='path'>" +
-                    esc(d.device || "?") +
-                    "</span><span class='stat'><strong>" +
-                    num(d.sessions) +
-                    "</strong></span></li>"
-                  );
-                })
-                .join("");
-            }
-
-            if (ga4.notes && ga4.notes.length) {
-              document.getElementById("ga4-note").textContent = ga4.notes[0];
-            }
-
-            (ga4.insights || []).forEach(function (t) {
-              if (t) bottomBits.push(t);
-            });
-          }
-
-          /* —— Bottom insights: useful Ads + site why —— */
-          var adsInsights = [
-            usW.cost > 0
-              ? "US last 7 days: " +
-                money(usW.cost) +
-                " / " +
-                num(usW.clicks) +
-                " clicks · Core cheaper & busier, Roles costlier & more specific."
-              : null,
-            cpl.cost_per_enquiry_usd != null
-              ? "Early US cost per enquiry ~" +
-                money(cpl.cost_per_enquiry_usd) +
-                "; cost per booked call ~" +
-                money(cpl.cost_per_sales_call_booked_usd) +
-                " (small sample from sales ops)."
-              : null,
-            auW.cpc != null && usW.cpc != null && auW.cpc > usW.cpc
-              ? "AU cost per click runs higher than US — smaller auction, competitive terms — not a tracking bug."
-              : null,
-            cplAu.cost_per_enquiry_usd == null
-              ? "AU cost per enquiry: not yet (no AU lead report in email from Holly/Cheyenne/Caitlin)."
-              : null
-          ];
-          adsInsights.forEach(function (t) {
-            if (t) bottomBits.unshift(t);
-          });
-
-          // Dedupe-ish: drop lecture / obvious lines if any leaked in
-          var skipRe = /do not invent|hallucin|no ga4 key-event|typical for b2b/i;
-          bottomBits = bottomBits.filter(function (t) {
-            return t && !skipRe.test(t);
-          });
-
-          var insightEl = document.getElementById("bottom-insights-list");
-          if (bottomBits.length) {
-            insightEl.innerHTML = bottomBits
-              .slice(0, 8)
-              .map(function (t) {
-                return "<li>" + esc(t) + "</li>";
-              })
-              .join("");
-          } else {
-            insightEl.innerHTML = "<li>No extra insights this pull.</li>";
-          }
-        })
-        .catch(function (err) {
-          document.getElementById("exec-updated").textContent =
-            "Could not load numbers — " + err;
-        });
-    })();
-  </script>
+  <script src="nav.js"></script>
 </body>
 </html>
