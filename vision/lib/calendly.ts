@@ -126,6 +126,11 @@ export function claimCalendlyAutoOpen(widgetUrl: string): boolean {
   return true;
 }
 
+/** Eligible employer thank-you only. Never auto-open test-hidden / eligible=0. */
+export function shouldCalendlyAutoOpen(conversionEligible: boolean): boolean {
+  return conversionEligible === true;
+}
+
 /** Test-only. */
 export function resetCalendlyAutoOpenForTests() {
   autoOpenedPopupUrl = "";

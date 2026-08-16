@@ -10,6 +10,7 @@ import {
   calendlyEmbedDomain,
   calendlyPopupUrl,
   calendlyUrlForMarket,
+  shouldCalendlyAutoOpen,
   THANK_YOU_BOOKING_COPY,
 } from "../../lib/calendly";
 import CalendlyPopup from "./CalendlyPopup";
@@ -132,25 +133,25 @@ export default async function ThankYouPage({
             ) : null}
             {showPhone || showBook ? (
               <div className="thank-you-book-actions">
-                {showPhone ? (
-                  <a
-                    href={phone.href!}
-                    className="micro-btn micro-btn-primary thank-you-book-primary"
-                    data-track="phone_cta_clicked"
-                  >
-                    Call {phone.display}
-                  </a>
-                ) : null}
                 {showBook && calendlyUrl && calendlyWidgetUrl ? (
                   <CalendlyPopup
                     widgetUrl={calendlyWidgetUrl}
                     bookUrl={calendlyUrl}
                     market={market}
-                    label="Pick a time"
-                    autoOpen
+                    label="Schedule a call"
+                    autoOpen={shouldCalendlyAutoOpen(conversionEligible)}
                     phoneDisplay={phone.display}
                     phoneHref={phone.href}
                   />
+                ) : null}
+                {showPhone ? (
+                  <a
+                    href={phone.href!}
+                    className={`micro-btn ${showBook ? "micro-btn-ghost thank-you-book-secondary" : "micro-btn-primary thank-you-book-primary"}`}
+                    data-track="phone_cta_clicked"
+                  >
+                    Call {phone.display}
+                  </a>
                 ) : null}
               </div>
             ) : null}

@@ -5,6 +5,7 @@ import {
   calendlyUrlForMarket,
   claimCalendlyAutoOpen,
   resetCalendlyAutoOpenForTests,
+  shouldCalendlyAutoOpen,
   THANK_YOU_BOOKING_COPY,
 } from "./calendly";
 
@@ -73,6 +74,11 @@ describe("calendlyUrlForMarket", () => {
       false,
     );
     expect(claimCalendlyAutoOpen("https://calendly.com/apac-virtualcoworker/30min")).toBe(true);
+  });
+
+  it("does not auto-open on eligible=0 / test-hidden thank-you", () => {
+    expect(shouldCalendlyAutoOpen(true)).toBe(true);
+    expect(shouldCalendlyAutoOpen(false)).toBe(false);
   });
 
   it("uses Caitlin booking copy without demo or fake urgency", () => {
