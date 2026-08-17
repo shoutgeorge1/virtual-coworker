@@ -10,11 +10,12 @@
 import type { MarketId } from "./markets";
 import type { CategorySlug } from "./categories";
 
-/** US default CTA. Prefer primaryHireCta(market) on employer surfaces. */
-export const PRIMARY_HIRE_CTA = "Book Your Free Consultation";
+/** US default CTA. Prefer primaryHireCta(market) on employer surfaces.
+ * Competitors push book/strategy call (MyOutDesk) — not “demo”, not phone-as-hero. */
+export const PRIMARY_HIRE_CTA = "Book a Free Strategy Call";
 
 export function primaryHireCta(market: MarketId): string {
-  return market === "au" ? "Book a free consultation" : PRIMARY_HIRE_CTA;
+  return market === "au" ? "Book a free strategy call" : PRIMARY_HIRE_CTA;
 }
 
 export type PainGainCopy = {
@@ -40,13 +41,13 @@ export function painGainCopy(market: MarketId): PainGainCopy {
       afterLabel: "What changes once they’re in",
       before: [
         "Email, calendars and follow-ups chew up the day",
-        "Important work slips while you put out fires",
+        "You worry about handing over email, passwords and client data",
         "Your best people get stuck on work below their pay",
         "The work that grows the business keeps waiting",
       ],
       after: [
         "A dedicated Filipino teammate on Australian hours - brief them once, then they’re on it",
-        "They take the load. Follow-ups actually get done.",
+        "You keep control of access. MFA, individual logins, a password manager - we talk through it before anyone logs in.",
         "Your local team gets time back for customers and growth",
         "Australian business hours. We handle employment admin so you don’t.",
       ],
@@ -61,13 +62,13 @@ export function painGainCopy(market: MarketId): PainGainCopy {
     afterLabel: "What changes with a virtual coworker",
     before: [
       "Email, calendars, and follow-ups eat your day",
-      "Important stuff slips while you put out fires",
+      "You worry about handing over email, passwords, and client data",
       "Your best people get stuck doing work below their pay",
       "The work that grows the business keeps waiting",
     ],
     after: [
       "A dedicated Filipino teammate on your hours - train them once, then they’re on it",
-      "They rack up the tasks. Follow-ups actually get done.",
+      "You keep control of access. MFA, individual logins, a password manager - we talk through it before anyone logs in.",
       "Your local team gets time back for customers and growth",
       "US business hours. We handle payroll so you don’t.",
     ],
@@ -86,8 +87,8 @@ export function painGainBooms(market: MarketId): PainGainBoom[] {
         body: "Good candidates. Your call. Nobody starts until you say yes.",
       },
       {
-        title: "Paperwork? Sorted.",
-        body: "We handle employment admin. You just meet people and hire.",
+        title: "Access stays yours.",
+        body: "MFA, individual logins, a password manager. We walk through the controls before anyone starts.",
       },
       {
         title: "They hit the ground running.",
@@ -105,8 +106,8 @@ export function painGainBooms(market: MarketId): PainGainBoom[] {
       body: "Great candidates. Your choice. Nobody starts until you say yes.",
     },
     {
-      title: "Payroll? Forget it.",
-      body: "We take care of everything. You just talk to great people and hire.",
+      title: "Access stays yours.",
+      body: "MFA, individual logins, a password manager. We walk through the controls before anyone starts.",
     },
     {
       title: "They hit the ground running.",
@@ -485,8 +486,8 @@ export function employerFaq(
     {
       q: "Full-time or part-time?",
       a: isAu
-        ? "Tell us the capacity you need. We’ll confirm what’s possible on the chat - obligation free, at no cost."
-        : "Tell us the capacity you need when you send the role. We’ll confirm options on the consult - obligation free, at no cost.",
+        ? "Both. 20 hours/week minimum. Start part-time without committing to a full-time hire - obligation free, at no cost."
+        : "Both. 20 hours/week minimum. Start part-time, then scale hours as you need them - obligation free, at no cost.",
     },
     {
       q: roleLabel
@@ -501,14 +502,18 @@ export function employerFaq(
             ? `This page is for ${roleLabel}. Tell us the day-to-day work and tools - we shortlist screened candidates for that role. Browse Services for other roles.`
             : `This page is for ${roleLabel}. Describe the day-to-day work and tools - we shortlist screened candidates for that seat. Browse Services for other roles.`
           : isAu
-            ? "Common roles include admin / virtual assistant support, bookkeeping, customer service, digital marketing, social media, HR, recruitment support and sales support. Pick the closest fit or tell us in the form."
+            ? "Common roles include admin / virtual assistant support, bookkeeping, customer service, digital marketing, social media, HR, recruitment support and sales support. Australian and New Zealand industry seats (real estate, construction, project administration, healthcare) are a targeted hire, not a generic VA. Pick the closest fit or tell us in the form."
             : "Common seats include admin / virtual assistant support, bookkeeping, customer service, digital marketing, social media, HR, recruitment support, and sales support. Pick the closest role or tell us in the form.",
     },
     {
       q: "How does matching and interviewing work?",
       a: isAu
-        ? "Tell us the role. We recruit and screen. You interview the shortlist on video and decide. No pressure to hire if it isn’t a fit."
-        : "You tell us the role. We recruit and screen. You interview the shortlist on video and decide. No pressure to hire if it isn’t the right fit.",
+        ? "Tell us the role. We recruit and screen for that job, not a generic VA. You interview the shortlist on video and decide. No pressure to hire if it isn’t a fit."
+        : "You tell us the role. We recruit and screen for that job, not a generic VA. You interview the shortlist on video and decide. No pressure to hire if it isn’t the right fit.",
+    },
+    {
+      q: "How do I keep systems and data safe?",
+      a: "You stay in control of access. Individual logins, MFA, a password manager, restricted permissions, NDAs, and endpoint security. We walk through the practical steps on the call rather than asserting that offshore is automatically safe.",
     },
     {
       q: isAu
@@ -527,8 +532,8 @@ export function employerFaq(
     {
       q: "Are rates transparent?",
       a: isAu
-        ? "We talk through rates once we understand the role, hours and seniority. A form starts a conversation - not a quote, contract or instant hire. No lock-in from the first chat."
-        : "We discuss rates once we understand the role, hours, and seniority. A form starts a conversation - not a quote, contract, or instant hire.",
+        ? "We talk through rates once we understand the role, hours, seniority and any Australian or New Zealand industry experience. A form starts a conversation - not a quote, contract or instant hire. No lock-in from the first chat."
+        : "We discuss rates once we understand the role, hours, and seniority. Skill and responsibility set the number - not a cheap-labor headline. A form starts a conversation - not a quote, contract, or instant hire.",
     },
     {
       q: "What happens after I submit the form?",
@@ -542,183 +547,139 @@ export function employerFaq(
 export type StopCloserSurface = "home" | "services" | "how" | CategorySlug;
 
 export type StopCloserCopy = {
+  eyebrow: string;
   title: string;
-  lines: readonly string[];
+  lead: string;
 };
 
-const CLOSER_TITLE = "Don't put it off.";
+const CLOSER_EYEBROW_US = "Next step";
+const CLOSER_EYEBROW_AU = "Next step";
+const CLOSER_TITLE_US = "Talk with a staffing specialist.";
+const CLOSER_TITLE_AU = "Talk with a staffing specialist.";
 
 const CLOSER_US: Record<StopCloserSurface, StopCloserCopy> = {
   home: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If hiring is still waiting, talk to someone now - obligation free, at no cost.",
-      "We match a dedicated Filipino teammate to your seat. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "Tell us the role. We’ll follow up for a short hiring consult - obligation free, at no cost. You interview before anyone starts.",
   },
   services: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If you’re still choosing the seat, talk now - obligation free, at no cost.",
-      "We match a dedicated Filipino teammate to the role. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "Pick the seat that fits, then start a short hiring consult - obligation free, at no cost. We match a dedicated Filipino teammate to the role.",
   },
   how: {
-    title: CLOSER_TITLE,
-    lines: [
-      "The process is simple. Talk now - obligation free, at no cost.",
-      "We match a dedicated Filipino teammate to the seat. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "The process is simple. Start with a short hiring consult - obligation free, at no cost. We recruit and screen; you interview and decide.",
   },
   "administrative-support": {
-    title: CLOSER_TITLE,
-    lines: [
-      "If the inbox is still eating the week, talk now - obligation free, at no cost.",
-      "We match a dedicated Filipino virtual assistant or EA to the seat. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "If admin is eating the week, start a short hiring consult - obligation free, at no cost. We match a dedicated Filipino virtual assistant or EA.",
   },
   bookkeeping: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If invoices are still stacking up, talk now - obligation free, at no cost.",
-      "We match a dedicated Filipino bookkeeper to the seat. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "If invoices are stacking up, start a short hiring consult - obligation free, at no cost. We match a dedicated Filipino bookkeeper.",
   },
   accounting: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If month-end is still piling up, talk now - obligation free, at no cost.",
-      "We match a dedicated Filipino accounting seat. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "If month-end is piling up, start a short hiring consult - obligation free, at no cost. We match a dedicated Filipino accounting seat.",
   },
   "customer-service": {
-    title: CLOSER_TITLE,
-    lines: [
-      "If customers are still waiting, talk now - obligation free, at no cost.",
-      "We match a dedicated Filipino support teammate. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "If customers are waiting on replies, start a short hiring consult - obligation free, at no cost. We match a dedicated Filipino support teammate.",
   },
   "digital-marketing": {
-    title: CLOSER_TITLE,
-    lines: [
-      "If campaigns are still stalling, talk now - obligation free, at no cost.",
-      "We match a dedicated Filipino marketer to the seat. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "If campaigns are stalling, start a short hiring consult - obligation free, at no cost. We match a dedicated Filipino marketer.",
   },
   "social-media": {
-    title: CLOSER_TITLE,
-    lines: [
-      "If channels are going quiet, talk now - obligation free, at no cost.",
-      "We match a dedicated Filipino social teammate. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "If channels are going quiet, start a short hiring consult - obligation free, at no cost. We match a dedicated Filipino social teammate.",
   },
   hr: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If people admin is still on managers, talk now - obligation free, at no cost.",
-      "We match dedicated Filipino HR support. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "If people admin is still on managers, start a short hiring consult - obligation free, at no cost. We match dedicated Filipino HR support.",
   },
   recruitment: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If the hiring pipeline is still slowing, talk now - obligation free, at no cost.",
-      "We match dedicated Filipino recruiting support. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "If the hiring pipeline is slowing, start a short hiring consult - obligation free, at no cost. We match dedicated Filipino recruiting support.",
   },
   sales: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If follow-ups are still slipping, talk now - obligation free, at no cost.",
-      "We match a dedicated Filipino setter or sales support seat. Now is a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_US,
+    title: CLOSER_TITLE_US,
+    lead: "If follow-ups are slipping, start a short hiring consult - obligation free, at no cost. We match a dedicated Filipino setter or sales support seat.",
   },
 };
 
 const CLOSER_AU: Record<StopCloserSurface, StopCloserCopy> = {
   home: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If hiring is still sitting on the to-do list, have a chat - obligation free, at no cost.",
-      "We’ll match a dedicated Filipino teammate to the seat. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "Tell us the role. We’ll follow up for a short hiring chat - obligation free, at no cost. You interview before anyone starts.",
   },
   services: {
-    title: CLOSER_TITLE,
-    lines: [
-      "Still deciding the role? Have a chat - obligation free, at no cost.",
-      "We’ll match a dedicated Filipino teammate for Australian hours. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "Pick the role that fits, then start a short hiring chat - obligation free, at no cost. We match a dedicated Filipino teammate for Australian hours.",
   },
   how: {
-    title: CLOSER_TITLE,
-    lines: [
-      "The process is straightforward. Have a chat - obligation free, at no cost.",
-      "We’ll match a dedicated Filipino teammate to the role. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "The process is straightforward. Start with a short hiring chat - obligation free, at no cost. We recruit and screen; you interview and decide.",
   },
   "administrative-support": {
-    title: CLOSER_TITLE,
-    lines: [
-      "If the inbox is still running the show, have a chat - obligation free, at no cost.",
-      "We’ll match a dedicated Filipino virtual assistant or EA for Australian hours. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "If admin is running the week, start a short hiring chat - obligation free, at no cost. We match a dedicated Filipino virtual assistant or EA for Australian hours.",
   },
   bookkeeping: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If the books are still falling behind, have a chat - obligation free, at no cost.",
-      "We’ll match a dedicated Filipino bookkeeper. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "If the books are falling behind, start a short hiring chat - obligation free, at no cost. We match a dedicated Filipino bookkeeper.",
   },
   accounting: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If month-end is still a scramble, have a chat - obligation free, at no cost.",
-      "We’ll match dedicated Filipino accounting support. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "If month-end is a scramble, start a short hiring chat - obligation free, at no cost. We match dedicated Filipino accounting support.",
   },
   "customer-service": {
-    title: CLOSER_TITLE,
-    lines: [
-      "If customers are still waiting on replies, have a chat - obligation free, at no cost.",
-      "We’ll match a dedicated Filipino support teammate for Australian hours. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "If customers are waiting on replies, start a short hiring chat - obligation free, at no cost. We match a dedicated Filipino support teammate for Australian hours.",
   },
   "digital-marketing": {
-    title: CLOSER_TITLE,
-    lines: [
-      "If marketing is still slipping, have a chat - obligation free, at no cost.",
-      "We’ll match a dedicated Filipino marketer. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "If marketing is slipping, start a short hiring chat - obligation free, at no cost. We match a dedicated Filipino marketer.",
   },
   "social-media": {
-    title: CLOSER_TITLE,
-    lines: [
-      "If the channels have gone quiet, have a chat - obligation free, at no cost.",
-      "We’ll match a dedicated Filipino social teammate. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "If the channels have gone quiet, start a short hiring chat - obligation free, at no cost. We match a dedicated Filipino social teammate.",
   },
   hr: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If people ops is still on managers, have a chat - obligation free, at no cost.",
-      "We’ll match dedicated Filipino HR support. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "If people ops is still on managers, start a short hiring chat - obligation free, at no cost. We match dedicated Filipino HR support.",
   },
   recruitment: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If hiring is still stuck in the admin, have a chat - obligation free, at no cost.",
-      "We’ll match dedicated Filipino recruiting support. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "If hiring is stuck in the admin, start a short hiring chat - obligation free, at no cost. We match dedicated Filipino recruiting support.",
   },
   sales: {
-    title: CLOSER_TITLE,
-    lines: [
-      "If follow-ups are still falling through, have a chat - obligation free, at no cost.",
-      "We’ll match dedicated Filipino sales support. Now’s a good time.",
-    ],
+    eyebrow: CLOSER_EYEBROW_AU,
+    title: CLOSER_TITLE_AU,
+    lead: "If follow-ups are falling through, start a short hiring chat - obligation free, at no cost. We match dedicated Filipino sales support.",
   },
 };
 

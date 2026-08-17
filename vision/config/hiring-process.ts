@@ -22,7 +22,7 @@ export function hiringProcessSteps(market: MarketId): HiringProcessStep[] {
   return [
     {
       k: "01 · Talk",
-      t: "Free consultation",
+      t: "Free strategy call",
       d: isAu
         ? "A short chat to understand your company, the role, and how many people you need. Then we write the job description with you - obligation free, at no cost."
         : "A short call to understand your company, the role, and how many people you need. Then we write the job description with you - obligation free, at no cost.",
@@ -30,7 +30,7 @@ export function hiringProcessSteps(market: MarketId): HiringProcessStep[] {
     {
       k: "02 · Hunt",
       t: "We recruit and rigorously vet",
-      d: "Our Philippines team sources and screens candidates. You get a curated shortlist - not a pile of random resumes, and not a freelancer marketplace.",
+      d: "Our Philippines team sources and screens candidates. Hundreds of applications get filtered so you review people who fit the role - not a pile of random resumes, and not a freelancer marketplace.",
     },
     {
       k: "03 · Pick",

@@ -7,7 +7,7 @@ describe("hiring process copy", () => {
       const steps = hiringProcessSteps(market);
       expect(steps).toHaveLength(4);
       const blob = steps.map((s) => `${s.t} ${s.d}`).join(" ").toLowerCase();
-      expect(blob).toContain("free consultation");
+      expect(blob).toContain("free strategy call");
       expect(blob).toContain("job description");
       expect(blob).toContain("hourly rates");
       expect(blob).toContain("time tracker");

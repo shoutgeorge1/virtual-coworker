@@ -1,0 +1,611 @@
+/* Paid guided-match LPs. Scoped to .gm so site chrome on quiz/other routes stays intact. */
+
+.gm {
+  overflow-x: clip;
+  --gm-ocean: #214873;
+  --gm-gold: #fac056;
+  --gm-sea: #128f8b;
+  --gm-ink: #17293c;
+  --gm-mute: #3d5163;
+  --gm-mist: #f7fbfb;
+  --gm-sand: #f3eee6;
+  --gm-edge: rgba(33, 72, 115, 0.18);
+  --gm-display: "Century Gothic Paneuropean", "Century Gothic", Poppins, sans-serif;
+  font-family: Poppins, system-ui, sans-serif;
+  color: var(--gm-ink);
+  background: #fff;
+  overflow-x: clip;
+}
+
+.gm a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.gm img {
+  max-width: 100%;
+  display: block;
+}
+
+.gm button,
+.gm input,
+.gm textarea {
+  font: inherit;
+}
+
+.gm-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.gm-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem 1rem;
+  padding: 1rem 0 0.4rem;
+  min-width: 0;
+}
+
+.gm-nav img {
+  height: 30px;
+  width: auto;
+}
+
+.gm-nav-links {
+  margin-left: auto;
+  display: flex;
+  gap: 1.15rem;
+  font-size: 1rem;
+  color: var(--gm-mute);
+  font-weight: 500;
+}
+
+.gm-call {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--gm-gold);
+  color: var(--gm-ocean);
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: var(--gm-display);
+  white-space: nowrap;
+  min-height: 44px;
+}
+
+.gm-call:focus-visible,
+.gm .gm-chip:focus-visible,
+.gm .gm-role-card:focus-visible,
+.gm .gm-submit:focus-visible,
+.gm .gm-ghost:focus-visible,
+.gm details summary:focus-visible,
+.gm input:focus-visible {
+  outline: 2px solid var(--gm-ocean);
+  outline-offset: 2px;
+}
+
+.gm h1 {
+  font-family: var(--gm-display);
+  font-size: clamp(1.85rem, 4vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.7rem;
+  overflow-wrap: break-word;
+}
+
+.gm h2 {
+  font-family: var(--gm-display);
+  font-size: clamp(1.5rem, 2.4vw, 1.95rem);
+  line-height: 1.22;
+  margin: 0 0 0.55rem;
+}
+
+.gm h3 {
+  font-family: var(--gm-display);
+  font-size: 1.12rem;
+  margin: 0 0 0.35rem;
+}
+
+.gm-lead {
+  font-size: 1.12rem;
+  line-height: 1.55;
+  color: var(--gm-mute);
+  margin: 0 0 1rem;
+  max-width: 36rem;
+}
+
+.gm-stars {
+  color: #c48a0c;
+  letter-spacing: -0.04em;
+}
+
+.gm-starline {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gm-ink);
+  margin: 0 0 1.1rem;
+  overflow-wrap: break-word;
+  line-height: 1.45;
+}
+
+.gm-hero {
+  padding: 1.1rem 0 2.4rem;
+}
+
+.gm-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 2.4rem;
+  align-items: center;
+}
+
+.gm-hero-grid > * {
+  min-width: 0;
+}
+
+.gm-hero-photo {
+  width: 100%;
+  height: min(78vh, 640px);
+  object-fit: cover;
+  border-radius: 8px;
+  background: #d7e0e8;
+}
+
+.gm-gate {
+  margin-top: 0.35rem;
+  max-width: 34rem;
+}
+
+.gm-step-n {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gm-sea);
+  margin: 0 0 0.35rem;
+}
+
+.gm-gate h2 {
+  font-size: 1.22rem;
+  margin-bottom: 0.65rem;
+}
+
+.gm-bar {
+  height: 4px;
+  background: #e4ecec;
+  overflow: hidden;
+  margin: 0 0 0.65rem;
+  border-radius: 99px;
+}
+
+.gm-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--gm-sea);
+}
+
+.gm-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0.75rem 0 0.35rem;
+}
+
+.gm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gm-chip,
+.gm-role-card {
+  background: #fff;
+  border: 1.5px solid var(--gm-edge);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--gm-ink);
+  text-align: left;
+  white-space: normal;
+}
+
+.gm-chip:hover,
+.gm-role-card:hover {
+  border-color: var(--gm-ocean);
+  background: #f4f8fc;
+}
+
+.gm-chip[aria-pressed="true"],
+.gm-role-card[aria-pressed="true"] {
+  background: var(--gm-ocean);
+  color: #fff;
+  border-color: var(--gm-ocean);
+  box-shadow: inset 0 0 0 1px var(--gm-ocean);
+}
+
+.gm-role-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2rem;
+  min-height: 96px;
+  padding: 1.05rem 1.1rem;
+}
+
+.gm-role-card b {
+  display: block;
+  font-family: var(--gm-display);
+  font-size: 1.08rem;
+}
+
+.gm-role-card span {
+  color: var(--gm-mute);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.gm-role-card[aria-pressed="true"] span {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.gm-check {
+  font-weight: 700;
+  margin-right: 0.3rem;
+}
+
+.gm input,
+.gm textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--gm-edge);
+  min-height: 44px;
+  font-size: 1rem;
+}
+
+.gm-submit {
+  width: 100%;
+  margin-top: 0.85rem;
+  background: var(--gm-gold);
+  color: var(--gm-ocean);
+  font-weight: 700;
+  padding: 0.85rem 1.1rem;
+  font-family: var(--gm-display);
+  min-height: 48px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.05rem;
+}
+
+.gm-submit.inline {
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.78rem 1.2rem;
+}
+
+.gm-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.gm-ghost {
+  background: transparent;
+  color: var(--gm-ocean);
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  padding: 0.45rem 0;
+  min-height: 44px;
+  font-size: 1rem;
+}
+
+.gm-hint {
+  font-size: 0.95rem;
+  color: var(--gm-mute);
+  margin: 0.55rem 0 0;
+  line-height: 1.45;
+}
+
+.gm-locked {
+  margin: 0 0 0.5rem;
+  font-size: 0.98rem;
+  color: var(--gm-mute);
+}
+
+.gm-seeker {
+  font-size: 0.95rem;
+  color: var(--gm-mute);
+  margin: 0.85rem 0 0;
+}
+
+.gm-seeker a {
+  color: var(--gm-ocean);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.gm-hid {
+  position: absolute;
+  left: -9999px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.gm-err {
+  color: #9f2d2d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.gm-band {
+  padding: 4.2rem 0;
+}
+
+.gm-band.sand {
+  background: var(--gm-sand);
+}
+
+.gm-band.mist {
+  background: var(--gm-mist);
+}
+
+.gm-band.white {
+  background: #fff;
+}
+
+.gm-band.ocean {
+  background: var(--gm-ocean);
+  color: #fff;
+}
+
+.gm-band.ocean .gm-lead,
+.gm-band.ocean .gm-hint {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.gm-logos {
+  background: var(--gm-mist);
+  padding: 1.8rem 0;
+}
+
+.gm-logo-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.4rem 2rem;
+  align-items: center;
+}
+
+.gm-logo-row img {
+  height: 32px;
+  max-width: 130px;
+  object-fit: contain;
+  filter: grayscale(1);
+}
+
+.gm-proof-meta {
+  text-align: center;
+  margin: 0.95rem 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gm-ink);
+}
+
+.gm-grid-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+  margin-top: 1.4rem;
+}
+
+.gm-step b {
+  display: block;
+  color: var(--gm-sea);
+  font-family: var(--gm-display);
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.gm-step p {
+  margin: 0;
+  color: var(--gm-mute);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.gm-role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.gm-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.4rem;
+  align-items: center;
+}
+
+.gm-why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem 1.8rem;
+  margin-top: 1.4rem;
+}
+
+.gm-why-grid p {
+  margin: 0;
+  color: var(--gm-mute);
+  line-height: 1.5;
+  font-size: 1.02rem;
+}
+
+.gm-scene,
+.gm-wide {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #d7e0e8;
+}
+
+.gm-scene {
+  height: 320px;
+}
+
+.gm-wide {
+  height: min(52vw, 460px);
+}
+
+.gm-quote-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 2.4rem;
+}
+
+.gm-quote {
+  margin: 0;
+}
+
+.gm-quote p {
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin: 0 0 0.55rem;
+}
+
+.gm-quote cite {
+  font-style: normal;
+  font-size: 1rem;
+  color: var(--gm-mute);
+  font-weight: 600;
+}
+
+.gm-quote.feat {
+  grid-column: 1 / -1;
+}
+
+.gm-quote.feat p {
+  font-size: 1.4rem;
+}
+
+.gm-model-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.gm-model-grid p {
+  color: var(--gm-mute);
+  line-height: 1.55;
+  font-size: 1.05rem;
+}
+
+.gm details {
+  border-bottom: 1px solid var(--gm-edge);
+  padding: 0.15rem 0;
+}
+
+.gm details summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 1rem 0;
+  list-style: none;
+  font-size: 1.08rem;
+}
+
+.gm details summary::-webkit-details-marker {
+  display: none;
+}
+
+.gm details p {
+  margin: 0 0 1rem;
+  color: var(--gm-mute);
+  max-width: 40rem;
+  line-height: 1.55;
+  font-size: 1.02rem;
+}
+
+.gm-closer {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.gm-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.gm-footer {
+  padding: 2.4rem 0 3.2rem;
+  background: var(--gm-ink);
+  color: #d7e0e8;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.gm-footer a {
+  color: #fac056;
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .gm-nav-links {
+    display: none;
+  }
+
+  .gm-call {
+    font-size: 0.88rem;
+    padding: 0.4rem 0.7rem;
+  }
+
+  .gm-hero-grid,
+  .gm-grid-steps,
+  .gm-split,
+  .gm-role-grid,
+  .gm-quote-grid,
+  .gm-closer,
+  .gm-model-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gm-hero-photo {
+    height: 280px;
+  }
+
+  .gm-wide,
+  .gm-scene {
+    height: 220px;
+  }
+
+  .gm-quote.feat {
+    grid-column: auto;
+  }
+
+  .gm h1 {
+    font-size: 1.62rem;
+    line-height: 1.18;
+  }
+
+  .gm-starline {
+    font-size: 0.92rem;
+  }
+
+  .gm-band {
+    padding: 3rem 0;
+  }
+
+  .gm-why-grid {
+    grid-template-columns: 1fr;
+  }
+}

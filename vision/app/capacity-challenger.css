@@ -1,0 +1,128 @@
+/* Isolated capacity challenger extras. Lives on .cc so live .gm pages stay untouched. */
+
+.cc-preview-note {
+  margin: 0;
+  padding: 0.45rem 1.25rem;
+  background: #17293c;
+  color: #f7fbfb;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.cc-eyebrow {
+  margin: 0 0 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gm-sea);
+}
+
+.cc-proof-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.cc-proof-strip li {
+  background: var(--gm-mist);
+  border: 1px solid var(--gm-edge);
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gm-ink);
+}
+
+.cc-form-intro {
+  max-width: 34rem;
+  margin: 0 0 0.85rem;
+  color: var(--gm-mute);
+  line-height: 1.5;
+  font-size: 1.02rem;
+}
+
+.cc-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.cc-card {
+  background: #fff;
+  border: 1px solid var(--gm-edge);
+  border-radius: 10px;
+  padding: 1.05rem 1.1rem 0.95rem;
+}
+
+.cc-card h3 {
+  margin-bottom: 0.4rem;
+}
+
+.cc-card p {
+  margin: 0;
+  color: var(--gm-mute);
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.cc-compare {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.25rem;
+}
+
+.cc-compare-card {
+  background: #fff;
+  border: 1px solid var(--gm-edge);
+  border-radius: 10px;
+  padding: 1rem 1.05rem 0.85rem;
+}
+
+.cc-compare-card.on {
+  border-color: var(--gm-sea);
+  box-shadow: 0 0 0 2px rgba(18, 143, 139, 0.18);
+}
+
+.cc-compare-card dl {
+  margin: 0.7rem 0 0;
+}
+
+.cc-compare-card dl > div {
+  display: grid;
+  gap: 0.12rem;
+  padding: 0.45rem 0;
+  border-top: 1px solid var(--gm-edge);
+}
+
+.cc-compare-card dt {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--gm-mute);
+}
+
+.cc-compare-card dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.cc-steps {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+  .cc-card-grid,
+  .cc-compare,
+  .cc-steps {
+    grid-template-columns: 1fr;
+  }
+}

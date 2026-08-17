@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import MarketLanding from "../components/MarketLanding";
+import GuidedMatchLanding from "../components/GuidedMatchLanding";
 import { resolveLpVariant } from "../../lib/resolve-lp-variant";
 import { buildPageMetadata } from "../../lib/seo";
-import "./au.css";
+import { resolveCareersUrl } from "../../config/markets";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Hire Dedicated Filipino Staff | Virtual Coworker AU",
   description:
-    "Hire a dedicated Filipino teammate for Australian hours. Free chat. We recruit. You interview. We handle employment admin. Not a gig marketplace.",
+    "Hire a dedicated Filipino teammate for Australian hours. We recruit. You interview. We handle employment admin. Not a gig marketplace.",
   path: "/au",
   indexable: true,
   ogImage: "/brand/hero-au-2026.jpg",
@@ -19,5 +19,11 @@ export default async function AUHome({
   searchParams: Promise<{ variant?: string }>;
 }) {
   const variant = await resolveLpVariant(await searchParams);
-  return <MarketLanding market="au" variant={variant} />;
+  return (
+    <GuidedMatchLanding
+      market="au"
+      variant={variant}
+      careersHref={resolveCareersUrl()}
+    />
+  );
 }
