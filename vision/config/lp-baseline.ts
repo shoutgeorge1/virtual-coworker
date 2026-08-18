@@ -43,23 +43,37 @@ export type BaselineRoleCard = { title: string; body: string };
 export type BaselineStep = { k: string; t: string; d: string };
 export type BaselineWhyItem = { title: string; body: string };
 
+export type RoleH1Noun = {
+  /** Person or staff noun used in the live control H1. */
+  noun: string;
+  /** Published US hourly record only — never printed in role H1s. */
+  rateHour: number | null;
+  /** Collective "staff" nouns: no "a", verb "Work". Person nouns: "a", "Works". */
+  collective?: boolean;
+};
+
 /**
  * Advertised role nouns for H1s (RSA / category). Hourly figures are the
  * published US record only — never used in role H1s or the role first screen.
  */
-export const US_PUBLISHED_RATES: Partial<
-  Record<CategorySlug, { noun: string; rateHour: number } | { noun: string; rateHour: null }>
-> = {
+export const US_PUBLISHED_RATES: Partial<Record<CategorySlug, RoleH1Noun>> = {
   "digital-marketing": { noun: "Marketer", rateHour: 12 },
   "social-media": { noun: "Social Media Manager", rateHour: 8 },
   accounting: { noun: "Accountant", rateHour: 10 },
   bookkeeping: { noun: "Bookkeeper", rateHour: 8 },
-  // RSA: Dedicated Filipino Admin / Hire Executive Assistant. VA+EA mix — no rate.
-  "administrative-support": { noun: "Admin", rateHour: null },
-  "customer-service": { noun: "Customer Support", rateHour: 7 },
-  hr: { noun: "HR Support", rateHour: null },
+  // RSA: Hire an Executive Assistant. Challenger later: Admin.
+  "administrative-support": { noun: "Executive Assistant", rateHour: null },
+  // RSA AU: Hire Customer Support Staff. Not "Customer Support Who".
+  "customer-service": {
+    noun: "Customer Support Staff",
+    rateHour: 7,
+    collective: true,
+  },
+  // RSA: Hire an HR Assistant. Challenger later: HR Support Staff.
+  hr: { noun: "HR Assistant", rateHour: null },
   recruitment: { noun: "Recruitment Assistant", rateHour: 9 },
-  sales: { noun: "Sales Support", rateHour: null },
+  // RSA AU: Hire Sales Support Staff. Person/staff noun, not "Sales Support Who".
+  sales: { noun: "Sales Support Staff", rateHour: null, collective: true },
 };
 
 export type BaselineRouteConfig = {
@@ -96,11 +110,13 @@ function coreH1(market: MarketId): string {
 }
 
 function roleH1(market: MarketId, slug: CategorySlug): string {
-  const noun = US_PUBLISHED_RATES[slug]?.noun || CATEGORIES[slug].label;
-  if (market === "au") {
-    return `Hire a Dedicated Filipino ${noun} Who Works Australian Hours`;
+  const spec = US_PUBLISHED_RATES[slug];
+  const noun = spec?.noun || CATEGORIES[slug].label;
+  const hours = market === "au" ? "Australian Hours" : "Your Hours";
+  if (spec?.collective) {
+    return `Hire Dedicated Filipino ${noun} Who Work ${hours}`;
   }
-  return `Hire a Dedicated Filipino ${noun} Who Works Your Hours`;
+  return `Hire a Dedicated Filipino ${noun} Who Works ${hours}`;
 }
 
 function rateText(market: MarketId, slug: CategorySlug | null): string {

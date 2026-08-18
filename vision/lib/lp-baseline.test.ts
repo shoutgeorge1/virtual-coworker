@@ -65,7 +65,7 @@ describe("Paid Landing Page Baseline v1 — August 2026", () => {
       role: "administrative-support",
     });
     expect(auAdmin.h1).toBe(
-      "Hire a Dedicated Filipino Admin Who Works Australian Hours",
+      "Hire a Dedicated Filipino Executive Assistant Who Works Australian Hours",
     );
     expect(auAdmin.h1).not.toMatch(/\$/);
     expect(auAdmin.supporting_copy).toMatch(/Australian hours/);
@@ -76,19 +76,49 @@ describe("Paid Landing Page Baseline v1 — August 2026", () => {
       role: "administrative-support",
     });
     expect(admin.h1).toBe(
-      "Hire a Dedicated Filipino Admin Who Works Your Hours",
+      "Hire a Dedicated Filipino Executive Assistant Who Works Your Hours",
     );
     expect(US_PUBLISHED_RATES["administrative-support"]?.rateHour).toBeNull();
+
+    const usCs = buildBaselineRoute({ market: "us", role: "customer-service" });
+    const auCs = buildBaselineRoute({ market: "au", role: "customer-service" });
+    expect(usCs.h1).toBe(
+      "Hire Dedicated Filipino Customer Support Staff Who Work Your Hours",
+    );
+    expect(auCs.h1).toBe(
+      "Hire Dedicated Filipino Customer Support Staff Who Work Australian Hours",
+    );
+    expect(usCs.h1).not.toMatch(/Customer Support Who/);
+
+    const usSales = buildBaselineRoute({ market: "us", role: "sales" });
+    expect(usSales.h1).toBe(
+      "Hire Dedicated Filipino Sales Support Staff Who Work Your Hours",
+    );
+    expect(usSales.h1).not.toMatch(/Sales Support Who/);
+
+    const usHr = buildBaselineRoute({ market: "us", role: "hr" });
+    expect(usHr.h1).toBe(
+      "Hire a Dedicated Filipino HR Assistant Who Works Your Hours",
+    );
+    expect(usHr.h1).not.toMatch(/HR Support Who/);
 
     for (const slug of CATEGORY_SLUGS) {
       const usRole = buildBaselineRoute({ market: "us", role: slug });
       const auRole = buildBaselineRoute({ market: "au", role: slug });
+      const collective = Boolean(US_PUBLISHED_RATES[slug]?.collective);
+      const usHours = collective
+        ? /Who Work Your Hours/
+        : /Who Works Your Hours/;
+      const auHours = collective
+        ? /Who Work Australian Hours/
+        : /Who Works Australian Hours/;
       expect(usRole.h1).toMatch(/Dedicated Filipino/);
-      expect(usRole.h1).toMatch(/Who Works Your Hours/);
+      expect(usRole.h1).toMatch(usHours);
       expect(usRole.h1).not.toMatch(/\$/);
+      expect(usRole.h1).not.toMatch(/\u2014|&mdash;/);
       expect(usRole.supporting_copy).not.toMatch(/\$/);
       expect(usRole.rate_text).toBe("");
-      expect(auRole.h1).toMatch(/Who Works Australian Hours/);
+      expect(auRole.h1).toMatch(auHours);
       expect(auRole.h1).not.toMatch(/\$/);
       expect(auRole.rate_text).toBe("");
     }
@@ -184,10 +214,19 @@ describe("Paid Landing Page Baseline v1 — August 2026", () => {
     expect(proto).toContain('redirectPreservingQuery("/us"');
   });
 
+  it("does not wire an H1 traffic split", () => {
+    const src = readFileSync(join(ROOT, "config/lp-baseline.ts"), "utf8");
+    expect(src).not.toMatch(/vc_exp/);
+    expect(src).not.toMatch(/Math\.random/);
+    expect(src).not.toMatch(/experiment_id/);
+  });
+
   it("does not invent competitor prices or em dashes in baseline copy", () => {
     const blob = JSON.stringify({
       us: buildBaselineRoute({ market: "us" }),
       au: buildBaselineRoute({ market: "au" }),
+      usCs: buildBaselineRoute({ market: "us", role: "customer-service" }),
+      usSales: buildBaselineRoute({ market: "us", role: "sales" }),
       shared: baselineSharedCopy("us"),
     }).toLowerCase();
     expect(blob).not.toMatch(/\$4/);
