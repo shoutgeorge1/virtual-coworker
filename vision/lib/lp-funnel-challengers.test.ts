@@ -45,6 +45,15 @@ describe("offer and proof funnel pages", () => {
     expect(au).not.toContain("ConsultLanding");
   });
 
+  it("keeps /us/offer and /au/offer on OfferLanding (live Ads test, not a baseline alias)", () => {
+    const usOffer = readFileSync(join(ROOT, "app/us/offer/page.tsx"), "utf8");
+    const auOffer = readFileSync(join(ROOT, "app/au/offer/page.tsx"), "utf8");
+    expect(usOffer).toContain("OfferLanding");
+    expect(auOffer).toContain("OfferLanding");
+    expect(usOffer).not.toContain("redirectPreservingQuery");
+    expect(auOffer).not.toContain("redirectPreservingQuery");
+  });
+
   it("keeps the same conversion machine and form_start rule", () => {
     const flags = guidedMatchLandingFlags();
     expect(flags.lp_surface).toBe("form");

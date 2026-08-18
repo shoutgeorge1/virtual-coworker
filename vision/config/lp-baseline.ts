@@ -317,10 +317,10 @@ export function baselineTrackingExtras(cfg: BaselineRouteConfig) {
   };
 }
 
-/** Alias paths retired from Ads conceptually; preserve as redirects to market home. */
+/** Alias paths retired from Ads conceptually; preserve as redirects to market home.
+ *  /us/offer and /au/offer stay live OfferLanding tests — ad groups already use those URLs. */
 export const BASELINE_HOME_ALIASES = [
   "start",
-  "offer",
   "proof",
   "consult",
   "capacity",

@@ -139,6 +139,7 @@ describe("Paid Landing Page Baseline v1 — August 2026", () => {
   });
 
   it("redirects retired challenger aliases to market home", () => {
+    expect(BASELINE_HOME_ALIASES).not.toContain("offer");
     for (const alias of BASELINE_HOME_ALIASES) {
       const us = readFileSync(join(ROOT, `app/us/${alias}/page.tsx`), "utf8");
       const au = readFileSync(join(ROOT, `app/au/${alias}/page.tsx`), "utf8");
