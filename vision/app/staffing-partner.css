@@ -89,6 +89,11 @@
   box-sizing: border-box;
 }
 
+/* Hero only: space between CTA and Google/Clutch starline. Closer CTA is untouched. */
+.sp .gm-hero .sp-hero-cta {
+  margin-bottom: 0.75rem;
+}
+
 .sp-proof {
   margin: 0.8rem 0 0;
   font-size: 0.78rem;
