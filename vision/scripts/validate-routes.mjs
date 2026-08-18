@@ -38,6 +38,18 @@ const required = [
   "au/[category]/page.tsx",
   "us/quiz/page.tsx",
   "au/quiz/page.tsx",
+  "us/offer/page.tsx",
+  "au/offer/page.tsx",
+  "us/proof/page.tsx",
+  "au/proof/page.tsx",
+  "us/consult/page.tsx",
+  "au/consult/page.tsx",
+  "us/start/page.tsx",
+  "au/start/page.tsx",
+  "us/staffing/page.tsx",
+  "preview/trust-first/page.tsx",
+  "preview/trust-first/[slug]/page.tsx",
+  "api/lead-preview/route.ts",
 ];
 
 const missing = required.filter((p) => !existsSync(join(app, p)));
@@ -56,5 +68,11 @@ for (const m of ["us", "au"]) {
   }
 }
 console.log("  /us/quiz · /au/quiz");
+console.log("  /us/offer · /au/offer · /us/proof · /au/proof");
+console.log("  /us/consult · /au/consult");
+console.log("  /us/start · /au/start");
+console.log("  /us/real-estate (US only)");
+console.log("  /us/staffing (US candidate, not an Ads destination)");
+console.log("  /preview/trust-first (internal review, noindex, not Ads)");
 console.log(`  alias: /{us|au}/human-resources → /{us|au}/hr (middleware 308)`);
 console.log(`Categories: ${CATEGORIES.length} × 2 markets`);

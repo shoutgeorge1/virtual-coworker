@@ -1,0 +1,493 @@
+/* Trust-first US challenger — preview only.
+   Light company site. No gradients, no floating theater, no animation libs. */
+
+.tf {
+  --tf-ink: #1c2430;
+  --tf-muted: #5b6573;
+  --tf-line: #d7dde6;
+  --tf-paper: #f6f7f9;
+  --tf-white: #ffffff;
+  --tf-navy: #214873;
+  --tf-navy-deep: #173552;
+  --tf-gold: #c48a1a;
+  --tf-gold-ink: #3d2c0a;
+  --tf-max: 1080px;
+  --tf-radius: 6px;
+  --tf-shadow: none;
+  min-height: 100vh;
+  background: var(--tf-white);
+  color: var(--tf-ink);
+  font-family: var(--font-body);
+}
+
+.tf * {
+  box-sizing: border-box;
+}
+
+.tf a {
+  color: inherit;
+}
+
+.tf img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.tf-wrap {
+  width: min(var(--tf-max), calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.tf-banner {
+  background: #f3f0e7;
+  color: #5a4a22;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  padding: 0.4rem 1rem;
+}
+
+.tf-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--tf-white);
+  border-bottom: 1px solid var(--tf-line);
+}
+
+.tf-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+}
+
+.tf-logo {
+  display: flex;
+  align-items: center;
+}
+
+.tf-logo img {
+  height: 42px;
+  width: auto;
+}
+
+.tf-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tf-phone {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--tf-navy);
+  white-space: nowrap;
+}
+
+.tf-header-cta,
+.tf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.55rem 1rem;
+  border-radius: var(--tf-radius);
+  background: var(--tf-navy);
+  color: var(--tf-white);
+  font-weight: 600;
+  font-size: 0.92rem;
+  border: 1px solid var(--tf-navy);
+}
+
+.tf-header-cta:hover,
+.tf-btn:hover,
+.tf-btn:focus-visible {
+  background: var(--tf-navy-deep);
+}
+
+.tf-btn-ghost {
+  background: transparent;
+  color: var(--tf-navy);
+}
+
+.tf-hero {
+  padding: 2.2rem 0 2.4rem;
+  background: var(--tf-white);
+}
+
+.tf-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 2.4rem;
+  align-items: start;
+}
+
+.tf-eyebrow {
+  margin: 0 0 0.55rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tf-navy);
+}
+
+.tf-h1 {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--tf-ink);
+  max-width: 22ch;
+  overflow-wrap: break-word;
+}
+
+.tf-lead {
+  margin: 0 0 1.1rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--tf-muted);
+  max-width: 42rem;
+}
+
+.tf-bullets {
+  margin: 0 0 1.2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.tf-bullets li {
+  position: relative;
+  padding: 0.28rem 0 0.28rem 1.2rem;
+  color: var(--tf-ink);
+}
+
+.tf-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  background: var(--tf-navy);
+}
+
+.tf-card {
+  background: var(--tf-white);
+  border: 1px solid var(--tf-line);
+  border-radius: var(--tf-radius);
+  padding: 1.15rem 1.2rem;
+}
+
+.tf-form h2,
+.tf-section h2 {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.tf-section {
+  padding: 2.2rem 0;
+}
+
+.tf-section-alt {
+  background: var(--tf-paper);
+}
+
+.tf-section-kicker {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tf-navy);
+}
+
+.tf-grid-3,
+.tf-grid-2 {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.tf-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tf-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tf-item {
+  border: 1px solid var(--tf-line);
+  background: var(--tf-white);
+  border-radius: var(--tf-radius);
+  padding: 1rem 1.05rem;
+}
+
+.tf-item h3,
+.tf-form label {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.tf-item p,
+.tf-muted {
+  margin: 0;
+  color: var(--tf-muted);
+  line-height: 1.5;
+}
+
+.tf-step-k {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  font-weight: 700;
+  color: var(--tf-navy);
+}
+
+.tf-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.25rem;
+  padding: 0.85rem 0 0;
+  color: var(--tf-muted);
+  font-size: 0.92rem;
+}
+
+.tf-strip span {
+  border-left: 2px solid var(--tf-navy);
+  padding-left: 0.65rem;
+}
+
+.tf-form label {
+  display: block;
+  font-weight: 600;
+}
+
+.tf-form input,
+.tf-form select,
+.tf-form textarea {
+  width: 100%;
+  min-height: 44px;
+  margin: 0 0 0.75rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #b7c0cc;
+  border-radius: 4px;
+  background: var(--tf-white);
+  color: var(--tf-ink);
+  font: inherit;
+}
+
+.tf-form textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.tf-form input:focus,
+.tf-form select:focus,
+.tf-form textarea:focus {
+  outline: 2px solid var(--tf-navy);
+  outline-offset: 1px;
+}
+
+.tf-form .tf-hp {
+  position: absolute;
+  left: -9999px;
+  height: 0;
+  overflow: hidden;
+}
+
+.tf-error {
+  margin: 0 0 0.7rem;
+  color: #8a1f11;
+  font-size: 0.92rem;
+}
+
+.tf-ok {
+  margin: 0;
+  color: var(--tf-navy-deep);
+  line-height: 1.5;
+}
+
+.tf-jobseeker {
+  margin-top: 0.9rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--tf-line);
+  font-size: 0.9rem;
+}
+
+.tf-jobseeker a {
+  color: var(--tf-navy);
+  text-decoration: underline;
+}
+
+.tf-quote {
+  margin: 0 0 0.7rem;
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.tf-quote footer {
+  color: var(--tf-muted);
+  font-size: 0.9rem;
+}
+
+.tf-compare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.tf-compare th,
+.tf-compare td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.7rem 0.65rem;
+  border-bottom: 1px solid var(--tf-line);
+}
+
+.tf-compare th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tf-faq details {
+  border-bottom: 1px solid var(--tf-line);
+  padding: 0.7rem 0;
+}
+
+.tf-faq summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tf-faq p {
+  margin: 0.45rem 0 0;
+  color: var(--tf-muted);
+}
+
+.tf-footer {
+  border-top: 1px solid var(--tf-line);
+  padding: 2rem 0 2.4rem;
+  background: var(--tf-paper);
+  color: var(--tf-muted);
+  font-size: 0.9rem;
+}
+
+.tf-footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr;
+  gap: 1.5rem;
+}
+
+.tf-footer strong {
+  color: var(--tf-ink);
+}
+
+.tf-footer a {
+  color: var(--tf-navy);
+}
+
+.tf-toolbar {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  padding: 0.45rem 1rem;
+  background: #173552;
+  color: #e8eef5;
+  font-size: 0.82rem;
+}
+
+.tf-toolbar a,
+.tf-toolbar button {
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  border-radius: 4px;
+  padding: 0.25rem 0.55rem;
+  min-height: 32px;
+}
+
+.tf-toolbar a.is-on,
+.tf-toolbar button.is-on {
+  background: #fff;
+  color: #173552;
+}
+
+.tf-index {
+  padding: 1.6rem 0 3rem;
+}
+
+.tf-index h1 {
+  margin: 0 0 0.4rem;
+  font-size: 1.7rem;
+}
+
+.tf-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--tf-line);
+  background: var(--tf-white);
+}
+
+.tf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.tf-table th,
+.tf-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.65rem 0.6rem;
+  border-bottom: 1px solid var(--tf-line);
+}
+
+.tf-table th {
+  background: var(--tf-paper);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tf-table a {
+  color: var(--tf-navy);
+  text-decoration: underline;
+}
+
+@media (max-width: 860px) {
+  .tf-hero-grid,
+  .tf-grid-3,
+  .tf-grid-2,
+  .tf-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tf-h1 {
+    max-width: none;
+  }
+
+  .tf-header-cta {
+    display: none;
+  }
+
+  .tf-phone {
+    font-size: 0.86rem;
+  }
+
+  .tf-logo img {
+    height: 38px;
+  }
+
+  .tf-hero {
+    padding-top: 1.4rem;
+  }
+}
