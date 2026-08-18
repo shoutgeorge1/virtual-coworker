@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { CATEGORIES, CATEGORY_SLUGS } from "../config/categories";
 import { MARKETS } from "../config/markets";
 import {
   FOOTER_SOCIAL_MARKS,
+  FORM_CUE,
   INDUSTRY_STATS,
+  PRESS_MARKS,
   PUBLIC_QUOTES,
   SITE,
 } from "../config/site";
@@ -94,6 +96,8 @@ function visibleSiteStrings(): { path: string; text: string }[] {
         sourceLabel: s.sourceLabel,
       })),
       footerSocial: FOOTER_SOCIAL_MARKS.map((p) => p.name),
+      formCue: FORM_CUE,
+      pressAlts: PRESS_MARKS.map((p) => p.alt),
     },
     "site",
     out,
@@ -125,6 +129,30 @@ function extractQuotedStrings(source: string): string[] {
 }
 
 const PUBLIC_SURFACE_FILES = [
+  "app/components/GuidedMatchLanding.tsx",
+  "app/components/GuidedMatchGate.tsx",
+  "config/guided-match.ts",
+  "app/components/CapacityChallengerLanding.tsx",
+  "config/lp-challenger-capacity.ts",
+  "app/components/OfferLanding.tsx",
+  "app/components/ProofLanding.tsx",
+  "config/lp-funnel-challengers.ts",
+  "app/us/offer/page.tsx",
+  "app/us/proof/page.tsx",
+  "app/au/offer/page.tsx",
+  "app/au/proof/page.tsx",
+  "app/components/ConsultLanding.tsx",
+  "config/lp-consult.ts",
+  "app/us/consult/page.tsx",
+  "app/au/consult/page.tsx",
+  "config/lp-sell-first.ts",
+  "app/us/start/page.tsx",
+  "app/au/start/page.tsx",
+  "config/lp-staffing-partner.ts",
+  "app/components/StaffingPartnerLanding.tsx",
+  "config/lp-baseline.ts",
+  "app/components/StaffingBaselineLanding.tsx",
+  "app/prototype/staffing-partner/us/page.tsx",
   "app/components/MarketLanding.tsx",
   "app/components/TrustBand.tsx",
   "app/components/GoogleReviewBadge.tsx",
@@ -143,14 +171,30 @@ const PUBLIC_SURFACE_FILES = [
   "app/components/RoleOutcomes.tsx",
   "app/how-it-works/page.tsx",
   "app/thank-you/page.tsx",
+  "app/thank-you/CalendlyPopup.tsx",
+  "lib/calendly.ts",
+  "lib/job-seeker-exit.ts",
   "app/services/page.tsx",
   "app/us/page.tsx",
   "app/au/page.tsx",
+  "app/us/quiz/page.tsx",
+  "app/au/quiz/page.tsx",
   "app/privacy/page.tsx",
   "app/terms/page.tsx",
   "app/layout.tsx",
+  "app/components/QuizConversionSlot.tsx",
   "config/employer-cro.ts",
   "config/hiring-process.ts",
+  "lib/seo.ts",
+  "lib/ungated-us-home.ts",
+];
+
+/** Config + surface files whose buyer-facing copy must not use em dashes. */
+const EM_DASH_SCAN_FILES = [
+  ...PUBLIC_SURFACE_FILES,
+  "config/categories.ts",
+  "config/markets.ts",
+  "config/site.ts",
 ];
 
 function visibleSurfaceFileStrings(): { path: string; text: string }[] {
@@ -183,6 +227,44 @@ function findHits(strings: { path: string; text: string }[]): string[] {
   return hits;
 }
 
+const EM_DASH_RE = /\u2014|&mdash;/i;
+
+function allPublicCopyStrings(): { path: string; text: string }[] {
+  return [
+    ...visibleCategoryStrings(),
+    ...visibleMarketStrings(),
+    ...visibleSiteStrings(),
+    ...visibleSurfaceFileStrings(),
+  ];
+}
+
+function findEmDashInStrings(strings: { path: string; text: string }[]): string[] {
+  return strings
+    .filter(({ text }) => EM_DASH_RE.test(text))
+    .map(({ path, text }) => `${path}: em dash in ${JSON.stringify(text)}`);
+}
+
+function findEmDashInFiles(): string[] {
+  const hits: string[] = [];
+  for (const rel of EM_DASH_SCAN_FILES) {
+    const abs = join(VISION_ROOT, rel);
+    try {
+      if (!statSync(abs).isFile()) continue;
+    } catch {
+      continue;
+    }
+    const stripped = readFileSync(abs, "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+    stripped.split("\n").forEach((line, i) => {
+      if (EM_DASH_RE.test(line)) {
+        hits.push(`${rel}:${i + 1}: ${line.trim()}`);
+      }
+    });
+  }
+  return hits;
+}
+
 describe("public copy lint", () => {
   it("has a maintainable banned-phrase list", () => {
     expect(banned.phrases.length).toBeGreaterThan(20);
@@ -204,6 +286,13 @@ describe("public copy lint", () => {
 
   it("rejects banned jargon in public surface TSX/TS", () => {
     const hits = findHits(visibleSurfaceFileStrings());
+    expect(hits, hits.join("\n") || "clean").toEqual([]);
+  });
+
+  it("rejects em dashes and &mdash; in public-facing copy", () => {
+    const stringHits = findEmDashInStrings(allPublicCopyStrings());
+    const fileHits = findEmDashInFiles();
+    const hits = [...stringHits, ...fileHits];
     expect(hits, hits.join("\n") || "clean").toEqual([]);
   });
 });

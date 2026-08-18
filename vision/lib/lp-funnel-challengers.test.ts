@@ -32,20 +32,17 @@ describe("offer and proof funnel pages", () => {
     expect(CATEGORY_SLUGS).not.toContain("capacity");
   });
 
-  it("leaves live /us and /au on GuidedMatchLanding", () => {
+  it("leaves live /us and /au on StaffingBaselineLanding (not funnel challengers)", () => {
     const us = readFileSync(join(ROOT, "app/us/page.tsx"), "utf8");
     const au = readFileSync(join(ROOT, "app/au/page.tsx"), "utf8");
-    expect(us).toContain("GuidedMatchLanding");
-    expect(au).toContain("GuidedMatchLanding");
+    expect(us).toContain("StaffingBaselineLanding");
+    expect(au).toContain("StaffingBaselineLanding");
     expect(us).not.toContain("OfferLanding");
     expect(us).not.toContain("ProofLanding");
     expect(us).not.toContain("ConsultLanding");
     expect(au).not.toContain("OfferLanding");
     expect(au).not.toContain("ProofLanding");
     expect(au).not.toContain("ConsultLanding");
-    expect(roleHeadline({ market: "us" }).h1).toBe(
-      "Hire reliable Filipino staff who work your hours.",
-    );
   });
 
   it("keeps the same conversion machine and form_start rule", () => {

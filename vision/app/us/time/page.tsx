@@ -1,24 +1,10 @@
-import type { Metadata } from "next";
-import CapacityChallengerLanding from "../../components/CapacityChallengerLanding";
-import { buildPageMetadata } from "../../../lib/seo";
-import { resolveCareersUrl } from "../../../config/markets";
-import { TIME_CHALLENGER_PATHS } from "../../../config/lp-challenger-capacity";
+import { redirectPreservingQuery } from "../../../lib/preserve-redirect";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Stop losing your mornings | Virtual Coworker US",
-  description:
-    "Add a vetted Filipino specialist for the recurring work consuming your team. We recruit. You interview. We handle payroll and HR.",
-  path: TIME_CHALLENGER_PATHS.us,
-  indexable: false,
-  ogImage: "/brand/hero-us-2026.jpg",
-});
-
-export default function USTimePage() {
-  return (
-    <CapacityChallengerLanding
-      market="us"
-      concept="time"
-      careersHref={resolveCareersUrl()}
-    />
-  );
+/** Retired Ads challenger alias → Paid Landing Page Baseline v1 (/us). */
+export default async function USTimeAlias({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  redirectPreservingQuery("/us", await searchParams);
 }

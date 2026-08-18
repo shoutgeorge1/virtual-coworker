@@ -94,6 +94,41 @@ describe("guided-match contract", () => {
     expect(guidedMatchStepIndex("contact", null, true).total).toBe(1);
   });
 
+  it("counts sequential staffing-partner screens honestly", () => {
+    expect(guidedMatchStepIndex("role", null, false, true)).toEqual({
+      shown: 1,
+      total: 5,
+      pct: "20%",
+    });
+    expect(guidedMatchStepIndex("hours", null, false, true)).toEqual({
+      shown: 2,
+      total: 5,
+      pct: "40%",
+    });
+    expect(guidedMatchStepIndex("people", null, false, true)).toEqual({
+      shown: 3,
+      total: 5,
+      pct: "60%",
+    });
+    expect(guidedMatchStepIndex("size", null, false, true)).toEqual({
+      shown: 4,
+      total: 5,
+      pct: "80%",
+    });
+    expect(guidedMatchStepIndex("contact", null, false, true)).toEqual({
+      shown: 5,
+      total: 5,
+      pct: "100%",
+    });
+    expect(previousStep("people", null, true)).toBe("hours");
+    expect(previousStep("hours", null, true)).toBe("role");
+    expect(previousStep("contact", null, true)).toBe("size");
+    expect(canGoBack("hours", null, false, true)).toBe(true);
+    expect(canGoBack("role", null, false, true)).toBe(false);
+    expect(firstGuidedMatchStep("bookkeeping", true)).toBe("hours");
+    expect(firstGuidedMatchStep("bookkeeping")).toBe("needs");
+  });
+
   it("uses approved hire headlines and the job-seeker line", () => {
     expect(roleHeadline({ market: "us" }).h1).toBe(
       "Hire reliable Filipino staff who work your hours.",
@@ -102,6 +137,22 @@ describe("guided-match contract", () => {
     expect(JOB_SEEKER_LINE).toBe(
       "Looking for work? View careers in the Philippines →",
     );
+  });
+
+  it("keeps GuidedMatchGate defaults off unless baseline opts in", () => {
+    const gate = readFileSync(
+      join(__dirname, "..", "app/components/GuidedMatchGate.tsx"),
+      "utf8",
+    );
+    expect(gate).toContain("includeGateId = true");
+    expect(gate).toContain("explicitContinue = false");
+    expect(gate).toContain("sequentialNeeds = false");
+    expect(gate).toContain("hoursQuestionSplit = false");
+    expect(gate).toContain("spQuiz = false");
+    expect(gate).toContain("allowRoleChange = false");
+    const us = readFileSync(join(__dirname, "..", "app/us/page.tsx"), "utf8");
+    expect(us).toContain("StaffingBaselineLanding");
+    expect(us).not.toContain("GuidedMatchLanding");
   });
 
   it("does not ship internal mock language or seat jargon", () => {

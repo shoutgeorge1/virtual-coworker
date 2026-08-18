@@ -12,16 +12,20 @@ import {
 import { chipClickIsFormStart, shouldStartEmployerFormOnPii } from "./guided-match";
 
 describe("capacity challenger preview", () => {
-  it("keeps live money routes untouched and isolates preview paths", () => {
+  it("keeps live money routes on baseline; capacity aliases redirect home", () => {
     expect(CAPACITY_CHALLENGER_PATHS.us).toBe("/us/capacity");
     expect(CAPACITY_CHALLENGER_PATHS.au).toBe("/au/capacity");
     expect(CAPACITY_CHALLENGER_ID).toBe("capacity-a");
     const usPage = readFileSync(join(__dirname, "../app/us/page.tsx"), "utf8");
     const auPage = readFileSync(join(__dirname, "../app/au/page.tsx"), "utf8");
+    expect(usPage).toContain("StaffingBaselineLanding");
+    expect(auPage).toContain("StaffingBaselineLanding");
     expect(usPage).not.toContain("CapacityChallengerLanding");
     expect(auPage).not.toContain("CapacityChallengerLanding");
-    expect(usPage).toContain('path: "/us"');
-    expect(auPage).toContain('path: "/au"');
+    const usCap = readFileSync(join(__dirname, "../app/us/capacity/page.tsx"), "utf8");
+    const auCap = readFileSync(join(__dirname, "../app/au/capacity/page.tsx"), "utf8");
+    expect(usCap).toContain('redirectPreservingQuery("/us"');
+    expect(auCap).toContain('redirectPreservingQuery("/au"');
   });
 
   it("localises US vs AU without changing form_start rules", () => {

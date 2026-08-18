@@ -1,7 +1,7 @@
 import { redirectPreservingQuery } from "../../../lib/preserve-redirect";
 
 /** Retired Ads challenger alias → Paid Landing Page Baseline v1 (/au). */
-export default async function AUTimeAlias({
+export default async function AUStartAlias({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

@@ -16,11 +16,18 @@
  * - employer_inquiry_submitted  (+ alias form_submit_success) — delivery OK, not Ads Primary
  * - employer_inquiry_delivery_failed
  * - phone_cta_clicked           (+ alias phone_click) — click ≠ qualified call
- * - calendly_cta_clicked        (+ alias calendly_click)
+ * - primary_cta_clicked         — sell-first hero CTA to #gate; not Ads Primary
+ * - calendly_cta_clicked        (+ alias calendly_click) — thank-you popup / book click; not Ads Primary
+ * - calendly_embed_viewed       — legacy inline calendar seen; not Ads Primary
  * - conversion_assist_opened
  * - conversion_assist_cta_clicked
  * - job_seeker_redirected       (interaction only — never Ads conversion)
+ * - form_start                  (+ alias of employer_form_started)
+ * - chat_widget_impression / chat_widget_open
+ * - popup_impression / popup_close
  */
+
+import { markPrimaryConverted } from "./conversion-assist";
 
 export const LP_VERSION = "stage1-v8";
 
@@ -36,6 +43,7 @@ export type Attribution = {
   landing_page_url: string;
   referrer: string;
   lp_version: string;
+  lp_variant: string;
   market: string;
   category: string;
   variant: string;
@@ -63,6 +71,7 @@ function emptyAttr(market = ""): Attribution {
     landing_page_url: "",
     referrer: "",
     lp_version: LP_VERSION,
+    lp_variant: "",
     market,
     category: "",
     variant: "",
@@ -70,11 +79,21 @@ function emptyAttr(market = ""): Attribution {
   };
 }
 
+export type AttributionExtras = {
+  category?: string;
+  variant?: string;
+  lp_variant?: string;
+  /** Optional page override (e.g. baseline_v1_2026_08). Default LP_VERSION. */
+  lp_version?: string;
+};
+
 export function captureAttribution(
   market = "",
-  extras: { category?: string; variant?: string } = {},
+  extras: AttributionExtras = {},
 ): Attribution {
   if (typeof window === "undefined") return emptyAttr(market);
+
+  const version = extras.lp_version || LP_VERSION;
 
   const next: Attribution = {
     utm_source: param("utm_source"),
@@ -87,7 +106,8 @@ export function captureAttribution(
     wbraid: param("wbraid"),
     landing_page_url: window.location.href.split("#")[0],
     referrer: document.referrer || "",
-    lp_version: LP_VERSION,
+    lp_version: version,
+    lp_variant: extras.lp_variant || param("lp_variant") || "",
     market: market || param("market") || "",
     category: extras.category || param("category") || "",
     variant: extras.variant || param("variant") || "",
@@ -107,7 +127,8 @@ export function captureAttribution(
       wbraid: next.wbraid || prev.wbraid || "",
       landing_page_url: next.landing_page_url || prev.landing_page_url || "",
       referrer: next.referrer || prev.referrer || "",
-      lp_version: LP_VERSION,
+      lp_version: version || prev.lp_version || LP_VERSION,
+      lp_variant: next.lp_variant || prev.lp_variant || "",
       market: next.market || prev.market || market || "",
       category: next.category || prev.category || "",
       variant: next.variant || prev.variant || "",
@@ -122,7 +143,7 @@ export function captureAttribution(
 
 export function readAttribution(
   market = "",
-  extras: { category?: string; variant?: string } = {},
+  extras: AttributionExtras = {},
 ): Attribution {
   if (typeof window === "undefined") return captureAttribution(market, extras);
   try {
@@ -135,6 +156,8 @@ export function readAttribution(
         ...captureAttribution(market || prev.market || "", {
           category: extras.category || prev.category,
           variant: extras.variant || prev.variant,
+          lp_variant: extras.lp_variant || prev.lp_variant,
+          lp_version: extras.lp_version || prev.lp_version,
         }),
       };
     }
@@ -152,7 +175,38 @@ type DataLayerEvent = {
 declare global {
   interface Window {
     dataLayer?: DataLayerEvent[];
+    gtag?: (...args: unknown[]) => void;
+    /** Set by MarketGtm when NEXT_PUBLIC_GA4_* is present. */
+    __vcGa4MeasurementId?: string;
+    /** Beacon sender installed by MarketGtm for experiment_* → GA4 collect. */
+    __vcSendExpGa4?: (
+      name: string,
+      params: Record<string, string | number | boolean>,
+    ) => void;
+    /** Queued experiment_* GA4 sends until MarketGtm bridge is ready. */
+    __vcExpGa4Queue?: Array<[string, Record<string, string | number | boolean>]>;
   }
+}
+
+const EXPERIMENT_EVENT_PREFIX = "experiment_";
+
+/**
+ * Dual-send site A/B events to GA4 via collect beacon (MarketGtm installs
+ * window.__vcSendExpGa4). GTM alone was only forwarding page_view; gtag('event')
+ * is swallowed when GTM owns the same measurement ID.
+ */
+function sendExperimentToGa4(
+  name: string,
+  params: Record<string, string | number | boolean>,
+): void {
+  if (typeof window === "undefined") return;
+  if (!name.startsWith(EXPERIMENT_EVENT_PREFIX)) return;
+  if (typeof window.__vcSendExpGa4 === "function") {
+    window.__vcSendExpGa4(name, params);
+    return;
+  }
+  window.__vcExpGa4Queue = window.__vcExpGa4Queue || [];
+  window.__vcExpGa4Queue.push([name, params]);
 }
 
 /** Diagnostic / secondary events — safe in all environments. */
@@ -163,13 +217,32 @@ export function trackEvent(
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
   const market = String(payload.market || "");
-  window.dataLayer.push({
+  const lpVariant =
+    payload.lp_variant !== undefined && payload.lp_variant !== ""
+      ? payload.lp_variant
+      : undefined;
+  const lpVersion =
+    payload.lp_version !== undefined && payload.lp_version !== ""
+      ? String(payload.lp_version)
+      : LP_VERSION;
+  const eventPayload: DataLayerEvent = {
     event: name,
     ...payload,
     market,
     site_surface: market || undefined,
-    lp_version: LP_VERSION,
-  });
+    lp_version: lpVersion,
+    ...(lpVariant ? { lp_variant: lpVariant } : {}),
+  };
+  window.dataLayer.push(eventPayload);
+
+  if (name.startsWith(EXPERIMENT_EVENT_PREFIX)) {
+    const ga4Params: Record<string, string | number | boolean> = {};
+    for (const [key, value] of Object.entries(eventPayload)) {
+      if (key === "event" || value === undefined) continue;
+      ga4Params[key] = value;
+    }
+    sendExperimentToGa4(name, ga4Params);
+  }
 }
 
 /** Phone CTA click — canonical + short alias. Not a qualified call conversion. */
@@ -182,6 +255,11 @@ export function trackPhoneClick(
     is_qualified_call: false,
     alias_of: "phone_cta_clicked",
   });
+  // Meaningful phone initiation — suppress secondary recovery for this session.
+  markPrimaryConverted("phone_click");
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("vc-primary-converted"));
+  }
 }
 
 /** Calendly CTA click — canonical + short alias. Not Ads Primary. */
@@ -190,6 +268,17 @@ export function trackCalendlyClick(
 ) {
   trackEvent("calendly_cta_clicked", payload);
   trackEvent("calendly_click", { ...payload, alias_of: "calendly_cta_clicked" });
+}
+
+/** Legacy thank-you inline Calendly viewed. Diagnostic only - not Ads Primary. */
+export function trackCalendlyEmbedViewed(
+  payload: Record<string, string | number | boolean | undefined> = {},
+) {
+  trackEvent("calendly_embed_viewed", {
+    ...payload,
+    bidding_primary: false,
+    is_qualified_call: false,
+  });
 }
 
 function alreadyFiredPrimary(submissionId: string): boolean {
@@ -248,6 +337,7 @@ export function trackValidEmployerSubmit(opts: {
   submittedAt?: string;
   lpSurface?: string;
   ctaMode?: string;
+  lpVariant?: string;
 }) {
   if (opts.conversionEligible === false) {
     trackEvent("employer_inquiry_log_only", {
@@ -267,6 +357,10 @@ export function trackValidEmployerSubmit(opts: {
     return;
   }
   markPrimaryFired(opts.submissionId);
+  markPrimaryConverted("form_submit");
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("vc-primary-converted"));
+  }
   const payload = {
     market: opts.market,
     country: opts.market === "au" ? "AU" : "US",
@@ -296,6 +390,7 @@ export function trackValidEmployerSubmit(opts: {
     cta_mode: opts.ctaMode || (opts.lpSurface === "quiz" ? "quiz_lp" : "form_primary"),
     landing_type:
       opts.ctaMode === "quiz_lp" || opts.lpSurface === "quiz" ? "quiz_lp" : "form_lp",
+    lp_variant: opts.lpVariant || (opts.lpSurface === "quiz" ? "quiz" : ""),
     /** Durable delivery succeeded — still NOT Ads bidding Primary */
     primary_eligible: true,
     bidding_primary: false,
@@ -307,4 +402,5 @@ export function trackValidEmployerSubmit(opts: {
   };
   trackEvent("employer_inquiry_submitted", payload);
   trackEvent("form_submit_success", { ...payload, alias_of: "employer_inquiry_submitted" });
+  trackEvent("form_submit", { ...payload, alias_of: "employer_inquiry_submitted" });
 }

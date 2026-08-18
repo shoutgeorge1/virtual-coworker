@@ -14,7 +14,7 @@ import { PUBLIC_QUOTES } from "../config/site";
 const ROOT = join(__dirname, "..");
 
 describe("consult-truth employer LP", () => {
-  it("uses a static sibling that does not replace /us or collide with categories", () => {
+  it("keeps consult config paths as aliases that redirect to baseline", () => {
     expect(CONSULT_PATHS.us).toBe("/us/consult");
     expect(CONSULT_PATHS.au).toBe("/au/consult");
     expect(CONSULT_VARIANT).toBe("consult-truth");
@@ -22,38 +22,28 @@ describe("consult-truth employer LP", () => {
     expect(CATEGORY_SLUGS).not.toContain("consult");
     const us = readFileSync(join(ROOT, "app/us/page.tsx"), "utf8");
     const au = readFileSync(join(ROOT, "app/au/page.tsx"), "utf8");
-    expect(us).toContain("GuidedMatchLanding");
-    expect(au).toContain("GuidedMatchLanding");
+    expect(us).toContain("StaffingBaselineLanding");
+    expect(au).toContain("StaffingBaselineLanding");
     expect(us).not.toContain("ConsultLanding");
     expect(au).not.toContain("ConsultLanding");
   });
 
-  it("ships ConsultLanding on /us/consult and /au/consult instead of a redirect", () => {
+  it("redirects /us/consult and /au/consult to market home (challenger retired)", () => {
     const usConsult = readFileSync(join(ROOT, "app/us/consult/page.tsx"), "utf8");
     const auConsult = readFileSync(join(ROOT, "app/au/consult/page.tsx"), "utf8");
+    expect(usConsult).toContain('redirectPreservingQuery("/us"');
+    expect(auConsult).toContain('redirectPreservingQuery("/au"');
+    expect(usConsult).not.toContain("ConsultLanding");
+  });
+
+  it("keeps ConsultLanding component available for reference", () => {
     const landing = readFileSync(
       join(ROOT, "app/components/ConsultLanding.tsx"),
       "utf8",
     );
-    expect(usConsult).toContain("ConsultLanding");
-    expect(auConsult).toContain("ConsultLanding");
-    expect(usConsult).not.toContain("redirect");
-    expect(auConsult).not.toContain("redirect");
     expect(landing).toContain("GuidedMatchGate");
     expect(landing).toContain("gm-consult");
     expect(landing).toContain("consult-landing.css");
-    expect(landing).toContain("gm-gate-card");
-    expect(landing).not.toContain("contactFirst");
-    expect(landing).not.toContain("EngageChat");
-    expect(landing).not.toContain("ExitIntent");
-    expect(landing).toContain("location.replace");
-    const heroIdx = landing.indexOf("gm-hero");
-    const gateIdx = landing.indexOf("<GuidedMatchGate");
-    const painIdx = landing.indexOf('id="pain"');
-    expect(heroIdx).toBeGreaterThan(-1);
-    expect(gateIdx).toBeGreaterThan(heroIdx);
-    expect(gateIdx).toBeLessThan(painIdx);
-    expect(landing.split("<GuidedMatchGate").length).toBe(2);
   });
 
   it("keeps consult craft scoped and makes the quiz the first tap", () => {

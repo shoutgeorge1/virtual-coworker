@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import GuidedMatchLanding from "../../components/GuidedMatchLanding";
+import StaffingBaselineLanding from "../../components/StaffingBaselineLanding";
 import { CATEGORIES, CATEGORY_SLUGS, isCategorySlug } from "../../../config/categories";
-import { resolveLpVariant } from "../../../lib/resolve-lp-variant";
 import { buildPageMetadata } from "../../../lib/seo";
 import { resolveCareersUrl } from "../../../config/markets";
 
 type Props = {
   params: Promise<{ category: string }>;
-  searchParams: Promise<{ variant?: string }>;
 };
 
 export function generateStaticParams() {
@@ -31,15 +29,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function USCategoryPage({ params, searchParams }: Props) {
+export default async function USCategoryPage({ params }: Props) {
   const { category } = await params;
   if (!isCategorySlug(category)) notFound();
-  const variant = await resolveLpVariant(await searchParams);
   return (
-    <GuidedMatchLanding
+    <StaffingBaselineLanding
       market="us"
       category={category}
-      variant={variant}
       careersHref={resolveCareersUrl()}
     />
   );
