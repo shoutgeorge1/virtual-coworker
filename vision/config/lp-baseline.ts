@@ -6,8 +6,9 @@
  * with live /us image bands and section rhythm (logos, how, roles, why+photo,
  * team, stories, quiz, closer).
  *
- * Do not invent prices, savings, or speed claims. US rates only when published.
- * AU: no unverified dollar amount in H1.
+ * Do not invent prices, savings, or speed claims. Published $7 is US homepage
+ * H1 only. Role H1s follow RSA / search language (dedicated Filipino + hours),
+ * not a starting rate. AU homepage H1 includes Australian hours (RSA pin).
  */
 
 import type { MarketId } from "./markets";
@@ -42,20 +43,22 @@ export type BaselineRoleCard = { title: string; body: string };
 export type BaselineStep = { k: string; t: string; d: string };
 export type BaselineWhyItem = { title: string; body: string };
 
-/** Published US starting rates only. Omit when role mixes rates or unverified. */
+/**
+ * Advertised role nouns for H1s (RSA / category). Hourly figures are the
+ * published US record only — never used in role H1s or the role first screen.
+ */
 export const US_PUBLISHED_RATES: Partial<
   Record<CategorySlug, { noun: string; rateHour: number } | { noun: string; rateHour: null }>
 > = {
-  "digital-marketing": { noun: "Digital Marketing Manager", rateHour: 12 },
+  "digital-marketing": { noun: "Marketer", rateHour: 12 },
   "social-media": { noun: "Social Media Manager", rateHour: 8 },
   accounting: { noun: "Accountant", rateHour: 10 },
   bookkeeping: { noun: "Bookkeeper", rateHour: 8 },
-  // VA $7 + EA $10 on same route — no single H1 rate.
-  "administrative-support": { noun: "Administrative Support", rateHour: null },
+  // RSA: Dedicated Filipino Admin / Hire Executive Assistant. VA+EA mix — no rate.
+  "administrative-support": { noun: "Admin", rateHour: null },
   "customer-service": { noun: "Customer Support", rateHour: 7 },
   hr: { noun: "HR Support", rateHour: null },
   recruitment: { noun: "Recruitment Assistant", rateHour: 9 },
-  // Sales mixes setter / support / lead-gen — omit single rate.
   sales: { noun: "Sales Support", rateHour: null },
 };
 
@@ -89,26 +92,21 @@ function coreH1(market: MarketId): string {
   if (market === "us") {
     return `Hire Dedicated Filipino Remote Staff From ${softHour(7)}`;
   }
-  return "Hire Dedicated Filipino Remote Staff";
+  return "Hire Dedicated Filipino Remote Staff Who Work Australian Hours";
 }
 
 function roleH1(market: MarketId, slug: CategorySlug): string {
-  const meta = US_PUBLISHED_RATES[slug];
-  const noun = meta?.noun || CATEGORIES[slug].label;
-  if (market === "us" && meta && meta.rateHour != null) {
-    return `Hire a Dedicated Filipino ${noun} From ${softHour(meta.rateHour)}`;
+  const noun = US_PUBLISHED_RATES[slug]?.noun || CATEGORIES[slug].label;
+  if (market === "au") {
+    return `Hire a Dedicated Filipino ${noun} Who Works Australian Hours`;
   }
-  return `Hire a Dedicated Filipino ${noun}`;
+  return `Hire a Dedicated Filipino ${noun} Who Works Your Hours`;
 }
 
 function rateText(market: MarketId, slug: CategorySlug | null): string {
-  if (market !== "us" || !slug) {
-    if (market === "us" && !slug) return "From $7/hour";
-    return "";
-  }
-  const meta = US_PUBLISHED_RATES[slug];
-  if (!meta || meta.rateHour == null) return "";
-  return `From $${meta.rateHour}/hour`;
+  // Homepage only. Role pages must not lead with a dollar figure.
+  if (market === "us" && !slug) return "From $7/hour";
+  return "";
 }
 
 function coreRoleCards(market: MarketId): BaselineRoleCard[] {
@@ -149,11 +147,12 @@ function roleTaskCards(slug: CategorySlug): BaselineRoleCard[] {
 }
 
 function supportingCopy(market: MarketId, slug: CategorySlug | null): string {
+  const hours = market === "au" ? "Australian hours" : "your hours";
   if (slug) {
     const label = (US_PUBLISHED_RATES[slug]?.noun || CATEGORIES[slug].label).toLowerCase();
-    return `We recruit and vet for your ${label} seat. You interview the shortlist and choose who joins. Full-time or part-time, on your time zone.`;
+    return `We recruit and vet for your ${label} seat. You interview the shortlist and choose who joins. Full-time or part-time, on ${hours}.`;
   }
-  return "We recruit and vet experienced candidates for your role. You interview the shortlist and choose who joins. Full-time or part-time, on your time zone.";
+  return `We recruit and vet experienced candidates for your role. You interview the shortlist and choose who joins. Full-time or part-time, on ${hours}.`;
 }
 
 export function baselineHowSteps(market: MarketId): BaselineStep[] {

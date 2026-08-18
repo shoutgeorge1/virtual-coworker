@@ -38,28 +38,59 @@ describe("Paid Landing Page Baseline v1 — August 2026", () => {
     expect(usRole).not.toContain("GuidedMatchLanding");
   });
 
-  it("keeps US CORE price-led H1 and omits unverified AU $7", () => {
+  it("keeps US CORE price-led H1 and pins AU CORE to Australian hours", () => {
     const us = buildBaselineRoute({ market: "us" });
     const au = buildBaselineRoute({ market: "au" });
     expect(us.h1.replace(/\u200b/g, "")).toBe(
       "Hire Dedicated Filipino Remote Staff From $7/Hour",
     );
-    expect(au.h1).toBe("Hire Dedicated Filipino Remote Staff");
+    expect(au.h1).toBe(
+      "Hire Dedicated Filipino Remote Staff Who Work Australian Hours",
+    );
     expect(au.h1).not.toMatch(/\$/);
+    expect(au.eyebrow).toBe("Dedicated Filipino Remote Staff");
   });
 
-  it("applies published role rates only when a single rate is verified", () => {
+  it("uses RSA hours language on role H1s and omits $ from the first screen", () => {
     const books = buildBaselineRoute({ market: "us", role: "bookkeeping" });
-    expect(books.h1.replace(/\u200b/g, "")).toContain("Bookkeeper From $8/Hour");
+    expect(books.h1).toBe(
+      "Hire a Dedicated Filipino Bookkeeper Who Works Your Hours",
+    );
+    expect(books.h1).not.toMatch(/\$/);
+    expect(books.supporting_copy).not.toMatch(/\$/);
+    expect(books.rate_text).toBe("");
+
+    const auAdmin = buildBaselineRoute({
+      market: "au",
+      role: "administrative-support",
+    });
+    expect(auAdmin.h1).toBe(
+      "Hire a Dedicated Filipino Admin Who Works Australian Hours",
+    );
+    expect(auAdmin.h1).not.toMatch(/\$/);
+    expect(auAdmin.supporting_copy).toMatch(/Australian hours/);
+    expect(auAdmin.supporting_copy).not.toMatch(/\$/);
+
     const admin = buildBaselineRoute({
       market: "us",
       role: "administrative-support",
     });
-    expect(admin.h1).not.toMatch(/\$/);
+    expect(admin.h1).toBe(
+      "Hire a Dedicated Filipino Admin Who Works Your Hours",
+    );
     expect(US_PUBLISHED_RATES["administrative-support"]?.rateHour).toBeNull();
+
     for (const slug of CATEGORY_SLUGS) {
-      const au = buildBaselineRoute({ market: "au", role: slug });
-      expect(au.h1).not.toMatch(/\$/);
+      const usRole = buildBaselineRoute({ market: "us", role: slug });
+      const auRole = buildBaselineRoute({ market: "au", role: slug });
+      expect(usRole.h1).toMatch(/Dedicated Filipino/);
+      expect(usRole.h1).toMatch(/Who Works Your Hours/);
+      expect(usRole.h1).not.toMatch(/\$/);
+      expect(usRole.supporting_copy).not.toMatch(/\$/);
+      expect(usRole.rate_text).toBe("");
+      expect(auRole.h1).toMatch(/Who Works Australian Hours/);
+      expect(auRole.h1).not.toMatch(/\$/);
+      expect(auRole.rate_text).toBe("");
     }
   });
 
