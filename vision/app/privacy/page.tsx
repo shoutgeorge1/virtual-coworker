@@ -47,7 +47,7 @@ export default function PrivacyPage() {
         <h2>What we collect</h2>
         <p>
           When you send a hiring request we collect the details you provide —
-          typically name, business email address, phone, company, and role context — plus
+          typically name, work email, phone, company, and role context — plus
           standard web attribution such as campaign tags, click identifiers when
           present, landing-page URL, referrer, and submission time. Career
           applications on the Philippines path collect the details you enter on
