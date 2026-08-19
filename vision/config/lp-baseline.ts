@@ -37,7 +37,7 @@ export const BASELINE_LP_VERSION = "baseline_v1_2026_08" as const;
 /** Visual lineage from the approved staffing-partner challenger. */
 export const BASELINE_LP_VARIANT = "price_staffing_v1" as const;
 
-export type BaselineIntentCluster = "core" | CategorySlug;
+export type BaselineIntentCluster = "core" | CategorySlug | "real-estate";
 
 export type BaselineRoleCard = { title: string; body: string };
 export type BaselineStep = { k: string; t: string; d: string };

@@ -47,6 +47,7 @@ const required = [
   "us/start/page.tsx",
   "au/start/page.tsx",
   "us/staffing/page.tsx",
+  "us/real-estate/page.tsx",
   "preview/trust-first/page.tsx",
   "preview/trust-first/[slug]/page.tsx",
   "api/lead-preview/route.ts",
