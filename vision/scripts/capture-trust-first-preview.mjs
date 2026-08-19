@@ -27,6 +27,7 @@ const slugs = [
   "sales",
   "administrative-support",
   "digital-marketing",
+  "social-media",
 ];
 
 const shots = [

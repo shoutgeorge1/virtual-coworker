@@ -14,3 +14,5 @@
 ## One next step
 
 Open the preview index. Compare Simple vs Proof-heavy. Do not import Editor CSV and do not change Final URLs.
+
+Social / Marketing VA follow-up (19 Aug): `ads-launch/research/social-marketing-va-2026-08-19/REPORT.md`. Adds a social-media preview page. Still preview-only. Platform pages were not built.

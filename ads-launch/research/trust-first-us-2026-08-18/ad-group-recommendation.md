@@ -2,6 +2,8 @@
 
 **Do not implement. No Editor import. No Ads API. Brand deferred.**
 
+19 Aug social/marketing follow-up is a separate paused add-on: `ads-launch/research/social-marketing-va-2026-08-19/REPORT.md`. This 18 Aug table is unchanged.
+
 Evidence: `ads-launch/_rsa_challenger_review.json`, `ads-launch/US-LP-DESTINATION-MAP-2026-08-18.md`, `ads-launch/research/myoutdesk-2026-08-18/virtual-coworker-opportunity-map.md`, local GA4 notes (10–16 Aug). No invented volume or CPC.
 
 Shared negatives to document later (not uploaded): job, jobs, salary, career, careers, apply, application, resume, work from home.

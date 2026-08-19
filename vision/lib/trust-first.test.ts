@@ -29,8 +29,8 @@ const BANNED_CLAIMS = [
 ];
 
 describe("trust-first preview family", () => {
-  it("covers the ten preview pages under the isolated namespace", () => {
-    expect(TRUST_FIRST_PAGE_KEYS).toHaveLength(10);
+  it("covers the preview pages under the isolated namespace", () => {
+    expect(TRUST_FIRST_PAGE_KEYS).toHaveLength(11);
     for (const key of TRUST_FIRST_PAGE_KEYS) {
       const page = TRUST_FIRST_PAGES[key];
       expect(page.previewPath.startsWith(TRUST_FIRST_NAMESPACE)).toBe(true);
@@ -83,5 +83,33 @@ describe("trust-first preview family", () => {
   it("stamps a preview lp version", () => {
     expect(TRUST_FIRST_LP_VERSION).toContain("preview");
     expect(variantHref("/preview/trust-first/us", "proof_heavy")).toContain("v=proof");
+  });
+
+  it("adds social-media and keeps digital-marketing on existing /us URLs", () => {
+    expect(TRUST_FIRST_PAGE_KEYS).toContain("social-media");
+    expect(TRUST_FIRST_PAGES["social-media"].h1).toBe(
+      "Hire a Social Media Virtual Assistant From the Philippines",
+    );
+    expect(TRUST_FIRST_PAGES["social-media"].proposedProductionPath).toBe("/us/social-media");
+    expect(TRUST_FIRST_PAGES["digital-marketing"].h1).toBe(
+      "Hire a Digital Marketing Virtual Assistant From the Philippines",
+    );
+    expect(TRUST_FIRST_PAGES["digital-marketing"].proposedProductionPath).toBe(
+      "/us/digital-marketing",
+    );
+  });
+
+  it("does not invent platform-specific preview pages without demand", () => {
+    const keys = TRUST_FIRST_PAGE_KEYS as readonly string[];
+    for (const slug of [
+      "instagram",
+      "linkedin",
+      "facebook",
+      "tiktok",
+      "youtube",
+      "pinterest",
+    ]) {
+      expect(keys.includes(slug)).toBe(false);
+    }
   });
 });
