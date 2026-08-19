@@ -45,6 +45,19 @@ describe("capacity challenger preview", () => {
     expect(shouldStartEmployerFormOnPii(true)).toBe(false);
   });
 
+  it("uses natural video-interview language", () => {
+    const blob = JSON.stringify([
+      capacityChallengerCopy("us"),
+      capacityChallengerCopy("au"),
+      challengerCopy("time", "us"),
+      challengerCopy("teammate", "au"),
+    ]);
+    expect(blob).toContain(
+      "You conduct a video interview with your chosen candidate.",
+    );
+    expect(blob).not.toMatch(/You meet people on video|You meet them on video/);
+  });
+
   it("does not use em dashes in challenger copy", () => {
     const blob = JSON.stringify([
       capacityChallengerCopy("us"),

@@ -10,7 +10,7 @@ import {
   baselineSharedCopy,
   buildBaselineRoute,
 } from "../config/lp-baseline";
-import { CATEGORY_SLUGS } from "../config/categories";
+import { CATEGORIES, CATEGORY_SLUGS } from "../config/categories";
 
 const ROOT = join(__dirname, "..");
 
@@ -219,6 +219,23 @@ describe("Paid Landing Page Baseline v1 — August 2026", () => {
     expect(src).not.toMatch(/vc_exp/);
     expect(src).not.toMatch(/Math\.random/);
     expect(src).not.toMatch(/experiment_id/);
+  });
+
+  it("uses starting-at language for US admin category rates, not around $8", () => {
+    const admin = CATEGORIES["administrative-support"];
+    expect(admin.description.us).toMatch(/starting at \$7\/hour/);
+    expect(admin.description.us).not.toMatch(/around \$8/);
+    expect(admin.variants.a.subhead.us).toMatch(/starting at \$7\/hour/);
+    expect(admin.variants.a.subhead.us).not.toMatch(/around \$8/);
+    expect(admin.description.au).not.toMatch(/\$/);
+    expect(admin.variants.a.subhead.au).not.toMatch(/\$/);
+  });
+
+  it("explains the video interview in How hiring works", () => {
+    const steps = baselineSharedCopy("us").steps;
+    expect(steps.map((s) => s.d).join(" ")).toContain(
+      "You conduct a video interview with your chosen candidate.",
+    );
   });
 
   it("does not invent competitor prices or em dashes in baseline copy", () => {

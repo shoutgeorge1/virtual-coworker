@@ -158,7 +158,7 @@ export function offerFunnelCopy(market: MarketId): OfferFunnelCopy {
     ],
     audienceLine:
       "This page is for employers. Job seekers use the careers link in the footer.",
-    contactHeading: "Send your name, email, and phone",
+    contactHeading: "Send your name, company, email, and phone",
     howTitle: "What happens after you send details",
     howBeats: [
       {
@@ -171,7 +171,7 @@ export function offerFunnelCopy(market: MarketId): OfferFunnelCopy {
       {
         k: "2",
         t: "We recruit if you are aligned",
-        d: "Philippines team sources and vets against the brief. You meet people on video.",
+        d: "Philippines team sources and vets against the brief. You conduct a video interview with your chosen candidate.",
       },
       {
         k: "3",
@@ -232,7 +232,7 @@ export function proofFunnelCopy(market: MarketId): ProofFunnelCopy {
       {
         k: "01",
         t: "Tell us the role",
-        d: "Name, email, and phone start a hiring conversation. We turn the role and hours into a brief.",
+        d: "Name, company, email, and phone start a hiring conversation. We turn the role and hours into a brief.",
       },
       {
         k: "02",
@@ -243,8 +243,8 @@ export function proofFunnelCopy(market: MarketId): ProofFunnelCopy {
         k: "03",
         t: "You interview. We stay on.",
         d: m.au
-          ? `You meet people on video and decide. Once you hire, we handle onboarding, ${m.admin}, and the time tracker.`
-          : `You meet people on video and decide. Once you hire, we handle onboarding, ${m.admin}, and the time tracker.`,
+          ? `You conduct a video interview with your chosen candidate. Once you hire, we handle onboarding, ${m.admin}, and the time tracker.`
+          : `You conduct a video interview with your chosen candidate. Once you hire, we handle onboarding, ${m.admin}, and the time tracker.`,
       },
     ],
     formEyebrow: "Employers only · obligation free",

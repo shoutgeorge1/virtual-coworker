@@ -139,6 +139,17 @@ describe("guided-match contract", () => {
     );
   });
 
+  it("requires company name on the shared employer contact step", () => {
+    const gate = readFileSync(
+      join(__dirname, "..", "app/components/GuidedMatchGate.tsx"),
+      "utf8",
+    );
+    expect(gate).toContain('name="company"');
+    expect(gate).toContain('htmlFor="gm-company"');
+    expect(gate).toContain("Enter your company name.");
+    expect(gate).toContain("Company website (optional)");
+  });
+
   it("keeps GuidedMatchGate defaults off unless baseline opts in", () => {
     const gate = readFileSync(
       join(__dirname, "..", "app/components/GuidedMatchGate.tsx"),

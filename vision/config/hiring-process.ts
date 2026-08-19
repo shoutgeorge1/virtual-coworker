@@ -35,7 +35,7 @@ export function hiringProcessSteps(market: MarketId): HiringProcessStep[] {
     {
       k: "03 · Pick",
       t: "Profiles, interviews, you choose",
-      d: "You receive candidate profiles with transparent hourly rates. Meet them on video. Nobody starts until you say yes.",
+      d: "You receive candidate profiles with transparent hourly rates. You conduct a video interview with your chosen candidate. Nobody starts until you say yes.",
     },
     {
       k: "04 · Go",

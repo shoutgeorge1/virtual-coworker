@@ -270,7 +270,7 @@ export function capacityChallengerCopy(market: MarketId): CapacityChallengerCopy
       },
       {
         title: "You interview. You choose.",
-        body: "We present vetted people. You meet them on video. Dedicated to your business, full-time or part-time, on your hours.",
+        body: "We present vetted people. You conduct a video interview with your chosen candidate. Dedicated to your business, full-time or part-time, on your hours.",
       },
     ],
     featuredQuoteIndex: FEATURED_QUOTE_INDEX,
@@ -292,7 +292,7 @@ export function capacityChallengerCopy(market: MarketId): CapacityChallengerCopy
       {
         k: "3",
         t: "Meet vetted candidates",
-        d: "After you are aligned, the Philippines team sources and vets. You meet people on video.",
+        d: "After you are aligned, the Philippines team sources and vets. You conduct a video interview with your chosen candidate.",
       },
       {
         k: "4",
@@ -494,7 +494,7 @@ export function teammateChallengerCopy(market: MarketId): CapacityChallengerCopy
       },
       {
         title: "You interview. You pick.",
-        body: "We source and vet. You meet people on video. Nobody starts until you say yes.",
+        body: "We source and vet. You conduct a video interview with your chosen candidate. Nobody starts until you say yes.",
       },
       {
         title: au ? "Employment admin handled" : "Payroll and HR handled",

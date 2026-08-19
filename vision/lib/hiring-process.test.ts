@@ -12,6 +12,10 @@ describe("hiring process copy", () => {
       expect(blob).toContain("hourly rates");
       expect(blob).toContain("time tracker");
       expect(blob).toContain("ongoing support");
+      expect(blob).toContain(
+        "you conduct a video interview with your chosen candidate",
+      );
+      expect(blob).not.toMatch(/meet (them|people) on video/);
       expect(blob).not.toMatch(/\bva\b/);
     }
   });

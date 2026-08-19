@@ -187,7 +187,7 @@ export function baselineHowSteps(market: MarketId): BaselineStep[] {
     {
       k: "3",
       t: "You interview and select",
-      d: "Meet finalists on video. Nobody starts without your yes.",
+      d: "You conduct a video interview with your chosen candidate. Nobody starts without your yes.",
     },
     {
       k: "4",
