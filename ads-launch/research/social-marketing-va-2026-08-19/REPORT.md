@@ -155,6 +155,8 @@ Preview stays noindex, no MarketGtm, form → `/api/lead-preview`. Live `employe
 
 Desktop/mobile H1 wrap: `.tf-h1` uses `clamp` + `22ch` + `overflow-wrap`. Long H1s wrap; they are not stuffed into one line.
 
+Local `next dev` on this branch 500s on every page because `vision/lib/tracking.ts` imports a missing `./conversion-assist`. Trust-first forms also import phone helpers that are not exported from `phone-format.ts`. Both were already true on `preview/trust-first-us-lps`. This expansion did not add those imports. Config tests for the new page passed (`vision/lib/trust-first.test.ts`).
+
 ## 11. Blocked by permissions
 
 - Google Ads Keyword Planner / Ads API: no credentials. Editor CSV only.
