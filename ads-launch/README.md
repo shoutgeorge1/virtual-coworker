@@ -1,5 +1,7 @@
 # Ads launch — Stage 1 v6 (local)
 
+**Social / Marketing VA expansion (2026-08-19, paused + preview only):** [`research/social-marketing-va-2026-08-19/REPORT.md`](./research/social-marketing-va-2026-08-19/REPORT.md) · Editor add-on [`google-ads-editor-social-marketing-va-us.csv`](./google-ads-editor-social-marketing-va-us.csv)
+
 **ChatGPT paste (start here):** [`CHATGPT-DEBRIEF.md`](./CHATGPT-DEBRIEF.md)  
 **Team email draft:** [`TEAM-UPDATE-EMAIL.md`](./TEAM-UPDATE-EMAIL.md) — paste to ChatGPT to polish  
 Deep audit: [`CHATGPT-MEGA-AUDIT.md`](./CHATGPT-MEGA-AUDIT.md)  

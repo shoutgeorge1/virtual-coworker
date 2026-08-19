@@ -1,0 +1,212 @@
+{
+  "generated_at": "2026-08-19",
+  "keyword_planner": {
+    "available": false,
+    "reason": "No Google Ads Keyword Planner / Ads API credentials in this environment. Ads API mutations are also disallowed (Editor CSV only)."
+  },
+  "public_volume_source": {
+    "name": "SEOpital VA keyword list (third-party, GLOBAL monthly searches, not official US Keyword Planner)",
+    "url": "https://www.seopital.co/blog/the-best-virtual-assistant-seo-keywords",
+    "note": "Use as directional only. US volume is a subset. 3-month / YoY / competition / bid ranges were not available."
+  },
+  "account_evidence_source": {
+    "keepers": "ads-launch/_evidence_search_terms.json",
+    "usa_st": "ads-launch/historical-performance-summary.json (Editor export ~2024-08-01 to 2026-08-04)",
+    "ga4": "xray/data/ga4-snapshot.json window 2026-08-10 to 2026-08-16",
+    "honesty": "Ads conversions are not Zoho-qualified employers. Count as traffic evidence, not lead quality."
+  },
+  "candidates": [
+    {
+      "keyword": "social media virtual assistant",
+      "global_monthly_volume_third_party": 1300,
+      "us_monthly_volume_keyword_planner": null,
+      "trend_3mo": null,
+      "trend_yoy": null,
+      "competition": null,
+      "top_of_page_low": null,
+      "top_of_page_high": null,
+      "account_evidence": {
+        "combined_clicks": 49,
+        "combined_conv": 3.2,
+        "combined_cost": 1346,
+        "usa_cost": 1095
+      },
+      "intent": "hire_social_va",
+      "employer_vs_jobseeker": "employer (jobs variant already appeared as waste)",
+      "match": "Exact + Phrase",
+      "ad_group": "Social_Media_VA_PH",
+      "launch": "LAUNCH NOW"
+    },
+    {
+      "keyword": "virtual marketing assistant",
+      "global_monthly_volume_third_party": 1600,
+      "account_evidence": {
+        "combined_clicks": 84,
+        "combined_conv": 6.0,
+        "combined_cost": 2152,
+        "usa_cost": 1086
+      },
+      "intent": "hire_marketing_va",
+      "employer_vs_jobseeker": "employer",
+      "match": "Exact + Phrase",
+      "ad_group": "Digital_Marketing_VA_PH",
+      "launch": "LAUNCH NOW"
+    },
+    {
+      "keyword": "marketing virtual assistant",
+      "global_monthly_volume_third_party": null,
+      "account_evidence": {
+        "combined_clicks": 35,
+        "combined_conv": 4.5,
+        "combined_cost": 1192,
+        "usa_cost": 727
+      },
+      "intent": "hire_marketing_va",
+      "employer_vs_jobseeker": "employer",
+      "match": "Exact + Phrase",
+      "ad_group": "Digital_Marketing_VA_PH",
+      "launch": "LAUNCH NOW"
+    },
+    {
+      "keyword": "digital marketing virtual assistant",
+      "global_monthly_volume_third_party": 880,
+      "account_evidence": {
+        "combined_clicks": 13,
+        "combined_conv": 1.0,
+        "combined_cost": 437,
+        "usa_cost": 242
+      },
+      "intent": "hire_marketing_va",
+      "employer_vs_jobseeker": "employer",
+      "match": "Exact + Phrase",
+      "ad_group": "Digital_Marketing_VA_PH",
+      "launch": "LAUNCH NOW"
+    },
+    {
+      "keyword": "marketing va",
+      "account_evidence": {
+        "combined_clicks": 18,
+        "combined_conv": 2.0,
+        "combined_cost": 639,
+        "usa_cost": 376
+      },
+      "intent": "hire_marketing_va",
+      "employer_vs_jobseeker": "employer, short head — Exact only if Phrase stays tight",
+      "match": "Exact",
+      "ad_group": "Digital_Marketing_VA_PH",
+      "launch": "LAUNCH NOW"
+    },
+    {
+      "keyword": "social media va",
+      "account_evidence": {
+        "combined_clicks": 28,
+        "combined_conv": 1.0,
+        "combined_cost": 1002
+      },
+      "intent": "hire_social_va",
+      "employer_vs_jobseeker": "mixed — keep Exact + Phrase, job negatives on",
+      "match": "Exact + Phrase",
+      "ad_group": "Social_Media_VA_PH",
+      "launch": "LAUNCH NOW"
+    },
+    {
+      "keyword": "social media assistant",
+      "account_evidence": {
+        "combined_clicks": 73,
+        "combined_conv": 1.0,
+        "combined_cost": 1089,
+        "usa_cost": 849
+      },
+      "intent": "role_title_mixed",
+      "employer_vs_jobseeker": "ambiguous / weak conversion",
+      "match": "do not add as Phrase",
+      "ad_group": "none",
+      "launch": "DO NOT LAUNCH YET"
+    },
+    {
+      "keyword": "social media marketing virtual assistant",
+      "global_monthly_volume_third_party": 140,
+      "account_evidence": null,
+      "intent": "hire_social_va",
+      "employer_vs_jobseeker": "employer, thin",
+      "match": "Exact only",
+      "ad_group": "Social_Media_VA_PH",
+      "launch": "TEST LIGHTLY (inside Social group, not its own group)"
+    },
+    {
+      "keyword": "lead generation virtual assistant",
+      "global_monthly_volume_third_party": 320,
+      "account_evidence": {
+        "combined_clicks": 11,
+        "combined_conv": 5.3,
+        "combined_cost": 331,
+        "usa_cost": 291
+      },
+      "intent": "sales_lead_gen_not_linkedin",
+      "employer_vs_jobseeker": "employer, but not a LinkedIn group",
+      "match": "leave with Sales / later discovery",
+      "ad_group": "none in this expansion",
+      "launch": "DO NOT LAUNCH YET as LinkedIn VA"
+    },
+    {
+      "keyword": "instagram virtual assistant",
+      "global_monthly_volume_third_party": null,
+      "account_evidence": "no keeper / no USA top employer ST. Only paused keywords hire instagram virtual assistant philippines, instagram manager philippines",
+      "intent": "platform_specific",
+      "employer_vs_jobseeker": "unknown, likely mixed",
+      "match": "none",
+      "ad_group": "none",
+      "launch": "DO NOT LAUNCH YET"
+    },
+    {
+      "keyword": "linkedin virtual assistant",
+      "global_monthly_volume_third_party": null,
+      "account_evidence": "no keeper / no USA top employer ST. Only paused outsource linkedin management philippines",
+      "intent": "platform_specific_or_lead_gen",
+      "employer_vs_jobseeker": "unknown",
+      "match": "none",
+      "ad_group": "none",
+      "launch": "DO NOT LAUNCH YET"
+    },
+    {
+      "keyword": "facebook virtual assistant",
+      "global_monthly_volume_third_party": null,
+      "account_evidence": "none in keepers",
+      "launch": "DO NOT LAUNCH YET"
+    },
+    {
+      "keyword": "tiktok virtual assistant",
+      "global_monthly_volume_third_party": null,
+      "account_evidence": "none",
+      "launch": "DO NOT LAUNCH YET"
+    },
+    {
+      "keyword": "tiktok shop virtual assistant",
+      "global_monthly_volume_third_party": null,
+      "account_evidence": "none",
+      "note": "Ecommerce/operator intent is interesting, but zero evidence. Do not invent a group.",
+      "launch": "DO NOT LAUNCH YET"
+    },
+    {
+      "keyword": "youtube virtual assistant",
+      "global_monthly_volume_third_party": null,
+      "account_evidence": "none",
+      "launch": "DO NOT LAUNCH YET"
+    },
+    {
+      "keyword": "pinterest virtual assistant",
+      "global_monthly_volume_third_party": null,
+      "account_evidence": "none",
+      "employer_vs_jobseeker": "high training / job-seeker risk if ever tested",
+      "launch": "DO NOT LAUNCH YET"
+    },
+    {
+      "keyword": "become a virtual assistant",
+      "global_monthly_volume_third_party": 4400,
+      "intent": "job_seeker",
+      "employer_vs_jobseeker": "job-seeker",
+      "match": "Campaign negative (new)",
+      "launch": "NEGATIVE"
+    }
+  ]
+}
