@@ -344,7 +344,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
       au: "Hire Philippines Administrative Support | Virtual Coworker AU",
     },
     description: {
-      us: "Inbox eating your week? Hire a dedicated Filipino virtual assistant or EA for US hours - typical admin around $8/hr. You interview.",
+      us: "Inbox eating your week? Hire a dedicated Filipino virtual assistant or EA for US hours - admin starting at $7/hour. You interview.",
       au: "Still doing the admin yourself? Hire a dedicated Filipino virtual assistant for Australian hours - you interview, we handle employment admin.",
     },
     variants: {
@@ -354,7 +354,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryCopy> = {
           au: "Still doing the admin yourself? Hire a dedicated Filipino virtual assistant.",
         },
         subhead: {
-          us: "Inbox, scheduling, and follow-ups eating leadership hours? We recruit and vet. You interview. Typical admin around $8 an hour.",
+          us: "Inbox, scheduling, and follow-ups eating leadership hours? We recruit and vet. You interview. Admin starting at $7/hour.",
           au: "Inbox, scheduling and follow-ups still landing back on you? We recruit. You interview. Australian hours - no lock-in from the first chat.",
         },
         primaryCta: "Book Your Free Consultation",

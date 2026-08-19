@@ -32,6 +32,7 @@ import {
   type PositionsId,
   type ScheduleId,
 } from "../../config/lead-value";
+import { GUIDED_MATCH_HOURS_MINIMUM_NOTE } from "../../config/guided-match";
 import {
   formatPhoneInput,
   normalizePhoneForStorage,
@@ -631,6 +632,7 @@ export default function LeadGate({
                         .join(" · ")}
                     </p>
                   ) : null}
+                  <p className="gate-hours-note">{GUIDED_MATCH_HOURS_MINIMUM_NOTE}</p>
                 </>
               ) : (
                 <fieldset className="gate-step gate-qualify">
@@ -672,6 +674,7 @@ export default function LeadGate({
                     ))}
                   </div>
                   <p className="gate-sublabel">Full-time or part-time?</p>
+                  <p className="gate-hours-note">{GUIDED_MATCH_HOURS_MINIMUM_NOTE}</p>
                   <div className="gate-chips" role="group" aria-label="Full-time or part-time">
                     {SCHEDULE_OPTIONS.map((o) => (
                       <button

@@ -121,6 +121,13 @@ describe("hours minimum on the shared gate", () => {
     expect(GUIDED_MATCH_HOURS_MINIMUM_NOTE).toBe("20 hours/week minimum.");
     expect(gate).toContain("GUIDED_MATCH_HOURS_MINIMUM_NOTE");
     expect(gate).toContain("Full-time or part-time");
+    expect(gate).toContain('name="company"');
+    const leadGate = readFileSync(
+      join(ROOT, "app/components/LeadGate.tsx"),
+      "utf8",
+    );
+    expect(leadGate).toContain("GUIDED_MATCH_HOURS_MINIMUM_NOTE");
+    expect(leadGate).toContain("Full-time or part-time?");
     const how = readFileSync(
       join(ROOT, "app/components/GuidedMatchLanding.tsx"),
       "utf8",

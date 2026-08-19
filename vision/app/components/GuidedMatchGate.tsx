@@ -41,7 +41,7 @@ type Props = {
   category?: CategorySlug | null;
   variant?: string;
   careersHref?: string;
-  /** Skip the role/hours quiz. Name, email, and phone are the first fields. */
+  /** Skip the role/hours quiz. Name, company, email, and phone are the first fields. */
   contactFirst?: boolean;
   contactHeading?: string;
   /** Hide 1 of 3 / progress until the visitor has entered the quiz. */
@@ -311,6 +311,9 @@ export default function GuidedMatchGate({
     if (!name) errs.name = "Enter your name.";
     if (!email) errs.email = "Enter your work email.";
     if (!phone.trim()) errs.phone = "Enter a phone number.";
+    if (!String(fd.get("company") || "").trim()) {
+      errs.company = "Enter your company name.";
+    }
     setFieldErrors(errs);
     setError("");
     if (Object.keys(errs).length) {
@@ -891,7 +894,7 @@ export default function GuidedMatchGate({
           </h2>
           {contactFirst ? (
             <p className="gm-hint">
-              Employers only. Name, email, and phone start a hiring conversation. Not an instant hire.
+              Employers only. Name, company, email, and phone start a hiring conversation. Not an instant hire.
             </p>
           ) : (
             <p className="gm-hint">{hiringSummary}</p>
@@ -962,6 +965,22 @@ export default function GuidedMatchGate({
             {fieldErrors.phone ? (
               <span className="gm-err" role="alert">
                 {fieldErrors.phone}
+              </span>
+            ) : null}
+
+            <label className="gm-label" htmlFor="gm-company">
+              Company name
+            </label>
+            <input
+              id="gm-company"
+              name="company"
+              autoComplete="organization"
+              aria-invalid={Boolean(fieldErrors.company)}
+              onFocus={markFormStarted}
+            />
+            {fieldErrors.company ? (
+              <span className="gm-err" role="alert">
+                {fieldErrors.company}
               </span>
             ) : null}
 

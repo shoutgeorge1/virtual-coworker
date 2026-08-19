@@ -60,6 +60,7 @@ describe("payload mapping", () => {
     expect(mapped.data.WBRAID).toBe("wbraid_xyz");
     expect(mapped.data.VC_Submission_ID).toBe("vc_us_test_1");
     expect(mapped.data.VC_Market).toBe("us");
+    expect(mapped.data.Company).toBe("Analytical Engines");
     expect(mapped.duplicateCheckFields).toEqual(["VC_Submission_ID"]);
   });
 

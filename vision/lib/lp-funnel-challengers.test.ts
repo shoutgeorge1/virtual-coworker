@@ -105,6 +105,19 @@ describe("offer and proof funnel pages", () => {
     expect(proofSrc).not.toContain("gm-hero-grid");
   });
 
+  it("uses natural video-interview language in hiring steps", () => {
+    const blob = JSON.stringify([
+      offerFunnelCopy("us"),
+      offerFunnelCopy("au"),
+      proofFunnelCopy("us"),
+      proofFunnelCopy("au"),
+    ]);
+    expect(blob).toContain(
+      "You conduct a video interview with your chosen candidate.",
+    );
+    expect(blob).not.toMatch(/You meet people on video/);
+  });
+
   it("does not use em dashes in funnel copy", () => {
     const blob = JSON.stringify([
       offerFunnelCopy("us"),
