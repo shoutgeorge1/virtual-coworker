@@ -8,7 +8,7 @@ vision/app/components/trust-first/    presentation
 vision/app/api/lead-preview/          preview form sink
 ```
 
-One template: `TrustFirstLanding`. Ten page configs. Two variants (`simple`, `proof_heavy`) from the same markup. Proof-heavy shows extra modules; it does not change H1, URL, or intent.
+One template: `TrustFirstLanding`. Twelve page configs. Two variants (`simple`, `proof_heavy`) from the same markup. Proof-heavy shows extra modules; it does not change H1, URL, or intent.
 
 Components: `CompanyHeader`, `TrustHero`, `EmployerQualificationForm`, `ProofStrip`, `RoleOrTaskCards`, `HowItWorks`, `WhyVirtualCoworker`, `EmployerComparison`, `CompanyProof`, `Testimonials`, `ObjectionHandling`, `FAQ`, `CompanyFooter`, `PreviewVariantToolbar`.
 

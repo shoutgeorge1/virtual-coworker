@@ -29,8 +29,8 @@ const BANNED_CLAIMS = [
 ];
 
 describe("trust-first preview family", () => {
-  it("covers the ten preview pages under the isolated namespace", () => {
-    expect(TRUST_FIRST_PAGE_KEYS).toHaveLength(10);
+  it("covers the twelve preview pages under the isolated namespace", () => {
+    expect(TRUST_FIRST_PAGE_KEYS).toHaveLength(12);
     for (const key of TRUST_FIRST_PAGE_KEYS) {
       const page = TRUST_FIRST_PAGES[key];
       expect(page.previewPath.startsWith(TRUST_FIRST_NAMESPACE)).toBe(true);
@@ -83,5 +83,21 @@ describe("trust-first preview family", () => {
   it("stamps a preview lp version", () => {
     expect(TRUST_FIRST_LP_VERSION).toContain("preview");
     expect(variantHref("/preview/trust-first/us", "proof_heavy")).toContain("v=proof");
+  });
+
+  it("adds VA-noun social and marketing pages without swapping live URLs", () => {
+    const social = TRUST_FIRST_PAGES["social-media-virtual-assistant"];
+    const marketing = TRUST_FIRST_PAGES["digital-marketing-virtual-assistant"];
+    expect(social.h1).toBe("Hire a Social Media Virtual Assistant From the Philippines");
+    expect(marketing.h1).toBe(
+      "Hire a Digital Marketing Virtual Assistant From the Philippines",
+    );
+    expect(social.currentProductionEquivalent).toBe("/us/social-media");
+    expect(marketing.currentProductionEquivalent).toBe("/us/digital-marketing");
+    expect(social.proposedProductionPath).toBe("/us/social-media-virtual-assistant");
+    expect(marketing.proposedProductionPath).toBe(
+      "/us/digital-marketing-virtual-assistant",
+    );
+    expect(TRUST_FIRST_PAGES["digital-marketing"].h1).not.toBe(marketing.h1);
   });
 });
