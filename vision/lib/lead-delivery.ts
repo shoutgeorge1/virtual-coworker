@@ -150,7 +150,7 @@ export function formatLeadEmailText(lead: LeadEmailFields): string {
   const name = [lead.firstName, lead.lastName].filter(Boolean).join(" ").trim() || "(none)";
   const lines: [string, string][] = [
     ["Name", name],
-    ["Email Address", lead.email || "(none)"],
+    ["Business Email Address", lead.email || "(none)"],
     ["Phone", lead.phone || "(none)"],
     ["Company", lead.company || "(none)"],
     ["Market", (lead.market || "").toUpperCase() || "(none)"],

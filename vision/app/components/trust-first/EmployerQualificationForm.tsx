@@ -53,7 +53,7 @@ export default function EmployerQualificationForm({ page, variant }: Props) {
     setError("");
 
     if (!name.trim() || !company.trim() || !email.trim() || !phone.trim()) {
-      setError("Company name, your name, work email, and a US phone are required.");
+      setError("Company name, your name, business email address, and a US phone are required.");
       return;
     }
 
@@ -146,7 +146,7 @@ export default function EmployerQualificationForm({ page, variant }: Props) {
             required
           />
 
-          <label htmlFor="tf-email">Work email</label>
+          <label htmlFor="tf-email">Business Email Address</label>
           <input
             id="tf-email"
             name="email"
