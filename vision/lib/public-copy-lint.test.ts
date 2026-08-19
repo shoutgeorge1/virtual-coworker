@@ -176,6 +176,8 @@ const PUBLIC_SURFACE_FILES = [
   "lib/job-seeker-exit.ts",
   "app/services/page.tsx",
   "app/us/page.tsx",
+  "app/us/real-estate/page.tsx",
+  "config/real-estate.ts",
   "app/au/page.tsx",
   "app/us/quiz/page.tsx",
   "app/au/quiz/page.tsx",

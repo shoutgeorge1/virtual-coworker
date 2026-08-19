@@ -190,5 +190,6 @@ export function sitemapPaths(): { path: string; priority: number }[] {
     paths.push({ path: `/us/${slug}`, priority: 0.9 });
     paths.push({ path: `/au/${slug}`, priority: 0.9 });
   }
+  paths.push({ path: "/us/real-estate", priority: 0.8 });
   return paths;
 }

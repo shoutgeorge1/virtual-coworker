@@ -18,6 +18,7 @@ import {
   baselineSharedCopy,
   baselineTrackingExtras,
   buildBaselineRoute,
+  type BaselineRouteConfig,
 } from "../../config/lp-baseline";
 import { clientMarksForMarket } from "../../config/site";
 import {
@@ -33,19 +34,27 @@ type Props = {
   market: MarketId;
   category?: CategorySlug | null;
   careersHref?: string;
+  /** Industry hub (US real-estate). Does not add a 10th paid category. */
+  routeOverride?: BaselineRouteConfig;
+  rolesHeading?: string;
+  trackingCategory?: string;
 };
 
 export default function StaffingBaselineLanding({
   market,
   category = null,
   careersHref = DEFAULT_CAREERS_URL,
+  routeOverride,
+  rolesHeading,
+  trackingCategory,
 }: Props) {
-  const cfg = buildBaselineRoute({ market, role: category });
+  const cfg = routeOverride || buildBaselineRoute({ market, role: category });
   const copy = baselineSharedCopy(market);
   const logos = clientMarksForMarket(market);
   const { featured, rest } = baselineQuotes(category);
   const extras = baselineTrackingExtras(cfg);
   const variant = BASELINE_LP_VARIANT;
+  const trackedCategory = trackingCategory || category || "";
 
   const gateHeadingRef = useRef<HTMLHeadingElement>(null);
   const quizCardRef = useRef<HTMLDivElement>(null);
@@ -53,7 +62,7 @@ export default function StaffingBaselineLanding({
 
   useEffect(() => {
     captureAttribution(market, {
-      category: category || "",
+      category: trackedCategory,
       variant,
       lp_variant: variant,
       lp_version: BASELINE_LP_VERSION,
@@ -63,7 +72,7 @@ export default function StaffingBaselineLanding({
         window.clearTimeout(pulseTimer.current);
       }
     };
-  }, [market, category, variant]);
+  }, [market, trackedCategory, variant]);
 
   function goToQuiz(
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -116,7 +125,7 @@ export default function StaffingBaselineLanding({
   function onPhone() {
     trackPhoneClick({
       market,
-      category: category || "",
+      category: trackedCategory,
       variant,
       ...extras,
     });
@@ -125,7 +134,7 @@ export default function StaffingBaselineLanding({
   function onPrimaryCta() {
     trackEvent("primary_cta_clicked", {
       market,
-      category: category || "",
+      category: trackedCategory,
       variant,
       destination: "#gate",
       ...extras,
@@ -136,7 +145,7 @@ export default function StaffingBaselineLanding({
     e.preventDefault();
     trackEvent("job_seeker_redirected", {
       market,
-      category: category || "",
+      category: trackedCategory,
       variant,
       intent: "job_seeker",
       destination: careersHref,
@@ -252,9 +261,11 @@ export default function StaffingBaselineLanding({
         <div className="gm-wrap">
           <p className="sp-eyebrow">{copy.rolesEyebrow}</p>
           <h2>
-            {category
-              ? `What this ${cfg.form_role.toLowerCase() || "role"} seat covers`
-              : copy.rolesTitle}
+            {rolesHeading
+              ? rolesHeading
+              : category
+                ? `What this ${cfg.form_role.toLowerCase() || "role"} seat covers`
+                : copy.rolesTitle}
           </h2>
           <p className="gm-lead">{copy.rolesLead}</p>
           <div className="sp-roles">
