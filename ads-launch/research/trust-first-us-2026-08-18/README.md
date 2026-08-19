@@ -10,6 +10,7 @@
 - Pages: `/preview/trust-first/{slug}`
 - Code: `vision/config/trust-first.ts` + `vision/app/components/trust-first/`
 - This folder: analysis, ads recommendation (read-only), QA notes
+- Social / Marketing VA add-on (19 Aug): `ads-launch/research/social-marketing-va-2026-08-19/`
 
 ## One next step
 

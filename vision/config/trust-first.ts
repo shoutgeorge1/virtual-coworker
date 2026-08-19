@@ -36,7 +36,9 @@ export type TrustFirstPageKey =
   | "customer-service"
   | "sales"
   | "administrative-support"
-  | "digital-marketing";
+  | "digital-marketing"
+  | "social-media-virtual-assistant"
+  | "digital-marketing-virtual-assistant";
 
 export type TrustFirstJobSeekerRisk = "low" | "medium" | "high";
 export type TrustFirstPageKind = "new" | "replacement" | "existing-challenger";
@@ -91,6 +93,8 @@ export const TRUST_FIRST_PAGE_KEYS: readonly TrustFirstPageKey[] = [
   "sales",
   "administrative-support",
   "digital-marketing",
+  "social-media-virtual-assistant",
+  "digital-marketing-virtual-assistant",
 ] as const;
 
 export const COMPANY_SIZE_OPTIONS = [
@@ -114,6 +118,7 @@ export const EMPLOYER_ROLE_OPTIONS = [
   "Customer service",
   "Sales support",
   "Digital marketing support",
+  "Social media support",
   "Real estate support",
   "Several roles / a small team",
   "Something else",
@@ -784,6 +789,116 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     pageKind: "replacement",
     recommendedStatus: "Challenger for a soft role URL (GA4 ~17 / 29.4% engaged).",
     notes: "Keep execution language. Do not promise agency-of-record outcomes.",
+    confidence: "observed",
+  }),
+
+  "social-media-virtual-assistant": page({
+    key: "social-media-virtual-assistant",
+    name: "Social media virtual assistant",
+    previewPath: `${TRUST_FIRST_NAMESPACE}/social-media-virtual-assistant`,
+    proposedProductionPath: "/us/social-media-virtual-assistant",
+    currentProductionEquivalent: "/us/social-media",
+    keywordCluster: "social media virtual assistant / social media VA / hire social media VA",
+    intendedCampaign: "VC_US_S_ROLES",
+    intendedAdGroup: "Social_Media_VA_PH (new, paused). Do not edit Social_Media_Hire_PH.",
+    title: "Hire a Social Media Virtual Assistant | Virtual Coworker",
+    description:
+      "Hire a dedicated social media virtual assistant from the Philippines. Scheduling, community replies, and reporting. You interview. We handle payroll.",
+    eyebrow: "Social media virtual assistants for US teams",
+    h1: "Hire a Social Media Virtual Assistant From the Philippines",
+    supporting:
+      "A dedicated teammate for scheduling, community replies, and the weekly reporting that slips. Virtual Coworker recruits and vets. You interview. This is a staffing hire, not a freelance poster and not a managed-ads retainers shop.",
+    heroBullets: [
+      "Scheduling, calendars, and publishing support",
+      "Comments, inbox triage, and basic reporting",
+      "You interview before anyone starts",
+    ],
+    trustStrip: [
+      `Staffing since ${TRUST_PROOF.sinceYear}`,
+      "Your US hours",
+      "You interview the shortlist",
+    ],
+    roles: [
+      { title: "Scheduling and calendars", body: "Plan and queue posts so channels do not go quiet when you are busy." },
+      { title: "Community and inbox support", body: "Comment and message triage in your voice. You keep the decisions that need a founder." },
+      { title: "Assets and Canva production", body: "Resize, organize, and build simple creatives from the brand files you already have." },
+      { title: "Repurposing and research", body: "Turn one piece of content into the next posts. Light research, not a strategy retainers pitch." },
+      { title: "Reporting", body: "The weekly snapshot so you are not rebuilding the same sheet." },
+    ],
+    faqs: [
+      {
+        q: "Do they run paid social ads for us?",
+        a: "This seat is a human assistant for scheduling, community, assets, and reporting. We are not selling a managed ads retainers package on this page.",
+      },
+      {
+        q: "Is this a freelance marketplace?",
+        a: "No. We recruit a dedicated person for the seat you described. You interview. After you hire, we employ them and handle payroll.",
+      },
+      {
+        q: "Are you hiring social media managers?",
+        a: "This page is for businesses hiring staff. If you want a job with Virtual Coworker, use the careers link.",
+      },
+      ...SHARED_FAQS.slice(1),
+    ],
+    formRoleDefault: "Social media support",
+    jobSeekerRisk: "medium",
+    pageKind: "new",
+    recommendedStatus: "Preview only. Launch-now candidate. Ads stay on live /us/social-media until this slug is promoted.",
+    notes:
+      "Account search terms already converted on social media virtual assistant and virtual social media assistant. Do not point ads at this preview URL.",
+    confidence: "observed",
+  }),
+
+  "digital-marketing-virtual-assistant": page({
+    key: "digital-marketing-virtual-assistant",
+    name: "Digital marketing virtual assistant",
+    previewPath: `${TRUST_FIRST_NAMESPACE}/digital-marketing-virtual-assistant`,
+    proposedProductionPath: "/us/digital-marketing-virtual-assistant",
+    currentProductionEquivalent: "/us/digital-marketing",
+    keywordCluster: "digital marketing virtual assistant / marketing VA / virtual marketing assistant",
+    intendedCampaign: "VC_US_S_ROLES",
+    intendedAdGroup: "Digital_Marketing_VA_PH (new, paused). Do not edit Digital_Marketing_Hire_PH.",
+    title: "Hire a Digital Marketing Virtual Assistant | Virtual Coworker",
+    description:
+      "Hire a dedicated digital marketing virtual assistant from the Philippines. Campaign support, email, CRM, and reporting. You interview. We handle payroll.",
+    eyebrow: "Digital marketing virtual assistants for US teams",
+    h1: "Hire a Digital Marketing Virtual Assistant From the Philippines",
+    supporting:
+      "Day-to-day marketing work needs an owner: campaign checklists, email sends, CRM updates, and reporting pulls. We recruit dedicated Filipino staff. You interview. Strategists stay on judgment work. This is not a promise that we run your ads account.",
+    heroBullets: [
+      "Campaign support, email, and CRM updates",
+      "Reporting and content publishing help",
+      "You interview before anyone joins",
+    ],
+    trustStrip: [
+      "Execution seat",
+      "Your tools",
+      "You decide who starts",
+    ],
+    roles: [
+      { title: "Campaign support", body: "Checklists, handoffs, and the coordination that stalls without an owner." },
+      { title: "Email and CRM", body: "List hygiene, routine sends, and the updates your closer should not be typing." },
+      { title: "Reporting", body: "Pulls and recaps so someone is not rebuilding the same dashboard every Friday." },
+      { title: "Content publishing", body: "Scheduling and asset coordination. Human assistant work, not a content-agency retainers pitch." },
+      { title: "SEO and research support", body: "Basic on-page updates and research against the brief you write. Not a ranking guarantee." },
+    ],
+    faqs: [
+      {
+        q: "Do you run Google or Meta ads for us?",
+        a: "We help you hire the person who owns the day-to-day work. We are not selling a managed ads retainers package on this page.",
+      },
+      {
+        q: "Is this a marketing agency retainers package?",
+        a: "No. We help you hire a dedicated marketing virtual assistant. Strategy and ad-account ownership stay with you or your agency.",
+      },
+      ...SHARED_FAQS.slice(1),
+    ],
+    formRoleDefault: "Digital marketing support",
+    jobSeekerRisk: "low",
+    pageKind: "new",
+    recommendedStatus: "Preview only. Launch-now candidate. Ads stay on live /us/digital-marketing until this slug is promoted.",
+    notes:
+      "virtual marketing assistant is the strongest historical term in this family. Leave the existing digital-marketing challenger untouched.",
     confidence: "observed",
   }),
 };
