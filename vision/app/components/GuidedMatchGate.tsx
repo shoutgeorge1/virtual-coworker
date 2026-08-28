@@ -309,7 +309,7 @@ export default function GuidedMatchGate({
     const email = String(fd.get("email") || "").trim();
     const errs: Record<string, string> = {};
     if (!name) errs.name = "Enter your name.";
-    if (!email) errs.email = "Enter your work email.";
+    if (!email) errs.email = "Enter your business email address.";
     if (!phone.trim()) errs.phone = "Enter a phone number.";
     setFieldErrors(errs);
     setError("");
@@ -923,7 +923,7 @@ export default function GuidedMatchGate({
               </div>
               <div>
                 <label className="gm-label" htmlFor="gm-email">
-                  Work email
+                  Business Email Address
                 </label>
                 <input
                   id="gm-email"

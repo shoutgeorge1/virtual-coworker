@@ -73,7 +73,7 @@ describe("lead delivery honesty", () => {
       submission_id: "vc_us_test",
     });
     expect(text).toContain("Name\n  Ada Lovelace");
-    expect(text).toContain("Email Address\n  ada@example.com");
+    expect(text).toContain("Business Email Address\n  ada@example.com");
     expect(text).toContain("GCLID\n  abc");
     expect(text).toContain("Submission ID\n  vc_us_test");
   });

@@ -105,11 +105,11 @@ export function validateEmployerLead(raw: LeadInput): ValidationResult {
     return {
       ok: false,
       code: "missing_fields",
-      reason: "name, work email, phone, and company are required",
+      reason: "name, business email address, phone, and company are required",
     };
   }
   if (!EMAIL_RE.test(email)) {
-    return { ok: false, code: "invalid_email", reason: "valid work email required" };
+    return { ok: false, code: "invalid_email", reason: "valid business email address required" };
   }
 
   const started = Number(raw.form_started_at || 0);

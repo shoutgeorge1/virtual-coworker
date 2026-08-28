@@ -312,7 +312,7 @@ export default function LeadGate({
   function validateClient(fd: FormData): Record<string, string> {
     const errs: Record<string, string> = {};
     if (!String(fd.get("name") || "").trim()) errs.name = "Enter your name.";
-    if (!String(fd.get("email") || "").trim()) errs.email = "Enter your work email.";
+    if (!String(fd.get("email") || "").trim()) errs.email = "Enter your business email address.";
     if (!phone.trim() && !String(fd.get("phone") || "").trim()) {
       errs.phone = "Enter a business phone.";
     }
