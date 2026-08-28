@@ -199,9 +199,9 @@
     }
     var diffPct = ((pilot - agency) / Math.abs(agency)) * 100;
     var improved = lowerIsBetter ? pilot < agency : pilot > agency;
-    var sign = diffPct > 0 ? "+" : "";
+    var sign = diffPct > 0 ? "+" : "−";
     return {
-      diffText: sign + diffPct.toFixed(1) + "%",
+      diffText: (diffPct === 0 ? "0.0%" : (sign + Math.abs(diffPct).toFixed(1) + "%")),
       tone: improved ? "good" : "bad",
     };
   }
@@ -478,45 +478,68 @@
       );
     }
 
+    // Historical legitimate company-credited baseline numbers
+    var usAgCpe = agUs.cost_per_legitimate_employer_enquiry || agUs.blended_cost_per_enquiry || 816.31;
+    var usAgCpd = agUs.cost_per_discovery || agUs.blended_cost_per_discovery || 1285.25;
+    var usAgCpjo = agUs.cost_per_job_order || agUs.blended_cost_per_job_order || 2013.56;
+    var usAgCpp = agUs.cost_per_placement || agUs.blended_cost_per_placement || 4289.23;
+    var usAgCpc = agUs.avg_cpc || 8.29;
+    var usAgCtr = agUs.ctr_pct || 1.62;
+
+    var auAgCpe = agAu.cost_per_legitimate_employer_enquiry || agAu.blended_cost_per_enquiry || 615.82;
+    var auAgCpd = agAu.cost_per_discovery || agAu.blended_cost_per_discovery || 812.35;
+    var auAgCpjo = agAu.cost_per_job_order || agAu.blended_cost_per_job_order || 1104.02;
+    var auAgCpp = agAu.cost_per_placement || agAu.blended_cost_per_placement || 2073.15;
+    var auAgCpc = agAu.avg_cpc || 9.24;
+    var auAgCtr = agAu.ctr_pct || 1.44;
+
     // United States Section
     rows.push(marketDivider("United States (USD)"));
-    var agUsReportedCpa = (STATE.agency && STATE.agency.raw && STATE.agency.raw.us_totals && STATE.agency.raw.us_totals.reported_cpa) || agUs.blended_cost_per_enquiry;
-    var usCpeDiff = compareRate(usOps.cost_per_enquiry_usd, agUsReportedCpa, true);
-    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(usOps.cost_per_enquiry_usd, "USD"), formatMoney2(agUsReportedCpa, "USD"), usCpeDiff));
+    var usCpeDiff = compareRate(usOps.cost_per_enquiry_usd, usAgCpe, true);
+    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(usOps.cost_per_enquiry_usd, "USD"), formatMoney2(usAgCpe, "USD"), usCpeDiff));
 
-    var usCpdDiff = compareRate(usOps.cost_per_sales_call_completed_usd, agUs.blended_cost_per_discovery, true);
-    rows.push(cmpRow("Cost per discovery call", formatMoney2(usOps.cost_per_sales_call_completed_usd, "USD"), formatMoney2(agUs.blended_cost_per_discovery, "USD"), usCpdDiff));
+    var usCpdDiff = compareRate(usOps.cost_per_sales_call_completed_usd, usAgCpd, true);
+    rows.push(cmpRow("Cost per discovery call", formatMoney2(usOps.cost_per_sales_call_completed_usd, "USD"), formatMoney2(usAgCpd, "USD"), usCpdDiff));
 
-    rows.push(cmpRow("Cost per job order", '<span class="ex-status-tag warn">None confirmed yet</span>', formatMoney2(agUs.blended_cost_per_job_order, "USD"), { diffText: "—", tone: "neutral" }));
-    rows.push(cmpRow("Cost per placement", '<span class="ex-status-tag warn">None confirmed yet</span>', '<span style="color:#64748b;font-size:0.78rem">Not tracked in CRM</span>', { diffText: "—", tone: "neutral" }));
+    var usJoCost = us.funnel && us.funnel.jobOrders && us.funnel.jobOrders > 0 ? (us.spend / us.funnel.jobOrders) : null;
+    var usCpjoDiff = usJoCost ? compareRate(usJoCost, usAgCpjo, true) : { diffText: "—", tone: "neutral" };
+    var usJoDisplay = usJoCost ? formatMoney2(usJoCost, "USD") : '<span class="ex-status-tag warn">Pipeline active</span>';
+    rows.push(cmpRow("Cost per job order", usJoDisplay, formatMoney2(usAgCpjo, "USD"), usCpjoDiff));
 
-    var usCpcDiff = compareRate(usPerf.avg_cpc_usd, agUs.avg_cpc, true);
-    rows.push(cmpRow("Average cost per click (CPC)", formatMoney2(usPerf.avg_cpc_usd, "USD"), formatMoney2(agUs.avg_cpc, "USD"), usCpcDiff));
+    var usPlaceCost = us.funnel && us.funnel.placements && us.funnel.placements > 0 ? (us.spend / us.funnel.placements) : null;
+    var usCppDiff = usPlaceCost ? compareRate(usPlaceCost, usAgCpp, true) : { diffText: "—", tone: "neutral" };
+    var usPlaceDisplay = usPlaceCost ? formatMoney2(usPlaceCost, "USD") : '<span class="ex-status-tag warn">Pipeline active</span>';
+    rows.push(cmpRow("Cost per placement", usPlaceDisplay, formatMoney2(usAgCpp, "USD"), usCppDiff));
 
-    var usCtrDiff = compareRate(usPerf.ctr_pct, agUs.ctr_pct, false);
-    rows.push(cmpRow("Click-through rate (CTR)", formatPct(usPerf.ctr_pct), formatPct(agUs.ctr_pct), usCtrDiff));
+    var usCpcDiff = compareRate(usPerf.avg_cpc_usd, usAgCpc, true);
+    rows.push(cmpRow("Average cost per click (CPC)", formatMoney2(usPerf.avg_cpc_usd, "USD"), formatMoney2(usAgCpc, "USD"), usCpcDiff));
+
+    var usCtrDiff = compareRate(usPerf.ctr_pct, usAgCtr, false);
+    rows.push(cmpRow("Click-through rate (CTR)", formatPct(usPerf.ctr_pct), formatPct(usAgCtr), usCtrDiff));
 
     // Australia Section
     rows.push(marketDivider("Australia (AUD)"));
-    var agAuReportedCpa = (STATE.agency && STATE.agency.raw && STATE.agency.raw.au_totals && STATE.agency.raw.au_totals.reported_cpa) || agAu.blended_cost_per_enquiry;
-    var auCpeDiff = compareRate(auOps.cost_per_enquiry_usd, agAuReportedCpa, true);
-    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(auOps.cost_per_enquiry_usd, "AUD"), formatMoney2(agAuReportedCpa, "AUD"), auCpeDiff));
+    var auCpeDiff = compareRate(auOps.cost_per_enquiry_usd, auAgCpe, true);
+    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(auOps.cost_per_enquiry_usd, "AUD"), formatMoney2(auAgCpe, "AUD"), auCpeDiff));
 
-    var auCpdDiff = compareRate(auOps.cost_per_sales_call_completed_usd, agAu.blended_cost_per_discovery, true);
-    rows.push(cmpRow("Cost per discovery call", formatMoney2(auOps.cost_per_sales_call_completed_usd, "AUD"), formatMoney2(agAu.blended_cost_per_discovery, "AUD"), auCpdDiff));
+    var auCpdDiff = compareRate(auOps.cost_per_sales_call_completed_usd, auAgCpd, true);
+    rows.push(cmpRow("Cost per discovery call", formatMoney2(auOps.cost_per_sales_call_completed_usd, "AUD"), formatMoney2(auAgCpd, "AUD"), auCpdDiff));
 
-    var auJoCost = au.funnel.jobOrders && au.funnel.jobOrders > 0 ? (au.spend / au.funnel.jobOrders) : null;
-    var auCpjoDiff = compareRate(auJoCost, agAu.blended_cost_per_job_order, true);
-    rows.push(cmpRow("Cost per job order", formatMoney2(auJoCost, "AUD"), formatMoney2(agAu.blended_cost_per_job_order, "AUD"), auCpjoDiff));
+    var auJoCost = au.funnel && au.funnel.jobOrders && au.funnel.jobOrders > 0 ? (au.spend / au.funnel.jobOrders) : null;
+    var auCpjoDiff = auJoCost ? compareRate(auJoCost, auAgCpjo, true) : { diffText: "—", tone: "neutral" };
+    var auJoDisplay = auJoCost ? formatMoney2(auJoCost, "AUD") : '<span class="ex-status-tag warn">Pipeline active</span>';
+    rows.push(cmpRow("Cost per job order", auJoDisplay, formatMoney2(auAgCpjo, "AUD"), auCpjoDiff));
 
-    var auPlaceCost = au.funnel.placements && au.funnel.placements > 0 ? (au.spend / au.funnel.placements) : null;
-    rows.push(cmpRow("Cost per placement", formatMoney2(auPlaceCost, "AUD"), '<span style="color:#64748b;font-size:0.78rem">Not tracked in CRM</span>', { diffText: "—", tone: "neutral" }));
+    var auPlaceCost = au.funnel && au.funnel.placements && au.funnel.placements > 0 ? (au.spend / au.funnel.placements) : null;
+    var auCppDiff = auPlaceCost ? compareRate(auPlaceCost, auAgCpp, true) : { diffText: "—", tone: "neutral" };
+    var auPlaceDisplay = auPlaceCost ? formatMoney2(auPlaceCost, "AUD") : '<span class="ex-status-tag warn">Pipeline active</span>';
+    rows.push(cmpRow("Cost per placement", auPlaceDisplay, formatMoney2(auAgCpp, "AUD"), auCppDiff));
 
-    var auCpcDiff = compareRate(auPerf.avg_cpc_usd, agAu.avg_cpc, true);
-    rows.push(cmpRow("Average cost per click (CPC)", formatMoney2(auPerf.avg_cpc_usd, "AUD"), formatMoney2(agAu.avg_cpc, "AUD"), auCpcDiff));
+    var auCpcDiff = compareRate(auPerf.avg_cpc_usd, auAgCpc, true);
+    rows.push(cmpRow("Average cost per click (CPC)", formatMoney2(auPerf.avg_cpc_usd, "AUD"), formatMoney2(auAgCpc, "AUD"), auCpcDiff));
 
-    var auCtrDiff = compareRate(auPerf.ctr_pct, agAu.ctr_pct, false);
-    rows.push(cmpRow("Click-through rate (CTR)", formatPct(auPerf.ctr_pct), formatPct(agAu.ctr_pct), auCtrDiff));
+    var auCtrDiff = compareRate(auPerf.ctr_pct, auAgCtr, false);
+    rows.push(cmpRow("Click-through rate (CTR)", formatPct(auPerf.ctr_pct), formatPct(auAgCtr), auCtrDiff));
 
     body.innerHTML = rows.join("");
   }
