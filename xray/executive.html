@@ -17,164 +17,187 @@
     <main class="main" id="ex-root">
       <div class="ex-loading" id="ex-loading">Loading executive performance…</div>
 
-      <!-- Header & Clean Period Controls -->
+      <!-- A. Header -->
       <header class="ex-header">
         <div class="ex-header-titles">
           <h1>Executive Performance</h1>
-          <p class="ex-subtitle" id="ex-period">—</p>
-          <p class="ex-fresh" id="ex-fresh">—</p>
+          <p class="ex-subtitle" id="ex-period">August 2026 · Month to Date</p>
+          <p class="ex-fresh" id="ex-fresh">Data through August 27 · Google Ads through August 27 · Sales outcomes confirmed by Cheyenne (US) and Holly (AU)</p>
         </div>
       </header>
 
-      <div class="ex-controls-bar">
-        <div class="ex-seg" role="tablist" aria-label="Reporting period">
-          <button type="button" class="on" data-ex-period="mtd" aria-pressed="true" id="tab-mtd">August 2026 Month to Date</button>
-          <button type="button" data-ex-period="prev" aria-pressed="false" id="tab-prev">July 2026 Pre-launch Baseline</button>
-        </div>
-      </div>
-
-      <!-- SECTION 1: Bottom Line (Single Unified Executive Briefing Card) -->
-      <section class="ex-section" aria-label="Bottom line executive summary">
-        <div class="ex-briefing-card">
+      <!-- B. Executive Verdict -->
+      <section class="ex-section" aria-label="Executive verdict">
+        <div class="ex-briefing-card" id="ex-verdict-card">
           <div class="ex-briefing-item">
-            <div class="ex-briefing-label">Results</div>
-            <div class="ex-briefing-text" id="ex-sum-perf">—</div>
+            <div class="ex-briefing-label">United States</div>
+            <div class="ex-briefing-text" id="ex-verdict-us">
+              Producing employer enquiries and completed discovery calls at substantially lower blended cost than the previous agency while operating at approximately 18% of the agency’s comparable spend pace. Downstream job orders still require sales validation.
+            </div>
           </div>
           <div class="ex-briefing-item">
-            <div class="ex-briefing-label">Tracking</div>
-            <div class="ex-briefing-text" id="ex-sum-conf">—</div>
+            <div class="ex-briefing-label">Australia</div>
+            <div class="ex-briefing-text" id="ex-verdict-au">
+              Producing confirmed activity through the entire funnel—18 enquiries, 12 completed discovery calls, 7 job orders and 4 placements—while operating at approximately 15% of the agency’s comparable spend pace.
+            </div>
           </div>
           <div class="ex-briefing-item">
-            <div class="ex-briefing-label">What we’re doing</div>
-            <div class="ex-briefing-text" id="ex-sum-dec">—</div>
+            <div class="ex-briefing-label">Current decision</div>
+            <div class="ex-briefing-text" id="ex-verdict-dec">
+              Continue the controlled ramp without changing bidding strategy. Validate the US pipeline and complete direct click-ID and phone-call tracking before aggressive scaling.
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- US Pipeline Notice (Prominent & Clear) -->
-      <div class="ex-pipeline-notice" id="ex-us-alert" role="alert">
-        <!-- Dynamically rendered based on US confirmation status -->
-      </div>
-
-      <!-- SECTION 2: US and Australia (Primary Leadership Scorecard) -->
-      <section class="ex-section" aria-label="US and Australia primary scorecard">
+      <!-- C. United States Scorecard -->
+      <section class="ex-section" aria-label="United States scorecard">
         <div class="ex-section-hd">
-          <h2>US and Australia</h2>
-          <span class="meta" id="ex-scorecard-meta">Side-by-side market scorecard · Google Ads search pilot vs historical agency baseline</span>
-        </div>
-        <div class="ex-market-grid" id="ex-market-scorecards">
-          <!-- Dynamically populated with side-by-side US and AU market cards -->
-        </div>
-        <p class="ex-observation-text" id="ex-main-observation">
-          <strong>Blended attribution note:</strong> All reported pilot unit costs use blended attribution (Google Ads spend ÷ confirmed outcomes). Because Google Ads is currently our primary marketing spend, blended metrics provide reliable directional decision-making for leadership while 1:1 click-ID (GCLID) tracking is being mapped across all landing page forms.
-        </p>
-      </section>
-
-      <!-- SECTION 3: Executive Spend & Efficiency Summary -->
-      <section class="ex-section" aria-label="Executive spend and efficiency comparison">
-        <div class="ex-section-hd">
-          <h2>Pilot vs recorded agency baseline</h2>
-          <span class="meta">Normalized monthly run-rate &amp; unit economic savings</span>
+          <div>
+            <h2>United States · USD</h2>
+            <p class="ex-section-sub">Google Search pilot compared with the two-year agency baseline</p>
+          </div>
         </div>
         <div class="ex-card ex-table-wrap">
-          <table class="ex-table ex-agency-table" id="ex-agency-table">
+          <table class="ex-table ex-scorecard-table" id="ex-us-table">
             <thead>
               <tr>
-                <th>Market</th>
-                <th class="num">Pilot Monthly Run-rate</th>
-                <th class="num">Agency Baseline Spend</th>
-                <th class="num">Monthly Spend Reduction</th>
-                <th class="num">Cost / Enquiry</th>
-                <th class="num">Cost / Discovery</th>
-                <th class="num">Cost / Job Order</th>
+                <th style="width: 28%;">Funnel metric</th>
+                <th class="num" style="width: 16%;">August MTD volume</th>
+                <th class="num" style="width: 18%;">Pilot blended cost</th>
+                <th class="num" style="width: 22%;">Agency blended baseline</th>
+                <th class="num" style="width: 16%;">Difference</th>
               </tr>
             </thead>
-            <tbody id="ex-agency-body">
-              <!-- Dynamically populated executive summary rows -->
+            <tbody id="ex-us-tbody">
+              <!-- Dynamically populated by executive.js -->
             </tbody>
           </table>
         </div>
-        <p class="ex-footnote-text">
-          Agency baseline reflects historical Google Ads spend ($724,880 USD in US; A$458,167 AUD in AU) credited against all legitimate company-wide CRM outcomes (excluding spam and job-seekers) across the 2-year prior agency management period.
-        </p>
+        <div class="ex-traffic-note" id="ex-us-traffic">
+          Supporting traffic efficiency: $3.22 CPC vs $8.29 agency · 9.4% CTR vs 1.6% agency
+        </div>
       </section>
 
-      <!-- SECTION 4: What We're Doing Next (Simple 3-item Action Plan) -->
-      <section class="ex-section" aria-label="Next steps and actions">
+      <!-- D. Australia Scorecard -->
+      <section class="ex-section" aria-label="Australia scorecard">
         <div class="ex-section-hd">
-          <h2>What we’re doing next</h2>
-          <span class="meta">Key priorities and fixes</span>
+          <div>
+            <h2>Australia · AUD</h2>
+            <p class="ex-section-sub">Google Search pilot compared with the two-year agency baseline</p>
+          </div>
         </div>
         <div class="ex-card ex-table-wrap">
-          <table class="ex-table ex-actions-table">
+          <table class="ex-table ex-scorecard-table" id="ex-au-table">
             <thead>
               <tr>
-                <th>Priority</th>
-                <th>Action</th>
-                <th>Why it matters</th>
-                <th>Status</th>
+                <th style="width: 28%;">Funnel metric</th>
+                <th class="num" style="width: 16%;">August MTD volume</th>
+                <th class="num" style="width: 18%;">Pilot blended cost</th>
+                <th class="num" style="width: 22%;">Agency blended baseline</th>
+                <th class="num" style="width: 16%;">Difference</th>
               </tr>
             </thead>
-            <tbody id="ex-actions-body">
-              <tr>
-                <td><strong>1. US pipeline review</strong></td>
-                <td>Confirm status of 16 completed discovery calls with Cheyenne.</td>
-                <td>Verifies whether discovery calls are converting to candidate interviews and job orders.</td>
-                <td><span class="ex-pill warn ex-pill-sm">In progress</span></td>
-              </tr>
-              <tr>
-                <td><strong>2. Ad click attribution fix</strong></td>
-                <td>Ensure landing page forms save ad click IDs (GCLID) into Zoho.</td>
-                <td>Required before scaling budgets or letting Google automatically optimize for leads.</td>
-                <td><span class="ex-pill warn ex-pill-sm">In progress</span></td>
-              </tr>
-              <tr>
-                <td><strong>3. Phone call tracking</strong></td>
-                <td>Pass caller identity and call outcomes from phone system into CRM.</td>
-                <td>Connects phone inquiries and booked consults directly to advertising spend.</td>
-                <td><span class="ex-pill ok ex-pill-sm">Reviewing</span></td>
-              </tr>
+            <tbody id="ex-au-tbody">
+              <!-- Dynamically populated by executive.js -->
             </tbody>
           </table>
         </div>
+        <div class="ex-traffic-note" id="ex-au-traffic">
+          Supporting traffic efficiency: A$4.77 CPC vs A$9.24 agency · 13.0% CTR vs 1.4% agency
+        </div>
       </section>
 
-      <!-- COLLAPSIBLE SUPPORTING DETAILS (For deep exploration without cluttering leadership view) -->
-      <div class="ex-details-group">
-        <details class="ex-details">
-          <summary>Detailed funnel and cost metrics</summary>
-          <div class="ex-details-bd" id="ex-deep-funnel">
-            <!-- Dynamically populated deep conversion rates & cost per JO/placement -->
+      <!-- E. Monthly Ramp History -->
+      <section class="ex-section" aria-label="Monthly ramp history">
+        <div class="ex-section-hd">
+          <div>
+            <h2>Pilot ramp by month</h2>
+            <p class="ex-section-sub">Month-by-month progression as pilot scales</p>
           </div>
-        </details>
-
-        <details class="ex-details">
-          <summary>Weekly trend (all weeks)</summary>
-          <div class="ex-details-bd" id="ex-trend-grid">
-            <!-- Weekly progression tables for US & AU -->
+        </div>
+        
+        <div class="ex-ramp-block">
+          <h3 class="ex-ramp-market-title"><span class="ex-mkt-tag us">US</span> United States <span class="ex-curr-badge">USD</span></h3>
+          <div class="ex-card ex-table-wrap">
+            <table class="ex-table ex-ramp-table" id="ex-ramp-us-table">
+              <thead>
+                <tr>
+                  <th style="width: 15%;">Month</th>
+                  <th class="num" style="width: 11%;">Spend</th>
+                  <th class="num" style="width: 11%;">Employer enquiries</th>
+                  <th class="num" style="width: 11%;">Completed calls</th>
+                  <th class="num" style="width: 10%;">Job orders</th>
+                  <th class="num" style="width: 10%;">Placements</th>
+                  <th class="num" style="width: 11%;">Cost/enquiry</th>
+                  <th class="num" style="width: 11%;">Cost/completed call</th>
+                  <th class="num" style="width: 10%;">Status</th>
+                </tr>
+              </thead>
+              <tbody id="ex-ramp-us-tbody">
+                <!-- Dynamically populated by executive.js -->
+              </tbody>
+            </table>
           </div>
-        </details>
+        </div>
 
-        <details class="ex-details">
-          <summary>Attribution &amp; tracking breakdown</summary>
-          <div class="ex-details-bd" id="ex-attrib-panel">
-            <!-- Reconciliation and data quality diagnostics -->
+        <div class="ex-ramp-block" style="margin-top: 1.5rem;">
+          <h3 class="ex-ramp-market-title"><span class="ex-mkt-tag au">AU</span> Australia <span class="ex-curr-badge">AUD</span></h3>
+          <div class="ex-card ex-table-wrap">
+            <table class="ex-table ex-ramp-table" id="ex-ramp-au-table">
+              <thead>
+                <tr>
+                  <th style="width: 15%;">Month</th>
+                  <th class="num" style="width: 11%;">Spend</th>
+                  <th class="num" style="width: 11%;">Employer enquiries</th>
+                  <th class="num" style="width: 11%;">Completed calls</th>
+                  <th class="num" style="width: 10%;">Job orders</th>
+                  <th class="num" style="width: 10%;">Placements</th>
+                  <th class="num" style="width: 11%;">Cost/enquiry</th>
+                  <th class="num" style="width: 11%;">Cost/completed call</th>
+                  <th class="num" style="width: 10%;">Status</th>
+                </tr>
+              </thead>
+              <tbody id="ex-ramp-au-tbody">
+                <!-- Dynamically populated by executive.js -->
+              </tbody>
+            </table>
           </div>
-        </details>
+        </div>
+      </section>
 
-        <details class="ex-details">
-          <summary>How these numbers are calculated (Blended attribution methodology)</summary>
-          <div class="ex-details-bd">
-            <ul class="ex-rules-list">
-              <li><strong>Blended Attribution:</strong> Google Ads represents our primary marketing spend. Unit costs (e.g. Cost per Enquiry, Cost per Discovery Call) divide total Google Ads investment by sales-confirmed employer outcomes in the period. While individual leads may not each carry a direct 1:1 click-ID attribution yet, blended attribution provides leadership with dependable directional insight into acquisition efficiency.</li>
-              <li><strong>Sales-Confirmed Outcomes:</strong> Sourced directly from Cheyenne Gichana (US) and Holly Wallace (AU) weekly reviews. Excludes non-employer contacts (job seekers, spam, and vendor solicitations).</li>
-              <li><strong>Lagging Funnel Dynamics:</strong> Discovery calls, job orders, and placements naturally mature 1–4 weeks after initial enquiries. Reported numbers reflect operational volume in the period rather than closed cohorts.</li>
-              <li><strong>Direct Click Attribution Progress:</strong> 1:1 click-ID capture (GCLID) is being instrumented across all website forms to pass directly into Zoho CRM, enabling granular channel ROAS reporting alongside blended performance.</li>
-            </ul>
+      <!-- F. Data Confidence & Next Action -->
+      <section class="ex-section" aria-label="Data confidence and next actions">
+        <div class="ex-section-hd">
+          <div>
+            <h2>Data confidence and next action</h2>
           </div>
-        </details>
-      </div>
+        </div>
+        <div class="ex-bottom-grid">
+          <div class="ex-card ex-bottom-card">
+            <h3 class="ex-bottom-card-hd">Methodology &amp; Tracking</h3>
+            <div class="ex-bottom-content">
+              <p>
+                <strong>Management reporting:</strong> Blended costs equal Google Ads spend divided by legitimate sales-confirmed employer outcomes during the reporting period. The same generous company-wide methodology is used for both the pilot and the historical agency baseline.
+              </p>
+              <p>
+                <strong>Optimization tracking:</strong> Direct GCLID and phone attribution remain incomplete and are not yet reliable enough for automated bidding decisions.
+              </p>
+            </div>
+          </div>
+          <div class="ex-card ex-bottom-card">
+            <h3 class="ex-bottom-card-hd">Next Actions</h3>
+            <div class="ex-bottom-content">
+              <ol class="ex-action-list">
+                <li><strong>Cheyenne:</strong> confirm outcomes from the 16 completed US discovery calls.</li>
+                <li><strong>Technical:</strong> pass GCLID, campaign and usable phone-call outcomes into Zoho.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <!-- Footer -->
       <footer class="ex-foot">
         <p class="ex-foot-text">
           Diagnostic tools:

@@ -1,7 +1,8 @@
 /**
- * Executive Performance — High-End Leadership Dashboard Styles
- * Focused on zero horizontal scrolling, calm spreadsheet aesthetic, generous spacing,
- * and high readability on standard laptop screens (1280px–1440px).
+ * Executive Performance — Leadership Dashboard Styles
+ *
+ * Designed for calm clarity, zero horizontal scroll, generous cell padding,
+ * and perfectly aligned tabular columns across US and AU scorecards.
  */
 
 :root {
@@ -26,12 +27,14 @@
   --ex-radius-sm: 4px;
 }
 
-/* Base override for executive page main container */
+/* Page Container Layout */
 body[data-page="executive.html"] .main {
-  max-width: 1240px;
+  max-width: 1200px;
   min-width: 0;
-  padding: 1.5rem 2rem 3.5rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* Loading & Error States */
@@ -39,7 +42,7 @@ body[data-page="executive.html"] .main {
 .ex-error {
   padding: 1.25rem 1.5rem;
   border-radius: var(--ex-radius);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   font-size: 0.92rem;
 }
 .ex-loading {
@@ -53,93 +56,61 @@ body[data-page="executive.html"] .main {
   color: var(--ex-bad);
 }
 
-/* Header */
+/* Header Section */
 .ex-header {
-  margin-bottom: 0.85rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--ex-border);
+  padding-bottom: 1.25rem;
 }
 .ex-header-titles h1 {
-  font-size: 1.65rem;
+  font-size: 1.85rem;
   font-weight: 700;
   color: var(--ex-text-main);
-  margin: 0 0 0.2rem 0;
+  margin: 0 0 0.35rem 0;
   letter-spacing: -0.025em;
   line-height: 1.2;
 }
 .ex-subtitle {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--ex-text-muted);
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.5rem 0;
   font-weight: 500;
 }
 .ex-fresh {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: var(--ex-text-dim);
   margin: 0;
   font-family: var(--mono, monospace);
-  line-height: 1.4;
-}
-
-/* Period Controls Bar */
-.ex-controls-bar {
-  margin-bottom: 1.25rem;
-}
-.ex-seg {
-  display: inline-flex;
-  background: #f1f5f9;
-  padding: 3px;
-  border-radius: 6px;
-  border: 1px solid var(--ex-border);
-}
-.ex-seg button {
-  background: transparent;
-  border: none;
-  padding: 0.45rem 0.95rem;
-  font-size: 0.84rem;
-  font-weight: 500;
-  color: #475569;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: inherit;
-}
-.ex-seg button:hover {
-  color: var(--ex-text-main);
-}
-.ex-seg button.on {
-  background: #ffffff;
-  color: var(--ex-text-main);
-  font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  line-height: 1.45;
 }
 
 /* Section Shell */
 .ex-section {
-  margin-bottom: 2.25rem;
+  margin-bottom: 2.75rem;
 }
 .ex-section-hd {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   border-bottom: 1px solid var(--ex-border);
-  padding-bottom: 0.45rem;
-  gap: 1rem;
+  padding-bottom: 0.5rem;
 }
 .ex-section-hd h2 {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--ex-text-main);
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
-.ex-section-hd .meta {
-  font-size: 0.8rem;
+.ex-section-sub {
+  font-size: 0.86rem;
   color: var(--ex-text-muted);
-  text-align: right;
-  flex-shrink: 0;
+  margin: 0.25rem 0 0 0;
+  font-weight: 400;
 }
 
-/* SECTION 1: Bottom Line Executive Briefing Card */
+/* Executive Verdict (Compact 3-Row Briefing) */
 .ex-briefing-card {
   background: var(--ex-card-bg);
   border: 1px solid var(--ex-border-strong);
@@ -149,54 +120,29 @@ body[data-page="executive.html"] .main {
 }
 .ex-briefing-item {
   display: grid;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: 180px 1fr;
   align-items: baseline;
-  gap: 1.5rem;
-  padding: 0.85rem 1.25rem;
+  gap: 1.75rem;
+  padding: 1.1rem 1.5rem;
   border-bottom: 1px solid var(--ex-border-subtle);
 }
 .ex-briefing-item:last-child {
   border-bottom: none;
 }
 .ex-briefing-label {
-  font-size: 0.8rem;
+  font-size: 0.86rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #475569;
+  letter-spacing: 0.02em;
+  color: #334155;
+  white-space: nowrap;
 }
 .ex-briefing-text {
-  font-size: 0.9rem;
-  line-height: 1.55;
+  font-size: 0.92rem;
+  line-height: 1.6;
   color: #1e293b;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-.ex-briefing-p {
-  margin: 0;
-  line-height: 1.55;
 }
 
-/* US Pipeline Notice */
-.ex-pipeline-notice {
-  display: none;
-  padding: 0.85rem 1.25rem;
-  border-radius: var(--ex-radius-sm);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
-}
-.ex-pipeline-notice.warn {
-  background: var(--ex-warn-bg);
-  border: 1px solid var(--ex-warn-border);
-  color: #92400e;
-}
-.ex-pipeline-notice strong {
-  color: #78350f;
-}
-
-/* Tables & Card Shells — Zero Horizontal Scrolling */
+/* Cards & Tables */
 .ex-card {
   background: var(--ex-card-bg);
   border: 1px solid var(--ex-border);
@@ -206,31 +152,34 @@ body[data-page="executive.html"] .main {
 }
 .ex-table-wrap {
   width: 100%;
-  overflow-x: hidden; /* No scrollbar on standard desktop screens */
+  overflow-x: hidden;
 }
 .ex-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   text-align: left;
   table-layout: fixed;
 }
 .ex-table th {
   background: var(--ex-hdr-bg);
-  padding: 0.65rem 0.75rem;
+  padding: 0.85rem 1.15rem;
   font-weight: 600;
-  font-size: 0.76rem;
+  font-size: 0.8rem;
   color: #475569;
   border-bottom: 1px solid var(--ex-border);
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 .ex-table td {
-  padding: 0.6rem 0.75rem;
+  padding: 0.85rem 1.15rem;
   border-bottom: 1px solid var(--ex-border-subtle);
   color: var(--ex-text-main);
   vertical-align: middle;
+  line-height: 1.45;
+  box-sizing: border-box;
 }
 .ex-table tbody tr:hover {
   background: #f8fafc;
@@ -241,40 +190,76 @@ body[data-page="executive.html"] .main {
 .ex-table .num {
   text-align: right;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
+
+/* Monospace text */
 .font-mono {
   font-family: var(--mono, monospace);
-  font-size: 0.83rem;
+  font-size: 0.88rem;
   letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Column Proportioning for Section 3 Summary Table */
-.ex-agency-table th:nth-child(1), .ex-agency-table td:nth-child(1) { width: 20%; }
-.ex-agency-table th:nth-child(2), .ex-agency-table td:nth-child(2) { width: 14%; }
-.ex-agency-table th:nth-child(3), .ex-agency-table td:nth-child(3) { width: 14%; }
-.ex-agency-table th:nth-child(4), .ex-agency-table td:nth-child(4) { width: 18%; }
-.ex-agency-table th:nth-child(5), .ex-agency-table td:nth-child(5) { width: 11%; }
-.ex-agency-table th:nth-child(6), .ex-agency-table td:nth-child(6) { width: 11%; }
-.ex-agency-table th:nth-child(7), .ex-agency-table td:nth-child(7) { width: 12%; }
+/* Exact Column Proportions for Scorecards: 28% | 16% | 18% | 22% | 16% */
+.ex-scorecard-table th:nth-child(1), .ex-scorecard-table td:nth-child(1) { width: 28%; }
+.ex-scorecard-table th:nth-child(2), .ex-scorecard-table td:nth-child(2) { width: 16%; }
+.ex-scorecard-table th:nth-child(3), .ex-scorecard-table td:nth-child(3) { width: 18%; }
+.ex-scorecard-table th:nth-child(4), .ex-scorecard-table td:nth-child(4) { width: 22%; }
+.ex-scorecard-table th:nth-child(5), .ex-scorecard-table td:nth-child(5) { width: 16%; }
 
-/* Column Proportioning for Section 4 Action Plan Table */
-.ex-actions-table th:nth-child(1), .ex-actions-table td:nth-child(1) { width: 22%; }
-.ex-actions-table th:nth-child(2), .ex-actions-table td:nth-child(2) { width: 33%; }
-.ex-actions-table th:nth-child(3), .ex-actions-table td:nth-child(3) { width: 32%; }
-.ex-actions-table th:nth-child(4), .ex-actions-table td:nth-child(4) { width: 13%; }
+/* Traffic Efficiency Note */
+.ex-traffic-note {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1.15rem;
+  font-size: 0.84rem;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid var(--ex-border-subtle);
+  border-radius: var(--ex-radius-sm);
+  line-height: 1.45;
+}
+
+/* Monthly Ramp Section */
+.ex-ramp-block {
+  margin-bottom: 1.75rem;
+}
+.ex-ramp-market-title {
+  margin: 0 0 0.65rem 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ex-text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Proportions for Monthly Ramp Table */
+.ex-ramp-table th, .ex-ramp-table td {
+  padding: 0.8rem 0.95rem;
+  font-size: 0.86rem;
+}
+.ex-ramp-table th:nth-child(1), .ex-ramp-table td:nth-child(1) { width: 15%; }
+.ex-ramp-table th:nth-child(2), .ex-ramp-table td:nth-child(2) { width: 11%; }
+.ex-ramp-table th:nth-child(3), .ex-ramp-table td:nth-child(3) { width: 11%; }
+.ex-ramp-table th:nth-child(4), .ex-ramp-table td:nth-child(4) { width: 11%; }
+.ex-ramp-table th:nth-child(5), .ex-ramp-table td:nth-child(5) { width: 10%; }
+.ex-ramp-table th:nth-child(6), .ex-ramp-table td:nth-child(6) { width: 10%; }
+.ex-ramp-table th:nth-child(7), .ex-ramp-table td:nth-child(7) { width: 11%; }
+.ex-ramp-table th:nth-child(8), .ex-ramp-table td:nth-child(8) { width: 11%; }
+.ex-ramp-table th:nth-child(9), .ex-ramp-table td:nth-child(9) { width: 10%; }
 
 /* Market Badge Tags */
 .ex-mkt-tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 1px 5px;
+  padding: 2px 6px;
   border-radius: 3px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-right: 0.35rem;
 }
 .ex-mkt-tag.us {
   background: #eff6ff;
@@ -291,46 +276,24 @@ body[data-page="executive.html"] .main {
   font-weight: 600;
   background: #f1f5f9;
   color: #475569;
-  padding: 1px 4px;
+  padding: 2px 5px;
   border-radius: 3px;
-  margin-left: 0.3rem;
   vertical-align: middle;
 }
 
 /* Status Tags */
 .ex-status-tag {
   display: inline-block;
-  padding: 1px 6px;
+  padding: 2px 7px;
   border-radius: 4px;
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 500;
   white-space: nowrap;
-}
-.ex-status-tag.warn {
-  background: #fef3c7;
-  color: #92400e;
 }
 .ex-status-tag.pending {
   background: #f1f5f9;
   color: #64748b;
-}
-
-/* Observations & Footnotes */
-.ex-observation-text {
-  margin: 0.75rem 0 0 0;
-  font-size: 0.84rem;
-  color: #475569;
-  line-height: 1.5;
-  background: #f8fafc;
-  padding: 0.65rem 0.9rem;
-  border-radius: 6px;
-  border: 1px solid var(--ex-border-subtle);
-}
-.ex-footnote-text {
-  margin: 0.65rem 0 0 0;
-  font-size: 0.8rem;
-  color: #64748b;
-  line-height: 1.45;
+  border: 1px solid #e2e8f0;
 }
 
 /* Delta Indicators */
@@ -344,174 +307,6 @@ body[data-page="executive.html"] .main {
 }
 .text-muted {
   color: var(--ex-text-muted) !important;
-}
-
-/* Side-by-Side Market Cards Grid */
-.ex-market-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.ex-market-card {
-  background: var(--ex-card-bg);
-  border: 1px solid var(--ex-border);
-  border-radius: var(--ex-radius);
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
-  display: flex;
-  flex-direction: column;
-}
-
-.ex-market-card-hd {
-  background: var(--ex-hdr-bg);
-  border-bottom: 1px solid var(--ex-border);
-  padding: 0.85rem 1rem 0.75rem;
-}
-
-.ex-market-card-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.65rem;
-}
-
-.ex-market-flag-title {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.ex-market-flag-title h3 {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--ex-text-main);
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.ex-lead-label {
-  font-size: 0.78rem;
-  color: var(--ex-text-muted);
-  font-weight: 500;
-}
-
-/* Market Spend Banner inside Card */
-.ex-market-spend-banner {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.35fr;
-  gap: 0.5rem;
-  background: #ffffff;
-  border: 1px solid var(--ex-border);
-  border-radius: 6px;
-  padding: 0.5rem 0.75rem;
-}
-
-.ex-spend-stat {
-  display: flex;
-  flex-direction: column;
-}
-
-.ex-spend-stat .ex-stat-lbl {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: #64748b;
-  letter-spacing: 0.03em;
-  line-height: 1.2;
-}
-
-.ex-spend-stat .ex-stat-val {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--ex-text-main);
-  margin-top: 0.15rem;
-}
-
-.ex-spend-stat .ex-stat-val.mute {
-  color: #64748b;
-  font-weight: 600;
-}
-
-.ex-spend-stat .ex-stat-val small {
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: #64748b;
-}
-
-.ex-spend-stat.highlight {
-  border-left: 1px solid var(--ex-border);
-  padding-left: 0.65rem;
-}
-
-.ex-market-card-table-wrap {
-  flex: 1;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-/* Column Proportioning for Scorecard Table inside Card */
-.ex-scorecard-table th:nth-child(1), .ex-scorecard-table td:nth-child(1) { width: 33%; }
-.ex-scorecard-table th:nth-child(2), .ex-scorecard-table td:nth-child(2) { width: 16%; }
-.ex-scorecard-table th:nth-child(3), .ex-scorecard-table td:nth-child(3) { width: 19%; }
-.ex-scorecard-table th:nth-child(4), .ex-scorecard-table td:nth-child(4) { width: 18%; }
-.ex-scorecard-table th:nth-child(5), .ex-scorecard-table td:nth-child(5) { width: 14%; }
-
-.ex-market-card-ft {
-  background: #f8fafc;
-  border-top: 1px solid var(--ex-border-subtle);
-  padding: 0.45rem 0.85rem;
-  font-size: 0.74rem;
-  color: #64748b;
-}
-
-/* Collapsible Details */
-.ex-details-group {
-  margin-top: 2.25rem;
-  border-top: 1px solid var(--ex-border);
-  padding-top: 1.5rem;
-}
-.ex-details {
-  background: #ffffff;
-  border: 1px solid var(--ex-border);
-  border-radius: 6px;
-  margin-bottom: 0.85rem;
-  overflow: hidden;
-}
-.ex-details summary {
-  padding: 0.75rem 1rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: #334155;
-  cursor: pointer;
-  background: #f8fafc;
-  user-select: none;
-}
-.ex-details summary:hover {
-  background: #f1f5f9;
-}
-.ex-details-bd {
-  padding: 1rem 1.25rem;
-  border-top: 1px solid var(--ex-border);
-  font-size: 0.86rem;
-}
-.ex-rules-list {
-  margin: 0;
-  padding-left: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  color: #334155;
-}
-.ex-rules-list li {
-  line-height: 1.5;
-}
-.ex-cell-note {
-  font-size: 0.8rem;
-  color: #64748b;
 }
 
 /* Pills */
@@ -535,15 +330,54 @@ body[data-page="executive.html"] .main {
 }
 .ex-pill-sm {
   font-size: 0.72rem;
-  padding: 1px 6px;
+  padding: 2px 7px;
+}
+
+/* Bottom 2-Column Section */
+.ex-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.ex-bottom-card {
+  padding: 1.25rem 1.5rem;
+}
+.ex-bottom-card-hd {
+  margin: 0 0 0.85rem 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ex-text-main);
+  border-bottom: 1px solid var(--ex-border-subtle);
+  padding-bottom: 0.5rem;
+}
+.ex-bottom-content {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #334155;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.ex-bottom-content p {
+  margin: 0;
+}
+.ex-action-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.ex-action-list li {
+  line-height: 1.55;
 }
 
 /* Footer */
 .ex-foot {
-  margin-top: 3rem;
-  padding-top: 1rem;
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
   border-top: 1px solid var(--ex-border);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   color: #94a3b8;
 }
 .ex-foot a {
@@ -555,22 +389,19 @@ body[data-page="executive.html"] .main {
   color: #0f172a;
 }
 
-/* Responsive Breakpoints */
-@media (max-width: 1100px) {
-  .ex-market-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 900px) {
+/* Responsive adjustments */
+@media (max-width: 960px) {
   body[data-page="executive.html"] .main {
-    padding: 1rem 1rem 2.5rem;
-  }
-  .ex-table-wrap {
-    overflow-x: auto;
+    padding: 1.25rem 1.25rem 3rem;
   }
   .ex-briefing-item {
     grid-template-columns: 1fr;
-    gap: 0.35rem;
+    gap: 0.4rem;
+  }
+  .ex-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+  .ex-table-wrap {
+    overflow-x: auto;
   }
 }
