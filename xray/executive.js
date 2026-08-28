@@ -12,7 +12,7 @@
   "use strict";
 
   var STATE = {
-    period: "mtd", // "mtd" | "prev" | "week" | "now"
+    period: "mtd", // "mtd" | "prev"
     snapshot: null,
     archiveW1: null,
     agency: null,
@@ -223,61 +223,21 @@
     var funnel = null;
     var ads = null;
 
-    if (periodKey === "mtd") {
-      bounds.start = "2026-08-01";
-      bounds.end = asOfDate();
-      bounds.label = "August 2026 to date";
-      bounds.partial = true;
-
-      funnel = sumSalesLabeled([w1, w2, w3], bounds.start, bounds.end, market);
-      ads = sumAdsByDate(by, bounds.start, bounds.end, cur);
-    } else if (periodKey === "prev") {
+    if (periodKey === "prev") {
       bounds.start = "2026-07-01";
       bounds.end = "2026-07-31";
-      bounds.label = "July 2026 (Pre-pilot)";
+      bounds.label = "July 2026 Pre-launch Baseline";
       bounds.partial = false;
       funnel = { enquiries: null, discoveries: null, jobOrders: null, placements: null, enquiriesPending: false, source: "None" };
       ads = null;
-    } else if (periodKey === "week") {
-      var ops = w2 || {};
-      bounds.start = ops.window_start || "2026-08-17";
-      bounds.end = ops.window_end || "2026-08-23";
-      bounds.label = ops.label || "Mon Aug 17 – Sun Aug 23";
+    } else {
+      bounds.start = "2026-08-01";
+      bounds.end = asOfDate();
+      bounds.label = "August 2026 Month to Date";
       bounds.partial = false;
 
-      funnel = sumSalesLabeled([ops], bounds.start, bounds.end, market);
+      funnel = sumSalesLabeled([w1, w2, w3], bounds.start, bounds.end, market);
       ads = sumAdsByDate(by, bounds.start, bounds.end, cur);
-      if (!ads && ops.spend_usd != null) {
-        ads = {
-          spend: ops.spend_usd,
-          clicks: ops.clicks || 0,
-          impressions: ops.impressions || 0,
-          ctrPct: ops.impressions > 0 ? (100 * (ops.clicks || 0)) / ops.impressions : null,
-          avgCpc: ops.avg_cpc_usd || null,
-          currency: cur,
-          source: "Ads",
-        };
-      }
-    } else if (periodKey === "now") {
-      var opsNow = w3 || {};
-      bounds.start = opsNow.window_start || "2026-08-24";
-      bounds.end = opsNow.window_end || "2026-08-25";
-      bounds.label = opsNow.label || "Mon Aug 24 – Tue Aug 25";
-      bounds.partial = true;
-
-      funnel = sumSalesLabeled([opsNow], bounds.start, bounds.end, market);
-      ads = sumAdsByDate(by, bounds.start, bounds.end, cur);
-      if (!ads && opsNow.spend_usd != null) {
-        ads = {
-          spend: opsNow.spend_usd,
-          clicks: opsNow.clicks || 0,
-          impressions: opsNow.impressions || 0,
-          ctrPct: opsNow.impressions > 0 ? (100 * (opsNow.clicks || 0)) / opsNow.impressions : null,
-          avgCpc: opsNow.avg_cpc_usd || null,
-          currency: cur,
-          source: "Ads",
-        };
-      }
     }
 
     var spend = ads ? ads.spend : null;
