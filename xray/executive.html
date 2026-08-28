@@ -4,849 +4,202 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>Executive · Virtual Coworker</title>
+  <title>Executive Performance · Virtual Coworker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="xray.css" />
-  <style>
-    body[data-page="executive.html"] .main {
-      max-width: 1120px;
-      font-variant-numeric: tabular-nums;
-    }
-    .dash-head { margin: 0 0 0.65rem; }
-    .dash-head h1 { margin: 0; font-size: 1.3rem; }
-    .dash-head .asof { margin: 0.25rem 0 0; font-size: 0.8rem; color: var(--muted); }
-    .mkt-block {
-      margin: 0 0 0.85rem;
-      padding: 0.85rem 1rem 1rem;
-      border-radius: 10px;
-      border: 1px solid var(--edge-soft);
-      background: var(--panel);
-    }
-    .mkt-block.us { border-color: var(--tint-green-edge); background: var(--tint-green); }
-    .mkt-block.au { border-color: var(--tint-cool-edge); background: var(--tint-cool); }
-    .mkt-block .mkt-hd {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.35rem 1rem;
-      margin: 0 0 0.55rem;
-    }
-    .mkt-block h2 {
-      margin: 0;
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .mkt-block .bud {
-      margin: 0;
-      font-size: 0.82rem;
-      color: var(--ink);
-      font-variant-numeric: tabular-nums;
-    }
-    .period {
-      margin: 0 0 0.55rem;
-    }
-    .period:last-child { margin-bottom: 0; }
-    .period h3 {
-      margin: 0 0 0.35rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .kpi-row {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 0.4rem;
-    }
-    @media (max-width: 900px) {
-      .kpi-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-    @media (max-width: 520px) {
-      .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    .kpi {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
-      min-height: 100%;
-      padding: 0.55rem 0.55rem 0.5rem;
-      border-radius: 8px;
-      border: 1px solid rgba(0,0,0,0.08);
-      background: rgba(255,255,255,0.72);
-    }
-    .kpi.kpi-emph {
-      border: 2px solid var(--accent-hot);
-      background: var(--tint-teal);
-      box-shadow: inset 3px 0 0 var(--accent-hot);
-      padding: 0.55rem 0.55rem 0.5rem;
-    }
-    .kpi.kpi-emph .k {
-      font-size: 0.74rem;
-      color: var(--accent-hot);
-    }
-    .kpi.kpi-emph .v {
-      font-size: 1.48rem;
-    }
-    .kpi .k {
-      display: block;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.15rem;
-      line-height: 1.2;
-      min-height: 1.55em;
-    }
-    .kpi .v {
-      display: block;
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: var(--ink);
-    }
-    .kpi .sub {
-      display: block;
-      margin-top: 0.22rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--muted);
-      line-height: 1.3;
-      white-space: normal;
-    }
-    .mkt-note {
-      margin: 0.55rem 0 0;
-      font-size: 0.84rem;
-      line-height: 1.4;
-      color: var(--ink);
-    }
-    .mkt-note .mute, .mkt-note.mute { font-size: 0.8rem; color: var(--muted); }
-    .why {
-      margin: 0.4rem 0 0;
-      font-size: 0.8rem;
-      line-height: 1.4;
-      color: var(--ink);
-    }
-    .cmp7 {
-      margin: 0.35rem 0 0;
-      font-size: 0.78rem;
-      line-height: 1.4;
-      color: var(--ink);
-    }
-    .week-group { margin: 0 0 0.45rem; }
-    .kpi-row.week-costs {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-bottom: 0.4rem;
-    }
-    .kpi-row.week-ads {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-    }
-    .week-costs .kpi,
-    .week-ads .kpi {
-      min-height: 4.85rem;
-    }
-    .week-costs .kpi-emph .k { font-size: 0.68rem; }
-    .week-costs .kpi-emph .v { font-size: 1.35rem; }
-    .week-ads .kpi .v { font-size: 1.18rem; }
-    @media (max-width: 900px) {
-      .kpi-row.week-ads { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-    @media (max-width: 520px) {
-      .kpi-row.week-costs { grid-template-columns: 1fr; }
-      .kpi-row.week-ads { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    .lead-cost { margin: 0.55rem 0 0.35rem; }
-    .lead-cost h3 {
-      margin: 0 0 0.35rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .src-chips {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.18rem 0.28rem;
-      margin: 0.28rem 0 0.05rem;
-    }
-    .src-chips-k {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-right: 0.1rem;
-    }
-    .src-chip {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 0.28rem;
-      max-width: 11rem;
-      padding: 0.1rem 0.38rem;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.07);
-      background: rgba(255,255,255,0.58);
-      font-size: 0.68rem;
-      line-height: 1.2;
-    }
-    .src-chip .src-l {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .src-chip .src-n { font-weight: 700; font-variant-numeric: tabular-nums; }
-    .prior-line { margin: 0.2rem 0 0; }
-    .zoho-census { margin: 0.2rem 0 0; }
-    .kpi-row.lead-kpi { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .kpi-row.lead-kpi.lead-kpi-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    @media (max-width: 900px) {
-      .kpi-row.lead-kpi.lead-kpi-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 520px) {
-      .kpi-row.lead-kpi { grid-template-columns: 1fr; }
-    }
-    details.today-demote {
-      margin: 0.35rem 0 0;
-      border: 1px dashed rgba(100,116,139,0.4);
-      border-radius: 8px;
-      background: rgba(255,255,255,0.35);
-    }
-    details.today-demote > summary {
-      cursor: pointer;
-      padding: 0.4rem 0.65rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      list-style: none;
-    }
-    details.today-demote > summary::-webkit-details-marker { display: none; }
-    details.today-demote .bd { padding: 0 0.55rem 0.55rem; }
-    .baseline {
-      margin: 0 0 0.85rem;
-      padding: 0.85rem 1rem 1rem;
-      border-radius: 10px;
-      border: 1px solid var(--tint-amber-edge);
-      background: var(--tint-amber);
-    }
-    /* Every section below the market cards wears the same header as the
-       market cards: small uppercase title left, quiet window right. */
-    .sec-hd {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.25rem 1rem;
-      margin: 0 0 0.6rem;
-    }
-    .sec-hd h2 {
-      margin: 0;
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .sec-hd .sec-meta {
-      margin: 0;
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-    }
-    .baseline .cmp {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-      font-variant-numeric: tabular-nums;
-    }
-    .baseline .cmp th, .baseline .cmp td {
-      text-align: left;
-      padding: 0.35rem 0.5rem;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-      vertical-align: top;
-    }
-    .baseline .cmp th {
-      font-size: 0.68rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-    .baseline .cmp th.num,
-    .baseline .cmp td.num {
-      text-align: right;
-      white-space: nowrap;
-    }
-    .baseline .cmp td:first-child { font-weight: 600; white-space: nowrap; }
-    .baseline .note { margin: 0.45rem 0 0; font-size: 0.8rem; color: var(--muted); }
-    .legacy-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.55rem;
-    }
-    .legacy-box {
-      margin: 0;
-      padding: 0.65rem 0.75rem 0.55rem;
-      border-radius: 8px;
-      border: 1px solid rgba(0,0,0,0.1);
-      background: rgba(255,255,255,0.72);
-    }
-    .legacy-box h3 {
-      margin: 0 0 0.35rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .legacy-box table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-    .legacy-box th, .legacy-box td {
-      padding: 0.28rem 0.2rem;
-      border-bottom: 1px solid rgba(0,0,0,0.07);
-    }
-    .legacy-box thead th {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-align: right;
-    }
-    .legacy-box thead th:first-child { text-align: left; }
-    .legacy-box th[scope="row"] {
-      text-align: left;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .legacy-box .num { text-align: right; }
-    .legacy-box td.this-w { font-weight: 700; color: var(--ink); }
-    .legacy-box td.leg-n { font-weight: 400; color: var(--muted); }
-    /* Legacy agency comparison — one column template for every band, so
-       This week / Legacy week / Δ stay in the same place all the way down. */
-    .baseline {
-      --cmp-cols: minmax(5rem, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-    }
-    .cmp-band { margin: 0 0 0.5rem; }
-    .cmp-band + .cmp-note + .cmp-band {
-      margin-top: 0.9rem;
-      padding-top: 0.9rem;
-      border-top: 1px solid rgba(0,0,0,0.12);
-    }
-    .cmp-band-hd {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.2rem 1rem;
-      margin: 0 0 0.3rem;
-      padding: 0 0.05rem;
-    }
-    .cmp-band-hd h3 {
-      margin: 0;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--ink);
-    }
-    .cmp-band-note { font-size: 0.72rem; color: var(--muted); }
-    .cmp-sheet {
-      display: grid;
-      grid-template-columns: var(--cmp-cols);
-      align-items: baseline;
-      column-gap: 0.75rem;
-      padding: 0.45rem 0.85rem 0.55rem;
-      border-radius: 8px;
-      border: 1px solid rgba(0,0,0,0.1);
-      background: rgba(255,255,255,0.72);
-      font-size: 0.88rem;
-      font-variant-numeric: tabular-nums;
-    }
-    .cmp-sheet .cell { padding: 0.16rem 0; min-width: 0; }
-    .cmp-sheet .num { text-align: right; }
-    .cmp-sheet .hd {
-      padding-bottom: 0.3rem;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-    }
-    .cmp-sheet .grp {
-      grid-column: 1 / -1;
-      margin-top: 0.4rem;
-      padding: 0.35rem 0 0.1rem;
-      border-top: 1px solid rgba(0,0,0,0.07);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .cmp-sheet .hd + .grp { margin-top: 0; border-top: none; }
-    .cmp-sheet .cm { font-weight: 600; color: var(--ink); }
-    .cmp-sheet .tw { font-weight: 700; color: var(--ink); }
-    .cmp-sheet .lg { font-weight: 400; color: var(--muted); }
-    .cmp-note {
-      margin: 0.3rem 0 0.75rem;
-      padding: 0 0.05rem;
-      font-size: 0.76rem;
-      line-height: 1.45;
-      color: var(--muted);
-    }
-    @media (max-width: 560px) {
-      .baseline { --cmp-cols: 4.2rem minmax(0, 1fr) minmax(0, 1fr) 5.4rem; }
-      .cmp-sheet { column-gap: 0.4rem; font-size: 0.82rem; }
-    }
-    .legacy-grid.ga4-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.4rem;
-    }
-    .ga4-grid .legacy-box {
-      padding: 0.55rem 0.6rem 0.45rem;
-      border-color: rgba(0,0,0,0.08);
-      background: rgba(255,255,255,0.72);
-    }
-    .ga4-grid .legacy-box h3 {
-      margin: 0 0 0.2rem;
-      font-size: 0.68rem;
-      min-height: 1.55em;
-    }
-    .ga4-grid .legacy-box table { font-size: 0.92rem; font-variant-numeric: tabular-nums; }
-    .ga4-grid .legacy-box th,
-    .ga4-grid .legacy-box td { padding: 0.16rem 0; border-bottom: none; }
-    .ga4-grid .legacy-box tr + tr th,
-    .ga4-grid .legacy-box tr + tr td { border-top: 1px solid rgba(0,0,0,0.06); }
-    .ga4-grid .legacy-box th[scope="row"] {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-    .ga4-now {
-      margin: 0 0 0.85rem;
-      padding: 0.85rem 1rem 1rem;
-      border-radius: 10px;
-      border: 1px solid var(--edge-soft);
-      background: var(--panel);
-    }
-    .windows {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.45rem 1rem;
-      margin: 1rem 0 0;
-      padding: 0.7rem 0 0;
-      border-top: 1px solid rgba(0,0,0,0.1);
-    }
-    .windows div { margin: 0; }
-    .windows dt {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .windows dd {
-      margin: 0.15rem 0 0;
-      font-size: 0.82rem;
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-    }
-    @media (max-width: 900px) {
-      .legacy-grid.ga4-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 720px) {
-      .legacy-grid { grid-template-columns: 1fr; }
-      .legacy-grid.sales-vol { grid-template-columns: 1fr; }
-      .legacy-grid.ga4-grid { grid-template-columns: 1fr 1fr; }
-      .windows { grid-template-columns: 1fr; }
-    }
-    .baseline .agency-econ { margin: 0 0 0.65rem; }
-    .baseline .agency-econ h3 { color: var(--ink); }
-    .halo {
-      margin: 0 0 0.85rem;
-      padding: 0.85rem 1rem 1rem;
-      border-radius: 10px;
-      border: 1px solid var(--tint-cool-edge);
-      background: var(--tint-cool);
-    }
-    .halo-frame {
-      margin: 0 0 0.4rem;
-      font-size: 0.8rem;
-      line-height: 1.35;
-      color: var(--muted);
-    }
-    .kpi-row.halo-kpi {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin: 0;
-    }
-    .halo-kpi .kpi { min-height: 4.85rem; }
-    @media (max-width: 900px) {
-      .kpi-row.halo-kpi { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-    @media (max-width: 520px) {
-      .kpi-row.halo-kpi { grid-template-columns: 1fr; }
-    }
-    .kpi.kpi-halo .v { font-size: 1.4rem; }
-    .halo .cmp, .halo-cmp {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-      font-variant-numeric: tabular-nums;
-    }
-    .halo .cmp th, .halo .cmp td,
-    .halo-cmp th, .halo-cmp td {
-      text-align: left;
-      padding: 0.35rem 0.5rem;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-      vertical-align: top;
-    }
-    .halo .cmp th, .halo-cmp th {
-      font-size: 0.68rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-    .halo .cmp th.num, .halo .cmp td.num,
-    .halo-cmp th.num, .halo-cmp td.num {
-      text-align: right;
-      white-space: nowrap;
-    }
-    .halo .cmp td:first-child, .halo-cmp td:first-child { font-weight: 600; white-space: nowrap; }
-    .halo .note { margin: 0.45rem 0 0; font-size: 0.8rem; color: var(--muted); }
-    .ga4-foot { margin: 0.55rem 0 0; }
-    details.calc-how {
-      margin: 0.7rem 0 0;
-      border: 1px dashed rgba(100,116,139,0.45);
-      border-radius: 8px;
-      background: rgba(255,255,255,0.35);
-    }
-    details.calc-how > summary {
-      cursor: pointer;
-      padding: 0.45rem 0.65rem;
-      font-weight: 600;
-      font-size: 0.82rem;
-      list-style: none;
-      color: var(--muted);
-    }
-    details.calc-how > summary::-webkit-details-marker { display: none; }
-    details.calc-how .bd { padding: 0 0.65rem 0.55rem; }
-    .delta-good { color: #166534; font-weight: 700; }
-    .delta-bad { color: #9f1239; font-weight: 700; }
-    .delta-flat { color: var(--muted); font-weight: 600; }
-    .mute { color: var(--muted); font-size: 0.8rem; }
-    details.ev {
-      margin: 0.5rem 0 0;
-      border: 1px dashed rgba(100,116,139,0.55);
-      border-radius: 8px;
-      background: var(--panel);
-    }
-    details.ev > summary {
-      cursor: pointer;
-      padding: 0.65rem 0.85rem;
-      font-weight: 700;
-      font-size: 0.92rem;
-      list-style: none;
-    }
-    details.ev > summary::-webkit-details-marker { display: none; }
-    details.ev .bd { padding: 0 0.85rem 0.85rem; border-top: 1px solid rgba(0,0,0,0.06); }
-    table.ev-t { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 0.45rem 0; }
-    table.ev-t th, table.ev-t td {
-      text-align: left; padding: 0.28rem 0.2rem;
-      border-bottom: 1px solid rgba(0,0,0,0.06); vertical-align: top;
-    }
-    table.ev-t th {
-      font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted);
-    }
-    .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .conf {
-      display: inline-block;
-      margin-left: 0.28rem;
-      padding: 0.02rem 0.32rem;
-      border-radius: 999px;
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      vertical-align: 0.12em;
-      line-height: 1.4;
-    }
-    .conf-v { background: #dcfce7; color: #166534; }
-    .conf-d { background: #e0e7ff; color: #3730a3; }
-    .conf-i { background: #fef3c7; color: #92400e; }
-    .conf-u { background: #f1f5f9; color: #475569; }
-    .conf-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem 0.7rem;
-      margin: 0.35rem 0 0.55rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
-    .disclose {
-      margin: 0 0 0.65rem;
-      font-size: 0.78rem;
-      line-height: 1.4;
-      color: var(--muted);
-    }
-    .exec-sum {
-      margin: 0 0 0.75rem;
-      padding: 0.55rem 0.85rem 0.55rem 1.2rem;
-      border-radius: 8px;
-      border: 1px solid var(--edge-soft);
-      background: var(--panel);
-      font-size: 0.86rem;
-      line-height: 1.4;
-    }
-    .exec-sum li { margin: 0 0 0.28rem; }
-    .exec-sum li:last-child { margin-bottom: 0; }
-    .funnel-k {
-      margin: 0.55rem 0 0.3rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .funnel {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .funnel li {
-      flex: 1 1 5.6rem;
-      min-width: 5.4rem;
-      padding: 0.35rem 0.4rem;
-      border-radius: 8px;
-      border: 1px solid rgba(0,0,0,0.08);
-      background: rgba(255,255,255,0.7);
-    }
-    .funnel .fn-k {
-      display: block;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: var(--muted);
-      line-height: 1.2;
-    }
-    .funnel .fn-n {
-      display: block;
-      font-size: 0.92rem;
-      font-weight: 700;
-      margin: 0.1rem 0;
-    }
-    .funnel .fn-miss { background: #f8fafc; }
-    .funnel .fn-inc { background: #fffbeb; }
-    .funnel .fn-dir { background: #eef2ff; }
-    .funnel-note { margin: 0.28rem 0 0; }
-    .crm-ready .st-ok { color: #166534; font-weight: 700; }
-    .crm-ready .st-rev { color: #92400e; font-weight: 700; }
-    .crm-ready .st-miss, .crm-ready .st-test { color: #475569; font-weight: 700; }
-    @media (max-width: 520px) {
-      .funnel li { flex: 1 1 46%; }
-      .conf { margin-left: 0.12rem; }
-    }
-  </style>
+  <link rel="stylesheet" href="executive.css" />
 </head>
-<body data-page="executive.html" data-foot="US · AU · baseline · baked">
+<body data-page="executive.html" data-foot="Executive · US + AU · Consolidated">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
-    <main class="main">
-      <header class="dash-head">
-        <h1>Executive</h1>
-        <p class="asof" id="asof">Mon Aug 10 – Sun Aug 16 · US $ · AU A$</p>
+    <main class="main" id="ex-root">
+      <div class="ex-loading" id="ex-loading">Loading executive performance data…</div>
+
+      <!-- Section A: Header & Reporting Controls -->
+      <header class="ex-header">
+        <div class="ex-header-titles">
+          <h1>Executive Performance</h1>
+          <p class="ex-subtitle" id="ex-period">—</p>
+          <p class="ex-fresh" id="ex-fresh">—</p>
+        </div>
+        <div class="ex-status-row" id="ex-status-row" aria-label="Market and attribution status"></div>
       </header>
 
-      <section class="mkt-block us" id="market-us" aria-label="United States">
-        <div class="mkt-hd">
-          <h2>United States</h2>
-          <p class="bud">Core $150 + Roles $100/day · Exact/Phrase · Max Clicks</p>
+      <div class="ex-controls-bar">
+        <div class="ex-seg" role="tablist" aria-label="Reporting period">
+          <button type="button" class="on" data-ex-period="mtd" aria-pressed="true" id="tab-mtd">Current month</button>
+          <button type="button" data-ex-period="prev" aria-pressed="false" id="tab-prev">Previous month</button>
+          <button type="button" data-ex-period="week" aria-pressed="false" id="tab-week">Last complete week</button>
+          <button type="button" data-ex-period="now" aria-pressed="false" id="tab-now">This week so far <span class="ex-tab-badge">partial</span></button>
         </div>
-        <div class="period week-group">
-          <h3>Mon Aug 10 – Sun Aug 16</h3>
-          <div class="kpi-row week-costs">
-          <div class="kpi kpi-emph"><span class="k">Cost / enquiry</span><span class="v num">$92.80</span><span class="sub">estimated</span></div>
-          <div class="kpi kpi-emph"><span class="k">Cost / completed call</span><span class="v num">$144.36</span><span class="sub">estimated</span></div>
-          <div class="kpi kpi-emph"><span class="k">Cost / JO</span><span class="v num">—</span><span class="sub">&nbsp;</span></div>
-          </div>
-          <div class="kpi-row week-ads">
-          <div class="kpi"><span class="k">Spend</span><span class="v num" id="us-spend">$1,299</span></div>
-          <div class="kpi"><span class="k">Clicks</span><span class="v num">444</span></div>
-          <div class="kpi"><span class="k">Impr.</span><span class="v num">4,123</span></div>
-          <div class="kpi"><span class="k">CTR</span><span class="v num">10.8%</span></div>
-          <div class="kpi"><span class="k">CPC</span><span class="v num">$2.93</span></div>
-          <div class="kpi"><span class="k">Ads conv</span><span class="v num">1</span></div>
-          </div>
-          <p class="mkt-note mute">14 enquiries · 9 completed calls · 4 looking for work · 2 not a fit · 1 PH job-seeker.</p>
-          <div class='src-chips' aria-label='Enquiry sources'><span class='src-chips-k'>Sources</span><span class='src-chip'><span class='src-l'>Google Organic</span><span class='src-n num'>8</span></span><span class='src-chip'><span class='src-l'>Bing Organic</span><span class='src-n num'>1</span></span><span class='src-chip'><span class='src-l'>Facebook</span><span class='src-n num'>2</span></span><span class='src-chip'><span class='src-l'>Referral Partner</span><span class='src-n num'>1</span></span><span class='src-chip'><span class='src-l'>Phone Call</span><span class='src-n num'>1</span></span><span class='src-chip'><span class='src-l'>Forbes</span><span class='src-n num'>1</span></span></div><p class='mute zoho-census'>Zoho census, same dates: 20 rows — a wider net over the same people, not extra enquiries.</p>
-        </div>
-      </section>
+      </div>
 
-      <section class="mkt-block au" id="market-au" aria-label="Australia">
-        <div class="mkt-hd">
-          <h2>Australia</h2>
-          <p class="bud">Core A$75 + Roles A$50/day</p>
-        </div>
-        <div class="period week-group">
-          <h3>Mon Aug 10 – Sun Aug 16</h3>
-          <div class="kpi-row week-costs">
-          <div class="kpi kpi-emph"><span class="k">Cost / enquiry</span><span class="v num">A$63.16</span><span class="sub">estimated</span></div>
-          <div class="kpi kpi-emph"><span class="k">Cost / booked call</span><span class="v num">A$442.10</span><span class="sub">estimated</span></div>
-          <div class="kpi kpi-emph"><span class="k">Cost / JO</span><span class="v num">A$294.73</span><span class="sub">estimated</span></div>
-          </div>
-          <div class="kpi-row week-ads">
-          <div class="kpi"><span class="k">Spend</span><span class="v num" id="au-spend">A$884</span></div>
-          <div class="kpi"><span class="k">Clicks</span><span class="v num">250</span></div>
-          <div class="kpi"><span class="k">Impr.</span><span class="v num">1,925</span></div>
-          <div class="kpi"><span class="k">CTR</span><span class="v num">13.0%</span></div>
-          <div class="kpi"><span class="k">CPC</span><span class="v num">A$3.54</span></div>
-          <div class="kpi"><span class="k">Ads conv</span><span class="v num">—</span></div>
-          </div>
-          <p class="mkt-note mute">14 enquiries · 2 discovery scheduled · 3 job orders.</p>
-          
-        </div>
-      </section>
+      <div class="ex-notice-box" id="ex-period-notice" role="status"></div>
 
-
-      <section class="halo" id="crm-activity" aria-label="Zoho this week">
-        <div class="sec-hd">
-          <h2>Zoho this week</h2>
-          <p class="sec-meta">Mon Aug 10 – Sun Aug 16 · every row Zoho created this week</p>
+      <!-- Section B: Executive Decision Summary (What leadership needs to know) -->
+      <section class="ex-section" aria-label="Executive decision summary">
+        <div class="ex-section-hd">
+          <h2>What leadership needs to know</h2>
+          <span class="meta" id="ex-summary-meta">30-second decision briefing</span>
         </div>
-        <div class="kpi-row halo-kpi">
-          <div class="kpi kpi-halo">
-            <span class="k">Sales Enquiries</span>
-            <span class="v num">38</span>
-            <span class="sub">US 20 · AU 14</span>
-          </div>
-          <div class="kpi kpi-halo">
-            <span class="k">Job Orders</span>
-            <span class="v num">4</span>
-            <span class="sub">US 1 · AU 3</span>
-          </div>
-          <div class="kpi kpi-halo">
-            <span class="k">Discovery scheduled</span>
-            <span class="v num">4</span>
-            <span class="sub">US 2 · AU 2</span>
-          </div>
-        </div>
-        <details class="calc-how">
-          <summary>July comparison (old)</summary>
-          <div class="bd">
-            <p class="note">July is older bookkeeping — not a fair before/after.</p>
-            <table class="cmp halo-cmp">
-              <thead>
-                <tr>
-                  <th>Metric</th>
-                  <th class="num">This flight</th>
-                  <th class="num">July</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Sales Enquiries</td>
-                  <td class="num">51</td>
-                  <td class="num mute">53</td>
-                </tr>
-                <tr>
-                  <td>Job Orders</td>
-                  <td class="num">18</td>
-                  <td class="num mute">26</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </details>
-      </section>
-
-
-      <details class="ev" id="crm-readiness">
-        <summary>CRM setup</summary>
-        <div class="bd">
-          <p class="mute">A named Zoho field is not the same as done.</p>
-          <table class="ev-t crm-ready">
-            <thead><tr><th>Check</th><th>Status</th><th>Evidence</th></tr></thead>
+        <div class="ex-card ex-summary-table-wrap">
+          <table class="ex-decision-table" aria-label="Executive summary rows">
             <tbody>
-              <tr><td>Destination CRM module</td><td class="st-rev">Needs review</td><td class="mute">Live CRM is WordPress + Zapier + humans. .app forms email us@ / apac@ — not writing to Zoho.</td></tr><tr><td>Employer vs job-seeker classification</td><td class="st-rev">Needs review</td><td class="mute">Cheyenne labels looking-for-work / PH job-seeker in email. Form gate exists in spec; not proven on every CRM row.</td></tr><tr><td>Persistent GCLID field</td><td class="st-miss">Missing</td><td class="mute">Dictionary has utm_gclid. Stage 1: 0 of 51 Sales Enquiries store a click ID. After ~5 Aug new Zoho rows stopped storing it.</td></tr><tr><td>Persistent GBRAID / WBRAID</td><td class="st-miss">Missing</td><td class="mute">No Zoho fields. Parked until writes turn on.</td></tr><tr><td>UTM fields</td><td class="st-test">Not tested</td><td class="mute">utm_source / medium / campaign exist in the dictionary. Stage 1 Zoho rows are mostly blank.</td></tr><tr><td>Original landing page</td><td class="st-test">Not tested</td><td class="mute">Mapped to Referring_URL in the draft. Not proven on Stage 1 rows.</td></tr><tr><td>Lead-created timestamp</td><td class="st-ok">Confirmed</td><td class="mute">Zoho Created_Time is what the halo census uses.</td></tr><tr><td>Deduplication rule</td><td class="st-miss">Missing</td><td class="mute">VC_Submission_ID does not exist yet.</td></tr><tr><td>Lifecycle stage definitions</td><td class="st-rev">Needs review</td><td class="mute">Zoho statuses exist (Discovery Scheduled, Job Order Submitted, etc.). Not a locked Stage 1 contract.</td></tr><tr><td>Sales ownership</td><td class="st-ok">Confirmed</td><td class="mute">Cheyenne Gichana = US. Holly Wallace = APAC / AU.</td></tr><tr><td>Qualified-lead definition</td><td class="st-rev">Needs review</td><td class="mute">No single documented qualified-employer definition on this scoreboard.</td></tr><tr><td>Job-order definition</td><td class="st-rev">Needs review</td><td class="mute">AU uses Zoho Job Order Submitted for the week. US JO was not named this week.</td></tr><tr><td>Placement definition</td><td class="st-miss">Missing</td><td class="mute">Not on the scoreboard. Do not treat JO as placement.</td></tr><tr><td>Offline conversion action mapping</td><td class="st-miss">Missing</td><td class="mute">Deferred during cold start. Do not import CRM outcomes into Ads yet.</td></tr><tr><td>Click-ID retention tested</td><td class="st-test">Not tested</td><td class="mute">0 gclid on Stage 1 Sales Enquiries.</td></tr><tr><td>Google Ads import tested</td><td class="st-test">Not tested</td><td class="mute">Offline import deferred. Not a green check because a Zapier action exists.</td></tr><tr><td>Legacy Zapier uploads audited</td><td class="st-rev">Needs review</td><td class="mute">Known inflated / thin JO upload vs real CRM job orders. Not a complete audit.</td></tr><tr><td>Documentation and owner assigned</td><td class="st-rev">Needs review</td><td class="mute">Field-map draft is parked. Writes remain OFF.</td></tr>
+              <tr>
+                <th scope="row" class="ex-decision-lbl">1. Performance</th>
+                <td class="ex-decision-body" id="ex-sum-perf">—</td>
+              </tr>
+              <tr>
+                <th scope="row" class="ex-decision-lbl">2. Data confidence</th>
+                <td class="ex-decision-body" id="ex-sum-conf">—</td>
+              </tr>
+              <tr>
+                <th scope="row" class="ex-decision-lbl">3. Current decision</th>
+                <td class="ex-decision-body" id="ex-sum-dec">—</td>
+              </tr>
             </tbody>
           </table>
         </div>
-      </details>
-
-      <section class="baseline" id="agency-baseline">
-        <div class="sec-hd">
-          <h2>Legacy agency comparison</h2>
-          <p class="sec-meta">This week vs their typical 7-day week</p>
-        </div>
-        <div class='cmp-band'><div class='cmp-band-hd'><h3>Ads</h3><span class='cmp-band-note'>Google Ads · both accounts</span></div><div class='cmp-sheet'><span class='cell hd'></span><span class='cell hd num'>This week</span><span class='cell hd num'>Legacy week</span><span class='cell hd num'>Δ</span><span class='cell grp'>CTR</span><span class='cell cm'>US</span><span class='cell num tw'>10.8%</span><span class='cell num lg'>1.6%</span><span class='cell num delta-good'>6.8×</span><span class='cell cm'>AU</span><span class='cell num tw'>13.0%</span><span class='cell num lg'>1.4%</span><span class='cell num delta-good'>9.0×</span><span class='cell grp'>CPC</span><span class='cell cm'>US</span><span class='cell num tw'>$2.93</span><span class='cell num lg'>$8.29</span><span class='cell num delta-good'>65% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$3.54</span><span class='cell num lg'>A$9.24</span><span class='cell num delta-good'>62% lower</span><span class='cell grp'>Spend</span><span class='cell cm'>US</span><span class='cell num tw'>$1,299</span><span class='cell num lg'>$6,913</span><span class='cell num delta-good'>81% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$884</span><span class='cell num lg'>A$4,369</span><span class='cell num delta-good'>80% lower</span><span class='cell grp'>Cost / JO</span><span class='cell cm'>US</span><span class='cell num tw'>—</span><span class='cell num lg'>$10,819</span><span class='cell num delta-flat'>—</span><span class='cell cm'>AU</span><span class='cell num tw'>A$294.73</span><span class='cell num lg'>A$12,727</span><span class='cell num delta-good'>98% lower</span></div></div>
-        <p class="cmp-note">Legacy cost / JO is agency spend ÷ the job orders in the Zapier CRM extract (67 US · 36 AU) — the whole extract we hold for those years, not a paid-only slice. US cost / JO this week is blank because ops did not name a US job order.</p>
-        <div class='cmp-band'><div class='cmp-band-hd'><h3>Sales</h3><span class='cmp-band-note'>Zoho rows · same week as the cards</span></div><div class='cmp-sheet'><span class='cell hd'></span><span class='cell hd num'>This week</span><span class='cell hd num'>Legacy week</span><span class='cell hd num'>Δ</span><span class='cell grp'>Enquiries</span><span class='cell cm'>US</span><span class='cell num tw'>20</span><span class='cell num lg'>9.8</span><span class='cell num delta-good'>2.0×</span><span class='cell cm'>AU</span><span class='cell num tw'>14</span><span class='cell num lg'>8.9</span><span class='cell num delta-good'>1.6×</span><span class='cell grp'>Job orders</span><span class='cell cm'>US</span><span class='cell num tw'>1</span><span class='cell num lg'>0.6</span><span class='cell num delta-good'>1.6×</span><span class='cell cm'>AU</span><span class='cell num tw'>3</span><span class='cell num lg'>0.3</span><span class='cell num delta-good'>8.7×</span><span class='cell grp'>Discovery</span><span class='cell cm'>US</span><span class='cell num tw'>2</span><span class='cell num lg'>0.3</span><span class='cell num delta-good'>6.4×</span><span class='cell cm'>AU</span><span class='cell num tw'>2</span><span class='cell num lg'>0.5</span><span class='cell num delta-good'>4.4×</span></div></div>
-        <p class="cmp-note">This-week Enquiries are the Zoho census (US 20 · AU 14) — same numbers as the Zoho box. Cheyenne’s 14 stays on the US card. Legacy enquiries are the agency&#x27;s own Google Ads lead-form conversions (Free Consultation Form Submitted [Original]), averaged over their run — Zoho has no Sales Enquiry history for most of that period.</p>
-        <dl class="windows">
-          <div><dt>This week</dt><dd>Mon Aug 10 – Sun Aug 16</dd></div>
-          <div><dt>Legacy agency</dt><dd>Aug 1, 2024 – Aug 4, 2026</dd></div>
-          <div><dt>GA4</dt><dd>Aug 10, 2026 – Aug 16, 2026</dd></div>
-        </dl>
       </section>
 
-      <section class="ga4-now" id="ga4" aria-label="Google Analytics">
-        <div class="sec-hd">
-          <h2>Google Analytics</h2>
-          <p class="sec-meta">Aug 10, 2026 – Aug 16, 2026</p>
+      <!-- Section C: US & Australia Market Scorecards -->
+      <section class="ex-section" aria-label="Market scorecards">
+        <div class="ex-section-hd">
+          <h2>Market scorecards</h2>
+          <span class="meta" id="ex-scorecard-meta">Spreadsheet view · Sales-confirmed business outcomes</span>
         </div>
-        <div class="legacy-grid ga4-grid"><div class="legacy-box"><h3>Sessions</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>554</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>149</td></tr></tbody></table></div><div class="legacy-box"><h3>Users</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>584</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>132</td></tr></tbody></table></div><div class="legacy-box"><h3>Stayed</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>39.2%</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>42.3%</td></tr></tbody></table></div><div class="legacy-box"><h3>Bounce</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>60.8%</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>57.7%</td></tr></tbody></table></div><div class="legacy-box"><h3>Paid search</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>384</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>109</td></tr></tbody></table></div><div class="legacy-box"><h3>Thank-you</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>4</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>4</td></tr></tbody></table></div><div class="legacy-box"><h3>Mobile</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>262</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—</td></tr></tbody></table></div><div class="legacy-box"><h3>Desktop</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>306</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—</td></tr></tbody></table></div><div class="legacy-box"><h3>Time on site</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>2m 23s</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>1m 33s</td></tr></tbody></table></div></div>
-        <p class="mute ga4-foot">No old-agency GA4 to compare.</p>
+        <div class="ex-card ex-table-wrap">
+          <table class="ex-table ex-scorecard-table" id="ex-scorecard-table">
+            <thead>
+              <tr>
+                <th class="ex-col-metric">Metric</th>
+                <th class="ex-col-us num">United States <span class="ex-curr-tag">USD</span></th>
+                <th class="ex-col-au num">Australia <span class="ex-curr-tag">AUD</span></th>
+                <th class="ex-col-notes">Reporting definition &amp; governance</th>
+              </tr>
+            </thead>
+            <tbody id="ex-scorecard-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
       </section>
 
-      <p class="mute"><a href="launch-control.html">Checklist → Launch steps</a></p>
-
-      <details class="ev" id="evidence">
-        <summary>Evidence (IS windows · JSON)</summary>
-        <div class="bd">
-          <h3 style="margin:0.55rem 0 0.25rem;font-size:0.88rem">US Search IS by window</h3>
-          <table class="ev-t">
-            <thead><tr><th>Window</th><th>Campaign</th><th class="num">IS</th><th class="num">Lost rank</th><th class="num">Lost budget</th><th class="num">Top</th><th class="num">Abs top</th></tr></thead>
-            <tbody><tr><td>last 2 complete days</td><td>VC_US_S_CORE</td><td class='num'>29.6%</td><td class='num'>58.7%</td><td class='num'>11.7%</td><td class='num'>20.0%</td><td class='num'>10.9%</td></tr>
-<tr><td>last 2 complete days</td><td>VC_US_S_ROLES</td><td class='num'>26.9%</td><td class='num'>67.5%</td><td class='num'>5.6%</td><td class='num'>17.1%</td><td class='num'>10.0%</td></tr>
-<tr><td>last 3 complete days</td><td>VC_US_S_CORE</td><td class='num'>29.2%</td><td class='num'>50.6%</td><td class='num'>20.2%</td><td class='num'>20.0%</td><td class='num'>10.9%</td></tr>
-<tr><td>last 3 complete days</td><td>VC_US_S_ROLES</td><td class='num'>26.0%</td><td class='num'>66.8%</td><td class='num'>7.1%</td><td class='num'>16.7%</td><td class='num'>10.0%</td></tr>
-<tr><td>last 7 complete days</td><td>VC_US_S_CORE</td><td class='num'>29.9%</td><td class='num'>38.8%</td><td class='num'>31.3%</td><td class='num'>19.9%</td><td class='num'>10.6%</td></tr>
-<tr><td>last 7 complete days</td><td>VC_US_S_ROLES</td><td class='num'>22.4%</td><td class='num'>66.8%</td><td class='num'>10.8%</td><td class='num'>13.7%</td><td class='num'>10.0%</td></tr></tbody>
-          </table>
-          <h3 style="margin:0.55rem 0 0.25rem;font-size:0.88rem">AU Search IS by window</h3>
-          <table class="ev-t">
-            <thead><tr><th>Window</th><th>Campaign</th><th class="num">IS</th><th class="num">Lost rank</th><th class="num">Lost budget</th><th class="num">Top</th><th class="num">Abs top</th></tr></thead>
-            <tbody><tr><td>last 2 complete days</td><td>VC_AU_S_CORE</td><td class='num'>34.5%</td><td class='num'>50.1%</td><td class='num'>15.4%</td><td class='num'>24.9%</td><td class='num'>14.4%</td></tr>
-<tr><td>last 2 complete days</td><td>VC_AU_S_ROLES</td><td class='num'>35.2%</td><td class='num'>58.8%</td><td class='num'>6.0%</td><td class='num'>24.1%</td><td class='num'>13.1%</td></tr>
-<tr><td>last 3 complete days</td><td>VC_AU_S_CORE</td><td class='num'>34.6%</td><td class='num'>38.1%</td><td class='num'>27.4%</td><td class='num'>25.1%</td><td class='num'>14.8%</td></tr>
-<tr><td>last 3 complete days</td><td>VC_AU_S_ROLES</td><td class='num'>30.0%</td><td class='num'>50.0%</td><td class='num'>20.0%</td><td class='num'>19.9%</td><td class='num'>11.9%</td></tr>
-<tr><td>last 7 complete days</td><td>VC_AU_S_CORE</td><td class='num'>33.2%</td><td class='num'>35.0%</td><td class='num'>31.8%</td><td class='num'>24.4%</td><td class='num'>14.6%</td></tr>
-<tr><td>last 7 complete days</td><td>VC_AU_S_ROLES</td><td class='num'>26.6%</td><td class='num'>46.9%</td><td class='num'>26.6%</td><td class='num'>17.6%</td><td class='num'>11.3%</td></tr></tbody>
-          </table>
-          <p class="mute">
-            <a href="data/executive-snapshot.json">executive-snapshot.json</a> ·
-            <a href="data/impression-share.json">impression-share.json</a> ·
-            <a href="recovery-audit">Recovery audit</a>
-          </p>
+      <!-- Section D: Trend Section -->
+      <section class="ex-section" aria-label="Pilot weekly progression">
+        <div class="ex-section-hd">
+          <h2>Weekly trend</h2>
+          <span class="meta">Complete pilot weeks + partial · USD &amp; AUD kept separate</span>
         </div>
-      </details>
+        <div class="ex-trend-grid" id="ex-trend-grid">
+          <!-- Dynamically populated US & AU trend tables -->
+        </div>
+      </section>
+
+      <!-- Section E: Pilot versus Recorded Legacy-Agency Baseline -->
+      <section class="ex-section" aria-label="Pilot versus recorded legacy-agency baseline">
+        <div class="ex-section-hd">
+          <h2>Pilot vs recorded legacy baseline</h2>
+          <span class="meta">Normalized rate comparison · Not raw multi-year totals</span>
+        </div>
+        <div class="ex-disclosure-banner">
+          <strong>Governance disclosure:</strong> Legacy funnel comparisons use recorded CRM outcomes under historically incomplete attribution and conversion governance. They are directional, not audited financial results. Rates from multi-year agency run are normalized to equivalent 7-day rates. USD and AUD are tracked separately.
+        </div>
+        <div class="ex-card ex-table-wrap">
+          <table class="ex-table ex-agency-table" id="ex-agency-table">
+            <thead>
+              <tr>
+                <th class="ex-col-metric">Metric</th>
+                <th class="ex-col-market">Market</th>
+                <th class="num">Search pilot</th>
+                <th class="num">Recorded legacy baseline</th>
+                <th class="num">Difference</th>
+                <th class="ex-col-conf">Confidence / Interpretation</th>
+              </tr>
+            </thead>
+            <tbody id="ex-agency-body">
+              <!-- Dynamically populated media & directional funnel rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section F: Data-Confidence and Attribution Panel -->
+      <section class="ex-section" aria-label="Data confidence and attribution panel">
+        <div class="ex-section-hd">
+          <h2>Data confidence &amp; attribution</h2>
+          <span class="meta">Reconciling 49 cumulative enquiries vs 31 census rows · Click-ID health</span>
+        </div>
+        <div class="ex-card ex-attrib-card" id="ex-attrib-panel">
+          <!-- Dynamically populated reconciliation, coverage, exclusions, phone status -->
+        </div>
+      </section>
+
+      <!-- Section G: Budget and Bidding Decisions -->
+      <section class="ex-section" aria-label="Budget and bidding decisions">
+        <div class="ex-section-hd">
+          <h2>Budget &amp; bidding governance</h2>
+          <span class="meta">Conservative hold · Do not optimize on unverified front-end conversions</span>
+        </div>
+        <div class="ex-card ex-table-wrap">
+          <table class="ex-table ex-decisions-table">
+            <thead>
+              <tr>
+                <th>Market</th>
+                <th>Current spend / budget</th>
+                <th>Bidding strategy</th>
+                <th>Decision</th>
+                <th>Strategic reason</th>
+                <th>Prerequisite before scaling</th>
+              </tr>
+            </thead>
+            <tbody id="ex-bidding-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section H: Current Blockers and Next Actions -->
+      <section class="ex-section" aria-label="Current blockers and next actions">
+        <div class="ex-section-hd">
+          <h2>Key blockers &amp; next actions</h2>
+          <span class="meta">Executive tracking · Deep forensics linked</span>
+        </div>
+        <div class="ex-card ex-table-wrap">
+          <table class="ex-table ex-blockers-table">
+            <thead>
+              <tr>
+                <th>Issue</th>
+                <th>Business consequence</th>
+                <th>Owner</th>
+                <th>Status</th>
+                <th>Next validation step</th>
+              </tr>
+            </thead>
+            <tbody id="ex-blockers-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer class="ex-foot">
+        <p class="ex-foot-text">
+          Diagnostic &amp; forensic tools:
+          <a href="sales-review.html">Sales review</a> ·
+          <a href="employer-signal-report.html">Employer signal</a> ·
+          <a href="phone-call-forensic.html">Phone forensic</a> ·
+          <a href="attribution.html">Funnel &amp; CRM</a> ·
+          <a href="rsa-review.html">Search ads</a> ·
+          <a href="executive-weekly.html">Weekly archive</a>
+        </p>
+      </footer>
     </main>
   </div>
   <script src="nav.js"></script>
+  <script src="executive.js"></script>
 </body>
 </html>
