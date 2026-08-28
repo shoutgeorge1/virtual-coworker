@@ -1,5 +1,5 @@
 /**
- * Executive Performance — Simplified Leadership Dashboard Renderer.
+ * Executive Performance — High-End Leadership Dashboard Renderer.
  *
  * Rules:
  * 1. Blended cost per enquiry = Google Ads spend ÷ sales-confirmed employer enquiries.
@@ -186,7 +186,7 @@
     return {
       enquiries: anyPending && enquiries == null ? null : enquiries,
       discoveries: discoveries,
-      jobOrders: jobOrders, // null if not explicitly reported
+      jobOrders: jobOrders,
       placements: placements,
       enquiriesPending: anyPending && enquiries == null,
       source: anyPending && enquiries == null ? "Pending" : "Sales labeled",
@@ -348,11 +348,6 @@
     var container = $("#ex-market-scorecards");
     if (!container) return;
 
-    var snap = STATE.snapshot || {};
-    var usPerf = (snap.performance_us || {}).totals_stage1_last_7_days || (snap.performance_us || {}).compare_7v7?.last_7 || {};
-    var auPerf = (snap.performance_au || {}).totals_stage1_last_7_days || (snap.performance_au || {}).compare_7v7?.last_7 || {};
-    
-    // Total impressions and clicks for MTD from ads sum
     var usAds = us.ads || {};
     var auAds = au.ads || {};
 
@@ -424,16 +419,16 @@
       if (!isPrev) {
         html += '  <div class="ex-market-spend-banner">';
         html += '    <div class="ex-spend-stat">';
-        html += '      <span class="ex-stat-lbl">Pilot Spend Run-rate</span>';
+        html += '      <span class="ex-stat-lbl">Pilot Run-rate</span>';
         html += '      <span class="ex-stat-val font-mono">' + formatMoney(monthlyRunRate, cur) + '<small>/mo</small></span>';
         html += '    </div>';
         html += '    <div class="ex-spend-stat">';
-        html += '      <span class="ex-stat-lbl">Agency Spend Baseline</span>';
+        html += '      <span class="ex-stat-lbl">Agency Baseline</span>';
         html += '      <span class="ex-stat-val font-mono mute">' + formatMoney(agMonthlySpend, cur) + '<small>/mo</small></span>';
         html += '    </div>';
         html += '    <div class="ex-spend-stat highlight">';
-        html += '      <span class="ex-stat-lbl">Monthly Spend Savings</span>';
-        html += '      <span class="ex-stat-val font-mono delta-good">−' + Math.round(spendSavingsPct) + '% <small>(' + formatMoney(agMonthlySpend - monthlyRunRate, cur) + '/mo saved)</small></span>';
+        html += '      <span class="ex-stat-lbl">Monthly Savings</span>';
+        html += '      <span class="ex-stat-val font-mono delta-good">−' + Math.round(spendSavingsPct) + '% <small class="text-muted">(−' + formatMoney(agMonthlySpend - monthlyRunRate, cur) + '/mo)</small></span>';
         html += '    </div>';
         html += '  </div>';
       }
@@ -443,11 +438,11 @@
       html += '<div class="ex-market-card-table-wrap">';
       html += '<table class="ex-table ex-scorecard-table">';
       html += '<thead><tr>';
-      html += '  <th>Funnel Stage / Metric</th>';
+      html += '  <th>Metric</th>';
       html += '  <th class="num">Volume</th>';
       html += '  <th class="num">Pilot (Blended)</th>';
       html += '  <th class="num">Agency Baseline</th>';
-      html += '  <th class="num">Efficiency / Δ</th>';
+      html += '  <th class="num">Savings / Δ</th>';
       html += '</tr></thead>';
       html += '<tbody>';
 
@@ -470,7 +465,7 @@
         html += '<tr>';
         html += '  <td><strong>Employer enquiries</strong></td>';
         html += '  <td class="num font-mono">' + enqVol + '</td>';
-        html += '  <td class="num font-mono">' + enqCost + '</td>';
+        html += '  <td class="num font-mono"><strong>' + enqCost + '</strong></td>';
         html += '  <td class="num font-mono text-muted">' + formatMoney2(agCpe, cur) + '</td>';
         html += '  <td class="num font-mono ' + (cpeDiff.tone === "good" ? "delta-good" : "") + '">' + cpeDiff.diffText + '</td>';
         html += '</tr>';
@@ -481,14 +476,14 @@
         html += '<tr>';
         html += '  <td><strong>Completed discovery calls</strong></td>';
         html += '  <td class="num font-mono">' + discVol + '</td>';
-        html += '  <td class="num font-mono">' + discCost + '</td>';
+        html += '  <td class="num font-mono"><strong>' + discCost + '</strong></td>';
         html += '  <td class="num font-mono text-muted">' + formatMoney2(agCpd, cur) + '</td>';
         html += '  <td class="num font-mono ' + (cpdDiff.tone === "good" ? "delta-good" : "") + '">' + cpdDiff.diffText + '</td>';
         html += '</tr>';
 
         // 4. Job Orders
         var joVol = data.funnel.jobOrders && data.funnel.jobOrders > 0 ? formatNum(data.funnel.jobOrders) : (market === "US" ? '<span class="ex-status-tag warn">None confirmed</span>' : (data.funnel.jobOrders === 0 ? "0" : "—"));
-        var joCost = joVal != null ? formatMoney2(joVal, cur) : (market === "US" ? '<span class="ex-status-tag warn">Pipeline active</span>' : "—");
+        var joCost = joVal != null ? '<strong>' + formatMoney2(joVal, cur) + '</strong>' : (market === "US" ? '<span class="ex-status-tag warn">Pipeline active</span>' : "—");
         var joDiffHtml = joDiff ? '<span class="' + (joDiff.tone === "good" ? "delta-good" : "") + '">' + joDiff.diffText + '</span>' : '<span class="ex-status-tag pending">Reviewing</span>';
         html += '<tr>';
         html += '  <td><strong>Confirmed job orders</strong></td>';
@@ -500,7 +495,7 @@
 
         // 5. Placements
         var plVol = data.funnel.placements && data.funnel.placements > 0 ? formatNum(data.funnel.placements) : (market === "US" ? '<span class="ex-status-tag warn">None confirmed</span>' : (data.funnel.placements === 0 ? "0" : "—"));
-        var plCost = plVal != null ? formatMoney2(plVal, cur) : (market === "US" ? '<span class="ex-status-tag warn">Pipeline active</span>' : "—");
+        var plCost = plVal != null ? '<strong>' + formatMoney2(plVal, cur) + '</strong>' : (market === "US" ? '<span class="ex-status-tag warn">Pipeline active</span>' : "—");
         var plDiffHtml = plDiff ? '<span class="' + (plDiff.tone === "good" ? "delta-good" : "") + '">' + plDiff.diffText + '</span>' : '<span class="ex-status-tag pending">Reviewing</span>';
         html += '<tr>';
         html += '  <td><strong>Confirmed placements</strong></td>';
@@ -515,7 +510,7 @@
         html += '<tr>';
         html += '  <td>Average cost per click (CPC)</td>';
         html += '  <td class="num font-mono text-muted">' + cpcClicks + '</td>';
-        html += '  <td class="num font-mono">' + (cpcVal != null ? formatMoney2(cpcVal, cur) : "—") + '</td>';
+        html += '  <td class="num font-mono"><strong>' + (cpcVal != null ? formatMoney2(cpcVal, cur) : "—") + '</strong></td>';
         html += '  <td class="num font-mono text-muted">' + formatMoney2(agCpc, cur) + '</td>';
         html += '  <td class="num font-mono ' + (cpcDiff.tone === "good" ? "delta-good" : "") + '">' + cpcDiff.diffText + '</td>';
         html += '</tr>';
@@ -525,7 +520,7 @@
         html += '<tr>';
         html += '  <td>Click-through rate (CTR)</td>';
         html += '  <td class="num font-mono text-muted">' + ctrImp + '</td>';
-        html += '  <td class="num font-mono">' + (ctrVal != null ? formatPct(ctrVal) : "—") + '</td>';
+        html += '  <td class="num font-mono"><strong>' + (ctrVal != null ? formatPct(ctrVal) : "—") + '</strong></td>';
         html += '  <td class="num font-mono text-muted">' + formatPct(agCtr) + '</td>';
         html += '  <td class="num font-mono ' + (ctrDiff.tone === "good" ? "delta-good" : "") + '">' + ctrDiff.diffText + '</td>';
         html += '</tr>';
@@ -625,34 +620,28 @@
     var usJoVal = us.funnel && us.funnel.jobOrders && us.funnel.jobOrders > 0 ? (usMtdSpend / us.funnel.jobOrders) : null;
     var auJoVal = au.funnel && au.funnel.jobOrders && au.funnel.jobOrders > 0 ? (auMtdSpend / au.funnel.jobOrders) : null;
 
-    var usCpeDiff = compareRate(usCpeVal, usAgCpe, true);
-    var auCpeDiff = compareRate(auCpeVal, auAgCpe, true);
-
-    var usCpdDiff = compareRate(usCpdVal, usAgCpd, true);
-    var auCpdDiff = compareRate(auCpdVal, auAgCpd, true);
-
     var rows = [];
 
     // US Row
     rows.push('<tr>' +
-      '<td><strong><span class="ex-mkt-tag us">US</span> United States ($ USD)</strong></td>' +
+      '<td><span class="ex-mkt-tag us">US</span> <strong>United States</strong></td>' +
       '<td class="num font-mono"><strong>' + formatMoney(usMonthlyRunRate, "USD") + '</strong>/mo</td>' +
       '<td class="num font-mono text-muted">' + formatMoney(usAgMonthlySpend, "USD") + '/mo</td>' +
-      '<td class="num font-mono delta-good">−' + Math.round(usSpendSavingsPct) + '% <small>(−' + formatMoney(usAgMonthlySpend - usMonthlyRunRate, "USD") + '/mo)</small></td>' +
-      '<td class="num font-mono">' + (usCpeVal ? formatMoney2(usCpeVal, "USD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(usAgCpe, "USD") + '</small></td>' +
-      '<td class="num font-mono">' + (usCpdVal ? formatMoney2(usCpdVal, "USD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(usAgCpd, "USD") + '</small></td>' +
-      '<td class="num font-mono">' + (usJoVal ? formatMoney2(usJoVal, "USD") : '<span class="ex-status-tag warn">Pipeline</span>') + ' <small class="text-muted">vs ' + formatMoney2(usAgCpjo, "USD") + '</small></td>' +
+      '<td class="num font-mono delta-good">−' + Math.round(usSpendSavingsPct) + '% <small class="text-muted">(−' + formatMoney(usAgMonthlySpend - usMonthlyRunRate, "USD") + '/mo)</small></td>' +
+      '<td class="num font-mono"><strong>' + (usCpeVal ? formatMoney2(usCpeVal, "USD") : "—") + '</strong></td>' +
+      '<td class="num font-mono"><strong>' + (usCpdVal ? formatMoney2(usCpdVal, "USD") : "—") + '</strong></td>' +
+      '<td class="num font-mono">' + (usJoVal ? '<strong>' + formatMoney2(usJoVal, "USD") + '</strong>' : '<span class="ex-status-tag warn">Pipeline active</span>') + '</td>' +
       '</tr>');
 
     // AU Row
     rows.push('<tr>' +
-      '<td><strong><span class="ex-mkt-tag au">AU</span> Australia (A$ AUD)</strong></td>' +
+      '<td><span class="ex-mkt-tag au">AU</span> <strong>Australia</strong></td>' +
       '<td class="num font-mono"><strong>' + formatMoney(auMonthlyRunRate, "AUD") + '</strong>/mo</td>' +
       '<td class="num font-mono text-muted">' + formatMoney(auAgMonthlySpend, "AUD") + '/mo</td>' +
-      '<td class="num font-mono delta-good">−' + Math.round(auSpendSavingsPct) + '% <small>(−' + formatMoney(auAgMonthlySpend - auMonthlyRunRate, "AUD") + '/mo)</small></td>' +
-      '<td class="num font-mono">' + (auCpeVal ? formatMoney2(auCpeVal, "AUD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(auAgCpe, "AUD") + '</small></td>' +
-      '<td class="num font-mono">' + (auCpdVal ? formatMoney2(auCpdVal, "AUD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(auAgCpd, "AUD") + '</small></td>' +
-      '<td class="num font-mono">' + (auJoVal ? formatMoney2(auJoVal, "AUD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(auAgCpjo, "AUD") + '</small></td>' +
+      '<td class="num font-mono delta-good">−' + Math.round(auSpendSavingsPct) + '% <small class="text-muted">(−' + formatMoney(auAgMonthlySpend - auMonthlyRunRate, "AUD") + '/mo)</small></td>' +
+      '<td class="num font-mono"><strong>' + (auCpeVal ? formatMoney2(auCpeVal, "AUD") : "—") + '</strong></td>' +
+      '<td class="num font-mono"><strong>' + (auCpdVal ? formatMoney2(auCpdVal, "AUD") : "—") + '</strong></td>' +
+      '<td class="num font-mono"><strong>' + (auJoVal ? formatMoney2(auJoVal, "AUD") : "—") + '</strong></td>' +
       '</tr>');
 
     body.innerHTML = rows.join("");
@@ -668,13 +657,13 @@
     }
 
     var h = '<table class="ex-table">';
-    h += '<thead><tr><th>Metric</th><th class="num">United States (USD)</th><th class="num">Australia (AUD)</th><th>Notes</th></tr></thead><tbody>';
+    h += '<thead><tr><th style="width:28%;">Metric</th><th class="num" style="width:20%;">United States (USD)</th><th class="num" style="width:20%;">Australia (AUD)</th><th style="width:32%;">Notes</th></tr></thead><tbody>';
 
-    h += '<tr><td>Enquiry → Discovery rate</td><td class="num">' + rateStr(us.funnel.discoveries, us.funnel.enquiries) + '</td><td class="num">' + rateStr(au.funnel.discoveries, au.funnel.enquiries) + '</td><td class="ex-cell-note">Period activity rate · Discovery calls lag enquiries.</td></tr>';
-    h += '<tr><td>Discovery → Job order rate</td><td class="num">' + (us.funnel.jobOrders ? rateStr(us.funnel.jobOrders, us.funnel.discoveries) : "—") + '</td><td class="num">' + rateStr(au.funnel.jobOrders, au.funnel.discoveries) + '</td><td class="ex-cell-note">Discovery calls converted to signed job orders.</td></tr>';
-    h += '<tr><td>Job order → Placement rate</td><td class="num">' + (us.funnel.placements ? rateStr(us.funnel.placements, us.funnel.jobOrders) : "—") + '</td><td class="num">' + rateStr(au.funnel.placements, au.funnel.jobOrders) + '</td><td class="ex-cell-note">Job orders converted to hired candidate placements.</td></tr>';
-    h += '<tr><td>Cost per job order</td><td class="num">' + ratioMoney(us.cpjo, "USD") + '</td><td class="num">' + ratioMoney(au.cpjo, "AUD") + '</td><td class="ex-cell-note">Ad spend divided by confirmed job orders.</td></tr>';
-    h += '<tr><td>Cost per placement</td><td class="num">' + ratioMoney(us.cpp, "USD") + '</td><td class="num">' + ratioMoney(au.cpp, "AUD") + '</td><td class="ex-cell-note">Ad spend divided by confirmed placements.</td></tr>';
+    h += '<tr><td>Enquiry → Discovery rate</td><td class="num font-mono">' + rateStr(us.funnel.discoveries, us.funnel.enquiries) + '</td><td class="num font-mono">' + rateStr(au.funnel.discoveries, au.funnel.enquiries) + '</td><td class="ex-cell-note">Period activity rate · Discovery calls lag enquiries.</td></tr>';
+    h += '<tr><td>Discovery → Job order rate</td><td class="num font-mono">' + (us.funnel.jobOrders ? rateStr(us.funnel.jobOrders, us.funnel.discoveries) : "—") + '</td><td class="num font-mono">' + rateStr(au.funnel.jobOrders, au.funnel.discoveries) + '</td><td class="ex-cell-note">Discovery calls converted to signed job orders.</td></tr>';
+    h += '<tr><td>Job order → Placement rate</td><td class="num font-mono">' + (us.funnel.placements ? rateStr(us.funnel.placements, us.funnel.jobOrders) : "—") + '</td><td class="num font-mono">' + rateStr(au.funnel.placements, au.funnel.jobOrders) + '</td><td class="ex-cell-note">Job orders converted to hired candidate placements.</td></tr>';
+    h += '<tr><td>Cost per job order</td><td class="num font-mono">' + ratioMoney(us.cpjo, "USD") + '</td><td class="num font-mono">' + ratioMoney(au.cpjo, "AUD") + '</td><td class="ex-cell-note">Ad spend divided by confirmed job orders.</td></tr>';
+    h += '<tr><td>Cost per placement</td><td class="num font-mono">' + ratioMoney(us.cpp, "USD") + '</td><td class="num font-mono">' + ratioMoney(au.cpp, "AUD") + '</td><td class="ex-cell-note">Ad spend divided by confirmed placements.</td></tr>';
 
     h += '</tbody></table>';
     container.innerHTML = h;
@@ -708,12 +697,12 @@
     ];
 
     function buildTableHtml(market, cur, weeks) {
-      var h = '<div style="margin-bottom:1rem;">';
-      h += '<h4 style="margin:0 0 0.5rem;font-size:0.9rem;">' + (market === "US" ? "United States (USD)" : "Australia (AUD)") + '</h4>';
+      var h = '<div style="margin-bottom:1.25rem;">';
+      h += '<h4 style="margin:0 0 0.5rem;font-size:0.88rem;color:var(--ex-text-main);">' + (market === "US" ? "United States (USD)" : "Australia (AUD)") + '</h4>';
       h += '<table class="ex-table"><thead><tr>';
-      h += '<th>Period</th><th class="num">Spend</th><th class="num">Enquiries</th><th class="num">Discoveries</th><th class="num">Job Orders</th>';
-      if (market === "AU") h += '<th class="num">Placements</th>';
-      h += '<th class="num">Cost / Enq</th></tr></thead><tbody>';
+      h += '<th style="width:24%;">Period</th><th class="num" style="width:14%;">Spend</th><th class="num" style="width:14%;">Enquiries</th><th class="num" style="width:14%;">Discoveries</th><th class="num" style="width:14%;">Job Orders</th>';
+      if (market === "AU") h += '<th class="num" style="width:10%;">Placements</th>';
+      h += '<th class="num" style="width:10%;">Cost / Enq</th></tr></thead><tbody>';
 
       weeks.forEach(function (w) {
         var d = w.data || {};
@@ -727,11 +716,11 @@
 
         h += '<tr>';
         h += '<td><strong>' + w.label + '</strong></td>';
-        h += '<td class="num">' + spend + '</td>';
-        h += '<td class="num">' + enq + '</td>';
-        h += '<td class="num">' + disc + '</td>';
-        h += '<td class="num">' + jo + '</td>';
-        if (market === "AU") h += '<td class="num">' + pl + '</td>';
+        h += '<td class="num font-mono">' + spend + '</td>';
+        h += '<td class="num font-mono">' + enq + '</td>';
+        h += '<td class="num font-mono">' + disc + '</td>';
+        h += '<td class="num font-mono">' + jo + '</td>';
+        if (market === "AU") h += '<td class="num font-mono">' + pl + '</td>';
         h += '<td class="num font-mono">' + cpe + '</td>';
         h += '</tr>';
       });
@@ -747,7 +736,7 @@
     var panel = $("#ex-attrib-panel");
     if (!panel) return;
 
-    var h = '<p style="margin:0 0 0.75rem;font-size:0.86rem;color:var(--body);line-height:1.5;">';
+    var h = '<p style="margin:0 0 0.75rem;font-size:0.86rem;color:var(--ex-text-main);line-height:1.55;">';
     h += '<strong>Blended directional attribution:</strong> Google Ads represents our primary marketing spend. During the pilot period, sales confirmed <strong>49 total employer enquiries</strong> (31 US + 18 AU). In the single-week CRM audit (Aug 17–23), <strong>31 records</strong> were inspected in Zoho, of which <strong>5 contained a verified advertising click ID (GCLID)</strong> (2 US, 3 AU). Because not every lead has direct click attribution yet, leadership uses blended funnel metrics for dependable directional decision-making while tracking integration is completed.';
     h += '</p>';
     h += '<ul class="ex-rules-list">';
