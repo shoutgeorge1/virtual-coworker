@@ -329,32 +329,38 @@
     var decEl = $("#ex-sum-dec");
 
     if (STATE.period === "prev") {
-      perfEl.textContent = "Search pilot had not yet launched in July 2026. Pre-pilot historical baseline only.";
-      confEl.textContent = "No Stage 1 ad traffic or tracking live during this period.";
-      decEl.textContent = "Review recorded legacy agency baseline for historical context.";
+      perfEl.innerHTML = "<p>Search pilot had not yet launched in July 2026. Pre-pilot historical baseline only.</p>";
+      confEl.innerHTML = "<p>No Stage 1 ad traffic or tracking live during this period.</p>";
+      decEl.innerHTML = "<p>Review recorded legacy agency baseline for historical context.</p>";
       return;
     }
 
-    // Row 1: Results
-    var usEnq = us.funnel.enquiriesPending ? "pending review" : formatNum(us.funnel.enquiries) + " employer enquiries";
-    var usDisc = us.funnel.discoveries == null ? "—" : formatNum(us.funnel.discoveries) + " discovery calls";
-    var auEnq = formatNum(au.funnel.enquiries) + " enquiries";
-    var auDisc = formatNum(au.funnel.discoveries) + " discovery calls";
-    var auJo = au.funnel.jobOrders == null ? "0" : formatNum(au.funnel.jobOrders) + " job orders";
-    var auPl = au.funnel.placements == null ? "0" : formatNum(au.funnel.placements) + " placements";
+    // Card 1: Results
+    var usSpend = formatMoney(us.spend, "USD");
+    var auSpend = formatMoney(au.spend, "AUD");
 
-    perfEl.textContent =
-      "US produced " + usEnq + " and " + usDisc + ". Australia produced " + auEnq + ", " + auDisc + ", " + auJo + " and " + auPl + ".";
+    var usEnq = us.funnel.enquiriesPending ? "pending review" : "<strong>" + formatNum(us.funnel.enquiries) + " enquiries</strong>";
+    var usDisc = us.funnel.discoveries == null ? "—" : "<strong>" + formatNum(us.funnel.discoveries) + " discovery calls</strong>";
+    var usStatus = '<span class="ex-status-tag warn">Awaiting JO validation</span>';
 
-    // Row 2: Tracking
+    var auEnq = "<strong>" + formatNum(au.funnel.enquiries) + " enquiries</strong>";
+    var auDisc = "<strong>" + formatNum(au.funnel.discoveries) + " discovery calls</strong>";
+    var auJo = "<strong>" + (au.funnel.jobOrders == null ? "0" : formatNum(au.funnel.jobOrders)) + " job orders</strong>";
+    var auPl = "<strong>" + (au.funnel.placements == null ? "0" : formatNum(au.funnel.placements)) + " placements</strong>";
+
+    perfEl.innerHTML =
+      '<div class="ex-bl-subrow"><strong>United States:</strong> ' + usSpend + ' spend → ' + usEnq + ' · ' + usDisc + ' · ' + usStatus + '</div>' +
+      '<div class="ex-bl-subrow"><strong>Australia:</strong> ' + auSpend + ' spend → ' + auEnq + ' · ' + auDisc + ' · ' + auJo + ' · ' + auPl + '</div>';
+
+    // Card 2: Tracking
     var totalGclid = us.withGclid + au.withGclid;
     var totalZoho = us.zohoRows + au.zohoRows;
-    confEl.textContent =
-      "Overall results are visible, but only " + totalGclid + " of " + totalZoho + " reviewed CRM records can be tied directly to an ad click.";
+    confEl.innerHTML =
+      '<p><strong>' + totalGclid + ' of ' + totalZoho + ' audited CRM records</strong> carry a verified Google ad click ID. Overall blended volume is visible, but campaign-level attribution is still being resolved.</p>';
 
-    // Row 3: What we're doing
-    decEl.textContent =
-      "Hold budgets and bidding steady while the team confirms US downstream outcomes and fixes CRM attribution.";
+    // Card 3: What we're doing
+    decEl.innerHTML =
+      '<p>Hold budgets and bidding steady while Cheyenne verifies US downstream pipeline status and tech maps website click IDs directly to Zoho CRM.</p>';
   }
 
   function renderUSNotice(us) {
@@ -366,7 +372,6 @@
       return;
     }
 
-    // US has enquiries & discoveries, but job orders/placements are not yet confirmed from email updates
     var hasEnquiries = (us.funnel.enquiries || 0) > 0;
     var hasDiscoveries = (us.funnel.discoveries || 0) > 0;
     var noJobOrders = us.funnel.jobOrders == null || us.funnel.jobOrders === 0;
@@ -405,6 +410,8 @@
     var usPl = formatPlacements(us.funnel.placements, "US");
     var usCpe = ratioMoney(us.cpe, "USD");
     var usCpd = ratioMoney(us.cpd, "USD");
+    var usCpjo = us.funnel.jobOrders && us.funnel.jobOrders > 0 ? ratioMoney(us.cpjo, "USD") : "—";
+    var usCpp = us.funnel.placements && us.funnel.placements > 0 ? ratioMoney(us.cpp, "USD") : "—";
 
     rows.push(
       '<tr>' +
@@ -416,6 +423,8 @@
       '<td class="num font-mono">' + usPl + '</td>' +
       '<td class="num font-mono">' + usCpe + '</td>' +
       '<td class="num font-mono">' + usCpd + '</td>' +
+      '<td class="num font-mono">' + usCpjo + '</td>' +
+      '<td class="num font-mono">' + usCpp + '</td>' +
       '</tr>'
     );
 
@@ -427,6 +436,8 @@
     var auPl = formatPlacements(au.funnel.placements, "AU");
     var auCpe = ratioMoney(au.cpe, "AUD");
     var auCpd = ratioMoney(au.cpd, "AUD");
+    var auCpjo = au.funnel.jobOrders && au.funnel.jobOrders > 0 ? ratioMoney(au.cpjo, "AUD") : "—";
+    var auCpp = au.funnel.placements && au.funnel.placements > 0 ? ratioMoney(au.cpp, "AUD") : "—";
 
     rows.push(
       '<tr>' +
@@ -438,6 +449,8 @@
       '<td class="num font-mono">' + auPl + '</td>' +
       '<td class="num font-mono">' + auCpe + '</td>' +
       '<td class="num font-mono">' + auCpd + '</td>' +
+      '<td class="num font-mono">' + auCpjo + '</td>' +
+      '<td class="num font-mono">' + auCpp + '</td>' +
       '</tr>'
     );
 
@@ -484,6 +497,9 @@
     var usCpdDiff = compareRate(usOps.cost_per_sales_call_completed_usd, agUs.blended_cost_per_discovery, true);
     rows.push(cmpRow("Cost per discovery call", formatMoney2(usOps.cost_per_sales_call_completed_usd, "USD"), formatMoney2(agUs.blended_cost_per_discovery, "USD"), usCpdDiff));
 
+    rows.push(cmpRow("Cost per job order", '<span class="ex-status-tag warn">None confirmed yet</span>', formatMoney2(agUs.blended_cost_per_job_order, "USD"), { diffText: "—", tone: "neutral" }));
+    rows.push(cmpRow("Cost per placement", '<span class="ex-status-tag warn">None confirmed yet</span>', '<span style="color:#64748b;font-size:0.78rem">Not tracked in CRM</span>', { diffText: "—", tone: "neutral" }));
+
     var usCpcDiff = compareRate(usPerf.avg_cpc_usd, agUs.avg_cpc, true);
     rows.push(cmpRow("Average cost per click (CPC)", formatMoney2(usPerf.avg_cpc_usd, "USD"), formatMoney2(agUs.avg_cpc, "USD"), usCpcDiff));
 
@@ -497,6 +513,13 @@
 
     var auCpdDiff = compareRate(auOps.cost_per_sales_call_completed_usd, agAu.blended_cost_per_discovery, true);
     rows.push(cmpRow("Cost per discovery call", formatMoney2(auOps.cost_per_sales_call_completed_usd, "AUD"), formatMoney2(agAu.blended_cost_per_discovery, "AUD"), auCpdDiff));
+
+    var auJoCost = au.funnel.jobOrders && au.funnel.jobOrders > 0 ? (au.spend / au.funnel.jobOrders) : null;
+    var auCpjoDiff = compareRate(auJoCost, agAu.blended_cost_per_job_order, true);
+    rows.push(cmpRow("Cost per job order", formatMoney2(auJoCost, "AUD"), formatMoney2(agAu.blended_cost_per_job_order, "AUD"), auCpjoDiff));
+
+    var auPlaceCost = au.funnel.placements && au.funnel.placements > 0 ? (au.spend / au.funnel.placements) : null;
+    rows.push(cmpRow("Cost per placement", formatMoney2(auPlaceCost, "AUD"), '<span style="color:#64748b;font-size:0.78rem">Not tracked in CRM</span>', { diffText: "—", tone: "neutral" }));
 
     var auCpcDiff = compareRate(auPerf.avg_cpc_usd, agAu.avg_cpc, true);
     rows.push(cmpRow("Average cost per click (CPC)", formatMoney2(auPerf.avg_cpc_usd, "AUD"), formatMoney2(agAu.avg_cpc, "AUD"), auCpcDiff));
