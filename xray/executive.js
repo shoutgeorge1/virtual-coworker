@@ -480,8 +480,9 @@
 
     // United States Section
     rows.push(marketDivider("United States (USD)"));
-    var usCpeDiff = compareRate(usOps.cost_per_enquiry_usd, agUs.blended_cost_per_enquiry, true);
-    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(usOps.cost_per_enquiry_usd, "USD"), formatMoney2(agUs.blended_cost_per_enquiry, "USD"), usCpeDiff));
+    var agUsReportedCpa = (STATE.agency && STATE.agency.raw && STATE.agency.raw.us_totals && STATE.agency.raw.us_totals.reported_cpa) || agUs.blended_cost_per_enquiry;
+    var usCpeDiff = compareRate(usOps.cost_per_enquiry_usd, agUsReportedCpa, true);
+    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(usOps.cost_per_enquiry_usd, "USD"), formatMoney2(agUsReportedCpa, "USD"), usCpeDiff));
 
     var usCpdDiff = compareRate(usOps.cost_per_sales_call_completed_usd, agUs.blended_cost_per_discovery, true);
     rows.push(cmpRow("Cost per discovery call", formatMoney2(usOps.cost_per_sales_call_completed_usd, "USD"), formatMoney2(agUs.blended_cost_per_discovery, "USD"), usCpdDiff));
@@ -497,8 +498,9 @@
 
     // Australia Section
     rows.push(marketDivider("Australia (AUD)"));
-    var auCpeDiff = compareRate(auOps.cost_per_enquiry_usd, agAu.blended_cost_per_enquiry, true);
-    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(auOps.cost_per_enquiry_usd, "AUD"), formatMoney2(agAu.blended_cost_per_enquiry, "AUD"), auCpeDiff));
+    var agAuReportedCpa = (STATE.agency && STATE.agency.raw && STATE.agency.raw.au_totals && STATE.agency.raw.au_totals.reported_cpa) || agAu.blended_cost_per_enquiry;
+    var auCpeDiff = compareRate(auOps.cost_per_enquiry_usd, agAuReportedCpa, true);
+    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(auOps.cost_per_enquiry_usd, "AUD"), formatMoney2(agAuReportedCpa, "AUD"), auCpeDiff));
 
     var auCpdDiff = compareRate(auOps.cost_per_sales_call_completed_usd, agAu.blended_cost_per_discovery, true);
     rows.push(cmpRow("Cost per discovery call", formatMoney2(auOps.cost_per_sales_call_completed_usd, "AUD"), formatMoney2(agAu.blended_cost_per_discovery, "AUD"), auCpdDiff));
