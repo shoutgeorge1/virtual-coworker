@@ -345,161 +345,315 @@
   }
 
   function renderMainScorecard(us, au) {
-    var body = $("#ex-scorecard-body");
-    var rows = [];
+    var container = $("#ex-market-scorecards");
+    if (!container) return;
 
-    function marketDivider(title) {
-      return (
-        '<tr class="ex-row-header">' +
-        '<th colspan="4"><span class="ex-hdr-title">' + title + '</span></th>' +
-        '</tr>'
-      );
+    var snap = STATE.snapshot || {};
+    var usPerf = (snap.performance_us || {}).totals_stage1_last_7_days || (snap.performance_us || {}).compare_7v7?.last_7 || {};
+    var auPerf = (snap.performance_au || {}).totals_stage1_last_7_days || (snap.performance_au || {}).compare_7v7?.last_7 || {};
+    
+    // Total impressions and clicks for MTD from ads sum
+    var usAds = us.ads || {};
+    var auAds = au.ads || {};
+
+    var agUs = (STATE.agency && STATE.agency.us) || {};
+    var agAu = (STATE.agency && STATE.agency.au) || {};
+
+    var usAgSpendTotal = agUs.total_spend || 724880;
+    var auAgSpendTotal = agAu.total_spend || 458167;
+    var usAgMonthlySpend = usAgSpendTotal / 24; // ~$30,203
+    var auAgMonthlySpend = auAgSpendTotal / 24; // ~$19,090
+
+    var usAgCpe = agUs.cost_per_legitimate_employer_enquiry || 816.31;
+    var usAgCpd = agUs.cost_per_discovery || 1285.25;
+    var usAgCpjo = agUs.cost_per_job_order || 2013.56;
+    var usAgCpp = agUs.cost_per_placement || 4289.23;
+    var usAgCpc = agUs.avg_cpc || 8.29;
+    var usAgCtr = agUs.ctr_pct || 1.62;
+
+    var auAgCpe = agAu.cost_per_legitimate_employer_enquiry || 615.82;
+    var auAgCpd = agAu.cost_per_discovery || 812.35;
+    var auAgCpjo = agAu.cost_per_job_order || 1104.02;
+    var auAgCpp = agAu.cost_per_placement || 2073.15;
+    var auAgCpc = agAu.avg_cpc || 9.24;
+    var auAgCtr = agAu.ctr_pct || 1.44;
+
+    function buildMarketCard(market, title, currency, data, ads, agTotalSpend, agMonthlySpend, agCpe, agCpd, agCpjo, agCpp, agCpc, agCtr, opsLead) {
+      var isPrev = STATE.period === "prev";
+      var cur = currency;
+
+      // Spend run-rate calculations
+      var mtdSpend = data.spend || 0;
+      var days = 27; // Aug 1 - Aug 27
+      var monthlyRunRate = isPrev ? 0 : (mtdSpend > 0 ? (mtdSpend / days) * 30.4 : 0);
+      var spendSavingsPct = agMonthlySpend > 0 ? ((agMonthlySpend - monthlyRunRate) / agMonthlySpend) * 100 : 0;
+      var periodEquivAgSpend = (agMonthlySpend / 30.4) * days;
+      var periodSpendDiff = compareRate(mtdSpend, periodEquivAgSpend, true);
+
+      // Unit cost & delta calculations
+      var cpeVal = data.cpe && data.cpe.value != null ? data.cpe.value : null;
+      var cpeDiff = compareRate(cpeVal, agCpe, true);
+
+      var cpdVal = data.cpd && data.cpd.value != null ? data.cpd.value : null;
+      var cpdDiff = compareRate(cpdVal, agCpd, true);
+
+      var joVal = data.funnel && data.funnel.jobOrders && data.funnel.jobOrders > 0 ? (mtdSpend / data.funnel.jobOrders) : null;
+      var joDiff = joVal != null ? compareRate(joVal, agCpjo, true) : null;
+
+      var plVal = data.funnel && data.funnel.placements && data.funnel.placements > 0 ? (mtdSpend / data.funnel.placements) : null;
+      var plDiff = plVal != null ? compareRate(plVal, agCpp, true) : null;
+
+      var cpcVal = ads && ads.avgCpc != null ? ads.avgCpc : null;
+      var cpcDiff = compareRate(cpcVal, agCpc, true);
+
+      var ctrVal = ads && ads.ctrPct != null ? ads.ctrPct : null;
+      var ctrDiff = compareRate(ctrVal, agCtr, false);
+
+      var html = '<div class="ex-market-card">';
+      
+      // Card Header
+      html += '<div class="ex-market-card-hd">';
+      html += '  <div class="ex-market-card-title-row">';
+      html += '    <div class="ex-market-flag-title">';
+      html += '      <span class="ex-mkt-tag ' + market.toLowerCase() + '">' + market + '</span>';
+      html += '      <h3>' + title + ' <span class="ex-curr-badge">' + cur + '</span></h3>';
+      html += '    </div>';
+      html += '    <span class="ex-lead-label">' + opsLead + '</span>';
+      html += '  </div>';
+
+      if (!isPrev) {
+        html += '  <div class="ex-market-spend-banner">';
+        html += '    <div class="ex-spend-stat">';
+        html += '      <span class="ex-stat-lbl">Pilot Spend Run-rate</span>';
+        html += '      <span class="ex-stat-val font-mono">' + formatMoney(monthlyRunRate, cur) + '<small>/mo</small></span>';
+        html += '    </div>';
+        html += '    <div class="ex-spend-stat">';
+        html += '      <span class="ex-stat-lbl">Agency Spend Baseline</span>';
+        html += '      <span class="ex-stat-val font-mono mute">' + formatMoney(agMonthlySpend, cur) + '<small>/mo</small></span>';
+        html += '    </div>';
+        html += '    <div class="ex-spend-stat highlight">';
+        html += '      <span class="ex-stat-lbl">Monthly Spend Savings</span>';
+        html += '      <span class="ex-stat-val font-mono delta-good">−' + Math.round(spendSavingsPct) + '% <small>(' + formatMoney(agMonthlySpend - monthlyRunRate, cur) + '/mo saved)</small></span>';
+        html += '    </div>';
+        html += '  </div>';
+      }
+      html += '</div>';
+
+      // Card Table
+      html += '<div class="ex-market-card-table-wrap">';
+      html += '<table class="ex-table ex-scorecard-table">';
+      html += '<thead><tr>';
+      html += '  <th>Funnel Stage / Metric</th>';
+      html += '  <th class="num">Volume</th>';
+      html += '  <th class="num">Pilot (Blended)</th>';
+      html += '  <th class="num">Agency Baseline</th>';
+      html += '  <th class="num">Efficiency / Δ</th>';
+      html += '</tr></thead>';
+      html += '<tbody>';
+
+      if (isPrev) {
+        html += '<tr><td colspan="5" style="text-align:center;padding:2rem 1rem;color:var(--ex-text-muted);">' +
+          'Pre-launch baseline period (July 2026). Search pilot launched in August 2026.</td></tr>';
+      } else {
+        // 1. Paid Ad Spend (MTD)
+        html += '<tr>';
+        html += '  <td><strong>Paid ad spend (MTD)</strong></td>';
+        html += '  <td class="num font-mono text-muted">—</td>';
+        html += '  <td class="num font-mono"><strong>' + formatMoney(mtdSpend, cur) + '</strong></td>';
+        html += '  <td class="num font-mono text-muted">' + formatMoney(periodEquivAgSpend, cur) + '</td>';
+        html += '  <td class="num font-mono ' + (periodSpendDiff.tone === "good" ? "delta-good" : "") + '">' + periodSpendDiff.diffText + '</td>';
+        html += '</tr>';
+
+        // 2. Employer Enquiries
+        var enqVol = data.funnel.enquiriesPending ? '<span class="ex-status-tag pending">Pending</span>' : formatNum(data.funnel.enquiries);
+        var enqCost = ratioMoney(data.cpe, cur);
+        html += '<tr>';
+        html += '  <td><strong>Employer enquiries</strong></td>';
+        html += '  <td class="num font-mono">' + enqVol + '</td>';
+        html += '  <td class="num font-mono">' + enqCost + '</td>';
+        html += '  <td class="num font-mono text-muted">' + formatMoney2(agCpe, cur) + '</td>';
+        html += '  <td class="num font-mono ' + (cpeDiff.tone === "good" ? "delta-good" : "") + '">' + cpeDiff.diffText + '</td>';
+        html += '</tr>';
+
+        // 3. Discovery Calls
+        var discVol = data.funnel.discoveries == null ? "—" : formatNum(data.funnel.discoveries);
+        var discCost = ratioMoney(data.cpd, cur);
+        html += '<tr>';
+        html += '  <td><strong>Completed discovery calls</strong></td>';
+        html += '  <td class="num font-mono">' + discVol + '</td>';
+        html += '  <td class="num font-mono">' + discCost + '</td>';
+        html += '  <td class="num font-mono text-muted">' + formatMoney2(agCpd, cur) + '</td>';
+        html += '  <td class="num font-mono ' + (cpdDiff.tone === "good" ? "delta-good" : "") + '">' + cpdDiff.diffText + '</td>';
+        html += '</tr>';
+
+        // 4. Job Orders
+        var joVol = data.funnel.jobOrders && data.funnel.jobOrders > 0 ? formatNum(data.funnel.jobOrders) : (market === "US" ? '<span class="ex-status-tag warn">None confirmed</span>' : (data.funnel.jobOrders === 0 ? "0" : "—"));
+        var joCost = joVal != null ? formatMoney2(joVal, cur) : (market === "US" ? '<span class="ex-status-tag warn">Pipeline active</span>' : "—");
+        var joDiffHtml = joDiff ? '<span class="' + (joDiff.tone === "good" ? "delta-good" : "") + '">' + joDiff.diffText + '</span>' : '<span class="ex-status-tag pending">Reviewing</span>';
+        html += '<tr>';
+        html += '  <td><strong>Confirmed job orders</strong></td>';
+        html += '  <td class="num font-mono">' + joVol + '</td>';
+        html += '  <td class="num font-mono">' + joCost + '</td>';
+        html += '  <td class="num font-mono text-muted">' + formatMoney2(agCpjo, cur) + '</td>';
+        html += '  <td class="num font-mono">' + joDiffHtml + '</td>';
+        html += '</tr>';
+
+        // 5. Placements
+        var plVol = data.funnel.placements && data.funnel.placements > 0 ? formatNum(data.funnel.placements) : (market === "US" ? '<span class="ex-status-tag warn">None confirmed</span>' : (data.funnel.placements === 0 ? "0" : "—"));
+        var plCost = plVal != null ? formatMoney2(plVal, cur) : (market === "US" ? '<span class="ex-status-tag warn">Pipeline active</span>' : "—");
+        var plDiffHtml = plDiff ? '<span class="' + (plDiff.tone === "good" ? "delta-good" : "") + '">' + plDiff.diffText + '</span>' : '<span class="ex-status-tag pending">Reviewing</span>';
+        html += '<tr>';
+        html += '  <td><strong>Confirmed placements</strong></td>';
+        html += '  <td class="num font-mono">' + plVol + '</td>';
+        html += '  <td class="num font-mono">' + plCost + '</td>';
+        html += '  <td class="num font-mono text-muted">' + formatMoney2(agCpp, cur) + '</td>';
+        html += '  <td class="num font-mono">' + plDiffHtml + '</td>';
+        html += '</tr>';
+
+        // 6. Avg CPC
+        var cpcClicks = ads && ads.clicks ? formatNum(ads.clicks) + " clicks" : "—";
+        html += '<tr>';
+        html += '  <td>Average cost per click (CPC)</td>';
+        html += '  <td class="num font-mono text-muted">' + cpcClicks + '</td>';
+        html += '  <td class="num font-mono">' + (cpcVal != null ? formatMoney2(cpcVal, cur) : "—") + '</td>';
+        html += '  <td class="num font-mono text-muted">' + formatMoney2(agCpc, cur) + '</td>';
+        html += '  <td class="num font-mono ' + (cpcDiff.tone === "good" ? "delta-good" : "") + '">' + cpcDiff.diffText + '</td>';
+        html += '</tr>';
+
+        // 7. CTR
+        var ctrImp = ads && ads.impressions ? formatNum(ads.impressions) + " imp" : "—";
+        html += '<tr>';
+        html += '  <td>Click-through rate (CTR)</td>';
+        html += '  <td class="num font-mono text-muted">' + ctrImp + '</td>';
+        html += '  <td class="num font-mono">' + (ctrVal != null ? formatPct(ctrVal) : "—") + '</td>';
+        html += '  <td class="num font-mono text-muted">' + formatPct(agCtr) + '</td>';
+        html += '  <td class="num font-mono ' + (ctrDiff.tone === "good" ? "delta-good" : "") + '">' + ctrDiff.diffText + '</td>';
+        html += '</tr>';
+      }
+
+      html += '</tbody></table>';
+      html += '</div>';
+
+      // Card Footnote
+      html += '<div class="ex-market-card-ft">';
+      html += '  <span>Historical 2-yr agency spend: ' + formatMoney(agTotalSpend, cur) + ' total (' + formatMoney(agMonthlySpend, cur) + '/mo)</span>';
+      html += '</div>';
+
+      html += '</div>';
+      return html;
     }
 
-    function dataRow(metric, volume, costPerOutcome, statusHtml) {
-      return (
-        '<tr>' +
-        '<td>' + metric + '</td>' +
-        '<td class="num font-mono">' + volume + '</td>' +
-        '<td class="num font-mono">' + costPerOutcome + '</td>' +
-        '<td class="ex-cell-note">' + statusHtml + '</td>' +
-        '</tr>'
-      );
-    }
+    var usCard = buildMarketCard(
+      "US",
+      "United States",
+      "USD",
+      us,
+      usAds,
+      usAgSpendTotal,
+      usAgMonthlySpend,
+      usAgCpe,
+      usAgCpd,
+      usAgCpjo,
+      usAgCpp,
+      usAgCpc,
+      usAgCtr,
+      "Sales review: Cheyenne Gichana"
+    );
 
-    // United States Section
-    rows.push(marketDivider("United States (USD)"));
-    rows.push(dataRow("Paid ad spend", formatMoney(us.spend, "USD"), "—", "Google Ads Search pilot (primary marketing spend)"));
-    
-    var usEnq = us.funnel.enquiriesPending ? '<span class="ex-status-tag pending">Pending</span>' : formatNum(us.funnel.enquiries);
-    rows.push(dataRow("Employer enquiries", usEnq, ratioMoney(us.cpe, "USD"), "Blended unit cost · Cheyenne ops review"));
-    
-    var usDisc = us.funnel.discoveries == null ? "—" : formatNum(us.funnel.discoveries);
-    rows.push(dataRow("Completed discovery calls", usDisc, ratioMoney(us.cpd, "USD"), "Blended unit cost · Sales calls completed by US team"));
-    
-    var usJo = us.funnel.jobOrders && us.funnel.jobOrders > 0 ? formatNum(us.funnel.jobOrders) : '<span class="ex-status-tag warn">None confirmed yet</span>';
-    var usCpjo = us.funnel.jobOrders && us.funnel.jobOrders > 0 ? ratioMoney(us.cpjo, "USD") : "—";
-    rows.push(dataRow("Confirmed job orders", usJo, usCpjo, "Awaiting sales validation from discovery cohort"));
-    
-    var usPl = us.funnel.placements && us.funnel.placements > 0 ? formatNum(us.funnel.placements) : '<span class="ex-status-tag warn">None confirmed yet</span>';
-    var usCpp = us.funnel.placements && us.funnel.placements > 0 ? ratioMoney(us.cpp, "USD") : "—";
-    rows.push(dataRow("Confirmed placements", usPl, usCpp, "Candidate hiring & placement in progress"));
+    var auCard = buildMarketCard(
+      "AU",
+      "Australia",
+      "AUD",
+      au,
+      auAds,
+      auAgSpendTotal,
+      auAgMonthlySpend,
+      auAgCpe,
+      auAgCpd,
+      auAgCpjo,
+      auAgCpp,
+      auAgCpc,
+      auAgCtr,
+      "Sales review: Holly Wallace"
+    );
 
-    // Australia Section
-    rows.push(marketDivider("Australia (AUD)"));
-    rows.push(dataRow("Paid ad spend", formatMoney(au.spend, "AUD"), "—", "Google Ads Search pilot (primary marketing spend)"));
-    
-    var auEnq = au.funnel.enquiries == null ? '<span class="ex-status-tag pending">Pending</span>' : formatNum(au.funnel.enquiries);
-    rows.push(dataRow("Employer enquiries", auEnq, ratioMoney(au.cpe, "AUD"), "Blended unit cost · Holly ops review"));
-    
-    var auDisc = au.funnel.discoveries == null ? "—" : formatNum(au.funnel.discoveries);
-    rows.push(dataRow("Completed discovery calls", auDisc, ratioMoney(au.cpd, "AUD"), "Blended unit cost · Sales calls completed by AU team"));
-    
-    var auJo = au.funnel.jobOrders && au.funnel.jobOrders > 0 ? formatNum(au.funnel.jobOrders) : (au.funnel.jobOrders === 0 ? "0" : "—");
-    var auCpjo = au.funnel.jobOrders && au.funnel.jobOrders > 0 ? ratioMoney(au.cpjo, "AUD") : "—";
-    rows.push(dataRow("Confirmed job orders", auJo, auCpjo, "Signed client job requisitions"));
-    
-    var auPl = au.funnel.placements && au.funnel.placements > 0 ? formatNum(au.funnel.placements) : (au.funnel.placements === 0 ? "0" : "—");
-    var auCpp = au.funnel.placements && au.funnel.placements > 0 ? ratioMoney(au.cpp, "AUD") : "—";
-    rows.push(dataRow("Confirmed placements", auPl, auCpp, "Candidate hires active"));
-
-    body.innerHTML = rows.join("");
+    container.innerHTML = usCard + auCard;
   }
 
   function renderSimplifiedAgencyComparison(us, au) {
     var body = $("#ex-agency-body");
-    var rows = [];
+    if (!body) return;
 
-    var snap = STATE.snapshot;
-    var usPerf = (snap.performance_us || {}).totals_stage1_last_7_days || {};
-    var auPerf = (snap.performance_au || {}).totals_stage1_last_7_days || {};
-    var usOps = snap.sales_ops_us || {};
-    var auOps = snap.sales_ops_au || {};
+    var isPrev = STATE.period === "prev";
+    if (isPrev) {
+      body.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:1.5rem;color:var(--ex-text-muted);">Pre-launch baseline period (July 2026).</td></tr>';
+      return;
+    }
+
     var agUs = (STATE.agency && STATE.agency.us) || {};
     var agAu = (STATE.agency && STATE.agency.au) || {};
 
-    function cmpRow(metricName, pilotVal, agencyVal, diffObj) {
-      var diffCls = diffObj.tone === "good" ? "delta-good" : diffObj.tone === "bad" ? "delta-bad" : "";
-      return (
-        '<tr>' +
-        '<td>' + metricName + '</td>' +
-        '<td class="num font-mono">' + pilotVal + '</td>' +
-        '<td class="num font-mono">' + agencyVal + '</td>' +
-        '<td class="num font-mono ' + diffCls + '">' + diffObj.diffText + '</td>' +
-        '</tr>'
-      );
-    }
+    var usAgSpendTotal = agUs.total_spend || 724880;
+    var auAgSpendTotal = agAu.total_spend || 458167;
+    var usAgMonthlySpend = usAgSpendTotal / 24; // ~$30,203
+    var auAgMonthlySpend = auAgSpendTotal / 24; // ~$19,090
 
-    function marketDivider(title) {
-      return (
-        '<tr class="ex-row-header">' +
-        '<th colspan="4"><span class="ex-hdr-title">' + title + '</span></th>' +
-        '</tr>'
-      );
-    }
+    var usAgCpe = agUs.cost_per_legitimate_employer_enquiry || 816.31;
+    var usAgCpd = agUs.cost_per_discovery || 1285.25;
+    var usAgCpjo = agUs.cost_per_job_order || 2013.56;
 
-    // Historical legitimate company-credited baseline numbers
-    var usAgCpe = agUs.cost_per_legitimate_employer_enquiry || agUs.blended_cost_per_enquiry || 816.31;
-    var usAgCpd = agUs.cost_per_discovery || agUs.blended_cost_per_discovery || 1285.25;
-    var usAgCpjo = agUs.cost_per_job_order || agUs.blended_cost_per_job_order || 2013.56;
-    var usAgCpp = agUs.cost_per_placement || agUs.blended_cost_per_placement || 4289.23;
-    var usAgCpc = agUs.avg_cpc || 8.29;
-    var usAgCtr = agUs.ctr_pct || 1.62;
+    var auAgCpe = agAu.cost_per_legitimate_employer_enquiry || 615.82;
+    var auAgCpd = agAu.cost_per_discovery || 812.35;
+    var auAgCpjo = agAu.cost_per_job_order || 1104.02;
 
-    var auAgCpe = agAu.cost_per_legitimate_employer_enquiry || agAu.blended_cost_per_enquiry || 615.82;
-    var auAgCpd = agAu.cost_per_discovery || agAu.blended_cost_per_discovery || 812.35;
-    var auAgCpjo = agAu.cost_per_job_order || agAu.blended_cost_per_job_order || 1104.02;
-    var auAgCpp = agAu.cost_per_placement || agAu.blended_cost_per_placement || 2073.15;
-    var auAgCpc = agAu.avg_cpc || 9.24;
-    var auAgCtr = agAu.ctr_pct || 1.44;
+    var days = 27;
+    var usMtdSpend = us.spend || 0;
+    var auMtdSpend = au.spend || 0;
 
-    // United States Section
-    rows.push(marketDivider("United States (USD)"));
-    var usCpeDiff = compareRate(usOps.cost_per_enquiry_usd, usAgCpe, true);
-    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(usOps.cost_per_enquiry_usd, "USD"), formatMoney2(usAgCpe, "USD"), usCpeDiff));
+    var usMonthlyRunRate = (usMtdSpend / days) * 30.4;
+    var auMonthlyRunRate = (auMtdSpend / days) * 30.4;
 
-    var usCpdDiff = compareRate(usOps.cost_per_sales_call_completed_usd, usAgCpd, true);
-    rows.push(cmpRow("Cost per discovery call", formatMoney2(usOps.cost_per_sales_call_completed_usd, "USD"), formatMoney2(usAgCpd, "USD"), usCpdDiff));
+    var usSpendSavingsPct = ((usAgMonthlySpend - usMonthlyRunRate) / usAgMonthlySpend) * 100;
+    var auSpendSavingsPct = ((auAgMonthlySpend - auMonthlyRunRate) / auAgMonthlySpend) * 100;
 
-    var usJoCost = us.funnel && us.funnel.jobOrders && us.funnel.jobOrders > 0 ? (us.spend / us.funnel.jobOrders) : null;
-    var usCpjoDiff = usJoCost ? compareRate(usJoCost, usAgCpjo, true) : { diffText: "—", tone: "neutral" };
-    var usJoDisplay = usJoCost ? formatMoney2(usJoCost, "USD") : '<span class="ex-status-tag warn">Pipeline active</span>';
-    rows.push(cmpRow("Cost per job order", usJoDisplay, formatMoney2(usAgCpjo, "USD"), usCpjoDiff));
+    var usCpeVal = us.cpe && us.cpe.value != null ? us.cpe.value : null;
+    var auCpeVal = au.cpe && au.cpe.value != null ? au.cpe.value : null;
 
-    var usPlaceCost = us.funnel && us.funnel.placements && us.funnel.placements > 0 ? (us.spend / us.funnel.placements) : null;
-    var usCppDiff = usPlaceCost ? compareRate(usPlaceCost, usAgCpp, true) : { diffText: "—", tone: "neutral" };
-    var usPlaceDisplay = usPlaceCost ? formatMoney2(usPlaceCost, "USD") : '<span class="ex-status-tag warn">Pipeline active</span>';
-    rows.push(cmpRow("Cost per placement", usPlaceDisplay, formatMoney2(usAgCpp, "USD"), usCppDiff));
+    var usCpdVal = us.cpd && us.cpd.value != null ? us.cpd.value : null;
+    var auCpdVal = au.cpd && au.cpd.value != null ? au.cpd.value : null;
 
-    var usCpcDiff = compareRate(usPerf.avg_cpc_usd, usAgCpc, true);
-    rows.push(cmpRow("Average cost per click (CPC)", formatMoney2(usPerf.avg_cpc_usd, "USD"), formatMoney2(usAgCpc, "USD"), usCpcDiff));
+    var usJoVal = us.funnel && us.funnel.jobOrders && us.funnel.jobOrders > 0 ? (usMtdSpend / us.funnel.jobOrders) : null;
+    var auJoVal = au.funnel && au.funnel.jobOrders && au.funnel.jobOrders > 0 ? (auMtdSpend / au.funnel.jobOrders) : null;
 
-    var usCtrDiff = compareRate(usPerf.ctr_pct, usAgCtr, false);
-    rows.push(cmpRow("Click-through rate (CTR)", formatPct(usPerf.ctr_pct), formatPct(usAgCtr), usCtrDiff));
+    var usCpeDiff = compareRate(usCpeVal, usAgCpe, true);
+    var auCpeDiff = compareRate(auCpeVal, auAgCpe, true);
 
-    // Australia Section
-    rows.push(marketDivider("Australia (AUD)"));
-    var auCpeDiff = compareRate(auOps.cost_per_enquiry_usd, auAgCpe, true);
-    rows.push(cmpRow("Cost per employer enquiry", formatMoney2(auOps.cost_per_enquiry_usd, "AUD"), formatMoney2(auAgCpe, "AUD"), auCpeDiff));
+    var usCpdDiff = compareRate(usCpdVal, usAgCpd, true);
+    var auCpdDiff = compareRate(auCpdVal, auAgCpd, true);
 
-    var auCpdDiff = compareRate(auOps.cost_per_sales_call_completed_usd, auAgCpd, true);
-    rows.push(cmpRow("Cost per discovery call", formatMoney2(auOps.cost_per_sales_call_completed_usd, "AUD"), formatMoney2(auAgCpd, "AUD"), auCpdDiff));
+    var rows = [];
 
-    var auJoCost = au.funnel && au.funnel.jobOrders && au.funnel.jobOrders > 0 ? (au.spend / au.funnel.jobOrders) : null;
-    var auCpjoDiff = auJoCost ? compareRate(auJoCost, auAgCpjo, true) : { diffText: "—", tone: "neutral" };
-    var auJoDisplay = auJoCost ? formatMoney2(auJoCost, "AUD") : '<span class="ex-status-tag warn">Pipeline active</span>';
-    rows.push(cmpRow("Cost per job order", auJoDisplay, formatMoney2(auAgCpjo, "AUD"), auCpjoDiff));
+    // US Row
+    rows.push('<tr>' +
+      '<td><strong><span class="ex-mkt-tag us">US</span> United States ($ USD)</strong></td>' +
+      '<td class="num font-mono"><strong>' + formatMoney(usMonthlyRunRate, "USD") + '</strong>/mo</td>' +
+      '<td class="num font-mono text-muted">' + formatMoney(usAgMonthlySpend, "USD") + '/mo</td>' +
+      '<td class="num font-mono delta-good">−' + Math.round(usSpendSavingsPct) + '% <small>(−' + formatMoney(usAgMonthlySpend - usMonthlyRunRate, "USD") + '/mo)</small></td>' +
+      '<td class="num font-mono">' + (usCpeVal ? formatMoney2(usCpeVal, "USD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(usAgCpe, "USD") + '</small></td>' +
+      '<td class="num font-mono">' + (usCpdVal ? formatMoney2(usCpdVal, "USD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(usAgCpd, "USD") + '</small></td>' +
+      '<td class="num font-mono">' + (usJoVal ? formatMoney2(usJoVal, "USD") : '<span class="ex-status-tag warn">Pipeline</span>') + ' <small class="text-muted">vs ' + formatMoney2(usAgCpjo, "USD") + '</small></td>' +
+      '</tr>');
 
-    var auPlaceCost = au.funnel && au.funnel.placements && au.funnel.placements > 0 ? (au.spend / au.funnel.placements) : null;
-    var auCppDiff = auPlaceCost ? compareRate(auPlaceCost, auAgCpp, true) : { diffText: "—", tone: "neutral" };
-    var auPlaceDisplay = auPlaceCost ? formatMoney2(auPlaceCost, "AUD") : '<span class="ex-status-tag warn">Pipeline active</span>';
-    rows.push(cmpRow("Cost per placement", auPlaceDisplay, formatMoney2(auAgCpp, "AUD"), auCppDiff));
-
-    var auCpcDiff = compareRate(auPerf.avg_cpc_usd, auAgCpc, true);
-    rows.push(cmpRow("Average cost per click (CPC)", formatMoney2(auPerf.avg_cpc_usd, "AUD"), formatMoney2(auAgCpc, "AUD"), auCpcDiff));
-
-    var auCtrDiff = compareRate(auPerf.ctr_pct, auAgCtr, false);
-    rows.push(cmpRow("Click-through rate (CTR)", formatPct(auPerf.ctr_pct), formatPct(auAgCtr), auCtrDiff));
+    // AU Row
+    rows.push('<tr>' +
+      '<td><strong><span class="ex-mkt-tag au">AU</span> Australia (A$ AUD)</strong></td>' +
+      '<td class="num font-mono"><strong>' + formatMoney(auMonthlyRunRate, "AUD") + '</strong>/mo</td>' +
+      '<td class="num font-mono text-muted">' + formatMoney(auAgMonthlySpend, "AUD") + '/mo</td>' +
+      '<td class="num font-mono delta-good">−' + Math.round(auSpendSavingsPct) + '% <small>(−' + formatMoney(auAgMonthlySpend - auMonthlyRunRate, "AUD") + '/mo)</small></td>' +
+      '<td class="num font-mono">' + (auCpeVal ? formatMoney2(auCpeVal, "AUD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(auAgCpe, "AUD") + '</small></td>' +
+      '<td class="num font-mono">' + (auCpdVal ? formatMoney2(auCpdVal, "AUD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(auAgCpd, "AUD") + '</small></td>' +
+      '<td class="num font-mono">' + (auJoVal ? formatMoney2(auJoVal, "AUD") : "—") + ' <small class="text-muted">vs ' + formatMoney2(auAgCpjo, "AUD") + '</small></td>' +
+      '</tr>');
 
     body.innerHTML = rows.join("");
   }

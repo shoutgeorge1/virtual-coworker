@@ -366,7 +366,163 @@
   color: #0f172a;
 }
 
+/* Side-by-Side Market Cards Grid */
+.ex-market-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.ex-market-card {
+  background: #ffffff;
+  border: 1px solid var(--ex-border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.ex-market-card-hd {
+  background: var(--ex-hdr-bg);
+  border-bottom: 1px solid var(--ex-border);
+  padding: 0.85rem 1rem;
+}
+
+.ex-market-card-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.ex-market-flag-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ex-market-flag-title h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ex-text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ex-mkt-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ex-mkt-tag.us {
+  background: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.ex-mkt-tag.au {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.ex-curr-badge {
+  font-size: 0.74rem;
+  font-weight: 600;
+  background: #e2e8f0;
+  color: #475569;
+  padding: 1px 5px;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.ex-lead-label {
+  font-size: 0.78rem;
+  color: var(--ex-text-muted);
+  font-weight: 500;
+}
+
+/* Market Spend Banner */
+.ex-market-spend-banner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.35fr;
+  gap: 0.5rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+}
+
+.ex-spend-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.ex-spend-stat .ex-stat-lbl {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.03em;
+}
+
+.ex-spend-stat .ex-stat-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ex-text-main);
+}
+
+.ex-spend-stat .ex-stat-val.mute {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.ex-spend-stat .ex-stat-val small {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.ex-spend-stat.highlight {
+  border-left: 1px solid #e2e8f0;
+  padding-left: 0.65rem;
+}
+
+.ex-market-card-table-wrap {
+  flex: 1;
+  overflow-x: auto;
+}
+
+.ex-market-card-ft {
+  background: #f8fafc;
+  border-top: 1px solid #f1f5f9;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.74rem;
+  color: #64748b;
+}
+
+.text-muted {
+  color: #64748b !important;
+}
+
 /* Responsive */
+@media (max-width: 1100px) {
+  .ex-market-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 1024px) {
   .ex-table-wrap {
     overflow-x: auto;
