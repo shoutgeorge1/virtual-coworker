@@ -354,7 +354,7 @@
     var totalGclid = us.withGclid + au.withGclid;
     var totalZoho = us.zohoRows + au.zohoRows;
     confEl.innerHTML =
-      '<div class="ex-briefing-p"><strong>' + totalGclid + ' of ' + totalZoho + ' audited CRM records</strong> carry a verified Google ad click ID. Overall blended volume is verified by sales ops, but campaign-level attribution is being repaired.</div>';
+      '<div class="ex-briefing-p"><strong>Blended attribution:</strong> Google Ads is the company’s primary marketing spend, but not every lead is directly tied to an ad click yet (' + totalGclid + ' of ' + totalZoho + ' audited CRM records carry verified click IDs). We evaluate total blended results as directional commercial intelligence while tracking is refined.</div>';
 
     // What we're doing
     decEl.innerHTML =
