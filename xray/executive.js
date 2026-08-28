@@ -320,7 +320,7 @@
     var snap = STATE.snapshot;
     var adsDate = (snap.generated_at_utc || "").slice(0, 10);
     $("#ex-fresh").textContent =
-      "Data through " + asOfDate() + " · Google Ads: " + adsDate + " · Sales confirmed by Cheyenne (US) & Holly (AU)";
+      "Data through " + asOfDate() + " · Google Ads: " + adsDate + " · Sales confirmed by Cheyenne (US) & Holly (AU) · Blended directional attribution";
   }
 
   function renderBottomLine(us, au) {
@@ -354,7 +354,7 @@
     var totalGclid = us.withGclid + au.withGclid;
     var totalZoho = us.zohoRows + au.zohoRows;
     confEl.innerHTML =
-      '<div class="ex-briefing-p"><strong>Blended attribution:</strong> Google Ads is the company’s primary marketing spend, but not every lead is directly tied to an ad click yet (' + totalGclid + ' of ' + totalZoho + ' audited CRM records carry verified click IDs). We evaluate total blended results as directional commercial intelligence while tracking is refined.</div>';
+      '<div class="ex-briefing-p"><strong>Blended attribution:</strong> Google Ads is the company’s primary marketing spend. While not every individual enquiry is directly attributed to an ad click yet (' + totalGclid + ' of ' + totalZoho + ' audited CRM records carry verified click IDs), total blended unit costs provide reliable directional guidance for leadership decisions while direct tracking is being connected.</div>';
 
     // What we're doing
     decEl.innerHTML =
@@ -409,13 +409,13 @@
 
     // United States Section
     rows.push(marketDivider("United States (USD)"));
-    rows.push(dataRow("Paid ad spend", formatMoney(us.spend, "USD"), "—", "Google Ads Search pilot (Core + Roles)"));
+    rows.push(dataRow("Paid ad spend", formatMoney(us.spend, "USD"), "—", "Google Ads Search pilot (primary marketing spend)"));
     
     var usEnq = us.funnel.enquiriesPending ? '<span class="ex-status-tag pending">Pending</span>' : formatNum(us.funnel.enquiries);
-    rows.push(dataRow("Employer enquiries", usEnq, ratioMoney(us.cpe, "USD"), "Validated employer leads (Cheyenne ops review)"));
+    rows.push(dataRow("Employer enquiries", usEnq, ratioMoney(us.cpe, "USD"), "Blended unit cost · Cheyenne ops review"));
     
     var usDisc = us.funnel.discoveries == null ? "—" : formatNum(us.funnel.discoveries);
-    rows.push(dataRow("Completed discovery calls", usDisc, ratioMoney(us.cpd, "USD"), "Sales calls completed by US team"));
+    rows.push(dataRow("Completed discovery calls", usDisc, ratioMoney(us.cpd, "USD"), "Blended unit cost · Sales calls completed by US team"));
     
     var usJo = us.funnel.jobOrders && us.funnel.jobOrders > 0 ? formatNum(us.funnel.jobOrders) : '<span class="ex-status-tag warn">None confirmed yet</span>';
     var usCpjo = us.funnel.jobOrders && us.funnel.jobOrders > 0 ? ratioMoney(us.cpjo, "USD") : "—";
@@ -427,13 +427,13 @@
 
     // Australia Section
     rows.push(marketDivider("Australia (AUD)"));
-    rows.push(dataRow("Paid ad spend", formatMoney(au.spend, "AUD"), "—", "Google Ads Search pilot (Core + Roles)"));
+    rows.push(dataRow("Paid ad spend", formatMoney(au.spend, "AUD"), "—", "Google Ads Search pilot (primary marketing spend)"));
     
     var auEnq = au.funnel.enquiries == null ? '<span class="ex-status-tag pending">Pending</span>' : formatNum(au.funnel.enquiries);
-    rows.push(dataRow("Employer enquiries", auEnq, ratioMoney(au.cpe, "AUD"), "Validated employer leads (Holly ops review)"));
+    rows.push(dataRow("Employer enquiries", auEnq, ratioMoney(au.cpe, "AUD"), "Blended unit cost · Holly ops review"));
     
     var auDisc = au.funnel.discoveries == null ? "—" : formatNum(au.funnel.discoveries);
-    rows.push(dataRow("Completed discovery calls", auDisc, ratioMoney(au.cpd, "AUD"), "Sales calls completed by AU team"));
+    rows.push(dataRow("Completed discovery calls", auDisc, ratioMoney(au.cpd, "AUD"), "Blended unit cost · Sales calls completed by AU team"));
     
     var auJo = au.funnel.jobOrders && au.funnel.jobOrders > 0 ? formatNum(au.funnel.jobOrders) : (au.funnel.jobOrders === 0 ? "0" : "—");
     var auCpjo = au.funnel.jobOrders && au.funnel.jobOrders > 0 ? ratioMoney(au.cpjo, "AUD") : "—";
@@ -611,7 +611,7 @@
     if (!panel) return;
 
     var h = '<p style="margin:0 0 0.75rem;font-size:0.86rem;color:var(--body);line-height:1.5;">';
-    h += '<strong>Reconciliation:</strong> During the 3-week pilot, sales confirmed <strong>49 total employer enquiries</strong> (31 US + 18 AU). In the single-week CRM audit (Aug 17–23), <strong>31 records</strong> were inspected in Zoho, of which <strong>5 contained a valid advertising click ID (GCLID)</strong> (2 US, 3 AU).';
+    h += '<strong>Blended directional attribution:</strong> Google Ads represents our primary marketing spend. During the pilot period, sales confirmed <strong>49 total employer enquiries</strong> (31 US + 18 AU). In the single-week CRM audit (Aug 17–23), <strong>31 records</strong> were inspected in Zoho, of which <strong>5 contained a verified advertising click ID (GCLID)</strong> (2 US, 3 AU). Because not every lead has direct click attribution yet, leadership uses blended funnel metrics for dependable directional decision-making while tracking integration is completed.';
     h += '</p>';
     h += '<ul class="ex-rules-list">';
     h += '<li><strong>Known Exclusions:</strong> 16 disqualified contacts (10 job seekers and 6 not-a-fit) were filtered out by sales operations and are excluded from employer numbers.</li>';
