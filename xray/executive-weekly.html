@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Executive · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="executive-weekly.html"] .main {
+      max-width: 1120px;
+      font-variant-numeric: tabular-nums;
+    }
+    .dash-head { margin: 0 0 0.45rem; }
+    .dash-head h1 { margin: 0; font-size: 1.45rem; }
+    .week-notes {
+      margin: 1.6rem 0 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+    .week-notes .asof {
+      margin: 0 0 0.45rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .week-notes .how-count { margin-bottom: 0.45rem; }
+    .week-notes .data-fresh { margin-top: 0.35rem; max-width: none; }
+    .mkt-block {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+    }
+    .mkt-block.us { border-color: var(--tint-green-edge); background: var(--tint-green); }
+    .mkt-block.au { border-color: var(--tint-cool-edge); background: var(--tint-cool); }
+    .mkt-block .mkt-hd {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.35rem 1rem;
+      margin: 0 0 0.55rem;
+    }
+    .mkt-block h2 {
+      margin: 0;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .mkt-block .bud {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+    .period {
+      margin: 0 0 0.55rem;
+    }
+    .period:last-child { margin-bottom: 0; }
+    .period h3 {
+      margin: 0 0 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+    @media (max-width: 900px) {
+      .kpi-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .kpi {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      min-height: 100%;
+      padding: 0.55rem 0.55rem 0.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.72);
+    }
+    .kpi.kpi-cost {
+      border: 1px solid rgba(0,0,0,0.10);
+      background: rgba(255,255,255,0.88);
+      box-shadow: none;
+    }
+    .kpi.kpi-cost .k {
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .kpi.kpi-cost .v {
+      font-size: 1.22rem;
+      font-weight: 600;
+    }
+    .kpi .k {
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+      line-height: 1.2;
+      min-height: 1.55em;
+    }
+    .kpi .v {
+      display: block;
+      font-size: 1.38rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+    .kpi .sub {
+      display: block;
+      margin-top: 0.28rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.35;
+      white-space: normal;
+    }
+    .kpi .sub .wow {
+      display: inline;
+      font-weight: 800;
+      font-size: 1rem;
+      margin-right: 0.22rem;
+    }
+    .kpi .sub .wow-arr {
+      font-size: 1.05em;
+      margin-right: 0.1rem;
+    }
+    .mkt-note {
+      margin: 0.55rem 0 0;
+      font-size: 0.84rem;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+    .mkt-note .mute, .mkt-note.mute { font-size: 0.8rem; color: var(--muted); }
+    .why {
+      margin: 0.4rem 0 0;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+    .cmp7 {
+      margin: 0.35rem 0 0;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+    .week-group { margin: 0 0 0.45rem; }
+    .kpi-row.week-costs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 0.4rem;
+    }
+    .kpi-row.week-ads {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .week-costs .kpi {
+      min-height: 4.2rem;
+    }
+    .week-costs .kpi-cost .k { font-size: 0.72rem; font-weight: 500; }
+    .week-costs .kpi-cost .v { font-size: 1.22rem; font-weight: 600; }
+    .week-ads {
+      padding: 0.15rem 0 0.05rem;
+    }
+    .week-ads .kpi {
+      min-height: 0;
+      padding: 0.2rem 0.12rem 0.15rem;
+      border: none;
+      background: transparent;
+      border-radius: 0;
+    }
+    .week-ads .kpi .k {
+      font-size: 0.68rem;
+      font-weight: 500;
+      min-height: 0;
+      letter-spacing: 0.03em;
+    }
+    .week-ads .kpi .v {
+      font-size: 1.02rem;
+      font-weight: 500;
+    }
+    .week-ads .kpi .sub {
+      font-size: 0.7rem;
+      font-weight: 400;
+      margin-top: 0.12rem;
+    }
+    .week-ads .kpi .sub .wow {
+      font-weight: 500;
+      font-size: 0.7rem;
+    }
+    .week-ads .kpi .sub .wow-arr {
+      font-size: 0.9em;
+    }
+    @media (max-width: 900px) {
+      .kpi-row.week-ads { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .kpi-row.week-costs { grid-template-columns: 1fr; }
+      .kpi-row.week-ads { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .lead-cost { margin: 0.55rem 0 0.35rem; }
+    .lead-cost h3 {
+      margin: 0 0 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .src-chips {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.18rem 0.28rem;
+      margin: 0.28rem 0 0.05rem;
+    }
+    .src-chips-k {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.1rem;
+    }
+    .src-chip {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.28rem;
+      max-width: 11rem;
+      padding: 0.1rem 0.38rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.07);
+      background: rgba(255,255,255,0.58);
+      font-size: 0.68rem;
+      line-height: 1.2;
+    }
+    .src-chip .src-l {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .src-chip .src-n { font-weight: 700; font-variant-numeric: tabular-nums; }
+    .prior-line { margin: 0.2rem 0 0; }
+    .zoho-census { margin: 0.2rem 0 0; }
+    .kpi-row.lead-kpi { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .kpi-row.lead-kpi.lead-kpi-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    @media (max-width: 900px) {
+      .kpi-row.lead-kpi.lead-kpi-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .kpi-row.lead-kpi { grid-template-columns: 1fr; }
+    }
+    details.today-demote {
+      margin: 0.35rem 0 0;
+      border: 1px dashed rgba(100,116,139,0.4);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.35);
+    }
+    details.today-demote > summary {
+      cursor: pointer;
+      padding: 0.4rem 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      list-style: none;
+    }
+    details.today-demote > summary::-webkit-details-marker { display: none; }
+    details.today-demote .bd { padding: 0 0.55rem 0.55rem; }
+    .baseline {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
+    }
+    /* Every section below the market cards wears the same header as the
+       market cards: small uppercase title left, quiet window right. */
+    .sec-hd {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.25rem 1rem;
+      margin: 0 0 0.6rem;
+    }
+    .sec-hd h2 {
+      margin: 0;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .sec-hd .sec-meta {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .baseline .cmp {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .baseline .cmp th, .baseline .cmp td {
+      text-align: left;
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      vertical-align: top;
+    }
+    .baseline .cmp th {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .baseline .cmp th.num,
+    .baseline .cmp td.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+    .baseline .cmp td:first-child { font-weight: 600; white-space: nowrap; }
+    .baseline .note { margin: 0.45rem 0 0; font-size: 0.8rem; color: var(--muted); }
+    .legacy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+    }
+    .legacy-box {
+      margin: 0;
+      padding: 0.65rem 0.75rem 0.55rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.72);
+    }
+    .legacy-box h3 {
+      margin: 0 0 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .legacy-box table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .legacy-box th, .legacy-box td {
+      padding: 0.28rem 0.2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .legacy-box thead th {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+    }
+    .legacy-box thead th:first-child { text-align: left; }
+    .legacy-box th[scope="row"] {
+      text-align: left;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .legacy-box .num { text-align: right; }
+    .legacy-box td.this-w { font-weight: 700; color: var(--ink); }
+    .legacy-box td.leg-n { font-weight: 400; color: var(--muted); }
+    /* Legacy agency comparison — one column template for every band, so
+       This week / Legacy week / Δ stay in the same place all the way down. */
+    .baseline {
+      --cmp-cols: minmax(5rem, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .cmp-sheet.has-lastwk {
+      --cmp-cols: minmax(3.6rem, 0.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(3.4rem, 0.85fr) minmax(0, 1fr) minmax(3.4rem, 0.85fr);
+    }
+    .cmp-band { margin: 0 0 0.5rem; }
+    .cmp-band + .cmp-note + .cmp-band {
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid rgba(0,0,0,0.12);
+    }
+    .cmp-band-hd {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.2rem 1rem;
+      margin: 0 0 0.3rem;
+      padding: 0 0.05rem;
+    }
+    .cmp-band-hd h3 {
+      margin: 0;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .cmp-band-note { font-size: 0.72rem; color: var(--muted); }
+    .cmp-sheet {
+      display: grid;
+      grid-template-columns: var(--cmp-cols);
+      align-items: baseline;
+      column-gap: 0.75rem;
+      padding: 0.45rem 0.85rem 0.55rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.72);
+      font-size: 0.88rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .cmp-sheet .cell { padding: 0.16rem 0; min-width: 0; }
+    .cmp-sheet .num { text-align: right; }
+    .cmp-sheet .hd {
+      padding-bottom: 0.3rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .cmp-sheet .grp {
+      grid-column: 1 / -1;
+      margin-top: 0.4rem;
+      padding: 0.35rem 0 0.1rem;
+      border-top: 1px solid rgba(0,0,0,0.07);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cmp-sheet .hd + .grp { margin-top: 0; border-top: none; }
+    .cmp-sheet .cm { font-weight: 600; color: var(--ink); }
+    .cmp-sheet .tw { font-weight: 700; color: var(--ink); }
+    .cmp-sheet .lg { font-weight: 400; color: var(--muted); }
+    .cmp-note {
+      margin: 0.3rem 0 0.75rem;
+      padding: 0 0.05rem;
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    @media (max-width: 560px) {
+      .baseline { --cmp-cols: 4.2rem minmax(0, 1fr) minmax(0, 1fr) 5.4rem; }
+      .cmp-sheet.has-lastwk { --cmp-cols: 3.1rem minmax(0, 1fr) minmax(0, 1fr) 3.2rem minmax(0, 1fr) 3.4rem; }
+      .cmp-sheet { column-gap: 0.4rem; font-size: 0.82rem; }
+    }
+    .legacy-grid.ga4-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+    .ga4-grid .legacy-box {
+      padding: 0.55rem 0.6rem 0.45rem;
+      border-color: rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.72);
+    }
+    .ga4-grid .legacy-box h3 {
+      margin: 0 0 0.2rem;
+      font-size: 0.68rem;
+      min-height: 1.55em;
+    }
+    .ga4-grid .legacy-box table { font-size: 1rem; font-variant-numeric: tabular-nums; }
+    .ga4-grid .legacy-box th,
+    .ga4-grid .legacy-box td { padding: 0.22rem 0; border-bottom: none; }
+    .ga4-grid .legacy-box tr + tr th,
+    .ga4-grid .legacy-box tr + tr td { border-top: 1px solid rgba(0,0,0,0.06); }
+    .ga4-grid .legacy-box th[scope="row"] {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .ga4-grid .legacy-box .sub {
+      display: block;
+      margin-top: 0.16rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .ga4-grid .legacy-box .wow {
+      display: inline;
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-right: 0.22rem;
+    }
+    .ga4-grid .legacy-box .wow-arr {
+      font-size: 1.05em;
+      margin-right: 0.1rem;
+    }
+    .ga4-grid .legacy-box .wow.delta-good { color: #166534; }
+    .ga4-grid .legacy-box .wow.delta-bad { color: #9f1239; }
+    .ga4-grid .legacy-box .wow.delta-flat { color: var(--muted); }
+    .ga4-now {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+    }
+    .windows {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.45rem 1rem;
+      margin: 1rem 0 0;
+      padding: 0.7rem 0 0;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    .windows div { margin: 0; }
+    .windows dt {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .windows dd {
+      margin: 0.15rem 0 0;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    @media (max-width: 900px) {
+      .legacy-grid.ga4-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .legacy-grid { grid-template-columns: 1fr; }
+      .legacy-grid.sales-vol { grid-template-columns: 1fr; }
+      .legacy-grid.ga4-grid { grid-template-columns: 1fr 1fr; }
+      .windows { grid-template-columns: 1fr; }
+    }
+    .baseline .agency-econ { margin: 0 0 0.65rem; }
+    .baseline .agency-econ h3 { color: var(--ink); }
+    .halo {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--tint-cool-edge);
+      background: var(--tint-cool);
+    }
+    .halo-frame {
+      margin: 0 0 0.4rem;
+      font-size: 0.8rem;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+    .kpi-row.halo-kpi {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: 0;
+    }
+    .halo-kpi .kpi { min-height: 4.85rem; }
+    @media (max-width: 900px) {
+      .kpi-row.halo-kpi { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .kpi-row.halo-kpi { grid-template-columns: 1fr; }
+    }
+    .kpi.kpi-halo .v { font-size: 1.4rem; }
+    .halo .cmp, .halo-cmp {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .halo .cmp th, .halo .cmp td,
+    .halo-cmp th, .halo-cmp td {
+      text-align: left;
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      vertical-align: top;
+    }
+    .halo .cmp th, .halo-cmp th {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .halo .cmp th.num, .halo .cmp td.num,
+    .halo-cmp th.num, .halo-cmp td.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+    .halo .cmp td:first-child, .halo-cmp td:first-child { font-weight: 600; white-space: nowrap; }
+    .halo .note { margin: 0.45rem 0 0; font-size: 0.8rem; color: var(--muted); }
+    .ga4-foot { margin: 0.55rem 0 0; }
+    .lp-block { margin: 0.75rem 0 0; }
+    .lp-block .sec-hd { margin-bottom: 0.4rem; }
+    .legacy-grid.lp-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    .lp-t { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .lp-t th, .lp-t td {
+      padding: 0.42rem 0.55rem;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .lp-t td.num, .lp-t th.num {
+      padding-left: 0.85rem;
+      min-width: 4.6rem;
+    }
+    .lp-t thead th {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+    }
+    .lp-t thead th:first-child, .lp-t th[scope="row"] { text-align: left; }
+    .lp-t th[scope="row"] {
+      font-weight: 600;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.88rem;
+      padding-right: 0.85rem;
+    }
+    .ga4-insight {
+      margin: 1rem 0 0;
+      padding: 0.95rem 1.1rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--edge-soft);
+      background: rgba(255,255,255,0.78);
+    }
+    .ga4-insight h3 {
+      margin: 0 0 0.55rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+    }
+    .ga4-insight ul {
+      margin: 0;
+      padding: 0 0 0 1.2rem;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+    .ga4-insight li { margin: 0 0 0.85rem; }
+    .ga4-insight li:last-child { margin-bottom: 0; }
+    .ga4-insight p { margin: 0.12rem 0 0; font-size: 0.95rem; line-height: 1.45; }
+    .ga4-insight .ins-k { font-weight: 700; }
+    .ga4-insight .ins-caveat { color: var(--muted); font-size: 0.88rem; }
+    .week-close {
+      margin: 1.25rem 0 0;
+      padding-top: 0.25rem;
+    }
+    .week-close .ga4-insight {
+      margin-top: 0;
+    }
+    .lp-t tr.small-n th, .lp-t tr.small-n td { color: var(--muted); }
+    .sample-tag {
+      display: inline-block;
+      margin-left: 0.35rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--warn);
+      font-family: var(--font);
+    }
+    .data-fresh {
+      margin: 0.2rem 0 0;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: var(--muted);
+      max-width: 46rem;
+    }
+    @media (max-width: 720px) {
+      .legacy-grid.lp-grid { grid-template-columns: 1fr; }
+      .lp-t { font-size: 0.82rem; }
+      .lp-t td.num, .lp-t th.num { min-width: 2.6rem; padding-left: 0.4rem; }
+    }
+    details.calc-how {
+      margin: 0.7rem 0 0;
+      border: 1px dashed rgba(100,116,139,0.45);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.35);
+    }
+    details.calc-how > summary {
+      cursor: pointer;
+      padding: 0.45rem 0.65rem;
+      font-weight: 600;
+      font-size: 0.82rem;
+      list-style: none;
+      color: var(--muted);
+    }
+    details.calc-how > summary::-webkit-details-marker { display: none; }
+    details.calc-how .bd { padding: 0 0.65rem 0.55rem; }
+    .delta-good { color: #166534; font-weight: 700; }
+    .delta-bad { color: #9f1239; font-weight: 700; }
+    .delta-flat { color: var(--muted); font-weight: 600; }
+    .mute { color: var(--muted); font-size: 0.8rem; }
+    details.ev {
+      margin: 0.5rem 0 0;
+      border: 1px dashed rgba(100,116,139,0.55);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+    details.ev > summary {
+      cursor: pointer;
+      padding: 0.65rem 0.85rem;
+      font-weight: 700;
+      font-size: 0.92rem;
+      list-style: none;
+    }
+    details.ev > summary::-webkit-details-marker { display: none; }
+    details.ev .bd { padding: 0 0.85rem 0.85rem; border-top: 1px solid rgba(0,0,0,0.06); }
+    table.ev-t { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 0.45rem 0; }
+    table.ev-t th, table.ev-t td {
+      text-align: left; padding: 0.28rem 0.2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06); vertical-align: top;
+    }
+    table.ev-t th {
+      font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted);
+    }
+    .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .conf {
+      display: inline-block;
+      margin-left: 0.28rem;
+      padding: 0.02rem 0.32rem;
+      border-radius: 999px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      vertical-align: 0.12em;
+      line-height: 1.4;
+    }
+    .conf-v { background: #dcfce7; color: #166534; }
+    .conf-d { background: #e0e7ff; color: #3730a3; }
+    .conf-i { background: #fef3c7; color: #92400e; }
+    .conf-u { background: #f1f5f9; color: #475569; }
+    .conf-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.7rem;
+      margin: 0.35rem 0 0.55rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .disclose {
+      margin: 0 0 0.65rem;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+    .exec-sum {
+      margin: 0 0 0.75rem;
+      padding: 0.55rem 0.85rem 0.55rem 1.2rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+    .exec-sum li { margin: 0 0 0.28rem; }
+    .exec-sum li:last-child { margin-bottom: 0; }
+    .funnel-k {
+      margin: 0.55rem 0 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .funnel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .funnel li {
+      flex: 1 1 5.6rem;
+      min-width: 5.4rem;
+      padding: 0.35rem 0.4rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.7);
+    }
+    .funnel .fn-k {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+    .funnel .fn-n {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin: 0.1rem 0;
+    }
+    .funnel .fn-miss { background: #f8fafc; }
+    .funnel .fn-inc { background: #fffbeb; }
+    .funnel .fn-dir { background: #eef2ff; }
+    .funnel-note { margin: 0.28rem 0 0; }
+    .crm-ready .st-ok { color: #166534; font-weight: 700; }
+    .crm-ready .st-rev { color: #92400e; font-weight: 700; }
+    .crm-ready .st-miss, .crm-ready .st-test { color: #475569; font-weight: 700; }
+    @media (max-width: 520px) {
+      .funnel li { flex: 1 1 46%; }
+      .conf { margin-left: 0.12rem; }
+    }
+    .week-toggle {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0 0 0.85rem;
+    }
+    .week-toggle button {
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--edge);
+      background: #fff;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .week-toggle button.on {
+      background: #1a1a1a;
+      color: #fff;
+      border-color: #1a1a1a;
+    }
+    .view-week[hidden] { display: none; }
+    .how-count {
+      margin: 0 0 0.75rem;
+      padding: 0;
+      border: none;
+      background: none;
+      font-size: 0.82rem;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    .how-count strong {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .how-count .cats,
+    .how-count .sample {
+      font-weight: 400;
+    }
+    .zoho-extra {
+      margin: 1.35rem 0 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .zoho-extra summary {
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .zoho-extra .bd {
+      margin-top: 0.55rem;
+    }
+    table.day-cmp {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      margin: 0.7rem 0 0;
+      font-size: 0.98rem;
+      font-variant-numeric: tabular-nums;
+    }
+    table.day-cmp th, table.day-cmp td {
+      text-align: right;
+      padding: 0.4rem 0.55rem;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    table.day-cmp th.day-lbl,
+    table.day-cmp th[scope="row"] {
+      text-align: left;
+      width: 34%;
+    }
+    table.day-cmp thead th {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body data-page="executive-weekly.html" data-foot="Weekly archive · US · AU · baked">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <header class="dash-head">
+        <h1>Executive · weekly archive</h1>
+        <p class="mute" style="margin:0.35rem 0 0">GA4 / landing-page / day-by-day detail. Monthly pilot report lives on <a href="executive.html">Executive Performance</a>.</p>
+      </header>
+      <div class="week-toggle" role="tablist" aria-label="Scoreboard week">
+        <button type="button" class="on" data-week="now" aria-pressed="true">This week so far</button>
+        <button type="button" data-week="frozen" aria-pressed="false">Aug 17–23 · frozen</button>
+        <button type="button" data-week="frozen-1016" aria-pressed="false">Aug 10–16 · frozen</button>
+      </div>
+
+      <div class="view-week" id="view-now">
+
+      <section class="mkt-block us" aria-label="United States now">
+        <div class="mkt-hd">
+          <h2>United States</h2>
+          <p class="bud">Mon Aug 24 – Thu Aug 27 so far</p>
+        </div>
+        <div class="period week-group">
+          <div class="kpi-row week-costs"><div class="kpi kpi-cost"><span class="k" title="Spend ÷ quality enquiries (Zoho rows minus junk, not-a-fit, and job-seeker). Not a Google Ads CPA.">Cost / enquiry</span><span class="v num">$155.28</span><span class="sub">quality enquiries · 4</span></div><div class="kpi kpi-cost"><span class="k" title="No Zoho Discovery Scheduled rows in this period.">Cost / discovery</span><span class="v num">—</span><span class="sub">not yet</span></div><div class="kpi kpi-cost"><span class="k" title="Spend ÷ all Zoho rows during this period — not a Google Ads CPA.">Cost / job order</span><span class="v num">$621.12</span><span class="sub">all Zoho rows · not Ads CPA</span></div></div>
+          <div class="kpi-row week-ads">
+          <div class="kpi"><span class="k">Spend</span><span class="v num">$939</span><span class="sub"><span class='wow delta-good' title='improved 9% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>9%</span> vs $1,033 last week</span></div>
+          <div class="kpi"><span class="k">Clicks</span><span class="v num">260</span><span class="sub"><span class='wow delta-bad' title='worse 23% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>23%</span> vs 338 last week</span></div>
+          <div class="kpi"><span class="k">Impr.</span><span class="v num">2,523</span><span class="sub"><span class='wow delta-bad' title='worse 33% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>33%</span> vs 3,763 last week</span></div>
+          <div class="kpi"><span class="k">CTR</span><span class="v num">10.3%</span><span class="sub"><span class='wow delta-good' title='improved 1.3 pts vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>1.3 pts</span> vs 9.0% last week</span></div>
+          <div class="kpi"><span class="k">CPC</span><span class="v num">$3.61</span><span class="sub"><span class='wow delta-bad' title='worse 18% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>18%</span> vs $3.06 last week</span></div>
+          <div class="kpi"><span class="k" title="Google Ads conversion actions in this window. Not a clean count of qualified employer enquiries.">Google Ads actions</span><span class="v num">2</span><span class="sub"><span class='wow delta-bad' title='worse 33% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>33%</span> vs 3 last week</span></div>
+          </div>
+          <table class='day-cmp'><thead><tr><th class='day-lbl' scope='col'>Day</th><th class='num' scope='col'>Spend</th><th class='num' scope='col'>Clicks</th><th class='num' scope='col'>CTR</th></tr></thead><tbody><tr><th scope='row'>Mon 24</th><td class='num'>$308</td><td class='num'>82</td><td class='num'>9.2%</td></tr><tr><th scope='row'>Tue 25</th><td class='num'>$313</td><td class='num'>87</td><td class='num'>12.2%</td></tr><tr><th scope='row'>Wed 26</th><td class='num'>$304</td><td class='num'>87</td><td class='num'>10.3%</td></tr><tr><th scope='row'>Thu 27</th><td class='num'>$14</td><td class='num'>4</td><td class='num'>5.6%</td></tr></tbody></table>
+          <p class='mkt-note mute'>Cheyenne Mon Aug 24 – Tue Aug 25: 0 enquiries (Mon–Tue pending). Weekend addendum 3 enquiries · 1 call booked · 2 looking for work (both weekend phone calls).</p>
+        </div>
+      </section>
+      <section class="mkt-block au" aria-label="Australia now">
+        <div class="mkt-hd">
+          <h2>Australia</h2>
+          <p class="bud">Mon Aug 24 – Thu Aug 27 so far</p>
+        </div>
+        <div class="period week-group">
+          <div class="kpi-row week-costs"><div class="kpi kpi-cost"><span class="k" title="Spend ÷ named microsite leads from sales. Not a Google Ads CPA.">Cost / enquiry</span><span class="v num">A$151.82</span><span class="sub">named sales leads · 2</span></div><div class="kpi kpi-cost"><span class="k" title="Spend ÷ Zoho Discovery Scheduled statuses this period — not a Google Ads CPA.">Cost / discovery</span><span class="v num">A$303.65</span><span class="sub">all Zoho rows · not Ads CPA</span></div><div class="kpi kpi-cost"><span class="k" title="Spend ÷ all Zoho rows during this period — not a Google Ads CPA.">Cost / job order</span><span class="v num">A$75.91</span><span class="sub">all Zoho rows · not Ads CPA</span></div></div>
+          <div class="kpi-row week-ads">
+          <div class="kpi"><span class="k">Spend</span><span class="v num">A$628</span><span class="sub"><span class='wow delta-bad' title='worse 55% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>55%</span> vs A$405 last week</span></div>
+          <div class="kpi"><span class="k">Clicks</span><span class="v num">82</span><span class="sub"><span class='wow delta-bad' title='worse 23% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>23%</span> vs 107 last week</span></div>
+          <div class="kpi"><span class="k">Impr.</span><span class="v num">854</span><span class="sub"><span class='wow delta-good' title='improved 37% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>37%</span> vs 622 last week</span></div>
+          <div class="kpi"><span class="k">CTR</span><span class="v num">9.6%</span><span class="sub"><span class='wow delta-bad' title='worse 7.6 pts vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>7.6 pts</span> vs 17.2% last week</span></div>
+          <div class="kpi"><span class="k">CPC</span><span class="v num">A$7.66</span><span class="sub"><span class='wow delta-bad' title='worse 102% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>102%</span> vs A$3.79 last week</span></div>
+          <div class="kpi"><span class="k" title="Google Ads conversion actions in this window. Not a clean count of qualified employer enquiries.">Google Ads actions</span><span class="v num">—</span><span class="sub">vs 5 last week</span></div>
+          </div>
+          <table class='day-cmp'><thead><tr><th class='day-lbl' scope='col'>Day</th><th class='num' scope='col'>Spend</th><th class='num' scope='col'>Clicks</th><th class='num' scope='col'>CTR</th></tr></thead><tbody><tr><th scope='row'>Mon 24</th><td class='num'>A$109</td><td class='num'>13</td><td class='num'>4.8%</td></tr><tr><th scope='row'>Tue 25</th><td class='num'>A$194</td><td class='num'>22</td><td class='num'>7.9%</td></tr><tr><th scope='row'>Wed 26</th><td class='num'>A$140</td><td class='num'>21</td><td class='num'>14.8%</td></tr><tr><th scope='row'>Thu 27</th><td class='num'>A$184</td><td class='num'>26</td><td class='num'>16.1%</td></tr></tbody></table>
+          <p class='mkt-note mute'>Holly Mon Aug 24 – Tue Aug 25: 2 enquiries · 1 job order (1 new). — sales calls completed.</p>
+        </div>
+      </section>      <section class="baseline week-sales" id="week-sales-now" aria-label="Sales">
+        <div class="sec-hd">
+          <h2>Sales</h2>
+          <p class="sec-meta">This week so far vs last week and vs legacy · named sales + Zoho rows</p>
+        </div>
+        <div class='cmp-band'><div class='cmp-band-hd'><h3>Sales</h3><span class='cmp-band-note'>Zoho rows · same week as the cards</span></div><div class='cmp-sheet has-lastwk'><span class='cell hd'></span><span class='cell hd num'>So far</span><span class='cell hd num'>Last week</span><span class='cell hd num'>Δ last week</span><span class='cell hd num'>Legacy 4d</span><span class='cell hd num'>Δ legacy</span><span class='cell grp'>Enquiries</span><span class='cell cm'>US</span><span class='cell num tw'>7</span><span class='cell num lg'>13</span><span class='cell num delta-bad'>46% lower</span><span class='cell num lg'>5.6</span><span class='cell num delta-good'>1.3×</span><span class='cell cm'>AU</span><span class='cell num tw'>8</span><span class='cell num lg'>12</span><span class='cell num delta-bad'>33% lower</span><span class='cell num lg'>5.1</span><span class='cell num delta-good'>1.6×</span><span class='cell grp'>Discovery</span><span class='cell cm'>US</span><span class='cell num tw'>0</span><span class='cell num lg'>2</span><span class='cell num delta-bad'>100% lower</span><span class='cell num lg'>0.2</span><span class='cell num delta-bad'>100% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>1</span><span class='cell num lg'>2</span><span class='cell num delta-bad'>50% lower</span><span class='cell num lg'>0.3</span><span class='cell num delta-good'>3.8×</span><span class='cell grp'>Job orders</span><span class='cell cm'>US</span><span class='cell num tw'>1</span><span class='cell num lg'>0</span><span class='cell num delta-flat'>—</span><span class='cell num lg'>0.4</span><span class='cell num delta-good'>2.7×</span><span class='cell cm'>AU</span><span class='cell num tw'>4</span><span class='cell num lg'>3</span><span class='cell num delta-good'>1.3×</span><span class='cell num lg'>0.2</span><span class='cell num delta-good'>20.4×</span></div></div>
+        <p class="cmp-note">This-week Enquiries in the sales table are the Zoho census (US 7 · AU 8). US Cost / enquiry uses Cheyenne’s 0 (Mon Aug 24 – Tue Aug 25). AU Cost / enquiry uses Holly’s 2 (Mon Aug 24 – Tue Aug 25). Δ legacy is 4/7 of their typical week. AU Owner = George on microsite rows is a routing bug, not a test-lead flag.</p>
+      </section>
+      <section class="baseline" id="agency-baseline-now" aria-label="Legacy agency comparison">
+        <div class="sec-hd">
+          <h2>Legacy agency comparison</h2>
+          <p class="sec-meta">This week so far vs 4/7 of their typical week</p>
+        </div>
+        <div class='cmp-band'><div class='cmp-band-hd'><h3>Ads</h3><span class='cmp-band-note'>Google Ads · both accounts</span></div><div class='cmp-sheet'><span class='cell hd'></span><span class='cell hd num'>So far</span><span class='cell hd num'>Legacy 4d</span><span class='cell hd num'>Δ</span><span class='cell grp'>CTR</span><span class='cell cm'>US</span><span class='cell num tw'>10.3%</span><span class='cell num lg'>1.6%</span><span class='cell num delta-good'>6.4×</span><span class='cell cm'>AU</span><span class='cell num tw'>9.6%</span><span class='cell num lg'>1.4%</span><span class='cell num delta-good'>6.7×</span><span class='cell grp'>CPC</span><span class='cell cm'>US</span><span class='cell num tw'>$3.61</span><span class='cell num lg'>$8.29</span><span class='cell num delta-good'>56% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$7.66</span><span class='cell num lg'>A$9.24</span><span class='cell num delta-good'>17% lower</span><span class='cell grp'>Spend</span><span class='cell cm'>US</span><span class='cell num tw'>$939</span><span class='cell num lg'>$3,950</span><span class='cell num delta-good'>76% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$628</span><span class='cell num lg'>A$2,497</span><span class='cell num delta-good'>75% lower</span><span class='cell grp'>Cost / enquiry</span><span class='cell cm'>US</span><span class='cell num tw'>$234.70</span><span class='cell num lg'>$707.45</span><span class='cell num delta-good'>67% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$314.06</span><span class='cell num lg'>A$490.64</span><span class='cell num delta-good'>36% lower</span><span class='cell grp'>Cost / discovery</span><span class='cell cm'>US</span><span class='cell num tw'>—</span><span class='cell num lg'>$21,966.06</span><span class='cell num delta-flat'>—</span><span class='cell cm'>AU</span><span class='cell num tw'>A$628.12</span><span class='cell num lg'>A$9,545.15</span><span class='cell num delta-good'>93% lower</span><span class='cell grp'>Cost / job order</span><span class='cell cm'>US</span><span class='cell num tw'>$938.80</span><span class='cell num lg'>$10,819</span><span class='cell num delta-good'>91% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$628.12</span><span class='cell num lg'>A$12,727</span><span class='cell num delta-good'>95% lower</span></div></div>
+        <p class="cmp-note">Legacy spend is 4/7 of their typical week — not a full 7 vs 7. CTR, CPC, and cost / job order stay as rates. US Cost / enquiry uses Cheyenne’s 0 named enquiries (Mon Aug 24 – Tue Aug 25). AU Cost / enquiry uses Holly’s 2 named enquiries (Mon Aug 24 – Tue Aug 25). US Cost / job order uses the Zoho census (1 JO). AU Cost / job order uses the Zoho census (4 JO). Zoho census is wider net — not added to Cheyenne/Holly counts.</p>
+        <dl class="windows">
+          <div><dt>This week</dt><dd>Mon Aug 24 – Thu Aug 27 so far</dd></div>
+          <div><dt>Legacy agency</dt><dd>Aug 1, 2024 – Aug 4, 2026</dd></div>
+          <div><dt>GA4</dt><dd>2026-08-24 → 2026-08-24</dd></div>
+        </dl>
+      </section>
+
+      <section class="ga4-now" aria-label="Google Analytics this week">
+        <div class="sec-hd">
+          <h2>Google Analytics</h2>
+          <p class="sec-meta">2026-08-24 → 2026-08-24 vs same weekdays last week · source GA4 · today partial in the US</p>
+        </div>
+        <div class="legacy-grid ga4-grid"><div class="legacy-box"><h3>Sessions</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>16<span class='sub'><span class='wow delta-bad' title='worse 88% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>88%</span> vs 129 last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>14<span class='sub'><span class='wow delta-bad' title='worse 67% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>67%</span> vs 43 last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Users</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>31<span class='sub'><span class='wow delta-bad' title='worse 72% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>72%</span> vs 112 last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>14<span class='sub'><span class='wow delta-bad' title='worse 64% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>64%</span> vs 39 last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Engaged</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>13<span class='sub'><span class='wow delta-bad' title='worse 89% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>89%</span> vs 114 last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>0<span class='sub'><span class='wow delta-bad' title='worse 100% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>100%</span> vs 30 last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Stayed</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>81.2%<span class='sub'><span class='wow delta-bad' title='worse 7.2 pts vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>7.2 pts</span> vs 88.4% last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>0.0%<span class='sub'><span class='wow delta-bad' title='worse 69.8 pts vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>69.8 pts</span> vs 69.8% last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Bounce</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>18.8%<span class='sub'><span class='wow delta-bad' title='worse 7.2 pts vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>7.2 pts</span> vs 11.6% last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>100.0%<span class='sub'><span class='wow delta-bad' title='worse 69.8 pts vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>69.8 pts</span> vs 30.2% last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Thank-you</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>0</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>0</td></tr></tbody></table></div><div class="legacy-box"><h3>Time on site</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>53s<span class='sub'><span class='wow delta-bad' title='worse 73% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>73%</span> vs 3m 12s last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>3s<span class='sub'><span class='wow delta-bad' title='worse 98% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>98%</span> vs 2m 05s last week</span></td></tr></tbody></table></div></div>
+        <div class='lp-block'><div class='sec-hd'><h2>Landing pages</h2><p class='sec-meta'>Same window as the tiles · Avg. session duration uses the same GA4 averageSessionDuration as Time on site. Pages under 10 sessions are faded — do not call a 100% stay rate a winner on one or two visits.</p></div><div class='legacy-grid lp-grid'><div class='legacy-box'><h3>United States</h3><table class='lp-t'><thead><tr><th>Page</th><th class='num'>Sessions</th><th class='num'>Stayed</th><th class='num' title='GA4 averageSessionDuration — same definition as Time on site above. Not a separate focus-time metric.'>Avg. engagement time</th><th class='num'>Bounce</th></tr></thead><tbody><tr id='lp-now-us'><th scope='row'>/us</th><td class='num'>13</td><td class='num'>100.0%</td><td class='num'>1m 04s</td><td class='num'>0.0%</td></tr></tbody></table></div><div class='legacy-box'><h3>Australia</h3><table class='lp-t'><thead><tr><th>Page</th><th class='num'>Sessions</th><th class='num'>Stayed</th><th class='num' title='GA4 averageSessionDuration — same definition as Time on site above. Not a separate focus-time metric.'>Avg. engagement time</th><th class='num'>Bounce</th></tr></thead><tbody><tr id='lp-now-au'><th scope='row'>/au</th><td class='num'>10</td><td class='num'>0.0%</td><td class='num'>4s</td><td class='num'>100.0%</td></tr><tr class='small-n' id='lp-now-au-accounting'><th scope='row'>/au/accounting <span class='sample-tag'>small sample</span></th><td class='num'>1</td><td class='num'>0.0%</td><td class='num'>—</td><td class='num'>100.0%</td></tr><tr class='small-n' id='lp-now-au-bookkeeping'><th scope='row'>/au/bookkeeping <span class='sample-tag'>small sample</span></th><td class='num'>1</td><td class='num'>0.0%</td><td class='num'>—</td><td class='num'>100.0%</td></tr><tr class='small-n' id='lp-now-au-recruitment'><th scope='row'>/au/recruitment <span class='sample-tag'>small sample</span></th><td class='num'>1</td><td class='num'>0.0%</td><td class='num'>—</td><td class='num'>100.0%</td></tr></tbody></table></div></div></div>
+        <div class="ga4-insight"><h3>Insights</h3><ul><li><p><span class='ins-k'>Observed.</span> US Search clicks 260 vs 338 same weekdays last week. Impressions 2,523 vs 3,763. CTR 10.3% vs 9.0%. CPC $3.61 vs $3.06.</p><p><span class='ins-k'>Probably means.</span> US traffic is holding. Volume is slightly up. People are still clicking at about the same rate. Cost per click is a little higher. There is no sign of account collapse.</p><p><span class='ins-k'>Next.</span> Watch CPC and junk queries. Do not treat this as a breakthrough or a failure.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Thursday is still partial in the US. This is same-weekday, not a full week.</p></li><li><p><span class='ins-k'>Observed.</span> Australia impressions 854 vs 622. Clicks 82 vs 107. CTR 9.6% vs 17.2%.</p><p><span class='ins-k'>Probably means.</span> Australia is entering fewer auctions or seeing a smaller eligible pool. The people who still see the ads are clicking at a much higher rate.</p><p><span class='ins-k'>Next.</span> Watch volume. Do not automatically add keywords or budget.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Australia Thursday is further along than the US (Brisbane clock). Same-weekday compare only — not a full week.</p></li><li><p><span class='ins-k'>Observed.</span> US hub /us has 13 sessions and 100.0% stayed. Time on site 53s vs 3m 12s same weekdays. US stayed 81.2% this week so far.</p><p><span class='ins-k'>Probably means.</span> Landing-page engagement looks encouraging, especially on the US hub.</p><p><span class='ins-k'>Next.</span> Treat the movement as directional. Wait for another clean week before calling a page a winner.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Recent analytics wiring (18 Aug) may distort some events and engagement. GA4 “conversions” this week are noise — ignore them. A user-count change is not cohort retention.</p></li><li><p><span class='ins-k'>Observed.</span> We can see ad clicks, page visits, named sales leads, and all-source Zoho rows. We cannot yet trust the path from landing page → enquiry → Job Order → Placement.</p><p><span class='ins-k'>Probably means.</span> The bottleneck is trustworthy attribution, not a shortage of dashboard metrics.</p><p><span class='ins-k'>Next.</span> Audit and document the Zoho pathway. Do not send Placement outcomes until the data model and conversion actions are approved.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Cost / enquiry and Cost / job order on this page are not Google Ads CPA unless the tile says so. The two connected Ads actions are enquiry statuses (Job Order Submitted, Discovery Scheduled). There is no Placement action.</p></li></ul></div>
+        <p class="mute ga4-foot">AU stayed / bounce / time compare to last full week (Mon Aug 17 – Sun Aug 23). Paid search and device were not in this mid-week pull. GA4 “conversions” this week are event noise after the 18 Aug wiring — ignore them. Month-over-month later, once we have more than one week.</p>
+      </section><section class="week-close" id="week-start-insights" aria-label="New week readout"><div class="ga4-insight"><h3>This week · early read</h3><ul><li><p><span class='ins-k'>Observed.</span> Mon Aug 24 – Thu Aug 27 so far. Ads so far: US $939 · 260 clicks · AU A$628 · 82 clicks.</p><p><span class='ins-k'>Probably means.</span> Monday is a clean start. Cheyenne and Holly updates are not in yet — cost / enquiry stays not yet on the cards.</p><p><span class='ins-k'>Next.</span> Let the week fill in before reacting. Same-weekday compare on Ads is the early signal.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Partial day in the US. Australia may be further along on the clock.</p></li><li><p><span class='ins-k'>Observed.</span> Frozen tab: Mon Aug 17 – Sun Aug 23 is the finished report. This tab is live ops only — do not mix last week’s enquiry totals with today’s partial spend.</p><p><span class='ins-k'>Probably means.</span> Compare full weeks on the frozen tab. Use same-weekday Ads compare here while the week is still young.</p><p><span class='ins-k'>Next.</span> Switch to Aug 17–23 frozen for the scoreboard Braden and sales ops should reference.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Sales-ops counts refresh from Cheyenne/Holly email, not from Zoho row totals on the card face.</p></li></ul></div></section>      <div class="week-notes">
+        <p class="asof">This week so far · US $ · AU A$</p>
+      <p class="how-count" id="how-we-count"><strong>How we count.</strong> Qualified employer is the score. A form plus a booking by the same person is one lead, two funnel steps — not two people. Ads conversion totals are not the count. <span class="cats">Qualified · Not-a-Fit · Junk · Test</span> <span class="sample">Paid through 18 Aug: US 1 qualified + 1 not-a-fit · AU 1 qualified + 2 junk. <a href="aug18-conversions.html">Aug 18</a>.</span></p>
+        <p class="data-fresh" id="fresh-now">Mon Aug 24 – Thu Aug 27 so far · Ads refreshed 2026-08-27 13:44 UTC · GA4 refreshed 2026-08-24 19:43 UTC · sources: Google Ads, GA4, named sales leads, Zoho census · US week in progress · AU may be further along</p>
+      </div>
+
+      </div>
+
+      <div class="view-week" id="view-frozen" hidden>
+      <section class="mkt-block us" id="market-us" aria-label="United States">
+        <div class="mkt-hd">
+          <h2>United States</h2>
+          <p class="bud">Core $150 + Roles $100/day · Exact/Phrase · Max Clicks</p>
+        </div>
+        <div class="period week-group">
+          <h3>Mon Aug 17 – Sun Aug 23</h3>
+          <div class="kpi-row week-costs">
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ named microsite leads from sales. Not a Google Ads CPA.">Cost / enquiry</span><span class="v num">$156.63</span><span class="sub">named sales leads</span></div>
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ named completed calls from sales. Not a Google Ads CPA.">Cost / discovery</span><span class="v num">$290.88</span><span class="sub">named sales calls</span></div>
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ all Zoho rows during this period — not a Google Ads CPA.">Cost / job order</span><span class="v num">$678.72</span><span class="sub">Zoho census · not Ads CPA</span></div>
+          </div>
+          <div class="kpi-row week-ads">
+          <div class="kpi"><span class="k">Spend</span><span class="v num" id="us-spend">$2,036</span><span class="sub"><span class='wow delta-bad' title='worse 41% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>41%</span> vs $1,440 last week</span></div>
+          <div class="kpi"><span class="k">Clicks</span><span class="v num">597</span><span class="sub"><span class='wow delta-good' title='improved 21% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>21%</span> vs 493 last week</span></div>
+          <div class="kpi"><span class="k">Impr.</span><span class="v num">7,474</span><span class="sub"><span class='wow delta-good' title='improved 65% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>65%</span> vs 4,518 last week</span></div>
+          <div class="kpi"><span class="k">CTR</span><span class="v num">8.0%</span><span class="sub"><span class='wow delta-bad' title='worse 2.9 pts vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>2.9 pts</span> vs 10.9% last week</span></div>
+          <div class="kpi"><span class="k">CPC</span><span class="v num">$3.41</span><span class="sub"><span class='wow delta-bad' title='worse 17% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>17%</span> vs $2.92 last week</span></div>
+          <div class="kpi"><span class="k" title="Google Ads conversion actions in this window. Not a clean count of qualified employer enquiries.">Google Ads actions</span><span class="v num">4</span><span class="sub"><span class='wow delta-good' title='improved 300% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>300%</span> vs 1 last week</span></div>
+          </div>
+          <p class="mkt-note mute">13 enquiries · 7 completed calls · 2 looking for work · 2 not a fit · 1 PH job-seeker.</p>
+          <div class='src-chips' aria-label='Enquiry sources'><span class='src-chips-k'>Sources</span><span class='src-chip'><span class='src-l'>Direct</span><span class='src-n num'>3</span></span><span class='src-chip'><span class='src-l'>Google Organic</span><span class='src-n num'>7</span></span><span class='src-chip'><span class='src-l'>Bing Organic</span><span class='src-n num'>0</span></span><span class='src-chip'><span class='src-l'>Facebook</span><span class='src-n num'>0</span></span><span class='src-chip'><span class='src-l'>Referral Partner (Outsource Accelerator)</span><span class='src-n num'>2</span></span><span class='src-chip'><span class='src-l'>Phone Call</span><span class='src-n num'>1</span></span></div><p class='mute zoho-census'>Zoho census, same dates: 20 rows · 1 discovery · 3 job orders. Wider net, not extra enquiries. Cost / job order uses this census JO.</p>
+        </div>
+      </section>
+      <section class="mkt-block au" id="market-au" aria-label="Australia">
+        <div class="mkt-hd">
+          <h2>Australia</h2>
+          <p class="bud">Core A$75 + Roles A$50/day</p>
+        </div>
+        <div class="period week-group">
+          <h3>Mon Aug 17 – Sun Aug 23</h3>
+          <div class="kpi-row week-costs">
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ named sales leads from Holly. Not a Google Ads CPA.">Cost / enquiry</span><span class="v num">A$116.71</span><span class="sub">named sales leads</span></div>
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ named sales calls from Holly. Not a Google Ads CPA.">Cost / discovery</span><span class="v num">A$133.38</span><span class="sub">named sales calls</span></div>
+          <div class="kpi kpi-cost"><span class="k" title="No Job Order count for this cost tile.">Cost / job order</span><span class="v num">—</span><span class="sub">&nbsp;</span></div>
+          </div>
+          <div class="kpi-row week-ads">
+          <div class="kpi"><span class="k">Spend</span><span class="v num" id="au-spend">A$934</span><span class="sub"><span class='wow delta-bad' title='worse 6% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>6%</span> vs A$884 last week</span></div>
+          <div class="kpi"><span class="k">Clicks</span><span class="v num">178</span><span class="sub"><span class='wow delta-bad' title='worse 29% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>29%</span> vs 250 last week</span></div>
+          <div class="kpi"><span class="k">Impr.</span><span class="v num">1,172</span><span class="sub"><span class='wow delta-bad' title='worse 39% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>39%</span> vs 1,925 last week</span></div>
+          <div class="kpi"><span class="k">CTR</span><span class="v num">15.2%</span><span class="sub"><span class='wow delta-good' title='improved 2.2 pts vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>2.2 pts</span> vs 13.0% last week</span></div>
+          <div class="kpi"><span class="k">CPC</span><span class="v num">A$5.25</span><span class="sub"><span class='wow delta-bad' title='worse 48% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>48%</span> vs A$3.54 last week</span></div>
+          <div class="kpi"><span class="k" title="Google Ads conversion actions in this window. Not a clean count of qualified employer enquiries.">Google Ads actions</span><span class="v num">5</span><span class="sub">&nbsp;</span></div>
+          </div>
+          <p class="mkt-note mute">8 enquiries · 7 sales calls · 0 job orders (0 new · 0 returning · 0 replacement) · 0 junk · 0 placements.</p>
+          <p class='mute zoho-census'>Zoho census, same dates: 11 rows · 0 discovery · 5 job orders. Holly’s 0 stays on the card. Do not add.</p>
+        </div>
+      </section>
+      <section class="baseline week-sales" id="week-sales" aria-label="Sales">
+        <div class="sec-hd">
+          <h2>Sales</h2>
+          <p class="sec-meta">This week vs their typical 7-day week</p>
+        </div>
+        <div class='cmp-band'><div class='cmp-band-hd'><h3>Sales</h3><span class='cmp-band-note'>Zoho rows · same week as the cards</span></div><div class='cmp-sheet'><span class='cell hd'></span><span class='cell hd num'>This week</span><span class='cell hd num'>Legacy week</span><span class='cell hd num'>Δ</span><span class='cell grp'>Enquiries</span><span class='cell cm'>US</span><span class='cell num tw'>20</span><span class='cell num lg'>9.8</span><span class='cell num delta-good'>2.0×</span><span class='cell cm'>AU</span><span class='cell num tw'>11</span><span class='cell num lg'>8.9</span><span class='cell num delta-good'>1.2×</span><span class='cell grp'>Discovery</span><span class='cell cm'>US</span><span class='cell num tw'>1</span><span class='cell num lg'>0.3</span><span class='cell num delta-good'>3.2×</span><span class='cell cm'>AU</span><span class='cell num tw'>0</span><span class='cell num lg'>0.5</span><span class='cell num delta-bad'>100% lower</span><span class='cell grp'>Job orders</span><span class='cell cm'>US</span><span class='cell num tw'>3</span><span class='cell num lg'>0.6</span><span class='cell num delta-good'>4.7×</span><span class='cell cm'>AU</span><span class='cell num tw'>5</span><span class='cell num lg'>0.3</span><span class='cell num delta-good'>14.6×</span></div></div>
+        <p class="cmp-note">This-week Enquiries are the Zoho census (US 20 · AU 11) — same numbers as the Zoho box. Cheyenne’s 13 stays on the US card. Holly’s 8 stays on the AU card. Legacy enquiries are the agency&#x27;s own Google Ads lead-form conversions (Free Consultation Form Submitted [Original]), averaged over their run — Zoho has no Sales Enquiry history for most of that period.</p>
+      </section>
+      <section class="baseline" id="agency-baseline" aria-label="Legacy agency comparison">
+        <div class="sec-hd">
+          <h2>Legacy agency comparison</h2>
+          <p class="sec-meta">This week vs their typical 7-day week</p>
+        </div>
+        <div class='cmp-band'><div class='cmp-band-hd'><h3>Ads</h3><span class='cmp-band-note'>Google Ads · both accounts</span></div><div class='cmp-sheet'><span class='cell hd'></span><span class='cell hd num'>This week</span><span class='cell hd num'>Legacy week</span><span class='cell hd num'>Δ</span><span class='cell grp'>CTR</span><span class='cell cm'>US</span><span class='cell num tw'>8.0%</span><span class='cell num lg'>1.6%</span><span class='cell num delta-good'>5.0×</span><span class='cell cm'>AU</span><span class='cell num tw'>15.2%</span><span class='cell num lg'>1.4%</span><span class='cell num delta-good'>10.6×</span><span class='cell grp'>CPC</span><span class='cell cm'>US</span><span class='cell num tw'>$3.41</span><span class='cell num lg'>$8.29</span><span class='cell num delta-good'>59% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$5.25</span><span class='cell num lg'>A$9.24</span><span class='cell num delta-good'>43% lower</span><span class='cell grp'>Spend</span><span class='cell cm'>US</span><span class='cell num tw'>$2,036</span><span class='cell num lg'>$6,913</span><span class='cell num delta-good'>71% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$934</span><span class='cell num lg'>A$4,369</span><span class='cell num delta-good'>79% lower</span><span class='cell grp'>Cost / enquiry</span><span class='cell cm'>US</span><span class='cell num tw'>$156.63</span><span class='cell num lg'>$707.45</span><span class='cell num delta-good'>78% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$116.71</span><span class='cell num lg'>A$490.64</span><span class='cell num delta-good'>76% lower</span><span class='cell grp'>Cost / discovery</span><span class='cell cm'>US</span><span class='cell num tw'>$2,036.15</span><span class='cell num lg'>$21,966.06</span><span class='cell num delta-good'>91% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>—</span><span class='cell num lg'>A$9,545.15</span><span class='cell num delta-flat'>—</span><span class='cell grp'>Cost / job order</span><span class='cell cm'>US</span><span class='cell num tw'>$678.72</span><span class='cell num lg'>$10,819</span><span class='cell num delta-good'>94% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>—</span><span class='cell num lg'>A$12,727</span><span class='cell num delta-flat'>—</span></div></div>
+        <p class="cmp-note">Legacy cost / job order is agency spend ÷ the job orders in the Zapier CRM extract (67 US · 36 AU), the whole extract we hold for those years, not a paid-only slice. US Cost / job order this week uses the Zoho census (3 JO). Cheyenne did not name a job order. AU Cost / job order uses Holly’s labeled job orders, not the Zoho census.</p>
+        <dl class="windows">
+          <div><dt>This week</dt><dd>Mon Aug 17 – Sun Aug 23</dd></div>
+          <div><dt>Legacy agency</dt><dd>Aug 1, 2024 – Aug 4, 2026</dd></div>
+          <div><dt>GA4</dt><dd>Aug 17, 2026 – Aug 23, 2026</dd></div>
+        </dl>
+      </section>
+
+      <section class="ga4-now" id="ga4" aria-label="Google Analytics">
+        <div class="sec-hd">
+          <h2>Google Analytics</h2>
+          <p class="sec-meta">Aug 17, 2026 – Aug 23, 2026 · frozen week · source GA4 · AU tags started Aug 12</p>
+        </div>
+        <div class="legacy-grid ga4-grid"><div class="legacy-box"><h3>Sessions</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>662<span class='sub'><span class='wow delta-good' title='improved 8% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>8%</span> vs 615 last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>185<span class='sub'><span class='wow delta-good' title='improved 24% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>24%</span> vs 149 last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Users</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>782<span class='sub'><span class='wow delta-good' title='improved 22% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>22%</span> vs 643 last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>161<span class='sub'><span class='wow delta-good' title='improved 22% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>22%</span> vs 132 last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Stayed</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>97.7%<span class='sub'><span class='wow delta-good' title='improved 52.0 pts vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>52.0 pts</span> vs 45.7% last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>52.4%<span class='sub'><span class='wow delta-bad' title='worse 2.0 pts vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>2.0 pts</span> vs 54.4% last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Bounce</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>2.3%<span class='sub'><span class='wow delta-good' title='improved 52.0 pts vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>52.0 pts</span> vs 54.3% last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>47.6%<span class='sub'><span class='wow delta-bad' title='worse 2.0 pts vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>2.0 pts</span> vs 45.6% last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Paid search</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>567<span class='sub'><span class='wow delta-good' title='improved 24% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>24%</span> vs 458 last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>153<span class='sub'><span class='wow delta-good' title='improved 23% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>23%</span> vs 124 last week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Thank-you</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>0</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>0</td></tr></tbody></table></div><div class="legacy-box"><h3>Mobile</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>458</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—</td></tr></tbody></table></div><div class="legacy-box"><h3>Desktop</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>208</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—</td></tr></tbody></table></div><div class="legacy-box"><h3>Time on site</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>1m 42s<span class='sub'><span class='wow delta-bad' title='worse 16% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>16%</span> vs 2m 02s last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>1m 33s<span class='sub'><span class='wow delta-bad' title='worse 10% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>10%</span> vs 1m 44s last week</span></td></tr></tbody></table></div></div>
+        <div class='lp-block'><div class='sec-hd'><h2>Landing pages</h2><p class='sec-meta'>Same window as the tiles · Avg. session duration uses the same GA4 averageSessionDuration as Time on site. Pages under 10 sessions are faded — do not call a 100% stay rate a winner on one or two visits.</p></div><div class='legacy-grid lp-grid'><div class='legacy-box'><h3>United States</h3><table class='lp-t'><thead><tr><th>Page</th><th class='num'>Sessions</th><th class='num'>Stayed</th><th class='num' title='GA4 averageSessionDuration — same definition as Time on site above. Not a separate focus-time metric.'>Avg. engagement time</th><th class='num'>Bounce</th></tr></thead><tbody><tr id='lp-frozen-us'><th scope='row'>/us</th><td class='num'>488</td><td class='num'>97.5%</td><td class='num'>1m 16s</td><td class='num'>2.5%</td></tr><tr id='lp-frozen-how-it-works'><th scope='row'>/how-it-works</th><td class='num'>22</td><td class='num'>100.0%</td><td class='num'>37s</td><td class='num'>0.0%</td></tr><tr id='lp-frozen-us-customer-service'><th scope='row'>/us/customer-service</th><td class='num'>20</td><td class='num'>95.0%</td><td class='num'>34s</td><td class='num'>5.0%</td></tr><tr id='lp-frozen-us-tf-bookkeeping'><th scope='row'>/us/tf/bookkeeping</th><td class='num'>20</td><td class='num'>100.0%</td><td class='num'>18s</td><td class='num'>0.0%</td></tr><tr id='lp-frozen-us-sales'><th scope='row'>/us/sales</th><td class='num'>19</td><td class='num'>100.0%</td><td class='num'>1m 46s</td><td class='num'>0.0%</td></tr><tr id='lp-frozen-us-social-media'><th scope='row'>/us/social-media</th><td class='num'>17</td><td class='num'>94.1%</td><td class='num'>9s</td><td class='num'>5.9%</td></tr></tbody></table></div><div class='legacy-box'><h3>Australia</h3><table class='lp-t'><thead><tr><th>Page</th><th class='num'>Sessions</th><th class='num'>Stayed</th><th class='num' title='GA4 averageSessionDuration — same definition as Time on site above. Not a separate focus-time metric.'>Avg. engagement time</th><th class='num'>Bounce</th></tr></thead><tbody><tr id='lp-frozen-au'><th scope='row'>/au</th><td class='num'>106</td><td class='num'>54.7%</td><td class='num'>1m 08s</td><td class='num'>45.3%</td></tr><tr id='lp-frozen-au-recruitment'><th scope='row'>/au/recruitment</th><td class='num'>28</td><td class='num'>60.7%</td><td class='num'>2m 09s</td><td class='num'>39.3%</td></tr><tr id='lp-frozen-au-social-media'><th scope='row'>/au/social-media</th><td class='num'>11</td><td class='num'>54.5%</td><td class='num'>4m 56s</td><td class='num'>45.5%</td></tr><tr class='small-n' id='lp-frozen-au-administrative-support'><th scope='row'>/au/administrative-support <span class='sample-tag'>small sample</span></th><td class='num'>7</td><td class='num'>57.1%</td><td class='num'>4m 13s</td><td class='num'>42.9%</td></tr><tr class='small-n' id='lp-frozen-au-customer-service'><th scope='row'>/au/customer-service <span class='sample-tag'>small sample</span></th><td class='num'>7</td><td class='num'>57.1%</td><td class='num'>20s</td><td class='num'>42.9%</td></tr><tr class='small-n' id='lp-frozen-au-digital-marketing'><th scope='row'>/au/digital-marketing <span class='sample-tag'>small sample</span></th><td class='num'>7</td><td class='num'>0.0%</td><td class='num'>—</td><td class='num'>100.0%</td></tr></tbody></table></div></div></div>
+        <div class="ga4-insight"><h3>Insights</h3><ul><li><p><span class='ins-k'>Observed.</span> US sessions 662 vs 615 the week before. Stayed 97.7% vs 45.7%. Time on site 1m 42s vs 2m 02s.</p><p><span class='ins-k'>Probably means.</span> This is the locked Mon Aug 17 – Sun Aug 23 baseline, not this week’s live scoreboard.</p><p><span class='ins-k'>Next.</span> Use it to compare later weeks. Do not treat launch week as the quality bar.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Users vs sessions is not cohort retention. AU tags only started Aug 12.</p></li><li><p><span class='ins-k'>Observed.</span> AU had 185 tagged sessions this frozen week. Stayed 52.4%.</p><p><span class='ins-k'>Probably means.</span> First tagged Australia week. There is no fair prior week to compare.</p><p><span class='ins-k'>Next.</span> Read AU volume here as a starting point, not a trend.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Tags started Aug 12, so Monday–Tuesday of that week are missing.</p></li><li><p><span class='ins-k'>Observed.</span> Most visits opened the hub — /us (488 US) · /au (106 AU).</p><p><span class='ins-k'>Probably means.</span> Role pages with enough sessions are the CRO pile. Tiny samples are not winners.</p><p><span class='ins-k'>Next.</span> See this week’s live table on the This week so far tab.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> These session counts are the frozen Mon Aug 17 – Sun Aug 23 baseline.</p></li></ul></div>
+        <p class="mute ga4-foot">Last week = 2026-08-10 → 2026-08-16. That week is launch / partial (US ads ~Aug 6, AU tags ~Aug 12). AU has no prior week to compare — first tagged week. Month-over-month later, once we have more than one week.</p>
+      </section>
+      <div class="week-notes">
+        <p class="asof">Mon Aug 17 – Sun Aug 23 · frozen · US $ · AU A$</p>
+      <p class="how-count"><strong>How we count.</strong> Qualified employer is the score. A form plus a booking by the same person is one lead, two funnel steps — not two people. Ads conversion totals are not the count. <span class="cats">Qualified · Not-a-Fit · Junk · Test</span> <span class="sample">Paid through 18 Aug: US 1 qualified + 1 not-a-fit · AU 1 qualified + 2 junk. <a href="aug18-conversions.html">Aug 18</a>.</span></p>
+        <p class="data-fresh" id="fresh-frozen">Mon Aug 17 – Sun Aug 23 frozen · Ads refreshed 2026-08-27 13:44 UTC · GA4 2026-08-24 19:43 UTC · Zoho census is all-source, not Ads CPA</p>
+      </div>
+
+      <details class="ev" id="crm-readiness">
+        <summary>CRM setup</summary>
+        <div class="bd">
+          <p class="mute">A named Zoho field is not the same as done.</p>
+          <table class="ev-t crm-ready">
+            <thead><tr><th>Check</th><th>Status</th><th>Evidence</th></tr></thead>
+            <tbody>
+              <tr><td>Destination CRM module</td><td class="st-rev">Needs review</td><td class="mute">Live CRM is WordPress + Zapier + humans. .app forms email us@ / apac@ — not writing to Zoho.</td></tr><tr><td>Employer vs job-seeker classification</td><td class="st-rev">Needs review</td><td class="mute">Cheyenne labels looking-for-work / PH job-seeker in email. Form gate exists in spec; not proven on every CRM row.</td></tr><tr><td>Persistent GCLID field</td><td class="st-miss">Missing</td><td class="mute">Dictionary has utm_gclid. This week: 5 of 33 Zoho rows store a click ID.</td></tr><tr><td>Persistent GBRAID / WBRAID</td><td class="st-miss">Missing</td><td class="mute">No Zoho fields. Parked until writes turn on.</td></tr><tr><td>UTM fields</td><td class="st-test">Not tested</td><td class="mute">utm_source / medium / campaign exist in the dictionary. Stage 1 Zoho rows are mostly blank.</td></tr><tr><td>Original landing page</td><td class="st-test">Not tested</td><td class="mute">Mapped to Referring_URL in the draft. Not proven on Stage 1 rows.</td></tr><tr><td>Lead-created timestamp</td><td class="st-ok">Confirmed</td><td class="mute">Zoho Created_Time is what the halo census uses.</td></tr><tr><td>Deduplication rule</td><td class="st-miss">Missing</td><td class="mute">VC_Submission_ID does not exist yet.</td></tr><tr><td>Lifecycle stage definitions</td><td class="st-rev">Needs review</td><td class="mute">Zoho statuses exist (Discovery Scheduled, Job Order Submitted, etc.). Not a locked Stage 1 contract.</td></tr><tr><td>Sales ownership</td><td class="st-ok">Confirmed</td><td class="mute">Cheyenne Gichana = US. Holly Wallace = APAC / AU.</td></tr><tr><td>Qualified-lead definition</td><td class="st-rev">Needs review</td><td class="mute">No single documented qualified-employer definition on this scoreboard.</td></tr><tr><td>Job-order definition</td><td class="st-rev">Needs review</td><td class="mute">AU card uses Holly’s 6 total JO this week (3 new / 1 returning / 2 replacement). US Cost / JO uses Zoho census 1 JO; Cheyenne did not name a JO.</td></tr><tr><td>Placement definition</td><td class="st-rev">Needs review</td><td class="mute">AU this week: Holly named 4 placements. Not a locked Stage 1 definition.</td></tr><tr><td>Offline conversion action mapping</td><td class="st-miss">Missing</td><td class="mute">Deferred during cold start. Do not import CRM outcomes into Ads yet.</td></tr><tr><td>Click-ID retention tested</td><td class="st-test">Not tested</td><td class="mute">0 gclid on Stage 1 Sales Enquiries.</td></tr><tr><td>Google Ads import tested</td><td class="st-test">Not tested</td><td class="mute">Offline import deferred. Not a green check because a Zapier action exists.</td></tr><tr><td>Legacy Zapier uploads audited</td><td class="st-rev">Needs review</td><td class="mute">Known inflated / thin JO upload vs real CRM job orders. Not a complete audit.</td></tr><tr><td>Documentation and owner assigned</td><td class="st-rev">Needs review</td><td class="mute">Field-map draft is parked. Writes remain OFF.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>      <details class="zoho-extra" id="zoho-census-extra">
+        <summary>Zoho census (all-source · not the scoreboard)</summary>
+        <div class="bd">
+
+      <section class="halo" id="crm-activity" aria-label="Zoho this week">
+        <div class="sec-hd">
+          <h2>Zoho this week</h2>
+          <p class="sec-meta">Mon Aug 17 – Sun Aug 23 · every row Zoho created this week</p>
+        </div>
+        <div class="legacy-grid ga4-grid"><div class="legacy-box"><h3>Enquiries</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>20</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>11</td></tr></tbody></table></div><div class="legacy-box"><h3>Discovery</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>1</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>0</td></tr></tbody></table></div><div class="legacy-box"><h3>Job orders</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>3</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>5</td></tr></tbody></table></div><div class="legacy-box"><h3>Job placements</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>—<span class='sub'>Ash · not on these rows</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—<span class='sub'>Ash · not on these rows</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Cost / enquiry</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>$101.81<span class='sub'>estimated</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>A$84.88<span class='sub'>estimated</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Cost / discovery</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>$2,036.15<span class='sub'>estimated</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—</td></tr></tbody></table></div><div class="legacy-box"><h3>Cost / job order</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>$678.72<span class='sub'>estimated</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>A$186.74<span class='sub'>estimated</span></td></tr></tbody></table></div></div>
+        <p class="mute ga4-foot">Same words as the cost tiles: enquiry · discovery · job order · placement. Census only — do not add to Cheyenne/Holly. Job placements live on the Placements module — Ash is wiring that. Holly named 4 last week; those stay on the AU card.</p>
+        
+        <details class="calc-how">
+          <summary>July comparison (old)</summary>
+          <div class="bd">
+            <p class="note">July is older bookkeeping — not a fair before/after.</p>
+            <table class="cmp halo-cmp">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th class="num">This flight</th>
+                  <th class="num">July</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Enquiries</td>
+                  <td class="num">51</td>
+                  <td class="num mute">53</td>
+                </tr>
+                <tr>
+                  <td>Job orders</td>
+                  <td class="num">18</td>
+                  <td class="num mute">26</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+
+        </div>
+      </details>
+<section class="week-close" id="week-close-insights" aria-label="Week close readout"><div class="ga4-insight"><h3>Week close · what to take from this report</h3><ul><li><p><span class='ins-k'>Observed.</span> US named enquiries 13 vs 18 prior week (Mon Aug 10 – Sun Aug 16). Completed calls 7 vs 9. Cost / enquiry $156.63 vs $79.98. Ads spend $2,036 vs $1,440 (597 clicks · CPC $3.41).</p><p><span class='ins-k'>Probably means.</span> The account spent more and labeled fewer US enquiries. Call completion held up — 7 on 13 is a slightly better enquiry→call rate than last week. That is volume and labeling, not proof ads got worse.</p><p><span class='ins-k'>Next.</span> Keep Max Clicks. Watch junk queries and CPC. Do not chase Ads conversion totals.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Cheyenne’s counts are Mon–Fri labeled. Zoho census (20 rows) is wider — not additive.</p></li><li><p><span class='ins-k'>Observed.</span> AU named enquiries 8 vs 8 prior week. Sales calls completed 7 vs 5. Cost / enquiry A$116.71 vs A$110.53. Ads spend A$934 · 178 clicks.</p><p><span class='ins-k'>Probably means.</span> Australia held enquiry volume and improved call throughput. Holly did not break out job orders in this email format — the scoreboard stays on enquiries and completed calls only.</p><p><span class='ins-k'>Next.</span> Let Holly’s labeled counts drive the AU card. Zoho job-order rows are census, not extra enquiries.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Mon–Fri labeled window. Full Mon–Sun is for Ads spend only.</p></li><li><p><span class='ins-k'>Observed.</span> Zoho census same week: US 20 rows · AU 11 rows. Click IDs stored: US 2 · AU 3.</p><p><span class='ins-k'>Probably means.</span> Most labelled leads still arrive without a click ID. Paid CAC is not yet measurable from Ads alone.</p><p><span class='ins-k'>Next.</span> Keep building the Zoho write path and gclid capture. Do not send Placement outcomes to Ads yet.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Executive face = Cheyenne/Holly email buckets. Zoho is off-page attribution watch only.</p></li><li><p><span class='ins-k'>Observed.</span> GA4 frozen week: US 662 sessions · 97.7% stayed. AU 185 sessions · 52.4% stayed.</p><p><span class='ins-k'>Probably means.</span> Site behaviour during the week looks healthy on both properties. US hub still takes most paid landings.</p><p><span class='ins-k'>Next.</span> Role-page CRO is the next landing-page bet — not a budget move this week.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> GA4 conversions after 18 Aug wiring are noise. Sessions and engagement are the read.</p></li><li><p><span class='ins-k'>Observed.</span> Mon Aug 17 – Sun Aug 23 is locked on the frozen tab. This week so far starts Mon Aug 24 – Thu Aug 27 so far.</p><p><span class='ins-k'>Probably means.</span> You now have two complete Mon–Sun sales weeks on Stage 1 Search. This is the baseline to compare forward.</p><p><span class='ins-k'>Next.</span> When Cheyenne and Holly email this week’s counts, they land on the default tab — not the frozen tab.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Frozen Ads numbers refresh on pull. Sales-ops enquiry counts on the frozen tab do not move.</p></li></ul></div></section>
+      </div>
+
+      <div class="view-week" id="view-frozen-1016" hidden>
+      <section class="mkt-block us" id="market-us-1016" aria-label="United States">
+        <div class="mkt-hd">
+          <h2>United States</h2>
+          <p class="bud">Core $150 + Roles $100/day · Exact/Phrase · Max Clicks</p>
+        </div>
+        <div class="period week-group">
+          <h3>Mon Aug 10 – Sun Aug 16</h3>
+          <div class="kpi-row week-costs">
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ named microsite leads from sales. Not a Google Ads CPA.">Cost / enquiry</span><span class="v num">$79.98</span><span class="sub">named sales leads</span></div>
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ named completed calls from sales. Not a Google Ads CPA.">Cost / discovery</span><span class="v num">$159.97</span><span class="sub">named sales calls</span></div>
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ all Zoho rows during this period — not a Google Ads CPA.">Cost / job order</span><span class="v num">$1,439.73</span><span class="sub">Zoho census · not Ads CPA</span></div>
+          </div>
+          <div class="kpi-row week-ads">
+          <div class="kpi"><span class="k">Spend</span><span class="v num" id="us-spend-1016">$1,440</span><span class="sub"><span class='wow delta-bad' title='worse 173% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>173%</span> vs $527 last week</span></div>
+          <div class="kpi"><span class="k">Clicks</span><span class="v num">493</span><span class="sub"><span class='wow delta-good' title='improved 168% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>168%</span> vs 184 last week</span></div>
+          <div class="kpi"><span class="k">Impr.</span><span class="v num">4,518</span><span class="sub"><span class='wow delta-good' title='improved 157% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>157%</span> vs 1,755 last week</span></div>
+          <div class="kpi"><span class="k">CTR</span><span class="v num">10.9%</span><span class="sub"><span class='wow delta-good' title='improved 0.4 pts vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>0.4 pts</span> vs 10.5% last week</span></div>
+          <div class="kpi"><span class="k">CPC</span><span class="v num">$2.92</span><span class="sub"><span class='wow delta-bad' title='worse 2% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>2%</span> vs $2.86 last week</span></div>
+          <div class="kpi"><span class="k" title="Google Ads conversion actions in this window. Not a clean count of qualified employer enquiries.">Google Ads actions</span><span class="v num">1</span><span class="sub">&nbsp;</span></div>
+          </div>
+          <p class="mkt-note mute">18 enquiries · 9 completed calls · 5 looking for work · 2 not a fit · 3 PH job-seekers · 1 weekend call booked.</p>
+          <div class='src-chips' aria-label='Enquiry sources'><span class='src-chips-k'>Sources</span><span class='src-chip'><span class='src-l'>Google Organic</span><span class='src-n num'>11</span></span><span class='src-chip'><span class='src-l'>Bing Organic</span><span class='src-n num'>1</span></span><span class='src-chip'><span class='src-l'>Facebook</span><span class='src-n num'>3</span></span><span class='src-chip'><span class='src-l'>Referral Partner</span><span class='src-n num'>1</span></span><span class='src-chip'><span class='src-l'>Phone Call</span><span class='src-n num'>1</span></span><span class='src-chip'><span class='src-l'>Forbes</span><span class='src-n num'>1</span></span></div><p class='mute zoho-census'>Zoho census, same dates: 18 rows · 3 discovery · 1 job order. Wider net, not extra enquiries. Cost / job order uses this census JO.</p>
+        </div>
+      </section>
+      <section class="mkt-block au" id="market-au-1016" aria-label="Australia">
+        <div class="mkt-hd">
+          <h2>Australia</h2>
+          <p class="bud">Core A$75 + Roles A$50/day</p>
+        </div>
+        <div class="period week-group">
+          <h3>Mon Aug 10 – Sun Aug 16</h3>
+          <div class="kpi-row week-costs">
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ named sales leads from Holly. Not a Google Ads CPA.">Cost / enquiry</span><span class="v num">A$110.53</span><span class="sub">named sales leads</span></div>
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ named sales calls from Holly. Not a Google Ads CPA.">Cost / discovery</span><span class="v num">A$176.84</span><span class="sub">named sales calls</span></div>
+          <div class="kpi kpi-cost"><span class="k" title="Spend ÷ all Zoho rows during this period — not a Google Ads CPA.">Cost / job order</span><span class="v num">A$147.37</span><span class="sub">named sales · not Ads CPA</span></div>
+          </div>
+          <div class="kpi-row week-ads">
+          <div class="kpi"><span class="k">Spend</span><span class="v num" id="au-spend-1016">A$884</span><span class="sub"><span class='wow delta-bad' title='worse 795% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>795%</span> vs A$99 last week</span></div>
+          <div class="kpi"><span class="k">Clicks</span><span class="v num">250</span><span class="sub"><span class='wow delta-good' title='improved 942% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>942%</span> vs 24 last week</span></div>
+          <div class="kpi"><span class="k">Impr.</span><span class="v num">1,925</span><span class="sub"><span class='wow delta-good' title='improved 1088% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>1088%</span> vs 162 last week</span></div>
+          <div class="kpi"><span class="k">CTR</span><span class="v num">13.0%</span><span class="sub"><span class='wow delta-bad' title='worse 1.8 pts vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>1.8 pts</span> vs 14.8% last week</span></div>
+          <div class="kpi"><span class="k">CPC</span><span class="v num">A$3.54</span><span class="sub"><span class='wow delta-good' title='improved 14% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>14%</span> vs A$4.12 last week</span></div>
+          <div class="kpi"><span class="k" title="Google Ads conversion actions in this window. Not a clean count of qualified employer enquiries.">Google Ads actions</span><span class="v num">—</span><span class="sub">&nbsp;</span></div>
+          </div>
+          <p class="mkt-note mute">8 enquiries · 5 sales calls · 6 job orders (3 new · 1 returning · 2 replacement) · 3 junk · 4 placements.</p>
+          <p class='mute zoho-census'>Zoho census, same dates: 14 rows · 0 discovery · 4 job orders. Holly’s 6 stays on the card. Do not add.</p>
+        </div>
+      </section>
+      <section class="baseline week-sales" id="week-sales-1016" aria-label="Sales">
+        <div class="sec-hd">
+          <h2>Sales</h2>
+          <p class="sec-meta">This week vs their typical 7-day week</p>
+        </div>
+        <div class='cmp-band'><div class='cmp-band-hd'><h3>Sales</h3><span class='cmp-band-note'>Zoho rows · same week as the cards</span></div><div class='cmp-sheet'><span class='cell hd'></span><span class='cell hd num'>This week</span><span class='cell hd num'>Legacy week</span><span class='cell hd num'>Δ</span><span class='cell grp'>Enquiries</span><span class='cell cm'>US</span><span class='cell num tw'>—</span><span class='cell num lg'>9.8</span><span class='cell num delta-flat'>—</span><span class='cell cm'>AU</span><span class='cell num tw'>—</span><span class='cell num lg'>8.9</span><span class='cell num delta-flat'>—</span><span class='cell grp'>Discovery</span><span class='cell cm'>US</span><span class='cell num tw'>—</span><span class='cell num lg'>0.3</span><span class='cell num delta-flat'>—</span><span class='cell cm'>AU</span><span class='cell num tw'>—</span><span class='cell num lg'>0.5</span><span class='cell num delta-flat'>—</span><span class='cell grp'>Job orders</span><span class='cell cm'>US</span><span class='cell num tw'>—</span><span class='cell num lg'>0.6</span><span class='cell num delta-flat'>—</span><span class='cell cm'>AU</span><span class='cell num tw'>—</span><span class='cell num lg'>0.3</span><span class='cell num delta-flat'>—</span></div></div>
+        <p class="cmp-note">This-week Enquiries are the Zoho census (US — · AU —) — same numbers as the Zoho box. Cheyenne’s 18 stays on the US card. Holly’s 8 stays on the AU card. Legacy enquiries are the agency&#x27;s own Google Ads lead-form conversions (Free Consultation Form Submitted [Original]), averaged over their run — Zoho has no Sales Enquiry history for most of that period.</p>
+      </section>
+      <section class="baseline" id="agency-baseline-1016" aria-label="Legacy agency comparison">
+        <div class="sec-hd">
+          <h2>Legacy agency comparison</h2>
+          <p class="sec-meta">This week vs their typical 7-day week</p>
+        </div>
+        <div class='cmp-band'><div class='cmp-band-hd'><h3>Ads</h3><span class='cmp-band-note'>Google Ads · both accounts</span></div><div class='cmp-sheet'><span class='cell hd'></span><span class='cell hd num'>This week</span><span class='cell hd num'>Legacy week</span><span class='cell hd num'>Δ</span><span class='cell grp'>CTR</span><span class='cell cm'>US</span><span class='cell num tw'>10.9%</span><span class='cell num lg'>1.6%</span><span class='cell num delta-good'>6.8×</span><span class='cell cm'>AU</span><span class='cell num tw'>13.0%</span><span class='cell num lg'>1.4%</span><span class='cell num delta-good'>9.0×</span><span class='cell grp'>CPC</span><span class='cell cm'>US</span><span class='cell num tw'>$2.92</span><span class='cell num lg'>$8.29</span><span class='cell num delta-good'>65% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$3.54</span><span class='cell num lg'>A$9.24</span><span class='cell num delta-good'>62% lower</span><span class='cell grp'>Spend</span><span class='cell cm'>US</span><span class='cell num tw'>$1,440</span><span class='cell num lg'>$6,913</span><span class='cell num delta-good'>79% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$884</span><span class='cell num lg'>A$4,369</span><span class='cell num delta-good'>80% lower</span><span class='cell grp'>Cost / enquiry</span><span class='cell cm'>US</span><span class='cell num tw'>$79.98</span><span class='cell num lg'>$707.45</span><span class='cell num delta-good'>89% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$110.53</span><span class='cell num lg'>A$490.64</span><span class='cell num delta-good'>77% lower</span><span class='cell grp'>Cost / discovery</span><span class='cell cm'>US</span><span class='cell num tw'>—</span><span class='cell num lg'>$21,966.06</span><span class='cell num delta-flat'>—</span><span class='cell cm'>AU</span><span class='cell num tw'>—</span><span class='cell num lg'>A$9,545.15</span><span class='cell num delta-flat'>—</span><span class='cell grp'>Cost / job order</span><span class='cell cm'>US</span><span class='cell num tw'>$1,439.73</span><span class='cell num lg'>$10,819</span><span class='cell num delta-good'>87% lower</span><span class='cell cm'>AU</span><span class='cell num tw'>A$147.37</span><span class='cell num lg'>A$12,727</span><span class='cell num delta-good'>99% lower</span></div></div>
+        <p class="cmp-note">Legacy cost / job order is agency spend ÷ the job orders in the Zapier CRM extract (67 US · 36 AU), the whole extract we hold for those years, not a paid-only slice. US Cost / job order this week uses the Zoho census (1 JO). Cheyenne did not name a job order. AU Cost / job order uses Holly’s labeled job orders, not the Zoho census.</p>
+        <dl class="windows">
+          <div><dt>This week</dt><dd>Mon Aug 10 – Sun Aug 16</dd></div>
+          <div><dt>Legacy agency</dt><dd>Aug 1, 2024 – Aug 4, 2026</dd></div>
+          <div><dt>GA4</dt><dd>Aug 10, 2026 – Aug 16, 2026</dd></div>
+        </dl>
+      </section>
+
+      <section class="ga4-now" id="ga4" aria-label="Google Analytics">
+        <div class="sec-hd">
+          <h2>Google Analytics</h2>
+          <p class="sec-meta">Aug 10, 2026 – Aug 16, 2026 · frozen week · source GA4 · AU tags started Aug 12</p>
+        </div>
+        <div class="legacy-grid ga4-grid"><div class="legacy-box"><h3>Sessions</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>615<span class='sub'><span class='wow delta-good' title='improved 249% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>249%</span> vs 176 last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>149<span class='sub'>first tagged week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Users</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>643<span class='sub'><span class='wow delta-good' title='improved 366% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>366%</span> vs 138 last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>132<span class='sub'>first tagged week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Stayed</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>45.7%<span class='sub'><span class='wow delta-bad' title='worse 4.9 pts vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>4.9 pts</span> vs 50.6% last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>54.4%<span class='sub'>first tagged week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Bounce</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>54.3%<span class='sub'><span class='wow delta-bad' title='worse 4.9 pts vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>4.9 pts</span> vs 49.4% last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>45.6%<span class='sub'>first tagged week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Paid search</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>458<span class='sub'><span class='wow delta-good' title='improved 398% vs last week'><span class='wow-arr' aria-hidden='true'>▲</span>398%</span> vs 92 last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>124<span class='sub'>first tagged week</span></td></tr></tbody></table></div><div class="legacy-box"><h3>Thank-you</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>4</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>4</td></tr></tbody></table></div><div class="legacy-box"><h3>Mobile</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>293</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—</td></tr></tbody></table></div><div class="legacy-box"><h3>Desktop</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>319</td></tr><tr><th scope='row'>AU</th><td class='num this-w'>—</td></tr></tbody></table></div><div class="legacy-box"><h3>Time on site</h3><table><tbody><tr><th scope='row'>US</th><td class='num this-w'>2m 02s<span class='sub'><span class='wow delta-bad' title='worse 56% vs last week'><span class='wow-arr' aria-hidden='true'>▼</span>56%</span> vs 4m 40s last week</span></td></tr><tr><th scope='row'>AU</th><td class='num this-w'>1m 44s<span class='sub'>first tagged week</span></td></tr></tbody></table></div></div>
+        <div class='lp-block'><div class='sec-hd'><h2>Landing pages</h2><p class='sec-meta'>Same window as the tiles · Avg. session duration uses the same GA4 averageSessionDuration as Time on site. Pages under 10 sessions are faded — do not call a 100% stay rate a winner on one or two visits.</p></div><div class='legacy-grid lp-grid'><div class='legacy-box'><h3>United States</h3><table class='lp-t'><thead><tr><th>Page</th><th class='num'>Sessions</th><th class='num'>Stayed</th><th class='num' title='GA4 averageSessionDuration — same definition as Time on site above. Not a separate focus-time metric.'>Avg. engagement time</th><th class='num'>Bounce</th></tr></thead><tbody><tr id='lp-frozen-us'><th scope='row'>/us</th><td class='num'>446</td><td class='num'>45.7%</td><td class='num'>—</td><td class='num'>54.3%</td></tr><tr id='lp-frozen-us-bookkeeping'><th scope='row'>/us/bookkeeping</th><td class='num'>40</td><td class='num'>47.5%</td><td class='num'>—</td><td class='num'>52.5%</td></tr><tr id='lp-frozen-us-customer-service'><th scope='row'>/us/customer-service</th><td class='num'>22</td><td class='num'>68.2%</td><td class='num'>—</td><td class='num'>31.8%</td></tr><tr id='lp-frozen-us-sales'><th scope='row'>/us/sales</th><td class='num'>19</td><td class='num'>63.2%</td><td class='num'>—</td><td class='num'>36.8%</td></tr><tr id='lp-frozen-us-digital-marketing'><th scope='row'>/us/digital-marketing</th><td class='num'>17</td><td class='num'>29.4%</td><td class='num'>—</td><td class='num'>70.6%</td></tr><tr id='lp-frozen-us-social-media'><th scope='row'>/us/social-media</th><td class='num'>15</td><td class='num'>40.0%</td><td class='num'>—</td><td class='num'>60.0%</td></tr></tbody></table></div><div class='legacy-box'><h3>Australia</h3><table class='lp-t'><thead><tr><th>Page</th><th class='num'>Sessions</th><th class='num'>Stayed</th><th class='num' title='GA4 averageSessionDuration — same definition as Time on site above. Not a separate focus-time metric.'>Avg. engagement time</th><th class='num'>Bounce</th></tr></thead><tbody><tr id='lp-frozen-au'><th scope='row'>/au</th><td class='num'>88</td><td class='num'>56.8%</td><td class='num'>—</td><td class='num'>43.2%</td></tr><tr id='lp-frozen-au-administrative-support'><th scope='row'>/au/administrative-support</th><td class='num'>13</td><td class='num'>38.5%</td><td class='num'>—</td><td class='num'>61.5%</td></tr><tr id='lp-frozen-au-recruitment'><th scope='row'>/au/recruitment</th><td class='num'>12</td><td class='num'>58.3%</td><td class='num'>—</td><td class='num'>41.7%</td></tr><tr class='small-n' id='lp-frozen-au-customer-service'><th scope='row'>/au/customer-service <span class='sample-tag'>small sample</span></th><td class='num'>7</td><td class='num'>85.7%</td><td class='num'>—</td><td class='num'>14.3%</td></tr><tr class='small-n' id='lp-frozen-au-social-media'><th scope='row'>/au/social-media <span class='sample-tag'>small sample</span></th><td class='num'>7</td><td class='num'>42.9%</td><td class='num'>—</td><td class='num'>57.1%</td></tr><tr class='small-n' id='lp-frozen-au-accounting'><th scope='row'>/au/accounting <span class='sample-tag'>small sample</span></th><td class='num'>4</td><td class='num'>25.0%</td><td class='num'>—</td><td class='num'>75.0%</td></tr></tbody></table></div></div></div>
+        <div class="ga4-insight"><h3>Insights</h3><ul><li><p><span class='ins-k'>Observed.</span> US sessions 615 vs 176 the week before. Stayed 45.7% vs 50.6%. Time on site 2m 02s vs 4m 40s.</p><p><span class='ins-k'>Probably means.</span> This is the locked Mon Aug 10 – Sun Aug 16 baseline, not this week’s live scoreboard.</p><p><span class='ins-k'>Next.</span> Use it to compare later weeks. Do not treat launch week as the quality bar.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Users vs sessions is not cohort retention. AU tags only started Aug 12.</p></li><li><p><span class='ins-k'>Observed.</span> AU had 149 tagged sessions this frozen week. Stayed 54.4%.</p><p><span class='ins-k'>Probably means.</span> First tagged Australia week. There is no fair prior week to compare.</p><p><span class='ins-k'>Next.</span> Read AU volume here as a starting point, not a trend.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> Tags started Aug 12, so Monday–Tuesday of that week are missing.</p></li><li><p><span class='ins-k'>Observed.</span> Most visits opened the hub — /us (446 US) · /au (88 AU).</p><p><span class='ins-k'>Probably means.</span> Role pages with enough sessions are the CRO pile. Tiny samples are not winners.</p><p><span class='ins-k'>Next.</span> See this week’s live table on the This week so far tab.</p><p class='ins-caveat'><span class='ins-k'>Caveat.</span> These session counts are the frozen Mon Aug 10 – Sun Aug 16 baseline.</p></li></ul></div>
+        <p class="mute ga4-foot">Last week = 2026-08-03 → 2026-08-09. That week is launch / partial (US ads ~Aug 6, AU tags ~Aug 12). AU has no prior week to compare — first tagged week. Month-over-month later, once we have more than one week.</p>
+      </section>
+      <div class="week-notes">
+        <p class="asof">Mon Aug 10 – Sun Aug 16 · frozen · US $ · AU A$</p>
+      <p class="how-count"><strong>How we count.</strong> Qualified employer is the score. A form plus a booking by the same person is one lead, two funnel steps — not two people. Ads conversion totals are not the count. <span class="cats">Qualified · Not-a-Fit · Junk · Test</span> <span class="sample">Paid through 18 Aug: US 1 qualified + 1 not-a-fit · AU 1 qualified + 2 junk. <a href="aug18-conversions.html">Aug 18</a>.</span></p>
+        <p class="data-fresh" id="fresh-frozen-1016">Mon Aug 10 – Sun Aug 16 frozen · Archived 2026-08-17 17:57 UTC · GA4 2026-08-18 16:34 UTC · AU tags started Aug 12 · launch-week baseline</p>
+      </div>
+
+      </div>
+      <p class="mute"><a href="launch-control.html">Checklist</a></p>
+
+      <details class="ev" id="evidence">
+        <summary>Evidence (IS windows · JSON)</summary>
+        <div class="bd">
+          <h3 style="margin:0.55rem 0 0.25rem;font-size:0.88rem">US Search IS by window</h3>
+          <table class="ev-t">
+            <thead><tr><th>Window</th><th>Campaign</th><th class="num">IS</th><th class="num">Lost rank</th><th class="num">Lost budget</th><th class="num">Top</th><th class="num">Abs top</th></tr></thead>
+            <tbody><tr><td>last 2 complete days</td><td>VC_US_S_CORE</td><td class='num'>29.1%</td><td class='num'>42.2%</td><td class='num'>28.7%</td><td class='num'>19.8%</td><td class='num'>10.7%</td></tr>
+<tr><td>last 2 complete days</td><td>VC_US_S_ROLES</td><td class='num'>19.8%</td><td class='num'>34.0%</td><td class='num'>46.1%</td><td class='num'>11.4%</td><td class='num'>10.0%</td></tr>
+<tr><td>last 3 complete days</td><td>VC_US_S_CORE</td><td class='num'>28.8%</td><td class='num'>49.2%</td><td class='num'>22.1%</td><td class='num'>19.6%</td><td class='num'>10.7%</td></tr>
+<tr><td>last 3 complete days</td><td>VC_US_S_ROLES</td><td class='num'>23.0%</td><td class='num'>48.7%</td><td class='num'>28.3%</td><td class='num'>14.3%</td><td class='num'>10.0%</td></tr>
+<tr><td>last 7 complete days</td><td>VC_US_S_CORE</td><td class='num'>29.9%</td><td class='num'>37.8%</td><td class='num'>32.2%</td><td class='num'>20.4%</td><td class='num'>10.7%</td></tr>
+<tr><td>last 7 complete days</td><td>VC_US_S_ROLES</td><td class='num'>22.3%</td><td class='num'>56.1%</td><td class='num'>21.6%</td><td class='num'>13.6%</td><td class='num'>10.0%</td></tr></tbody>
+          </table>
+          <h3 style="margin:0.55rem 0 0.25rem;font-size:0.88rem">AU Search IS by window</h3>
+          <table class="ev-t">
+            <thead><tr><th>Window</th><th>Campaign</th><th class="num">IS</th><th class="num">Lost rank</th><th class="num">Lost budget</th><th class="num">Top</th><th class="num">Abs top</th></tr></thead>
+            <tbody><tr><td>last 2 complete days</td><td>VC_AU_S_CORE</td><td class='num'>35.7%</td><td class='num'>64.3%</td><td class='num'>0.0%</td><td class='num'>24.9%</td><td class='num'>14.6%</td></tr>
+<tr><td>last 2 complete days</td><td>VC_AU_S_ROLES</td><td class='num'>30.9%</td><td class='num'>69.1%</td><td class='num'>0.0%</td><td class='num'>23.1%</td><td class='num'>14.6%</td></tr>
+<tr><td>last 3 complete days</td><td>VC_AU_S_CORE</td><td class='num'>36.3%</td><td class='num'>63.7%</td><td class='num'>0.0%</td><td class='num'>25.6%</td><td class='num'>14.5%</td></tr>
+<tr><td>last 3 complete days</td><td>VC_AU_S_ROLES</td><td class='num'>31.8%</td><td class='num'>62.3%</td><td class='num'>5.9%</td><td class='num'>22.8%</td><td class='num'>12.8%</td></tr>
+<tr><td>last 7 complete days</td><td>VC_AU_S_CORE</td><td class='num'>33.6%</td><td class='num'>39.5%</td><td class='num'>27.0%</td><td class='num'>24.3%</td><td class='num'>14.5%</td></tr>
+<tr><td>last 7 complete days</td><td>VC_AU_S_ROLES</td><td class='num'>27.0%</td><td class='num'>49.1%</td><td class='num'>24.0%</td><td class='num'>18.3%</td><td class='num'>11.9%</td></tr></tbody>
+          </table>
+          <p class="mute">
+            <a href="data/executive-snapshot.json">executive-snapshot.json</a> ·
+            <a href="data/impression-share.json">impression-share.json</a> ·
+            <a href="recovery-audit">Recovery audit</a>
+          </p>
+        </div>
+      </details>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll("[data-week]");
+      var views = {
+        now: document.getElementById("view-now"),
+        frozen: document.getElementById("view-frozen"),
+        "frozen-1016": document.getElementById("view-frozen-1016")
+      };
+      function show(which) {
+        Object.keys(views).forEach(function (k) {
+          if (views[k]) views[k].hidden = k !== which;
+        });
+        buttons.forEach(function (b) {
+          var on = b.getAttribute("data-week") === which;
+          b.classList.toggle("on", on);
+          b.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+      }
+      buttons.forEach(function (b) {
+        b.addEventListener("click", function () { show(b.getAttribute("data-week")); });
+      });
+      if (location.hash === "#frozen" || location.hash.indexOf("lp-frozen") === 0) show("frozen");
+      else if (location.hash === "#launch" || location.hash === "#frozen-1016" || location.hash.indexOf("lp-frozen-1016") === 0) show("frozen-1016");
+      else if (location.hash.indexOf("lp-now") === 0) show("now");
+    })();
+  </script>
+</body>
+</html>

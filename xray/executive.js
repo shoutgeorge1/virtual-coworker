@@ -209,6 +209,7 @@
       cpd: cpd,
       cpjo: cpjo,
       cpp: cpp,
+      daysInPeriod: daysInPeriod,
       agTotalSpend: agSpendTotal,
       agPeriodEquivSpend: agPeriodEquivSpend,
       agCpe: agCpe,
@@ -292,12 +293,16 @@
     var rows = [];
 
     // 1. Google Ads spend
+    var daysText = (data.daysInPeriod || 27) + " days";
     rows.push(
       "<tr>" +
         "<td><strong>Google Ads spend</strong></td>" +
         '<td class="num font-mono text-muted">—</td>' +
         '<td class="num font-mono"><strong>' + formatMoney(spend, cur) + "</strong></td>" +
-        '<td class="num font-mono text-muted">' + formatMoney(agSpendEquiv, cur) + " agency-equivalent spend through the same day</td>" +
+        '<td class="num font-mono text-muted">' +
+          formatMoney(agSpendEquiv, cur) +
+          '<div class="ex-cell-sub">Agency-equiv (' + daysText + ')</div>' +
+        "</td>" +
         '<td class="num font-mono">' + spendPacePct + "% of agency pace</td>" +
       "</tr>"
     );
@@ -400,7 +405,7 @@
           '<td class="num font-mono">' + usPl + "</td>" +
           '<td class="num font-mono"><strong>' + usCpe + "</strong></td>" +
           '<td class="num font-mono"><strong>' + usCpd + "</strong></td>" +
-          '<td class="num font-mono"><span class="ex-pill ok ex-pill-sm">Active · MTD</span></td>" +
+          '<td class="num font-mono"><span class="ex-pill ok ex-pill-sm">Active · MTD</span></td>' +
         "</tr>";
     }
 
@@ -423,7 +428,7 @@
           '<td class="num font-mono">' + auPl + "</td>" +
           '<td class="num font-mono"><strong>' + auCpe + "</strong></td>" +
           '<td class="num font-mono"><strong>' + auCpd + "</strong></td>" +
-          '<td class="num font-mono"><span class="ex-pill ok ex-pill-sm">Active · MTD</span></td>" +
+          '<td class="num font-mono"><span class="ex-pill ok ex-pill-sm">Active · MTD</span></td>' +
         "</tr>";
     }
   }
