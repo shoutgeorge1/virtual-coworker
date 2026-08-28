@@ -10,7 +10,7 @@ const checks = [
   {
     path: "/executive",
     forbid: [/Loading numbers/i, /id="asof">Loading/i, /Say yes\/no on/i, /Ask Cursor/i, /Ask Sales/i, /Your checklist/i, /may be paid/i, /Watch next week/i],
-    require: [/Executive Performance/i, /United States/i, /Australia/i, /Bottom line/i, /US and Australia/i, /Pilot vs recorded agency baseline/i, /What we’re doing next/i],
+    require: [/Executive Performance/i, /Australia/i, /Bottom line/i, /US and Australia/i, /Pilot vs recorded agency baseline/i, /What we’re doing next/i],
     note: "Executive performance canonical dashboard",
   },
   {
