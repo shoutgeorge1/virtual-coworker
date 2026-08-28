@@ -335,32 +335,30 @@
       return;
     }
 
-    // Card 1: Results
+    // Results briefing
     var usSpend = formatMoney(us.spend, "USD");
     var auSpend = formatMoney(au.spend, "AUD");
 
-    var usEnq = us.funnel.enquiriesPending ? "pending review" : "<strong>" + formatNum(us.funnel.enquiries) + " enquiries</strong>";
-    var usDisc = us.funnel.discoveries == null ? "—" : "<strong>" + formatNum(us.funnel.discoveries) + " discovery calls</strong>";
-    var usStatus = '<span class="ex-status-tag warn">Awaiting JO validation</span>';
-
-    var auEnq = "<strong>" + formatNum(au.funnel.enquiries) + " enquiries</strong>";
-    var auDisc = "<strong>" + formatNum(au.funnel.discoveries) + " discovery calls</strong>";
-    var auJo = "<strong>" + (au.funnel.jobOrders == null ? "0" : formatNum(au.funnel.jobOrders)) + " job orders</strong>";
-    var auPl = "<strong>" + (au.funnel.placements == null ? "0" : formatNum(au.funnel.placements)) + " placements</strong>";
+    var usEnq = us.funnel.enquiriesPending ? "Pending review" : formatNum(us.funnel.enquiries) + " employer enquiries";
+    var usDisc = us.funnel.discoveries == null ? "—" : formatNum(us.funnel.discoveries) + " discovery calls";
+    var auEnq = formatNum(au.funnel.enquiries) + " enquiries";
+    var auDisc = formatNum(au.funnel.discoveries) + " discovery calls";
+    var auJo = (au.funnel.jobOrders == null ? "0" : formatNum(au.funnel.jobOrders)) + " job orders";
+    var auPl = (au.funnel.placements == null ? "0" : formatNum(au.funnel.placements)) + " placements";
 
     perfEl.innerHTML =
-      '<div class="ex-bl-subrow"><strong>United States:</strong> ' + usSpend + ' spend → ' + usEnq + ' · ' + usDisc + ' · ' + usStatus + '</div>' +
-      '<div class="ex-bl-subrow"><strong>Australia:</strong> ' + auSpend + ' spend → ' + auEnq + ' · ' + auDisc + ' · ' + auJo + ' · ' + auPl + '</div>';
+      '<div class="ex-briefing-p"><strong>United States:</strong> ' + usSpend + ' ad spend produced ' + usEnq + ' and ' + usDisc + '. Job orders and placements await confirmation.</div>' +
+      '<div class="ex-briefing-p"><strong>Australia:</strong> ' + auSpend + ' ad spend produced ' + auEnq + ', ' + auDisc + ', ' + auJo + ', and ' + auPl + '.</div>';
 
-    // Card 2: Tracking
+    // Tracking briefing
     var totalGclid = us.withGclid + au.withGclid;
     var totalZoho = us.zohoRows + au.zohoRows;
     confEl.innerHTML =
-      '<p><strong>' + totalGclid + ' of ' + totalZoho + ' audited CRM records</strong> carry a verified Google ad click ID. Overall blended volume is visible, but campaign-level attribution is still being resolved.</p>';
+      '<div class="ex-briefing-p"><strong>' + totalGclid + ' of ' + totalZoho + ' audited CRM records</strong> carry a verified Google ad click ID. Overall blended volume is verified by sales ops, but campaign-level attribution is being repaired.</div>';
 
-    // Card 3: What we're doing
+    // What we're doing
     decEl.innerHTML =
-      '<p>Hold budgets and bidding steady while Cheyenne verifies US downstream pipeline status and tech maps website click IDs directly to Zoho CRM.</p>';
+      '<div class="ex-briefing-p">Hold budgets and bidding steady while Cheyenne confirms US downstream pipeline status and tech maps website click IDs directly to Zoho CRM.</div>';
   }
 
   function renderUSNotice(us) {
@@ -390,69 +388,60 @@
     var body = $("#ex-scorecard-body");
     var rows = [];
 
-    function formatJobOrders(val, market) {
-      if (val != null && val > 0) return formatNum(val);
-      if (market === "US") return '<span class="ex-status-tag warn">None confirmed yet</span>';
-      return "0";
+    function marketDivider(title) {
+      return (
+        '<tr class="ex-row-header">' +
+        '<th colspan="4"><span class="ex-hdr-title">' + title + '</span></th>' +
+        '</tr>'
+      );
     }
 
-    function formatPlacements(val, market) {
-      if (val != null && val > 0) return formatNum(val);
-      if (market === "US") return '<span class="ex-status-tag warn">None confirmed yet</span>';
-      return "0";
+    function dataRow(metric, volume, costPerOutcome, statusHtml) {
+      return (
+        '<tr>' +
+        '<td>' + metric + '</td>' +
+        '<td class="num font-mono">' + volume + '</td>' +
+        '<td class="num font-mono">' + costPerOutcome + '</td>' +
+        '<td class="ex-cell-note">' + statusHtml + '</td>' +
+        '</tr>'
+      );
     }
 
-    // US Row
-    var usSpend = formatMoney(us.spend, "USD");
+    // United States Section
+    rows.push(marketDivider("United States (USD)"));
+    rows.push(dataRow("Paid ad spend", formatMoney(us.spend, "USD"), "—", "Google Ads Search pilot (Core + Roles)"));
+    
     var usEnq = us.funnel.enquiriesPending ? '<span class="ex-status-tag pending">Pending</span>' : formatNum(us.funnel.enquiries);
+    rows.push(dataRow("Employer enquiries", usEnq, ratioMoney(us.cpe, "USD"), "Validated employer leads (Cheyenne ops review)"));
+    
     var usDisc = us.funnel.discoveries == null ? "—" : formatNum(us.funnel.discoveries);
-    var usJo = formatJobOrders(us.funnel.jobOrders, "US");
-    var usPl = formatPlacements(us.funnel.placements, "US");
-    var usCpe = ratioMoney(us.cpe, "USD");
-    var usCpd = ratioMoney(us.cpd, "USD");
+    rows.push(dataRow("Completed discovery calls", usDisc, ratioMoney(us.cpd, "USD"), "Sales calls completed by US team"));
+    
+    var usJo = us.funnel.jobOrders && us.funnel.jobOrders > 0 ? formatNum(us.funnel.jobOrders) : '<span class="ex-status-tag warn">None confirmed yet</span>';
     var usCpjo = us.funnel.jobOrders && us.funnel.jobOrders > 0 ? ratioMoney(us.cpjo, "USD") : "—";
+    rows.push(dataRow("Confirmed job orders", usJo, usCpjo, "Awaiting sales validation from discovery cohort"));
+    
+    var usPl = us.funnel.placements && us.funnel.placements > 0 ? formatNum(us.funnel.placements) : '<span class="ex-status-tag warn">None confirmed yet</span>';
     var usCpp = us.funnel.placements && us.funnel.placements > 0 ? ratioMoney(us.cpp, "USD") : "—";
+    rows.push(dataRow("Confirmed placements", usPl, usCpp, "Candidate hiring & placement in progress"));
 
-    rows.push(
-      '<tr>' +
-      '<td><strong>United States</strong> <span class="ex-curr-tag">USD</span></td>' +
-      '<td class="num font-mono">' + usSpend + '</td>' +
-      '<td class="num font-mono">' + usEnq + '</td>' +
-      '<td class="num font-mono">' + usDisc + '</td>' +
-      '<td class="num font-mono">' + usJo + '</td>' +
-      '<td class="num font-mono">' + usPl + '</td>' +
-      '<td class="num font-mono">' + usCpe + '</td>' +
-      '<td class="num font-mono">' + usCpd + '</td>' +
-      '<td class="num font-mono">' + usCpjo + '</td>' +
-      '<td class="num font-mono">' + usCpp + '</td>' +
-      '</tr>'
-    );
-
-    // AU Row
-    var auSpend = formatMoney(au.spend, "AUD");
+    // Australia Section
+    rows.push(marketDivider("Australia (AUD)"));
+    rows.push(dataRow("Paid ad spend", formatMoney(au.spend, "AUD"), "—", "Google Ads Search pilot (Core + Roles)"));
+    
     var auEnq = au.funnel.enquiries == null ? '<span class="ex-status-tag pending">Pending</span>' : formatNum(au.funnel.enquiries);
+    rows.push(dataRow("Employer enquiries", auEnq, ratioMoney(au.cpe, "AUD"), "Validated employer leads (Holly ops review)"));
+    
     var auDisc = au.funnel.discoveries == null ? "—" : formatNum(au.funnel.discoveries);
-    var auJo = formatJobOrders(au.funnel.jobOrders, "AU");
-    var auPl = formatPlacements(au.funnel.placements, "AU");
-    var auCpe = ratioMoney(au.cpe, "AUD");
-    var auCpd = ratioMoney(au.cpd, "AUD");
+    rows.push(dataRow("Completed discovery calls", auDisc, ratioMoney(au.cpd, "AUD"), "Sales calls completed by AU team"));
+    
+    var auJo = au.funnel.jobOrders && au.funnel.jobOrders > 0 ? formatNum(au.funnel.jobOrders) : (au.funnel.jobOrders === 0 ? "0" : "—");
     var auCpjo = au.funnel.jobOrders && au.funnel.jobOrders > 0 ? ratioMoney(au.cpjo, "AUD") : "—";
+    rows.push(dataRow("Confirmed job orders", auJo, auCpjo, "Signed client job requisitions"));
+    
+    var auPl = au.funnel.placements && au.funnel.placements > 0 ? formatNum(au.funnel.placements) : (au.funnel.placements === 0 ? "0" : "—");
     var auCpp = au.funnel.placements && au.funnel.placements > 0 ? ratioMoney(au.cpp, "AUD") : "—";
-
-    rows.push(
-      '<tr>' +
-      '<td><strong>Australia</strong> <span class="ex-curr-tag">AUD</span></td>' +
-      '<td class="num font-mono">' + auSpend + '</td>' +
-      '<td class="num font-mono">' + auEnq + '</td>' +
-      '<td class="num font-mono">' + auDisc + '</td>' +
-      '<td class="num font-mono">' + auJo + '</td>' +
-      '<td class="num font-mono">' + auPl + '</td>' +
-      '<td class="num font-mono">' + auCpe + '</td>' +
-      '<td class="num font-mono">' + auCpd + '</td>' +
-      '<td class="num font-mono">' + auCpjo + '</td>' +
-      '<td class="num font-mono">' + auCpp + '</td>' +
-      '</tr>'
-    );
+    rows.push(dataRow("Confirmed placements", auPl, auCpp, "Candidate hires active"));
 
     body.innerHTML = rows.join("");
   }
