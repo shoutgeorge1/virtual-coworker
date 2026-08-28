@@ -11,20 +11,19 @@
   <link rel="stylesheet" href="xray.css" />
   <link rel="stylesheet" href="executive.css" />
 </head>
-<body data-page="executive.html" data-foot="Executive · US + AU · Consolidated">
+<body data-page="executive.html" data-foot="Executive · US + AU · Leadership Dashboard">
   <div class="app">
     <aside class="sidebar" data-nav></aside>
     <main class="main" id="ex-root">
-      <div class="ex-loading" id="ex-loading">Loading executive performance data…</div>
+      <div class="ex-loading" id="ex-loading">Loading executive performance…</div>
 
-      <!-- Section A: Header & Reporting Controls -->
+      <!-- Header & Clean Period Controls -->
       <header class="ex-header">
         <div class="ex-header-titles">
           <h1>Executive Performance</h1>
           <p class="ex-subtitle" id="ex-period">—</p>
           <p class="ex-fresh" id="ex-fresh">—</p>
         </div>
-        <div class="ex-status-row" id="ex-status-row" aria-label="Market and attribution status"></div>
       </header>
 
       <div class="ex-controls-bar">
@@ -36,164 +35,171 @@
         </div>
       </div>
 
-      <div class="ex-notice-box" id="ex-period-notice" role="status"></div>
-
-      <!-- Section B: Executive Decision Summary (What leadership needs to know) -->
-      <section class="ex-section" aria-label="Executive decision summary">
-        <div class="ex-section-hd">
-          <h2>What leadership needs to know</h2>
-          <span class="meta" id="ex-summary-meta">30-second decision briefing</span>
-        </div>
-        <div class="ex-card ex-summary-table-wrap">
-          <table class="ex-decision-table" aria-label="Executive summary rows">
-            <tbody>
-              <tr>
-                <th scope="row" class="ex-decision-lbl">1. Performance</th>
-                <td class="ex-decision-body" id="ex-sum-perf">—</td>
-              </tr>
-              <tr>
-                <th scope="row" class="ex-decision-lbl">2. Data confidence</th>
-                <td class="ex-decision-body" id="ex-sum-conf">—</td>
-              </tr>
-              <tr>
-                <th scope="row" class="ex-decision-lbl">3. Current decision</th>
-                <td class="ex-decision-body" id="ex-sum-dec">—</td>
-              </tr>
-            </tbody>
-          </table>
+      <!-- SECTION 1: Bottom Line (3 Concise Leadership Rows) -->
+      <section class="ex-section" aria-label="Bottom line executive summary">
+        <div class="ex-card ex-summary-card">
+          <h2 class="ex-card-hd">Bottom line</h2>
+          <div class="ex-summary-rows">
+            <div class="ex-summary-row">
+              <span class="ex-summary-label">Results</span>
+              <span class="ex-summary-body" id="ex-sum-perf">—</span>
+            </div>
+            <div class="ex-summary-row">
+              <span class="ex-summary-label">Tracking</span>
+              <span class="ex-summary-body" id="ex-sum-conf">—</span>
+            </div>
+            <div class="ex-summary-row">
+              <span class="ex-summary-label">What we’re doing</span>
+              <span class="ex-summary-body" id="ex-sum-dec">—</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Section C: US & Australia Market Scorecards -->
-      <section class="ex-section" aria-label="Market scorecards">
+      <!-- US Pipeline Notice (Prominent & Clear) -->
+      <div class="ex-pipeline-notice" id="ex-us-alert" role="alert">
+        <!-- Dynamically rendered based on US confirmation status -->
+      </div>
+
+      <!-- SECTION 2: US and Australia (Primary Leadership Table) -->
+      <section class="ex-section" aria-label="US and Australia primary scorecard">
         <div class="ex-section-hd">
-          <h2>Market scorecards</h2>
-          <span class="meta" id="ex-scorecard-meta">Spreadsheet view · Sales-confirmed business outcomes</span>
+          <h2>US and Australia</h2>
+          <span class="meta" id="ex-scorecard-meta">Commercial results and sales-confirmed business outcomes</span>
         </div>
         <div class="ex-card ex-table-wrap">
-          <table class="ex-table ex-scorecard-table" id="ex-scorecard-table">
+          <table class="ex-table ex-main-table" id="ex-main-scorecard">
             <thead>
               <tr>
-                <th class="ex-col-metric">Metric</th>
-                <th class="ex-col-us num">United States <span class="ex-curr-tag">USD</span></th>
-                <th class="ex-col-au num">Australia <span class="ex-curr-tag">AUD</span></th>
-                <th class="ex-col-notes">Reporting definition &amp; governance</th>
+                <th class="ex-col-market">Market</th>
+                <th class="num">Ad spend</th>
+                <th class="num">Employer enquiries</th>
+                <th class="num">Discovery calls</th>
+                <th class="num">Job orders</th>
+                <th class="num">Placements</th>
+                <th class="num">Cost per enquiry</th>
+                <th class="num">Cost per discovery</th>
               </tr>
             </thead>
             <tbody id="ex-scorecard-body">
-              <!-- Dynamically populated -->
+              <!-- Dynamically populated 2 rows: United States & Australia -->
             </tbody>
           </table>
         </div>
+        <p class="ex-observation-text" id="ex-main-observation">
+          Australia is currently converting enquiries further through the sales funnel. US is producing discovery calls, but job-order status needs confirmation.
+        </p>
       </section>
 
-      <!-- Section D: Trend Section -->
-      <section class="ex-section" aria-label="Pilot weekly progression">
+      <!-- SECTION 3: Pilot versus Agency (Clean 4-metric Leadership Comparison) -->
+      <section class="ex-section" aria-label="Pilot versus recorded agency baseline">
         <div class="ex-section-hd">
-          <h2>Weekly trend</h2>
-          <span class="meta">Complete pilot weeks + partial · USD &amp; AUD kept separate</span>
-        </div>
-        <div class="ex-trend-grid" id="ex-trend-grid">
-          <!-- Dynamically populated US & AU trend tables -->
-        </div>
-      </section>
-
-      <!-- Section E: Pilot versus Recorded Legacy-Agency Baseline -->
-      <section class="ex-section" aria-label="Pilot versus recorded legacy-agency baseline">
-        <div class="ex-section-hd">
-          <h2>Pilot vs recorded legacy baseline</h2>
-          <span class="meta">Normalized rate comparison · Not raw multi-year totals</span>
-        </div>
-        <div class="ex-disclosure-banner">
-          <strong>Governance disclosure:</strong> Legacy funnel comparisons use recorded CRM outcomes under historically incomplete attribution and conversion governance. They are directional, not audited financial results. Rates from multi-year agency run are normalized to equivalent 7-day rates. USD and AUD are tracked separately.
+          <h2>Pilot vs recorded agency baseline</h2>
+          <span class="meta">Recorded historical agency run normalized to weekly rate · Directional comparison</span>
         </div>
         <div class="ex-card ex-table-wrap">
           <table class="ex-table ex-agency-table" id="ex-agency-table">
             <thead>
               <tr>
-                <th class="ex-col-metric">Metric</th>
-                <th class="ex-col-market">Market</th>
+                <th>Metric</th>
                 <th class="num">Search pilot</th>
-                <th class="num">Recorded legacy baseline</th>
+                <th class="num">Recorded agency baseline</th>
                 <th class="num">Difference</th>
-                <th class="ex-col-conf">Confidence / Interpretation</th>
               </tr>
             </thead>
             <tbody id="ex-agency-body">
-              <!-- Dynamically populated media & directional funnel rows -->
+              <!-- Dynamically populated 4 primary metrics separated by US & AU -->
             </tbody>
           </table>
         </div>
+        <p class="ex-footnote-text">
+          The agency comparison uses recorded historical results. Historical CRM tracking was incomplete, so funnel comparisons are directional.
+        </p>
       </section>
 
-      <!-- Section F: Data-Confidence and Attribution Panel -->
-      <section class="ex-section" aria-label="Data confidence and attribution panel">
+      <!-- SECTION 4: What We're Doing Next (Simple 3-item Action Plan) -->
+      <section class="ex-section" aria-label="Next steps and actions">
         <div class="ex-section-hd">
-          <h2>Data confidence &amp; attribution</h2>
-          <span class="meta">Reconciling 49 cumulative enquiries vs 31 census rows · Click-ID health</span>
-        </div>
-        <div class="ex-card ex-attrib-card" id="ex-attrib-panel">
-          <!-- Dynamically populated reconciliation, coverage, exclusions, phone status -->
-        </div>
-      </section>
-
-      <!-- Section G: Budget and Bidding Decisions -->
-      <section class="ex-section" aria-label="Budget and bidding decisions">
-        <div class="ex-section-hd">
-          <h2>Budget &amp; bidding governance</h2>
-          <span class="meta">Conservative hold · Do not optimize on unverified front-end conversions</span>
+          <h2>What we’re doing next</h2>
+          <span class="meta">Key priorities and fixes</span>
         </div>
         <div class="ex-card ex-table-wrap">
-          <table class="ex-table ex-decisions-table">
+          <table class="ex-table ex-actions-table">
             <thead>
               <tr>
-                <th>Market</th>
-                <th>Current spend / budget</th>
-                <th>Bidding strategy</th>
-                <th>Decision</th>
-                <th>Strategic reason</th>
-                <th>Prerequisite before scaling</th>
-              </tr>
-            </thead>
-            <tbody id="ex-bidding-body">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Section H: Current Blockers and Next Actions -->
-      <section class="ex-section" aria-label="Current blockers and next actions">
-        <div class="ex-section-hd">
-          <h2>Key blockers &amp; next actions</h2>
-          <span class="meta">Executive tracking · Deep forensics linked</span>
-        </div>
-        <div class="ex-card ex-table-wrap">
-          <table class="ex-table ex-blockers-table">
-            <thead>
-              <tr>
-                <th>Issue</th>
-                <th>Business consequence</th>
-                <th>Owner</th>
+                <th>Priority</th>
+                <th>Action</th>
+                <th>Why it matters</th>
                 <th>Status</th>
-                <th>Next validation step</th>
               </tr>
             </thead>
-            <tbody id="ex-blockers-body">
-              <!-- Dynamically populated -->
+            <tbody id="ex-actions-body">
+              <tr>
+                <td><strong>1. US pipeline review</strong></td>
+                <td>Confirm status of 16 completed discovery calls with Cheyenne.</td>
+                <td>Verifies whether discovery calls are converting to candidate interviews and job orders.</td>
+                <td><span class="ex-pill warn ex-pill-sm">In progress</span></td>
+              </tr>
+              <tr>
+                <td><strong>2. Ad click attribution fix</strong></td>
+                <td>Ensure landing page forms save ad click IDs (GCLID) into Zoho.</td>
+                <td>Required before scaling budgets or letting Google automatically optimize for leads.</td>
+                <td><span class="ex-pill warn ex-pill-sm">In progress</span></td>
+              </tr>
+              <tr>
+                <td><strong>3. Phone call tracking</strong></td>
+                <td>Pass caller identity and call outcomes from phone system into CRM.</td>
+                <td>Connects phone inquiries and booked consults directly to advertising spend.</td>
+                <td><span class="ex-pill ok ex-pill-sm">Reviewing</span></td>
+              </tr>
             </tbody>
           </table>
         </div>
       </section>
+
+      <!-- COLLAPSIBLE SUPPORTING DETAILS (For deep exploration without cluttering leadership view) -->
+      <div class="ex-details-group">
+        <details class="ex-details">
+          <summary>Detailed funnel and cost metrics</summary>
+          <div class="ex-details-bd" id="ex-deep-funnel">
+            <!-- Dynamically populated deep conversion rates & cost per JO/placement -->
+          </div>
+        </details>
+
+        <details class="ex-details">
+          <summary>Weekly trend (all weeks)</summary>
+          <div class="ex-details-bd" id="ex-trend-grid">
+            <!-- Weekly progression tables for US & AU -->
+          </div>
+        </details>
+
+        <details class="ex-details">
+          <summary>Attribution &amp; tracking breakdown</summary>
+          <div class="ex-details-bd" id="ex-attrib-panel">
+            <!-- Reconciliation and data quality diagnostics -->
+          </div>
+        </details>
+
+        <details class="ex-details">
+          <summary>How these numbers are calculated</summary>
+          <div class="ex-details-bd">
+            <ul class="ex-rules-list">
+              <li><strong>Blended Cost per Enquiry:</strong> Google Ads spend divided by all sales-confirmed employer enquiries. This is an operational efficiency metric, not paid Google Ads CPA.</li>
+              <li><strong>Sales-Confirmed Outcomes:</strong> Sourced from Cheyenne Gichana (US) and Holly Wallace (AU) weekly reviews. Excludes job seekers, spam, solicitors, and invalid leads.</li>
+              <li><strong>Lagging Funnel:</strong> Job orders and placements take 2–4 weeks from initial discovery calls. Current month numbers reflect activity in period, not a closed cohort.</li>
+              <li><strong>Ad Attribution:</strong> Only leads containing a verified advertising click ID (GCLID) are counted as directly attributed. Coverage is currently 5 of 31 reviewed records.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
 
       <footer class="ex-foot">
         <p class="ex-foot-text">
-          Diagnostic &amp; forensic tools:
+          Diagnostic tools:
           <a href="sales-review.html">Sales review</a> ·
           <a href="employer-signal-report.html">Employer signal</a> ·
           <a href="phone-call-forensic.html">Phone forensic</a> ·
           <a href="attribution.html">Funnel &amp; CRM</a> ·
-          <a href="rsa-review.html">Search ads</a> ·
           <a href="executive-weekly.html">Weekly archive</a>
         </p>
       </footer>

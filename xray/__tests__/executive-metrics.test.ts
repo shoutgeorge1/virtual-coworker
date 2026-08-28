@@ -134,6 +134,8 @@ describe("sumSalesLabeled", () => {
     );
     expect(funnel.enquiries).toBe(31);
     expect(funnel.discoveries).toBe(16);
+    expect(funnel.jobOrders).toBe(0);
+    expect(funnel.placements).toBe(0);
     expect(funnel.enquiriesPending).toBeFalsy();
   });
 
