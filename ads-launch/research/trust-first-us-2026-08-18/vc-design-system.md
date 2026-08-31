@@ -6,7 +6,9 @@ Preview only. Uses real VC brand tokens. Does not restyle live `/us`.
 
 - Next.js app in `vision/` (not Astro)
 - Poppins + Century Gothic Paneuropean
-- Navy `#214873`, ink `#1c2430`, paper `#f6f7f9`, gold reserved and not used as a floating CTA
+- Navy `#214873`, light blue `#0071c9` (`--vc-blue`, H1 sentence 2 + light-surface accents), cream `#f6f3ea`, ink `#1c2430`, paper `#f6f7f9`
+- Cyan `#33ded8` only on the dark footer (logo / live `/us` on navy). Not the H1.
+- Google stars only: `#fbbc04`. No orange. Gold is not the H1 or CTA.
 - `/brand/logo-vc.png`
 - `SITE`, `TRUST_PROOF`, `PUBLIC_QUOTES`, `CLIENT_MARKS`, `COMPANY_IDENTITY`
 - `validateEmployerLead`, `validateUsPhone`, `formatPhoneInput`
@@ -23,7 +25,7 @@ Preview only. Uses real VC brand tokens. Does not restyle live `/us`.
 
 ## Look
 
-White background. Dark readable text. Normal header. Logo a little larger (42px). Phone present, not the whole page. 6px radius. Borders instead of shadows. One primary navy button. No gradients, no quizzes, no popups, no chat on the form, no AI portraits, no raw DKI.
+White background. Dark readable text. Logo 42px. Phone present, not the whole page. 6px radius. Borders instead of shadows. Navy primary button. Hero H1: Century Gothic Paneuropean Bold (same as live `/us`), sentence 1 navy, sentence 2 light blue `#0071c9`. Cream check wells, navy checks. Light-blue section ticks. No quizzes, popups, chat on the form, AI portraits, or raw DKI.
 
 ## Live pages inspected (not replaced)
 

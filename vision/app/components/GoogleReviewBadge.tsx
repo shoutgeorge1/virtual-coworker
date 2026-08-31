@@ -33,20 +33,16 @@ export default function GoogleReviewBadge({
           {proof.rating}
           <i>/5</i>
         </b>
-        <span>
-          Google · {proof.reviewCount} reviews
-        </span>
+        <span>Google</span>
       </span>
     );
   }
   return (
-    <span className="trust-chip" aria-label={label}>
-      <RatingStars />
+    <span className="trust-chip trust-chip-review" aria-label={label}>
+      <RatingStars size={16} />
       <span>
-        <b>{proof.rating}</b>
-        <span>
-          Google · {proof.reviewCount} reviews
-        </span>
+        <b className="trust-chip-rating-line">{proof.rating}</b>
+        <span className="trust-chip-meta">Google</span>
       </span>
     </span>
   );

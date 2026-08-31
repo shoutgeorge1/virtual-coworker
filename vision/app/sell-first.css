@@ -1,0 +1,148 @@
+/* Sell-first fold challenger only. Do not restyle /us or /au control. */
+
+.gm-sell .gm-nav {
+  padding: 0.5rem 0;
+  gap: 0.5rem;
+}
+
+.gm-sell .gm-nav img {
+  height: 24px;
+}
+
+.gm-sell .gm-nav-links {
+  display: none;
+}
+
+.gm-sell .gm-nav .gm-call {
+  margin-left: auto;
+  min-height: 40px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.92rem;
+}
+
+.gm-sell .gm-hero {
+  padding: 0.35rem 0 1.15rem;
+}
+
+.gm-sell .gm-hero-grid {
+  gap: 1.4rem;
+}
+
+.gm-sell h1 {
+  font-size: clamp(1.68rem, 6.4vw, 2.85rem);
+  margin: 0 0 0.45rem;
+  line-height: 1.12;
+}
+
+.gm-sell .gm-lead {
+  font-size: 1.02rem;
+  line-height: 1.45;
+  margin: 0 0 0.9rem;
+  max-width: 34rem;
+}
+
+.gm-sell .gm-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 28rem;
+  min-height: 52px;
+  height: 52px;
+  padding: 0 1.2rem;
+  margin: 0;
+  background: var(--gm-gold);
+  color: var(--gm-ocean);
+  font-family: var(--gm-display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  border-radius: 8px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.gm-sell .gm-starline {
+  margin: 0.75rem 0 0.1rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.gm-sell .gm-since {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--gm-mute);
+}
+
+.gm-sell .gm-hero-seeker {
+  margin: 0.45rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--gm-mute);
+}
+
+.gm-sell .gm-hero-seeker a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: var(--gm-mute);
+}
+
+.gm-sell .gm-qualify {
+  padding: 2.1rem 0 1.4rem;
+  background: var(--gm-mist);
+  border-top: 1px solid var(--gm-edge);
+}
+
+.gm-sell .gm-qualify .gm-gate {
+  margin-top: 0;
+  max-width: 36rem;
+}
+
+.gm-sell .gm-hero-photo {
+  height: min(58vh, 480px);
+  object-position: 50% 18%;
+}
+
+@media (min-width: 901px) {
+  .gm-sell .gm-hero {
+    min-height: calc(100vh - 3.6rem);
+    display: flex;
+    align-items: flex-start;
+    padding-top: 0.85rem;
+  }
+
+  .gm-sell .gm-hero-cta {
+    width: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .gm-sell .gm-hero {
+    min-height: calc(100svh - 3.5rem);
+    padding-bottom: 0.65rem;
+  }
+
+  .gm-sell .gm-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    min-height: 0;
+  }
+
+  .gm-sell .gm-hero-cta {
+    max-width: none;
+  }
+
+  .gm-sell .gm-hero-photo {
+    height: 200px;
+    max-height: 200px;
+    min-height: 160px;
+    order: 2;
+  }
+
+  .gm-sell .gm-nav .gm-call {
+    font-size: 0.88rem;
+    padding: 0.32rem 0.7rem;
+    min-height: 40px;
+  }
+}

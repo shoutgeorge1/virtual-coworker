@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>US Search restructure · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    .tree { font-family: var(--mono); font-size: 0.82rem; line-height: 1.55; white-space: pre; overflow-x: auto; margin: 0; }
+    .kw { font-family: var(--mono); font-size: 0.78rem; }
+    .ag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    @media (max-width: 900px) { .ag-grid { grid-template-columns: 1fr; } }
+    .ag-card { border: 1px solid var(--edge-soft); border-radius: 10px; padding: 0.75rem 0.9rem; background: var(--panel-inset); }
+    .ag-card h3 { margin: 0 0 0.35rem; font-size: 1rem; }
+    .intent { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.03em; padding: 0.1rem 0.4rem; border-radius: 4px; border: 1px solid; }
+    .intent-a { color: #166534; border-color: rgba(45,138,78,0.35); background: rgba(45,138,78,0.1); }
+    .intent-b { color: #0f766e; border-color: rgba(15,118,110,0.35); background: rgba(15,118,110,0.1); }
+    .intent-c { color: #92400e; border-color: rgba(180,83,9,0.35); background: rgba(180,83,9,0.1); }
+    .intent-d, .intent-e { color: #9f2d2d; border-color: rgba(194,65,65,0.35); background: rgba(194,65,65,0.1); }
+  </style>
+</head>
+<body data-page="us-restructure.html" data-foot="Analysis 18 Aug<br />Editor CSV not built yet">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">US Search · live market research · 18 Aug 2026</p>
+        <h1>Restructure from what the account taught us</h1>
+        <p>
+          Archived. Live structure is in the Google Ads account.
+          This page is the 18 Aug “if we started over” note — not a to-do.
+        </p>
+      </header>
+
+      <div class="notice">
+        <p><strong>Pilot beats history.</strong> Ads conversions are not CRM truth — 1 CORE conversion in the last complete 7 days; Zoho US week had 0 gclid. Do not kill employer clusters on that desert. Do not treat 21% CTR on job-seeker queries as a win.</p>
+        <ul class="glance-bullets" style="margin:0.4rem 0 0">
+          <li>Windows: RSA + ST 4–13 Aug · campaign IS 10–16 Aug · GA4 LP 8–16 Aug · Editor history ~Aug 2024–4 Aug 2026</li>
+          <li>Brand is deferred — <code>Brand_VC</code> stays; do not expand it</li>
+          <li>This page is the decision. No Editor CSV yet. No Ads API mutations.</li>
+        </ul>
+      </div>
+
+      <div class="stats stats-4">
+        <div class="stat">
+          <p class="lbl">Enabled US AGs</p>
+          <p class="val">26 → 10</p>
+          <p class="hint">Plus Brand, left alone</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Staffing AG CTR</p>
+          <p class="val">18.8%</p>
+          <p class="hint">Best CORE with volume</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Admin / EA CTR</p>
+          <p class="val">3.6%</p>
+          <p class="hint">Rebuild Exact employer</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">CORE IS</p>
+          <p class="val">29.9%</p>
+          <p class="hint">Lost rank 38% · budget 32%</p>
+        </div>
+      </div>
+
+      <section class="panel tint-cool" id="answer">
+        <div class="panel-hd">
+          <p class="kicker">The account we would build today</p>
+          <h2>Final US structure</h2>
+        </div>
+        <div class="panel-bd">
+          <pre class="tree">VC_US_S_CORE
+  Brand_VC                      KEEP (do not expand)
+  Remote_Virtual_Staffing_PH    MERGE  Staffing_Agency + Virtual_Staff + leaked Exact
+  Filipino_VA_Agency_PH         MERGE  Agency company kws + VA_Agency_Firm
+  Hire_VA_PH                    REBUILD  hire / dedicated / for-business only
+  Offshore_VA_PH                KEEP  Philippines / Filipino VA
+
+VC_US_S_ROLES
+  Bookkeeping_PH                KEEP Hire + absorb Outsource
+  Digital_Marketing_PH          KEEP Hire + absorb Outsource
+  Social_Media_PH               REBUILD one PH Exact AG
+  Administration_EA_PH          REBUILD Exact employer EA / admin
+  Customer_Service_PH           KEEP Outsource spine + absorb Hire
+  Accounting_PH                 KEEP thin PH Exact
+  Sales_Support_PH              REBUILD (no setters)
+
+PAUSED
+  Appointment_Setter_Hire_PH · Recruitment_* · HR_* · Admin_City_Test
+  Sales_Outsource_PH · remaining Outsource twins after absorb</pre>
+        </div>
+      </section>
+
+      <section class="panel" id="decisions">
+        <div class="panel-hd">
+          <p class="kicker">Every live US ad group</p>
+          <h2>KEEP · REBUILD · MERGE · PAUSE</h2>
+        </div>
+        <div class="panel-bd tbl-wrap">
+          <table class="tbl-tight">
+            <thead>
+              <tr>
+                <th>Ad group</th>
+                <th>Action</th>
+                <th>Search-term evidence</th>
+                <th>RSA evidence</th>
+                <th>LP / intent</th>
+                <th>Recommendation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Staffing_Agency_PH</td>
+                <td><span class="badge badge-high">MERGE</span></td>
+                <td>remote staffing agency 10c / $27; agencies 6c / $16. Intent A. Scattered with Hire + Agency.</td>
+                <td>144 / 27 / 18.8% / $74. Last2 CTR 20.3%.</td>
+                <td>Staffing-company buyer landing on a VA hire story.</td>
+                <td>Become Remote_Virtual_Staffing_PH. Own Exact. Negative temp / jobs.</td>
+              </tr>
+              <tr>
+                <td>Agency_PH</td>
+                <td><span class="badge badge-high">MERGE</span></td>
+                <td>Same staffing cluster + filipino staffing agency 7c / $12 + US temp-agency junk.</td>
+                <td>307 / 34 / 11.1% / $88. Last2 17.6%.</td>
+                <td>Company-buyer. Pause the live Broad keyword.</td>
+                <td>Staffing Exact → Remote_Virtual_Staffing. Agency / Filipino agency → Filipino_VA_Agency_PH.</td>
+              </tr>
+              <tr>
+                <td>Hire_VA_PH</td>
+                <td><span class="badge badge-info">REBUILD</span></td>
+                <td>Dumping ground: va workers ph (excluded), staffing leak, providers, dedicated VA. Bare “virtual assistant” 2.2% CTR.</td>
+                <td>1019 / 130 / 12.8% / $292. Phrase: remote VA for business $44, providers $36, dedicated $24.</td>
+                <td>Mix of A / B / E. Volume useful; architecture not.</td>
+                <td>Strip staffing / agency kws. Keep hire / dedicated / for-business.</td>
+              </tr>
+              <tr>
+                <td>Offshore_VA_PH</td>
+                <td><span class="badge badge-ok">KEEP</span></td>
+                <td>PH / Filipino Exact starved (virtual assistant philippines ≈ 0 impr). va workers ph already excluded.</td>
+                <td>248 / 45 / 18.1% / $95. Place language works.</td>
+                <td>Leadership cluster. Lost rank, not dead demand. History: $17.7k on that one term.</td>
+                <td>Keep as PH VA home. Do not merge into Agency.</td>
+              </tr>
+              <tr>
+                <td>VA_Agency_Firm_PH</td>
+                <td><span class="badge badge-high">MERGE</span></td>
+                <td>32 impr / 1 click.</td>
+                <td>9 / 1 / $2.</td>
+                <td>Same company-buyer as Agency_PH.</td>
+                <td>Fold into Filipino_VA_Agency_PH. Pause this AG.</td>
+              </tr>
+              <tr>
+                <td>Virtual_Staff_PH</td>
+                <td><span class="badge badge-high">MERGE</span></td>
+                <td>This AG 12 impr / 0 clicks. “virtual staffing” clicked once elsewhere.</td>
+                <td>0 clicks.</td>
+                <td>Synonym of remote staffing.</td>
+                <td>Fold into Remote_Virtual_Staffing_PH. Pause this AG.</td>
+              </tr>
+              <tr>
+                <td>Brand_VC</td>
+                <td><span class="badge badge-ok">KEEP</span></td>
+                <td>virtual coworker 7c / $14.</td>
+                <td>40% CTR. Cheap. Not Stage 1 learning.</td>
+                <td>Brand deferred.</td>
+                <td>Leave enabled. Do not expand. Do not center the rebuild on it.</td>
+              </tr>
+              <tr>
+                <td>Bookkeeping_Hire_PH</td>
+                <td><span class="badge badge-ok">KEEP</span></td>
+                <td>virtual bookkeeping / remote bookkeeping assistant — role employer.</td>
+                <td>132 / 18 / 13.6% / $60. Last2 14.9%.</td>
+                <td>/us/bookkeeping 40 sess, 40% engaged — best role LP.</td>
+                <td>Keep. Absorb Outsource Exact. Negative jobs / salary.</td>
+              </tr>
+              <tr>
+                <td>Bookkeeping_Outsource_PH</td>
+                <td><span class="badge badge-high">MERGE</span></td>
+                <td>83 impr / 1 click.</td>
+                <td>2 / 0.</td>
+                <td>Same URL.</td>
+                <td>Pause AG. Move PH Exact into Bookkeeping_Hire.</td>
+              </tr>
+              <tr>
+                <td>Digital_Marketing_Hire_PH</td>
+                <td><span class="badge badge-ok">KEEP</span></td>
+                <td>digital marketing assistant 3c / $10; remote marketing assistant 2c / $7 (B/C).</td>
+                <td>90 / 14 / 15.6% / $45.</td>
+                <td>Role LP exists.</td>
+                <td>Keep. Absorb Outsource. Watch bare “remote marketing assistant”.</td>
+              </tr>
+              <tr>
+                <td>Digital_Marketing_Outsource_PH</td>
+                <td><span class="badge badge-high">MERGE</span></td>
+                <td>One clean Exact: digital marketing outsourcing philippines 2c / $6.</td>
+                <td>24 / 2 / 8.3% / $6.</td>
+                <td>Same URL.</td>
+                <td>Pause AG. Move PH Exact into Hire.</td>
+              </tr>
+              <tr>
+                <td>Social_Media_Hire_PH</td>
+                <td><span class="badge badge-info">REBUILD</span></td>
+                <td>filipino social media va 2c / $6. Historical SMM PH converted. Current Exact PH = 0 impr.</td>
+                <td>18 / 1 / 5.6% / $2.</td>
+                <td>Starved PH auctions + remote-job bleed.</td>
+                <td>One Social_Media_PH. Exact PH / Filipino only.</td>
+              </tr>
+              <tr>
+                <td>Social_Media_Outsource_PH</td>
+                <td><span class="badge badge-high">MERGE</span></td>
+                <td>smm panel / cheapsmmglobal / social media agency usa — junk.</td>
+                <td>36 / 5 / 13.9% / $18. CTR on junk is still junk.</td>
+                <td>Not employer VA demand.</td>
+                <td>Pause. Negative panel / smm / agency-usa.</td>
+              </tr>
+              <tr>
+                <td>Administration_EA_PH</td>
+                <td><span class="badge badge-info">REBUILD</span></td>
+                <td>what is a VA, remote EA (C). Bare virtual assistant 2.2% CTR.</td>
+                <td>111 / 4 / 3.6% / $13. Worst live CTR with volume.</td>
+                <td>Query is EA / admin; ad is generic VA.</td>
+                <td>Exact: virtual executive assistant, hire EA, EA philippines. Negative remote jobs / what is.</td>
+              </tr>
+              <tr>
+                <td>Admin_City_Test</td>
+                <td><span class="badge badge-crit">PAUSE</span></td>
+                <td>hire VA florida / new york — 4 clicks.</td>
+                <td>27 / 4 / 14.8% / $12.</td>
+                <td>Cities do not change the offer.</td>
+                <td>Pause. Not Stage 1.</td>
+              </tr>
+              <tr>
+                <td>Customer_Service_Outsource_PH</td>
+                <td><span class="badge badge-ok">KEEP</span></td>
+                <td>cs outsource 3c / $10 (A). Also retail call centers (wrong).</td>
+                <td>54 / 5 / 9.3% / $17.</td>
+                <td>/us/customer-service 22.7% engaged — LP miss, not keyword miss.</td>
+                <td>Become Customer_Service_PH. Negative call center / BPO / representative / jobs.</td>
+              </tr>
+              <tr>
+                <td>Customer_Service_Hire_PH</td>
+                <td><span class="badge badge-high">MERGE</span></td>
+                <td>virtual customer service 1c. remote CSR is D (job seeker).</td>
+                <td>64 / 4 / 6.2% / $12.</td>
+                <td>Same weak LP.</td>
+                <td>Pause AG. Move clean Exact into Customer_Service_PH.</td>
+              </tr>
+              <tr>
+                <td>Sales_Hire_PH</td>
+                <td><span class="badge badge-info">REBUILD</span></td>
+                <td>WFH appointment setter 2c / $7 (D).</td>
+                <td>59 / 3 / 5.1% / $7.</td>
+                <td>Setter queries should not hit generic sales VA.</td>
+                <td>Keep lead-gen / sales VA Exact PH. Strip setters.</td>
+              </tr>
+              <tr>
+                <td>Sales_Outsource_PH</td>
+                <td><span class="badge badge-crit">PAUSE</span></td>
+                <td>1 impr / 0.</td>
+                <td>Dead.</td>
+                <td>No learning.</td>
+                <td>Pause.</td>
+              </tr>
+              <tr>
+                <td>Appointment_Setter_Hire_PH</td>
+                <td><span class="badge badge-crit">PAUSE</span></td>
+                <td>Clicked terms are WFH / from home (D). Employer Exact 0 clicks.</td>
+                <td>33 / 7 / 21.2% / $22 — high CTR, bad customer.</td>
+                <td>Job seekers on a sales LP.</td>
+                <td>Pause. Expand Job Seekers negatives. Do not recreate.</td>
+              </tr>
+              <tr>
+                <td>Recruitment_Hire_PH</td>
+                <td><span class="badge badge-crit">PAUSE</span></td>
+                <td>virtual assistant jobs 7c / $22, careers, job board — E.</td>
+                <td>71 / 13 / 18.3% / $51. Second-worst intent in the account.</td>
+                <td>/us/recruitment teaches job seekers we hire people.</td>
+                <td>Pause entire AG. Campaign negatives: jobs, careers, job board, salary.</td>
+              </tr>
+              <tr>
+                <td>Recruitment_Outsource_PH</td>
+                <td><span class="badge badge-crit">PAUSE</span></td>
+                <td>Near zero.</td>
+                <td>1 impr.</td>
+                <td>—</td>
+                <td>Pause.</td>
+              </tr>
+              <tr>
+                <td>Accounting_Hire_PH</td>
+                <td><span class="badge badge-ok">KEEP</span></td>
+                <td>filipino accountant 1c / $4. History had PH accounting outsourcing.</td>
+                <td>27 / 0 in RSA window.</td>
+                <td>Too thin to judge LP.</td>
+                <td>One thin PH Exact AG. Absorb Outsource. Do not expand.</td>
+              </tr>
+              <tr>
+                <td>Accounting_Outsource_PH</td>
+                <td><span class="badge badge-high">MERGE</span></td>
+                <td>3 impr / 0.</td>
+                <td>Dead twin.</td>
+                <td>Same URL.</td>
+                <td>Pause. Move PH Exact into Accounting_Hire.</td>
+              </tr>
+              <tr>
+                <td>Human_Resources_Hire_PH</td>
+                <td><span class="badge badge-crit">PAUSE</span></td>
+                <td>hr virtual assistant 1c / $3. History was thin by design.</td>
+                <td>8 / 0.</td>
+                <td>/us/hr — no volume.</td>
+                <td>Pause both HR AGs.</td>
+              </tr>
+              <tr>
+                <td>Human_Resources_Outsource_PH</td>
+                <td><span class="badge badge-crit">PAUSE</span></td>
+                <td>0 clicks.</td>
+                <td>0.</td>
+                <td>—</td>
+                <td>Pause.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel tint-green" id="create">
+        <div class="panel-hd">
+          <p class="kicker">Only two new names — consolidations, not expansion</p>
+          <h2>CREATE NOW</h2>
+        </div>
+        <div class="panel-bd">
+          <div class="ag-grid">
+            <div class="ag-card">
+              <h3>Remote_Virtual_Staffing_PH</h3>
+              <p><span class="intent intent-a">A · Employer</span> Campaign <code>VC_US_S_CORE</code> · LP <code>/us/start</code></p>
+              <p>Search terms: remote staffing agency · remote staffing agencies · remote staffing agency us · virtual staffing · virtual staffing company · virtual staffing agencies.</p>
+              <p class="kw"><strong>Exact:</strong> remote staffing agency · remote staffing agencies · remote staffing · virtual staffing · virtual staffing agency · virtual staffing company · virtual staffing agencies · offshore staffing agency</p>
+              <p class="kw"><strong>Phrase:</strong> remote staffing agency · virtual staffing company · dedicated remote staff</p>
+              <p class="kw"><strong>Negatives:</strong> temp · temporary · jobs · job · careers · wfh · work from home · near me · houston · representative · salary</p>
+              <p><strong>RSA:</strong> Remote Staffing Agency · Dedicated Filipino Remote Staff · US Hours Remote Staff · Not a Freelance Bench · You Interview the Shortlist. Skip “Find Your Perfect VA”.</p>
+              <p><strong>LP:</strong> “Build your team with dedicated Filipino remote staff.” Recruit / vet / interview. Point to existing <code>/us/start</code> — do not invent <code>/us/staffing</code> until this AG is clean for two weeks.</p>
+            </div>
+            <div class="ag-card">
+              <h3>Filipino_VA_Agency_PH</h3>
+              <p><span class="intent intent-a">A · Employer shopping a company</span> Campaign <code>VC_US_S_CORE</code> · LP <code>/us/start</code> or <code>/us/offer</code></p>
+              <p>Search terms: virtual assistant agency in philippines · filipino staffing agency · philippines staffing agency · virtual assistant providers · virtual assistant companies · filipino va agency.</p>
+              <p class="kw"><strong>Exact:</strong> virtual assistant agency · virtual assistant agency philippines · virtual assistant company philippines · filipino va agency · filipino staffing agency · philippines staffing agency · virtual assistant providers · virtual assistant companies</p>
+              <p class="kw"><strong>Phrase:</strong> filipino staffing agency · filipino va agency · virtual assistant agency philippines · philippines va company</p>
+              <p class="kw"><strong>Negatives:</strong> jobs · beginners · hiring (job-board) · temp · salary · freelance · upwork</p>
+              <p><strong>RSA:</strong> Philippines VA Company · Filipino VA Agency · Staffing Partner Since 2011 · We Recruit You Interview · Not a Gig Platform.</p>
+              <p><strong>LP:</strong> Company, not freelancer. Shortlist + interview + ongoing employer relationship. Same conversion machine as /us.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel tint-amber" id="watch">
+        <div class="panel-hd">
+          <p class="kicker">Emerging — more volume required</p>
+          <h2>WATCHLIST</h2>
+        </div>
+        <div class="panel-bd tbl-wrap">
+          <table class="tbl-tight">
+            <thead>
+              <tr>
+                <th>Theme</th>
+                <th>Pilot 4–13 Aug</th>
+                <th>History ~2024–Aug 2026</th>
+                <th>Call</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Remote staffing</td>
+                <td>19 clk / $51. Clean A.</td>
+                <td>Only 8 historical clicks — live discovery.</td>
+                <td>CREATE NOW (merge)</td>
+              </tr>
+              <tr>
+                <td>Virtual staffing</td>
+                <td>1 click</td>
+                <td>50 clk / $606</td>
+                <td>Fold into Remote_Virtual_Staffing</td>
+              </tr>
+              <tr>
+                <td>Filipino VA agency</td>
+                <td>filipino staffing agency 7c / $12</td>
+                <td>PH VA agency $950 one term; Filipino VA $6.3k / 160 clk</td>
+                <td>CREATE NOW (company AG)</td>
+              </tr>
+              <tr>
+                <td>Offshore staffing</td>
+                <td>6 impr / 0 clk</td>
+                <td>Near-zero as a query. Offshore RSA headline 16.1% CTR</td>
+                <td>Keywords inside staffing / PH — not its own AG</td>
+              </tr>
+              <tr>
+                <td>Executive assistant</td>
+                <td>~2 clk. Admin AG 3.6% CTR</td>
+                <td>98 clk / $2.4k, lots of bare EA</td>
+                <td>Rebuild Administration_EA_PH. No new AG.</td>
+              </tr>
+              <tr>
+                <td>Real Estate VA</td>
+                <td>No clicked cluster. “how to be a real estate va” is E.</td>
+                <td>119 clk / $1,652 / 4 Ads conv. Employer-ish 18 clk / $493. Ambiguous 101 clk / $1,159 (RE VA philippines $311).</td>
+                <td>BUILT 18 Aug in <code>VC_US_S_ROLES</code>. See <a href="real-estate-ads.html">Real estate ads</a> and <a href="https://www.virtualcoworker.app/us/real-estate" target="_blank" rel="noopener">/us/real-estate</a>. Isolate the verified employer signal — not a new campaign.</td>
+              </tr>
+              <tr>
+                <td>Property management</td>
+                <td>None</td>
+                <td>13 clk / $202</td>
+                <td>BUILT 18 Aug as <code>Property_Management_VA_PH</code>. Same LP. See <a href="real-estate-ads.html">Real estate ads</a>.</td>
+              </tr>
+              <tr>
+                <td>Back office</td>
+                <td>back office va 2 impr / 0</td>
+                <td>0 clicks</td>
+                <td>WATCH</td>
+              </tr>
+              <tr>
+                <td>Data entry</td>
+                <td>1 impr / 0</td>
+                <td>19 clk / $330 — job mix</td>
+                <td>WATCH. Job-seeker risk.</td>
+              </tr>
+              <tr>
+                <td>Appointment setting</td>
+                <td>5 clk / $19, almost all WFH (D)</td>
+                <td>33 clk / $365 / 0 Ads conv</td>
+                <td>PAUSE live AG. Do not recreate until negatives hold.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="language">
+        <div class="panel-hd">
+          <p class="kicker">What buyers call this</p>
+          <h2>Search-term insights</h2>
+        </div>
+        <div class="panel-bd">
+          <p>Two different markets, two different dictionaries:</p>
+          <ul class="glance-bullets">
+            <li><strong>History (ST cost share):</strong> virtual assistant 50% · Philippines 24% · hire 7% · VA shorthand 5% · Filipino 3% · agency 2% · staffing / remote staffing under 1%.</li>
+            <li><strong>Pilot clicks (4–13 Aug):</strong> the terms that actually got clicked were generic VA / hire, then <strong>remote staffing agency</strong>, then job-seeker junk (now mostly excluded), then bookkeeping. Exact Philippines heads are starved (CORE lost-IS-rank 38%).</li>
+            <li>A buyer typing <em>remote staffing agency</em> is closer to Virtual Coworker than a buyer typing bare <em>virtual assistant</em>. The current CORE fights that by dumping staffing queries into Hire_VA_PH RSAs.</li>
+            <li>Intent: A = remote staffing agency, cs outsource, filipino staffing agency, VA agency philippines. E = va workers ph (47c / $93, 24% CTR, excluded), virtual assistant jobs, careers. D = WFH appointment setter, remote CSR, administrative assistant remote.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="rsa">
+        <div class="panel-hd">
+          <p class="kicker">Human marketing, not Ad Strength</p>
+          <h2>RSA insights</h2>
+        </div>
+        <div class="panel-bd">
+          <p>Headline asset CTR, 4–13 Aug (overlapping — one impression can show several lines):</p>
+          <ul class="glance-bullets">
+            <li><strong>Place + staffing + company wins:</strong> Virtual Staff Philippines 28.4% · Philippines VA Company 23.3% · US Hours Remote Staff 21.3% · Offshore Staffing Agency (KW) 19.3% · Filipino Virtual Assistant 18.1% · Hire Filipino VA 13–15%.</li>
+            <li><strong>Generic VA services 12.1%.</strong> Role-title headlines 10.6%. “Employer Hiring Only” 8.4%. “Not a Job Board VA” 6.9% — defensive copy does not make a business owner click, and it is not a proven junk filter.</li>
+            <li>Concepts that are working: <strong>Filipino, Philippines, staffing, agency, remote staff, dedicated, hire, US hours.</strong> Recruit / vet / shortlist is under-shown (107 impr) but not a loser. Cost / savings was not a live headline theme.</li>
+            <li>Appointment Setter KW 23.3% CTR — same trap as the setter AG. Do not scale it.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel tint-cool" id="lp">
+        <div class="panel-hd">
+          <p class="kicker">First mobile viewport</p>
+          <h2>Landing-page implications</h2>
+        </div>
+        <div class="panel-bd">
+          <p>GA4 8–14 Aug: 406 US clicks → 355 paid /us sessions → 53% bounce → 16s stay → form_start <strong>2 / 355</strong>. CTR is not the leak. Current /us H1 is already “Hire reliable Filipino staff who work your hours” — closer than the old generic VA hero. Staffing queries still should not feel like a freelancer marketplace.</p>
+          <div class="tbl-wrap">
+            <table class="tbl-tight">
+              <thead>
+                <tr>
+                  <th>Cluster</th>
+                  <th>They need to feel</th>
+                  <th>LP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Remote / virtual staffing agency</td>
+                  <td>Dedicated Filipino remote staff. Staffing partner. We recruit, you interview.</td>
+                  <td>/us/start — do not invent /us/staffing yet</td>
+                </tr>
+                <tr>
+                  <td>Filipino / PH VA agency</td>
+                  <td>Philippines VA company since 2011. Shortlist. Ongoing employer relationship.</td>
+                  <td>/us/start or /us/offer</td>
+                </tr>
+                <tr>
+                  <td>Hire / dedicated VA</td>
+                  <td>Hire a dedicated Filipino VA on your hours. 20 hours/week minimum.</td>
+                  <td>/us or /us/start</td>
+                </tr>
+                <tr>
+                  <td>Philippines / Filipino VA</td>
+                  <td>Filipino VAs. Your time zone. Not Upwork.</td>
+                  <td>/us</td>
+                </tr>
+                <tr>
+                  <td>Bookkeeping</td>
+                  <td>Filipino bookkeeping teammate. Invoices, reconciliations.</td>
+                  <td>/us/bookkeeping — keep</td>
+                </tr>
+                <tr>
+                  <td>Customer service</td>
+                  <td>Dedicated CS staff — not a call center, not a job ad.</td>
+                  <td>/us/customer-service — rewrite ATF (23% engaged)</td>
+                </tr>
+                <tr>
+                  <td>Admin / EA</td>
+                  <td>Virtual executive assistant. Calendar, inbox, follow-up.</td>
+                  <td>/us/administrative-support — match EA, stop generic VA</td>
+                </tr>
+                <tr>
+                  <td>Real estate</td>
+                  <td>Only if we ever create it: brokerage admin / CRM / follow-up, and only work VC actually does.</td>
+                  <td>Do not build</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel tint-rose" id="negatives">
+        <div class="panel-hd">
+          <p class="kicker">Keep using and expanding</p>
+          <h2>Job Seekers · Competitors · Sniper</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li><strong>Already proven:</strong> va workers ph (47c / $93 / 24% CTR — excluded). virtual assistant jobs / careers / job board.</li>
+            <li><strong>Add now:</strong> work from home, wfh, from home (setters), jobs, careers, salary, representative (CS), administrative assistant remote, temp, temporary, smm panel, near me (local temp), call center.</li>
+            <li><strong>Do not negative:</strong> hire, hiring a VA, how to hire a virtual assistant, philippines, filipino, agency, staffing.</li>
+            <li>Agency_PH has <strong>one Enabled Broad</strong> keyword — pause it in Editor. No new Broad.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="next">
+        <div class="panel-hd">
+          <p class="kicker">Next Editor pass — when you say go</p>
+          <h2>Do not do this yet</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>No giant keyword expansion. No Real Estate / Property / Back Office / Data Entry groups.</li>
+            <li>Do not pause Offshore_VA_PH because Philippines Exact has 0 impressions — that is lost rank, and it is historically the money cluster.</li>
+            <li>Do pause Recruitment and setters even though CTR is high.</li>
+            <li>When you want the CSV: pause list + keyword moves + two consolidated AGs, all Paused until you enable. Staffing_Agency_PH first.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+</body>
+</html>

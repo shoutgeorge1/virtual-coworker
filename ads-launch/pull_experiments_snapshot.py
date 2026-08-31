@@ -8,13 +8,21 @@ No invented winners. Prefer real event counts when available:
                            "experiment_variant": "a", ... }, ... ] }
    Or a bare JSON array of the same objects.
 
-2. Optional GA4 Data API when GA4_PROPERTY_ID is set and google-analytics-data
-   is installed + ADC/service account works. On auth/API failure: keep inventory,
-   set data_status to awaiting_source — do not invent numbers.
+2. GA4 Data API when google-analytics-data is installed + ADC / service account
+   works. Property ID: env GA4_PROPERTY_ID, else DEFAULT_GA4_PROPERTY_ID_US
+   (G-2V3V0BS6JW → 549075481). On auth/API failure: keep inventory, set
+   data_status to awaiting_source — do not invent numbers. Successful empty
+   pull → live zeros (“wired, 0 events in window”).
 
 Usage:
+  export GA4_PROPERTY_ID=549075481   # optional; script default is the same US id
   python3 ads-launch/pull_experiments_snapshot.py
   python3 ads-launch/pull_experiments_snapshot.py --events path/to/events.json
+
+Auth (prefer service account — durable for daily pulls / Automation):
+  GOOGLE_APPLICATION_CREDENTIALS=/path/to/ga4-viewer-sa.json
+  # SA email must be Viewer on the GA4 property (Admin → Property access management)
+  # Avoid: gcloud auth application-default login (often blocked — unverified user OAuth)
 """
 
 from __future__ import annotations
@@ -32,8 +40,60 @@ REPO = Path(__file__).resolve().parents[1]
 OUT = REPO / "xray" / "data" / "experiments-snapshot.json"
 DEFAULT_EVENTS = REPO / "xray" / "data" / "experiments-events.json"
 
+# US property for measurement G-2V3V0BS6JW (Admin → Property settings).
+# Prefer env GA4_PROPERTY_ID; this is the durable documented fallback (not a secret).
+DEFAULT_GA4_PROPERTY_ID_US = "549075481"
+
+
+def _load_dotenv_quiet() -> None:
+    """Load repo .env / vision/.env.local into os.environ if present (no override)."""
+    for path in (REPO / ".env", REPO / "vision" / ".env.local"):
+        if not path.is_file():
+            continue
+        try:
+            for raw in path.read_text(encoding="utf-8").splitlines():
+                line = raw.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, val = line.partition("=")
+                key = key.strip()
+                if not key or key in os.environ:
+                    continue
+                val = val.strip().strip("'").strip('"')
+                os.environ[key] = val
+        except OSError:
+            continue
+
+
+def resolve_ga4_property_id() -> str:
+    return (os.environ.get("GA4_PROPERTY_ID") or "").strip() or DEFAULT_GA4_PROPERTY_ID_US
+
+
 # Keep in sync with vision/lib/experiments.ts + SITE-EXPERIMENTS.md
+# EXPERIMENTS_LIVE stays false; only SELECTIVE_LIVE_EXPERIMENTS run.
+SELECTIVE_LIVE_IDS = frozenset({"us_hero_portrait"})
+
 EXPERIMENT_DEFS: list[dict[str, Any]] = [
+    {
+        "id": "us_hero_portrait",
+        "label": "US /us hero — female navy (a) vs male AU portrait (b)",
+        "surface": "US hub /us hero photo only",
+        "variants": ["a", "b"],
+        "variant_labels": {
+            "a": "Female navy · va-us.jpg (baseline control face)",
+            "b": "Male portrait · va-au.jpg (challenger)",
+        },
+        "fires_click": False,
+        "click_note": (
+            "Views = experiment_view. Converts = experiment_convert (form success / phone). "
+            "No experiment_click on this test — do not invent Ads image CTR."
+        ),
+        "preview_path": "/us",
+        "baseline_note": (
+            "Control arm A keeps the historic converting /us face. Form, copy, and tracking "
+            "on the money LP are unchanged — hero photo only."
+        ),
+    },
     {
         "id": "exit_popup",
         "label": "Exit / timed popup copy",
@@ -53,9 +113,9 @@ EXPERIMENT_DEFS: list[dict[str, Any]] = [
         "surface": "hero teaser + role quiz",
         "variants": ["a", "b", "c"],
         "variant_labels": {
-            "a": "Get your week back",
-            "b": "Stop guessing your next hire",
-            "c": "Which hire buys back the most time",
+            "a": "Who should you hire first",
+            "b": "Take the quiz. See who to hire",
+            "c": "Find the teammate that gets you your week back",
         },
         "fires_click": True,
         "click_note": "Teaser tap + quiz start / CTA → experiment_click",
@@ -65,7 +125,7 @@ EXPERIMENT_DEFS: list[dict[str, Any]] = [
         "label": "Chat launcher label",
         "surface": "engage chat launcher",
         "variants": ["a", "b"],
-        "variant_labels": {"a": "Label A", "b": "Label B"},
+        "variant_labels": {"a": "Chat with us", "b": "Chat — hiring help"},
         "fires_click": True,
         "click_note": "Open chat → experiment_click",
     },
@@ -87,7 +147,53 @@ EXPERIMENT_DEFS: list[dict[str, Any]] = [
         "fires_click": False,
         "click_note": "Density test — same CTAs both arms. Primary later KPI: form_start / convert rate, not click CTR",
     },
+    {
+        "id": "role_imagery",
+        "label": "Role / trust imagery — set A (defaults) vs set B",
+        "surface": "services page + market LPs + late trust",
+        "variants": ["a", "b"],
+        "variant_labels": {"a": "set A (defaults)", "b": "set B (challenger)"},
+        "fires_click": False,
+        "click_note": "Imagery swap — views + convert rate matter more than click CTR",
+    },
 ]
+
+# Not random A/B — live creative swaps measured by URL CVR, not experiment_* arms.
+LIVE_SWAPS: list[dict[str, Any]] = [
+    {
+        "id": "marketing_a_orange",
+        "label": "Marketing A orange on marketing LPs",
+        "kind": "live_swap",
+        "status": "live",
+        "surfaces": [
+            "/us/digital-marketing",
+            "/us/social-media",
+        ],
+        "asset": "/roles/marketing-a.png",
+        "measure": (
+            "Week-over-week form starts + leads on those URLs (GA4 / Zoho). "
+            "Not random A/B — no experiment_id arms."
+        ),
+        "unavailable": [
+            "Image-level Google Ads CTR for this face (Ads asset scores incomplete)",
+            "experiment_view / experiment_convert split (not an experiment_* test)",
+        ],
+        "media_report_anchor": "media.html#live-tests",
+    },
+]
+
+METRICS_AVAILABILITY = {
+    "can_measure": [
+        "experiment_view by experiment_id + experiment_variant (GA4 custom dims once registered)",
+        "experiment_convert (form success / phone fan-out) by variant",
+        "employer_form_started / employer_inquiry_submitted on URLs (page-level)",
+        "Keyword / RSA CTR from Search ads (not image-level)",
+    ],
+    "unavailable": [
+        "Image-level Google Ads impressions / clicks / CTR for hero faces",
+        "Fake winners — empty cells mean not pulled yet, not zero traffic",
+    ],
+}
 
 ASSIST_EVENTS = [
     {"event": "exit_intent_shown", "maps_to": "exit_popup view assist"},
@@ -156,11 +262,13 @@ def aggregate(events: list[dict[str, Any]]) -> dict[str, dict[str, dict[str, int
     return out
 
 
-def try_ga4_pull() -> tuple[list[dict[str, Any]], str | None]:
-    """Optional GA4 Data API. Returns (events, error_note)."""
-    property_id = (os.environ.get("GA4_PROPERTY_ID") or "").strip()
-    if not property_id:
-        return [], None
+def try_ga4_pull() -> tuple[list[dict[str, Any]], str | None, bool]:
+    """GA4 Data API.
+
+    Returns (events, note, connected).
+    connected=True means auth + property query worked (events may be empty).
+    """
+    property_id = resolve_ga4_property_id()
     try:
         from google.analytics.data_v1beta import BetaAnalyticsDataClient
         from google.analytics.data_v1beta.types import (
@@ -170,44 +278,75 @@ def try_ga4_pull() -> tuple[list[dict[str, Any]], str | None]:
             RunReportRequest,
         )
     except ImportError:
-        return [], "google-analytics-data not installed — use local events JSON"
+        return [], "google-analytics-data not installed — pip install google-analytics-data", False
 
     try:
         client = BetaAnalyticsDataClient()
         prop = property_id if property_id.startswith("properties/") else f"properties/{property_id}"
         events_out: list[dict[str, Any]] = []
-        for event_name in ("experiment_view", "experiment_click", "experiment_convert"):
-            req = RunReportRequest(
-                property=prop,
-                date_ranges=[DateRange(start_date="28daysAgo", end_date="today")],
-                dimensions=[
-                    Dimension(name="eventName"),
-                    Dimension(name="customEvent:experiment_id"),
-                    Dimension(name="customEvent:experiment_variant"),
-                ],
-                metrics=[Metric(name="eventCount")],
-                dimension_filter={
-                    "filter": {
-                        "field_name": "eventName",
-                        "string_filter": {"value": event_name},
-                    }
-                },
-            )
-            resp = client.run_report(req)
-            for row in resp.rows:
-                dims = [d.value for d in row.dimension_values]
-                count = int(row.metric_values[0].value) if row.metric_values else 0
-                events_out.append(
-                    {
-                        "event": dims[0] if dims else event_name,
-                        "experiment_id": dims[1] if len(dims) > 1 else "",
-                        "experiment_variant": dims[2] if len(dims) > 2 else "",
-                        "count": count,
-                    }
+
+        # Prefer variant breakdown via event-scoped custom dimensions.
+        try:
+            for event_name in ("experiment_view", "experiment_click", "experiment_convert"):
+                req = RunReportRequest(
+                    property=prop,
+                    date_ranges=[DateRange(start_date="28daysAgo", end_date="today")],
+                    dimensions=[
+                        Dimension(name="eventName"),
+                        Dimension(name="customEvent:experiment_id"),
+                        Dimension(name="customEvent:experiment_variant"),
+                    ],
+                    metrics=[Metric(name="eventCount")],
+                    dimension_filter={
+                        "filter": {
+                            "field_name": "eventName",
+                            "string_filter": {"value": event_name},
+                        }
+                    },
                 )
-        return events_out, None
-    except Exception as exc:  # noqa: BLE001 — stub: never crash; surface note
-        return [], f"GA4 pull failed: {exc}"
+                resp = client.run_report(req)
+                for row in resp.rows:
+                    dims = [d.value for d in row.dimension_values]
+                    count = int(row.metric_values[0].value) if row.metric_values else 0
+                    events_out.append(
+                        {
+                            "event": dims[0] if dims else event_name,
+                            "experiment_id": dims[1] if len(dims) > 1 else "",
+                            "experiment_variant": dims[2] if len(dims) > 2 else "",
+                            "count": count,
+                        }
+                    )
+            return events_out, "Connected", True
+        except Exception as dim_exc:  # noqa: BLE001
+            # If custom dims missing, still prove connectivity + raw event counts.
+            try:
+                raw_total = 0
+                for event_name in ("experiment_view", "experiment_click", "experiment_convert"):
+                    req = RunReportRequest(
+                        property=prop,
+                        date_ranges=[DateRange(start_date="28daysAgo", end_date="today")],
+                        dimensions=[Dimension(name="eventName")],
+                        metrics=[Metric(name="eventCount")],
+                        dimension_filter={
+                            "filter": {
+                                "field_name": "eventName",
+                                "string_filter": {"value": event_name},
+                            }
+                        },
+                    )
+                    resp = client.run_report(req)
+                    for row in resp.rows:
+                        raw_total += int(row.metric_values[0].value) if row.metric_values else 0
+                note = (
+                    f"Connected to {property_id}; custom dims experiment_id/experiment_variant "
+                    f"not queryable yet ({dim_exc}). Raw experiment_* eventCount in window: {raw_total}. "
+                    "Register those event params as custom dimensions in GA4 Admin, then re-pull."
+                )
+                return [], note, True
+            except Exception as exc:  # noqa: BLE001
+                return [], f"GA4 pull failed: {exc}", False
+    except Exception as exc:  # noqa: BLE001 — never crash; surface note
+        return [], f"GA4 pull failed: {exc}", False
 
 
 def build_snapshot(
@@ -219,10 +358,10 @@ def build_snapshot(
     window: str | None,
     ga4_note: str | None = None,
 ) -> dict[str, Any]:
-    has_data = bool(counts)
+    # None = not pulled yet (dashes). Dict (even empty) = pulled → show zeros.
+    has_data = counts is not None
     experiments: list[dict[str, Any]] = []
     total_views = total_clicks = total_converts = 0
-    saw_any = False
 
     for defn in EXPERIMENT_DEFS:
         exp_id = defn["id"]
@@ -231,7 +370,6 @@ def build_snapshot(
             if has_data and counts is not None:
                 raw = counts.get(exp_id, {}).get(v, {"views": 0, "clicks": 0, "converts": 0})
                 views, clicks, converts = raw["views"], raw["clicks"], raw["converts"]
-                saw_any = True
                 total_views += views
                 total_clicks += clicks
                 total_converts += converts
@@ -245,21 +383,37 @@ def build_snapshot(
             else:
                 metrics_by_variant[v] = empty_metrics()
 
+        status = "live" if exp_id in SELECTIVE_LIVE_IDS else "parked"
         experiments.append(
             {
                 **defn,
-                "status": "active",
+                "status": status,
                 "winner": None,
                 "metrics_by_variant": metrics_by_variant,
             }
         )
 
-    if has_data and saw_any:
+    # Live-only totals so parked zeros don't drown the running board.
+    live_views = live_clicks = live_converts = 0
+    if has_data and counts is not None:
+        for exp_id in SELECTIVE_LIVE_IDS:
+            for v_counts in counts.get(exp_id, {}).values():
+                live_views += v_counts.get("views", 0)
+                live_clicks += v_counts.get("clicks", 0)
+                live_converts += v_counts.get("converts", 0)
+
+    if has_data:
         totals = {
             "views": total_views,
             "clicks": total_clicks,
             "ctr_pct": rate(total_clicks, total_views),
             "converts": total_converts,
+        }
+        live_totals = {
+            "views": live_views,
+            "clicks": live_clicks,
+            "ctr_pct": rate(live_clicks, live_views),
+            "converts": live_converts,
         }
     else:
         totals = {
@@ -268,19 +422,69 @@ def build_snapshot(
             "ctr_pct": None,
             "converts": None,
         }
+        live_totals = {
+            "views": None,
+            "clicks": None,
+            "ctr_pct": None,
+            "converts": None,
+        }
 
-    prop = (os.environ.get("GA4_PROPERTY_ID") or "").strip() or None
-    return {
+    prop = resolve_ga4_property_id()
+    if source == "ga4" and has_data and live_views == 0 and live_clicks == 0:
+        scoreboard_next = (
+            f"US GA4 property {prop} connected. Selective live us_hero_portrait has "
+            "0 experiment_* events with variant breakdown in the pull window — not broken. "
+            "Register custom dims experiment_id / experiment_variant in GA4 Admin if needed, "
+            "then re-run ads-launch/pull_experiments_snapshot.py and redeploy xray."
+        )
+    elif source == "ga4":
+        scoreboard_next = (
+            f"US scoreboard pulling from property {prop}. Re-run "
+            "ads-launch/pull_experiments_snapshot.py after traffic; redeploy xray. "
+            "AU GTM still missing."
+        )
+    else:
+        scoreboard_next = (
+            f"Property id ready ({prop} for G-2V3V0BS6JW). Run "
+            "ads-launch/pull_experiments_snapshot.py with ADC "
+            "(`gcloud auth application-default login`) or a service account JSON, "
+            "OR drop an export at xray/data/experiments-events.json. Redeploy xray. "
+            "AU GTM still missing — do not invent AU ids."
+        )
+
+    prior: dict[str, Any] = {}
+    if OUT.is_file():
+        try:
+            prior = json.loads(OUT.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            prior = {}
+
+    snap: dict[str, Any] = {
         "generated_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": source,
         "source_note": source_note,
-        "primary_kpi": "ctr",
+        "primary_kpi": "views_and_converts",
         "primary_kpi_note": (
-            "CTR = experiment_click ÷ experiment_view (by experiment_id + experiment_variant). "
-            "Conversions column is reserved — experiment_convert already fires on form_submit / phone_click."
+            "For us_hero_portrait: views = experiment_view, converts = experiment_convert. "
+            "CTR only when experiment_click fires (most parked tests). "
+            "Image-level Ads CTR is unavailable — do not invent it."
         ),
         "window": window,
         "data_status": data_status,
+        "experiments_live_master": False,
+        "selective_live": sorted(SELECTIVE_LIVE_IDS),
+        "baseline": {
+            "path": "/us",
+            "label": "Paid LP baseline · control",
+            "note": (
+                "Money LP form, copy, and tracking stay frozen. "
+                "Only the /us hero portrait is in a selective 50/50. "
+                "EXPERIMENTS_LIVE remains false globally."
+            ),
+            "control_variant": "a",
+            "control_asset": "/brand/va-us.jpg",
+        },
+        "metrics_availability": METRICS_AVAILABILITY,
         "events": {
             "view": "experiment_view",
             "click": "experiment_click",
@@ -288,22 +492,62 @@ def build_snapshot(
             "payload_fields": ["experiment_id", "experiment_variant", "convert_reason"],
         },
         "assist_events": ASSIST_EVENTS,
+        "wiring": {
+            "us_gtm": "GTM-M92DX9BJ",
+            "us_ga4_measurement": "G-2V3V0BS6JW",
+            "us_ga4_property_id": prop,
+            "us_datalayer_experiment_events": "confirmed",
+            "us_ga4_experiment_bridge": (
+                "MarketGtm installs collect sendBeacon for experiment_* "
+                "(GTM alone only sent page_view; gtag event is swallowed under GTM)"
+            ),
+            "au_gtm": "missing",
+            "au_ga4": "missing",
+            "au_blocker": (
+                "Need a new Australia GTM container ID + GA4 measurement ID for the microsite. "
+                "Paste into Vercel as NEXT_PUBLIC_GTM_AU and NEXT_PUBLIC_GA4_AU. "
+                "Do not reuse US GTM-M92DX9BJ or legacy WP GTM-KNDLKVW."
+            ),
+            "homepage_h1": "locked — do not A/B until George asks",
+            "scoreboard_next": scoreboard_next,
+        },
         "ga4": {
             "connected": source == "ga4",
             "property_id": prop,
+            "measurement_id_us": "G-2V3V0BS6JW",
             "note": ga4_note
-            or "Set GA4_PROPERTY_ID + ADC / service account, or place events at xray/data/experiments-events.json",
+            or (
+                f"Using property {prop}. Set GA4_PROPERTY_ID to override. "
+                "Needs ADC (`gcloud auth application-default login`) or "
+                "GOOGLE_APPLICATION_CREDENTIALS service account with Viewer on the property."
+            ),
         },
         "totals": totals,
+        "live_totals": live_totals,
+        "live_swaps": LIVE_SWAPS,
         "experiments": experiments,
         "docs": {
             "site": "vision/docs/SITE-EXPERIMENTS.md",
             "module": "vision/lib/experiments.ts",
+            "see_in_ga4": (
+                "GA4 → Admin → DebugView (or Reports → Realtime → Events) on property "
+                f"{prop} (G-2V3V0BS6JW). Look for experiment_view / experiment_click / "
+                "experiment_convert with params experiment_id + experiment_variant."
+            ),
+            "xray_tab": "ab-tests.html",
+            "media_report": "media.html#live-tests",
         },
     }
 
+    # Preserve hand-authored Ads expansion notes if present.
+    if isinstance(prior.get("us_exact_phrase_expansion"), dict):
+        snap["us_exact_phrase_expansion"] = prior["us_exact_phrase_expansion"]
+
+    return snap
+
 
 def main() -> int:
+    _load_dotenv_quiet()
     parser = argparse.ArgumentParser(description="Pull / build experiments snapshot for xray")
     parser.add_argument(
         "--events",
@@ -314,42 +558,47 @@ def main() -> int:
     parser.add_argument(
         "--skip-ga4",
         action="store_true",
-        help="Do not attempt GA4 Data API even if GA4_PROPERTY_ID is set",
+        help="Do not attempt GA4 Data API (local events / inventory only)",
     )
     args = parser.parse_args()
 
+    prop = resolve_ga4_property_id()
     events = load_events(args.events)
     source = "local_events"
     source_note = f"Aggregated from {args.events.relative_to(REPO)}"
     data_status = "live"
     window = "local_file"
     ga4_note = None
+    ga4_connected = False
 
     if not events and not args.skip_ga4:
-        ga4_events, ga4_err = try_ga4_pull()
-        if ga4_events:
+        ga4_events, ga4_note_out, ga4_connected = try_ga4_pull()
+        ga4_note = ga4_note_out
+        if ga4_connected:
             events = ga4_events
             source = "ga4"
-            source_note = "Aggregated from GA4 Data API (customEvent:experiment_id / experiment_variant)"
             window = "28daysAgo → today"
-            ga4_note = "Connected"
-        elif ga4_err:
-            ga4_note = ga4_err
+            if events:
+                source_note = (
+                    f"Aggregated from GA4 Data API property {prop} "
+                    "(customEvent:experiment_id / experiment_variant)"
+                )
+            else:
+                source_note = (
+                    f"GA4 property {prop} connected — 0 experiment_* events with variant "
+                    "breakdown in window (28daysAgo → today). Wired, not broken."
+                )
 
-    if not events:
+    if ga4_connected:
         snap = build_snapshot(
-            None,
-            source="inventory_only",
-            source_note=(
-                "No live event counts yet. Microsite already pushes experiment_view / "
-                "experiment_click / experiment_convert to dataLayer. "
-                "Drop a GA4 export at xray/data/experiments-events.json or set GA4_PROPERTY_ID."
-            ),
-            data_status="awaiting_source",
-            window=None,
+            aggregate(events),
+            source=source,
+            source_note=source_note,
+            data_status="live",
+            window=window,
             ga4_note=ga4_note,
         )
-    else:
+    elif events:
         snap = build_snapshot(
             aggregate(events),
             source=source,
@@ -358,10 +607,30 @@ def main() -> int:
             window=window,
             ga4_note=ga4_note,
         )
+    else:
+        snap = build_snapshot(
+            None,
+            source="inventory_only",
+            source_note=(
+                f"US dataLayer + gtag bridge fire experiment_view/click/convert on /us. "
+                f"Property id {prop} (G-2V3V0BS6JW) is set for the pull path; "
+                "scoreboard numbers need a successful GA4 API auth or a local export "
+                "at xray/data/experiments-events.json. "
+                "AU GTM still missing — no visit tags on /au."
+            ),
+            data_status="awaiting_source",
+            window=None,
+            ga4_note=ga4_note,
+        )
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(snap, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {OUT.relative_to(REPO)} · status={snap['data_status']} · source={snap['source']}")
+    print(
+        f"Wrote {OUT.relative_to(REPO)} · status={snap['data_status']} · "
+        f"source={snap['source']} · property={prop}"
+    )
+    if ga4_note:
+        print(f"GA4 note: {ga4_note}")
     return 0
 
 

@@ -1,0 +1,56 @@
+{
+  "generated_at_utc": "2026-08-21T17:03:58.306859+00:00",
+  "window": "2026-08-04_to_2026-08-21",
+  "api_calls_used": 2,
+  "api_calls_max": 2,
+  "rows": [
+    {
+      "market": "US",
+      "campaign": "VC_US_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "status": "ENABLED",
+      "impr": 2345,
+      "clicks": 227,
+      "ctr": 9.68,
+      "conv": 3.0,
+      "all_conv": 143.0,
+      "cost": 537.26
+    },
+    {
+      "market": "US",
+      "campaign": "VC_US_S_ROLES",
+      "ad_group": "Appointment_Setter_Hire_PH",
+      "status": "ENABLED",
+      "impr": 179,
+      "clicks": 21,
+      "ctr": 11.73,
+      "conv": 1.0,
+      "all_conv": 32.0,
+      "cost": 92.89
+    },
+    {
+      "market": "AU",
+      "campaign": "VC_AU_S_ROLES",
+      "ad_group": "Recruitment_Hire_PH",
+      "status": "ENABLED",
+      "impr": 279,
+      "clicks": 53,
+      "ctr": 19.0,
+      "conv": 4.0,
+      "all_conv": 4.0,
+      "cost": 217.64
+    },
+    {
+      "market": "AU",
+      "campaign": "VC_AU_S_ROLES",
+      "ad_group": "Social_Media_Hire_PH",
+      "status": "ENABLED",
+      "impr": 107,
+      "clicks": 13,
+      "ctr": 12.15,
+      "conv": 1.0,
+      "all_conv": 1.0,
+      "cost": 59.68
+    }
+  ]
+}

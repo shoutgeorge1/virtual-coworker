@@ -3,7 +3,7 @@ import { pressMarksForMarket } from "../../config/site";
 
 /**
  * Standalone “Featured in” press/awards strip.
- * Same layout language as “Companies that hired through us” —
+ * Same layout language as the TrustBand client logo strip —
  * white panel, equal flex cells, constrained width. Display-only.
  */
 export default function PressBand({

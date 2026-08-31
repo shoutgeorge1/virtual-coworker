@@ -1,0 +1,220 @@
+{
+  "title": "Zoho quality gate + Max Conv readiness",
+  "generated_at_utc": "2026-08-20T10:55:00Z",
+  "read_only": true,
+  "uploads_activated": false,
+  "zoho_writes": false,
+  "zoho_crm_enabled": false,
+  "conversion_settings_changed": false,
+  "maximize_conversions_switched": false,
+  "protect_label_requested": "PROTECT_CONFIRMED_WINNER_AUG18",
+  "protect_label_applied": false,
+  "protect_label_blocker": "Google Ads OAuth invalid_grant on 20 Aug (list_accessible_customers). No Ads mutate attempted.",
+  "measurement_rule": {
+    "form_plus_booked_call": "one_human_two_steps_stronger_if_booked",
+    "not_duplicate": true,
+    "duplication_only_if": "same_action_fires_repeatedly_with_no_distinct_user_action",
+    "best_path": "ad_click → employer_form → booked_call",
+    "booked_call_is_employer_only_after": "record classified as employer, not junk/job-seeker/test/unknown"
+  },
+  "au_4_ads_vs_2_junk": {
+    "ads_aug18_click_date": 4.0,
+    "zoho_paid_people": 2,
+    "zoho_status": "Junk Lead",
+    "booked_call": false,
+    "discovery_call_date": "",
+    "reading": "stacked_same_submit_action_family",
+    "not": "form_plus_calendly_progression",
+    "not_four_people": true,
+    "likely_stack": ["form", "thank_you", "qualify_lead", "close_convert_lead"],
+    "do_not_change_conversion_settings": true
+  },
+  "us_2_ads_vs_2_people": {
+    "ads_aug18_click_date": 2.0,
+    "zoho_paid_people": 2,
+    "match": "one_to_one",
+    "qualities": ["employer_probable", "employer_not_a_fit"],
+    "booked_call": false
+  },
+  "extra_coql": {
+    "file": ".local/zoho/quality-gate-extra-coql.json",
+    "api_calls": 1,
+    "window": "2026-08-17T00:00:00-07:00 to 2026-08-21T00:00:00-07:00",
+    "paid_gclid_rows": 5,
+    "qualification_status_filled": 0,
+    "discovery_call_date_filled": 0,
+    "blueprint_drift": [
+      {
+        "record_id": "6724032000029875002",
+        "lead_status": "Decided Against / Not a Fit",
+        "blueprint_status": "Junk Lead"
+      }
+    ]
+  },
+  "classification": {
+    "field_proposed": "VC_Inquiry_Class",
+    "do_not_overload": "Lead_Status",
+    "default_on_create": "Unknown / Needs Review",
+    "values": [
+      "Qualified Employer",
+      "Probable Employer",
+      "Job Seeker",
+      "Spam",
+      "Internal Test",
+      "Unknown / Needs Review"
+    ],
+    "reliable_today": false,
+    "gaps": [
+      "No working job-seeker field. Lead_Status=Resume is 0 all-time.",
+      "Qualification_Status unused.",
+      "Junk Lead may mix spam and seekers.",
+      "No ad group field. utm_content is the proxy.",
+      "Blueprint_Lead_Status can disagree with Lead_Status."
+    ],
+    "job_seeker_beats_form": {
+      "enters_zoho": true,
+      "class": "Job Seeker",
+      "never_upload_as_employer": true
+    }
+  },
+  "preserve_on_every_record": [
+    "utm_gclid",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_term",
+    "utm_content",
+    "Region",
+    "Campaign_Name",
+    "Job_Position_Required",
+    "Company",
+    "Created_Time",
+    "Submission_Timestamp",
+    "Discovery_Call_Date"
+  ],
+  "preserve_gaps": {
+    "ad_group": "no Zoho field; propose VC_Ad_Group; today utm_content",
+    "gbraid_wbraid": "fields do not exist; omit until writes-on"
+  },
+  "upload_eligibility_future_only": {
+    "activated": false,
+    "require_all": [
+      "VC_Inquiry_Class == Qualified Employer",
+      "utm_gclid present",
+      "outcome is Discovery Scheduled or Job Order Submitted AFTER employer class"
+    ],
+    "never": [
+      "Job Seeker",
+      "Spam",
+      "Internal Test",
+      "Unknown / Needs Review",
+      "Probable Employer (wait for confirm)",
+      "booked call while class is junk or job-seeker"
+    ]
+  },
+  "window": {
+    "paid_gclid_proven": "2026-08-17T00:00:00-07:00 to 2026-08-21T00:00:00-07:00 PT",
+    "wider_zoho_all_sources": {
+      "used": true,
+      "us": 14,
+      "au": 14,
+      "blank": 1,
+      "do_not_add_to_paid_score": true
+    },
+    "ads_aug18_source": "xray/data/executive-snapshot.json pull 2026-08-19",
+    "ads_live_20_aug": "blocked invalid_grant"
+  },
+  "deliverable_11": {
+    "title": "Market-by-market Max Conv decision + exact actions safe vs unsafe",
+    "do_not_switch": true,
+    "evaluate_separately": true,
+    "US": {
+      "owner": "Cheyenne Gichana",
+      "paid_human_inquiries": 2,
+      "qualified_employers": 0,
+      "probable_employers": 1,
+      "not_a_fit": 1,
+      "booked_employer_calls": 0,
+      "job_seekers": 0,
+      "spam_or_tests_paid": 0,
+      "unknown_paid": 0,
+      "ready_for_maximize_conversions": false,
+      "why_not": "Two people. One good form, no booked call. Not a bidding sample.",
+      "primary_enabled": [
+        "VC_US_Thank_You",
+        "VC_US_Calendly_Booked",
+        "VC_US_Phone_Call_From_Ads",
+        "VC_US_Phone_Call_From_Website",
+        "VC_US_Phone_Click_Website"
+      ],
+      "include_in_conversions_leftover": ["eBook Download (All Web Site Data) HIDDEN"],
+      "actions_that_mix_employer_and_junk": [
+        "VC_US_Thank_You",
+        "VC_US_Calendly_Booked",
+        "VC US — virtualcoworker.app (web) qualify_lead",
+        "VC US — virtualcoworker.app (web) close_convert_lead"
+      ],
+      "safe_to_bid_on_now": [],
+      "unsafe_to_bid_on_now": [
+        "VC_US_Thank_You",
+        "VC_US_Calendly_Booked",
+        "VC_US_Phone_Click_Website",
+        "GA4 page_view / user_engagement / session_start",
+        "hidden UA leftovers"
+      ]
+    },
+    "AU": {
+      "owner": "Holly Wallace",
+      "paid_human_inquiries": 3,
+      "qualified_employers": 0,
+      "probable_employers": 1,
+      "booked_employer_calls": 0,
+      "job_seekers": 0,
+      "spam_or_tests_paid": 2,
+      "unknown_paid": 0,
+      "ads_aug18_conversions": 4.0,
+      "ready_for_maximize_conversions": false,
+      "australia_ready_first": false,
+      "why_not": "Ads 4 on 18 Aug were junk people, not employers. Opposite of ready.",
+      "primary_enabled": [
+        "VC_AU_Thank_You",
+        "VC_AU_Calendly_Booked",
+        "VC_AU_Phone_Call_From_Ads",
+        "VC_AU_Phone_Click_Website",
+        "Call (1300 886 740)"
+      ],
+      "include_in_conversions_leftover": [
+        "Chat (All Web Site Data) HIDDEN",
+        "Submission (All Web Site Data) HIDDEN x2",
+        "Job order form filled out (All Web Site Data) HIDDEN",
+        "Lead Form Submit Completion (All Web Site Data) HIDDEN",
+        "Transactions (Main - virtualcoworker.com.au) HIDDEN"
+      ],
+      "actions_that_mix_employer_and_junk": [
+        "VC_AU_Thank_You",
+        "VC_AU_Calendly_Booked",
+        "Virtual Coworker AU (web) qualify_lead",
+        "Virtual Coworker AU (web) close_convert_lead"
+      ],
+      "safe_to_bid_on_now": [],
+      "unsafe_to_bid_on_now": [
+        "VC_AU_Thank_You",
+        "VC_AU_Calendly_Booked",
+        "phone click / 1300",
+        "hidden UA leftovers"
+      ]
+    }
+  },
+  "frontend_gate": {
+    "uploads_activated": false,
+    "do_not_rebuild_converting_lps": ["/us", "/au/social-media"],
+    "already_live": [
+      "company name required on employer form",
+      "role preselected on role pages",
+      "job-seeker phone and looking-for-a-job exit to careers"
+    ],
+    "zoho_is_last_gate": true,
+    "owners": {"US": "Cheyenne Gichana", "AU": "Holly Wallace"},
+    "note": "Website misses some seekers. Sales mark junk vs employer. That mark is future bid fuel. Not Ads tags."
+  }
+}

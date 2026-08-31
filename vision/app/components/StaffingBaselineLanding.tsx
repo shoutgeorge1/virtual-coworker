@@ -19,32 +19,91 @@ import {
   baselineTrackingExtras,
   buildBaselineRoute,
 } from "../../config/lp-baseline";
+import {
+  LANDING_PAGE_TYPES,
+  STAFFING_AGENCY_CANDIDATE_LP_VERSION,
+  US_BASELINE_LABEL,
+} from "../../config/lp-version";
+import { staffingAgencyCopy } from "../../config/lp-staffing-agency";
+import {
+  REAL_ESTATE_SLUG,
+  buildRealEstateRoute,
+  isRealEstateSlug,
+} from "../../config/lp-real-estate";
 import { clientMarksForMarket } from "../../config/site";
 import {
   captureAttribution,
   trackEvent,
   trackPhoneClick,
 } from "../../lib/tracking";
+import { trackExperimentConvert } from "../../lib/experiments";
+import { trackLpView } from "../../lib/lp-events";
+import { exitToCareers } from "../../lib/job-seeker-exit";
+import { bookPathForMarket, withCurrentSearch } from "../../lib/preserve-query";
 import GuidedMatchGate from "./GuidedMatchGate";
+import UsBaselineHero from "./UsBaselineHero";
 import "../guided-match.css";
 import "../staffing-partner.css";
 
 type Props = {
   market: MarketId;
-  category?: CategorySlug | null;
+  category?: CategorySlug | typeof REAL_ESTATE_SLUG | null;
   careersHref?: string;
+  /** Unused candidate only. Live /us stays "baseline". */
+  profile?: "baseline" | "staffing_agency";
 };
 
 export default function StaffingBaselineLanding({
   market,
   category = null,
   careersHref = DEFAULT_CAREERS_URL,
+  profile = "baseline",
 }: Props) {
-  const cfg = buildBaselineRoute({ market, role: category });
-  const copy = baselineSharedCopy(market);
+  const isRealEstate = isRealEstateSlug(category);
+  const isStaffingAgency = profile === "staffing_agency" && market === "us";
+  const baseCfg = isRealEstate
+    ? buildRealEstateRoute(market)
+    : buildBaselineRoute({ market, role: category });
+  const agency = isStaffingAgency ? staffingAgencyCopy() : null;
+  const lpVersion = isStaffingAgency
+    ? STAFFING_AGENCY_CANDIDATE_LP_VERSION
+    : BASELINE_LP_VERSION;
+  const landingPageType = isStaffingAgency
+    ? LANDING_PAGE_TYPES.staffing_agency_candidate
+    : LANDING_PAGE_TYPES.employer_paid_lp;
+  const cfg = agency
+    ? {
+        ...baseCfg,
+        eyebrow: agency.eyebrow,
+        h1: agency.h1,
+        supporting_copy: agency.supporting_copy,
+      }
+    : baseCfg;
+  const copy = {
+    ...baselineSharedCopy(market),
+    ...(agency
+      ? {
+          howTitle: agency.howTitle,
+          howLead: agency.howLead,
+          howEyebrow: agency.howEyebrow,
+          whyItems: agency.whyItems,
+          gateLead: agency.gateLead,
+        }
+      : {}),
+  };
   const logos = clientMarksForMarket(market);
-  const { featured, rest } = baselineQuotes(category);
-  const extras = baselineTrackingExtras(cfg);
+  const { featured, rest } = baselineQuotes(isRealEstate ? null : category);
+  const extras = {
+    ...baselineTrackingExtras(cfg),
+    lp_version: lpVersion,
+    ...(isRealEstate
+      ? {
+          lp_role: REAL_ESTATE_SLUG,
+          lp_intent_cluster: REAL_ESTATE_SLUG,
+          lp_route: cfg.route,
+        }
+      : {}),
+  };
   const variant = BASELINE_LP_VARIANT;
 
   const gateHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -56,14 +115,21 @@ export default function StaffingBaselineLanding({
       category: category || "",
       variant,
       lp_variant: variant,
-      lp_version: BASELINE_LP_VERSION,
+      lp_version: lpVersion,
+      baseline_label: US_BASELINE_LABEL,
+    });
+    trackLpView({
+      market,
+      lp_version: lpVersion,
+      baseline_label: US_BASELINE_LABEL,
+      landing_page_type: landingPageType,
     });
     return () => {
       if (pulseTimer.current !== undefined) {
         window.clearTimeout(pulseTimer.current);
       }
     };
-  }, [market, category, variant]);
+  }, [market, category, variant, lpVersion, landingPageType]);
 
   function goToQuiz(
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -113,12 +179,18 @@ export default function StaffingBaselineLanding({
     window.setTimeout(done, 900);
   }
 
-  function onPhone() {
+  function onPhone(location: "header" | "hero" | "closer") {
     trackPhoneClick({
       market,
       category: category || "",
       variant,
+      cta_location: location,
       ...extras,
+    });
+    trackExperimentConvert("phone_click", {
+      market,
+      surface: "staffing_baseline",
+      cta_location: location,
     });
   }
 
@@ -134,27 +206,23 @@ export default function StaffingBaselineLanding({
 
   function onCareers(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
-    trackEvent("job_seeker_redirected", {
+    exitToCareers(careersHref, {
       market,
-      category: category || "",
-      variant,
-      intent: "job_seeker",
-      destination: careersHref,
-      primary_eligible: false,
-      bidding_primary: false,
-      source: "paid_lp_footer",
-      ...extras,
+      lp_version: lpVersion,
+      landing_page_type: landingPageType,
+      redirect_location: "footer_careers_link",
+      redirect_reason: "careers_escape",
     });
-    window.location.replace(careersHref);
   }
 
   return (
     <div
       className="gm sp"
-      data-lp-version={BASELINE_LP_VERSION}
+      data-lp-version={lpVersion}
       data-lp-variant={variant}
       data-market={market}
       data-baseline="v1-2026-08"
+      data-baseline-label={US_BASELINE_LABEL}
     >
       <div className="gm-wrap">
         <nav className="gm-nav" aria-label="Employer hiring">
@@ -172,9 +240,8 @@ export default function StaffingBaselineLanding({
               Hire
             </a>
           </div>
-          <a className="gm-call" href={cfg.phone_href} onClick={onPhone}>
-            <span className="sp-phone-long">{cfg.phone_display}</span>
-            <span className="sp-phone-short">{cfg.phone_short}</span>
+          <a className="gm-call" href={cfg.phone_href} onClick={() => onPhone("header")}>
+            {cfg.phone_display}
           </a>
         </nav>
       </div>
@@ -185,13 +252,35 @@ export default function StaffingBaselineLanding({
             <p className="sp-eyebrow">{cfg.eyebrow}</p>
             <h1>{cfg.h1}</h1>
             <p className="gm-lead">{cfg.supporting_copy}</p>
-            <a
-              className="sp-hero-cta"
-              href="#gate"
-              onClick={(e) => goToQuiz(e, true)}
-            >
-              {copy.primaryCta}
-            </a>
+            <div className="sp-hero-cta-row">
+              <a
+                className="sp-hero-cta"
+                href="#gate"
+                onClick={(e) => goToQuiz(e, true)}
+              >
+                {copy.primaryCta}
+              </a>
+              <a
+                className="sp-hero-cta-secondary"
+                href={bookPathForMarket(market)}
+                data-track="calendly_cta_clicked"
+                data-market={market}
+                onClick={(e) => {
+                  const next = withCurrentSearch(bookPathForMarket(market));
+                  trackEvent("calendly_cta_clicked", {
+                    market,
+                    href: next,
+                    source: "hero_skip_form",
+                    bidding_primary: false,
+                  });
+                  if (next === bookPathForMarket(market)) return;
+                  e.preventDefault();
+                  window.location.assign(next);
+                }}
+              >
+                Book a call - skip the form
+              </a>
+            </div>
             <p className="gm-starline sp-hero-stars">
               <span className="gm-stars" aria-hidden="true">
                 ★★★★★
@@ -204,15 +293,19 @@ export default function StaffingBaselineLanding({
             </p>
             <p className="sp-proof">{cfg.proof_items.join(" • ")}</p>
           </div>
-          <img
-            className="gm-hero-photo"
-            src={cfg.hero_image}
-            alt={cfg.hero_alt}
-            width={960}
-            height={1280}
-            fetchPriority="high"
-            decoding="async"
-          />
+          {market === "us" && !category && !isRealEstate && !isStaffingAgency ? (
+            <UsBaselineHero className="gm-hero-photo" />
+          ) : (
+            <img
+              className="gm-hero-photo"
+              src={cfg.hero_image}
+              alt={cfg.hero_alt}
+              width={960}
+              height={1280}
+              fetchPriority="high"
+              decoding="async"
+            />
+          )}
         </div>
       </section>
 
@@ -252,9 +345,11 @@ export default function StaffingBaselineLanding({
         <div className="gm-wrap">
           <p className="sp-eyebrow">{copy.rolesEyebrow}</p>
           <h2>
-            {category
-              ? `What this ${cfg.form_role.toLowerCase() || "role"} seat covers`
-              : copy.rolesTitle}
+            {isRealEstate
+              ? "What this real-estate seat covers"
+              : category
+                ? `What this ${cfg.form_role.toLowerCase() || "role"} seat covers`
+                : copy.rolesTitle}
           </h2>
           <p className="gm-lead">{copy.rolesLead}</p>
           <div className="sp-roles">
@@ -333,12 +428,35 @@ export default function StaffingBaselineLanding({
               {copy.gateTitle}
             </h2>
             <p className="gm-lead">{copy.gateLead}</p>
+            <p className="gm-lead" style={{ marginTop: "-0.35rem" }}>
+              Prefer not to fill a form?{" "}
+              <a
+                href={bookPathForMarket(market)}
+                data-track="calendly_cta_clicked"
+                data-market={market}
+                onClick={(e) => {
+                  const next = withCurrentSearch(bookPathForMarket(market));
+                  trackEvent("calendly_cta_clicked", {
+                    market,
+                    href: next,
+                    source: "gate_skip_form",
+                    bidding_primary: false,
+                  });
+                  if (next === bookPathForMarket(market)) return;
+                  e.preventDefault();
+                  window.location.assign(next);
+                }}
+              >
+                Book a consultation instead
+              </a>
+              .
+            </p>
             <GuidedMatchGate
               market={market}
               category={category}
               variant={variant}
               lpVariant={variant}
-              lpVersion={BASELINE_LP_VERSION}
+              lpVersion={lpVersion}
               careersHref={careersHref}
               includeGateId={false}
               explicitContinue
@@ -361,7 +479,7 @@ export default function StaffingBaselineLanding({
             <a
               className="sp-hero-cta"
               href={cfg.phone_href}
-              onClick={onPhone}
+              onClick={() => onPhone("closer")}
             >
               {copy.finalPhoneCta}
             </a>

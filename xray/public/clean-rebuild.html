@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Clean Rebuild · Virtual Coworker Search Pilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+</head>
+<body data-page="clean-rebuild.html" data-foot="Search rebuild package<br />Docs in docs/rebuild/">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">Performance architecture · Spec only</p>
+        <h1>Clean Rebuild</h1>
+        <p>
+          From-scratch Search for US + AU employers. No live Ads, GTM, Zoho, or CallRail
+          changes in this package — implementation docs live in
+          <code>docs/rebuild/</code>.
+        </p>
+      </header>
+
+      <div class="notice">
+        <p>
+          <strong>Hypothesis:</strong> Tight Exact/Phrase Search into one employer-only LP
+          per market, bidding Maximize Clicks until form + phone + human lead QA are
+          trustworthy, should outperform the prior setup (Max Conv + WordPress Final URLs + hire/job dual-door).
+        </p>
+      </div>
+
+      <div class="stats stats-4">
+        <div class="stat">
+          <p class="lbl">Channel</p>
+          <p class="val">Search</p>
+          <p class="hint">No PMax / DG / DSA</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Bid v1</p>
+          <p class="val">Max Clicks</p>
+          <p class="hint">Then Max Conv</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">LPs</p>
+          <p class="val">1 / mkt</p>
+          <p class="hint">Employer only</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Docs</p>
+          <p class="val">11</p>
+          <p class="hint">docs/rebuild</p>
+        </div>
+      </div>
+
+      <section class="panel tint-cool" id="hypothesis">
+        <div class="panel-hd">
+          <p class="kicker">Working theory</p>
+          <h2>Hypothesis</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>Prior Final URL structure pointed heavily at WordPress homepage/services (~82% of URL <em>refs</em> — not traffic proof).</li>
+            <li>Conversion signal is untrusted until employer-only form + phone fire cleanly and job-seeker path never credits Ads/Zoho sales.</li>
+            <li>The hire-vs-job gate is intentional product design; fix positioning/implementation — do not remove the separation.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel tint-green" id="verified">
+        <div class="panel-hd">
+          <p class="kicker">Evidence</p>
+          <h2>Verified</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>Editor exports: USA + AU structure only — each has <strong>1 Enabled</strong> brand Search campaign still on Max Conv (budget fields 100 / 30). Live check from Aug 5 campaign view in this thread.</li>
+            <li>Live brand ads point at <code>try…/us</code> and <code>try…/apac</code>; sitelinks still include WordPress destinations.</li>
+            <li>Most historical Final URL refs → WP; <code>try.*</code> + <code>lp-*</code> ≈ 2.2% of refs; many <code>lp-*</code> are 404/redirects.</li>
+            <li>Public HTML: three GTMs; no <code>AW-</code> visible; try thank-you 404; WP dual-door to <code>.ph</code>.</li>
+            <li>No performance CSVs in repo yet (clicks/cost/conv unknown).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel tint-amber" id="unknown">
+        <div class="panel-hd">
+          <p class="kicker">Gaps</p>
+          <h2>Unknown</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>Actual spend, CTR, CPC, search terms, and which conversion actions Max Conv optimized.</li>
+            <li>Admin permission verified inside each US + AU account (MCC Accept already done).</li>
+            <li>Paid host Final URL lock (Stage 1 microsite is the working path; WordPress stays as-is).</li>
+            <li>CallRail / Zoho readiness and qualified-lead definition.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="v1-scope">
+        <div class="panel-hd">
+          <p class="kicker">In / out</p>
+          <h2>v1 scope</h2>
+        </div>
+        <div class="panel-bd tbl-wrap">
+          <table class="tbl-tight">
+            <thead>
+              <tr><th>In</th><th>Out</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Search · Brand · Core hire VA · ≤3 role campaigns per market</td>
+                <td>PMax · Demand Gen · DSA · broad match</td>
+              </tr>
+              <tr>
+                <td>Exact launch · Phrase after QA · shared job-seeker negatives</td>
+                <td>Large competitor conquest build</td>
+              </tr>
+              <tr>
+                <td>One paid LP/market · employer form + phone · inline gate baseline</td>
+                <td>WP homepage/services as Final URL</td>
+              </tr>
+              <tr>
+                <td>Max Clicks → verified signal → Max Conv → value bidding</td>
+                <td>Smart bidding on day-one untrusted goals</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel tint-teal" id="hierarchy">
+        <div class="panel-hd">
+          <p class="kicker">Signals</p>
+          <h2>Conversion hierarchy</h2>
+        </div>
+        <div class="panel-bd">
+          <ol class="glance-bullets" style="list-style:decimal;padding-left:1.25rem">
+            <li><strong>Diagnostics:</strong> CTR · search terms · CPC · GA4 engagement · form behavior · manual lead QA</li>
+            <li><strong>Stage 1 bid:</strong> Maximize Clicks (employer conv observe-only)</li>
+            <li><strong>Primary later:</strong> <code>employer_lead_form</code> + qualified <code>employer_lead_call</code></li>
+            <li><strong>Never:</strong> job-seeker path → Ads employer conv or Zoho sales lead</li>
+            <li><strong>Then:</strong> Zoho qualified / opp / customer values for value bidding</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="panel" id="access">
+        <div class="panel-hd">
+          <p class="kicker">Blockers</p>
+          <h2>Required access</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>Verify Admin inside USA + AU accounts (MCC Accept done)</li>
+            <li>Spend owner + budgets</li>
+            <li>Lead emails US/AU · phones for CallRail</li>
+            <li>Performance export pack (see docs) — for CPC guardrail &amp; legacy conv audit</li>
+            <li>Zoho field confirm when ready to write (email interim OK)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel tint-rose" id="blockers">
+        <div class="panel-hd">
+          <p class="kicker">Before spend</p>
+          <h2>Launch blockers</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>Canonical LP + working thank-you (200)</li>
+            <li>Tag Assistant: hire fires employer lead · job path fires none</li>
+            <li>No WP dual-door on paid chrome</li>
+            <li>v1 campaigns built paused · existing account campaigns left unchanged</li>
+            <li>Qualified-lead definition from Braden</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel tint-violet" id="phases">
+        <div class="panel-hd">
+          <p class="kicker">Progression</p>
+          <h2>Phase progression</h2>
+        </div>
+        <div class="panel-bd tbl-wrap">
+          <table class="tbl-tight">
+            <thead>
+              <tr><th>Phase</th><th>Status</th><th>Doc</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1 Evidence + export ask</td><td><span class="st st-progress">Spec done</span></td><td>01</td></tr>
+              <tr><td>2 Campaign blueprint</td><td><span class="st st-progress">Spec done</span></td><td>02</td></tr>
+              <tr><td>3 Keywords + negatives</td><td><span class="st st-progress">Spec done</span></td><td>03</td></tr>
+              <tr><td>4 Paid LP requirements</td><td><span class="st st-progress">Spec done</span></td><td>04</td></tr>
+              <tr><td>5 Employer-gate experiments</td><td><span class="st st-progress">Spec done</span></td><td>05</td></tr>
+              <tr><td>6 CallRail map</td><td><span class="st st-progress">Spec done</span></td><td>06</td></tr>
+              <tr><td>7 GA4/GTM/Ads map</td><td><span class="st st-progress">Spec done</span></td><td>07</td></tr>
+              <tr><td>8 Zoho contract</td><td><span class="st st-progress">Spec done</span></td><td>08</td></tr>
+              <tr><td>9 Bidding ladder</td><td><span class="st st-progress">Spec done</span></td><td>09</td></tr>
+              <tr><td>10 Launch checklist</td><td><span class="st st-progress">Spec done</span></td><td>10</td></tr>
+              <tr><td>11 Risks / owners</td><td><span class="st st-progress">Spec done</span></td><td>11</td></tr>
+              <tr><td>Live build / launch</td><td><span class="st st-progress">Stage 1 built</span></td><td>Paused import ready · approvals</td></tr>
+            </tbody>
+          </table>
+          <p class="muted" style="margin:0.75rem 0 0;font-size:0.88rem">
+            Full package:
+            <a href="docs/rebuild/README.md"><code>docs/rebuild/</code></a>
+            (mirrored from repo <code>docs/rebuild/</code>). Day-to-day ops stay on Launch Checklist / Tracking.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel" id="sequence">
+        <div class="panel-hd">
+          <p class="kicker">When unblocked</p>
+          <h2>First launch sequence</h2>
+        </div>
+        <div class="panel-bd">
+          <ol class="glance-bullets" style="list-style:decimal;padding-left:1.25rem">
+            <li>Verify Admin in-account → pull performance CSVs</li>
+            <li>Lock LP host + budgets + qualified definition</li>
+            <li>Ship LP / gate / observe-only conversions</li>
+            <li>Build paused v1 Search · isolate legacy</li>
+            <li>Enable US Core → Roles (Brand deferred / contained)</li>
+            <li>Stay Max Clicks until Stage 3 exit criteria</li>
+          </ol>
+        </div>
+      </section>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="launch-control">Checklist</a>
+        <a class="btn" href="keyword-strategy">Keyword Strategy</a>
+        <a class="btn" href="tracking.html">Tracking</a>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js?v=20260809c"></script>
+</body>
+</html>

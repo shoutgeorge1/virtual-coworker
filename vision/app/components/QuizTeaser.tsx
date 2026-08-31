@@ -8,14 +8,14 @@ import {
   type ExpVariant,
 } from "../../lib/experiments";
 
-/** Benefit-led teasers — “take the hiring quiz”, not “free 60 sec / stop guessing”. */
+/** Benefit-led teasers - “take the hiring quiz”, not “free 60 sec / stop guessing”. */
 const TEASERS: Record<
   ExpVariant,
   { kicker: string; label: string }
 > = {
   a: {
     kicker: "Hiring quiz",
-    label: "Take the hiring quiz — who should you hire first? →",
+    label: "Take the hiring quiz - who should you hire first? →",
   },
   b: {
     kicker: "Take the hiring quiz",
@@ -27,7 +27,7 @@ const TEASERS: Record<
   },
 };
 
-/** Hero magnet — shares quiz_copy experiment with RoleQuiz. */
+/** Hero magnet - shares quiz_copy experiment with RoleQuiz. */
 export default function QuizTeaser({ light = false }: { light?: boolean }) {
   const [variant, setVariant] = useState<ExpVariant>("a");
 

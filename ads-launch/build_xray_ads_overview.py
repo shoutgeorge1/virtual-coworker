@@ -4,6 +4,7 @@
 Reads:
   ads-launch/google-ads-editor-import-us.csv
   ads-launch/google-ads-editor-import-au.csv
+  ads-launch/google-ads-editor-campaign-negatives-us.csv / -au.csv (MMC negs)
   ads-launch/phase1-enable-manifest-us.csv / -au.csv (tier counts)
   NEGATIVE_REVIEW_HOLDOUT from build_stage1_editor_package.py
 
@@ -38,6 +39,8 @@ OUT_HTML = XRAY / "ads-package.html"
 
 US_CSV = ADS / "google-ads-editor-import-us.csv"
 AU_CSV = ADS / "google-ads-editor-import-au.csv"
+US_NEG_CSV = ADS / "google-ads-editor-campaign-negatives-us.csv"
+AU_NEG_CSV = ADS / "google-ads-editor-campaign-negatives-au.csv"
 MANIFEST_US = ADS / "phase1-enable-manifest-us.csv"
 MANIFEST_AU = ADS / "phase1-enable-manifest-au.csv"
 
@@ -214,9 +217,13 @@ def read_live_ops_from_editor(db_path: Path = EDITOR_US_DB) -> dict:
                 "AU campaigns not live yet"
             ),
             "measurement": (
-                "Phone-first after routing works; form Secondary; Zoho Qualified later"
+                "Phone = guiding light until Zoho offline qualify; "
+                "Max Clicks meantime; prefer phone over form spam"
             ),
-            "brand": "Brand ~$40/day waste control — deferred as strategy center",
+            "brand": (
+                "Brand paused by George 2026-08-07 (~$1k/lead; SEO owns brand) "
+                "— deferred; don’t re-enable"
+            ),
         },
     }
 
@@ -283,7 +290,14 @@ def _tier_counts(path: Path) -> dict[str, int]:
 
 
 def _is_campaign_neg(r: dict[str, str]) -> bool:
-    return (r.get("Criterion Type") or "").strip().lower() == "campaign negative"
+    if (r.get("Criterion Type") or "").strip().lower() == "campaign negative":
+        return True
+    # MMC negatives CSV (Keywords, Negative → Make multiple changes)
+    return bool((r.get("Match type") or "").strip()) and bool(
+        (r.get("Keyword") or "").strip()
+    ) and bool((r.get("Campaign") or "").strip()) and not (
+        r.get("Row Type") or ""
+    ).strip()
 
 
 def _is_positive_kw(r: dict[str, str]) -> bool:
@@ -296,14 +310,17 @@ def _is_positive_kw(r: dict[str, str]) -> bool:
     return (r.get("Criterion Type") or "").strip().lower() in {"exact", "phrase", "broad"}
 
 
-def parse_market(rows: list[dict[str, str]], market: str) -> dict:
+def parse_market(
+    rows: list[dict[str, str]], market: str, neg_rows: list[dict[str, str]] | None = None
+) -> dict:
+    neg_rows = neg_rows or []
     by_type: dict[str, list[dict[str, str]]] = defaultdict(list)
     for r in rows:
         by_type[r.get("Row Type") or ""].append(r)
 
     campaign_negs = [
         r
-        for r in rows
+        for r in (*rows, *neg_rows)
         if _is_campaign_neg(r)
         or (r.get("Row Type") or "") == "Campaign negative keyword"
     ]
@@ -415,7 +432,9 @@ def parse_market(rows: list[dict[str, str]], market: str) -> dict:
             if (r.get("Keyword") or "").strip()
         }
     )
-    neg_match = Counter((r.get("Criterion Type") or "") for r in campaign_negs)
+    neg_match = Counter(
+        (r.get("Criterion Type") or r.get("Match type") or "") for r in campaign_negs
+    )
 
     sitelinks = []
     for r in by_type["Sitelink"]:
@@ -531,8 +550,10 @@ def build_package() -> dict:
     holdouts = _load_holdouts()
     us_rows = _read_csv(US_CSV)
     au_rows = _read_csv(AU_CSV)
-    us = parse_market(us_rows, "US")
-    au = parse_market(au_rows, "AU")
+    us_negs = _read_csv(US_NEG_CSV) if US_NEG_CSV.exists() else []
+    au_negs = _read_csv(AU_NEG_CSV) if AU_NEG_CSV.exists() else []
+    us = parse_market(us_rows, "US", us_negs)
+    au = parse_market(au_rows, "AU", au_negs)
     tiers_us = _tier_counts(MANIFEST_US)
     tiers_au = _tier_counts(MANIFEST_AU)
     live = read_live_ops_from_editor()

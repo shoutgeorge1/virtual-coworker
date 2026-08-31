@@ -9,6 +9,12 @@
       ]
     }
   ],
+  "crons": [
+    {
+      "path": "/api/cron/daily-sync",
+      "schedule": "30 12 * * *"
+    }
+  ],
   "redirects": [
     { "source": "/", "destination": "/launch-control", "permanent": false },
     { "source": "/checklist", "destination": "/launch-control", "permanent": true },
@@ -18,12 +24,13 @@
     { "source": "/action", "destination": "/launch-control", "permanent": true },
     { "source": "/action.html", "destination": "/launch-control", "permanent": true },
     { "source": "/index.html", "destination": "/launch-control", "permanent": false },
-    { "source": "/keywords", "destination": "/keyword-strategy", "permanent": true },
-    { "source": "/keywords.html", "destination": "/keyword-strategy", "permanent": true },
+    { "source": "/keywords", "destination": "/trust-first-rollout", "permanent": false },
+    { "source": "/keywords.html", "destination": "/trust-first-rollout", "permanent": false },
     { "source": "/leadflow", "destination": "/lead-routing", "permanent": true },
     { "source": "/leadflow.html", "destination": "/lead-routing", "permanent": true },
-    { "source": "/site-tests", "destination": "/experiments", "permanent": false },
-    { "source": "/site-experiments", "destination": "/experiments", "permanent": false },
+    { "source": "/site-tests", "destination": "/ab-tests", "permanent": false },
+    { "source": "/site-experiments", "destination": "/ab-tests", "permanent": false },
+    { "source": "/ab", "destination": "/ab-tests", "permanent": false },
     { "source": "/funnel", "destination": "/conversion-path", "permanent": false },
     { "source": "/funnel.html", "destination": "/conversion-path", "permanent": false },
     { "source": "/os", "destination": "/growth-os", "permanent": false },

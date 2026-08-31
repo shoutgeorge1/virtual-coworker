@@ -2,6 +2,28 @@
 
 Like Ads — run 2–3 variants on key engagement pieces, measure, keep winners, refresh. **Not** one-and-done A/B death.
 
+## Status — mostly parked (2026-08-12) · selective live (2026-08-21)
+
+**Most background A/B tests stay off.** Exit popup / chat / density chaos stays frozen.
+
+**Selective live:** `us_hero_portrait` on `/us` only — female navy (`va-us`) vs male portrait (`va-au`). Flip via `SELECTIVE_LIVE_EXPERIMENTS` in `vision/lib/experiments.ts`. Preview: `?vc_exp=us_hero_portrait&vc_var=a|b`.
+
+**Marketing orange (not A/B):** `/us/digital-marketing` and `/us/social-media` heroes use **Marketing A** (`/roles/marketing-a.png`, orange sweater) as the live control. Compare form CVR week-over-week.
+
+Frozen arms for everything else:
+
+| ID | Frozen to | Why that letter |
+|---|---|---|
+| `lp_density` | **B lean** | Form money LPs already force lean |
+| `gate_headline` | A | Current form title |
+| `role_imagery` | A | Current default portraits (Marketing A on digital-marketing) |
+| `exit_popup` | A | Current popup copy (**widget off** 2026-08-14) |
+| `chat_launcher` | A | “Chat with us” (**widget off** 2026-08-14) |
+| `quiz_copy` | A | Quiz LP framing |
+| `?variant=` (LP creative) | **A** | Category H1/sub A; query still works for QA |
+
+Do **not** treat parked as “restore dark US” or “restore chip-quiz form.” Those stay unmounted.
+
 ## How it works
 
 - Module: `vision/lib/experiments.ts`
@@ -12,32 +34,46 @@ Like Ads — run 2–3 variants on key engagement pieces, measure, keep winners,
   `__vcSendExpGa4`) so `experiment_*` reaches GA4 even when GTM Event tags are
   not mapped (gtag `event` is swallowed when GTM owns the same measurement ID)
 
-## Active experiments (Aug 2026)
+## Parked experiments (Aug 2026 — not serving random arms)
 
 | ID | Variants | Surface | What changes |
 |---|---|---|---|
-| `exit_popup` | A / B / C | Soft popup | Image + headline + body + CTAs — **component unmounted** (2026-08); gate/chat do live filter. Remount only after George OK — see `CRO-BACKLOG-2026-08-11.md` |
-| `quiz_copy` | A / B / C | Role quiz (mid-page on form LPs) | Benefit headline, lead, teaser, win-screen kicker. Hero quiz teaser removed from form LPs 2026-08-11 so the form is the one obvious action. |
-| `chat_launcher` | A / B | Chat bubble | Launcher label — must say **Chat**, not live agent |
+| `exit_popup` | A / B / C | Soft popup | Image + headline + body + CTAs. **Hold 2026-08-14** — off live (`NEXT_PUBLIC_ENABLE_EXIT_INTENT=false`). A/B vs clean LP later. |
+| `quiz_copy` | A / B / C | Role quiz (`/us/quiz` · `/au/quiz` only) | Benefit headline, lead, teaser, win-screen kicker. Mid-page quiz **unmounted** from form LPs 2026-08-11 (LP simplify). |
+| `chat_launcher` | A / B | Chat bubble | Launcher label — must say **Chat**, not live agent. **Hold 2026-08-14** — off live (`NEXT_PUBLIC_ENABLE_CHAT=false`). A/B vs clean LP later. |
 | `gate_headline` | A / B | Form card (generic LP) | Headline + “2 minutes” framing |
-| `lp_density` | A / B | Whole market landing | A = wordy (all supporting copy), B = lean |
+| `lp_density` | A / B | Quiz / secondary (form LPs force lean) | A = wordy, B = lean. **Form money LPs force lean** as of LP simplify 2026-08-11. |
 | `role_imagery` | A / B | Category heroes + services + late trust | Portrait set A (defaults) vs set B |
+| `us_hero_portrait` | A / B | **US `/us` hero only** | **Selective live 2026-08-21.** A = female navy `va-us`. B = male `va-au`. |
 
 Category role pages keep role-specific gate titles (not A/B’d).
+
+### `us_hero_portrait` — female vs male on `/us`
+
+Gut from AU: male hero may lift trust. US hub only — role LPs unchanged (marketing LPs use Marketing A orange).
+
+- **A** — `/brand/va-us.jpg` (female, navy blouse) — historic converting path
+- **B** — `/brand/va-au.jpg` (male) — AU portrait as US challenger
+- Sticky 50/50 · `experiment_view` / `experiment_convert` when form/phone fires
+- Force: `https://www.virtualcoworker.app/us?vc_exp=us_hero_portrait&vc_var=b`
+
+### Marketing A orange (live swap, not random A/B)
+
+`/us/digital-marketing` + `/us/social-media` heroes → `/roles/marketing-a.png`. Ads asset CTR for this face was soft; testing on the LP where conversion happens.
 
 ### `lp_density` — wordy vs lean
 
 The question: does more explanation help or hurt form starts?
 
-- **A `wordy`** — the page as written: staffing explainer paragraph, section
-  sub-copy, press strip, industry research cards, FAQ.
-- **B `lean`** — same page with everything marked `data-lp="secondary"` removed
-  and section rhythm tightened. (Press logos are **not** secondary.)
+- **A `wordy`** — supporting copy visible (staffing explainer, section sub-copy).
+- **B `lean`** — everything marked `data-lp="secondary"` removed; section rhythm tightened.
+
+**Form money LPs (`/us`, `/au`, role category form surfaces):** lean is forced
+(LP simplify 2026-08-11). Parked sections (mid-page quiz, industry stats, PainGain,
+long FAQ, StopCloser) are unmounted — not merely hidden by density.
 
 **What never changes between arms:** the lead form, the phone number, every CTA,
-the proof counters, recognition badges, client marks and review quotes. Only the
-volume of supporting copy moves, so a win is a real answer about density rather
-than about losing a CTA.
+the proof counters, recognition badges, client marks and review quotes.
 
 How it is wired:
 
@@ -153,18 +189,23 @@ Arm **B** = prior set (`*-a.png` / `admin-b` for HR + trust-team-office) — sol
 
 Surfaces: category LP heroes, `/services` cards, late trust photo above FAQ.  
 Relevant face → relevant role only (see `IMAGE-CHOICES.md`).  
-Stop closer photo (`/brand/vc-stop-va-v2.png`) is **not** in this experiment — later A/B of closer images only if we want it.
+End-of-page closer is copy + CTAs only (stop-sign photo retired).
 
 See `IMAGE-CHOICES.md` + `config/role-imagery.ts`.
 
 ## Popup timing (not an experiment — product rule)
 
-**Status:** `ExitIntent` is coded + CSS’d but **not mounted** on `MarketLanding`. Live employer/job-seeker split is the **inline LeadGate** (and chat / quiz link). Rules below apply only if remounted behind `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true`.
+**Status (2026-08-14):** Chat launcher and exit popup are **on hold**. They obscure the LP, especially on mobile. Flags default off unless explicitly `true`. Revisit later as an A/B vs the clean LP (form / phone / gate) to pick conversions. Do not remount without George.
 
-- Desktop: exit-intent after ~12s settle; timed fallback ~90s; scroll ~50% also OK after settle
-- Mobile: scroll ~50% **or** ~75s timed — never immediate
-- Form busy / already filling → don’t show
+Shared constants: `lib/conversion-assist.ts` (`CONVERSION_ASSIST`). Code stays in repo.
+
+- Absorb first: ~20s before exit-intent; chat launcher ~22s or ~32% scroll
+- Desktop: exit-intent after absorb; timed fallback ~40s; scroll ~32% also OK after absorb
+- Mobile: scroll ~32% **or** ~40s timed — never immediate
+- Form busy / already filling / chat panel open / chat already engaged → don’t show exit
+- Chat OR exit modal — never stack (`vc-popup-open` hides chat; exit skips while chat open)
 - CTA → light binary (hiring vs job) → hirers scroll to `#gate` with employer path open on **What do you need help with?** + gold flash (`focusGate`); job seekers leave to `virtualcoworker.com.ph`
+- Sticky CTA (mobile): only when `#gate` / quiz target leaves the viewport
 
 ## CRO backlog
 

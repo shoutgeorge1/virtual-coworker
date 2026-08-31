@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Tracking inventory · Virtual Coworker Paid Acquisition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../xray.css" />
+</head>
+<body data-root="../" data-page="tracking.html" data-foot="Reference · existing sites<br />Paid layer gets its own tracking">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">Reference</p>
+        <h1>Existing tracking inventory</h1>
+        <p>
+          What is already installed on the WordPress sites, read from public page source. Useful
+          background — separate tags per market is the right model here.
+        </p>
+      </header>
+
+      <div class="notice notice-quiet">
+        <p>
+          <strong>This describes the current sites, not the paid layer.</strong>
+          New paid landing pages get their own clean conversion setup rather than depending on this
+          arrangement. The measurement framework for paid is on
+          <a href="measurement.html">Measurement</a>.
+        </p>
+      </div>
+
+      <section class="panel" id="model" style="background:var(--tint-teal);border-color:var(--tint-teal-edge)">
+        <div class="panel-hd" style="background:var(--tint-teal-hd);border-bottom-color:var(--tint-teal-edge)">
+          <p class="kicker">Intent</p>
+          <h2>What clean looks like</h2>
+        </div>
+        <div class="panel-bd" style="overflow-x:auto">
+          <table class="model-table">
+            <thead>
+              <tr>
+                <th>Market</th>
+                <th>Audience</th>
+                <th>Wanted setup</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>US</strong></td>
+                <td>Businesses hiring VAs</td>
+                <td>Own GTM · GA4 · Ads · Meta</td>
+              </tr>
+              <tr>
+                <td><strong>AU</strong></td>
+                <td>Businesses hiring VAs</td>
+                <td>Own GTM · GA4 · Ads (keep AU signal clean)</td>
+              </tr>
+              <tr>
+                <td><strong>PH</strong></td>
+                <td>Job seekers</td>
+                <td>Own analytics / creatives; keep off buyer funnels</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="matrix">
+        <div class="panel-hd">
+          <p class="kicker">Inventory</p>
+          <h2>What we found on public pages</h2>
+        </div>
+        <div class="panel-bd" style="padding-top:0.35rem;overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Tag / tool</th>
+                <th>US buyer (.com)</th>
+                <th>AU buyer (.com.au)</th>
+                <th>PH careers (.com.ph)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Google Tag Manager</td>
+                <td><span class="mono">GTM-TTKNKT</span></td>
+                <td><span class="mono">GTM-KNDLKVW</span> <span class="badge badge-ok">Separate</span></td>
+                <td><span class="badge badge-med">None</span> — gtag direct</td>
+              </tr>
+              <tr>
+                <td>Google Analytics (GA4)</td>
+                <td><span class="mono">G-JCQKGCTYCQ</span> <span class="muted">via GTM</span></td>
+                <td><span class="mono">G-W57WKPRGV9</span> <span class="muted">via GTM</span></td>
+                <td><span class="mono">G-KG893CWZH0</span> <span class="badge badge-ok">Own</span> <span class="muted">hardcoded</span></td>
+              </tr>
+              <tr>
+                <td>Google Ads</td>
+                <td><span class="mono">AW-962672995</span></td>
+                <td><span class="mono">AW-1010248779</span></td>
+                <td class="muted">Not found on homepage</td>
+              </tr>
+              <tr>
+                <td>Meta Pixel</td>
+                <td>
+                  <span class="mono">233132881256273</span>
+                  <span class="badge badge-med">In theme</span>
+                </td>
+                <td class="muted">Not on homepage sample</td>
+                <td class="muted">Not found</td>
+              </tr>
+              <tr>
+                <td>Site chat</td>
+                <td>Zendesk</td>
+                <td>Zendesk / Zopim</td>
+                <td class="muted">None obvious</td>
+              </tr>
+              <tr>
+                <td>Geo helper</td>
+                <td><span class="mono">ipapi.co</span> → PH banner</td>
+                <td class="muted">None on homepage</td>
+                <td>Reverse banner <em>commented out</em></td>
+              </tr>
+              <tr>
+                <td>Phones (header)</td>
+                <td>US <span class="mono">888 964 8644</span> + AU <span class="mono">1300 886 740</span></td>
+                <td>AU <span class="mono">1300 886 740</span></td>
+                <td class="muted">Not the buyer header</td>
+              </tr>
+              <tr>
+                <td>Talent ATS</td>
+                <td class="muted">Footer → PH</td>
+                <td class="muted">Footer → PH</td>
+                <td>Zoho Recruit</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <p class="proof-key muted" style="margin-top:1rem">
+        <strong>How to read this:</strong>
+        Cells = IDs / tools visible in public HTML or public GTM containers on the pages we sampled.
+        “Separate” and “Own” are <em>good</em> when audiences differ.
+        “In theme” = Meta hardcoded in page HTML while Google tags sit in GTM (two places to edit).
+        Talent off-ramp / form-mix notes are on <a href="findings.html#contamination">Findings</a>
+        (for VC’s team — not George’s to-dos), not here.
+      </p>
+
+      <section class="panel" id="sources" style="margin-top:1.15rem">
+        <div class="panel-hd">
+          <p class="kicker">Sources</p>
+          <h2>Where these IDs came from</h2>
+        </div>
+        <div class="panel-bd">
+          <div class="chip-row">
+            <a class="chip" href="https://virtualcoworker.com/" target="_blank" rel="noopener">US homepage</a>
+            <a class="chip" href="https://virtualcoworker.com.au/" target="_blank" rel="noopener">AU homepage</a>
+            <a class="chip" href="https://virtualcoworker.com.ph/" target="_blank" rel="noopener">PH homepage</a>
+            <a class="chip" href="evidence.html">Source files</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="related" style="margin-top:1.15rem;background:var(--tint-amber);border-color:var(--tint-amber-edge)">
+        <div class="panel-hd" style="background:var(--tint-amber-hd);border-bottom-color:var(--tint-amber-edge)">
+          <p class="kicker">Related</p>
+          <h2>Where to go next</h2>
+        </div>
+        <div class="panel-bd">
+          <div class="chip-row">
+            <a class="chip" href="findings.html#consult-form">Hire + job on one form</a>
+            <a class="chip" href="findings.html#contamination">Talent off-ramp on hire sites</a>
+            <a class="chip" href="measurement.html">Paid measurement framework</a>
+            <a class="chip" href="ads.html#known">What we know about the Ads accounts</a>
+          </div>
+        </div>
+      </section>
+
+      <p class="limits-note">
+        Not visible on public pages, which does not prove they don't exist behind a login:
+        call tracking, other CRM platforms, form-to-CRM wiring, and conversion definitions.
+        Those are validation questions on <a href="leadflow.html#questions">Lead Flow &amp; Zoho</a>.
+      </p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="measurement.html">Measurement</a>
+        <a class="btn" href="../us.html">Google Ads Workspace</a>
+        <a class="btn" href="findings.html">Findings for your team</a>
+      </div>
+    </main>
+  </div>
+  <script src="../nav.js?v=20260809c"></script>
+</body>
+</html>

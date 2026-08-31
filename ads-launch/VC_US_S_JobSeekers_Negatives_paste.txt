@@ -1,0 +1,148 @@
+# Paste into shared negative list. Match types noted in brackets.
+# Do NOT add: hire, hiring, remote, work, home, staffing, assistant (bare)
+
+# === BROAD roots ===
+job
+jobs
+career
+careers
+salary
+salaries
+wage
+wages
+resume
+cv
+employment
+internship
+intern
+vacancy
+vacancies
+indeed
+glassdoor
+jobstreet
+unemployment
+onlinejobs
+wfh
+positions
+applicant
+applicants
+jobseeker
+jobseekers
+
+# === PHRASE (wrap in quotes in Ads UI if your paste box needs it) ===
+"work from home"
+"from home"
+"at home"
+"job board"
+"job boards"
+"job listing"
+"job listings"
+"job opening"
+"job openings"
+"entry level"
+"no experience"
+"part time"
+"full time"
+"looking for a job"
+"looking for work"
+"looking for employment"
+"seeking employment"
+"seeking a job"
+"i need a job"
+"need a job"
+"want a job"
+"hiring me"
+"how to get a job"
+"how to find a job"
+"how to become"
+"become a"
+"work as"
+"apply now"
+"apply as"
+"apply to be"
+"job description"
+"remote job"
+"remote jobs"
+"online job"
+"online jobs"
+"freelance job"
+"freelance jobs"
+"virtual assistant jobs"
+"virtual assistant job"
+"virtual assistant careers"
+"virtual assistant career"
+"virtual assistant salary"
+"va jobs"
+"va job"
+"va careers"
+"va career"
+"va salary"
+"work from home appointment setter"
+"appointment setter work from home"
+"appointment setter from home"
+"appointment setter jobs"
+"work from home customer service"
+"customer service work from home"
+"work from home virtual assistant"
+"virtual assistant work from home"
+"work from home administrative assistant"
+"administrative assistant jobs"
+"administrative assistant jobs remote"
+"remote assistant jobs"
+"remote executive assistant position"
+"virtual assistant positions"
+"virtual assistant apply"
+"virtual assistant apply now"
+"find a virtual assistant job"
+"freelance virtual assistant jobs"
+"online job virtual assistant"
+"online jobs va"
+"remote job virtual assistant"
+"remote virtual assistant jobs"
+"virtual assistant jobs remote"
+"virtual assistant job remote"
+"virtual assistant jobs near me"
+"digital assistant remote jobs"
+"remote job philippines"
+"social media assistant jobs"
+"online social media manager jobs"
+"personal assistant job"
+"personal assistant jobs"
+"bookkeeper jobs"
+"bookkeeping jobs"
+"customer service jobs"
+"customer service remote jobs"
+"onlinejobs ph"
+"onlinejobs.ph"
+"online jobs ph"
+"online jobs philippines"
+"linkedin jobs"
+"upwork jobs"
+"fiverr jobs"
+"indeed virtual assistant"
+"work at home"
+"working from home"
+"home based job"
+"home based jobs"
+"work from home job"
+"work from home jobs"
+"wfh job"
+"wfh jobs"
+"part time job"
+"part time jobs"
+"full time job"
+"full time jobs"
+"side hustle"
+"make money online"
+"earn money online"
+"submit resume"
+"cover letter"
+"job interview"
+"get a job"
+"find a job"
+"find work"
+"be a virtual assistant"
+"become a virtual assistant"
+"where can i apply"
+"virtual assistant work careers"
+"i need a va careers"

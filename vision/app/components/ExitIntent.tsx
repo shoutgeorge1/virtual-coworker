@@ -4,6 +4,20 @@ import { useEffect, useState } from "react";
 import { trackEvent } from "../../lib/tracking";
 import { focusGate } from "../../lib/focus-gate";
 import {
+  CONVERSION_ASSIST,
+  EXIT_SESSION_KEY,
+  hasReachedScrollAssist,
+  isChatPanelOpen,
+  isCoarsePointer,
+  isFormBusy,
+  markAssistEngaged,
+  shouldSuppressSecondaryAssist,
+  wasChatEngaged,
+  wasExitShown,
+  wasPrimaryConverted,
+  writeSessionFlag,
+} from "../../lib/conversion-assist";
+import {
   assignExperiment,
   trackExperimentClick,
   trackExperimentConvert,
@@ -14,8 +28,6 @@ import { DEFAULT_CAREERS_URL } from "../../config/markets";
 import { exitToCareers } from "../../lib/job-seeker-exit";
 import type { MarketId } from "../../config/markets";
 import type { AbVariant } from "../../config/categories";
-
-const SESSION_KEY = "vc_exit_intent_seen";
 
 type PopupVariant = {
   id: ExpVariant;
@@ -57,29 +69,18 @@ const VARIANTS: PopupVariant[] = [
   },
 ];
 
-/**
- * Opt-in only. Auto timed / exit / scroll popups interrupt reading and
- * duplicate the inline employer/job-seeker gate - default OFF (CRO pass 2026-08).
- * Set NEXT_PUBLIC_ENABLE_EXIT_INTENT=true only if deliberately re-enabling.
- */
+/** Off unless explicitly true. Hold 2026-08-14 — obscures LP, especially mobile. A/B later. */
 function flagEnabled(): boolean {
   const raw = (process.env.NEXT_PUBLIC_ENABLE_EXIT_INTENT || "").trim().toLowerCase();
   return raw === "true";
 }
 
-function isCoarsePointer(): boolean {
-  if (typeof window === "undefined") return false;
-  try {
-    return window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 760;
-  } catch {
-    return window.innerWidth < 760;
-  }
-}
-
 /**
- * Soft offer popup - exit-intent on desktop; scroll-depth or long wait on mobile.
- * Light 2-step gate: hiring vs job seeker → form or PH careers egress.
- * Never immediate. 3 creative A/B/C variants via experiments.ts.
+ * Soft offer popup — absorb first, then exit-intent / scroll / timed.
+ * CTAs → hire path to #gate form, phone, or job-seeker egress.
+ * Coordinates with EngageChat: never stacks while chat panel is open;
+ * skips if visitor already engaged chat this session.
+ * Hold 2026-08-14: off unless NEXT_PUBLIC_ENABLE_EXIT_INTENT=true. A/B later.
  */
 export default function ExitIntent({
   market,
@@ -109,26 +110,14 @@ export default function ExitIntent({
     const assigned = VARIANTS.find((v) => v.id === assignedId) || VARIANTS[0];
     setPopup(assigned);
 
-    try {
-      if (sessionStorage.getItem(SESSION_KEY) === "1") return;
-    } catch {
-      /* ignore */
-    }
+    if (wasExitShown() || wasChatEngaged() || wasPrimaryConverted()) return;
 
     let shown = false;
     let formTouched = false;
     const mobile = isCoarsePointer();
     const engagedAt = Date.now();
-    const EXIT_MIN_MS = 12_000;
-    const TIMED_MS = mobile ? 75_000 : 90_000;
-    const SCROLL_DEPTH = 0.5;
 
-    const formBusy = () => {
-      if (formTouched) return true;
-      const el = document.activeElement;
-      if (!el || !(el instanceof HTMLElement)) return false;
-      return Boolean(el.closest("#gate, .gate-card, form"));
-    };
+    const formBusy = () => formTouched || isFormBusy() || shouldSuppressSecondaryAssist();
 
     const onFormInteract = () => {
       formTouched = true;
@@ -136,13 +125,12 @@ export default function ExitIntent({
 
     const show = (reason: string) => {
       if (shown) return;
+      if (wasExitShown() || wasChatEngaged() || wasPrimaryConverted()) return;
+      if (isChatPanelOpen()) return;
       if (formBusy()) return;
       shown = true;
-      try {
-        sessionStorage.setItem(SESSION_KEY, "1");
-      } catch {
-        /* ignore */
-      }
+      markAssistEngaged("exit");
+      writeSessionFlag(EXIT_SESSION_KEY);
       document.documentElement.classList.add("vc-popup-open");
       setOpen(true);
       trackExperimentView("exit_popup", assigned.id, {
@@ -165,28 +153,33 @@ export default function ExitIntent({
         reason,
         popup_variant: assigned.id,
       });
+      trackEvent("popup_impression", {
+        market,
+        category: category || "",
+        variant: variant || "",
+        reason,
+        popup_version: assigned.id,
+      });
     };
 
     const onLeave = (e: globalThis.MouseEvent) => {
       if (mobile) return;
-      if (Date.now() - engagedAt < EXIT_MIN_MS) return;
+      if (Date.now() - engagedAt < CONVERSION_ASSIST.absorbMs) return;
       if (e.clientY > 8) return;
       show("exit_intent");
     };
 
     const onScroll = () => {
-      const doc = document.documentElement;
-      const scrollable = doc.scrollHeight - window.innerHeight;
-      if (scrollable < 240) return;
-      const depth = window.scrollY / scrollable;
-      if (depth >= SCROLL_DEPTH) {
-        if (mobile || Date.now() - engagedAt >= EXIT_MIN_MS) {
-          show(mobile ? "scroll_50" : "scroll_50_desktop");
-        }
+      if (!hasReachedScrollAssist()) return;
+      if (mobile || Date.now() - engagedAt >= CONVERSION_ASSIST.absorbMs) {
+        show(mobile ? "scroll_depth" : "scroll_depth_desktop");
       }
     };
 
-    const timer = window.setTimeout(() => show(mobile ? "timed_75s" : "timed_90s"), TIMED_MS);
+    const timer = window.setTimeout(
+      () => show(mobile ? "timed_mobile" : "timed_desktop"),
+      CONVERSION_ASSIST.timedExitMs,
+    );
     if (!mobile) document.addEventListener("mouseout", onLeave);
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("focusin", onFormInteract, true);
@@ -203,7 +196,18 @@ export default function ExitIntent({
   }, [enabled, market, category, variant]);
 
   useEffect(() => {
-    if (!open) document.documentElement.classList.remove("vc-popup-open");
+    if (!open) {
+      document.documentElement.classList.remove("vc-popup-open");
+      return;
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        document.documentElement.classList.remove("vc-popup-open");
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   if (!enabled || !open) return null;
@@ -211,6 +215,12 @@ export default function ExitIntent({
   const dismiss = () => {
     document.documentElement.classList.remove("vc-popup-open");
     setOpen(false);
+    trackEvent("popup_close", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      popup_version: popup.id,
+    });
   };
   const showPhone = Boolean(phoneHref && phoneDisplay);
   const careers = careersHref || DEFAULT_CAREERS_URL;

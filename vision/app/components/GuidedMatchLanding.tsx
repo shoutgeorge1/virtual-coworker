@@ -14,15 +14,23 @@ import {
 } from "../../config/guided-match";
 import { clientMarksForMarket } from "../../config/site";
 import { DEFAULT_CAREERS_URL } from "../../config/markets";
+import {
+  normalizeSellFirstHeadline,
+  sellFirstCopy,
+  type SellFirstHeadlineId,
+} from "../../config/lp-sell-first";
 import { trackPhoneClick, trackEvent } from "../../lib/tracking";
 import GuidedMatchGate from "./GuidedMatchGate";
 import "../guided-match.css";
+import "../sell-first.css";
 
 type Props = {
   market: MarketId;
   category?: CategorySlug | null;
   variant?: string;
   careersHref?: string;
+  sellFirst?: boolean;
+  headlineId?: SellFirstHeadlineId;
 };
 
 export default function GuidedMatchLanding({
@@ -30,9 +38,16 @@ export default function GuidedMatchLanding({
   category,
   variant = "",
   careersHref = DEFAULT_CAREERS_URL,
+  sellFirst = false,
+  headlineId = "a",
 }: Props) {
   const copy = marketLandingCopy(market);
-  const headlines = roleHeadline({ market, lockedCategory: category });
+  const sell = sellFirst
+    ? sellFirstCopy(market, normalizeSellFirstHeadline(headlineId))
+    : null;
+  const headlines = sell
+    ? { h1: sell.h1, lead: sell.lead }
+    : roleHeadline({ market, lockedCategory: category });
   const logos = clientMarksForMarket(market);
   const featIdx = Math.max(0, featuredQuoteIndex(category));
   const featured = GUIDED_MATCH_QUOTES[featIdx];
@@ -50,7 +65,10 @@ export default function GuidedMatchLanding({
     });
   }
 
-  function onCareers(e: React.MouseEvent<HTMLAnchorElement>) {
+  function onCareers(
+    e: React.MouseEvent<HTMLAnchorElement>,
+    source = "paid_lp_footer",
+  ) {
     e.preventDefault();
     trackEvent("job_seeker_redirected", {
       market,
@@ -60,9 +78,20 @@ export default function GuidedMatchLanding({
       destination: careersHref,
       primary_eligible: false,
       bidding_primary: false,
-      source: "paid_lp_footer",
+      source,
     });
     window.location.replace(careersHref);
+  }
+
+  function onPrimaryCta() {
+    trackEvent("primary_cta_clicked", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      lp_variant: variant || "",
+      headline_id: sell?.headlineId || "",
+      destination: "#gate",
+    });
   }
 
   function selectBandRole(chip: string) {
@@ -118,16 +147,18 @@ export default function GuidedMatchLanding({
   ];
 
   return (
-    <div className="gm">
+    <div className={sellFirst ? "gm gm-sell" : "gm"}>
       <div className="gm-wrap">
         <nav className="gm-nav" aria-label="Employer hiring">
           <img src="/brand/logo-vc.png" alt="Virtual Coworker" width={148} height={30} />
-          <div className="gm-nav-links">
-            <a href="#how">How it works</a>
-            <a href="#roles">Roles</a>
-            <a href="#stories">Stories</a>
-            <a href="#gate">Hire</a>
-          </div>
+          {sellFirst ? null : (
+            <div className="gm-nav-links">
+              <a href="#how">How it works</a>
+              <a href="#roles">Roles</a>
+              <a href="#stories">Stories</a>
+              <a href="#gate">Hire</a>
+            </div>
+          )}
           <a className="gm-call" href={copy.phoneHref} onClick={onPhone}>
             {copy.phoneDisplay}
           </a>
@@ -137,24 +168,53 @@ export default function GuidedMatchLanding({
       <section className="gm-hero">
         <div className="gm-wrap gm-hero-grid">
           <div>
-            <h1>{headlines.h1}</h1>
+            <h1 data-headline={sell?.headlineId || undefined}>{headlines.h1}</h1>
             <p className="gm-lead">{headlines.lead}</p>
-            <p className="gm-starline">
-              <span className="gm-stars" aria-hidden="true">
-                ★★★★★
-              </span>{" "}
-              {copy.googleLine} ·{" "}
-              <span className="gm-stars" aria-hidden="true">
-                ★★★★★
-              </span>{" "}
-              {copy.clutchLine}
-            </p>
-            <GuidedMatchGate
-              market={market}
-              category={category}
-              variant={variant}
-              careersHref={careersHref}
-            />
+            {sellFirst && sell ? (
+              <>
+                <a
+                  className="gm-hero-cta"
+                  href="#gate"
+                  onClick={onPrimaryCta}
+                >
+                  {sell.cta} →
+                </a>
+                <p className="gm-starline">
+                  <span className="gm-stars" aria-hidden="true">
+                    ★★★★★
+                  </span>{" "}
+                  {sell.compactProof}
+                </p>
+                <p className="gm-since">{sell.sinceLine}</p>
+                <p className="gm-hero-seeker">
+                  <a
+                    href={careersHref}
+                    onClick={(e) => onCareers(e, "paid_lp_hero_subordinate")}
+                  >
+                    {JOB_SEEKER_LINE}
+                  </a>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="gm-starline">
+                  <span className="gm-stars" aria-hidden="true">
+                    ★★★★★
+                  </span>{" "}
+                  {copy.googleLine} ·{" "}
+                  <span className="gm-stars" aria-hidden="true">
+                    ★★★★★
+                  </span>{" "}
+                  {copy.clutchLine}
+                </p>
+                <GuidedMatchGate
+                  market={market}
+                  category={category}
+                  variant={variant}
+                  careersHref={careersHref}
+                />
+              </>
+            )}
           </div>
           <img
             className="gm-hero-photo"
@@ -167,6 +227,20 @@ export default function GuidedMatchLanding({
           />
         </div>
       </section>
+
+      {sellFirst ? (
+        <section className="gm-qualify" id="qualify">
+          <div className="gm-wrap">
+            <GuidedMatchGate
+              market={market}
+              category={category}
+              variant={variant}
+              careersHref={careersHref}
+              quietStart
+            />
+          </div>
+        </section>
+      ) : null}
 
       <section className="gm-logos" aria-label="Companies we have staffed">
         <div className="gm-wrap">

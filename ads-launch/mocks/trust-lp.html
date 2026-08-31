@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Concept mock · Virtual Coworker trust LP (not live)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ocean: #214873;
+      --deep: #17334f;
+      --foam: #eef8f7;
+      --mist: #f7fbfb;
+      --gold: #fac056;
+      --sea: #128f8b;
+      --ink: #17293c;
+      --mute: #55697c;
+      --edge: rgba(33, 72, 115, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      background: var(--mist);
+      color: var(--ink);
+    }
+    a { color: inherit; text-decoration: none; }
+    .ribbon {
+      background: #7a2e0e;
+      color: #fff7ee;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 0.55rem 1rem;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.2rem; }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--edge);
+    }
+    nav img { height: 28px; }
+    nav .links { display: flex; gap: 1.1rem; font-size: 0.9rem; color: var(--mute); font-weight: 500; margin-left: auto; }
+    .call {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--gold); color: var(--ocean); font-weight: 700;
+      padding: 0.48rem 0.95rem; border-radius: 999px; font-size: 0.92rem;
+      box-shadow: 0 8px 20px rgba(250, 192, 86, 0.35);
+    }
+    .toggle {
+      margin: 0.8rem 0 0;
+      display: flex; gap: 0.4rem; align-items: center;
+      font-size: 0.8rem; color: var(--mute);
+    }
+    .toggle button {
+      border: 1px solid var(--edge); background: #fff; color: var(--ink);
+      border-radius: 999px; padding: 0.25rem 0.7rem; cursor: pointer; font: inherit;
+    }
+    .toggle button.on { background: var(--ocean); color: #fff; border-color: var(--ocean); }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.2rem;
+      padding: 2.2rem 0 1.4rem;
+      align-items: start;
+    }
+    .kicker { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; color: var(--sea); font-weight: 600; margin: 0 0 0.5rem; }
+    h1 { font-size: 2.35rem; line-height: 1.12; letter-spacing: -0.03em; margin: 0 0 0.7rem; }
+    .lead { font-size: 1.05rem; color: var(--mute); margin: 0 0 1rem; max-width: 36rem; }
+    .ticks { margin: 0 0 1.1rem; padding: 0; list-style: none; }
+    .ticks li { padding: 0.22rem 0 0.22rem 1.3rem; position: relative; }
+    .ticks li:before { content: "✓"; position: absolute; left: 0; color: var(--sea); font-weight: 700; }
+    .proof {
+      display: flex; flex-wrap: wrap; gap: 0.55rem; margin: 0 0 1.1rem;
+    }
+    .pill {
+      background: #fff; border: 1px solid var(--edge); border-radius: 999px;
+      padding: 0.28rem 0.7rem; font-size: 0.78rem; color: var(--deep); font-weight: 600;
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; }
+    .btn {
+      background: var(--gold); color: var(--ocean); font-weight: 700;
+      padding: 0.78rem 1.15rem; border-radius: 999px; display: inline-block;
+    }
+    .ghost { color: var(--ocean); font-weight: 600; font-size: 0.95rem; }
+    .card {
+      background: #fff; border: 1px solid var(--edge); border-radius: 18px;
+      padding: 1.15rem 1.2rem; box-shadow: 0 18px 40px rgba(23, 41, 60, 0.08);
+    }
+    .card h2 { margin: 0 0 0.85rem; font-size: 1.15rem; }
+    label { display: block; font-size: 0.78rem; font-weight: 600; margin: 0.5rem 0 0.25rem; }
+    input {
+      width: 100%; padding: 0.55rem 0.7rem; border-radius: 10px;
+      border: 1px solid var(--edge); font: inherit;
+    }
+    .submit {
+      width: 100%; margin-top: 0.9rem; border: 0; cursor: default;
+      background: var(--gold); color: var(--ocean); font-weight: 700;
+      padding: 0.8rem; border-radius: 999px; font: inherit;
+    }
+    .hint { font-size: 0.78rem; color: var(--mute); margin: 0.65rem 0 0; }
+    .logos {
+      border-top: 1px solid var(--edge); border-bottom: 1px solid var(--edge);
+      padding: 1rem 0; background: #fff;
+    }
+    .logos p { margin: 0 0 0.55rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); text-align: center; }
+    .logo-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; align-items: center; opacity: 0.82; }
+    .logo-row img { height: 28px; max-width: 120px; object-fit: contain; filter: grayscale(1); }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 1.8rem 0; }
+    .step { background: #fff; border: 1px solid var(--edge); border-radius: 14px; padding: 1rem; }
+    .step b { display: block; color: var(--sea); font-size: 0.78rem; margin-bottom: 0.3rem; }
+    h3.sec { margin: 1.6rem 0 0.6rem; font-size: 1.35rem; }
+    .roles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+    .role { background: #fff; border: 1px solid var(--edge); border-radius: 12px; padding: 0.7rem 0.8rem; font-size: 0.88rem; font-weight: 600; }
+    footer { padding: 1.6rem 0 2.4rem; color: var(--mute); font-size: 0.82rem; }
+    footer strong { color: var(--ink); }
+    @media (max-width: 860px) {
+      .hero, .grid3, .roles { grid-template-columns: 1fr; }
+      nav .links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ribbon">CONCEPT MOCK — not live. No Ads or .app changes. Compare with current /us and /au.</div>
+  <div class="wrap">
+    <nav>
+      <img src="https://www.virtualcoworker.app/brand/logo-vc.png" alt="Virtual Coworker" />
+      <div class="links">
+        <a href="#roles">Services</a>
+        <a href="#how">How it works</a>
+        <a href="#proof">Reviews</a>
+        <a href="#form">Strategy call</a>
+      </div>
+      <a class="call js-phone" href="tel:+18889648644">☎ (888) 964-8644</a>
+    </nav>
+    <div class="toggle">
+      Mock market:
+      <button type="button" class="on" data-m="us">US</button>
+      <button type="button" data-m="au">AU</button>
+      <span>Phone is a first-class button — that’s the experiment, not a new brand.</span>
+    </div>
+
+    <section class="hero">
+      <div>
+        <p class="kicker js-kicker">United States · Employers · Philippines staffing · Since 2011</p>
+        <h1 class="js-h1">Hire dedicated Filipino staff who work your hours.</h1>
+        <p class="lead js-lead">We recruit, vet, and handle payroll. You interview on video and keep the hire. Not a gig marketplace. Not a job board.</p>
+        <ul class="ticks js-ticks"></ul>
+        <div class="proof">
+          <span class="pill">Google 5.0 · 39 reviews</span>
+          <span class="pill">Clutch 4.9</span>
+          <span class="pill">450K+ LinkedIn</span>
+          <span class="pill">West Hollywood + Sydney offices</span>
+          <span class="pill js-entity">Virtual Coworker Inc.</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn" href="#form">Book a Free Strategy Call</a>
+          <a class="ghost js-phone" href="tel:+18889648644">Prefer to talk? Call now</a>
+        </div>
+      </div>
+      <form class="card" id="form" onsubmit="return false;">
+        <h2>Book a free strategy call</h2>
+        <label>Full name</label>
+        <input placeholder="Full name" />
+        <label>Work email</label>
+        <input placeholder="Work email" />
+        <label>Phone</label>
+        <input class="js-ph-placeholder" placeholder="(201) 555-0123" />
+        <label>Company website (optional)</label>
+        <input placeholder="https://" />
+        <button class="submit" type="button">Book a Free Strategy Call</button>
+        <p class="hint">Mock only — this form does not send. Obligation free. About a minute. We don’t sell your information.</p>
+        <p class="hint js-nap">US office · 750 N San Vicente Blvd, West Hollywood, CA 90069</p>
+      </form>
+    </section>
+  </div>
+
+  <section class="logos">
+    <div class="wrap">
+      <p>Teams we’re proud to work with — existing marks only, no invented brands</p>
+      <div class="logo-row">
+        <img src="https://www.virtualcoworker.app/brand/trust/client-good-co.png" alt="Good Co." />
+        <img src="https://www.virtualcoworker.app/brand/trust/client-credit-card-compare.png" alt="Credit Card Compare" />
+        <img src="https://www.virtualcoworker.app/brand/trust/client-buzinga.png" alt="Buzinga" />
+        <img src="https://www.virtualcoworker.app/brand/trust/client-proactive-media.png" alt="ProActive Media" />
+        <img src="https://www.virtualcoworker.app/brand/trust/client-learning-deli.png" alt="The Learning Deli" />
+        <img src="https://www.virtualcoworker.app/brand/trust/client-recruitloop.png" alt="RecruitLoop" />
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <h3 class="sec" id="how">How it works</h3>
+    <div class="grid3">
+      <div class="step"><b>1 · Tell us the seat</b>Free strategy call. Role, hours, timezone. No lock-in.</div>
+      <div class="step"><b>2 · You interview</b>We recruit and shortlist. You pick on video. Payroll stays with us.</div>
+      <div class="step"><b>3 · They stay on</b>Dedicated full-time or part-time. Your hours. We stay after they start.</div>
+    </div>
+    <h3 class="sec" id="roles">Roles we staff</h3>
+    <div class="roles">
+      <div class="role">Executive / admin</div>
+      <div class="role">Bookkeeping</div>
+      <div class="role">Customer service</div>
+      <div class="role">Digital marketing</div>
+      <div class="role">Social media</div>
+      <div class="role">Accounting</div>
+      <div class="role">Recruiting support</div>
+      <div class="role">Don’t see it? Ask</div>
+    </div>
+    <h3 class="sec" id="proof">Why this mock looks “more like a company”</h3>
+    <p class="lead" style="max-width:40rem">Same Virtual Coworker facts already on /us. The change is density and phone: more links, logo strip in the first viewport, office/ABN in the hero, call as a real button — the pattern Outsourcey, Wing, Time Etc, Upsource, and virtualcoworker.com already use.</p>
+    <footer>
+      <strong>Virtual Coworker Inc.</strong> · Virtual Coworker Pty. Ltd. ABN 49 154 746 004<br />
+      US 750 N San Vicente Blvd, West Hollywood, CA 90069 · AU Level 8/11 York St, Sydney NSW 2000<br />
+      Philippines recruitment hub · For businesses hiring staff — not a job board.
+    </footer>
+  </div>
+  <script>
+    const copy = {
+      us: {
+        kicker: "United States · Employers · Philippines staffing · Since 2011",
+        h1: "Hire dedicated Filipino staff who work your hours.",
+        lead: "We recruit, vet, and handle payroll. You interview on video and keep the hire. Not a gig marketplace. Not a job board.",
+        ticks: [
+          "Dedicated full-time or part-time professionals from the Philippines",
+          "They work your time zone — not a night shift",
+          "Recruiting, vetting, payroll, and ongoing support handled for you",
+          "Serving businesses since 2011 — not a gig marketplace",
+        ],
+        phoneHref: "tel:+18889648644",
+        phone: "(888) 964-8644",
+        entity: "Virtual Coworker Inc.",
+        nap: "US office · 750 N San Vicente Blvd, West Hollywood, CA 90069",
+        ph: "(201) 555-0123",
+        pills: ["Google 5.0 · 39 reviews", "Clutch 4.9", "450K+ LinkedIn", "West Hollywood + Sydney offices", "Virtual Coworker Inc."],
+      },
+      au: {
+        kicker: "Australia · Businesses · Philippines staffing · Since 2011",
+        h1: "Hire dedicated Filipino staff for Australian hours.",
+        lead: "We recruit, vet, and handle employment admin. You interview on video. Obligation free. Not a gig marketplace. Not Seek.",
+        ticks: [
+          "Dedicated full-time or part-time professionals from the Philippines",
+          "They work Australian hours — your time zone, not theirs",
+          "Recruiting, vetting, employment admin, and ongoing support handled for you",
+          "Serving businesses since 2011 — ABN 49 154 746 004",
+        ],
+        phoneHref: "tel:+611300886740",
+        phone: "1300 886 740",
+        entity: "ABN 49 154 746 004",
+        nap: "AU office · Level 8/11 York St, Sydney NSW 2000 · ABN 49 154 746 004",
+        ph: "0400 000 000",
+        pills: ["Google 4.8 · 23 reviews", "Clutch 4.9", "Sydney office", "Virtual Coworker Pty. Ltd.", "ABN 49 154 746 004"],
+      },
+    };
+    function apply(m) {
+      const c = copy[m];
+      document.querySelector(".js-kicker").textContent = c.kicker;
+      document.querySelector(".js-h1").textContent = c.h1;
+      document.querySelector(".js-lead").textContent = c.lead;
+      document.querySelector(".js-ticks").innerHTML = c.ticks.map((t) => "<li>" + t + "</li>").join("");
+      document.querySelectorAll(".js-phone").forEach((el) => {
+        el.href = c.phoneHref;
+        el.textContent = el.classList.contains("call") ? "☎ " + c.phone : "Prefer to talk? Call now";
+      });
+      document.querySelector(".js-entity").textContent = c.entity;
+      document.querySelector(".js-nap").textContent = c.nap;
+      document.querySelector(".js-ph-placeholder").placeholder = c.ph;
+      const pills = document.querySelectorAll(".proof .pill");
+      c.pills.forEach((t, i) => { if (pills[i]) pills[i].textContent = t; });
+      document.querySelectorAll(".toggle button").forEach((b) => b.classList.toggle("on", b.dataset.m === m));
+    }
+    document.querySelectorAll(".toggle button").forEach((b) => b.addEventListener("click", () => apply(b.dataset.m)));
+    apply("us");
+  </script>
+</body>
+</html>

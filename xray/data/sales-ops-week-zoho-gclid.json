@@ -1,0 +1,76 @@
+{
+  "generated_at_utc": "2026-08-19T20:38:06.668826+00:00",
+  "window_start": "2026-08-17T00:00:00-07:00",
+  "window_end_exclusive": "2026-08-20T00:00:00-07:00",
+  "api_calls": 1,
+  "leads_in_window": 24,
+  "with_utm_gclid": 5,
+  "gclid": {
+    "n": 5,
+    "by_region": {
+      "AU": 3,
+      "USA": 2
+    },
+    "by_status": {
+      "New Enquiry (Auto)": 3,
+      "Attempted to Contact 2 (Auto)": 1,
+      "Decided Against / Not a Fit": 1
+    },
+    "by_form_source": {
+      "form": 5
+    },
+    "by_utm_campaign": {
+      "24117949196": 3,
+      "24117249292": 2
+    },
+    "by_campaign_name": {
+      "24117949196": 3,
+      "24117249292": 2
+    },
+    "looks_app_host": 5,
+    "looks_vc_campaign": 0
+  },
+  "all": {
+    "n": 24,
+    "by_region": {
+      "USA": 13,
+      "AU": 10,
+      "(blank)": 1
+    },
+    "by_status": {
+      "New Enquiry (Auto)": 9,
+      "Job Order Submitted": 5,
+      "Discovery Scheduled": 3,
+      "Junk Lead": 3,
+      "Decided Against / Not a Fit": 2,
+      "Attempted to Contact 2 (Auto)": 1,
+      "Information Brochure Sent": 1
+    },
+    "by_form_source": {
+      "(blank)": 10,
+      "form": 7,
+      "Job Order Form": 6,
+      "API Integration Test": 1
+    },
+    "by_utm_campaign": {
+      "(blank)": 11,
+      "24117949196": 3,
+      "organic: google": 3,
+      "(direct)": 3,
+      "24117249292": 2,
+      "referral: m.facebook.com": 1,
+      "referral: l.facebook.com": 1
+    },
+    "by_campaign_name": {
+      "(blank)": 11,
+      "24117949196": 3,
+      "organic: google": 3,
+      "(direct)": 3,
+      "24117249292": 2,
+      "referral: m.facebook.com": 1,
+      "referral: l.facebook.com": 1
+    },
+    "looks_app_host": 7,
+    "looks_vc_campaign": 0
+  }
+}

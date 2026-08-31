@@ -1,5 +1,11 @@
 /** Shared employer-lead validation (server + tests). No secrets. */
 
+import {
+  PH_PHONE_CAREERS_MESSAGE,
+  US_PHONE_ERROR,
+  validateUsPhone,
+} from "./phone-format";
+
 export const MIN_COMPLETION_MS = 2500;
 export const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
 
@@ -9,6 +15,7 @@ export type LeadInput = {
   name?: string;
   email?: string;
   phone?: string;
+  /** Required for employer follow-up. Validated in validateEmployerLead. */
   company?: string;
   role?: string;
   category?: string;
@@ -20,6 +27,8 @@ export type LeadInput = {
   /** Honeypot — must be empty */
   website?: string;
   company_url?: string;
+  /** Optional visible company site. Not a honeypot. Never required. */
+  company_website?: string;
   form_started_at?: number | string;
   submitted_at?: string;
   utm_source?: string;
@@ -30,6 +39,10 @@ export type LeadInput = {
   gclid?: string;
   gbraid?: string;
   wbraid?: string;
+  utm_matchtype?: string;
+  utm_device?: string;
+  session_id?: string;
+  baseline_label?: string;
   landing_page_url?: string;
   referrer?: string;
   lp_version?: string;
@@ -47,13 +60,21 @@ export type LeadInput = {
 };
 
 export type ValidationResult =
-  | { ok: true; intent: "employer"; market: "us" | "au"; email: string; name: string }
+  | {
+      ok: true;
+      intent: "employer";
+      market: "us" | "au";
+      email: string;
+      name: string;
+      phone: string;
+    }
   | {
       ok: false;
       code:
         | "invalid_json"
         | "missing_fields"
         | "invalid_email"
+        | "invalid_us_phone"
         | "honeypot"
         | "too_fast"
         | "job_seeker"
@@ -95,21 +116,35 @@ export function validateEmployerLead(raw: LeadInput): ValidationResult {
   if (honeypot) {
     return { ok: false, code: "honeypot", reason: "rejected" };
   }
+  // company_website is a visible optional field — never treat as honeypot, never required.
 
   const name = String(raw.name || "").trim();
   const email = String(raw.email || "").trim().toLowerCase();
   const phone = String(raw.phone || "").trim();
   const company = String(raw.company || "").trim();
+  // company_website stays optional. Company name is required for sales follow-up.
 
   if (!name || !email || !phone || !company) {
     return {
       ok: false,
       code: "missing_fields",
-      reason: "name, work email, phone, and company are required",
+      reason: "name, company, work email, and phone are required",
     };
   }
   if (!EMAIL_RE.test(email)) {
     return { ok: false, code: "invalid_email", reason: "valid work email required" };
+  }
+
+  let storedPhone = phone;
+  if (market === "us") {
+    const usPhone = validateUsPhone(phone);
+    if (!usPhone.ok) {
+      if (usPhone.code === "ph_job_seeker_phone") {
+        return { ok: false, code: "job_seeker", reason: PH_PHONE_CAREERS_MESSAGE };
+      }
+      return { ok: false, code: "invalid_us_phone", reason: US_PHONE_ERROR };
+    }
+    storedPhone = usPhone.e164;
   }
 
   const started = Number(raw.form_started_at || 0);
@@ -120,7 +155,7 @@ export function validateEmployerLead(raw: LeadInput): ValidationResult {
     }
   }
 
-  return { ok: true, intent: "employer", market, email, name };
+  return { ok: true, intent: "employer", market, email, name, phone: storedPhone };
 }
 
 /** Safe reject log — no PII / message body. */

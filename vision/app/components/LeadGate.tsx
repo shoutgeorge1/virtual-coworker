@@ -9,6 +9,7 @@ import {
   trackPhoneClick,
   trackValidEmployerSubmit,
 } from "../../lib/tracking";
+import { markFormStarted } from "../../lib/conversion-assist";
 import { exitToCareers } from "../../lib/job-seeker-exit";
 import {
   assignExperiment,
@@ -26,7 +27,6 @@ import { formLabelForSlug } from "../../config/categories";
 import {
   COMPANY_SIZE_OPTIONS,
   POSITIONS_OPTIONS,
-  SCHEDULE_OPTIONS,
   scoreLeadValue,
   type CompanySizeId,
   type PositionsId,
@@ -35,7 +35,17 @@ import {
 import {
   formatPhoneInput,
   normalizePhoneForStorage,
+  PH_PHONE_CAREERS_MESSAGE,
+  US_PHONE_ERROR,
+  validateUsPhone,
 } from "../../lib/phone-format";
+import { trackFormValidationError } from "../../lib/lp-events";
+import { AUTHORITATIVE_LP_VERSION } from "../../config/lp-version";
+import {
+  shouldFireEmployerFormStarted,
+  shouldFireEmployerGateSelected,
+  type FormStartReason,
+} from "../../lib/ungated-us-home";
 
 const GATE_TITLES: Record<ExpVariant, { title: string; eyebrowSuffix: string }> = {
   a: { title: "Start Hiring - 2 minutes.", eyebrowSuffix: "2 minutes" },
@@ -62,8 +72,9 @@ export type GateCopy = {
   emailPlaceholder: string;
   phoneLabel: string;
   phonePlaceholder: string;
-  companyLabel: string;
-  companyPlaceholder: string;
+  /** Optional — omitted on simplified money form (work email is enough). */
+  companyLabel?: string;
+  companyPlaceholder?: string;
   submit: string;
   reassure: string;
   callLabel: string;
@@ -73,6 +84,11 @@ export type GateCopy = {
   doneBody: string;
   /** When false, hide phone block entirely (AU form-primary). */
   showPhone?: boolean;
+  /** Visible optional site field (ungated employer LPs). Not the honeypot. */
+  websiteLabel?: string;
+  websitePlaceholder?: string;
+  audienceLine?: string;
+  careersUnderForm?: string;
 };
 
 function CallBlock({
@@ -91,40 +107,31 @@ function CallBlock({
   if (copy.showPhone === false || (!copy.phoneHref && !copy.phoneDisplay)) {
     return null;
   }
-  const cls = `gate-call${solo ? " gate-call-solo" : ""}`;
-  const inner = (
-    <>
-      <span className="gate-call-ico" aria-hidden>
-        ☎
-      </span>
-      <span>
-        <b>{copy.phoneDisplay}</b>
-        <em>{copy.callLabel}</em>
-      </span>
-    </>
-  );
-
   if (!copy.phoneHref) {
     return null;
   }
+  // Quiet secondary — competitors push form/book, not phone-as-hero.
   return (
-    <a
-      className={cls}
-      href={copy.phoneHref}
-      onClick={() => {
-        trackPhoneClick({
-          market,
-          category: category || "",
-          variant: variant || "",
-        });
-        trackExperimentConvert("phone_click", {
-          market,
-          source: "lead_gate",
-        });
-      }}
-    >
-      {inner}
-    </a>
+    <p className={`gate-phone-quiet${solo ? " gate-phone-quiet-solo" : ""}`}>
+      <span>{copy.callLabel} </span>
+      <a
+        href={copy.phoneHref}
+        onClick={() => {
+          trackPhoneClick({
+            market,
+            category: category || "",
+            variant: variant || "",
+            cta_location: "gate",
+          });
+          trackExperimentConvert("phone_click", {
+            market,
+            source: "lead_gate",
+          });
+        }}
+      >
+        {copy.phoneDisplay}
+      </a>
+    </p>
   );
 }
 
@@ -140,6 +147,7 @@ export default function LeadGate({
   preselectedPositions = null,
   compactAfterQuiz = false,
   ctaMode,
+  ungated = false,
 }: {
   copy: GateCopy;
   market: MarketId;
@@ -151,15 +159,17 @@ export default function LeadGate({
   lpSurface?: "form" | "quiz";
   preselectedCompanySize?: CompanySizeId | string | null;
   preselectedPositions?: PositionsId | string | null;
-  /** Quiz LP after reward: name/email/phone/company only (role + size + seats known). */
+  /** Quiz LP after reward: name/email/phone only (role + size + seats known). */
   compactAfterQuiz?: boolean;
   ctaMode?: "form_primary" | "quiz_lp";
+  /** Employer form LPs: form visible on load, no hire vs job-seeker buttons. */
+  ungated?: boolean;
 }) {
   const router = useRouter();
   const initialRole =
     preselectedRole || (category ? formLabelForSlug(category) : null);
   const [intent, setIntent] = useState<"employer" | "job_seeker" | null>(
-    assumeEmployer ? "employer" : null,
+    ungated || assumeEmployer ? "employer" : null,
   );
   const [role, setRole] = useState<string | null>(initialRole);
   const [done, setDone] = useState(false);
@@ -171,13 +181,13 @@ export default function LeadGate({
   const exitingSeeker = useRef(false);
   const [headlineVariant, setHeadlineVariant] = useState<ExpVariant>("a");
   const [roleEmphasize, setRoleEmphasize] = useState(false);
-  const [companySize, setCompanySize] = useState<CompanySizeId | null>(() => {
+  const [companySize] = useState<CompanySizeId | null>(() => {
     const id = String(preselectedCompanySize || "").trim();
     return COMPANY_SIZE_OPTIONS.some((o) => o.id === id)
       ? (id as CompanySizeId)
       : null;
   });
-  const [positionsNeeded, setPositionsNeeded] = useState<PositionsId | null>(
+  const [positionsNeeded] = useState<PositionsId | null>(
     () => {
       const id = String(preselectedPositions || "").trim();
       return POSITIONS_OPTIONS.some((o) => o.id === id)
@@ -185,9 +195,11 @@ export default function LeadGate({
         : null;
     },
   );
-  const [schedule, setSchedule] = useState<ScheduleId | null>(null);
+  const [schedule] = useState<ScheduleId | null>(null);
   const [phone, setPhone] = useState("");
   const resolvedCtaMode = ctaMode || (lpSurface === "quiz" ? "quiz_lp" : "form_primary");
+  /** Phase 0: size / seats / FT-PT chips off default form (MyOutDesk-simple). */
+  const showQualifyChipBanks = false;
 
   useEffect(() => {
     captureAttribution(market, {
@@ -207,11 +219,23 @@ export default function LeadGate({
     if (initialRole) setRole(initialRole);
   }, [initialRole]);
 
-  function markStart() {
-    if (startedRef.current) return;
+  function markStart(reason: FormStartReason = "field_interaction") {
+    if (
+      !shouldFireEmployerFormStarted({
+        alreadyFired: startedRef.current,
+        reason,
+        ungated,
+      })
+    ) {
+      return;
+    }
     startedRef.current = true;
     const t = Date.now();
     setStartedAt(t);
+    markFormStarted();
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("vc-form-started"));
+    }
     trackEvent("employer_form_started", {
       market,
       category: category || "",
@@ -220,23 +244,38 @@ export default function LeadGate({
       lp_surface: lpSurface,
       cta_mode: resolvedCtaMode,
       landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
+      start_reason: reason,
+    });
+    trackEvent("form_start", {
+      market,
+      category: category || "",
+      variant: variant || "",
+      alias_of: "employer_form_started",
+      start_reason: reason,
     });
   }
 
   function onEmployerGate() {
+    const fireGate = shouldFireEmployerGateSelected({
+      ungated,
+      alreadyEmployer: intent === "employer",
+      reason: "user_click",
+    });
     setIntent("employer");
     setError(null);
-    trackEvent("employer_gate_selected", {
-      market,
-      category: category || "",
-      variant: variant || "",
-      gate_variant: "inline",
-      intent: "employer",
-      lp_surface: lpSurface,
-      cta_mode: resolvedCtaMode,
-      landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
-    });
-    markStart();
+    if (fireGate) {
+      trackEvent("employer_gate_selected", {
+        market,
+        category: category || "",
+        variant: variant || "",
+        gate_variant: "inline",
+        intent: "employer",
+        lp_surface: lpSurface,
+        cta_mode: resolvedCtaMode,
+        landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
+      });
+    }
+    markStart("gate_click");
   }
 
   useEffect(() => {
@@ -244,7 +283,15 @@ export default function LeadGate({
       const detail = (e as CustomEvent<GateAssistDetail>).detail || {};
       if (detail.intent === "employer") {
         setIntent((prev) => {
-          if (prev === "employer") return prev;
+          if (
+            !shouldFireEmployerGateSelected({
+              ungated,
+              alreadyEmployer: prev === "employer",
+              reason: "gate_assist",
+            })
+          ) {
+            return "employer";
+          }
           queueMicrotask(() => {
             trackEvent("employer_gate_selected", {
               market,
@@ -257,7 +304,7 @@ export default function LeadGate({
               cta_mode: resolvedCtaMode,
               landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
             });
-            markStart();
+            markStart("gate_click");
           });
           return "employer";
         });
@@ -266,7 +313,7 @@ export default function LeadGate({
       const assistRole = detail.role?.trim();
       if (assistRole && copy.roles.includes(assistRole)) {
         setRole(assistRole);
-        markStart();
+        markStart("field_interaction");
       }
       if (detail.emphasize === "role") {
         setRoleEmphasize(true);
@@ -291,7 +338,7 @@ export default function LeadGate({
     };
     window.addEventListener(GATE_ASSIST_EVENT, onAssist);
     return () => window.removeEventListener(GATE_ASSIST_EVENT, onAssist);
-  }, [market, category, variant, copy.roles, lpSurface]);
+  }, [market, category, variant, copy.roles, lpSurface, ungated]);
 
   function onJobSeekerGate() {
     if (exitingSeeker.current) return;
@@ -303,9 +350,12 @@ export default function LeadGate({
       variant: variant || "",
       gate_variant: "inline",
       source: "lead_gate",
+      redirect_location: "gate_careers_link",
+      redirect_reason: "careers_escape",
       lp_surface: lpSurface,
       cta_mode: resolvedCtaMode,
       landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
+      landing_page_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "employer_paid_lp",
     });
   }
 
@@ -314,10 +364,21 @@ export default function LeadGate({
     if (!String(fd.get("name") || "").trim()) errs.name = "Enter your name.";
     if (!String(fd.get("email") || "").trim()) errs.email = "Enter your work email.";
     if (!phone.trim() && !String(fd.get("phone") || "").trim()) {
-      errs.phone = "Enter a business phone.";
+      errs.phone = "Enter a phone number.";
+    } else if (market === "us") {
+      const raw = phone.trim() || String(fd.get("phone") || "").trim();
+      const usPhone = validateUsPhone(raw);
+      if (!usPhone.ok) {
+        errs.phone =
+          usPhone.code === "ph_job_seeker_phone"
+            ? PH_PHONE_CAREERS_MESSAGE
+            : US_PHONE_ERROR;
+      }
     }
-    if (!String(fd.get("company") || "").trim()) errs.company = "Enter your company name.";
-    if (!role) errs.role = "Select what you need help with.";
+    // Money form: no role chip gauntlet. Quiz / legacy chip path still needs a role.
+    if (!role && resolvedCtaMode !== "form_primary") {
+      errs.role = "Select what you need help with.";
+    }
     return errs;
   }
 
@@ -329,15 +390,27 @@ export default function LeadGate({
     const errs = validateClient(fd);
     setFieldErrors(errs);
     if (Object.keys(errs).length) {
-      trackEvent("employer_form_validation_error", {
+      const phoneErr = errs.phone || "";
+      const category =
+        phoneErr === PH_PHONE_CAREERS_MESSAGE
+          ? "job_seeker_intent"
+          : phoneErr === US_PHONE_ERROR
+            ? "invalid_us_phone"
+            : "missing_required_field";
+      trackFormValidationError({
         market,
-        category: category || "",
-        variant: variant || "",
-        fields: Object.keys(errs).join(","),
-        lp_surface: lpSurface,
-        cta_mode: resolvedCtaMode,
-        landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
+        error_category: category,
+        form_step: "contact",
+        landing_page_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "employer_paid_lp",
       });
+      if (phoneErr === PH_PHONE_CAREERS_MESSAGE) {
+        exitToCareers(copy.careersHref, {
+          market,
+          redirect_location: "us_phone_validation",
+          redirect_reason: "ph_phone_number",
+          landing_page_type: "employer_paid_lp",
+        });
+      }
       return;
     }
 
@@ -359,15 +432,16 @@ export default function LeadGate({
       phone:
         normalizePhoneForStorage(phone || String(fd.get("phone") || ""), market) ||
         String(fd.get("phone") || "").trim(),
-      company: String(fd.get("company") || ""),
-      role: role || "",
+      company: String(fd.get("company") || "").trim(),
+      role: role || (category ? formLabelForSlug(category) : "") || "",
       category: category || "",
       variant: variant || "",
       intent: "employer",
       website: String(fd.get("website") || ""),
+      company_website: String(fd.get("company_website") || "").trim(),
       form_started_at: startedAt || Date.now(),
       market,
-      lp_version: attr.lp_version || "stage1-v8",
+      lp_version: attr.lp_version || AUTHORITATIVE_LP_VERSION,
       submitted_at: new Date().toISOString(),
       company_size: companySize || "",
       positions_needed: positionsNeeded || "",
@@ -447,15 +521,7 @@ export default function LeadGate({
         valueKind: data.value_kind || clientScored.value_kind,
         fitLabel: data.fit_label || clientScored.fit_label,
         landingPage: attr.landing_page_url,
-        utmSource: attr.utm_source,
-        utmMedium: attr.utm_medium,
-        utmCampaign: attr.utm_campaign,
-        utmTerm: attr.utm_term,
-        utmContent: attr.utm_content,
-        gclid: attr.gclid,
-        gbraid: attr.gbraid,
-        wbraid: attr.wbraid,
-        submittedAt: payload.submitted_at,
+        lpVersion: attr.lp_version,
         lpSurface,
         ctaMode: resolvedCtaMode,
         lpVariant: lpSurface === "quiz" ? "quiz" : attr.lp_variant || "",
@@ -499,25 +565,16 @@ export default function LeadGate({
     ? copy.eyebrow.replace(/about a minute|2 minutes/i, gateFrame.eyebrowSuffix)
     : copy.eyebrow;
 
-  const hideRoleStep = Boolean(initialRole && assumeEmployer);
-  const hideQualifyChips = compactAfterQuiz && Boolean(companySize && positionsNeeded);
-  const hideIntentStep = compactAfterQuiz && assumeEmployer;
-  const roleStepNum = hideIntentStep ? 1 : 2;
-  const qualifyStepNum = hideIntentStep ? (hideRoleStep ? 1 : 2) : hideRoleStep ? 2 : 3;
-  const detailsStepNum = hideIntentStep
-    ? hideRoleStep && hideQualifyChips
-      ? 1
-      : hideRoleStep || hideQualifyChips
-        ? 2
-        : 3
-    : hideRoleStep && hideQualifyChips
-      ? 2
-      : hideRoleStep || hideQualifyChips
-        ? 3
-        : 4;
+  const hideRoleStep =
+    resolvedCtaMode === "form_primary" ||
+    Boolean(initialRole && assumeEmployer);
+  const quizCarriesQualify =
+    compactAfterQuiz && Boolean(companySize && positionsNeeded);
+  const hideQualifyChips = !showQualifyChipBanks || quizCarriesQualify;
+  const hideIntentStep = ungated || (compactAfterQuiz && assumeEmployer);
 
   useEffect(() => {
-    if (compactAfterQuiz && assumeEmployer) markStart();
+    if (compactAfterQuiz && assumeEmployer) markStart("form_visible");
     // eslint-disable-next-line react-hooks/exhaustive-deps -- once on reveal
   }, [compactAfterQuiz, assumeEmployer]);
 
@@ -529,6 +586,8 @@ export default function LeadGate({
       data-cta-mode={resolvedCtaMode}
       data-lp-surface={lpSurface}
       data-landing-type={resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp"}
+      data-qualify-chips={showQualifyChipBanks ? "on" : "off"}
+      data-ungated={ungated ? "employer-lp" : undefined}
     >
       <div className="gate-card-head">
         <p className="gate-card-eyebrow">{displayEyebrow}</p>
@@ -554,9 +613,7 @@ export default function LeadGate({
         <div className="gate-card-body">
           {hideIntentStep ? null : (
           <fieldset className="gate-step">
-            <legend>
-              <b>1</b> {copy.intentLabel}
-            </legend>
+            <legend>{copy.intentLabel}</legend>
             <div className="gate-intent" role="group" aria-label={copy.intentLabel}>
               <button
                 type="button"
@@ -585,9 +642,7 @@ export default function LeadGate({
                   className={`gate-step${roleEmphasize ? " is-role-emphasize" : ""}`}
                   data-gate-role-step
                 >
-                  <legend>
-                    <b>{roleStepNum}</b> {copy.roleLabel}
-                  </legend>
+                  <legend>{copy.roleLabel}</legend>
                   <div className="gate-chips" role="group" aria-label={copy.roleLabel}>
                     {copy.roles.map((o) => (
                       <button
@@ -597,7 +652,7 @@ export default function LeadGate({
                         aria-pressed={role === o}
                         onClick={() => {
                           setRole(o);
-                          markStart();
+                          markStart("field_interaction");
                         }}
                       >
                         {o}
@@ -619,7 +674,8 @@ export default function LeadGate({
                   <input type="hidden" name="company_size" value={companySize || ""} readOnly />
                   <input type="hidden" name="positions_needed" value={positionsNeeded || ""} readOnly />
                   <input type="hidden" name="schedule" value={schedule || ""} readOnly />
-                  {role || companySize || positionsNeeded || schedule ? (
+                  {quizCarriesQualify &&
+                  (role || companySize || positionsNeeded || schedule) ? (
                     <p className="gate-quiz-summary">
                       {[
                         role,
@@ -632,69 +688,10 @@ export default function LeadGate({
                     </p>
                   ) : null}
                 </>
-              ) : (
-                <fieldset className="gate-step gate-qualify">
-                  <legend>
-                    <b>{qualifyStepNum}</b> About the hire
-                  </legend>
-                  <p className="gate-sublabel">Company size</p>
-                  <div className="gate-chips" role="group" aria-label="Company size">
-                    {COMPANY_SIZE_OPTIONS.map((o) => (
-                      <button
-                        type="button"
-                        key={o.id}
-                        className={companySize === o.id ? "on" : ""}
-                        aria-pressed={companySize === o.id}
-                        onClick={() => {
-                          setCompanySize(o.id);
-                          markStart();
-                        }}
-                      >
-                        {o.label}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="gate-sublabel">How many positions?</p>
-                  <div className="gate-chips" role="group" aria-label="Positions needed">
-                    {POSITIONS_OPTIONS.map((o) => (
-                      <button
-                        type="button"
-                        key={o.id}
-                        className={positionsNeeded === o.id ? "on" : ""}
-                        aria-pressed={positionsNeeded === o.id}
-                        onClick={() => {
-                          setPositionsNeeded(o.id);
-                          markStart();
-                        }}
-                      >
-                        {o.label}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="gate-sublabel">Full-time or part-time?</p>
-                  <div className="gate-chips" role="group" aria-label="Full-time or part-time">
-                    {SCHEDULE_OPTIONS.map((o) => (
-                      <button
-                        type="button"
-                        key={o.id}
-                        className={schedule === o.id ? "on" : ""}
-                        aria-pressed={schedule === o.id}
-                        onClick={() => {
-                          setSchedule(o.id);
-                          markStart();
-                        }}
-                      >
-                        {o.label}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-              )}
+              ) : null}
 
               <fieldset className="gate-step">
-                <legend>
-                  <b>{detailsStepNum}</b> {copy.detailsLabel}
-                </legend>
+                {copy.detailsLabel ? <legend>{copy.detailsLabel}</legend> : null}
                 <label className="gate-hp" aria-hidden="true">
                   Website
                   <input
@@ -715,7 +712,7 @@ export default function LeadGate({
                       placeholder={copy.namePlaceholder}
                       aria-invalid={Boolean(fieldErrors.name)}
                       aria-describedby={fieldErrors.name ? "err-name" : undefined}
-                      onFocus={markStart}
+                      onFocus={() => markStart("field_interaction")}
                     />
                     {fieldErrors.name ? (
                       <span id="err-name" className="gate-field-error" role="alert">
@@ -732,6 +729,7 @@ export default function LeadGate({
                       placeholder={copy.emailPlaceholder}
                       aria-invalid={Boolean(fieldErrors.email)}
                       aria-describedby={fieldErrors.email ? "err-email" : undefined}
+                      onFocus={() => markStart("field_interaction")}
                     />
                     {fieldErrors.email ? (
                       <span id="err-email" className="gate-field-error" role="alert">
@@ -754,8 +752,9 @@ export default function LeadGate({
                       aria-describedby={fieldErrors.phone ? "err-phone" : undefined}
                       onChange={(e) => {
                         setPhone(formatPhoneInput(e.target.value, market));
-                        markStart();
+                        markStart("field_interaction");
                       }}
+                      onFocus={() => markStart("field_interaction")}
                     />
                     {fieldErrors.phone ? (
                       <span id="err-phone" className="gate-field-error" role="alert">
@@ -763,22 +762,20 @@ export default function LeadGate({
                       </span>
                     ) : null}
                   </label>
-                  <label>
-                    <span className="gate-label">{copy.companyLabel}</span>
-                    <input
-                      type="text"
-                      name="company"
-                      autoComplete="organization"
-                      placeholder={copy.companyPlaceholder}
-                      aria-invalid={Boolean(fieldErrors.company)}
-                      aria-describedby={fieldErrors.company ? "err-company" : undefined}
-                    />
-                    {fieldErrors.company ? (
-                      <span id="err-company" className="gate-field-error" role="alert">
-                        {fieldErrors.company}
-                      </span>
-                    ) : null}
-                  </label>
+                  {ungated && copy.websiteLabel ? (
+                    <label>
+                      <span className="gate-label">{copy.websiteLabel}</span>
+                      <input
+                        type="text"
+                        name="company_website"
+                        inputMode="url"
+                        autoComplete="url"
+                        placeholder={copy.websitePlaceholder || ""}
+                        onFocus={() => markStart("field_interaction")}
+                        onChange={() => markStart("field_interaction")}
+                      />
+                    </label>
+                  ) : null}
                 </div>
               </fieldset>
 
@@ -796,21 +793,42 @@ export default function LeadGate({
           ) : null}
 
           {intent === null ? (
-            <p className="gate-reassure">Choose one option to continue.</p>
+            <p className="gate-reassure">Pick the option that fits - takes a second.</p>
           ) : null}
 
           {copy.showPhone !== false && copy.phoneHref ? (
-            <>
-              <div className="gate-or">
-                <span>or</span>
-              </div>
-              <CallBlock
-                copy={copy}
-                market={market}
-                category={category || undefined}
-                variant={variant}
-              />
-            </>
+            <CallBlock
+              copy={copy}
+              market={market}
+              category={category || undefined}
+              variant={variant}
+            />
+          ) : null}
+
+          {ungated && copy.careersUnderForm ? (
+            <p className="gate-careers">
+              <a
+                href={copy.careersHref}
+                onClick={(e) => {
+                  e.preventDefault();
+                  exitToCareers(copy.careersHref, {
+                    market,
+                    category: category || "",
+                    variant: variant || "",
+                    gate_variant: "inline",
+                    source: "lead_gate_ungated_link",
+                    lp_surface: lpSurface,
+                    cta_mode: resolvedCtaMode,
+                    landing_type: resolvedCtaMode === "quiz_lp" ? "quiz_lp" : "form_lp",
+                  });
+                }}
+              >
+                {copy.careersUnderForm}
+              </a>
+            </p>
+          ) : null}
+          {ungated && copy.audienceLine ? (
+            <p className="gate-audience">{copy.audienceLine}</p>
           ) : null}
         </div>
       )}

@@ -1,0 +1,378 @@
+{
+  "generated_at": "2026-08-18T18:02:03Z",
+  "total_candidates": 3468,
+  "by_cluster": {
+    "brand": 11,
+    "ph_va_geo": 13,
+    "sitemap_industry": 11,
+    "sitemap_service": 32,
+    "offshore_outsourcing": 5,
+    "staffing": 13,
+    "agency_firm": 8,
+    "virtual_staff": 6,
+    "accountant": 8,
+    "accounting": 8,
+    "admin": 8,
+    "appointment_setter": 8,
+    "bookkeeper": 8,
+    "bookkeeping": 7,
+    "customer_support": 8,
+    "digital_marketing": 8,
+    "executive_assistant": 8,
+    "healthcare": 7,
+    "human_resources": 8,
+    "inside_sales": 8,
+    "isa": 8,
+    "legal": 7,
+    "property_management": 7,
+    "recruiting": 8,
+    "recruitment": 8,
+    "sales": 8,
+    "sdr": 8,
+    "social_media": 8,
+    "transaction_coordinator": 7,
+    "virtual_receptionist": 7,
+    "ecommerce": 7,
+    "hr": 7,
+    "insurance": 7,
+    "mortgage": 7,
+    "real_estate": 12,
+    "tech": 7,
+    "Accounting_Hire_PH": 127,
+    "Accounting_Outsource_PH": 98,
+    "Administration_EA_PH": 161,
+    "VA_Agency_Firm_PH": 94,
+    "Staffing_Agency_PH": 76,
+    "Agency_PH": 150,
+    "Offshore_VA_PH": 241,
+    "appointment_sales": 2,
+    "Appointment_Setter_Hire_PH": 91,
+    "Bookkeeping_Hire_PH": 132,
+    "Customer_Service_Hire_PH": 177,
+    "hr_recruit": 1,
+    "Sales_Hire_PH": 123,
+    "Human_Resources_Hire_PH": 135,
+    "Digital_Marketing_Hire_PH": 107,
+    "Bookkeeping_Outsource_PH": 108,
+    "customer_service": 6,
+    "Customer_Service_Outsource_PH": 143,
+    "Human_Resources_Outsource_PH": 38,
+    "Hire_VA_PH": 263,
+    "Virtual_Staff_PH": 91,
+    "admin_ea": 1,
+    "administrative": 6,
+    "marketing": 6,
+    "Recruitment_Outsource_PH": 56,
+    "Admin_City_Test": 103,
+    "Brand_VC": 39,
+    "Digital_Marketing_Outsource_PH": 135,
+    "Recruitment_Hire_PH": 136,
+    "Social_Media_Outsource_PH": 101,
+    "Sales_Outsource_PH": 47,
+    "Social_Media_Hire_PH": 150,
+    "prefix_test": 5,
+    "network_prefix_test": 3
+  },
+  "top_50": [
+    {
+      "slug": "google-brand-search-campaign-b",
+      "score": 1000,
+      "cluster": "brand",
+      "source": "known"
+    },
+    {
+      "slug": "google-philippines-virtual-assistants",
+      "score": 1000,
+      "cluster": "ph_va_geo",
+      "source": "known"
+    },
+    {
+      "slug": "google-ecommerce-virtual-assistants",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-financial-planning",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-healthcare",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-hr-virtual-assistants",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-insurance-virtual-assistants",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-legal",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-marketing-agency",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-mortgage-virtual-assistants",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-property-management",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-real-estate-virtual-assistants",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-tech-virtual-assistants",
+      "score": 930,
+      "cluster": "sitemap_industry",
+      "source": "sitemap_industry"
+    },
+    {
+      "slug": "google-administrative-virtual-assistants",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-ai",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-bookkeeping",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-customer-service-virtual-assistant",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-help-desk-outsourcing",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-inside-sales-agent",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-loan-processor-assistant",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-marketing-virtual-assistants",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-medical-billing-virtual-assistant",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-real-estate-isa",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-recruiting-assistant",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-sales-development-representative",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-transaction-coordinator",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-virtual-medical-receptionist",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-virtual-personal-assistant",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-virtual-receptionist",
+      "score": 920,
+      "cluster": "sitemap_service",
+      "source": "sitemap_service"
+    },
+    {
+      "slug": "google-virtual-assistants-outsourcing",
+      "score": 900,
+      "cluster": "offshore_outsourcing",
+      "source": "utm_campaign"
+    },
+    {
+      "slug": "google-filipino-virtual-assistants",
+      "score": 890,
+      "cluster": "ph_va_geo",
+      "source": "seed_filipino"
+    },
+    {
+      "slug": "google-remote-staffing-agency",
+      "score": 880,
+      "cluster": "staffing",
+      "source": "core_cluster"
+    },
+    {
+      "slug": "google-virtual-assistant-agency",
+      "score": 880,
+      "cluster": "agency_firm",
+      "source": "core_cluster"
+    },
+    {
+      "slug": "google-virtual-assistants-philippines",
+      "score": 880,
+      "cluster": "ph_va_geo",
+      "source": "seed_word_order"
+    },
+    {
+      "slug": "google-philippines-virtual-assistant",
+      "score": 870,
+      "cluster": "ph_va_geo",
+      "source": "seed_singular"
+    },
+    {
+      "slug": "google-philippines-virtual-assistant-agency",
+      "score": 870,
+      "cluster": "agency_firm",
+      "source": "core_cluster"
+    },
+    {
+      "slug": "google-brand",
+      "score": 860,
+      "cluster": "brand",
+      "source": "brand_grammar"
+    },
+    {
+      "slug": "google-brand-campaign",
+      "score": 860,
+      "cluster": "brand",
+      "source": "brand_grammar"
+    },
+    {
+      "slug": "google-brand-search",
+      "score": 860,
+      "cluster": "brand",
+      "source": "brand_grammar"
+    },
+    {
+      "slug": "google-brand-search-campaign",
+      "score": 860,
+      "cluster": "brand",
+      "source": "brand_grammar"
+    },
+    {
+      "slug": "google-brand-search-campaign-a",
+      "score": 860,
+      "cluster": "brand",
+      "source": "brand_grammar"
+    },
+    {
+      "slug": "google-brand-search-campaign-c",
+      "score": 860,
+      "cluster": "brand",
+      "source": "brand_grammar"
+    },
+    {
+      "slug": "google-branded-search",
+      "score": 860,
+      "cluster": "brand",
+      "source": "brand_grammar"
+    },
+    {
+      "slug": "google-myoutdesk",
+      "score": 860,
+      "cluster": "brand",
+      "source": "brand_grammar"
+    },
+    {
+      "slug": "google-virtual-assistant-company",
+      "score": 860,
+      "cluster": "agency_firm",
+      "source": "core_cluster"
+    },
+    {
+      "slug": "google-virtual-assistant-philippines",
+      "score": 860,
+      "cluster": "ph_va_geo",
+      "source": "service_first"
+    },
+    {
+      "slug": "google-virtual-staffing-agency",
+      "score": 860,
+      "cluster": "staffing",
+      "source": "core_cluster"
+    },
+    {
+      "slug": "google-hire-virtual-assistant",
+      "score": 850,
+      "cluster": "ph_va_geo",
+      "source": "hire"
+    },
+    {
+      "slug": "google-philippines-staffing-agency",
+      "score": 850,
+      "cluster": "staffing",
+      "source": "core_cluster"
+    },
+    {
+      "slug": "google-virtual-assistant-firm",
+      "score": 850,
+      "cluster": "agency_firm",
+      "source": "core_cluster"
+    }
+  ]
+}

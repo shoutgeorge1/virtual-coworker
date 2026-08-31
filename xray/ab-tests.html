@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>A/B tests · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="ab-tests.html"] .main {
+      max-width: 1180px;
+      font-variant-numeric: tabular-nums;
+    }
+    .ab-lede {
+      margin: 0 0 1rem;
+      font-size: 0.98rem;
+      color: var(--body);
+      max-width: 44rem;
+      line-height: 1.45;
+    }
+    .ab-banner {
+      margin: 0 0 1rem;
+      padding: 0.75rem 0.95rem;
+      border-radius: 8px;
+      border: 1px solid var(--tint-green-edge);
+      background: var(--tint-green);
+      font-size: 0.9rem;
+      color: var(--body);
+    }
+    .ab-banner.warn {
+      border-color: var(--tint-amber-edge);
+      background: var(--tint-amber);
+    }
+    .ab-banner strong { color: var(--ink); }
+    .ab-banner code {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.8rem;
+    }
+    .ab-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin: 0 0 1rem;
+      border: 1px solid var(--tint-cool-edge);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--tint-cool);
+    }
+    @media (max-width: 760px) {
+      .ab-stats { grid-template-columns: 1fr 1fr; }
+    }
+    .ab-stats .stat {
+      padding: 0.75rem 0.85rem;
+      border-right: 1px solid var(--tint-cool-edge);
+    }
+    .ab-stats .stat:last-child { border-right: none; }
+    .ab-stats .lbl {
+      margin: 0;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .ab-stats .val {
+      margin: 0.22rem 0 0;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .ab-stats .hint {
+      margin: 0.15rem 0 0;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .ab-card {
+      margin: 0 0 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .ab-card.live { border-color: var(--tint-green-edge); }
+    .ab-card.parked { opacity: 0.92; }
+    .ab-card-hd {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--tint-cool);
+      border-bottom: 1px solid var(--tint-cool-edge);
+    }
+    .ab-card.live .ab-card-hd {
+      background: var(--tint-green);
+      border-bottom-color: var(--tint-green-edge);
+    }
+    .ab-card-hd h2 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .ab-card-hd .id {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .ab-card-hd .surface {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .ab-card-bd { padding: 0.65rem 1rem 0.85rem; }
+    .ab-card .note {
+      margin: 0 0 0.55rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .ab-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .ab-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      padding: 0.35rem 0.45rem;
+      border-bottom: 1px solid var(--edge);
+    }
+    .ab-table th.num,
+    .ab-table td.num { text-align: right; }
+    .ab-table td {
+      padding: 0.45rem;
+      border-bottom: 1px solid var(--edge-soft);
+      color: var(--body);
+      vertical-align: top;
+    }
+    .ab-table tr:last-child td { border-bottom: none; }
+    .ab-table .var-letter {
+      display: inline-block;
+      min-width: 1.35rem;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--ink);
+    }
+    .ab-table .var-label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+    .ab-table .kpi { font-weight: 700; color: var(--ink); }
+    .ab-table .muted-cell { color: var(--muted); }
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.12rem 0.4rem;
+      border-radius: 4px;
+      border: 1px solid var(--tint-green-edge);
+      background: var(--tint-green);
+      color: #166534;
+    }
+    .tag.warn {
+      border-color: var(--tint-amber-edge);
+      background: var(--tint-amber);
+      color: #92400e;
+    }
+    .tag.cool {
+      border-color: var(--tint-cool-edge);
+      background: var(--tint-cool);
+      color: #334155;
+    }
+    .tag.park {
+      border-color: var(--edge-soft);
+      background: var(--panel-inset);
+      color: var(--muted);
+    }
+    .ab-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.55rem;
+      align-items: center;
+    }
+    .ab-preview a {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #1d4ed8;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(29, 78, 216, 0.35);
+    }
+    .ab-preview a:hover {
+      color: #1e3a8a;
+      border-bottom-color: #1e3a8a;
+    }
+    .ab-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin: 0 0 1rem;
+    }
+    @media (max-width: 900px) {
+      .ab-grid-2 { grid-template-columns: 1fr; }
+    }
+    .ab-side {
+      border-radius: 8px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+      padding: 0.85rem 1rem;
+    }
+    .ab-side h2 {
+      margin: 0 0 0.45rem;
+      font-size: 0.95rem;
+    }
+    .ab-side .sub {
+      margin: 0 0 0.55rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .ab-side ul {
+      margin: 0;
+      padding: 0 0 0 1.1rem;
+      font-size: 0.88rem;
+      color: var(--body);
+    }
+    .ab-side li { margin: 0.28rem 0; }
+    .ab-side code {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.78rem;
+    }
+    .section-label {
+      margin: 1.15rem 0 0.55rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .section-label:first-of-type { margin-top: 0.35rem; }
+    .swap-card {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
+    }
+    .swap-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+    .swap-card p {
+      margin: 0.3rem 0 0;
+      font-size: 0.88rem;
+      line-height: 1.4;
+      color: var(--body);
+    }
+    .swap-card .links { margin-top: 0.55rem; }
+    details.parked-block {
+      margin: 0.5rem 0 1rem;
+      border: 1px dashed var(--edge-soft);
+      border-radius: 8px;
+      background: var(--panel-inset);
+      padding: 0.35rem 0.75rem 0.75rem;
+    }
+    details.parked-block > summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 0.45rem 0;
+      color: var(--ink);
+    }
+  </style>
+</head>
+<body data-page="ab-tests.html" data-foot="Selective live · baseline /us intact">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <header class="page-head">
+        <h1>A/B tests</h1>
+        <p class="data-fresh" id="ab-fresh">Snapshot embedded · scores fill on open</p>
+      </header>
+
+      <p class="ab-lede">
+        Background site tests only. Money LP baseline (<code>/us</code> form, copy, tracking) stays frozen.
+        Master switch <code>EXPERIMENTS_LIVE</code> stays off — one selective hero test + one marketing orange live swap.
+      </p>
+
+      <div class="ab-banner" id="baseline-banner" role="status">
+        <strong>Baseline control untouched.</strong>
+        Paid path stays on <code>/us</code>. Control face = A · female navy <code>va-us.jpg</code>.
+        Challenger = B · male <code>va-au.jpg</code>. No global experiment flip.
+      </div>
+
+      <div class="ab-banner warn" id="status-banner" role="status">
+        <strong>Opening scoreboard</strong> — reading experiments-snapshot.json
+      </div>
+
+      <div class="ab-stats" id="kpi-row" aria-label="Live test KPIs">
+        <div class="stat">
+          <p class="lbl">Views</p>
+          <p class="val" id="kpi-views">—</p>
+          <p class="hint">experiment_view · live only</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Clicks</p>
+          <p class="val" id="kpi-clicks">—</p>
+          <p class="hint">experiment_click (if fired)</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">CTR</p>
+          <p class="val" id="kpi-ctr">—</p>
+          <p class="hint">Clicks ÷ views</p>
+        </div>
+        <div class="stat">
+          <p class="lbl">Converts</p>
+          <p class="val" id="kpi-converts">—</p>
+          <p class="hint">experiment_convert</p>
+        </div>
+      </div>
+
+      <p class="section-label">Running now</p>
+      <div id="live-list" aria-live="polite"></div>
+
+      <p class="section-label">Live swaps (not random A/B)</p>
+      <div id="swap-list"></div>
+
+      <details class="parked-block">
+        <summary>Parked inventory (not serving random arms)</summary>
+        <p class="ab-lede" style="margin-top:0.35rem;font-size:0.88rem">
+          Exit popup, chat, density, quiz, gate, role imagery stay frozen. Code remains; scoreboard zeros mean parked, not “failed.”
+        </p>
+        <div id="parked-list"></div>
+      </details>
+
+      <div class="ab-grid-2">
+        <section class="ab-side" aria-labelledby="can-hd">
+          <h2 id="can-hd">What we can measure</h2>
+          <p class="sub">From dataLayer → GA4 bake · honest empties only</p>
+          <ul id="can-list">
+            <li><code>experiment_view</code> / <code>experiment_convert</code> by variant</li>
+            <li>Form starts + leads by URL (GA4 / Zoho)</li>
+            <li>Keyword / RSA CTR from Search ads</li>
+          </ul>
+        </section>
+        <section class="ab-side" aria-labelledby="cant-hd">
+          <h2 id="cant-hd">Unavailable (say so plainly)</h2>
+          <p class="sub">Do not invent these numbers</p>
+          <ul id="cant-list">
+            <li>Image-level Google Ads impressions / clicks / CTR for hero faces</li>
+            <li>Winners before volume exists</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="media.html#live-tests">Media · live tests + orange hopper</a>
+        <a class="btn" href="https://www.virtualcoworker.app/us?vc_exp=us_hero_portrait&amp;vc_var=a" target="_blank" rel="noopener">Force A · female</a>
+        <a class="btn" href="https://www.virtualcoworker.app/us?vc_exp=us_hero_portrait&amp;vc_var=b" target="_blank" rel="noopener">Force B · male</a>
+        <a class="btn" href="executive">Executive</a>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js?v=20260821-ab"></script>
+  <script>
+    (function () {
+      var LP_HOST = "https://www.virtualcoworker.app";
+
+      function num(n) {
+        if (n == null || isNaN(n)) return "—";
+        return Number(n).toLocaleString("en-US");
+      }
+      function pct(n) {
+        if (n == null || isNaN(n)) return "—";
+        return Number(n).toFixed(2) + "%";
+      }
+      function fmtWhen(iso) {
+        if (!iso) return "not pulled yet";
+        try {
+          return new Date(iso).toLocaleString("en-US", {
+            timeZone: "America/Los_Angeles",
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            timeZoneName: "short"
+          });
+        } catch (e) {
+          return iso;
+        }
+      }
+      function esc(s) {
+        return String(s == null ? "" : s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function forceUrl(path, expId, variant) {
+        var base = path || "/us";
+        if (base.charAt(0) !== "/") base = "/" + base;
+        return (
+          LP_HOST +
+          base +
+          (base.indexOf("?") >= 0 ? "&" : "?") +
+          "vc_exp=" +
+          encodeURIComponent(expId) +
+          "&vc_var=" +
+          encodeURIComponent(variant)
+        );
+      }
+
+      function previewCell(exp, variant) {
+        if (exp.status !== "live") {
+          return '<span class="muted-cell">Parked</span>';
+        }
+        var path = exp.preview_path || "/us";
+        var href = forceUrl(path, exp.id, variant);
+        return (
+          '<div class="ab-preview"><a href="' +
+          esc(href) +
+          '" target="_blank" rel="noopener noreferrer">Force ' +
+          esc(String(variant).toUpperCase()) +
+          "</a></div>"
+        );
+      }
+
+      function renderExp(exp) {
+        var labels = exp.variant_labels || {};
+        var metrics = exp.metrics_by_variant || {};
+        var live = exp.status === "live";
+        var rows = (exp.variants || [])
+          .map(function (v) {
+            var m = metrics[v] || {};
+            var label = labels[v] || "";
+            var control =
+              live && v === "a"
+                ? " <span class='tag cool'>Control</span>"
+                : live && v === "b"
+                  ? " <span class='tag'>Challenger</span>"
+                  : "";
+            return (
+              "<tr>" +
+              "<td><span class='var-letter'>" +
+              esc(String(v).toUpperCase()) +
+              "</span>" +
+              control +
+              (label ? "<span class='var-label'>" + esc(label) + "</span>" : "") +
+              "</td>" +
+              "<td>" +
+              previewCell(exp, v) +
+              "</td>" +
+              "<td class='num'>" +
+              num(m.views) +
+              "</td>" +
+              "<td class='num'>" +
+              num(m.clicks) +
+              "</td>" +
+              "<td class='num kpi'>" +
+              pct(m.ctr_pct) +
+              "</td>" +
+              "<td class='num'>" +
+              num(m.converts) +
+              "</td>" +
+              "<td class='num muted-cell'>" +
+              pct(m.convert_rate_pct) +
+              "</td>" +
+              "</tr>"
+            );
+          })
+          .join("");
+
+        var statusTag = live
+          ? "<span class='tag'>Running</span>"
+          : "<span class='tag park'>Parked</span>";
+        if (exp.fires_click === false) {
+          statusTag += " <span class='tag warn'>No click CTR</span>";
+        }
+
+        return (
+          '<article class="ab-card ' +
+          (live ? "live" : "parked") +
+          '" id="exp-' +
+          esc(exp.id) +
+          '">' +
+          '<div class="ab-card-hd">' +
+          "<h2>" +
+          esc(exp.label || exp.id) +
+          "</h2>" +
+          '<span class="id">' +
+          esc(exp.id) +
+          "</span>" +
+          statusTag +
+          '<span class="surface">' +
+          esc(exp.surface || "") +
+          "</span>" +
+          "</div>" +
+          '<div class="ab-card-bd">' +
+          (exp.baseline_note
+            ? '<p class="note"><strong>Baseline:</strong> ' + esc(exp.baseline_note) + "</p>"
+            : "") +
+          (exp.click_note ? '<p class="note">' + esc(exp.click_note) + "</p>" : "") +
+          '<table class="ab-table">' +
+          "<thead><tr>" +
+          "<th>Variant</th>" +
+          "<th>Preview</th>" +
+          "<th class='num'>Views</th>" +
+          "<th class='num'>Clicks</th>" +
+          "<th class='num'>CTR</th>" +
+          "<th class='num'>Converts</th>" +
+          "<th class='num'>Conv %</th>" +
+          "</tr></thead>" +
+          "<tbody>" +
+          rows +
+          "</tbody></table>" +
+          "</div></article>"
+        );
+      }
+
+      function renderSwap(s) {
+        var links = (s.surfaces || [])
+          .map(function (path) {
+            return (
+              '<a href="' +
+              esc(LP_HOST + path) +
+              '" target="_blank" rel="noopener">' +
+              esc(path) +
+              "</a>"
+            );
+          })
+          .join(" · ");
+        var unavail = (s.unavailable || [])
+          .map(function (u) {
+            return "<li>" + esc(u) + "</li>";
+          })
+          .join("");
+        return (
+          '<div class="swap-card" id="swap-' +
+          esc(s.id) +
+          '">' +
+          "<h3>" +
+          esc(s.label || s.id) +
+          ' <span class="tag warn">Live swap</span></h3>' +
+          "<p><strong>Asset:</strong> <code>" +
+          esc(s.asset || "") +
+          "</code></p>" +
+          "<p>" +
+          esc(s.measure || "") +
+          "</p>" +
+          (unavail
+            ? "<p><strong>Unavailable:</strong></p><ul>" + unavail + "</ul>"
+            : "") +
+          '<p class="links">Live: ' +
+          links +
+          ' · <a href="' +
+          esc(s.media_report_anchor || "media.html#live-tests") +
+          '">Media report</a></p>' +
+          "</div>"
+        );
+      }
+
+      function fillList(id, items, htmlFn, emptyMsg) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (!items || !items.length) {
+          el.innerHTML = '<p class="ab-banner warn">' + esc(emptyMsg) + "</p>";
+          return;
+        }
+        el.innerHTML = items.map(htmlFn).join("");
+      }
+
+      function load() {
+        var loader =
+          typeof window.__VC_loadPageData === "function"
+            ? window.__VC_loadPageData("/data/experiments-snapshot.json")
+            : window.__VC_loadPageData("/data/experiments-snapshot.json").then(function (r) {
+                if (!r.ok) throw new Error("snapshot " + r.status);
+                return r.json();
+              });
+        return loader;
+      }
+
+      load()
+        .then(function (data) {
+          var live = data.data_status === "live";
+          var banner = document.getElementById("status-banner");
+          banner.className = "ab-banner" + (live ? "" : " warn");
+          banner.innerHTML =
+            "<strong>" +
+            (live ? "Snapshot connected" : "Waiting on GA4 / event export") +
+            "</strong> · source <code>" +
+            esc(data.source || "—") +
+            "</code>" +
+            (data.window ? " · " + esc(data.window) : "") +
+            " · " +
+            esc(data.source_note || "");
+
+          document.getElementById("ab-fresh").textContent =
+            "Updated " +
+            fmtWhen(data.generated_at_utc) +
+            " · selective live: " +
+            ((data.selective_live || []).join(", ") || "none") +
+            " · EXPERIMENTS_LIVE=false";
+
+          if (data.baseline && data.baseline.note) {
+            document.getElementById("baseline-banner").innerHTML =
+              "<strong>Baseline control untouched.</strong> " +
+              esc(data.baseline.note) +
+              " Control arm = <code>" +
+              esc(data.baseline.control_variant || "a") +
+              "</code> · <code>" +
+              esc(data.baseline.control_asset || "/brand/va-us.jpg") +
+              "</code>";
+          }
+
+          var totals = data.live_totals || data.totals || {};
+          document.getElementById("kpi-views").textContent = num(totals.views);
+          document.getElementById("kpi-clicks").textContent = num(totals.clicks);
+          document.getElementById("kpi-ctr").textContent = pct(totals.ctr_pct);
+          document.getElementById("kpi-converts").textContent = num(totals.converts);
+
+          var exps = (data.experiments || []).filter(function (e) {
+            return e && e.id && e.variants;
+          });
+          var running = exps.filter(function (e) {
+            return e.status === "live";
+          });
+          var parked = exps.filter(function (e) {
+            return e.status !== "live";
+          });
+
+          fillList("live-list", running, renderExp, "No selective live tests in snapshot.");
+          fillList("parked-list", parked, renderExp, "No parked inventory.");
+          fillList(
+            "swap-list",
+            data.live_swaps || [],
+            renderSwap,
+            "No live swaps listed."
+          );
+
+          var avail = data.metrics_availability || {};
+          if (avail.can_measure && avail.can_measure.length) {
+            document.getElementById("can-list").innerHTML = avail.can_measure
+              .map(function (x) {
+                return "<li>" + esc(x) + "</li>";
+              })
+              .join("");
+          }
+          if (avail.unavailable && avail.unavailable.length) {
+            document.getElementById("cant-list").innerHTML = avail.unavailable
+              .map(function (x) {
+                return "<li>" + esc(x) + "</li>";
+              })
+              .join("");
+          }
+        })
+        .catch(function (err) {
+          document.getElementById("status-banner").className = "ab-banner warn";
+          document.getElementById("status-banner").innerHTML =
+            "<strong>Could not load</strong> experiments-snapshot.json — " +
+            esc(String(err));
+          document.getElementById("ab-fresh").textContent = "Snapshot missing";
+        });
+    })();
+  </script>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script type="application/json" id="embedded-page-data">
+{
+  "generated_at_utc": "2026-08-21T17:46:57Z",
+  "source": "inventory_only",
+  "source_note": "US dataLayer + gtag bridge fire experiment_view/click/convert on /us. Property id 549075481 (G-2V3V0BS6JW) is set for the pull path; scoreboard numbers need a successful GA4 API auth or a local export at xray/data/experiments-events.json. AU GTM still missing \u2014 no visit tags on /au.",
+  "primary_kpi": "views_and_converts",
+  "primary_kpi_note": "For us_hero_portrait: views = experiment_view, converts = experiment_convert. CTR only when experiment_click fires (most parked tests). Image-level Ads CTR is unavailable \u2014 do not invent it.",
+  "window": null,
+  "data_status": "awaiting_source",
+  "experiments_live_master": false,
+  "selective_live": [
+    "us_hero_portrait"
+  ],
+  "baseline": {
+    "path": "/us",
+    "label": "Paid LP baseline \u00b7 control",
+    "note": "Money LP form, copy, and tracking stay frozen. Only the /us hero portrait is in a selective 50/50. EXPERIMENTS_LIVE remains false globally.",
+    "control_variant": "a",
+    "control_asset": "/brand/va-us.jpg"
+  },
+  "metrics_availability": {
+    "can_measure": [
+      "experiment_view by experiment_id + experiment_variant (GA4 custom dims once registered)",
+      "experiment_convert (form success / phone fan-out) by variant",
+      "employer_form_started / employer_inquiry_submitted on URLs (page-level)",
+      "Keyword / RSA CTR from Search ads (not image-level)"
+    ],
+    "unavailable": [
+      "Image-level Google Ads impressions / clicks / CTR for hero faces",
+      "Fake winners \u2014 empty cells mean not pulled yet, not zero traffic"
+    ]
+  },
+  "events": {
+    "view": "experiment_view",
+    "click": "experiment_click",
+    "convert": "experiment_convert",
+    "payload_fields": [
+      "experiment_id",
+      "experiment_variant",
+      "convert_reason"
+    ]
+  },
+  "assist_events": [
+    {
+      "event": "exit_intent_shown",
+      "maps_to": "exit_popup view assist"
+    },
+    {
+      "event": "conversion_assist_cta_clicked",
+      "maps_to": "exit_popup click assist"
+    },
+    {
+      "event": "quiz_started",
+      "maps_to": "quiz_copy engagement"
+    },
+    {
+      "event": "lead_magnet_completed",
+      "maps_to": "quiz_copy complete"
+    },
+    {
+      "event": "chat_opened",
+      "maps_to": "chat_launcher open"
+    },
+    {
+      "event": "employer_form_started",
+      "maps_to": "gate / density form start"
+    },
+    {
+      "event": "phone_cta_clicked",
+      "maps_to": "phone click (also fans out experiment_convert)"
+    },
+    {
+      "event": "employer_inquiry_submitted",
+      "maps_to": "form success (also fans out experiment_convert)"
+    }
+  ],
+  "wiring": {
+    "us_gtm": "GTM-M92DX9BJ",
+    "us_ga4_measurement": "G-2V3V0BS6JW",
+    "us_ga4_property_id": "549075481",
+    "us_datalayer_experiment_events": "confirmed",
+    "us_ga4_experiment_bridge": "MarketGtm installs collect sendBeacon for experiment_* (GTM alone only sent page_view; gtag event is swallowed under GTM)",
+    "au_gtm": "missing",
+    "au_ga4": "missing",
+    "au_blocker": "Need a new Australia GTM container ID + GA4 measurement ID for the microsite. Paste into Vercel as NEXT_PUBLIC_GTM_AU and NEXT_PUBLIC_GA4_AU. Do not reuse US GTM-M92DX9BJ or legacy WP GTM-KNDLKVW.",
+    "homepage_h1": "locked \u2014 do not A/B until George asks",
+    "scoreboard_next": "Property id ready (549075481 for G-2V3V0BS6JW). Run ads-launch/pull_experiments_snapshot.py with ADC (`gcloud auth application-default login`) or a service account JSON, OR drop an export at xray/data/experiments-events.json. Redeploy xray. AU GTM still missing \u2014 do not invent AU ids."
+  },
+  "ga4": {
+    "connected": false,
+    "property_id": "549075481",
+    "measurement_id_us": "G-2V3V0BS6JW",
+    "note": "google-analytics-data not installed \u2014 pip install google-analytics-data"
+  },
+  "totals": {
+    "views": null,
+    "clicks": null,
+    "ctr_pct": null,
+    "converts": null
+  },
+  "live_totals": {
+    "views": null,
+    "clicks": null,
+    "ctr_pct": null,
+    "converts": null
+  },
+  "live_swaps": [
+    {
+      "id": "marketing_a_orange",
+      "label": "Marketing A orange on marketing LPs",
+      "kind": "live_swap",
+      "status": "live",
+      "surfaces": [
+        "/us/digital-marketing",
+        "/us/social-media"
+      ],
+      "asset": "/roles/marketing-a.png",
+      "measure": "Week-over-week form starts + leads on those URLs (GA4 / Zoho). Not random A/B \u2014 no experiment_id arms.",
+      "unavailable": [
+        "Image-level Google Ads CTR for this face (Ads asset scores incomplete)",
+        "experiment_view / experiment_convert split (not an experiment_* test)"
+      ],
+      "media_report_anchor": "media.html#live-tests"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "us_hero_portrait",
+      "label": "US /us hero \u2014 female navy (a) vs male AU portrait (b)",
+      "surface": "US hub /us hero photo only",
+      "variants": [
+        "a",
+        "b"
+      ],
+      "variant_labels": {
+        "a": "Female navy \u00b7 va-us.jpg (baseline control face)",
+        "b": "Male portrait \u00b7 va-au.jpg (challenger)"
+      },
+      "fires_click": false,
+      "click_note": "Views = experiment_view. Converts = experiment_convert (form success / phone). No experiment_click on this test \u2014 do not invent Ads image CTR.",
+      "preview_path": "/us",
+      "baseline_note": "Control arm A keeps the historic converting /us face. Form, copy, and tracking on the money LP are unchanged \u2014 hero photo only.",
+      "status": "live",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "exit_popup",
+      "label": "Exit / timed popup copy",
+      "surface": "employer LP popup",
+      "variants": [
+        "a",
+        "b",
+        "c"
+      ],
+      "variant_labels": {
+        "a": "Skip Upwork roulette",
+        "b": "Tired of hiring that eats your week",
+        "c": "One clear seat"
+      },
+      "fires_click": true,
+      "click_note": "Hire / job / phone CTAs \u2192 experiment_click",
+      "status": "parked",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "c": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "quiz_copy",
+      "label": "Quiz teaser + reward framing",
+      "surface": "hero teaser + role quiz",
+      "variants": [
+        "a",
+        "b",
+        "c"
+      ],
+      "variant_labels": {
+        "a": "Who should you hire first",
+        "b": "Take the quiz. See who to hire",
+        "c": "Find the teammate that gets you your week back"
+      },
+      "fires_click": true,
+      "click_note": "Teaser tap + quiz start / CTA \u2192 experiment_click",
+      "status": "parked",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "c": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "chat_launcher",
+      "label": "Chat launcher label",
+      "surface": "engage chat launcher",
+      "variants": [
+        "a",
+        "b"
+      ],
+      "variant_labels": {
+        "a": "Chat with us",
+        "b": "Chat \u2014 hiring help"
+      },
+      "fires_click": true,
+      "click_note": "Open chat \u2192 experiment_click",
+      "status": "parked",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "gate_headline",
+      "label": "Form gate headline",
+      "surface": "LeadGate card title",
+      "variants": [
+        "a",
+        "b"
+      ],
+      "variant_labels": {
+        "a": "Headline A",
+        "b": "Headline B"
+      },
+      "fires_click": false,
+      "click_note": "Views fire; no dedicated experiment_click yet \u2014 use form_start / convert once GA4 is wired",
+      "status": "parked",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "lp_density",
+      "label": "Landing density \u2014 wordy (a) vs lean (b)",
+      "surface": "market landing page body",
+      "variants": [
+        "a",
+        "b"
+      ],
+      "variant_labels": {
+        "a": "wordy",
+        "b": "lean"
+      },
+      "fires_click": false,
+      "click_note": "Density test \u2014 same CTAs both arms. Primary later KPI: form_start / convert rate, not click CTR",
+      "status": "parked",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    },
+    {
+      "id": "role_imagery",
+      "label": "Role / trust imagery \u2014 set A (defaults) vs set B",
+      "surface": "services page + market LPs + late trust",
+      "variants": [
+        "a",
+        "b"
+      ],
+      "variant_labels": {
+        "a": "set A (defaults)",
+        "b": "set B (challenger)"
+      },
+      "fires_click": false,
+      "click_note": "Imagery swap \u2014 views + convert rate matter more than click CTR",
+      "status": "parked",
+      "winner": null,
+      "metrics_by_variant": {
+        "a": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        },
+        "b": {
+          "views": null,
+          "clicks": null,
+          "ctr_pct": null,
+          "converts": null,
+          "convert_rate_pct": null
+        }
+      }
+    }
+  ],
+  "docs": {
+    "site": "vision/docs/SITE-EXPERIMENTS.md",
+    "module": "vision/lib/experiments.ts",
+    "see_in_ga4": "GA4 \u2192 Admin \u2192 DebugView (or Reports \u2192 Realtime \u2192 Events) on property 549075481 (G-2V3V0BS6JW). Look for experiment_view / experiment_click / experiment_convert with params experiment_id + experiment_variant.",
+    "xray_tab": "ab-tests.html",
+    "media_report": "media.html#live-tests"
+  },
+  "us_exact_phrase_expansion": {
+    "id": "us-exact-phrase-expansion-2026-08-21",
+    "name": "US Exact/Phrase Expansion",
+    "status": "dry_run_not_launched",
+    "campaign": "VC_US_S_ROLES",
+    "landing_page": "https://www.virtualcoworker.app/us",
+    "lp_version": "us-main-control",
+    "ad_groups": [
+      "QuickBooks_Bookkeeper",
+      "Executive_Assistant",
+      "Admin_Assistant",
+      "Customer_Support",
+      "HR_Recruiting",
+      "Ecommerce_Shopify",
+      "Sales_Support_CRM"
+    ],
+    "notes": "Exact+phrase expansion onto /us (not trust-first). No TF_ prefix. BruntWork-informed RSAs.",
+    "created_at": "2026-08-21"
+  }
+}
+
+</script>
+  <script>
+  window.__VC_loadPageData = function (fallbackUrl) {
+    try {
+      var el = document.getElementById("embedded-page-data");
+      if (el && el.textContent && el.textContent.trim()) {
+        return Promise.resolve(JSON.parse(el.textContent));
+      }
+    } catch (e) {}
+    return fetch(fallbackUrl, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    });
+  };
+  </script>
+</body>
+</html>

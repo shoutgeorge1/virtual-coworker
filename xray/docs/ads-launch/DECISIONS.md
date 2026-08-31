@@ -37,9 +37,42 @@ Past burn: agents launched ~8 campaigns + many AGs via API and burned developer-
 - Aligns with Brand deferred hard rule above.
 - Stakeholder follow-up email (**Brand paused + phone tracking**) **sent** 2026-08-07 to Braden / Caitlin / Cheyenne (CC George).
 
+### Planning exception (2026-08-13) — George asked
+
+- George sent a **medium** checklist: **US Brand Defense Campaign — .com + Target Impression Share**.
+- This is a **planning / checklist** project. It does **not** become this week’s #1. Tracking, form simplify, daily search terms, and the forensic audit stay first.
+- Live `Brand_VC` inside CORE: **do not pause / split / edit** in this pass.
+- Recommendation: **B prepare paused Editor `VC_US_S_BRAND`**; keep A live until George Approves Enable. Do not Post. Do not email Braden.
+- Audit: `ads-launch/BRAND-US-DEFENSE-AUDIT-2026-08-13.md`. Checklist: Launch Control `#brand-defense`.
+- Historical $803 / ~$1k CPA remains **untrusted** (not a qualified-lead number).
+
+## Zoho + offline conversions — DEFERRED DURING COLD START (HARD — 2026-08-14)
+
+Zoho is **not cancelled**. It is **not** an active Google Ads optimization project right now. Campaigns are about one week into cold start. Immediate priority: generate and improve **verified employer conversion signal** (search terms, ads, landing pages, forms, bookings, calls).
+
+Full lock: `ads-launch/ZOHO-COLD-START-DEFERRED-2026-08-14.md`. Checklist: Launch Control `#zoho-deferred-cold-start`.
+
+| Keep | Do not |
+|------|--------|
+| Zoho API **read-only** | Build a new Zoho → Google Ads offline-conversion integration |
+| `.app` → Zoho production writes **OFF** | Add Zapier |
+| Front-end Ads conversion tracking | Change existing Zoho records, workflows, fields, users, or permissions |
+| GCLID / GBRAID / WBRAID / UTMs / campaign / landing / submission ID on `.app` enquiries | Make any existing Zoho-related Google Ads conversion **Primary** |
+| Email delivery of employer leads | Alter bidding or campaign settings through the API |
+| Dashboard read-only Zoho monitoring for business context | Use unverified CRM outcomes as bidding signals |
+| Maximize Clicks | Treat missing `VC_*` / `.app` stamps on current Zoho rows as a Zoho failure |
+
+**Why:** Historical Google click IDs were not consistently preserved; most enquiries sit under broad sources such as “Website”; legacy “Zoho JO Submitted,” “Standard OCI,” and possible Zapier uploads may overlap or be incomplete slices; Job Order uploads/values do not reconcile cleanly enough to bid on. Missing `VC_*` / `.app` attribution on new records is **expected** — new forms are not connected yet.
+
+**Revisit only after:** (1) enough qualified employer enquiries (2) VC names the Zoho owner (3) existing Zoho / Zapier / Google Ads uploads are documented and reconciled (4) one `.app` Sales Enquiry can be tested safely end to end (5) CRM outcome definitions and values are consistent enough to validate.
+
+### Communication record (2026-08-14)
+
+George emailed **Braden** and **Amanda** with subject **Stage 1 conversion strategy and Zoho next steps**. George supports offline conversions long term, but recommends slowing that work during cold start and validating the previous agency’s implementation before adding another feedback system.
+
 ## US phone / Call assets (LOCKED — 2026-08-10 · George restore)
 
-**Phone = guiding light** until Zoho offline “qualified lead” is ready. USA Search stays **Maximize Clicks** while campaigns season. Primary: ~60s call from ads. Secondary: website phone taps. Forms useful but not driving the account (spam/bot risk).
+**Phone = guiding light** during cold start. Zoho offline “qualified lead” is **deferred** (2026-08-14 lock) — not this week’s Ads optimization work. USA Search stays **Maximize Clicks** while campaigns season. Primary: ~60s call from ads. Secondary: website phone taps. Forms useful but not driving the account (spam/bot risk).
 
 **George restore 2026-08-10 (later):** verified US line is **888-964-8644** / `tel:+18889648644`. The same-day 310 swap is **superseded**. 888-954 and 888-864 are wrong — never publish.
 
@@ -59,7 +92,7 @@ Past burn: agents launched ~8 campaigns + many AGs via API and burned developer-
 - Fresh **GTM + GA4** on the new microsite so this test’s data stays separate from older WordPress/tagging. Not a judgment on the past — don’t mix signals.
 - Sniper negatives: campaign-level list **`VC_US_S_🚫_Sniper`** attached by George to CORE + ROLES (manual). Repo: `ads-launch/VC_US_S_Sniper_Negatives.*`.
 - **Next session:** site A/B tests → GA4 wiring on Site tests dashboard.
-- **Early next week (aim):** shallow Zoho “decent qualified lead” → Google Ads offline conversion (not “customer paid” — just “looks real”).
+- **Zoho “qualified lead” → Ads offline conversion:** **superseded 2026-08-14** — deferred during cold start. See HARD lock above. Do not treat the old “early next week” aim as live work.
 - **Australia:** confirm/add the AU number in Ads before launch — don’t assume answering is ready.
 
 ## Conversion / CRM stack (LOCKED direction — 2026-08-06)
@@ -70,11 +103,11 @@ Past burn: agents launched ~8 campaigns + many AGs via API and burned developer-
 
 1. **Form fill → thank-you** — primary online signal. Employer inquiry delivered (`employer_inquiry_submitted` after durable delivery). Calendly already on thank-you (US/AU) = **secondary / separate** candidate — never a second Primary for the same inquiry.
 2. **Phone call** — basic click-to-call OK to observe; **phone CTA ≠ qualified** until CallRail (or equivalent) exists. Plan a real call conversion later.
-3. Prefer **direct integrations** (form → email/webhook/sheet; later Zoho API) over complicated Zapier architecture. Zapier may exist in the museum — document, don’t lean on “weird Zapier” as the design.
-4. **Zoho:** George has access. Figure the **lead port path** (API preferred once product/org identified). Recruit vs CRM discovery still **deferred** — no Leads assumption; no live write from repo until path is chosen. Ask VC who owns CRM/admin when stuck.
-5. **Zoho ↔ Google Ads native integration** — audit/document; use **later** for higher-value offline (qualified lead / job order / placement). **Not** a duplicate Primary for the same inquiry.
+3. Prefer **direct integrations** (form → email/webhook/sheet) over complicated Zapier architecture. Zapier may exist in the museum — document only. **Do not add Zapier.**
+4. **Zoho (2026-08-14):** **deferred during cold start** — not cancelled, not an active Ads optimization project. API read-only. `.app` writes OFF. No new Zoho→Ads offline integration. No Zoho record/workflow/field/user/permission changes. Ask VC who owns CRM only when the revisit gate is met.
+5. **Zoho ↔ Google Ads native integration** — do **not** make existing Zoho-related conversions Primary. Use later only after the revisit gate. **Not** a duplicate Primary for the same inquiry.
 6. **CallRail:** layer in ~1–2 months when they get serious — **not** Stage 1 required.
-7. Offline / higher-value conversions via Zoho **after** basic form + phone exist.
+7. Offline / higher-value conversions via Zoho **after** the 2026-08-14 revisit gate — not during this cold start.
 
 ### Still true
 
@@ -120,7 +153,7 @@ Past burn: agents launched ~8 campaigns + many AGs via API and burned developer-
 - No historical shared negs / audiences / conversions / account machinery on `VC_*`  
 - Don’t switch Max Conv until new conversion action verified + meaningful data  
 
-Zoho remains a **PARALLEL** workstream — **not** a traffic blocker. **Platform discovery + live inventory/API implementation are DEFERRED** (see `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md`): George’s UI shows **no Leads**; visible spine includes Accounts / Contacts / Job Orders / Placements. May be Zoho Recruit or heavily customized CRM — **do not assume CRM API V8 or hardcode Leads**. Native Ads audit stays separate and does **not** assume George’s pending Ads developer token.
+Zoho remains a **PARALLEL** workstream — **not** a traffic blocker and **not** an active Ads optimization project during this cold start (2026-08-14 HARD lock). **Platform discovery + live inventory/API implementation stay DEFERRED** (see `ads-launch/zoho/DEFERRED-PLATFORM-DISCOVERY.md` and `ZOHO-COLD-START-DEFERRED-2026-08-14.md`): George’s UI shows **no Leads**; visible spine includes Accounts / Contacts / Job Orders / Placements. May be Zoho Recruit or heavily customized CRM — **do not assume CRM API V8 or hardcode Leads**. Native Ads audit stays separate and does **not** assume George’s pending Ads developer token. No new offline-conversion build until the revisit gate.
 
 ## Operating rule (locked — judgment over busywork)
 
@@ -149,11 +182,11 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 | **US phone (site + Ads)** | `(888) 964-8644` / `tel:+18889648644` | **Primary (George 2026-08-10 restore).** Never 888-864 or 888-954. 310 is not the public US number. AU stays **1300 886 740**. |
 | **Careers URL** | `/ph` (PH microsite) | Internal job-seeker exit. **Never** WordPress. Env WP hosts rejected. |
 | **Lead delivery** | Real channel required for **TRAFFIC READY** | `ALLOW_LOG_ONLY_LEADS=true` = **explicit blocked mode** — QA logs only, `conversion_eligible=false`, not TRAFFIC READY. Zoho CRM = **CRM READY** parallel track (not a traffic gate). |
-| **Exit-intent** | Off unless `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true` | Frequency-capped once/session. No fake live chat. |
+| **Exit-intent / chat widgets** | **Hold** (2026-08-14) | Off unless `NEXT_PUBLIC_ENABLE_EXIT_INTENT=true` / `NEXT_PUBLIC_ENABLE_CHAT=true`. They obscure the LP, especially mobile. A/B vs clean LP later. No fake live chat. |
 | **Ads conversions (firing)** | `NEXT_PUBLIC_ENABLE_ADS_CONVERSIONS=false` | Observe-only until new GTM → new Ads actions tested. |
 | **New conversion actions** | **Build new — never reuse old account actions** | Stage 1 OPTIMIZATION: (1) form fill → thank-you / employer inquiry **delivered** (2) phone (basic now; qualified ~60s when CallRail). Prefer direct integrations. Leave old Zoho/Zapier actions untouched for archive. One inquiry ≠ two Primaries. |
 | **Calendly / booking** | Wired on thank-you from live WP (2026-08-06) | US `calendly.com/cheyenne-virtualcoworker/30min` · AU `calendly.com/apac-virtualcoworker/30min`. Env override: `NEXT_PUBLIC_CALENDLY_US` / `_AU`. Confirm with VC. **Not** TRAFFIC READY. Booking CTA = Stage 1 **secondary / separate conversion candidate** — do **not** replace primary `employer_inquiry_submitted`. Booked-call event = OPTIMIZATION READY / later once GTM fires. |
-| **Zoho lead port** | Access yes · path TBD · API preferred | George has Zoho access. Discover Recruit vs CRM (deferred). Prefer API when product known; native Zoho↔Ads for offline later — not duplicate Primary. No live write until path locked. Zapier = document only, not architecture. Ask VC who owns CRM/admin. |
+| **Zoho lead port** | **Deferred during cold start** (2026-08-14) | Not cancelled. API read-only. Writes OFF. No new OCI, no Zapier, no Primary Zoho conversions, no Ads API bidding changes. Revisit only after the five-item gate in `ZOHO-COLD-START-DEFERRED-2026-08-14.md`. |
 | **CallRail** | ~1–2 months | Not Stage 1 / not TRAFFIC READY. Until then phone CTA ≠ qualified call. |
 | **Campaign goals** | **Campaign-specific on each `VC_*`** | After Post in Ads UI: Goals → campaign-specific → only the new actions. Editor CSV cannot fully express this. |
 | **Negatives** | **VC-only curated campaign negs** | Builder emits campaign-level Broad rows from `NEGATIVES` only. Soft cap ~220 unique. Never attach account shared mega lists to `VC_*`. |
@@ -195,13 +228,14 @@ Editor may not fully express goals — see Launch Control + `EDITOR-PREFLIGHT-RE
 ### Parallel / later (not traffic blockers)
 
 - Per-market GTM/GA4/GSC (`GTM_US` + `GTM_AU`) → **OPTIMIZATION READY** — separate containers are the measurement requirement
-- **Zoho platform discovery** (product + API path) → then inventory / OAuth / adapter / field mapping → **CRM READY** — **deferred**; access ≠ integration complete; no Leads assumption
+- **Zoho + offline conversions — DEFERRED DURING COLD START** (2026-08-14 HARD lock). Not cancelled. Not an active Ads optimization project. Full: `ZOHO-COLD-START-DEFERRED-2026-08-14.md`
+- **Zoho platform discovery** (product + API path) → then inventory / OAuth / adapter / field mapping → **CRM READY** — parked behind the revisit gate; access ≠ integration complete; no Leads assumption
 - Native Zoho↔Ads audit (observe only; separate from Ads developer token; do not authorize from repo work)
-- **Offline conversion actions** (plan later — **not** Stage 1 primary / not TRAFFIC READY):
+- **Offline conversion actions** (plan later — **not** Stage 1 primary / not TRAFFIC READY / not this cold start):
   - Job order — value TBD (range discussed **$200–$400**, **not approved**)
   - Job placement — value TBD (range discussed **$500–$800**, **not approved**)
   - Deduping: unique Zoho IDs as conversion IDs; don’t double-count order+placement on the same journey without rules; GCLID / offline import path
-- Stage 1 primary conversion (when wired for optimization): **employer inquiry delivered**. Qualified call when CallRail ready. Job order / placement = later offline.
+- Stage 1 primary conversion (when wired for optimization): **employer inquiry delivered** on the front end. Keep those values separate from unverified CRM outcomes. Job order / placement = later offline after the revisit gate.
 - Thank-you → **book hiring conversation** (Calendly): Stage 1 **secondary** or separate conversion candidate — **never** Primary replacing `employer_inquiry_submitted`. Confirm URLs with VC; booked-call event when GTM ready → OPTIMIZATION READY / later. **Not** required for TRAFFIC READY.
 - CallRail / qualified-call tracking
 - GTM Ads conversion mapping (tested) → **OPTIMIZATION READY**

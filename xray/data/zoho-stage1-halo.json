@@ -1,0 +1,51 @@
+{
+  "generated_at_utc": "2026-08-14T19:45:00+00:00",
+  "read_only": true,
+  "method": "Zoho CRM API v8 COQL SELECT only — no writes. Counts from Created_Time.",
+  "stage1": {
+    "label": "Stage 1 flight",
+    "start": "2026-08-06",
+    "end": "2026-08-14",
+    "days": 9,
+    "filter": "Created_Time >= 2026-08-06T00:00:00+00:00 AND Created_Time < 2026-08-15T00:00:00+00:00",
+    "sales_enquiries": {
+      "total": 51,
+      "usa": 23,
+      "au": 25,
+      "blank": 3,
+      "with_utm_gclid": 0
+    },
+    "job_orders": {
+      "total": 18,
+      "usa": 8,
+      "au": 9,
+      "blank": 1
+    },
+    "discovery_scheduled": 4,
+    "calls_in_window": 31
+  },
+  "baseline": {
+    "label": "Quietest recent 9-day window before Stage 1",
+    "start": "2026-07-01",
+    "end": "2026-07-09",
+    "days": 9,
+    "filter": "Created_Time >= 2026-07-01T00:00:00+00:00 AND Created_Time < 2026-07-10T00:00:00+00:00",
+    "why": "Lowest Sales Enquiry count among comparable 9-day windows scanned May–Aug 2026 before VC_* Stage 1 (Jul 1–9 = 53 SE). Immediate prior Jul 28–Aug 5 was higher (80 SE, junk-heavy). Active-CRM Dec 2025–Aug 5 average (~74 SE / 28 JO per 9d) is hotter — not used as the 'lowest' floor. Empty pre-Oct 2025 months excluded (CRM history not live then).",
+    "sales_enquiries": {
+      "total": 53,
+      "usa": 26,
+      "au": 27
+    },
+    "job_orders": {
+      "total": 26,
+      "usa": 12,
+      "au": 14
+    },
+    "discovery_scheduled": 0
+  },
+  "context": {
+    "july_2026_per_9d": {"se": 62.1, "jo": 22.6, "note": "July monthly rate scaled to 9 days — Stage 1 sits near the low end of a working book."},
+    "active_crm_avg_per_9d": {"se": 73.7, "jo": 27.8, "window": "2025-12-01 → 2026-08-05"},
+    "attribution": "0 of 51 Stage 1 Sales Enquiries have utm_gclid. Expected — new .app forms are not writing to Zoho. Not a Zoho failure. Concurrent CRM volume during the paid flight (site / GMB / phone / manual entry) — monitoring baseline only, not click-attributed paid CAC and not demonstrated ads lift. Zoho + offline conversions deferred during cold start."
+  }
+}

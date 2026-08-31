@@ -1,0 +1,241 @@
+{
+  "title": "Aug 18 winning-path registry",
+  "generated_at_utc": "2026-08-20T10:45:00Z",
+  "quality_rule": "Zoho human outcome outranks Ads conversion tags. Junk and not-a-fit are not winners.",
+  "protect_label_requested": "PROTECT_CONFIRMED_WINNER_AUG18",
+  "protect_label_applied": false,
+  "protect_label_blocker": "Google Ads OAuth refresh token invalid_grant (reconfirmed 20 Aug 04:15 PT via shoutgeorge-ads list_accessible_customers). Interactive reauth required. No API mutate attempted.",
+  "confirmations": {
+    "us_keyword_virtual_assistant_agency_in_usa": {
+      "status": "ENABLED Exact + Phrase in Hire_VA_PH as of 18 Aug inspect. Also Enabled in Hire_VA_PH_offer_LP.",
+      "paused": false,
+      "action": "freeze — do not restore, do not pause"
+    },
+    "rsa_820314203419": {
+      "headline": "Virtual Assistant Agency…",
+      "group": "VA_Agency_Firm_PH",
+      "served_us_convert": false,
+      "why": "US convert was Hire_VA_PH. This ad is a different group. Eligible Hire_VA_PH ads: 820036923766, 820036923769, 820036923772. Serving ad unconfirmed — no click-level Ads."
+    },
+    "rsa_820329868205": {
+      "headline": "Hire Social Media Staff…",
+      "group": "Social_Media_Hire_PH",
+      "served_au_convert": "eligible_unconfirmed",
+      "why": "Right group and enabled 14 Aug. Other enabled RSAs 820329868079 and 820329868202. Live Ads cannot say which ad got the click."
+    }
+  },
+  "timezone_notes": {
+    "zoho_filter": "America/Los_Angeles Created_Time",
+    "ads_us": "America/Los_Angeles",
+    "ads_au": "Australia/Sydney — AU Aug 18 Ads day overlaps 17 Aug PT evening",
+    "ga4": "property-local"
+  },
+  "sources": {
+    "zoho": "Zoho CRM v8 COQL 2026-08-17T00:00:00-07:00 to 2026-08-21T00:00:00-07:00",
+    "ads_live": "blocked — invalid_grant",
+    "ads_existing": "xray/data/executive-snapshot.json (pull 2026-08-19) + ads-launch/_rsa_challenger_review.json + conv-actions-2026-08-19.json",
+    "ga4": "GA4 Data API properties 549075481 (US) and AU property, 2026-08-17 to 2026-08-20",
+    "lp_git": "e03d1dd baseline_v1_2026_08 2026-08-18 04:22 PT; stage1-v8 family through that commit"
+  },
+  "human_journeys": [
+    {
+      "ledger_id": "US-A18-01",
+      "market": "US",
+      "zoho_record_id": "6724032000029876002",
+      "created_pt": "2026-08-18T04:06:18",
+      "search_term": "virtual assistant agency in usa",
+      "keyword": "virtual assistant agency in usa",
+      "match_type": "Exact and Phrase both Enabled in Hire_VA_PH (18 Aug inspect). Click match type not in notes.",
+      "campaign": "VC_US_S_CORE",
+      "campaign_id": "24117249292",
+      "ad_group": "Hire_VA_PH",
+      "ad_group_id": "198704755323",
+      "keyword_status_last_seen": "Exact + Phrase ENABLED in Hire_VA_PH (inspect 2026-08-18). Also Enabled in Hire_VA_PH_offer_LP. No disk evidence it was paused. Freeze — do not restore.",
+      "rsa_ad_ids_eligible_unconfirmed": ["820036923766", "820036923769", "820036923772"],
+      "rsa_serving_ad_confirmed": false,
+      "rsa_id_820314203419": "NOT this path. That ad is in VA_Agency_Firm_PH. Cannot have served this Hire_VA_PH click.",
+      "form_version": "GuidedMatchGate + StaffingBaselineLanding. Convert hit stage1-v8 before e03d1dd.",
+      "final_url": "https://www.virtualcoworker.app/us",
+      "landing_page": "/us",
+      "lp_version": "stage1-v8",
+      "lp_commit_before_baseline": "pre-e03d1dd (baseline shipped 2026-08-18 04:22 PT; this lead is 04:06 PT)",
+      "role_requested": "Administrative / virtual assistant",
+      "has_company": false,
+      "company_size": "1-10",
+      "zoho_status": "Attempted to Contact 2 (Auto)",
+      "quality": "employer_probable",
+      "protect": true,
+      "protect_reason": "Paid gclid form on /us. Employer-shaped role. Sales still working it. Not junk."
+    },
+    {
+      "ledger_id": "US-A18-02",
+      "market": "US",
+      "zoho_record_id": "6724032000029875002",
+      "created_pt": "2026-08-18T02:19:01",
+      "search_term": "virtual assistant for real estate investors",
+      "keyword": "virtual assistant for real estate investors",
+      "match_type": "BROAD",
+      "campaign": "VC_US_S_CORE",
+      "campaign_id": "24117249292",
+      "ad_group": "Hire_VA_PH",
+      "ad_group_id": "198704755323",
+      "final_url": "https://www.virtualcoworker.app/us",
+      "landing_page": "/us",
+      "lp_version": "stage1-v8",
+      "role_requested": "Other / not sure",
+      "has_company": false,
+      "company_size": "1-10",
+      "zoho_status": "Decided Against / Not a Fit",
+      "quality": "employer_not_a_fit",
+      "protect": false,
+      "protect_reason": "Human path existed but sales marked not a fit. Reconstruct only. Do not expand real estate from this row. Cheyenne 19 Aug: investor/wholesaler RE VA is often a poor fit."
+    },
+    {
+      "ledger_id": "AU-A17-01",
+      "market": "AU",
+      "zoho_record_id": "6724032000029868001",
+      "created_pt": "2026-08-17T20:25:24",
+      "ads_calendar_note": "17 Aug PT evening = 18 Aug AEST. Likely inside AU Ads Aug 18 conversion day.",
+      "search_term_reported": "virtual assistant hiring in australia (Ads ST; RSA review already excluded this term)",
+      "keyword": "australia virtual assistant",
+      "match_relationship": "exact close variant (operator brief; Ads API not live to reconfirm)",
+      "campaign": "VC_AU_S_ROLES",
+      "campaign_id": "24117949196",
+      "ad_group": "Recruitment_Hire_PH",
+      "ad_group_id": "199115615677",
+      "final_url": "https://www.virtualcoworker.app/au/recruitment",
+      "landing_page": "/au/recruitment",
+      "lp_version": "stage1-v8",
+      "role_requested": "Recruitment support",
+      "has_company": false,
+      "company_size": "1-10",
+      "zoho_status": "Junk Lead",
+      "quality": "spam_or_junk",
+      "protect": false,
+      "protect_reason": "Ads-strong, CRM-junk. Form defaulted to Recruitment support. No company. Do not freeze."
+    },
+    {
+      "ledger_id": "AU-A17-02",
+      "market": "AU",
+      "zoho_record_id": "6724032000029820005",
+      "created_pt": "2026-08-17T15:28:22",
+      "keyword": "australia virtual assistant",
+      "campaign": "VC_AU_S_ROLES",
+      "campaign_id": "24117949196",
+      "ad_group": "Recruitment_Hire_PH",
+      "ad_group_id": "199115615677",
+      "final_url": "https://www.virtualcoworker.app/au/recruitment",
+      "lp_version": "stage1-v8",
+      "role_requested": "Recruitment support",
+      "has_company": false,
+      "company_size": "11-50",
+      "zoho_status": "Junk Lead",
+      "quality": "spam_or_junk",
+      "protect": false,
+      "protect_reason": "Second junk on the same keyword → recruitment page."
+    },
+    {
+      "ledger_id": "AU-A19-01",
+      "market": "AU",
+      "zoho_record_id": "6724032000029986002",
+      "created_pt": "2026-08-19T04:11:28",
+      "search_term": "hire a social media manager",
+      "keyword": "hire a social media manager",
+      "match_type": "p (phrase)",
+      "device": "c (computer)",
+      "campaign": "VC_AU_S_ROLES",
+      "campaign_id": "24117949196",
+      "ad_group": "Social_Media_Hire_PH",
+      "ad_group_id": "199115614717",
+      "rsa_ad_ids_eligible_unconfirmed": ["820329868205", "820329868079", "820329868202"],
+      "rsa_serving_ad_confirmed": false,
+      "rsa_id_820329868205": "Eligible/unconfirmed. Right group (Social_Media_Hire_PH), enabled 14 Aug. Live Ads click-level not available (invalid_grant). Do not call it the winning ad from timing alone.",
+      "form_version": "GuidedMatchGate + StaffingBaselineLanding, role preselected Social media support, lp_version baseline_v1_2026_08",
+      "final_url": "https://www.virtualcoworker.app/au/social-media",
+      "landing_page": "/au/social-media",
+      "lp_version": "baseline_v1_2026_08",
+      "lp_commit": "e03d1dd",
+      "role_requested": "Social media support",
+      "has_company": true,
+      "company_token": "H…5",
+      "company_size": "1-10",
+      "zoho_status": "Information Brochure Sent",
+      "quality": "employer_probable",
+      "protect": true,
+      "protect_reason": "Paid gclid. Role matches page. Company present. Holly working it (brochure). Query → role ad group → role LP aligned."
+    }
+  ],
+  "protected_paths": [
+    {
+      "id": "PROTECT-US-AGENCY",
+      "campaign": "VC_US_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "ad_group_id": "198704755323",
+      "keyword": "virtual assistant agency in usa",
+      "match_types_do_not_change": ["EXACT", "PHRASE"],
+      "rsa": "do not edit or replace enabled RSAs 820036923766 / 820036923769 / 820036923772 in Hire_VA_PH. Serving ad unconfirmed. 820314203419 is a different group.",
+      "final_url": "https://www.virtualcoworker.app/us",
+      "lp_version_at_convert": "stage1-v8",
+      "current_live_lp": "baseline_v1_2026_08 (e03d1dd) — do not roll back /us",
+      "do_not": [
+        "pause keyword",
+        "change match type",
+        "add negative that contains agency in usa",
+        "move keyword",
+        "edit RSA",
+        "change Final URL",
+        "substantially edit /us",
+        "change bidding on this group during freeze"
+      ]
+    },
+    {
+      "id": "PROTECT-AU-SMM",
+      "campaign": "VC_AU_S_ROLES",
+      "ad_group": "Social_Media_Hire_PH",
+      "ad_group_id": "199115614717",
+      "keyword": "hire a social media manager",
+      "match_types_do_not_change": ["PHRASE"],
+      "rsa": "do not edit enabled RSAs 820329868079 / 820329868202 / 820329868205. Serving ad unconfirmed.",
+      "final_url": "https://www.virtualcoworker.app/au/social-media",
+      "lp_version": "baseline_v1_2026_08",
+      "lp_commit": "e03d1dd",
+      "do_not": [
+        "pause keyword",
+        "change Phrase match",
+        "add negative that blocks hire a social media manager",
+        "move keyword",
+        "edit RSA",
+        "change Final URL",
+        "substantially edit /au/social-media"
+      ]
+    }
+  ],
+  "not_protected": [
+    {
+      "path": "AU Recruitment_Hire_PH / australia virtual assistant → /au/recruitment",
+      "why": "Two Junk Lead records. Ads conversions are not people."
+    },
+    {
+      "path": "US Hire_VA_PH Broad / virtual assistant for real estate investors → /us",
+      "why": "One human, Decided Against / Not a Fit. Do not treat as a winner."
+    }
+  ],
+  "transferable": [
+    "Role-specific query + role ad group + role landing page (AU social media).",
+    "Employer shopping language: agency, hire a [role] — not generic VA + hiring + country.",
+    "Company present on the better AU lead; missing on junk and not-a-fit.",
+    "Recruitment LP + generic 'australia virtual assistant' leaked job-seeker/junk. Do not copy that structure.",
+    "Generic /us can still produce an employer-probable lead when the query is agency/employer."
+  ],
+  "ads_vs_zoho": {
+    "ads_aug18_click_date": { "US": 2.0, "AU": 4.0, "source": "executive-snapshot 2026-08-19" },
+    "zoho_paid_people_aug17_19_pt": {
+      "employer_probable": 2,
+      "employer_not_a_fit": 1,
+      "junk": 2
+    },
+    "controlling_number": "5 paid gclid people in the window. 2 are junk. 1 is not a fit. 2 are probable employers.",
+    "duplication": "Form + booked call is one person, two steps — not a duplicate. AU 4 Ads vs 2 junk Zoho rows is stacked form/thank-you/qualify/close on the same submit (no booked call). That is one action family, not four people, and not form+Calendly. US 2 Ads = 2 Zoho people. Do not change conversion settings.",
+    "primary_action_recommendation": "Eventually bid on one completed employer inquiry action (VC_*_Thank_You after gclid, or a later Zoho JO upload). Phone click stays secondary. GA4 page_view/user_engagement must never be Primary."
+  }
+}

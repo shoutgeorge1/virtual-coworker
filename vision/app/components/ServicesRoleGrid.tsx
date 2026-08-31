@@ -31,7 +31,7 @@ const CARD_TREATMENTS: Record<
 
 /**
  * Services role grid with unique portraits per title.
- * Assigns role_imagery once for the page; thumbs follow A/B.
+ * Whole card is one link to the role LP (image + copy + CTA).
  */
 export default function ServicesRoleGrid({ market }: { market: MarketId }) {
   const variant = useRoleImageryVariant(market, "services_grid");
@@ -41,11 +41,14 @@ export default function ServicesRoleGrid({ market }: { market: MarketId }) {
       {CATEGORY_SLUGS.map((slug) => {
         const c = CATEGORIES[slug];
         const t = CARD_TREATMENTS[slug];
+        const href = `/${market}/${slug}#gate`;
         return (
-          <article
+          <Link
+            href={href}
             className={`services-card services-card-with-photo services-card--${t.frame} services-card--tone-${t.tone} services-card--accent-${t.accent}`}
             key={slug}
             data-crop={t.crop}
+            aria-label={`${c.label} - ${primaryHireCta(market)}`}
           >
             <RolePortraitThumb category={slug} variant={variant} />
             <div className="services-card-body">
@@ -54,11 +57,11 @@ export default function ServicesRoleGrid({ market }: { market: MarketId }) {
               <p>{roleOutcomes(slug, market).problem}</p>
               <p className="services-card-gain">{roleOutcomes(slug, market).gain}</p>
               <div className="services-card-links">
-                <Link href={`/${market}/${slug}#gate`}>{primaryHireCta(market)} →</Link>
-                <Link href={`/${market}/${slug}`}>Role details</Link>
+                <span className="services-card-cta">{primaryHireCta(market)} →</span>
+                <span className="services-card-details">Role details</span>
               </div>
             </div>
-          </article>
+          </Link>
         );
       })}
     </div>

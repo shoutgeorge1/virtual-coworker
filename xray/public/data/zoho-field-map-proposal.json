@@ -1,0 +1,260 @@
+{
+  "generated_at_utc": "2026-08-31T05:44:29.244195+00:00",
+  "writes_enabled": false,
+  "owner": "Cursor",
+  "plain_english": "Which form boxes save into which Zoho boxes so we can see paid leads in CRM.",
+  "source_app": "vision LeadGate /api/lead payload (vision/lib/zoho/payload.ts)",
+  "source_zoho": "ads-launch/ATTRIBUTION-RECOVERY-2026-08-13/ZOHO-DICTIONARY.md",
+  "approval_required": false,
+  "next_step": "Draft parked. Zoho + offline conversions are DEFERRED DURING COLD START (not cancelled). Do not turn writes on during cold start. Revisit only after the five-item gate.",
+  "notes": [
+    "Click id for this org is utm_gclid \u2014 not $gclid.",
+    "Extras without Zoho fields (role, size, seats, timeline) fold into Description for now.",
+    "VC_Submission_ID / gbraid / wbraid: create or omit when writes turn on \u2014 not George homework.",
+    "Production writes remain OFF. No Zoho writes. No Ads mutate. No new Zapier. No Primary Zoho conversions.",
+    "Missing VC_* / .app stamps on current Zoho rows is expected \u2014 new forms are not connected. Not a Zoho failure."
+  ],
+  "mappings": [
+    {
+      "app_field": "firstName",
+      "plain_label": "Name (first)",
+      "purpose": "Name (first)",
+      "proposed_zoho_api_name": "First_Name",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "standard",
+      "clarity": "clear",
+      "note": "Form first name \u2192 Zoho First_Name"
+    },
+    {
+      "app_field": "lastName",
+      "plain_label": "Name (last)",
+      "purpose": "Name (last)",
+      "proposed_zoho_api_name": "Last_Name",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "standard",
+      "clarity": "clear",
+      "note": "Form last name \u2192 Zoho Last_Name"
+    },
+    {
+      "app_field": "email",
+      "plain_label": "Email",
+      "purpose": "Email",
+      "proposed_zoho_api_name": "Email",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "standard",
+      "clarity": "clear",
+      "note": "Form email \u2192 Zoho Email"
+    },
+    {
+      "app_field": "phone",
+      "plain_label": "Phone",
+      "purpose": "Phone",
+      "proposed_zoho_api_name": "Phone",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "standard",
+      "clarity": "clear",
+      "note": "Form phone \u2192 Zoho Phone"
+    },
+    {
+      "app_field": "company",
+      "plain_label": "Company",
+      "purpose": "Company",
+      "proposed_zoho_api_name": "Company",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "standard",
+      "clarity": "clear",
+      "note": "Form company \u2192 Zoho Company"
+    },
+    {
+      "app_field": "message",
+      "plain_label": "Message",
+      "purpose": "Message",
+      "proposed_zoho_api_name": "Description",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "standard",
+      "clarity": "clear",
+      "note": "Form message \u2192 Zoho Description"
+    },
+    {
+      "app_field": "gclid",
+      "plain_label": "Google click id",
+      "purpose": "Google click id",
+      "proposed_zoho_api_name": "utm_gclid",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "confirmed_in_dictionary",
+      "clarity": "clear",
+      "note": "Paid click id. Use utm_gclid (not $gclid) for this org."
+    },
+    {
+      "app_field": "utm_source",
+      "plain_label": "UTM source",
+      "purpose": "UTM source",
+      "proposed_zoho_api_name": "utm_source",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "confirmed_in_dictionary",
+      "clarity": "clear",
+      "note": null
+    },
+    {
+      "app_field": "utm_medium",
+      "plain_label": "UTM medium",
+      "purpose": "UTM medium",
+      "proposed_zoho_api_name": "utm_medium",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "confirmed_in_dictionary",
+      "clarity": "clear",
+      "note": null
+    },
+    {
+      "app_field": "utm_campaign",
+      "plain_label": "UTM campaign",
+      "purpose": "UTM campaign",
+      "proposed_zoho_api_name": "utm_campaign",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "confirmed_in_dictionary",
+      "clarity": "clear",
+      "note": null
+    },
+    {
+      "app_field": "utm_term",
+      "plain_label": "UTM term",
+      "purpose": "UTM term",
+      "proposed_zoho_api_name": "utm_term",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "confirmed_in_dictionary",
+      "clarity": "clear",
+      "note": null
+    },
+    {
+      "app_field": "utm_content",
+      "plain_label": "UTM content",
+      "purpose": "UTM content",
+      "proposed_zoho_api_name": "utm_content",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "confirmed_in_dictionary",
+      "clarity": "clear",
+      "note": null
+    },
+    {
+      "app_field": "market",
+      "plain_label": "Market (us/au)",
+      "purpose": "Market (us/au)",
+      "proposed_zoho_api_name": "Region",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "map_values",
+      "clarity": "clear",
+      "note": "us \u2192 USA \u00b7 au \u2192 AU (Zoho Region picklist)"
+    },
+    {
+      "app_field": "company_website",
+      "plain_label": "Company website",
+      "purpose": "Company website",
+      "proposed_zoho_api_name": "Website",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "confirmed_in_dictionary",
+      "clarity": "clear",
+      "note": null
+    },
+    {
+      "app_field": "referrer",
+      "plain_label": "Referrer",
+      "purpose": "Referrer",
+      "proposed_zoho_api_name": "Referrer",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "confirmed_in_dictionary",
+      "clarity": "clear",
+      "note": null
+    },
+    {
+      "app_field": "landing_page_url",
+      "plain_label": "Landing page URL",
+      "purpose": "Landing page URL",
+      "proposed_zoho_api_name": "Referring_URL",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "confirmed_in_dictionary",
+      "clarity": "clear",
+      "note": null
+    },
+    {
+      "app_field": "role",
+      "plain_label": "Role requested",
+      "purpose": "Role requested",
+      "proposed_zoho_api_name": "Description (line)",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "fold_into_description",
+      "clarity": "clear",
+      "note": "Cursor: keep as a Description line for now (no custom field yet)"
+    },
+    {
+      "app_field": "company_size",
+      "plain_label": "Company size",
+      "purpose": "Company size",
+      "proposed_zoho_api_name": "Description (line)",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "fold_into_description",
+      "clarity": "clear",
+      "note": "Cursor: keep as a Description line for now"
+    },
+    {
+      "app_field": "positions_needed",
+      "plain_label": "Seats needed",
+      "purpose": "Seats needed",
+      "proposed_zoho_api_name": "Description (line)",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "fold_into_description",
+      "clarity": "clear",
+      "note": "Cursor: keep as a Description line for now"
+    },
+    {
+      "app_field": "hiring_timeline",
+      "plain_label": "Hiring timeline",
+      "purpose": "Hiring timeline",
+      "proposed_zoho_api_name": "Description (line)",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "fold_into_description",
+      "clarity": "clear",
+      "note": "Cursor: keep as a Description line for now"
+    },
+    {
+      "app_field": "submission_id",
+      "plain_label": "Form submission id",
+      "purpose": "Form submission id",
+      "proposed_zoho_api_name": "VC_Submission_ID",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "missing_in_zoho",
+      "clarity": "cursor_parked",
+      "note": "Field does not exist yet. Create before writes (dedupe). Not a George homework item."
+    },
+    {
+      "app_field": "gbraid",
+      "plain_label": "iOS click id",
+      "purpose": "iOS click id",
+      "proposed_zoho_api_name": "(omit)",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "missing_in_zoho",
+      "clarity": "cursor_parked",
+      "note": "Does not exist in Zoho. Omit until we create a field when writes turn on."
+    },
+    {
+      "app_field": "wbraid",
+      "plain_label": "Web click id",
+      "purpose": "Web click id",
+      "proposed_zoho_api_name": "(omit)",
+      "module": "Leads (UI: Sales Enquiries)",
+      "status": "missing_in_zoho",
+      "clarity": "cursor_parked",
+      "note": "Does not exist in Zoho. Omit until we create a field when writes turn on."
+    }
+  ],
+  "cursor_parked_fields": [
+    "submission_id",
+    "gbraid",
+    "wbraid"
+  ],
+  "sales_later_fields": [],
+  "uncertain_fields": [
+    "submission_id",
+    "gbraid",
+    "wbraid"
+  ]
+}

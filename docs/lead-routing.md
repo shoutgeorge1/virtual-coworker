@@ -11,7 +11,7 @@ Email delivery still works as a backup. Full CRM admin / rebuild is not required
 
 **WordPress still:** Gravity Forms → `us@` / `apac@` (unchanged).
 
-**Later:** Zoho CRM API (sales ops parallel — not required for Monday ads review).
+**Later:** Zoho CRM API (sales ops parallel — **deferred during cold start**, 2026-08-14). Not cancelled. Not required for ads review. See `ads-launch/ZOHO-COLD-START-DEFERRED-2026-08-14.md`.
 
 1. Form submission is stored safely (server route)
 2. Lead is delivered to a durable channel (GitHub Issues pilot; email when Resend is wired)
@@ -19,7 +19,7 @@ Email delivery still works as a backup. Full CRM admin / rebuild is not required
 4. Optional backup copy to a spreadsheet or database
 5. User sees a confirmed thank-you state
 6. Failed delivery is logged (no silent drops)
-7. Zoho integration can be added later without rebuilding the form
+7. Zoho integration can be added later without rebuilding the form — only after the cold-start revisit gate
 
 ## Lead fields
 

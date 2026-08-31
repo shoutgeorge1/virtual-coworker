@@ -25,7 +25,7 @@ export default function TermsPage() {
         <p className="micro-kicker legal-kicker">Virtual Coworker</p>
         <h1>Terms of use</h1>
         <p>
-          These terms apply to this Virtual Coworker website — US and Australia
+          These terms apply to this Virtual Coworker website - US and Australia
           hiring pages, services, how-it-works, the Philippines careers path,
           and related forms. By using the site you agree to these terms and our{" "}
           <Link href="/privacy">Privacy notice</Link>.
@@ -41,8 +41,8 @@ export default function TermsPage() {
         <p>
           Sending a hiring request on US or Australia pages asks our team to
           follow up for a hiring conversation. It is not an instant hire, a job
-          offer, or a signed contract. Placement, rates, and employment terms —
-          if any — are confirmed separately. The Philippines path is for talent
+          offer, or a signed contract. Placement, rates, and employment terms -
+          if any - are confirmed separately. The Philippines path is for talent
           applications only and is not a business hiring form.
         </p>
 

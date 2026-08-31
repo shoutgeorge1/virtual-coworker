@@ -34,7 +34,7 @@ describe("lead delivery honesty", () => {
 
   it("zoho CRM alone is not a traffic durable channel", () => {
     const env = {
-      ZOHO_CRM_ENABLED: "true",
+      ZOHO_SUBMISSION_ENABLED: "true",
       ZOHO_CRM_CLIENT_ID: "cid",
       ZOHO_CRM_CLIENT_SECRET: "sec",
       ZOHO_CRM_REFRESH_TOKEN: "rt",
@@ -76,6 +76,20 @@ describe("lead delivery honesty", () => {
     expect(text).toContain("Email Address\n  ada@example.com");
     expect(text).toContain("GCLID\n  abc");
     expect(text).toContain("Submission ID\n  vc_us_test");
+  });
+
+  it("includes optional company website without requiring it", () => {
+    const withSite = formatLeadEmailText({
+      firstName: "Ada",
+      email: "ada@example.com",
+      company_website: "https://acme.com",
+    });
+    expect(withSite).toContain("Company website\n  https://acme.com");
+    const withoutSite = formatLeadEmailText({
+      firstName: "Ada",
+      email: "ada@example.com",
+    });
+    expect(withoutSite).toContain("Company website\n  (none)");
   });
 
   it("includes modeled lead value without calling it revenue", () => {

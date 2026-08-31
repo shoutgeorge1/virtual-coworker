@@ -1,0 +1,24 @@
+{
+  "_comment": "Example event log for ads-launch/pull_experiments_snapshot.py. Copy to experiments-events.json and replace with real GA4 export rows. Do not invent winners.",
+  "events": [
+    {
+      "event": "experiment_view",
+      "experiment_id": "quiz_copy",
+      "experiment_variant": "a",
+      "count": 0
+    },
+    {
+      "event": "experiment_click",
+      "experiment_id": "quiz_copy",
+      "experiment_variant": "a",
+      "count": 0
+    },
+    {
+      "event": "experiment_convert",
+      "experiment_id": "quiz_copy",
+      "experiment_variant": "a",
+      "convert_reason": "form_submit",
+      "count": 0
+    }
+  ]
+}

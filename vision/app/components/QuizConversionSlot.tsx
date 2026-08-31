@@ -130,11 +130,11 @@ export default function QuizConversionSlot({
             copy={{
               ...gate,
               eyebrow: isAu
-                ? "Businesses only · 30 seconds"
-                : "Employers only · 30 seconds",
+                ? "About 30 seconds · obligation free"
+                : "About 30 seconds · free strategy call",
               title: isAu
-                ? "Book a free consultation - obligation free, at no cost."
-                : "Book your free consultation.",
+                ? "Book a free strategy call"
+                : "Book a free strategy call",
             }}
             market={market}
             category={category}

@@ -1,0 +1,36 @@
+{
+  "generated_from": "ads-launch/ZOHO-STAGE1-WINDOW-2026-08-06-to-14.md Sales Enquiry Created_Time",
+  "note": "Same weekdays as this week so far: Mon–Thu only. Not a full 7. Counts as of the 14 Aug extract. No PII.",
+  "window_start": "2026-08-10",
+  "window_end": "2026-08-13",
+  "label": "Mon Aug 10 – Thu Aug 13",
+  "usa": {
+    "n": 13,
+    "discovery_scheduled": 2,
+    "job_order_submitted": 0,
+    "by_status": {
+      "Information Brochure Sent": 4,
+      "Junk Lead": 3,
+      "Decided Against / Not a Fit": 2,
+      "Discovery Scheduled": 2,
+      "Unresponsive Clients": 1,
+      "Not Ready - 1 Month": 1
+    }
+  },
+  "au": {
+    "n": 12,
+    "discovery_scheduled": 2,
+    "job_order_submitted": 3,
+    "by_status": {
+      "Job Order Submitted": 3,
+      "Discovery Scheduled": 2,
+      "No Shows": 1,
+      "Junk Lead": 1,
+      "Sales Call Follow Up 1": 1,
+      "Information Brochure Sent": 1,
+      "Attempted to Contact 1 (Auto)": 1,
+      "Decided Against / Not a Fit": 1,
+      "New Enquiry (Auto)": 1
+    }
+  }
+}

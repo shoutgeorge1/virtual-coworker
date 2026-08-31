@@ -1,0 +1,19 @@
+{
+  "id": "us-exact-phrase-expansion-2026-08-21",
+  "name": "US Exact/Phrase Expansion",
+  "status": "dry_run_not_launched",
+  "campaign": "VC_US_S_ROLES",
+  "landing_page": "https://www.virtualcoworker.app/us",
+  "lp_version": "us-main-control",
+  "ad_groups": [
+    "QuickBooks_Bookkeeper",
+    "Executive_Assistant",
+    "Admin_Assistant",
+    "Customer_Support",
+    "HR_Recruiting",
+    "Ecommerce_Shopify",
+    "Sales_Support_CRM"
+  ],
+  "notes": "Exact+phrase expansion onto /us (not trust-first). No TF_ prefix. BruntWork-informed RSAs.",
+  "created_at": "2026-08-21"
+}

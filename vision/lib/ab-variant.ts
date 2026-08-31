@@ -1,12 +1,19 @@
 /**
  * Stable A/B assignment for paid LPs.
  * Prefer cookie set by middleware (SSR-safe). Client helpers for QA override + persist.
+ *
+ * PARKED 2026-08-12: LP_CREATIVE_AB_LIVE = false. Freeze to A (current simplified
+ * category copy). Ignore old B cookies. `?variant=` still works for QA.
  */
 
 import type { AbVariant } from "../config/categories";
 
 export const AB_COOKIE = "vc_ab_variant";
 export const AB_STORAGE_KEY = "vc_ab_variant";
+
+/** false = everyone gets variant A unless `?variant=` is in the URL. */
+export const LP_CREATIVE_AB_LIVE = false;
+export const PARKED_LP_VARIANT: AbVariant = "a";
 
 export function normalizeVariant(raw: string | null | undefined): AbVariant | null {
   if (!raw) return null;
@@ -31,6 +38,10 @@ export function assignVariant(opts: {
 }): { variant: AbVariant; source: "query" | "cookie" | "assigned" } {
   const fromQuery = normalizeVariant(opts.queryVariant);
   if (fromQuery) return { variant: fromQuery, source: "query" };
+
+  if (!LP_CREATIVE_AB_LIVE) {
+    return { variant: PARKED_LP_VARIANT, source: "assigned" };
+  }
 
   const fromCookie = normalizeVariant(opts.cookieVariant);
   if (fromCookie) return { variant: fromCookie, source: "cookie" };

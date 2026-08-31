@@ -1,7 +1,12 @@
-# Zoho platform discovery and audit — **DEFERRED**
+# Zoho platform discovery and audit — **DEFERRED DURING COLD START**
 
-**Status:** later-phase parallel workstream · **not** a TRAFFIC READY blocker  
-**Do not run** inventory, OAuth, exports, or adapter writes from this doc until George starts this phase.
+**Status:** later-phase parallel workstream · **not** a TRAFFIC READY blocker · **not** an active Google Ads optimization project (locked 2026-08-14)
+
+Zoho is **not cancelled**. Do **not** run inventory, OAuth, exports, adapter writes, or a new Zoho→Ads offline-conversion build from this doc until the [revisit gate](../ZOHO-COLD-START-DEFERRED-2026-08-14.md) is met.
+
+Keep API **read-only**. Keep `.app` writes **OFF**. Do not add Zapier. Do not change existing Zoho records, workflows, fields, users, or permissions. Do not make Zoho-related Ads conversions Primary. Do not alter bidding via API. Continue Maximize Clicks.
+
+Missing `VC_*` / `.app` attribution on current Zoho records is **expected** (new forms are not connected). That is not a Zoho failure.
 
 ## Observation (George — UI, 2026-08-06)
 

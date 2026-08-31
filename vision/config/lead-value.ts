@@ -21,8 +21,9 @@
  * Tune after 20 / 50 / 100 manually qualified leads. No ML.
  * CRM / Zoho later overrides this website estimate; keep both in history.
  *
- * Quiz LP (`/us/quiz`, `/au/quiz`) asks the same size + seats chips inside
- * the quiz (gamified). Homepage form (`/us`, `/au`) asks them as tap chips.
+ * Quiz LP (`/us/quiz`, `/au/quiz`) asks size + seats chips inside the quiz.
+ * Homepage form (`/us`, `/au`) — Phase 0 (2026-08-11): qualify chips off;
+ * scoring uses unknown-size / unknown-seats defaults when blank.
  */
 
 export const COMPANY_SIZE_OPTIONS = [

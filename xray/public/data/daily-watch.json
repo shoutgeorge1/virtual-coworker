@@ -1,0 +1,514 @@
+{
+  "generated_at_utc": "2026-08-10T20:24:55.161677+00:00",
+  "started_at_utc": "2026-08-10T20:24:04.720551+00:00",
+  "window": "LAST_7_DAYS",
+  "scope": "VC_US_* + VC_AU_* (Brand deferred \u2014 Stage 1 first)",
+  "api_calls": [
+    {
+      "n": 1,
+      "name": "us_search_terms_7d",
+      "ok": true,
+      "row_count": 78
+    },
+    {
+      "n": 2,
+      "name": "au_search_terms_7d",
+      "ok": true,
+      "row_count": 21
+    },
+    {
+      "n": 3,
+      "name": "us_campaign_pacing_7d",
+      "ok": true,
+      "row_count": 8
+    },
+    {
+      "n": 4,
+      "name": "au_campaign_pacing_7d",
+      "ok": true,
+      "row_count": 4
+    }
+  ],
+  "api_calls_used": 4,
+  "api_call_cap": 4,
+  "hard_stop": null,
+  "digest": {
+    "status": "attention",
+    "summary": "3 operator notes.",
+    "bullets": [
+      "US: VC_US_S_CORE spent $150.03 vs $75/day budget (2.0\u00d7) on 2026-08-09",
+      "US: VC_US_S_ROLES spent $79.18 vs $50/day budget (1.6\u00d7) on 2026-08-09",
+      "AU: VC_AU_S_CORE spent $116.55 vs $75/day budget (1.6\u00d7) on 2026-08-10"
+    ],
+    "problem_count": 3
+  },
+  "checks": {
+    "va_workers_ph": {
+      "search_term": "va workers ph",
+      "market": "US",
+      "campaign": "VC_US_S_CORE",
+      "campaign_status": "ENABLED",
+      "status": "EXCLUDED",
+      "cost_usd_7d": 92.83,
+      "cost_today": 0.0,
+      "focus_day": "2026-08-09",
+      "verdict": "already_excluded_historical"
+    }
+  },
+  "markets": {
+    "US": {
+      "search_terms": {
+        "market": "US",
+        "row_count": 78,
+        "unique_term_campaigns": 70,
+        "total_cost_usd": 379.15,
+        "focus_day": "2026-08-09",
+        "top_by_spend": [
+          {
+            "market": "US",
+            "search_term": "va workers ph",
+            "campaign": "VC_US_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Offshore_VA_PH",
+            "cost_usd": 92.83,
+            "cost_today": 0.0,
+            "clicks": 47,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "remote staffing agencies",
+            "campaign": "VC_US_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Hire_VA_PH",
+            "cost_usd": 13.17,
+            "cost_today": 3.09,
+            "clicks": 5,
+            "conversions": 0.0,
+            "status": "ADDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "virtual assistant jobs",
+            "campaign": "VC_US_S_ROLES",
+            "campaign_status": "ENABLED",
+            "ad_group": "Recruitment_Hire_PH",
+            "cost_usd": 12.52,
+            "cost_today": 0.0,
+            "clicks": 3,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": true,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "cs outsource",
+            "campaign": "VC_US_S_ROLES",
+            "campaign_status": "ENABLED",
+            "ad_group": "Customer_Service_Outsource_PH",
+            "cost_usd": 10.38,
+            "cost_today": 3.3,
+            "clicks": 3,
+            "conversions": 0.0,
+            "status": "NONE",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "virtual assistant jobs",
+            "campaign": "VC_US_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Hire_VA_PH",
+            "cost_usd": 9.67,
+            "cost_today": 0.0,
+            "clicks": 4,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": true,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "social media manager remote",
+            "campaign": "VC_US_S_ROLES",
+            "campaign_status": "ENABLED",
+            "ad_group": "Social_Media_Hire_PH",
+            "cost_usd": 7.13,
+            "cost_today": 7.13,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "companies looking for virtual assistants",
+            "campaign": "VC_US_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Hire_VA_PH",
+            "cost_usd": 7.02,
+            "cost_today": 7.02,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "temp agencies for remote work",
+            "campaign": "VC_US_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Agency_PH",
+            "cost_usd": 6.85,
+            "cost_today": 6.85,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "work from home appointment setter",
+            "campaign": "VC_US_S_ROLES",
+            "campaign_status": "ENABLED",
+            "ad_group": "Sales_Hire_PH",
+            "cost_usd": 6.79,
+            "cost_today": 0.0,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": true,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "virtual assistant",
+            "campaign": "VC_US_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Hire_VA_PH",
+            "cost_usd": 6.66,
+            "cost_today": 6.66,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "ADDED_EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "virtual assistant talent",
+            "campaign": "VC_US_S_ROLES",
+            "campaign_status": "ENABLED",
+            "ad_group": "Recruitment_Hire_PH",
+            "cost_usd": 6.64,
+            "cost_today": 0.0,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "NONE",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-09"
+          },
+          {
+            "market": "US",
+            "search_term": "recruitment teamficient com",
+            "campaign": "VC_US_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Agency_PH",
+            "cost_usd": 6.64,
+            "cost_today": 6.64,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "NONE",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-09"
+          }
+        ],
+        "operator_notes": [],
+        "flagged": []
+      },
+      "pacing": {
+        "market": "US",
+        "focus_day": "2026-08-09",
+        "campaigns": [
+          {
+            "name": "VC_US_S_CORE",
+            "status": "ENABLED",
+            "daily_budget_usd": 75.0,
+            "cost_last_7_days": 315.22,
+            "cost_today": 150.03,
+            "clicks_last_7_days": 124,
+            "conversions_last_7_days": 0.0,
+            "spend_vs_budget_today": 2.0
+          },
+          {
+            "name": "VC_US_S_ROLES",
+            "status": "ENABLED",
+            "daily_budget_usd": 50.0,
+            "cost_last_7_days": 211.64,
+            "cost_today": 79.18,
+            "clicks_last_7_days": 60,
+            "conversions_last_7_days": 0.0,
+            "spend_vs_budget_today": 1.58
+          }
+        ],
+        "blowups": [
+          {
+            "market": "US",
+            "campaign": "VC_US_S_CORE",
+            "status": "ENABLED",
+            "cost_today": 150.03,
+            "daily_budget_usd": 75.0,
+            "ratio": 2.0
+          },
+          {
+            "market": "US",
+            "campaign": "VC_US_S_ROLES",
+            "status": "ENABLED",
+            "cost_today": 79.18,
+            "daily_budget_usd": 50.0,
+            "ratio": 1.58
+          }
+        ],
+        "total_cost_last_7_days": 526.86,
+        "total_cost_today": 229.21
+      },
+      "ads_policy": null
+    },
+    "AU": {
+      "search_terms": {
+        "market": "AU",
+        "row_count": 21,
+        "unique_term_campaigns": 20,
+        "total_cost_usd": 123.37,
+        "focus_day": "2026-08-10",
+        "top_by_spend": [
+          {
+            "market": "AU",
+            "search_term": "24x7 direct",
+            "campaign": "VC_AU_S_ROLES",
+            "campaign_status": "ENABLED",
+            "ad_group": "Administration_EA_PH",
+            "cost_usd": 17.44,
+            "cost_today": 17.44,
+            "clicks": 3,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "virtual assistant",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Hire_VA_PH",
+            "cost_usd": 11.89,
+            "cost_today": 11.89,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "ADDED_EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "virtual assistant team au",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Hire_VA_PH",
+            "cost_usd": 10.43,
+            "cost_today": 5.3,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "NONE",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "offshore virtual assistant",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Offshore_VA_PH",
+            "cost_usd": 7.19,
+            "cost_today": 0.0,
+            "clicks": 2,
+            "conversions": 0.0,
+            "status": "ADDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "we work remotely",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Agency_PH",
+            "cost_usd": 5.99,
+            "cost_today": 5.99,
+            "clicks": 1,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "virtual assistant australia hiring",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Hire_VA_PH",
+            "cost_usd": 5.95,
+            "cost_today": 5.95,
+            "clicks": 1,
+            "conversions": 0.0,
+            "status": "NONE",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "social media marketing companies perth",
+            "campaign": "VC_AU_S_ROLES",
+            "campaign_status": "ENABLED",
+            "ad_group": "Social_Media_Outsource_PH",
+            "cost_usd": 5.92,
+            "cost_today": 5.92,
+            "clicks": 1,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "recruitment agency for australia in the philippines",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Agency_PH",
+            "cost_usd": 5.9,
+            "cost_today": 5.9,
+            "clicks": 1,
+            "conversions": 0.0,
+            "status": "EXCLUDED",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "remote talent com au",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Agency_PH",
+            "cost_usd": 5.89,
+            "cost_today": 5.89,
+            "clicks": 1,
+            "conversions": 0.0,
+            "status": "NONE",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "australia virtual assistant hiring",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Hire_VA_PH",
+            "cost_usd": 5.18,
+            "cost_today": 5.18,
+            "clicks": 1,
+            "conversions": 0.0,
+            "status": "NONE",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "staffhouse philippines",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Agency_PH",
+            "cost_usd": 5.18,
+            "cost_today": 0.0,
+            "clicks": 1,
+            "conversions": 0.0,
+            "status": "NONE",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          },
+          {
+            "market": "AU",
+            "search_term": "virtual assistant hiring australia",
+            "campaign": "VC_AU_S_CORE",
+            "campaign_status": "ENABLED",
+            "ad_group": "Hire_VA_PH",
+            "cost_usd": 5.06,
+            "cost_today": 5.06,
+            "clicks": 1,
+            "conversions": 0.0,
+            "status": "NONE",
+            "job_seeker_like": false,
+            "focus_day": "2026-08-10"
+          }
+        ],
+        "operator_notes": [],
+        "flagged": []
+      },
+      "pacing": {
+        "market": "AU",
+        "focus_day": "2026-08-10",
+        "campaigns": [
+          {
+            "name": "VC_AU_S_CORE",
+            "status": "ENABLED",
+            "daily_budget_usd": 75.0,
+            "cost_last_7_days": 156.4,
+            "cost_today": 116.55,
+            "clicks_last_7_days": 31,
+            "conversions_last_7_days": 0.0,
+            "spend_vs_budget_today": 1.55
+          },
+          {
+            "name": "VC_AU_S_ROLES",
+            "status": "ENABLED",
+            "daily_budget_usd": 50.0,
+            "cost_last_7_days": 110.2,
+            "cost_today": 51.28,
+            "clicks_last_7_days": 24,
+            "conversions_last_7_days": 0.0,
+            "spend_vs_budget_today": 1.03
+          }
+        ],
+        "blowups": [
+          {
+            "market": "AU",
+            "campaign": "VC_AU_S_CORE",
+            "status": "ENABLED",
+            "cost_today": 116.55,
+            "daily_budget_usd": 75.0,
+            "ratio": 1.55
+          }
+        ],
+        "total_cost_last_7_days": 266.6,
+        "total_cost_today": 167.83
+      }
+    }
+  },
+  "notes": [
+    "Read-only. No Ads mutations.",
+    "Do not flag 0 conversions \u2014 tracking not trusted yet.",
+    "Brand ads deferred (Stage 1 VC_* first).",
+    "Basic Access: keep this job \u22645 GAQL searches/day.",
+    "Digest rescored locally after logic fix (no extra GAQL)."
+  ]
+}

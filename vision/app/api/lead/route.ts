@@ -18,7 +18,7 @@ import {
   formatLeadEmailText,
   parseLeadCc,
 } from "../../../lib/lead-delivery";
-import { upsertEmployerLead } from "../../../lib/zoho/client";
+import { createEmployerLead } from "../../../lib/zoho/client";
 import { leadLogSafe } from "../../../lib/zoho/redact";
 import { scoreLeadFromSignals } from "../../../config/lead-value";
 import { normalizePhoneForStorage } from "../../../lib/phone-format";
@@ -169,7 +169,7 @@ export async function POST(req: NextRequest) {
   const schedule = String(body.schedule || "").trim();
   const hiringTimeline = String(body.hiring_timeline || body.timeline || "").trim();
   const phoneRaw = String(body.phone || "").trim();
-  const phone = normalizePhoneForStorage(phoneRaw, market) || phoneRaw;
+  const phone = validation.phone || normalizePhoneForStorage(phoneRaw, market) || phoneRaw;
   const scored = scoreLeadFromSignals({
     intent: "employer",
     company_size: companySize,
@@ -184,6 +184,7 @@ export async function POST(req: NextRequest) {
     email,
     phone,
     company: String(body.company || "").trim(),
+    company_website: String(body.company_website || "").trim(),
     role: String(body.role || "").trim(),
     category: String(body.category || "").trim(),
     variant: String(body.variant || "").trim(),
@@ -208,20 +209,28 @@ export async function POST(req: NextRequest) {
     gclid: body.gclid || "",
     gbraid: body.gbraid || "",
     wbraid: body.wbraid || "",
+    match_type: body.utm_matchtype || "",
+    device: body.utm_device || "",
     landing_page_url: body.landing_page_url || "",
     referrer: body.referrer || "",
     lp_version: body.lp_version || "",
     lp_variant: body.lp_variant || "",
+    baseline_label: body.baseline_label || "",
+    session_id: body.session_id || "",
     captured_at: body.captured_at || "",
     submitted_at: submittedAt,
+    form_source: String(body.lp_surface || "").trim() || "virtualcoworker.app",
+    lead_source: "Website",
     // Honesty: never imply CRM/job-order success
     is_job_order: false,
     is_placement: false,
     zoho_synced: false,
   };
 
-  const deliveries: { channel: string; ok: boolean; detail: string }[] = [];
+  const deliveries: { channel: string; ok: boolean; detail: string; record_id?: string }[] = [];
   let zohoSynced = false;
+  let zohoRecordId: string | undefined;
+  let zohoDetail = "skipped";
 
   if (cfg.webhook) {
     const t0 = Date.now();
@@ -280,20 +289,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Direct Zoho CRM — separate channel; zoho_synced only with CRM record id.
-  // CRM READY is Launch Control status; not required for TRAFFIC READY.
-  if (cfg.zohoCrm) {
-    const z = await upsertEmployerLead(record);
-    deliveries.push({
-      channel: "zoho_crm",
-      ok: z.ok,
-      detail: z.detail,
-    });
-    if (z.zoho_synced && z.recordId) {
-      zohoSynced = true;
-    }
-  }
-
+  // Email first. Zoho is additional and must not fail email.
   const to = market === "au" ? cfg.emailToAu : cfg.emailToUs;
   if (to && cfg.resend && cfg.from) {
     const t0 = Date.now();
@@ -366,6 +362,32 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Direct Zoho CRM create-only. After email. Failure must not fail email.
+  // Gated by ZOHO_SUBMISSION_ENABLED (default off). Never upsert.
+  if (cfg.zohoCrm) {
+    try {
+      const z = await createEmployerLead(record);
+      zohoDetail = z.detail;
+      deliveries.push({
+        channel: "zoho_crm",
+        ok: z.ok,
+        detail: z.detail,
+        record_id: z.recordId,
+      });
+      if (z.zoho_synced && z.recordId) {
+        zohoSynced = true;
+        zohoRecordId = z.recordId;
+      }
+    } catch (err) {
+      zohoDetail = err instanceof Error ? err.message : "zoho_error";
+      deliveries.push({
+        channel: "zoho_crm",
+        ok: false,
+        detail: "zoho_error",
+      });
+    }
+  }
+
   const trafficOk = deliveries.some(
     (d) =>
       d.ok &&
@@ -393,6 +415,8 @@ export async function POST(req: NextRequest) {
         conversion_eligible: false,
         lead_delivery_succeeded: false,
         zoho_synced: false,
+        zoho_record_id: null,
+        zoho_status: zohoDetail,
         deliveries,
         warning: "log_only — not a live lead delivery channel; not conversion-eligible",
         lead_score: scored.lead_score,
@@ -429,6 +453,8 @@ export async function POST(req: NextRequest) {
       conversion_eligible: false,
       lead_delivery_succeeded: false,
       zoho_synced: zohoSynced,
+      zoho_record_id: zohoRecordId || null,
+      zoho_status: zohoDetail,
       deliveries,
       warning:
         "zoho_crm without email/webhook/sheet — CRM READY path only; not TRAFFIC READY",
@@ -450,6 +476,8 @@ export async function POST(req: NextRequest) {
         conversion_eligible: false,
         lead_delivery_succeeded: false,
         zoho_synced: zohoSynced,
+        zoho_record_id: zohoRecordId || null,
+        zoho_status: zohoDetail,
         deliveries,
       },
       { status: 502 },
@@ -466,6 +494,8 @@ export async function POST(req: NextRequest) {
     lead_delivery_succeeded: true,
     // Paid/traffic readiness is a Launch Control verdict — not this API field.
     zoho_synced: zohoSynced,
+    zoho_record_id: zohoRecordId || null,
+    zoho_status: zohoDetail,
     deliveries,
     lead_score: scored.lead_score,
     estimated_lead_value: scored.estimated_lead_value,

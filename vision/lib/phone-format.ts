@@ -1,7 +1,6 @@
 /**
- * As-you-type phone display + CRM-safe normalize.
- * Do not reject short/international numbers — formatting is a convenience,
- * not a gate. Server still only requires a non-empty phone.
+ * As-you-type phone display + CRM-safe normalize + US employer validation.
+ * AU still formats without a NANP gate. US server validation is authoritative.
  */
 
 import type { MarketId } from "../config/markets";
@@ -54,12 +53,17 @@ function formatAuDisplay(digits: string, hadPlus: boolean): string {
   if (!digits && hadPlus) return "+";
 
   let national = digits;
-  let intl = hadPlus;
+  let intl = false;
 
+  // Only treat as +61 once the country code is complete — typing "+6"
+  // must not jump to "+61 6" (that duplicates the "1" and mangles the rest).
   if (national.startsWith("61")) {
     intl = true;
     national = national.slice(2);
     if (national.startsWith("0")) national = national.slice(1);
+  } else if (hadPlus) {
+    // Incomplete (+ / +6) or non-AU country code — don't force +61.
+    return `+${digits}`;
   }
 
   // +61 4XX XXX XXX (mobile) / +61 2 XXXX XXXX (landline) / +61 1300 XXX XXX
@@ -141,3 +145,59 @@ export function normalizePhoneForStorage(raw: string, market: MarketId): string 
   if (hadPlus) return `+${digits}`;
   return digits;
 }
+
+export type UsPhoneRejectCode = "invalid_us_phone" | "ph_job_seeker_phone";
+
+export type UsPhoneValidation =
+  | { ok: true; e164: string; national10: string }
+  | { ok: false; code: UsPhoneRejectCode };
+
+function isNanpNational(digits10: string): boolean {
+  if (digits10.length !== 10) return false;
+  const npa = digits10[0];
+  const nxx = digits10[3];
+  return npa >= "2" && npa <= "9" && nxx >= "2" && nxx <= "9";
+}
+
+function looksLikePhMobile(digits: string): boolean {
+  if (digits.startsWith("63")) {
+    const rest = digits.slice(2).replace(/^0/, "");
+    return rest.length === 10 && rest.startsWith("9");
+  }
+  if (digits.startsWith("09") && digits.length === 11) return true;
+  if (digits.startsWith("9") && digits.length === 11) return true;
+  return false;
+}
+
+/**
+ * Accept valid US +1 / 10-digit NANP. Reject PH +63 and 09xx local mobiles,
+ * incomplete, and overlong numbers. 555 test numbers (e.g. 951-555-0123) pass.
+ */
+export function validateUsPhone(raw: string): UsPhoneValidation {
+  const value = String(raw || "").trim();
+  if (!value) return { ok: false, code: "invalid_us_phone" };
+  const digits = phoneDigits(value);
+  if (!digits) return { ok: false, code: "invalid_us_phone" };
+
+  if (looksLikePhMobile(digits)) {
+    return { ok: false, code: "ph_job_seeker_phone" };
+  }
+
+  let national = digits;
+  if (national.startsWith("1") && national.length === 11) {
+    national = national.slice(1);
+  }
+
+  if (national.length < 10) return { ok: false, code: "invalid_us_phone" };
+  if (national.length > 10) return { ok: false, code: "invalid_us_phone" };
+  if (!isNanpNational(national)) return { ok: false, code: "invalid_us_phone" };
+
+  return { ok: true, e164: `+1${national}`, national10: national };
+}
+
+export const US_PHONE_ERROR =
+  "Enter a valid US phone number, like (951) 555-0123.";
+
+export const PH_PHONE_CAREERS_MESSAGE =
+  "That number looks like a Philippines mobile. This page is for US employers hiring staff. If you are looking for work, view careers in the Philippines.";
+

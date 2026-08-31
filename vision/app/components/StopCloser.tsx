@@ -5,15 +5,9 @@ import {
   type StopCloserSurface,
 } from "../../config/employer-cro";
 
-const STOP_VA = {
-  src: "/brand/vc-stop-va-v2.png",
-  alt: "Virtual assistant at her desk with both hands up beside a stop sign",
-} as const;
-
 /**
- * End-of-page closer — photoreal VA + real metal stop sign in the photo + CTAs.
- * Same *reason* on US + AU; wording is market-native. Role/hub surfaces get
- * a specific second line — not one generic closer pasted everywhere.
+ * End-of-page closing CTA — same sell-band language as the rest of the LP.
+ * No stop-sign imagery; calm next-step copy + form / phone CTAs.
  */
 export default function StopCloser({
   market,
@@ -43,41 +37,32 @@ export default function StopCloser({
 
   return (
     <section
-      className={`lp-stop${light ? " lp-stop-light" : ""}`}
-      aria-labelledby="lp-stop-title"
+      className={`lp-close ${shell}-sell${light ? " lp-close-light" : ""}`}
+      aria-labelledby="lp-close-title"
     >
-      <div className="lp-stop-inner">
-        <figure className="lp-stop-visual">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={STOP_VA.src} alt={STOP_VA.alt} />
-        </figure>
-
-        <div className="lp-stop-copy">
-          <h2 id="lp-stop-title">{copy.title}</h2>
-          <p className="lp-stop-lead">
-            {copy.lines.map((line, i) => (
-              <span key={line}>
-                {i > 0 ? <br /> : null}
-                {line}
-              </span>
-            ))}
+      <div className={`${shell}-sell-inner lp-close-inner`}>
+        <header className="lp-close-head">
+          <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
+            {copy.eyebrow}
           </p>
-          <div className="lp-stop-actions">
+          <h2 id="lp-close-title">{copy.title}</h2>
+          <p className="lp-close-lead">{copy.lead}</p>
+        </header>
+        <div className="lp-close-actions">
+          <a
+            href={ctaHref}
+            className={`${shell}-btn ${shell}-btn-primary lp-close-primary`}
+          >
+            {cta}
+          </a>
+          {showPhone && phoneHref ? (
             <a
-              href={ctaHref}
-              className={`${shell}-btn ${shell}-btn-primary lp-stop-primary`}
+              href={phoneHref}
+              className={`${shell}-btn ${shell}-btn-ghost lp-close-call`}
             >
-              {cta}
+              {callLabel}
             </a>
-            {showPhone && phoneHref ? (
-              <a
-                href={phoneHref}
-                className={`${shell}-btn ${shell}-btn-ghost lp-stop-call`}
-              >
-                {callLabel}
-              </a>
-            ) : null}
-          </div>
+          ) : null}
         </div>
       </div>
     </section>

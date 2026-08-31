@@ -1,0 +1,58 @@
+metric,market,window,n,unit,label,note
+vc_campaigns_enabled,US,as_of_2026-08-13,2,campaigns,VERIFIED,VC_US_S_CORE + VC_US_S_ROLES
+vc_campaigns_enabled,AU,as_of_2026-08-13,2,campaigns,VERIFIED,VC_AU_S_CORE + VC_AU_S_ROLES
+vc_goal_config_level_campaign,US,as_of_2026-08-13,2,campaigns,VERIFIED,not account-default
+vc_goal_config_level_campaign,AU,as_of_2026-08-13,2,campaigns,VERIFIED,not account-default
+vc_bidding_target_spend,US+AU,as_of_2026-08-13,4,campaigns,VERIFIED,Maximize Clicks
+us_vc_biddable_categories,US,as_of_2026-08-13,3,category_origin_pairs,VERIFIED,PHONE_CALL_LEAD website + ads; SUBMIT_LEAD_FORM website
+us_vc_book_appointment_biddable,US,as_of_2026-08-13,0,flag,VERIFIED,BOOK_APPOINTMENT website biddable=false
+us_vc_converted_lead_biddable,US,as_of_2026-08-13,0,flag,VERIFIED,CONVERTED_LEAD website biddable=false
+au_vc_biddable_category_map,AU,as_of_2026-08-13,,categories,UNKNOWN,Ads budget exhausted
+historical_bidding_target_recoverable,US+AU,2024-08-01_to_2026-08-12,0,proof,VERIFIED,answer=NO; change_event not recovered
+monthly_conversion_mix,US+AU,2024-08-01_to_2026-08-12,,rows,UNKNOWN,fetched pass1 unwritten; not replayed
+campaigns_current_conv_shaped_bidding,US,as_of_pull_16:03Z,40,of_52,VERIFIED,current type; not month-by-month history
+campaigns_current_conv_shaped_bidding,AU,as_of_pull_16:03Z,41,of_64,VERIFIED,current type; not month-by-month history
+vc_us_core_clicks,US,2024-08-01_to_2026-08-12,234,clicks,VERIFIED,morning forensic pull
+vc_us_roles_clicks,US,2024-08-01_to_2026-08-12,109,clicks,VERIFIED,morning forensic pull
+vc_au_core_clicks,AU,2024-08-01_to_2026-08-12,84,clicks,VERIFIED,morning forensic pull
+vc_au_roles_clicks,AU,2024-08-01_to_2026-08-12,53,clicks,VERIFIED,morning forensic pull
+vc_us_core_conversions,US,2024-08-01_to_2026-08-12,0,conversions,VERIFIED,metrics.conversions
+vc_us_roles_conversions,US,2024-08-01_to_2026-08-12,0,conversions,VERIFIED,all_conversions=1
+vc_au_core_conversions,AU,2024-08-01_to_2026-08-12,0,conversions,VERIFIED,
+vc_au_roles_conversions,AU,2024-08-01_to_2026-08-12,0,conversions,VERIFIED,
+zoho_job_orders_all_sources,ALL,available_history,782,records,VERIFIED,not an Ads denominator
+zoho_job_orders_90d,ALL,last_90d,242,records,VERIFIED,prior census; not replayed
+zoho_jo_direct_gclid,ALL,all_time,18,records,VERIFIED,UTM_Gclid filled
+zoho_jo_direct_gclid_unique_hashes,ALL,all_time,18,hashes,VERIFIED,18/18 match linked enquiry
+zoho_jo_90d_rows_in_join_sample,ALL,last_90d_newest_200,200,records,VERIFIED,242-200=42 not in this join
+zoho_jo_90d_sample_with_enquiry_lookup,ALL,last_90d_newest_200,192,records,VERIFIED,
+zoho_jo_click_linked_90d_sample,ALL,last_90d_newest_200,69,records,VERIFIED,direct 18 + inherited 51; NOT 782
+zoho_jo_inherited_gclid_only_90d_sample,ALL,last_90d_newest_200,51,records,VERIFIED,enquiry utm_gclid; JO field empty
+zoho_jo_click_linked_unique_hashes_90d_sample,ALL,last_90d_newest_200,62,hashes,VERIFIED,69 rows / 62 hashes
+zoho_jo_click_linked_usa_90d_sample,USA,last_90d_newest_200,43,records,VERIFIED,
+zoho_jo_click_linked_au_90d_sample,AU,last_90d_newest_200,26,records,VERIFIED,
+zoho_jo_click_linked_placement_stage_90d_sample,ALL,last_90d_newest_200,26,records,VERIFIED,stage=Placement
+zoho_jo_click_linked_cancelled_90d_sample,ALL,last_90d_newest_200,29,records,VERIFIED,Job Order Cancelled 28 + Cancelled NHI 1
+zoho_jo_click_linked_neither_90d_sample,ALL,last_90d_newest_200,131,records,VERIFIED,no gclid on JO or enquiry
+zoho_sales_enquiries_with_gclid,ALL,all_time,576,records,VERIFIED,prior census; uniqueness UNKNOWN
+zoho_placements_job_order_lookup_field,ALL,schema,0,fields,VERIFIED,Deals has no Job Order lookup
+zoho_jo_related_deals_or_placements,ALL,one_placement_jo,,relation,UNKNOWN,common relation names invalid; settings API 401
+ads_zoho_jo_zapier_conversions,US,2024-08-01_to_2026-08-12,67,conversions,VERIFIED,not a census of job orders
+ads_zoho_jo_zapier_all_conversions,US,2024-08-01_to_2026-08-12,125,all_conversions,VERIFIED,
+ads_zoho_jo_oci_conversions,US,2024-08-01_to_2026-08-12,23,conversions,VERIFIED,twin; overlap UNKNOWN
+ads_zoho_jo_oci_all_conversions,US,2024-08-01_to_2026-08-12,85,all_conversions,VERIFIED,
+ads_zoho_jo_zapier_conversions,AU,2024-08-01_to_2026-08-12,36,conversions,VERIFIED,not a census of job orders
+ads_zoho_jo_zapier_all_conversions,AU,2024-08-01_to_2026-08-12,69,all_conversions,VERIFIED,
+ads_zoho_jo_oci_conversions,AU,2024-08-01_to_2026-08-12,14,conversions,VERIFIED,twin; overlap UNKNOWN
+ads_zoho_jo_oci_all_conversions,AU,2024-08-01_to_2026-08-12,51,all_conversions,VERIFIED,
+zapier_still_active,ALL,as_of_2026-08-13,,flag,UNKNOWN,no Zapier access; do not upload to test
+ads_can_list_uploaded_gclids,ALL,this_pass,,flag,UNKNOWN,not queried; do not upload to test
+gtm_us_published_version,US,live_container,6,version,VERIFIED,GTM-M92DX9BJ
+gtm_au_published_version,AU,live_container,6,version,VERIFIED,GTM-5T6KPVSF; spec AU v5 is stale
+gtm_calendly_event_scheduled_listener,US+AU,live_container,1,per_container,VERIFIED,existence not firing
+gtm_employer_inquiry_submitted_ads_tag,US+AU,live_container,1,per_container,VERIFIED,existence not firing
+gtm_form_submit_success_trigger,US+AU,live_container,0,triggers,VERIFIED,alias not used as trigger
+site_calendly_booked_listener,APP,vision_code,0,listeners,VERIFIED,open/click only
+zoho_crm_write_from_app,APP,as_of_2026-08-13,0,enabled,VERIFIED,ZOHO_CRM_ENABLED off
+api_ads_queries_this_pass,ALL,2026-08-13,12,queries,VERIFIED,ceiling 12; see API-CALL-LOG
+api_zoho_requests_this_pass,ALL,2026-08-13,12,requests,VERIFIED,8 in join script + 4 related-name probes; ceiling 20

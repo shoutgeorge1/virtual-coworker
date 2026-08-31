@@ -9,11 +9,20 @@ OPERATING RULE (locked): Existing account remains unchanged.
   New VC_* campaigns are a separate Stage 1 system. This builder emits ONLY:
   - new Paused VC_* campaigns (never PM_*)
   - campaign-level negatives from the curated NEGATIVES list below
+    (SEPARATE CSV — see below; never mixed into the main Account Import)
   - a clearly labeled live job-seeker cohort (VC_Neg_JobSeekers_Live) for
     VC_US_* only — Phrase campaign negatives with a distinct Comment, not
     mixed into the curated Stage1 blob and not PM_* shared mega lists
   It does NOT pull, attach, or reference account shared / PM_* mega
   negative lists (some 3000+ terms). Do not attach PM_* shared lists.
+
+HARD LESSON (AU Editor DB 2026-08-08): Account-importing Keyword rows with
+  Criterion Type = "Campaign negative" + blank Ad Group dual-writes each term
+  as (1) a real campaign-level KeywordNegative AND (2) an Enabled Broad
+  *positive* keyword inside a blank/unnamed ad group (George renamed "Unkown").
+  Main package CSVs must NOT contain those Keyword rows. Campaign negatives
+  ship in google-ads-editor-campaign-negatives-*.csv for Keywords, Negative →
+  Make multiple changes only.
 
 RSA: 3 unique full RSAs (15H/4D) per main AG — hire-intent / role-outcome or
 PH-offshore / proof-speed-of-staffing angles from ST evidence. City-test AGs
@@ -29,6 +38,8 @@ Outputs:
   - ads-launch/google-ads-editor-import-us.csv (US only — preferred import path)
   - ads-launch/google-ads-editor-import-au.csv (AU only — preferred import path)
   - ads-launch/google-ads-editor-import-multi-account.csv (same as combined)
+  - ads-launch/google-ads-editor-campaign-negatives-us.csv / -au.csv
+    (Keywords, Negative → Make multiple changes ONLY — not Account Import)
   - ads-launch/phase1-enable-manifest-us.csv / -au.csv (review tiers; all Paused)
   - ads-launch/PHASE1-REVIEW.md
   - ads-launch/EDITOR-PREFLIGHT-REPORT.md
@@ -83,9 +94,9 @@ BUDGET_DAILY = {
     "US": {"core": "75", "roles": "50"},  # USD
     "AU": {"core": "75", "roles": "50"},  # AUD
 }
-# Live USA Editor (2026-08-07): CORE ceiling $12, ROLES $8. AU stays conservative.
+# Live USA Editor (2026-08-07): CORE ceiling $12, ROLES $10. AU stays conservative.
 MAX_CPC = {
-    "US": {"core": "12", "roles": "8"},  # USD
+    "US": {"core": "12", "roles": "10"},  # USD
     "AU": {"core": "6", "roles": "6"},  # AUD
 }
 
@@ -115,11 +126,15 @@ CONTROLLED_ROLE_KEYS = (
 
 # Final URL suffix only — do NOT also put UTMs on Tracking template (double-UTM bug).
 # Use supported ValueTrack IDs — NOT undefined {_campaign}/{_adgroup} custom params.
-SUFFIX = (
+# US: omit lp_version so the site's AUTHORITATIVE_LP_VERSION cannot drift from Ads.
+# AU: keep the historical stamp until a dedicated AU suffix pass.
+SUFFIX_BASE = (
     "utm_source=google&utm_medium=cpc&utm_campaign={campaignid}"
-    f"&utm_content={{adgroupid}}&utm_term={{keyword}}&utm_matchtype={{matchtype}}"
-    f"&utm_device={{device}}&lp_version={LP_VERSION}"
+    "&utm_content={adgroupid}&utm_term={keyword}&utm_matchtype={matchtype}"
+    "&utm_device={device}"
 )
+SUFFIX_US = SUFFIX_BASE
+SUFFIX = f"{SUFFIX_BASE}&lp_version={LP_VERSION}"
 TRACK = "{lpurl}"
 
 # Commercial / research negatives held out of import — judge from live ST + lead quality.
@@ -223,18 +238,39 @@ FIELDS = [
 ]
 
 # Campaign-level Broad negatives — curated Stage 1 set only (tight).
-# Applied per VC_* campaign as Keyword rows with Criterion Type = Campaign negative.
-# (Do NOT use Row Type "Campaign negative keyword" + Criterion Type Broad — Editor
-# mis-reads that and spawns blank ad groups to hold the negatives.)
+# Emitted ONLY in google-ads-editor-campaign-negatives-*.csv (MMC path).
+# NEVER put these in the main Account Import CSV — Editor dual-writes blank
+# AGs + Enabled Broad positives (confirmed AU ape_5735391940, 2026-08-08).
 # NEVER inherit account shared / PM_* mega lists into this package.
 # Never bare hire/hiring. Do NOT blanket-neg "how to" (blocks converting
 # "how to hire a virtual assistant"); use specific DIY how-tos instead.
 # Soft cap: keep this curated, not a 3k dump. QA fails if unique > MAX.
 MAX_UNIQUE_NEGATIVES = 220
 
+# Separate MMC negatives file columns (Keywords, Negative → Make multiple changes).
+NEG_MMC_FIELDS = [
+    "Account",
+    "Campaign",
+    "Keyword",
+    "Match type",
+    "Comment",
+]
+
 
 def is_campaign_negative_row(r: dict[str, str]) -> bool:
+    """Editor Account-import shape (must NOT appear in main package CSVs)."""
     return (r.get("Criterion Type") or "").strip().lower() == "campaign negative"
+
+
+def is_mmc_negative_row(r: dict[str, str]) -> bool:
+    """Keywords, Negative → Make multiple changes CSV row."""
+    return bool((r.get("Match type") or "").strip()) and bool(
+        (r.get("Keyword") or "").strip()
+    ) and bool((r.get("Campaign") or "").strip())
+
+
+def is_negative_package_row(r: dict[str, str]) -> bool:
+    return is_campaign_negative_row(r) or is_mmc_negative_row(r)
 
 
 def is_positive_keyword_row(r: dict[str, str]) -> bool:
@@ -3017,7 +3053,7 @@ def _rsa_catalog() -> dict:
                 lambda m: D(
                     "Outsource customer service to dedicated Philippines specialists.",
                     "Keep quality standards while we recruit, vet, and support the seat.",
-                    f"Built for {m['employers']} scaling support without local headcount drag.",
+                    f"Built for {m['employers']} scaling support without local hiring overhead.",
                     "Partner-led outsourcing with interview-before-placement discipline.",
                 ),
                 "outsource",
@@ -3534,50 +3570,54 @@ def append_campaign_shell(
     rows.append(r)
 
 
-def append_negatives_assets(
+def append_campaign_negatives_mmc(
+    rows: list[dict[str, str]],
+    *,
+    cname: str,
+) -> None:
+    """Append campaign negatives for Keywords, Negative → Make multiple changes.
+
+    Do NOT Account-import these as Keyword / Campaign negative rows — that path
+    dual-writes blank ad groups + Enabled Broad positives (AU 2026-08-08).
+    """
+    for neg in NEGATIVES:
+        rows.append(
+            {
+                "Account": "",
+                "Campaign": cname,
+                "Keyword": neg,
+                "Match type": "Broad",
+                "Comment": (
+                    "VC-only curated Stage1 campaign neg; NOT account shared / PM_* "
+                    "mega list; MMC import only (Keywords, Negative)"
+                ),
+            }
+        )
+
+    # Live job-seeker cohort — US only, Phrase, clearly labeled (not Stage1 blob).
+    if cname.startswith("VC_US_"):
+        for term, match in VC_NEG_JOBSEEKERS_LIVE:
+            rows.append(
+                {
+                    "Account": "",
+                    "Campaign": cname,
+                    "Keyword": term.strip().strip('"'),
+                    "Match type": match,
+                    "Comment": (
+                        f"{VC_NEG_JOBSEEKERS_LIVE_NAME} · {VC_NEG_JOBSEEKERS_LIVE_TOPIC}; "
+                        f"{match} campaign neg on VC_US_* only; NOT Stage1 curated blob; "
+                        "NOT account shared / PM_* mega list; MMC import only"
+                    ),
+                }
+            )
+
+
+def append_assets(
     rows: list[dict[str, str]],
     *,
     cname: str,
     sitelinks: list[tuple[str, str, str, str]],
 ) -> None:
-    for neg in NEGATIVES:
-        r = blank_row()
-        # Minimal campaign-negative shape per Google Ads Editor CSV docs:
-        # Criterion Type = "Campaign negative", Ad Group blank, bare keyword = Broad.
-        r.update(
-            {
-                "Row Type": "Keyword",
-                "Campaign": cname,
-                "Keyword": neg,
-                "Criterion Type": "Campaign negative",
-                "Comment": (
-                    "VC-only curated Stage1 campaign neg; NOT account shared / PM_* "
-                    "mega list; repeated per campaign (Editor requirement)"
-                ),
-            }
-        )
-        rows.append(r)
-
-    # Live job-seeker cohort — US only, Phrase, clearly labeled (not Stage1 blob).
-    if cname.startswith("VC_US_"):
-        for term, match in VC_NEG_JOBSEEKERS_LIVE:
-            kw = phrase_neg_keyword(term) if match == "Phrase" else term
-            r = blank_row()
-            r.update(
-                {
-                    "Row Type": "Keyword",
-                    "Campaign": cname,
-                    "Keyword": kw,
-                    "Criterion Type": "Campaign negative",
-                    "Comment": (
-                        f"{VC_NEG_JOBSEEKERS_LIVE_NAME} · {VC_NEG_JOBSEEKERS_LIVE_TOPIC}; "
-                        f"{match} campaign neg on VC_US_* only; NOT Stage1 curated blob; "
-                        "NOT account shared / PM_* mega list"
-                    ),
-                }
-            )
-            rows.append(r)
-
     for callout in [
         "Vetted Filipino Talent",
         "Employer Hiring Only",
@@ -4019,7 +4059,7 @@ def build_core(
                 comment=f"Core RSA {angle}; Final URL=market home",
             )
 
-    append_negatives_assets(
+    append_assets(
         rows,
         cname=cname,
         sitelinks=[
@@ -4033,7 +4073,19 @@ def build_core(
                 "How Hiring Works",
                 "Recruit, vet, shortlist",
                 "You interview talent",
-                core_final,
+                f"https://{final_url_host()}/how-it-works?market={mkt.lower()}",
+            ),
+            (
+                "Take the VA Quiz",
+                "Find the right role",
+                "A few taps. Employers.",
+                f"{core_final}/quiz",
+            ),
+            (
+                "Hire by Role",
+                "Admin, books, marketing",
+                "Philippines staff seats",
+                f"https://{final_url_host()}/services?market={mkt.lower()}",
             ),
             (
                 "Admin Support Hire",
@@ -4042,10 +4094,10 @@ def build_core(
                 f"{core_final}/administrative-support",
             ),
             (
-                f"{mkt} Employer Home",
-                "Generic Core landing",
-                "Not WordPress homepage",
-                core_final,
+                "Bookkeeping Hire",
+                "Philippines books staff",
+                "Category landing page",
+                f"{core_final}/bookkeeping",
             ),
         ],
     )
@@ -4146,7 +4198,7 @@ def build_roles(
             )
 
     # Campaign-level sitelinks span primary role LPs
-    append_negatives_assets(
+    append_assets(
         rows,
         cname=cname,
         sitelinks=[
@@ -4154,7 +4206,19 @@ def build_roles(
                 "Tell Us Who You Need",
                 "Employer hiring path",
                 "Form for businesses",
-                f"{base_url}/administrative-support#gate",
+                f"{base_url}#gate",
+            ),
+            (
+                "How Hiring Works",
+                "Recruit, vet, shortlist",
+                "You interview talent",
+                f"https://{final_url_host()}/how-it-works?market={mkt.lower()}",
+            ),
+            (
+                "Take the VA Quiz",
+                "Find the right role",
+                "A few taps. Employers.",
+                f"{base_url}/quiz",
             ),
             (
                 "Digital Marketing Hire",
@@ -4179,6 +4243,10 @@ def build_roles(
 
 
 def build() -> list[dict[str, str]]:
+    """Main Account Import package — campaigns, AGs, Exact/Phrase positives, RSAs, assets.
+
+    Campaign negatives are intentionally excluded (see build_campaign_negatives).
+    """
     rows: list[dict[str, str]] = []
     host = final_url_host()
 
@@ -4195,6 +4263,16 @@ def build() -> list[dict[str, str]]:
         )
 
     apply_budget_cpc_defaults(rows)
+    stamp_account_ids(rows)
+    return rows
+
+
+def build_campaign_negatives() -> list[dict[str, str]]:
+    """MMC-only campaign negatives for all VC_* campaigns (not Account Import)."""
+    rows: list[dict[str, str]] = []
+    for mkt in ("US", "AU"):
+        for suffix in ("CORE", "ROLES"):
+            append_campaign_negatives_mmc(rows, cname=f"VC_{mkt}_S_{suffix}")
     stamp_account_ids(rows)
     return rows
 
@@ -4334,7 +4412,7 @@ PHASE1_REVIEW = ROOT / "ads-launch" / "PHASE1-REVIEW.md"
 LIVE_PAUSED_DOC = ROOT / "ads-launch" / "VC-KEYWORDS-PAUSED-LIVE.md"
 
 
-def qa(rows: list[dict[str, str]]) -> None:
+def qa(rows: list[dict[str, str]], neg_rows: list[dict[str, str]]) -> None:
     kinds = Counter(r["Row Type"] for r in rows)
     print("Row types:", dict(kinds))
     camps = sorted({r["Campaign"] for r in rows if r["Campaign"]})
@@ -4384,55 +4462,70 @@ def qa(rows: list[dict[str, str]]) -> None:
         raise SystemExit("Undefined custom tracking params in SUFFIX")
     if "{campaignid}" not in SUFFIX or "{adgroupid}" not in SUFFIX:
         raise SystemExit("SUFFIX missing ValueTrack campaignid/adgroupid")
-    for term in NEGATIVE_REVIEW_HOLDOUT:
-        if any(
-            r.get("Keyword", "").lower() == term.lower() and is_campaign_negative_row(r)
-            for r in rows
-        ):
-            raise SystemExit(f"Holdout negative still in import: {term}")
-    print("Negative holdouts (not imported):", len(NEGATIVE_REVIEW_HOLDOUT))
 
-    # Bare keyword text under Campaign negative = Broad match negative.
-    active_broad_negs = {
-        r["Keyword"].lower()
-        for r in rows
-        if is_campaign_negative_row(r)
-        and (r.get("Keyword") or "").strip()
-        and not (r.get("Keyword") or "").startswith(("[", '"'))
-    }
-    bad_neg_shape = [
+    # Main Account Import must never carry campaign-neg Keyword rows (blank-AG bug).
+    leaked_negs = [r for r in rows if is_campaign_negative_row(r)]
+    if leaked_negs:
+        raise SystemExit(
+            f"Main package has {len(leaked_negs)} Campaign negative Keyword rows — "
+            "these dual-write blank AGs + Enabled Broad positives in Editor. "
+            "Use google-ads-editor-campaign-negatives-*.csv (MMC) only."
+        )
+    blank_ag_kw = [
         r
         for r in rows
-        if (r.get("Row Type") or "") == "Campaign negative keyword"
-        or (
-            (r.get("Negative") or "").strip().lower() == "true"
-            and (r.get("Criterion Type") or "").strip().lower() == "broad"
-            and not (r.get("Ad Group") or "").strip()
-        )
+        if (r.get("Row Type") or "") == "Keyword"
+        and not (r.get("Ad Group") or "").strip()
     ]
-    if bad_neg_shape:
+    if blank_ag_kw:
         raise SystemExit(
-            "Bad campaign-negative CSV shape "
-            f"({len(bad_neg_shape)} rows) — use Criterion Type='Campaign negative' "
-            "with blank Ad Group (Editor otherwise creates blank ad groups)"
+            f"Main package has {len(blank_ag_kw)} Keyword rows with blank Ad Group "
+            "(Editor spawns blank/Unkown AGs)"
         )
     for r in rows:
         if r.get("Row Type") == "Ad group" and not (r.get("Ad Group") or "").strip():
             raise SystemExit("Blank Ad group name in package")
-        if is_campaign_negative_row(r) and (r.get("Ad Group") or "").strip():
+        if (r.get("Row Type") or "") == "Campaign negative keyword":
+            raise SystemExit("Forbidden Row Type 'Campaign negative keyword' in main package")
+
+    if not neg_rows:
+        raise SystemExit("Campaign negatives MMC package is empty")
+    for r in neg_rows:
+        if not is_mmc_negative_row(r):
+            raise SystemExit(f"Bad MMC negative row: {r}")
+        mt = (r.get("Match type") or "").strip()
+        if mt not in ("Broad", "Phrase", "Exact"):
+            raise SystemExit(f"MMC negative bad Match type={mt!r}: {r.get('Keyword')!r}")
+        if (r.get("Keyword") or "").startswith(("[", '"')):
             raise SystemExit(
-                f"Campaign negative has Ad Group set: {r.get('Keyword')!r} / "
-                f"{r.get('Ad Group')!r}"
+                f"MMC negative Keyword must be bare text (match type in column): "
+                f"{r.get('Keyword')!r}"
             )
-    # Holdout terms must never appear in import CSVs (any row Keyword).
+
+    for term in NEGATIVE_REVIEW_HOLDOUT:
+        if any(
+            r.get("Keyword", "").lower() == term.lower() and is_mmc_negative_row(r)
+            for r in neg_rows
+        ):
+            raise SystemExit(f"Holdout negative still in MMC package: {term}")
+    print("Negative holdouts (not imported):", len(NEGATIVE_REVIEW_HOLDOUT))
+
+    # Broad MMC negatives (Match type Broad) — canary checks.
+    active_broad_negs = {
+        r["Keyword"].lower()
+        for r in neg_rows
+        if (r.get("Match type") or "").strip() == "Broad"
+        and (r.get("Keyword") or "").strip()
+    }
+    # Holdout terms must never appear in main or MMC Keyword columns.
     import_keywords = {
         (r.get("Keyword") or "").lower()
-        for r in rows
+        for r in (*rows, *neg_rows)
         if (r.get("Keyword") or "").strip()
     }
     for term in NEGATIVE_REVIEW_HOLDOUT:
         if term.lower() in import_keywords:
-            raise SystemExit(f"Holdout term leaked into import Keyword column: {term}")
+            raise SystemExit(f"Holdout term leaked into Keyword column: {term}")
     assert_employer_research_canaries(active_broad_negs)
     print(
         "Employer-research canaries OK:",
@@ -4441,6 +4534,7 @@ def qa(rows: list[dict[str, str]]) -> None:
         len(active_broad_negs),
         "unique Broad negs",
     )
+    print("MMC campaign negatives:", len(neg_rows))
 
     ads = [r for r in rows if r["Row Type"] == "Ad"]
     for r in ads:
@@ -4645,7 +4739,7 @@ def qa(rows: list[dict[str, str]]) -> None:
         if brand_kw in pos_blob:
             raise SystemExit(f"Brand keyword in Stage 1 package (deferred): {brand_kw}")
 
-    negs = {r["Keyword"].lower() for r in rows if is_campaign_negative_row(r)}
+    negs = {r["Keyword"].lower() for r in neg_rows if is_mmc_negative_row(r)}
     if "hire" in negs or "hiring" in negs:
         raise SystemExit("hire/hiring must not be campaign negatives")
     if "workers" in negs:
@@ -4654,7 +4748,7 @@ def qa(rows: list[dict[str, str]]) -> None:
             "(employer shorthand 'va workers ph')"
         )
 
-    live_neg_rows = [r for r in rows if is_live_jobseeker_neg_row(r)]
+    live_neg_rows = [r for r in neg_rows if is_live_jobseeker_neg_row(r)]
     expected_live = len(VC_NEG_JOBSEEKERS_LIVE) * 2  # CORE + ROLES, US only
     if len(live_neg_rows) != expected_live:
         raise SystemExit(
@@ -4667,10 +4761,10 @@ def qa(rows: list[dict[str, str]]) -> None:
                 f"{VC_NEG_JOBSEEKERS_LIVE_NAME} leaked onto non-US campaign: "
                 f"{r.get('Campaign')}"
             )
-        if not (r.get("Keyword") or "").startswith('"'):
+        if (r.get("Match type") or "").strip() != "Phrase":
             raise SystemExit(
-                f"{VC_NEG_JOBSEEKERS_LIVE_NAME} must be Phrase-quoted: "
-                f"{r.get('Keyword')!r}"
+                f"{VC_NEG_JOBSEEKERS_LIVE_NAME} must be Match type Phrase: "
+                f"{r.get('Keyword')!r} / {r.get('Match type')!r}"
             )
 
     live_paused_pos = [
@@ -4733,10 +4827,22 @@ def qa(rows: list[dict[str, str]]) -> None:
     for r in rows:
         if r["Row Type"] == "Callout" and not r["Callout text"]:
             raise SystemExit("Empty callout")
-        if r["Row Type"] == "Sitelink" and (
-            not r["Link Text"] or not r["Description Line 1"] or not r["Final URL"]
-        ):
-            raise SystemExit("Empty sitelink fields")
+        if r["Row Type"] == "Sitelink":
+            if (
+                not r["Link Text"]
+                or not r["Description Line 1"]
+                or not r["Final URL"]
+            ):
+                raise SystemExit("Empty sitelink fields")
+            if len(r["Link Text"]) > 25:
+                raise SystemExit(f"Sitelink text too long: {r['Link Text']}")
+            if len(r["Description Line 1"]) > 35:
+                raise SystemExit(f"Sitelink desc1 too long: {r['Description Line 1']}")
+            if r["Description Line 2"] and len(r["Description Line 2"]) > 35:
+                raise SystemExit(f"Sitelink desc2 too long: {r['Description Line 2']}")
+            fu = r["Final URL"]
+            if "wordpress" in fu.lower() or "try.virtualcoworker" in fu.lower():
+                raise SystemExit(f"WP sitelink URL: {fu}")
         if r["Row Type"] == "Structured snippet" and not r["Snippet Values"]:
             raise SystemExit("Empty structured snippet")
 
@@ -4748,9 +4854,11 @@ def qa(rows: list[dict[str, str]]) -> None:
     if len(dki_ads) < 8:
         raise SystemExit(f"DKI underused: only {len(dki_ads)} ads have KeyWord insertion")
 
-    # lp_version stamp
+    # lp_version stamp — AU suffix only. US relies on site events.
+    if "lp_version=" in SUFFIX_US:
+        raise SystemExit("US suffix must not include lp_version (site is source of truth)")
     if f"lp_version={LP_VERSION}" not in SUFFIX:
-        raise SystemExit(f"SUFFIX missing {LP_VERSION}")
+        raise SystemExit(f"AU SUFFIX missing {LP_VERSION}")
 
     print(
         "QA OK — RSA ads:",
@@ -4767,13 +4875,28 @@ def qa(rows: list[dict[str, str]]) -> None:
 OUT_US = ROOT / "ads-launch" / "google-ads-editor-import-us.csv"
 OUT_AU = ROOT / "ads-launch" / "google-ads-editor-import-au.csv"
 OUT_MULTI = ROOT / "ads-launch" / "google-ads-editor-import-multi-account.csv"
+OUT_NEG_US = ROOT / "ads-launch" / "google-ads-editor-campaign-negatives-us.csv"
+OUT_NEG_AU = ROOT / "ads-launch" / "google-ads-editor-campaign-negatives-au.csv"
+OUT_NEG_MULTI = ROOT / "ads-launch" / "google-ads-editor-campaign-negatives-multi-account.csv"
 PREFLIGHT = ROOT / "ads-launch" / "EDITOR-PREFLIGHT-REPORT.md"
 
 
 def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
+    for r in rows:
+        camp = r.get("Campaign") or ""
+        if r.get("Final URL suffix") and camp.startswith("VC_US_"):
+            r["Final URL suffix"] = SUFFIX_US
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS, extrasaction="ignore")
+        w.writeheader()
+        w.writerows(rows)
+
+
+def write_neg_mmc_csv(path: Path, rows: list[dict[str, str]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=NEG_MMC_FIELDS, extrasaction="ignore")
         w.writeheader()
         w.writerows(rows)
 
@@ -5074,15 +5197,19 @@ def write_live_paused_keywords_doc(rows: list[dict[str, str]]) -> None:
     )
 
 
-def write_preflight(rows: list[dict[str, str]]) -> None:
+def write_preflight(
+    rows: list[dict[str, str]], neg_rows: list[dict[str, str]]
+) -> None:
     from datetime import datetime, timezone
 
     kinds = Counter(r["Row Type"] for r in rows)
     camps = [r for r in rows if r["Row Type"] == "Campaign"]
     pos = [r for r in rows if is_positive_keyword_row(r)]
-    negs = [r for r in rows if is_campaign_negative_row(r)]
+    negs = [r for r in neg_rows if is_mmc_negative_row(r)]
     us_rows = [r for r in rows if r["Account"] == ACCOUNT_IDS["US"]]
     au_rows = [r for r in rows if r["Account"] == ACCOUNT_IDS["AU"]]
+    us_negs = [r for r in negs if r["Account"] == ACCOUNT_IDS["US"]]
+    au_negs = [r for r in negs if r["Account"] == ACCOUNT_IDS["AU"]]
     unique_negs = len({r["Keyword"].lower() for r in negs})
     lines = [
         "# Editor preflight report",
@@ -5097,10 +5224,13 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "",
         "- Leave existing `PM_*` campaigns, shared negative lists, Zoho/Zapier "
         "conversion actions, and historical reporting alone.",
-        "- This package attaches curated Stage1 campaign-level negatives "
-        f"(cap {MAX_UNIQUE_NEGATIVES}) plus a **separate labeled live cohort** "
-        f"`{VC_NEG_JOBSEEKERS_LIVE_NAME}` on `VC_US_*` only — **not** account shared / "
-        "`PM_*` large shared lists.",
+        "- Campaign-level negatives ship in a **separate MMC CSV** "
+        f"(cap {MAX_UNIQUE_NEGATIVES} curated + `{VC_NEG_JOBSEEKERS_LIVE_NAME}` on "
+        "`VC_US_*` only) — **not** inside the main Account Import, **not** account "
+        "shared / `PM_*` mega lists.",
+        "- **Why separate:** Account-importing `Keyword` + `Campaign negative` rows "
+        "dual-writes blank/`Unkown` ad groups packed with Enabled Broad *positives* "
+        "(confirmed AU Editor DB 2026-08-08). Main CSV has zero of those rows.",
         "- Do **not** attach older account shared / `PM_*` negative lists to `VC_*` "
         "after Import/Post.",
         "- Do **not** use audiences to restrict targeting for initial Search launch "
@@ -5119,8 +5249,10 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "",
         "| File | Use |",
         "|------|-----|",
-        f"| `google-ads-editor-import-us.csv` ({len(us_rows)} rows) | **Preferred** — import into USA `{ACCOUNT_IDS['US']}` only |",
-        f"| `google-ads-editor-import-au.csv` ({len(au_rows)} rows) | **Preferred** — import into AU `{ACCOUNT_IDS['AU']}` only |",
+        f"| `google-ads-editor-import-us.csv` ({len(us_rows)} rows) | **Preferred** — Account Import into USA `{ACCOUNT_IDS['US']}` only |",
+        f"| `google-ads-editor-import-au.csv` ({len(au_rows)} rows) | **Preferred** — Account Import into AU `{ACCOUNT_IDS['AU']}` only |",
+        f"| `google-ads-editor-campaign-negatives-us.csv` ({len(us_negs)} rows) | **Keywords, Negative → Make multiple changes** (USA) — do **not** Account Import |",
+        f"| `google-ads-editor-campaign-negatives-au.csv` ({len(au_negs)} rows) | **Keywords, Negative → Make multiple changes** (AU) — do **not** Account Import |",
         f"| `google-ads-editor-import.csv` / `-multi-account.csv` ({len(rows)} rows) | Manager multi-account only — every row has Account |",
         f"| `phase1-enable-manifest-us.csv` / `-au.csv` | **Review-only** enable ladder (tiers 1A/1B/2/3 + PHRASE_HOLD + LIVE_PAUSED; all Paused) |",
         f"| `PHASE1-REVIEW.md` | Tier definitions + per-market counts |",
@@ -5131,12 +5263,12 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "",
         f"- Campaigns: {kinds.get('Campaign', 0)} (all Paused)",
         f"- Ad groups: {kinds.get('Ad group', 0)}",
-        f"- Positive keywords: {len(pos)}",
+        f"- Positive keywords: {len(pos)} (Exact + Phrase only — **zero Broad positives**)",
         f"- Live-paused positives (`{VC_KEYWORDS_PAUSED_LIVE_NAME}`): "
         f"{len([r for r in pos if is_live_paused_keyword(r['Keyword'])])} rows "
         f"(US+AU; keep Paused — {VC_KEYWORDS_PAUSED_LIVE_REASON})",
         f"- RSAs: {kinds.get('Ad', 0)}",
-        f"- Active campaign negatives: {len(negs)} rows "
+        f"- Campaign negatives (MMC file): {len(negs)} rows "
         f"({unique_negs} unique texts) — Stage1 curated Broad on all 4 VC_* campaigns "
         f"+ `{VC_NEG_JOBSEEKERS_LIVE_NAME}` Phrase on `VC_US_*` only",
         f"- `{VC_NEG_JOBSEEKERS_LIVE_NAME}`: {len(VC_NEG_JOBSEEKERS_LIVE)} Phrase terms "
@@ -5270,16 +5402,23 @@ def write_preflight(rows: list[dict[str, str]]) -> None:
         "3. **Domain live:** `www.virtualcoworker.app` — package Final URLs already on www. "
         "Confirm `/us` `/au` `/ph` LPs still 200 before Import.",
         "4. Download fresh USA + AU accounts into Editor (read-only sync).",
-        "5. Import **US split** into USA → Check changes → leave **Paused**.",
-        "6. Import **AU split** into AU → Check changes → leave **Paused**.",
-        "7. Confirm every Final URL uses `www.virtualcoworker.app` (not `*.vercel.app`).",
-        "8. Confirm `VC_*` Stage1 curated Broad negs + "
+        "5. Import **US split** (`google-ads-editor-import-us.csv`) into USA → "
+        "Check changes → leave **Paused**. Do **not** Account-import the negatives CSV.",
+        "6. Import **AU split** (`google-ads-editor-import-au.csv`) into AU → "
+        "Check changes → leave **Paused**.",
+        "7. Add campaign negatives via **Keywords and Targeting → Keywords, Negative → "
+        "Make multiple changes** using `google-ads-editor-campaign-negatives-*.csv` "
+        "(campaign column, no ad group; Add as campaign-level). "
+        "If AU already has the 172 Stage1 campaign negs from an earlier import, skip "
+        "re-adding — just delete any blank/`Unkown` ad groups with Broad positives.",
+        "8. Confirm every Final URL uses `www.virtualcoworker.app` (not `*.vercel.app`).",
+        "9. Confirm `VC_*` Stage1 curated Broad negs + "
         f"`{VC_NEG_JOBSEEKERS_LIVE_NAME}` Phrase cohort on `VC_US_*` — "
         "**do not** attach older `PM_*` / account shared mega lists.",
-        "9. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval. "
+        "10. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval. "
         f"Skip tier **LIVE_PAUSED** (`{VC_KEYWORDS_PAUSED_LIVE_NAME}`).",
-        "10. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
-        "11. Enable is a separate explicit decision after TRAFFIC READY — "
+        "11. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.",
+        "12. Enable is a separate explicit decision after TRAFFIC READY — "
         "never from Import/Post alone. Still **NOT** paid-ready until TRAFFIC READY.",
         "",
     ]
@@ -5312,18 +5451,28 @@ def mirror_docs() -> None:
 
 def main() -> None:
     rows = build()
-    qa(rows)
+    neg_rows = build_campaign_negatives()
+    qa(rows, neg_rows)
     write_csv(OUT, rows)
     write_csv(OUT_MULTI, rows)
     write_csv(OUT_US, [r for r in rows if r["Account"] == ACCOUNT_IDS["US"]])
     write_csv(OUT_AU, [r for r in rows if r["Account"] == ACCOUNT_IDS["AU"]])
+    write_neg_mmc_csv(OUT_NEG_MULTI, neg_rows)
+    write_neg_mmc_csv(
+        OUT_NEG_US, [r for r in neg_rows if r["Account"] == ACCOUNT_IDS["US"]]
+    )
+    write_neg_mmc_csv(
+        OUT_NEG_AU, [r for r in neg_rows if r["Account"] == ACCOUNT_IDS["AU"]]
+    )
     us_n, au_n = write_phase1_manifests(rows)
     write_live_paused_keywords_doc(rows)
-    write_preflight(rows)
+    write_preflight(rows, neg_rows)
     MIRROR.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(OUT, MIRROR)
     shutil.copy2(OUT_US, MIRROR.parent / OUT_US.name)
     shutil.copy2(OUT_AU, MIRROR.parent / OUT_AU.name)
+    shutil.copy2(OUT_NEG_US, MIRROR.parent / OUT_NEG_US.name)
+    shutil.copy2(OUT_NEG_AU, MIRROR.parent / OUT_NEG_AU.name)
     shutil.copy2(OUT_MANIFEST_US, MIRROR.parent / OUT_MANIFEST_US.name)
     shutil.copy2(OUT_MANIFEST_AU, MIRROR.parent / OUT_MANIFEST_AU.name)
     mirror_docs()
@@ -5333,6 +5482,7 @@ def main() -> None:
     build_xray_ads_overview()
     print(f"Wrote {OUT} ({len(rows)} rows)")
     print(f"Wrote {OUT_US} / {OUT_AU} / {OUT_MULTI}")
+    print(f"Wrote {OUT_NEG_US} / {OUT_NEG_AU} / {OUT_NEG_MULTI} ({len(neg_rows)} neg rows)")
     print(f"Wrote {OUT_MANIFEST_US} ({us_n}) / {OUT_MANIFEST_AU} ({au_n})")
     print(f"Wrote {LIVE_PAUSED_DOC}")
     print(f"Wrote {PHASE1_REVIEW}")

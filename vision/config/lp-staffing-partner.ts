@@ -4,7 +4,7 @@
  * Path: /prototype/staffing-partner/us
  * lp_variant: price_staffing_v1
  *
- * Not live /us. Not an Ads Final URL. Do not invent /us/staffing.
+ * Not live /us. Not an Ads Final URL. The unused staffing-agency candidate is /us/staffing.
  * Same conversion machine: GuidedMatchGate role → hours → people → size → contact.
  */
 

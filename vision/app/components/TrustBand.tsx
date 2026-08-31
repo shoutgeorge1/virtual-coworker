@@ -52,16 +52,14 @@ export default function TrustBand({
               <GoogleReviewBadge proof={gbp} variant="pill" />
               <span
                 className="trust-rating-pill"
-                aria-label={`Clutch ${TRUST_PROOF.clutch.rating} out of 5 from ${TRUST_PROOF.clutch.reviewCount} reviews`}
+                aria-label={`Clutch ${TRUST_PROOF.clutch.rating} out of 5`}
               >
                 <RatingStars size={14} />
                 <b>
                   {TRUST_PROOF.clutch.rating}
                   <i>/5</i>
                 </b>
-                <span>
-                  Independent reviews · Clutch · {TRUST_PROOF.clutch.reviewCount}
-                </span>
+                <span>Clutch</span>
               </span>
             </div>
           </div>
@@ -88,9 +86,17 @@ export default function TrustBand({
         {clientMarks.length > 0 ? (
           <div
             className="trust-clients"
-            aria-label="Companies that have hired through Virtual Coworker"
+            aria-label={
+              market === "au"
+                ? "Clients we're proud to support"
+                : "Teams we're proud to work with"
+            }
           >
-            <p className="trust-press-label">Companies that hired through us</p>
+            <p className="trust-press-label">
+              {market === "au"
+                ? "Clients we're proud to support"
+                : "Teams we're proud to work with"}
+            </p>
             <ul className="trust-clients-row">
               {clientMarks.map((c) => {
                 const label = c.alt || c.name;

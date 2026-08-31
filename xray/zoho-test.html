@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Zoho test recap · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+</head>
+<body data-page="zoho-test.html" data-foot="Live form → email + Zoho<br />Create-only · New Enquiry">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">17 Aug 2026 · for George</p>
+        <h1>Zoho landing-page test — what happened</h1>
+        <p>
+          Live <code>/api/lead</code> now emails the team <strong>and</strong> creates a Sales Enquiry.
+          Create-only. Default status only. Email still goes through if Zoho fails.
+        </p>
+      </header>
+
+      <section class="panel tint-green">
+        <div class="panel-hd">
+          <p class="kicker">Bottom line</p>
+          <h2>Production LP → Zoho is on</h2>
+          <span class="st st-ok">Writes ON</span>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>Vercel <code>ZOHO_SUBMISSION_ENABLED=true</code> (env only — still <code>false</code> in git)</li>
+            <li><code>ZOHO_CRM_ENABLED</code> stays false and does not turn writes on</li>
+            <li>Path: form → us@ / apac@ first, then a new Sales Enquiry</li>
+            <li>Create-only. No upsert. No update. No delete scopes</li>
+            <li>Status written: <strong>New Enquiry (Auto)</strong> only</li>
+            <li>No Ads / Zapier / Data Manager changes from our side</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel tint-cool">
+        <div class="panel-hd">
+          <p class="kicker">Records</p>
+          <h2>Three labelled test Sales Enquiries</h2>
+          <span class="st st-ok">GET confirmed</span>
+        </div>
+        <div class="panel-bd">
+          <p style="margin:0 0 0.7rem">
+            All three are module <code>Leads</code> (UI: Sales Enquiries).
+            Status <strong>New Enquiry (Auto)</strong>. Not Discovery Scheduled.
+            Not Job Order Submitted. No GCLID. Not converted.
+          </p>
+          <ul class="glance-bullets">
+            <li>
+              <code>6724032000029820001</code> — first API test (leave as-is)<br />
+              Company <code>[TEST] Virtual Coworker API</code> · stamp <code>VC-ZOHO-TEST-20260817T212046Z</code>
+            </li>
+            <li>
+              <code>6724032000029822001</code> — live <code>/us</code> form path<br />
+              Company <code>[TEST] LP US — Do not contact</code> · submission <code>vc_us_msxqxe3v_t757xd</code>
+            </li>
+            <li>
+              <code>6724032000029823001</code> — live <code>/us/consult</code> form path<br />
+              Company <code>[TEST] LP US consult — Do not contact</code> · submission <code>vc_us_msxqxgqi_gnoe8u</code>
+            </li>
+          </ul>
+          <p style="margin:0.7rem 0 0">
+            Look these up in Zoho Sales Enquiries. Do not qualify, convert, or book them.
+            Ask the team to confirm no workflow auto-moves <code>[TEST]</code> rows.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel tint-amber">
+        <div class="panel-hd">
+          <p class="kicker">Conversion tracking</p>
+          <h2>What already exists vs what we cannot set</h2>
+        </div>
+        <div class="panel-bd">
+          <p style="margin:0 0 0.55rem">
+            We did not touch Data Manager, Zapier, or conversion actions.
+            No Ads API. No offline upload. No invented dollar values.
+          </p>
+          <ul class="glance-bullets">
+            <li>
+              <strong>Already there (US + AU):</strong>
+              Zoho JO Submitted [Standard OCI] and via Zapier;
+              Zoho Discovery Scheduled [Standard OCI] and via Zapier
+            </li>
+            <li>
+              <strong>New Enquiry is correctly not a conversion</strong> —
+              the live connections are named for Job Order Submitted and Discovery Scheduled only
+            </li>
+            <li>
+              <strong>Values on disk (13 Aug inventory):</strong>
+              Standard OCI JO and Discovery show <code>$1</code>;
+              Zapier twins show <code>$0</code>.
+              Those are placeholders, not what a job order or placement is worth
+            </li>
+            <li>
+              <strong>Missing:</strong> no Placement conversion action in that inventory.
+              AU has the same JO / Discovery pair as US
+            </li>
+            <li>
+              Last screenshot was Needs attention. George reauthorized both connections 17 Aug.
+              Manual runs completed. Filters still mean Job Order Submitted and Discovery Scheduled only.
+              Do not rebuild.
+            </li>
+          </ul>
+          <p style="margin:0.7rem 0 0">
+            They type Job Order and Placement values in Ads themselves. We do not invent dollars.
+            Matching still fails when the Lead has no click ID / email / phone — that’s the CRM piece, not a dead pipe.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel tint-rose">
+        <div class="panel-hd">
+          <p class="kicker">Ads safety</p>
+          <h2>Test rows were built to miss both live feeds</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>Zoho JO Submitted US [Standard OCI]</li>
+            <li>Zoho Discovery Scheduled US [Standard OCI]</li>
+          </ul>
+          <p style="margin:0.7rem 0 0">
+            Status is New Enquiry (Auto) only. No click id.
+            Owner: George Aguilar. Do not move these into Discovery or JO.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-hd">
+          <p class="kicker">Email</p>
+          <h2>Draft ready — not sent</h2>
+        </div>
+        <div class="panel-bd">
+          <p style="margin:0">
+            New team email is drafted, not sent. Covers Data Manager back on, the three [TEST] IDs,
+            import row errors, and Ash owning CRM field matching. Wait for George to say send.
+          </p>
+        </div>
+      </section>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="launch-control">Checklist</a>
+        <a class="btn" href="later.html#zoho-revisit-gate">Zoho later gate</a>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js?v=20260817-zoho-test3"></script>
+</body>
+</html>

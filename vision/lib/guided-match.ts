@@ -5,6 +5,7 @@
 
 import type { MarketId } from "../config/markets";
 import type { CategorySlug } from "../config/categories";
+import { REAL_ESTATE_SLUG } from "../config/lp-real-estate";
 import {
   GUIDED_MATCH_CTA_MODE,
   GUIDED_MATCH_LANDING_TYPE,
@@ -14,7 +15,7 @@ import {
 } from "../config/guided-match";
 import { LP_VERSION } from "./tracking";
 
-export function guidedMatchLandingFlags(lpVariant = "", lpVersion = LP_VERSION) {
+export function guidedMatchLandingFlags(lpVariant = "", lpVersion: string = LP_VERSION) {
   return {
     lp_surface: GUIDED_MATCH_LP_SURFACE,
     cta_mode: GUIDED_MATCH_CTA_MODE,
@@ -40,7 +41,7 @@ const SEQUENTIAL_LOCKED: readonly GuidedMatchStep[] = [
 
 export function guidedMatchStepIndex(
   step: GuidedMatchStep,
-  lockedCategory?: CategorySlug | null,
+  lockedCategory?: CategorySlug | typeof REAL_ESTATE_SLUG | null,
   contactFirst = false,
   sequentialNeeds = false,
 ): { shown: number; total: number; pct: string } {
@@ -68,7 +69,7 @@ export function guidedMatchStepIndex(
 
 export function canGoBack(
   step: GuidedMatchStep,
-  lockedCategory?: CategorySlug | null,
+  lockedCategory?: CategorySlug | typeof REAL_ESTATE_SLUG | null,
   contactFirst = false,
   sequentialNeeds = false,
 ): boolean {
@@ -78,7 +79,7 @@ export function canGoBack(
 
 export function previousStep(
   step: GuidedMatchStep,
-  lockedCategory?: CategorySlug | null,
+  lockedCategory?: CategorySlug | typeof REAL_ESTATE_SLUG | null,
   sequentialNeeds = false,
 ): GuidedMatchStep {
   if (sequentialNeeds) {
@@ -130,7 +131,7 @@ export function shouldStartEmployerFormOnPii(alreadyFired: boolean): boolean {
   return true;
 }
 
-/** Role / hours chips must never count as employer_form_started. */
+/** Role / hours chips count as GA4 form_start (first hiring action). */
 export function chipClickIsFormStart(): boolean {
-  return false;
+  return true;
 }

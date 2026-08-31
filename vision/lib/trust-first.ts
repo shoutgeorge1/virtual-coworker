@@ -115,4 +115,27 @@ export function previewAnalyticsMeta(
   };
 }
 
+export function highlightPhrase(
+  text: string,
+  phrase: string,
+): { before: string; accent: string; after: string } | null {
+  if (!phrase) return null;
+  const idx = text.toLowerCase().indexOf(phrase.toLowerCase());
+  if (idx < 0) return null;
+  return {
+    before: text.slice(0, idx),
+    accent: text.slice(idx, idx + phrase.length),
+    after: text.slice(idx + phrase.length),
+  };
+}
+
+/** First clause stays navy. Second clause is the light-blue pop. */
+export function splitHeadline(text: string): { lead: string; accent: string } {
+  const period = text.match(/^(.*?[.!?])\s+(.+)$/);
+  if (period) return { lead: period[1], accent: period[2] };
+  const comma = text.match(/^(.*?,)\s+(.+)$/);
+  if (comma) return { lead: comma[1], accent: comma[2] };
+  return { lead: text, accent: "" };
+}
+
 export { TRUST_FIRST_NAMESPACE, TRUST_FIRST_VARIANTS };

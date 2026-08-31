@@ -1,0 +1,157 @@
+{
+  "generated_at": "2026-08-24T19:00:00Z",
+  "title": "Phone call → CRM forensic (aggregate only)",
+  "owner_next": "Braden names backup owner · Ash validates CRM linkage · Raffie supplies pre-Aug 19 logs · Cheyenne confirms callback SOP",
+  "george_role": "Paid-media + tracking QA only — not telephone ops or CRM ownership",
+  "evidence_labels": {
+    "LIVE": "Read from live system or confirmed email from VC ops",
+    "DERIVED": "Calculated from LIVE inputs",
+    "INFERRED": "Reasonable inference — labeled, not asserted as fact",
+    "MANUAL": "Human statement (email / interview) — not API-proven",
+    "UNAVAILABLE": "Not found; do not treat as zero"
+  },
+  "verdict": {
+    "voice_to_crm_integrated": {
+      "value": "PARTIAL — not a complete sales pipeline",
+      "label": "LIVE",
+      "detail": "CRM Calls module receives some CTI-style inbound/missed stubs owned by Cheyenne after Aug 19. Caller identity is the US DID (+18889648644), not the external ANI. No Contact/Lead match. Call_Result empty. No callback Tasks. Sales Enquiries are not auto-created from these calls."
+    },
+    "inbound_creates_sales_enquiry": {
+      "value": false,
+      "label": "LIVE",
+      "detail": "Only 3 Leads with Lead_Source=Phone since Aug 6; none tied to Voice CTI pattern. Website remains the dominant Lead_Source."
+    },
+    "missed_calls_assigned_and_returned": {
+      "value": "UNPROVEN",
+      "label": "MANUAL",
+      "detail": "Raffie: press 1 → Cheyenne → VM; alerts to us@. Cheyenne has not yet confirmed callback ownership or where outcomes are stored. No CRM Task subjects matching missed/callback/voicemail since Aug 6."
+    }
+  },
+  "coverage": {
+    "us_campaign_launch_through_aug18": {
+      "label": "PARTIAL",
+      "provider": "Grasshopper",
+      "provider_label": "DERIVED",
+      "note": "Open CSV ingested 24 Aug. 888 inbound legs: 23; unique external callers: 15; dates Aug 7–18. Aug 6 launch day not in file. Aug 19+ not in Grasshopper."
+    },
+    "aug19_through_audit": {
+      "label": "PARTIAL",
+      "note": "Zoho Voice forwarding live (Raffie MANUAL). Password zip call_logs_2026-08-19_09_20_2026-08-24_09_20(1).zip in Gmail — open CSV for this window not yet received. CRM Calls COQL live for same window."
+    },
+    "previous_90_days": {
+      "label": "LIVE",
+      "crm_calls_total": 407,
+      "note": "Almost all Outbound; inbound/missed in CRM are concentrated on Aug 11 demo + Aug 19+ DID stubs."
+    },
+    "previous_12_months": {
+      "label": "LIVE",
+      "crm_calls_total": 1170,
+      "note": "Count only. No bulk PII extract."
+    }
+  },
+  "us": {
+    "phone_link_clicks_ads_period": {
+      "value": 62,
+      "label": "MANUAL",
+      "note": "Button taps / phone-link clicks — not verified completed calls. Do not combine with unique callers."
+    },
+    "public_number": "(888) 964-8644",
+    "voice_forward_to": "323-300-2663",
+    "voice_forward_start": "2026-08-19",
+    "ivr": {
+      "1": "New client → Cheyenne → VM if no answer",
+      "2": "Current client support → Jona",
+      "3": "Other → Cheyenne",
+      "4": "Main menu",
+      "label": "MANUAL"
+    },
+    "hours": "Weekdays 9 AM–9 PM EST; weekend closed message (VM still possible)",
+    "notify": "us@virtualcoworker.com",
+    "crm_calls_since_aug6": {
+      "outbound": 65,
+      "inbound": 8,
+      "missed": 9,
+      "label": "LIVE"
+    },
+    "crm_inbound_missed_aug19_plus_did_as_caller": {
+      "value": 12,
+      "label": "LIVE",
+      "note": "Subject/Caller_ID show +18889648644 — external unique callers UNAVAILABLE from CRM alone"
+    },
+    "crm_inbound_missed_with_contact_link": {
+      "value": 0,
+      "label": "DERIVED",
+      "note": "Among the 12 DID-as-from rows; Aug 11 demo rows did have Who_Id"
+    },
+    "call_result_populated_on_those_12": {
+      "value": 0,
+      "label": "LIVE"
+    },
+    "callback_tasks_since_aug6": {
+      "value": 0,
+      "label": "LIVE",
+      "note": "No Tasks with missed/callback/voicemail in Subject"
+    },
+    "unique_external_callers_grasshopper_csv": {
+      "value": 15,
+      "label": "DERIVED",
+      "note": "Grasshopper Detail_08.24.2026_11.15.58_AM.csv — 888 inbound legs only; Aug 7–18 2026; pre–Voice cutover"
+    },
+    "grasshopper_inbound_888_legs": {
+      "value": 23,
+      "label": "DERIVED"
+    },
+    "grasshopper_answered_888": {
+      "value": 14,
+      "label": "DERIVED",
+      "note": "Inbound legs typed Forwarded / connected"
+    },
+    "grasshopper_hangup_888": {
+      "value": 9,
+      "label": "DERIVED"
+    },
+    "grasshopper_voicemail_888": {
+      "value": 0,
+      "label": "DERIVED"
+    },
+    "grasshopper_date_range": {
+      "min": "2026-08-07",
+      "max": "2026-08-18",
+      "label": "DERIVED"
+    },
+    "unique_external_callers_voice": {
+      "value": null,
+      "label": "UNAVAILABLE",
+      "note": "Requires open CSV or decrypted Voice export in .local/phone-call-forensic/"
+    },
+    "answered_missed_voicemail_voice": {
+      "value": null,
+      "label": "UNAVAILABLE"
+    },
+    "potential_employer_review_queue": {
+      "value": null,
+      "label": "UNAVAILABLE",
+      "note": "Do not invent a count. Build only after Voice export + Cheyenne classification."
+    }
+  },
+  "au": {
+    "public_number": "1300 886 740",
+    "phone_link_clicks": {
+      "value": 2,
+      "label": "MANUAL",
+      "note": "George email 24 Aug — low priority"
+    },
+    "crm_inbound_evidence": {
+      "value": "UNAVAILABLE",
+      "label": "UNAVAILABLE",
+      "note": "No AU Voice export in this pass. AU 1300 voicemail still says Alex (Launch Control waiting item)."
+    },
+    "sales_ops_owner": "Holly Wallace"
+  },
+  "ads_vs_calls": {
+    "do_not_equate": "phone_link_clicks ≠ completed_calls ≠ CRM_Calls ≠ Sales_Enquiries",
+    "website_call_60s_us": "Configured (LIVE tracking docs). Not proof of CRM logging.",
+    "offline_conversion_uploads": "DEFERRED until records clean"
+  },
+  "checklist_parent": "Phone lead recovery and CRM integration"
+}

@@ -1,0 +1,1449 @@
+{
+  "generated_at_utc": "2026-08-14T18:01:09.633443+00:00",
+  "schema_version": 1,
+  "read_only": true,
+  "purpose": "Reconcile Google Ads \u2192 GA4 \u2192 website \u2192 Zoho without mutating campaigns",
+  "clean_traffic_since": "2026-08-08",
+  "date_windows_note": "Never blend windows without labeling. USD and AUD stay separate.",
+  "sync": {
+    "google_ads": {
+      "status": "healthy",
+      "last_success_utc": "2026-08-14T18:00:44.982091+00:00",
+      "age_hours": 0.0
+    },
+    "ga4": {
+      "status": "healthy",
+      "last_success_utc": "2026-08-14T18:01:06Z",
+      "age_hours": 0.0
+    },
+    "impression_share": {
+      "status": "healthy",
+      "last_success_utc": "2026-08-14T18:01:03.586042+00:00",
+      "age_hours": 0.0
+    },
+    "daily_watch": {
+      "status": "stale",
+      "last_success_utc": "2026-08-10T20:24:55.161677+00:00",
+      "age_hours": 93.6
+    },
+    "zoho": {
+      "status": "delayed",
+      "last_success_utc": "2026-08-13",
+      "age_hours": null,
+      "note": "Census + attribution recovery pack \u2014 not a live scheduled sync into xray/data"
+    }
+  },
+  "spend": {
+    "US": {
+      "currency": "USD",
+      "source": "Google Ads",
+      "window_note": "VC_US_% \u00b7 segments.date BETWEEN 2026-08-04 AND 2026-08-14 (7-day view + early CPL window in one API call)",
+      "windows": {
+        "today": {
+          "impressions": 498,
+          "clicks": 48,
+          "cost": 164.44,
+          "ctr_pct": 9.6,
+          "cpc": 3.43,
+          "dates": [
+            "2026-08-14"
+          ],
+          "label": "Focus day 2026-08-14",
+          "note": "Calendar day present in last Ads pull \u2014 not live clock"
+        },
+        "yesterday": {
+          "impressions": 652,
+          "clicks": 74,
+          "cost": 194.65,
+          "ctr_pct": 11.3,
+          "cpc": 2.63,
+          "dates": [
+            "2026-08-13"
+          ]
+        },
+        "last_3_days": {
+          "impressions": 1484,
+          "clicks": 171,
+          "cost": 476.34,
+          "ctr_pct": 11.5,
+          "cpc": 2.79,
+          "dates": [
+            "2026-08-12",
+            "2026-08-13",
+            "2026-08-14"
+          ]
+        },
+        "last_7_days": {
+          "impressions": 4362,
+          "clicks": 465,
+          "cost": 1256.33,
+          "ctr_pct": 10.7,
+          "cpc": 2.7,
+          "dates": [
+            "2026-08-06",
+            "2026-08-07",
+            "2026-08-08",
+            "2026-08-09",
+            "2026-08-10",
+            "2026-08-11",
+            "2026-08-12",
+            "2026-08-13",
+            "2026-08-14"
+          ]
+        },
+        "since_clean_traffic": {
+          "impressions": 3622,
+          "clicks": 363,
+          "cost": 1000.99,
+          "ctr_pct": 10.0,
+          "cpc": 2.76,
+          "dates": [
+            "2026-08-08",
+            "2026-08-09",
+            "2026-08-10",
+            "2026-08-11",
+            "2026-08-12",
+            "2026-08-13",
+            "2026-08-14"
+          ],
+          "since": "2026-08-08"
+        },
+        "month_to_date": {
+          "status": "unavailable",
+          "note": "Need a dedicated MTD Ads pull \u2014 not in current snapshot"
+        }
+      }
+    },
+    "AU": {
+      "currency": "AUD",
+      "source": "Google Ads",
+      "window_note": "2026-08-08_to_2026-08-14",
+      "note": "AUD amounts \u2014 do not sum with USD",
+      "windows": {
+        "today": {
+          "impressions": 334,
+          "clicks": 41,
+          "cost": 130.39,
+          "ctr_pct": 12.3,
+          "cpc": 3.18,
+          "dates": [
+            "2026-08-14"
+          ],
+          "label": "Focus day 2026-08-14",
+          "note": "Calendar day present in last Ads pull \u2014 not live clock"
+        },
+        "yesterday": {
+          "impressions": 297,
+          "clicks": 39,
+          "cost": 122.99,
+          "ctr_pct": 13.1,
+          "cpc": 3.15,
+          "dates": [
+            "2026-08-13"
+          ]
+        },
+        "last_3_days": {
+          "impressions": 946,
+          "clicks": 122,
+          "cost": 381.66,
+          "ctr_pct": 12.9,
+          "cpc": 3.13,
+          "dates": [
+            "2026-08-12",
+            "2026-08-13",
+            "2026-08-14"
+          ]
+        },
+        "last_7_days": {
+          "impressions": 1679,
+          "clicks": 217,
+          "cost": 769.28,
+          "ctr_pct": 12.9,
+          "cpc": 3.55,
+          "dates": [
+            "2026-08-08",
+            "2026-08-09",
+            "2026-08-10",
+            "2026-08-11",
+            "2026-08-12",
+            "2026-08-13",
+            "2026-08-14"
+          ]
+        },
+        "since_clean_traffic": {
+          "impressions": 1682,
+          "clicks": 218,
+          "cost": 787.6,
+          "ctr_pct": 13.0,
+          "cpc": 3.61,
+          "dates": [
+            "2026-08-08",
+            "2026-08-09",
+            "2026-08-10",
+            "2026-08-11",
+            "2026-08-12",
+            "2026-08-13",
+            "2026-08-14"
+          ],
+          "since": "2026-08-08"
+        },
+        "month_to_date": {
+          "status": "unavailable",
+          "note": "Need a dedicated MTD Ads pull \u2014 not in current snapshot"
+        }
+      }
+    },
+    "combined_spend_forbidden": true,
+    "clean_traffic_since": "2026-08-08"
+  },
+  "campaigns": [
+    {
+      "campaign": "VC_US_S_CORE",
+      "status": "ENABLED",
+      "cohort": "stage1",
+      "market": "US",
+      "currency": "USD",
+      "spend_7d": 778.14,
+      "clicks_7d": 325,
+      "impressions_7d": 2495,
+      "ctr_pct_7d": 13.0,
+      "cpc_7d": 2.39,
+      "spend_focus_day": 102.36,
+      "clicks_focus_day": 34,
+      "ads_conversions_7d": 1.0,
+      "source": "Google Ads",
+      "search_is_pct": 30.8,
+      "lost_is_rank_pct": 30.4,
+      "lost_is_budget_pct": 38.7,
+      "search_top_is_pct": 20.3,
+      "search_abs_top_is_pct": 10.3,
+      "daily_budget": 150.0,
+      "crm_qualified_outcomes": null,
+      "crm_note": "Zoho not joined to campaign yet \u2014 see CRM outcomes block"
+    },
+    {
+      "campaign": "VC_US_S_ROLES",
+      "status": "ENABLED",
+      "cohort": "stage1",
+      "market": "US",
+      "currency": "USD",
+      "spend_7d": 478.19,
+      "clicks_7d": 140,
+      "impressions_7d": 1867,
+      "ctr_pct_7d": 7.5,
+      "cpc_7d": 3.42,
+      "spend_focus_day": 62.08,
+      "clicks_focus_day": 14,
+      "ads_conversions_7d": null,
+      "source": "Google Ads",
+      "search_is_pct": 20.9,
+      "lost_is_rank_pct": 64.7,
+      "lost_is_budget_pct": 14.4,
+      "search_top_is_pct": 12.3,
+      "search_abs_top_is_pct": 10.0,
+      "daily_budget": 100.0,
+      "crm_qualified_outcomes": null,
+      "crm_note": "Zoho not joined to campaign yet \u2014 see CRM outcomes block"
+    },
+    {
+      "campaign": "VC_AU_S_CORE",
+      "status": "ENABLED",
+      "cohort": "stage1",
+      "market": "AU",
+      "currency": "AUD",
+      "spend_7d": 466.87,
+      "clicks_7d": 137,
+      "impressions_7d": 889,
+      "ctr_pct_7d": 15.4,
+      "cpc_7d": 3.41,
+      "spend_focus_day": 77.81,
+      "clicks_focus_day": 27,
+      "ads_conversions_7d": null,
+      "source": "Google Ads",
+      "search_is_pct": 30.4,
+      "lost_is_rank_pct": 32.9,
+      "lost_is_budget_pct": 36.7,
+      "search_top_is_pct": 22.7,
+      "search_abs_top_is_pct": 13.7,
+      "daily_budget": 75.0,
+      "crm_qualified_outcomes": null,
+      "crm_note": "Zoho not joined to campaign yet \u2014 see CRM outcomes block"
+    },
+    {
+      "campaign": "VC_AU_S_ROLES",
+      "status": "ENABLED",
+      "cohort": "stage1",
+      "market": "AU",
+      "currency": "AUD",
+      "spend_7d": 302.41,
+      "clicks_7d": 80,
+      "impressions_7d": 790,
+      "ctr_pct_7d": 10.1,
+      "cpc_7d": 3.78,
+      "spend_focus_day": 52.58,
+      "clicks_focus_day": 14,
+      "ads_conversions_7d": null,
+      "source": "Google Ads",
+      "search_is_pct": 23.9,
+      "lost_is_rank_pct": 43.4,
+      "lost_is_budget_pct": 32.7,
+      "search_top_is_pct": 15.5,
+      "search_abs_top_is_pct": 10.0,
+      "daily_budget": 50.0,
+      "crm_qualified_outcomes": null,
+      "crm_note": "Zoho not joined to campaign yet \u2014 see CRM outcomes block"
+    }
+  ],
+  "website": {
+    "source": "GA4",
+    "window": "7daysAgo \u2192 today",
+    "US": {
+      "sessions": 545,
+      "users": 550,
+      "engaged_sessions": 197,
+      "engagement_rate_pct": 36.1,
+      "conversions_ga4": 0.0
+    },
+    "AU": {
+      "sessions": 71,
+      "users": 64,
+      "engaged_sessions": 18,
+      "engagement_rate_pct": 25.4,
+      "note": "2026-08-12"
+    },
+    "events": {
+      "form_start": 10,
+      "form_submit": 0,
+      "phone_click": 0,
+      "quiz_start": 0,
+      "quiz_complete": 0,
+      "chat_open": 0,
+      "popup_impression": 0,
+      "calendly_click": 0,
+      "note": "Counts from GA4 top-events report \u2014 low-volume custom events may be missing from top-N"
+    },
+    "landing_pages": {
+      "US": [
+        {
+          "path": "/us",
+          "path_display": "/us",
+          "path_kind": "us_home",
+          "sessions": 398,
+          "users": 333,
+          "engaged_sessions": 147,
+          "engagement_rate_pct": 36.9,
+          "bounce_rate_pct": 63.1,
+          "market_guess": "US"
+        },
+        {
+          "path": "(empty path)",
+          "path_display": "untagged",
+          "path_kind": "unknown",
+          "sessions": 43,
+          "users": 39,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "other"
+        },
+        {
+          "path": "/us/bookkeeping",
+          "path_display": "/us/bookkeeping",
+          "path_kind": "role_lp",
+          "sessions": 23,
+          "users": 23,
+          "engaged_sessions": 7,
+          "engagement_rate_pct": 30.4,
+          "bounce_rate_pct": 69.6,
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/digital-marketing",
+          "path_display": "/us/digital-marketing",
+          "path_kind": "role_lp",
+          "sessions": 16,
+          "users": 13,
+          "engaged_sessions": 4,
+          "engagement_rate_pct": 25.0,
+          "bounce_rate_pct": 75.0,
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/social-media",
+          "path_display": "/us/social-media",
+          "path_kind": "role_lp",
+          "sessions": 16,
+          "users": 16,
+          "engaged_sessions": 6,
+          "engagement_rate_pct": 37.5,
+          "bounce_rate_pct": 62.5,
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/sales",
+          "path_display": "/us/sales",
+          "path_kind": "role_lp",
+          "sessions": 15,
+          "users": 15,
+          "engaged_sessions": 11,
+          "engagement_rate_pct": 73.3,
+          "bounce_rate_pct": 26.7,
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/administrative-support",
+          "path_display": "/us/administrative-support",
+          "path_kind": "role_lp",
+          "sessions": 13,
+          "users": 12,
+          "engaged_sessions": 4,
+          "engagement_rate_pct": 30.8,
+          "bounce_rate_pct": 69.2,
+          "market_guess": "US"
+        },
+        {
+          "path": "(not set)",
+          "path_display": "untagged",
+          "path_kind": "unknown",
+          "sessions": 11,
+          "users": 144,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 9.1,
+          "bounce_rate_pct": 90.9,
+          "market_guess": "other"
+        },
+        {
+          "path": "/us/customer-service",
+          "path_display": "/us/customer-service",
+          "path_kind": "role_lp",
+          "sessions": 8,
+          "users": 8,
+          "engaged_sessions": 3,
+          "engagement_rate_pct": 37.5,
+          "bounce_rate_pct": 62.5,
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/recruitment",
+          "path_display": "/us/recruitment",
+          "path_kind": "role_lp",
+          "sessions": 8,
+          "users": 8,
+          "engaged_sessions": 2,
+          "engagement_rate_pct": 25.0,
+          "bounce_rate_pct": 75.0,
+          "market_guess": "US"
+        },
+        {
+          "path": "/thank-you",
+          "path_display": "/thank-you",
+          "path_kind": "thank_you",
+          "sessions": 7,
+          "users": 4,
+          "engaged_sessions": 6,
+          "engagement_rate_pct": 85.7,
+          "bounce_rate_pct": 14.3,
+          "market_guess": "other"
+        },
+        {
+          "path": "/how-it-works",
+          "path_display": "/how-it-works",
+          "path_kind": "other_site",
+          "sessions": 6,
+          "users": 6,
+          "engaged_sessions": 3,
+          "engagement_rate_pct": 50.0,
+          "bounce_rate_pct": 50.0,
+          "market_guess": "other"
+        },
+        {
+          "path": "/services",
+          "path_display": "/services",
+          "path_kind": "other_site",
+          "sessions": 6,
+          "users": 6,
+          "engaged_sessions": 2,
+          "engagement_rate_pct": 33.3,
+          "bounce_rate_pct": 66.7,
+          "market_guess": "other"
+        },
+        {
+          "path": "/us/accounting",
+          "path_display": "/us/accounting",
+          "path_kind": "role_lp",
+          "sessions": 2,
+          "users": 2,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "US"
+        },
+        {
+          "path": "/privacy",
+          "path_display": "/privacy",
+          "path_kind": "other_site",
+          "sessions": 1,
+          "users": 1,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "other"
+        }
+      ],
+      "AU": [
+        {
+          "path": "/au",
+          "path_display": "/au",
+          "path_kind": "au",
+          "sessions": 43,
+          "users": 40,
+          "engaged_sessions": 11,
+          "engagement_rate_pct": 25.6,
+          "bounce_rate_pct": 74.4,
+          "market_guess": "AU"
+        },
+        {
+          "path": "(empty path)",
+          "path_display": "untagged",
+          "path_kind": "unknown",
+          "sessions": 18,
+          "users": 18,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "other"
+        },
+        {
+          "path": "/au/administrative-support",
+          "path_display": "/au/administrative-support",
+          "path_kind": "au",
+          "sessions": 6,
+          "users": 5,
+          "engaged_sessions": 3,
+          "engagement_rate_pct": 50.0,
+          "bounce_rate_pct": 50.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/au/recruitment",
+          "path_display": "/au/recruitment",
+          "path_kind": "au",
+          "sessions": 6,
+          "users": 6,
+          "engaged_sessions": 2,
+          "engagement_rate_pct": 33.3,
+          "bounce_rate_pct": 66.7,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/services",
+          "path_display": "/services",
+          "path_kind": "other_site",
+          "sessions": 5,
+          "users": 5,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "other"
+        },
+        {
+          "path": "/au/accounting",
+          "path_display": "/au/accounting",
+          "path_kind": "au",
+          "sessions": 2,
+          "users": 2,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 50.0,
+          "bounce_rate_pct": 50.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/au/digital-marketing",
+          "path_display": "/au/digital-marketing",
+          "path_kind": "au",
+          "sessions": 2,
+          "users": 2,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "(not set)",
+          "path_display": "untagged",
+          "path_kind": "unknown",
+          "sessions": 1,
+          "users": 1,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "market_guess": "other"
+        },
+        {
+          "path": "/au/customer-service",
+          "path_display": "/au/customer-service",
+          "path_kind": "au",
+          "sessions": 1,
+          "users": 1,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/au/hr",
+          "path_display": "/au/hr",
+          "path_kind": "au",
+          "sessions": 1,
+          "users": 1,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/how-it-works",
+          "path_display": "/how-it-works",
+          "path_kind": "other_site",
+          "sessions": 1,
+          "users": 1,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "other"
+        }
+      ],
+      "path_kind_sessions": {
+        "us_home": 398,
+        "role_lp": 101,
+        "quiz": 0,
+        "au": 0,
+        "thank_you": 7,
+        "other_site": 13,
+        "other": 0,
+        "unknown": 54
+      },
+      "landing_compare": {
+        "us_home_sessions": 398,
+        "role_lp_sessions": 101,
+        "quiz_sessions": 0,
+        "thank_you_sessions": 7,
+        "note": "Path buckets from landingPage dimension. Role LPs = /us/* except home/quiz."
+      }
+    },
+    "device": {
+      "paid_search_mobile": null,
+      "paid_search_desktop": null,
+      "paid_search_mobile_pct": null,
+      "verdict": null,
+      "note": null
+    }
+  },
+  "sales_ops": {
+    "source": "Sales ops handoff (not Zoho join)",
+    "US": {
+      "window": "Sat Aug 8 \u2013 Mon Aug 10",
+      "enquiries": 4,
+      "sales_calls_booked": 2,
+      "junk_job_seeker": 1,
+      "not_a_fit": 1,
+      "spend_usd": 394.79,
+      "cost_per_enquiry_usd": 98.7,
+      "cost_per_sales_call_booked_usd": 197.4,
+      "caveat": "Early / small sample \u2014 do not treat as steady-state CPL. Job-seeker junk never counts as a win."
+    },
+    "AU": {
+      "status": "waiting_on_leads",
+      "enquiries": null,
+      "spend_aud": 769.28,
+      "caveat": "Cost per enquiry: not yet (no AU lead report in email)."
+    }
+  },
+  "zoho": {
+    "source": "Zoho CRM (read-only census Aug 13)",
+    "gate": "NOT READY FOR CRM WRITES OR OFFLINE IMPORT",
+    "app_writes_enabled": false,
+    "modules": {
+      "sales_enquiries": "Leads (UI: Sales Enquiries)",
+      "job_orders": "Job_Orders",
+      "placements": "Deals (UI: Placements)",
+      "calls": "Calls (no gclid)"
+    },
+    "last_90d": {
+      "sales_enquiries": 647,
+      "job_orders": 242,
+      "placements": 122,
+      "calls": 379,
+      "note": "All sources \u2014 not paid-search-only"
+    },
+    "gclid": {
+      "enquiries_with_utm_gclid_all_time": 576,
+      "job_orders_direct_utm_gclid": 18,
+      "job_orders_click_linked_90d_sample": 69,
+      "newest_30_enquiries_with_gclid": 0,
+      "note": "After 5 Aug 2026 new enquiries stopped storing utm_gclid; .app not writing CRM"
+    },
+    "attribution_confidence": {
+      "ads_to_zoho_jo_zapier": "ambiguous",
+      "reason": "Zapier JO uploads (67 US / 36 AU) \u2260 782 CRM job orders; object mismatch"
+    }
+  },
+  "conversion_tiers": {
+    "T0_click_session": {
+      "ads_clicks_us_7d": 465,
+      "ads_clicks_au_7d": 217,
+      "ga4_sessions_us": 545,
+      "ga4_sessions_au": 71
+    },
+    "T1_micro": {
+      "form_start": 10,
+      "quiz_start": 0,
+      "chat_open": 0,
+      "popup_impression": 0
+    },
+    "T2_website_lead": {
+      "form_submit": 0,
+      "phone_click": 0,
+      "sales_ops_enquiries_us": 4,
+      "note": "Phone click \u2260 qualified call; form submit \u2260 Ads Primary"
+    },
+    "T3_crm_qualified_employer": {
+      "value": null,
+      "status": "unavailable_for_paid",
+      "note": ".app not in Zoho; human disposition required"
+    },
+    "T4_job_order": {
+      "crm_all_sources_90d": 242,
+      "click_linked_90d_sample": 69,
+      "vc_star_campaigns": 0,
+      "note": "Do not use 782 / Zapier 67 as VC_* truth"
+    },
+    "T5_placement": {
+      "crm_all_sources_90d": 122,
+      "click_linked": null,
+      "note": "Deals have no click-id field"
+    }
+  },
+  "funnel": {
+    "steps": [
+      {
+        "id": "ad_click",
+        "label": "Ad click",
+        "US": 465,
+        "AU": 217,
+        "source": "Google Ads"
+      },
+      {
+        "id": "landing_session",
+        "label": "Landing session",
+        "US": 545,
+        "AU": 71,
+        "source": "GA4"
+      },
+      {
+        "id": "engaged",
+        "label": "Engaged visitor",
+        "US": 197,
+        "AU": 18,
+        "source": "GA4"
+      },
+      {
+        "id": "form_start",
+        "label": "Form start",
+        "US": 10,
+        "AU": null,
+        "source": "GA4"
+      },
+      {
+        "id": "primary_cta",
+        "label": "Phone click / form submit",
+        "US": 0,
+        "AU": null,
+        "source": "GA4"
+      },
+      {
+        "id": "sales_ops_enquiry",
+        "label": "Sales-ops employer enquiry",
+        "US": 4,
+        "AU": null,
+        "source": "Sales ops"
+      },
+      {
+        "id": "crm_enquiry",
+        "label": "Zoho Sales Enquiry (all sources)",
+        "US": null,
+        "AU": null,
+        "all": 647,
+        "source": "Zoho",
+        "confidence": "unattributed_to_vc_star"
+      },
+      {
+        "id": "job_order",
+        "label": "Job order (all sources 90d)",
+        "all": 242,
+        "source": "Zoho",
+        "confidence": "unattributed_to_vc_star"
+      },
+      {
+        "id": "placement",
+        "label": "Placement (all sources 90d)",
+        "all": 122,
+        "source": "Zoho",
+        "confidence": "unattributed_to_vc_star"
+      }
+    ],
+    "filters_note": "Per-campaign/query/device funnel join not yet available \u2014 needs scheduled gclid join store"
+  },
+  "search_terms": [
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_CORE",
+      "ad_group": "Offshore_VA_PH",
+      "search_term": "va workers ph",
+      "keyword": null,
+      "match_type": null,
+      "cost": 92.83,
+      "clicks": 47,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "search_term": "remote staffing agencies",
+      "keyword": null,
+      "match_type": null,
+      "cost": 13.17,
+      "clicks": 5,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "ADDED",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_ROLES",
+      "ad_group": "Recruitment_Hire_PH",
+      "search_term": "virtual assistant jobs",
+      "keyword": null,
+      "match_type": null,
+      "cost": 12.52,
+      "clicks": 3,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "job_seeker",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_ROLES",
+      "ad_group": "Customer_Service_Outsource_PH",
+      "search_term": "cs outsource",
+      "keyword": null,
+      "match_type": null,
+      "cost": 10.38,
+      "clicks": 3,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "NONE",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "search_term": "virtual assistant jobs",
+      "keyword": null,
+      "match_type": null,
+      "cost": 9.67,
+      "clicks": 4,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "job_seeker",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_ROLES",
+      "ad_group": "Social_Media_Hire_PH",
+      "search_term": "social media manager remote",
+      "keyword": null,
+      "match_type": null,
+      "cost": 7.13,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "search_term": "companies looking for virtual assistants",
+      "keyword": null,
+      "match_type": null,
+      "cost": 7.02,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_CORE",
+      "ad_group": "Agency_PH",
+      "search_term": "temp agencies for remote work",
+      "keyword": null,
+      "match_type": null,
+      "cost": 6.85,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_ROLES",
+      "ad_group": "Sales_Hire_PH",
+      "search_term": "work from home appointment setter",
+      "keyword": null,
+      "match_type": null,
+      "cost": 6.79,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "job_seeker",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "search_term": "virtual assistant",
+      "keyword": null,
+      "match_type": null,
+      "cost": 6.66,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "ADDED_EXCLUDED",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_ROLES",
+      "ad_group": "Recruitment_Hire_PH",
+      "search_term": "virtual assistant talent",
+      "keyword": null,
+      "match_type": null,
+      "cost": 6.64,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "NONE",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "US",
+      "country": "US",
+      "campaign": "VC_US_S_CORE",
+      "ad_group": "Agency_PH",
+      "search_term": "recruitment teamficient com",
+      "keyword": null,
+      "match_type": null,
+      "cost": 6.64,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "NONE",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_ROLES",
+      "ad_group": "Administration_EA_PH",
+      "search_term": "24x7 direct",
+      "keyword": null,
+      "match_type": null,
+      "cost": 17.44,
+      "clicks": 3,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "search_term": "virtual assistant",
+      "keyword": null,
+      "match_type": null,
+      "cost": 11.89,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "ADDED_EXCLUDED",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "search_term": "virtual assistant team au",
+      "keyword": null,
+      "match_type": null,
+      "cost": 10.43,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "NONE",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Offshore_VA_PH",
+      "search_term": "offshore virtual assistant",
+      "keyword": null,
+      "match_type": null,
+      "cost": 7.19,
+      "clicks": 2,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "ADDED",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Agency_PH",
+      "search_term": "we work remotely",
+      "keyword": null,
+      "match_type": null,
+      "cost": 5.99,
+      "clicks": 1,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "search_term": "virtual assistant australia hiring",
+      "keyword": null,
+      "match_type": null,
+      "cost": 5.95,
+      "clicks": 1,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "NONE",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_ROLES",
+      "ad_group": "Social_Media_Outsource_PH",
+      "search_term": "social media marketing companies perth",
+      "keyword": null,
+      "match_type": null,
+      "cost": 5.92,
+      "clicks": 1,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Agency_PH",
+      "search_term": "recruitment agency for australia in the philippines",
+      "keyword": null,
+      "match_type": null,
+      "cost": 5.9,
+      "clicks": 1,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "EXCLUDED",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Agency_PH",
+      "search_term": "remote talent com au",
+      "keyword": null,
+      "match_type": null,
+      "cost": 5.89,
+      "clicks": 1,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "NONE",
+      "classification": "ambiguous",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "search_term": "australia virtual assistant hiring",
+      "keyword": null,
+      "match_type": null,
+      "cost": 5.18,
+      "clicks": 1,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "NONE",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Agency_PH",
+      "search_term": "staffhouse philippines",
+      "keyword": null,
+      "match_type": null,
+      "cost": 5.18,
+      "clicks": 1,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "NONE",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    },
+    {
+      "market": "AU",
+      "country": "AU",
+      "campaign": "VC_AU_S_CORE",
+      "ad_group": "Hire_VA_PH",
+      "search_term": "virtual assistant hiring australia",
+      "keyword": null,
+      "match_type": null,
+      "cost": 5.06,
+      "clicks": 1,
+      "impressions": null,
+      "cpc": null,
+      "ads_conversions": 0.0,
+      "status": "NONE",
+      "classification": "likely_employer",
+      "crm_qualified": null,
+      "source": "Google Ads",
+      "window": "LAST_7_DAYS"
+    }
+  ],
+  "discrepancies": [
+    {
+      "id": "ads_clicks_vs_ga4_sessions",
+      "left": {
+        "label": "US Ads Stage-1 clicks (7d)",
+        "value": 465,
+        "source": "Google Ads"
+      },
+      "right": {
+        "label": "US GA4 sessions (7d)",
+        "value": 545,
+        "source": "GA4"
+      },
+      "note": "Not 1:1 \u2014 multi-session, consent, Direct bleed, AU on separate property"
+    },
+    {
+      "id": "ads_conv_vs_ga4_conv",
+      "left": {
+        "label": "VC_* Ads conversions",
+        "value": 0,
+        "source": "Google Ads"
+      },
+      "right": {
+        "label": "GA4 conversions metric",
+        "value": 0.0,
+        "source": "GA4"
+      },
+      "note": "Both near zero on Maximize Clicks \u2014 expected until pipe proven"
+    },
+    {
+      "id": "ga4_leads_vs_zoho",
+      "left": {
+        "label": "GA4 form_submit (top events)",
+        "value": 0,
+        "source": "GA4"
+      },
+      "right": {
+        "label": "Zoho Sales Enquiries 90d (all sources)",
+        "value": 647,
+        "source": "Zoho"
+      },
+      "note": ".app not writing Zoho; CRM still WP/Zapier/humans"
+    },
+    {
+      "id": "zoho_enquiry_vs_job_order",
+      "left": {
+        "label": "Sales Enquiries 90d",
+        "value": 647,
+        "source": "Zoho"
+      },
+      "right": {
+        "label": "Job Orders 90d",
+        "value": 242,
+        "source": "Zoho"
+      },
+      "note": "Enquiry status \u201cJO Submitted\u201d \u2260 Job Orders object"
+    },
+    {
+      "id": "zapier_vs_crm_job_orders",
+      "left": {
+        "label": "Ads Zapier JO conversions US+AU",
+        "value": 103,
+        "source": "Google Ads"
+      },
+      "right": {
+        "label": "CRM Job Orders all-time",
+        "value": 782,
+        "source": "Zoho"
+      },
+      "note": "Object mismatch \u2014 never use Zapier count as census"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "traffic_no_conversion",
+      "severity": "high",
+      "title": "Traffic but no primary website conversions",
+      "detail": "682 Stage-1 clicks in Ads window vs 0 form submits / 0 phone clicks in GA4 event list.",
+      "evidence": [
+        "Google Ads clicks",
+        "GA4 events"
+      ]
+    },
+    {
+      "id": "form_abandonment",
+      "severity": "high",
+      "title": "Form starts with no submissions in GA4 event list",
+      "detail": "GA4 shows form_start=10, no employer_inquiry_submitted in top events.",
+      "evidence": [
+        "GA4 form_start"
+      ]
+    },
+    {
+      "id": "tracking_desert",
+      "severity": "medium",
+      "title": "Ads + GA4 conversion columns both near zero",
+      "detail": "Expected on Maximize Clicks while pipe is proven \u2014 but confirm GTM maps employer_inquiry_submitted / phone.",
+      "evidence": [
+        "Google Ads conversions",
+        "GA4 conversions"
+      ]
+    },
+    {
+      "id": "crm_disconnect",
+      "severity": "critical",
+      "title": ".app leads are not writing to Zoho",
+      "detail": "ZOHO_CRM_ENABLED is off. Website leads and Zoho Sales Enquiries are two movies. Email/webhook is the live design.",
+      "evidence": [
+        "Zoho census Aug 13",
+        "vision zoho adapter"
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "rank_VC_US_S_ROLES",
+      "title": "VC_US_S_ROLES is rank-constrained, not budget-constrained",
+      "detail": "Lost IS rank 64.7% vs lost IS budget 14.4%. Raising budget alone is unlikely to fix auction coverage \u2014 check relevance, RSA, and CPC competitiveness.",
+      "evidence": [
+        "search_is=20.9%",
+        "lost_rank=64.7%",
+        "lost_budget=14.4%"
+      ],
+      "do_not": [
+        "Add Broad Match",
+        "Blindly raise budget"
+      ]
+    },
+    {
+      "id": "form_ux",
+      "title": "Investigate form abandonment before scaling spend",
+      "detail": "GA4 form_start without matching submits. Confirm mobile sticky/chat no longer covers submit, and GTM maps employer_inquiry_submitted.",
+      "evidence": [
+        "GA4 events",
+        "conversion-assist hierarchy"
+      ]
+    },
+    {
+      "id": "wire_zoho",
+      "title": "Wire .app \u2192 Zoho before trusting CRM outcomes on paid",
+      "detail": "Map utm_gclid (not $gclid). Keep writes off until Caitlin/Cheyenne confirm the qualified status. Stay on Maximize Clicks.",
+      "evidence": [
+        "EXECUTIVE-TRUTH Aug 13",
+        "ZOHO-DICTIONARY"
+      ],
+      "do_not": [
+        "Offline import of historical 576 gclids as Primary"
+      ]
+    }
+  ],
+  "ux_interference": {
+    "status": "insufficient_volume",
+    "label": "Observational only \u2014 not causal",
+    "note": "Need session-scoped popup_impression / chat_widget_impression flags in GA4 before comparing primary CTA rates. New events wired on site; await volume.",
+    "planned_compare": [
+      "sessions with popup shown vs without",
+      "primary CTA rate",
+      "form completion rate",
+      "phone click rate",
+      "engagement"
+    ]
+  },
+  "attribution_model": {
+    "match_priority": [
+      "gclid",
+      "campaign_query_ids",
+      "email",
+      "normalized_phone",
+      "timestamp_proximity",
+      "landing_page_session"
+    ],
+    "confidence_labels": [
+      "attributed",
+      "likely_attributed",
+      "unattributed",
+      "ambiguous"
+    ],
+    "live_join_status": "not_built",
+    "live_join_note": "Deterministic gclid join store not yet scheduled. Historical hash join: 18/18 JO UTM_Gclid matched enquiry utm_gclid (Aug 13).",
+    "field_truth": {
+      "zoho_enquiry_gclid": "utm_gclid",
+      "zoho_job_order_gclid": "UTM_Gclid",
+      "vision_default_was": "$gclid + VC_Submission_ID (missing in live CRM)"
+    }
+  },
+  "recovery_audit_as_of": "2026-08-13",
+  "inputs": {
+    "executive_snapshot": true,
+    "ga4_snapshot": true,
+    "impression_share": true,
+    "daily_watch": true,
+    "attribution_numbers_csv": true
+  },
+  "honesty": "This board explains the account. It does not invent paid\u2192CRM winners. Secondary widgets are recovery \u2014 never Primary."
+}

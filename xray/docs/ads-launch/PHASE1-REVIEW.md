@@ -1,6 +1,6 @@
 # Phase 1 enable review manifests
 
-- Generated: 2026-08-07 12:54 UTC
+- Generated: 2026-08-08 20:11 UTC
 - Purpose: **review-only** enable ladder — not an Enabled import file
 - Every keyword Status = **Paused** (do not enable from these CSVs)
 - Source of enable order: `PHASED-ACTIVATION.md`

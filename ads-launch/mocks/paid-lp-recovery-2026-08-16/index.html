@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Concept mocks · Paid LP A/B/C · not live</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: "Century Gothic Paneuropean";
+      src: url("../assets/fonts/CenturyGothicPaneuropean.woff2") format("woff2");
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: "Century Gothic Paneuropean";
+      src: url("../assets/fonts/CenturyGothicPaneuropean-Bold.woff2") format("woff2");
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    :root {
+      --ocean: #214873; --deep: #17334f; --gold: #fac056; --cyan: #33ded8;
+      --sea: #128f8b; --ink: #17293c; --mute: #55697c; --mist: #f7fbfb;
+      --foam: #eef8f7; --edge: rgba(33,72,115,.12);
+      --display: "Century Gothic Paneuropean", "Century Gothic", Poppins, sans-serif;
+      --body: Poppins, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body { font-family: var(--body); background: var(--mist); color: var(--ink); }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button, input, select { font: inherit; }
+    .ribbon { background: #7a2e0e; color: #fff7ee; text-align: center; font-size: .8rem; font-weight: 600; padding: .5rem 1rem; }
+    .switcher {
+      position: sticky; top: 0; z-index: 40;
+      background: #fff; border-bottom: 1px solid var(--edge);
+      padding: .65rem 1rem; display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center;
+    }
+    .switcher b { font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+    .seg { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .seg button {
+      border: 1px solid var(--edge); background: #fff; border-radius: 999px;
+      padding: .32rem .75rem; cursor: pointer; color: var(--ink);
+    }
+    .seg button.on { background: var(--ocean); color: #fff; border-color: var(--ocean); }
+    .switcher .note { font-size: .78rem; color: var(--mute); }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.15rem; }
+    nav.lp-nav { display: flex; align-items: center; gap: 1rem; padding: .85rem 0; }
+    nav.lp-nav img { height: 28px; width: auto; }
+    nav.lp-nav .links { margin-left: auto; display: flex; gap: 1.05rem; font-size: .88rem; color: var(--mute); font-weight: 500; }
+    .call {
+      display: inline-flex; align-items: center; gap: .35rem;
+      background: var(--gold); color: var(--ocean); font-weight: 700;
+      padding: .48rem .95rem; border-radius: 999px; font-size: .92rem; font-family: var(--display);
+      box-shadow: 0 8px 20px rgba(250,192,86,.35); white-space: nowrap;
+    }
+    .kicker { text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; color: var(--sea); font-weight: 600; margin: 0 0 .45rem; }
+    h1 { font-family: var(--display); font-size: clamp(1.85rem, 3.4vw, 2.55rem); line-height: 1.12; letter-spacing: -.03em; margin: 0 0 .65rem; }
+    .lead { font-size: 1.05rem; color: var(--mute); margin: 0 0 1rem; max-width: 38rem; }
+    .ticks { margin: 0 0 1rem; padding: 0; list-style: none; }
+    .ticks li { padding: .18rem 0 .18rem 1.3rem; position: relative; }
+    .ticks li:before { content: "✓"; position: absolute; left: 0; color: var(--sea); font-weight: 700; }
+    .stars { color: #e2a012; letter-spacing: -.05em; font-size: 1.05rem; }
+    .proof-row, .logo-row, .cta-row { display: flex; flex-wrap: wrap; gap: .55rem; align-items: center; }
+    .pill { background: #fff; border: 1px solid var(--edge); border-radius: 999px; padding: .22rem .7rem; font-size: .78rem; font-weight: 600; color: var(--deep); }
+    .card {
+      background: #fff; border: 1px solid var(--edge); border-radius: 18px;
+      padding: 1.1rem 1.15rem; box-shadow: 0 18px 40px rgba(23,41,60,.08);
+    }
+    .card h2 { margin: 0 0 .35rem; font-size: 1.18rem; font-family: var(--display); }
+    .eyebrow { font-size: .75rem; font-weight: 600; color: var(--sea); margin: 0 0 .2rem; }
+    label { display: block; font-size: .78rem; font-weight: 600; margin: .48rem 0 .22rem; }
+    input, select {
+      width: 100%; padding: .55rem .7rem; border-radius: 10px; border: 1px solid var(--edge); background: #fff;
+    }
+    .submit, .chip, .ghost {
+      border-radius: 999px; cursor: pointer; border: 0;
+    }
+    .submit {
+      width: 100%; margin-top: .85rem; background: var(--gold); color: var(--ocean);
+      font-weight: 700; padding: .78rem; font-family: var(--display);
+    }
+    .ghost { background: transparent; color: var(--ocean); font-weight: 600; padding: .4rem .2rem; }
+    .hint { font-size: .78rem; color: var(--mute); margin: .55rem 0 0; }
+    .quote {
+      background: #fff; border: 1px solid var(--edge); border-radius: 14px; padding: .85rem 1rem; margin: .7rem 0 0;
+    }
+    .quote p { margin: 0 0 .4rem; font-size: .95rem; }
+    .quote cite { font-style: normal; font-size: .8rem; color: var(--mute); }
+    .va-support { width: 92px; height: 118px; object-fit: cover; border-radius: 14px; }
+    .va-large { width: 100%; height: 100%; min-height: 280px; object-fit: cover; border-radius: 18px; }
+    .office { width: 100%; height: 220px; object-fit: cover; border-radius: 16px; }
+    .grid2 { display: grid; grid-template-columns: 1.15fr .85fr; gap: 1.6rem; align-items: start; padding: 1.4rem 0 1.1rem; }
+    .grid3 { display: grid; grid-template-columns: 1fr .72fr .9fr; gap: 1.3rem; align-items: start; padding: 1.4rem 0 1.1rem; }
+    .grid-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; }
+    .step { background: #fff; border: 1px solid var(--edge); border-radius: 14px; padding: .85rem; }
+    .step b { display: block; color: var(--sea); font-size: .76rem; margin-bottom: .25rem; }
+    .logo-row img { height: 26px; max-width: 110px; object-fit: contain; filter: grayscale(1); }
+    .logos { background: #fff; border-top: 1px solid var(--edge); border-bottom: 1px solid var(--edge); padding: 1rem 0; }
+    .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .chip { background: #fff; border: 1px solid var(--edge); padding: .55rem .85rem; font-weight: 600; }
+    .chip.on { background: var(--ocean); color: #fff; border-color: var(--ocean); }
+    .bar { height: 8px; background: #e4ecec; border-radius: 99px; overflow: hidden; margin: 0 0 .8rem; }
+    .bar > span { display: block; height: 100%; background: var(--sea); }
+    .risk { background: #3b1d12; color: #ffd7be; font-size: .85rem; padding: .7rem 1rem; }
+    .placeholder {
+      border: 1.5px dashed rgba(33,72,115,.35); border-radius: 14px; padding: .9rem;
+      color: var(--mute); font-size: .88rem; background: rgba(255,255,255,.6);
+    }
+    .seeker { font-size: .82rem; margin: .7rem 0 0; }
+    .seeker a { color: var(--ocean); font-weight: 600; text-decoration: underline; }
+    footer.lp { padding: 1.5rem 0 2.4rem; color: var(--mute); font-size: .82rem; }
+    .hid { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .done { padding: .6rem 0; font-weight: 600; color: var(--sea); }
+    #view { min-height: 70vh; }
+    @media (max-width: 900px) {
+      nav.lp-nav .links { display: none; }
+      .grid2, .grid3, .grid-steps { grid-template-columns: 1fr; }
+      h1 { font-size: 1.85rem; }
+      .va-large { min-height: 200px; }
+      .chip { min-height: 44px; }
+      .submit { min-height: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ribbon">CONCEPT MOCK — not live. No Ads, GTM, Vercel, or /us /au changes. Forms do not send.</div>
+  <div class="switcher">
+    <b>Page</b>
+    <div class="seg" id="pageSeg">
+      <button type="button" data-p="control" class="on">Current / control</button>
+      <button type="button" data-p="a">A · Rescue</button>
+      <button type="button" data-p="b">B · Quiz</button>
+      <button type="button" data-p="c">C · Productized</button>
+    </div>
+    <b>Market</b>
+    <div class="seg" id="mSeg">
+      <button type="button" data-m="us" class="on">US</button>
+      <button type="button" data-m="au">AU</button>
+    </div>
+    <span class="note">Same brand as live /us. Role pages would reuse this funnel with the role preselected.</span>
+  </div>
+  <div id="view"></div>
+
+  <script>
+    const ASSET = "../assets";
+    const STARS = '<span class="stars" aria-hidden="true">★★★★★</span>';
+    const MARKETS = {
+      us: {
+        label: "United States",
+        kicker: "United States · Employers · Philippines staffing · Since 2011",
+        h1Control: "Hire Dedicated Virtual Assistants from the Philippines",
+        leadControl: "Full-time or part-time dedicated professionals who work your hours. We recruit, vet, handle payroll, and stay with you after they start. Serving businesses since 2011.",
+        h1A: "Get matched with vetted Filipino staff who work your hours",
+        leadA: "Tell us the seat. We recruit and shortlist. You interview on video and pick. We handle payroll, HR, and time tracking. Serving businesses since 2011.",
+        h1B: "What kind of help do you need?",
+        leadB: "Two short choices — then we start a staffing conversation. Not an instant hire, not an instant quote.",
+        h1C: "Dedicated Filipino staff, recruited and employed for your team",
+        leadC: "A staffing system: we recruit and vet, you interview, nobody starts until you say yes. US hours. Philippines talent. Here since 2011.",
+        ticks: [
+          "Dedicated full-time or part-time professionals from the Philippines",
+          "They work your time zone — not a night shift",
+          "Recruiting, vetting, payroll, and ongoing support handled for you",
+          "Serving businesses since 2011 — not a gig marketplace",
+        ],
+        explain: "Book a free consultation. We recruit and shortlist. You interview and pick. We handle payroll, HR, and time tracking. Hourly rates depend on the seat — we talk through them once we understand the role.",
+        phone: "(888) 964-8644",
+        tel: "tel:+18889648644",
+        google: "5.0 Google · 39 reviews",
+        clutch: "4.9 Clutch · 7 reviews",
+        entity: "Virtual Coworker Inc.",
+        nap: "US office · 750 N San Vicente Blvd, West Hollywood, CA 90069",
+        hero: ASSET + "/people/va-us.jpg",
+        hours: "US business hours",
+      },
+      au: {
+        label: "Australia",
+        kicker: "Australia · Businesses · Philippines staffing · Since 2011",
+        h1Control: "Hire dedicated virtual assistants from the Philippines",
+        leadControl: "Full-time or part-time dedicated professionals on Australian hours. We recruit, vet, handle employment admin, and stay with you after they start. Serving businesses since 2011.",
+        h1A: "Get matched with vetted Filipino staff on Australian hours",
+        leadA: "Tell us the seat. We recruit and shortlist. You interview on video. We handle employment admin. Obligation free. Serving businesses since 2011.",
+        h1B: "What kind of help do you need?",
+        leadB: "Two short choices — then a teammate follows up for a staffing chat. Not an instant hire. No lock-in.",
+        h1C: "Dedicated Filipino staff for Australian hours",
+        leadC: "We recruit and vet. You interview. Nobody starts until you say yes. Sydney office. ABN on the page. Here since 2011.",
+        ticks: [
+          "Dedicated full-time or part-time professionals from the Philippines",
+          "They work Australian hours — your time zone, not theirs",
+          "Recruiting, vetting, employment admin, and ongoing support handled for you",
+          "Serving businesses since 2011 — ABN 49 154 746 004",
+        ],
+        explain: "Book a free consultation. We recruit and shortlist. You interview and pick. We handle employment admin and time tracking. Hourly rates depend on the role — we talk them through once we understand what you need.",
+        phone: "1300 886 740",
+        tel: "tel:+611300886740",
+        google: "4.8 Google · 23 reviews",
+        clutch: "4.9 Clutch · 7 reviews",
+        entity: "Virtual Coworker Pty. Ltd. · ABN 49 154 746 004",
+        nap: "AU office · Level 8/11 York St, Sydney NSW 2000 · ABN 49 154 746 004",
+        hero: ASSET + "/people/va-au.jpg",
+        hours: "Australian business hours",
+      },
+    };
+    const QUOTE = {
+      text: "They’ve exceeded our expectations! The recruiting process was well organized, and I feel we were matched very well.",
+      by: "Kyrstin H. · General Manager · College Hunks",
+    };
+    const ROLES = ["Administration", "Bookkeeping / accounting", "Marketing / social", "Sales / customer support", "Recruiting / HR", "Not sure yet"];
+    const LOGOS = [
+      ["client-good-co.png", "Good Co."],
+      ["client-credit-card-compare.png", "Credit Card Compare"],
+      ["client-buzinga.png", "Buzinga Apps"],
+      ["client-proactive-media.png", "ProActive Media"],
+      ["client-learning-deli.png", "The Learning Deli"],
+      ["client-recruitloop.png", "RecruitLoop"],
+    ];
+
+    const state = {
+      page: "control",
+      market: "us",
+      quiz: 1,
+      role: "",
+      hours: "",
+      sent: false,
+    };
+
+    function logoStrip() {
+      return LOGOS.map(([f, a]) => `<img src="${ASSET}/clients/${f}" alt="${a}" />`).join("");
+    }
+    function proofPills(m) {
+      return `<span class="pill">${STARS} ${m.google}</span><span class="pill">${STARS} ${m.clutch}</span><span class="pill">450K+ LinkedIn</span><span class="pill">290K+ Facebook</span><span class="pill">Since 2011</span>`;
+    }
+    function quoteBox() {
+      return `<aside class="quote"><p>“${QUOTE.text}”</p><cite>${QUOTE.by}</cite></aside>`;
+    }
+    function nav(m, full) {
+      const links = full
+        ? `<div class="links"><a href="#how">How it works</a><a href="#roles">Roles</a><a href="#proof">Reviews</a><a href="#form">Start hiring</a></div>`
+        : `<div class="links"><a href="#form">Start hiring</a><a href="https://virtualcoworker.com.ph">Looking for work?</a></div>`;
+      return `<div class="wrap"><nav class="lp-nav">
+        <img src="${ASSET}/logo-vc.png" alt="Virtual Coworker" />
+        ${links}
+        <a class="call" href="${m.tel}">☎ ${m.phone}</a>
+      </nav></div>`;
+    }
+    function hidden() {
+      return `<div class="hid">
+        <input name="campaign" value="(hidden · paid campaign)" readonly />
+        <input name="adgroup" value="(hidden · ad group)" readonly />
+        <input name="keyword" value="(hidden · keyword)" readonly />
+        <input name="role_context" value="${state.role || "(role from quiz or route)"}" readonly />
+        <input name="market" value="${state.market}" readonly />
+      </div>`;
+    }
+    function seeker() {
+      return `<p class="seeker">For businesses hiring staff — not a job board. Looking for work? <a href="https://virtualcoworker.com.ph">Philippines careers →</a></p>`;
+    }
+    function contactFields(m, opts) {
+      const website = opts && opts.website
+        ? `<label>Company website (optional)<input placeholder="https://" /></label>` : "";
+      return `${hidden()}
+        <label>Full name<input name="name" autocomplete="name" placeholder="Full name" /></label>
+        <label>Work email<input name="email" type="email" placeholder="Work email" /></label>
+        <label>Phone<input name="phone" type="tel" placeholder="${state.market === "au" ? "0400 000 000" : "(201) 555-0123"}" /></label>
+        ${website}
+        <button class="submit" type="button" data-act="submit">${opts.submit}</button>
+        <p class="hint">${opts.hint}</p>`;
+    }
+    function logosBlock() {
+      return `<section class="logos"><div class="wrap">
+        <p class="kicker" style="text-align:center">Teams we’re proud to work with — existing marks only</p>
+        <div class="logo-row" style="justify-content:center">${logoStrip()}</div>
+      </div></section>`;
+    }
+    function process() {
+      const m = MARKETS[state.market];
+      const admin = state.market === "au" ? "employment admin" : "payroll, HR";
+      return `<div class="wrap" id="how"><h3 style="font-family:var(--display);margin:1.4rem 0 .7rem">What happens after you submit</h3>
+        <div class="grid-steps">
+          <div class="step"><b>1 · Talk</b>Free strategy call. Role, hours, timezone. Obligation free.</div>
+          <div class="step"><b>2 · Recruit</b>Philippines team sources and vets. You get a shortlist — not a freelancer marketplace.</div>
+          <div class="step"><b>3 · You pick</b>Profiles with hourly rates. Video interview. Nobody starts until you say yes.</div>
+          <div class="step"><b>4 · We stay</b>Onboarding, ${admin}, time tracker. They work ${m.hours.toLowerCase()}.</div>
+        </div></div>`;
+    }
+    function footer(m) {
+      return `<footer class="lp"><div class="wrap">
+        <strong>${m.entity}</strong><br />${m.nap}<br />
+        Philippines recruitment hub · Job seekers use virtualcoworker.com.ph
+      </div></footer>`;
+    }
+
+    function renderControl() {
+      const m = MARKETS[state.market];
+      return `${nav(m, false)}
+        <div class="wrap">
+          <section class="grid3">
+            <div>
+              <p class="kicker">${m.kicker}</p>
+              <h1>${m.h1Control}</h1>
+              <p class="lead">${m.leadControl}</p>
+              <ul class="ticks">${m.ticks.map((t) => `<li>${t}</li>`).join("")}</ul>
+              <p class="lead" style="font-size:.95rem">${m.explain}</p>
+              <div class="proof-row">${proofPills(m)}</div>
+            </div>
+            <div>
+              <img class="va-large" src="${m.hero}" alt="Dedicated Virtual Coworker teammate at a desk" />
+              <p class="hint">Dedicated hire · Matched to your role · ${m.hours}</p>
+            </div>
+            <form class="card" id="form" onsubmit="return false;">
+              <p class="eyebrow">About a minute · free strategy call</p>
+              <h2>Book a free strategy call</h2>
+              ${state.sent ? `<p class="done">Mock only — nothing was sent.</p>` : contactFields(m, {
+                website: true,
+                submit: state.market === "au" ? "Book a free strategy call" : "Book a Free Strategy Call",
+                hint: "Obligation free. A specialist follows up. We don’t sell your information. Prefer to talk? Use the gold number in the header.",
+              })}
+              ${seeker()}
+            </form>
+          </section>
+        </div>
+        ${logosBlock()}
+        ${process()}
+        <div class="wrap" id="proof">${quoteBox()}<p class="hint">More quotes sit below the fold on the live page — same roster, not invented.</p></div>
+        ${footer(m)}`;
+    }
+
+    function renderA() {
+      const m = MARKETS[state.market];
+      return `${nav(m, true)}
+        <div class="wrap">
+          <section class="grid2">
+            <div>
+              <p class="kicker">${m.kicker}</p>
+              <h1>${m.h1A}</h1>
+              <p class="lead">${m.leadA}</p>
+              <div class="proof-row" style="margin-bottom:.7rem">${proofPills(m)}</div>
+              <div class="cta-row" style="align-items:flex-end;gap:1rem;margin:.4rem 0">
+                <img class="va-support" src="${m.hero}" alt="Virtual Coworker teammate" />
+                <div>
+                  <p class="hint" style="margin:0">Supporting photo from the live paid LP — not a third competing column.</p>
+                  <a class="ghost" href="${m.tel}">Prefer to talk? ${m.phone}</a>
+                </div>
+              </div>
+              ${quoteBox()}
+              <ul class="ticks" style="margin-top:.9rem">${m.ticks.map((t) => `<li>${t}</li>`).join("")}</ul>
+            </div>
+            <form class="card" id="form" onsubmit="return false;">
+              <p class="eyebrow">Tell us who you need · about a minute</p>
+              <h2>Start your shortlist conversation</h2>
+              <p class="hint" style="margin:0 0 .6rem">You receive a hiring conversation and a recruited shortlist after we understand the seat. Not an instant match. Company website is not asked here.</p>
+              ${state.sent ? `<p class="done">Mock only — nothing was sent.</p>` : contactFields(m, {
+                website: false,
+                submit: "Tell us who you need",
+                hint: "A specialist follows up within one business day. You interview. You pick. We stay on payroll and support.",
+              })}
+              ${seeker()}
+            </form>
+          </section>
+        </div>
+        ${logosBlock()}
+        ${process()}
+        ${footer(m)}`;
+    }
+
+    function renderB() {
+      const m = MARKETS[state.market];
+      const pct = state.quiz === 1 ? "33%" : state.quiz === 2 ? "66%" : "100%";
+      let inner = "";
+      if (state.quiz === 1) {
+        inner = `<p class="eyebrow">Step 1 of 3 · no contact details yet</p>
+          <h2>What kind of help do you need?</h2>
+          <div class="chips" style="margin-top:.7rem">${ROLES.map((r) =>
+            `<button type="button" class="chip${state.role === r ? " on" : ""}" data-act="role" data-v="${r}">${r}</button>`
+          ).join("")}</div>
+          <button class="submit" type="button" data-act="next1" ${state.role ? "" : "disabled style='opacity:.45'"}>Continue</button>
+          <p class="hint">Role pages preselect this step. Campaign / keyword stay in hidden fields.</p>`;
+      } else if (state.quiz === 2) {
+        inner = `<p class="eyebrow">Step 2 of 3 · still no name or email</p>
+          <h2>Hours and pace</h2>
+          <div class="chips" style="margin:.6rem 0 1rem">${["Full-time", "Part-time", "Not sure yet"].map((v) =>
+            `<button type="button" class="chip${state.hours === v ? " on" : ""}" data-act="hours" data-v="${v}">${v}</button>`
+          ).join("")}</div>
+          <p class="hint">${m.hours} — Filipino talent. We do not quote a salary here.</p>
+          <button class="submit" type="button" data-act="next2" ${state.hours ? "" : "disabled style='opacity:.45'"}>Continue to contact</button>
+          <p class="hint"><button class="ghost" type="button" data-act="back">Back</button></p>`;
+      } else {
+        inner = `<p class="eyebrow">Step 3 of 3 · start the matching process</p>
+          <h2>Where should we send the next step?</h2>
+          <p class="hint">${[state.role, state.hours, m.hours].filter(Boolean).join(" · ")}</p>
+          ${state.sent ? `<p class="done">Mock only — nothing was sent. In production this is employer_form_started then inquiry submitted.</p>` : contactFields(m, {
+            website: false,
+            submit: "Start the matching process",
+            hint: "A specialist calls to scope the role, then we recruit. Not an instant quote, not a guaranteed candidate.",
+          })}
+          <p class="hint"><button class="ghost" type="button" data-act="back">Back</button></p>`;
+      }
+      return `${nav(m, true)}
+        <div class="wrap">
+          <section class="grid2">
+            <div>
+              <p class="kicker">${m.kicker}</p>
+              <h1>${m.h1B}</h1>
+              <p class="lead">${m.leadB}</p>
+              <div class="proof-row">${proofPills(m)}</div>
+              ${quoteBox()}
+              <p class="hint" style="margin-top:.8rem"><a class="call" href="${m.tel}">☎ ${m.phone}</a> stays available on every step.</p>
+            </div>
+            <form class="card" id="form" onsubmit="return false;">
+              <div class="bar" aria-label="Progress"><span style="width:${pct}"></span></div>
+              ${inner}
+              ${seeker()}
+            </form>
+          </section>
+        </div>
+        ${logosBlock()}
+        ${process()}
+        ${footer(m)}`;
+    }
+
+    function renderC() {
+      const m = MARKETS[state.market];
+      return `<div class="risk"><div class="wrap"><strong>Implementation risk: HIGH.</strong> Full-company IA. Form does not dominate the first screen — may <em>hurt</em> form-start even if trust rises. Do not ship this as the first live test.</div></div>
+        ${nav(m, true)}
+        <div class="wrap">
+          <section class="grid2">
+            <div>
+              <p class="kicker">${m.kicker}</p>
+              <h1>${m.h1C}</h1>
+              <p class="lead">${m.leadC}</p>
+              <div class="proof-row">${proofPills(m)}</div>
+              <div class="cta-row" style="margin:1rem 0">
+                <a class="submit" style="width:auto;padding:.75rem 1.1rem;display:inline-block" href="#form">See how staffing works</a>
+                <a class="call" href="${m.tel}">☎ ${m.phone}</a>
+              </div>
+              ${quoteBox()}
+            </div>
+            <div>
+              <img class="office" src="${ASSET}/people/trust-team-office.png" alt="Existing Virtual Coworker team / office photograph" />
+              <p class="hint">Company photo already in brand (trust-team-office). Not a competitor image. Not a fake “available this week” profile.</p>
+            </div>
+          </section>
+          <h3 id="how" style="font-family:var(--display)">What you receive</h3>
+          <div class="grid-steps">
+            <div class="step"><b>A scoped seat</b>Strategy call to name the role, hours, and timezone.</div>
+            <div class="step"><b>A recruited shortlist</b>We hunt and vet. You do not plow through a marketplace inbox.</div>
+            <div class="step"><b>Your interview</b>You meet them on video. You pick. Nobody starts without that.</div>
+            <div class="step"><b>Employment + support</b>${state.market === "au" ? "Admin, time tracker, ongoing support on Australian hours." : "Payroll, HR, time tracker, ongoing support on your hours."}</div>
+          </div>
+          <div class="placeholder" style="margin:1rem 0">
+            <strong>Placeholder — no fake candidate cards.</strong>
+            We do not have approved public “available this week” profiles or a testimonial video library for ads. If that footage is exported from the official company pages later, it can sit here. Named staff photos from .com.ph are <em>not</em> used (ad permission unknown).
+          </div>
+          <p class="kicker" id="roles">Roles we staff (examples — same funnel if you landed from a role ad)</p>
+          <div class="chips" style="margin-bottom:1.2rem">
+            ${["Admin / VA", "Bookkeeping", "Customer service", "Marketing", "Sales support", "Recruiting support"].map((r) => `<span class="pill">${r}</span>`).join("")}
+          </div>
+          <form class="card" id="form" onsubmit="return false;" style="max-width:32rem">
+            <p class="eyebrow">After you’ve seen how it works</p>
+            <h2>Start a hiring conversation</h2>
+            ${state.sent ? `<p class="done">Mock only — nothing was sent.</p>` : contactFields(m, {
+              website: false,
+              submit: "Request a hiring plan",
+              hint: "Same real process as today. We will not invent a price or a start date on this page.",
+            })}
+            ${seeker()}
+          </form>
+        </div>
+        ${logosBlock()}
+        ${footer(m)}`;
+    }
+
+    let keepSent = false;
+    function render() {
+      if (!keepSent) state.sent = false;
+      keepSent = false;
+      const map = { control: renderControl, a: renderA, b: renderB, c: renderC };
+      document.getElementById("view").innerHTML = map[state.page]();
+      document.querySelectorAll("#pageSeg button").forEach((b) => b.classList.toggle("on", b.dataset.p === state.page));
+      document.querySelectorAll("#mSeg button").forEach((b) => b.classList.toggle("on", b.dataset.m === state.market));
+      location.hash = state.page + "-" + state.market;
+    }
+
+    document.getElementById("pageSeg").addEventListener("click", (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      state.page = b.dataset.p; state.quiz = 1; state.role = ""; state.hours = ""; render();
+    });
+    document.getElementById("mSeg").addEventListener("click", (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      state.market = b.dataset.m; render();
+    });
+    document.getElementById("view").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-act]"); if (!b) return;
+      const act = b.dataset.act;
+      if (act === "role") { state.role = b.dataset.v; render(); }
+      if (act === "hours") { state.hours = b.dataset.v; render(); }
+      if (act === "next1" && state.role) { state.quiz = 2; render(); }
+      if (act === "next2" && state.hours) { state.quiz = 3; render(); }
+      if (act === "back") { state.quiz = Math.max(1, state.quiz - 1); render(); }
+      if (act === "submit") { state.sent = true; keepSent = true; render(); }
+    });
+
+    const hash = (location.hash || "#control-us").replace("#", "").split("-");
+    if (["control", "a", "b", "c"].includes(hash[0])) state.page = hash[0];
+    if (hash[1] === "au" || hash[1] === "us") state.market = hash[1];
+    render();
+  </script>
+</body>
+</html>

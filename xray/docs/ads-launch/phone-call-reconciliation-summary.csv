@@ -1,0 +1,31 @@
+market,window,metric,value,label,notes
+US,campaign_launch_to_aug18,inbound_call_records,23,DERIVED,Grasshopper Detail_08.24.2026 — 888 inbound legs only; Aug 7–18 2026
+US,campaign_launch_to_aug18,unique_external_callers,15,DERIVED,Grasshopper 888 inbound legs; distinct Caller ID; not employer count
+US,campaign_launch_to_aug18,crm_inbound_or_missed_calls,0,LIVE,COQL: no non-demo inbound/missed in CRM Calls for Aug 6–18 except Caitlin Instant Trial Demo on Aug 11.
+US,aug19_to_audit,zoho_voice_export_rows,UNAVAILABLE,UNAVAILABLE,Password-protected zip in Gmail (Raffie). Not ingested — PII. Drop into .local/phone-call-forensic/ to analyze.
+US,aug19_to_audit,crm_calls_total,46,LIVE,COQL Call_Start_Time >= 2026-08-19
+US,aug19_to_audit,crm_outbound,33,LIVE,
+US,aug19_to_audit,crm_inbound,7,LIVE,Subjects show Incoming call from +18889648644 — DID as caller
+US,aug19_to_audit,crm_missed,5,LIVE,Subjects show Missed call from +18889648644
+US,aug19_to_audit,crm_inbound_missed_with_real_ani,0,DERIVED,Caller_ID / From_Number on these rows resolve to ***8644 (the DID)
+US,aug19_to_audit,crm_inbound_missed_linked_to_contact,0,DERIVED,Who_Id empty on DID-as-from rows
+US,aug19_to_audit,crm_call_result_populated,0,LIVE,Call_Result null on inbound/missed sample
+US,aug19_to_audit,callback_tasks_created,0,LIVE,No Tasks Subject matching missed/callback/voicemail since Aug 6
+US,aug19_to_audit,sales_enquiries_lead_source_phone,0,LIVE,The 3 Phone-source Leads since Aug 6 are dated Aug 13 (before Voice cutover)
+US,aug6_to_audit,ads_phone_link_clicks,~62,MANUAL,Taps — not completed calls. Do not add to unique callers.
+US,aug6_to_audit,crm_calls_total,88,LIVE,
+US,aug6_to_audit,crm_outbound,65,LIVE,
+US,aug6_to_audit,crm_inbound,8,LIVE,Includes Aug 11 demo inbound
+US,aug6_to_audit,crm_missed,9,LIVE,Includes Aug 11 demo missed
+US,prev_90d,crm_calls_total,407,LIVE,390 outbound / 8 inbound / 9 missed
+US,prev_365d,crm_calls_total,1170,LIVE,Call_Result populated on only ~13 rows in 365d (Interested 7 · No response/Busy 5 · Requested call back 1)
+US,aug6_to_audit,answered_rate,UNAVAILABLE,UNAVAILABLE,Need Voice disposition + real ANI
+US,aug6_to_audit,missed_rate,UNAVAILABLE,UNAVAILABLE,CRM Missed count is not the Voice truth
+US,aug6_to_audit,callback_completion_rate,UNAVAILABLE,UNAVAILABLE,No callback Task evidence
+US,aug6_to_audit,calls_represented_as_sales_enquiry,UNAVAILABLE,UNAVAILABLE,No deterministic Voice→Lead link found
+US,aug6_to_audit,potential_employer_calls,UNAVAILABLE,UNAVAILABLE,Requires Voice export + human classification
+US,aug6_to_audit,recovery_review_candidates,9,DERIVED,Grasshopper 888 hangup rows in .local recovery queue — human review only; not outreach approved
+AU,all_windows,inbound_call_records,UNAVAILABLE,UNAVAILABLE,No AU Voice export this pass
+AU,ads_period,phone_link_clicks,~2,MANUAL,George email 24 Aug
+AU,all_windows,crm_voice_integration,UNAVAILABLE,UNAVAILABLE,Do not assume parity with US
+BOTH,architecture,zoho_voice_equals_zoho_crm,false,LIVE,Shared brand name ≠ integration. Evidence shows partial CTI Call activity only.

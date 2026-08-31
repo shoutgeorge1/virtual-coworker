@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>MOCK thank-you · same query keys as production</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: Poppins, system-ui, sans-serif; margin: 0; background: #f7fbfb; color: #17293c; }
+    .ribbon { background: #7a2e0e; color: #fff7ee; text-align: center; font-weight: 600; padding: .5rem 1rem; font-size: .82rem; }
+    .wrap { max-width: 40rem; margin: 2rem auto; padding: 0 1.1rem; }
+    .call { display: inline-block; background: #fac056; color: #214873; font-weight: 700; padding: .5rem 1rem; border-radius: 999px; text-decoration: none; }
+    a { color: #214873; }
+    .hint { color: #55697c; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <div class="ribbon">MOCK thank-you — same URL keys as production <code>/thank-you?market=&amp;sid=</code>. Does not book Calendly. Does not write Zoho.</div>
+  <div class="wrap">
+    <h1>Thanks — you’re in. (mock)</h1>
+    <p id="meta"></p>
+    <p>Production would now show the same market thank-you and the existing Calendly overlay (US Cheyenne 30 min / AU APAC 30 min). Those URLs are preserved and not opened here so we don’t schedule a real call.</p>
+    <p><a class="call" id="phone" href="#">Call</a></p>
+    <p class="hint">Calendly (not auto-opened): <span id="cal"></span></p>
+    <p><a href="index.html">← Back to replacement mocks</a></p>
+  </div>
+  <script src="contract.js"></script>
+  <script>
+    const q = new URLSearchParams(location.search);
+    const market = q.get("market") === "au" ? "au" : "us";
+    const sid = q.get("sid") || "";
+    const eligible = q.get("eligible") !== "0";
+    document.getElementById("meta").textContent =
+      "market=" + market + " · sid=" + sid + " · category=" + (q.get("category") || "(core)") +
+      " · eligible=" + eligible + " · MOCK_LOCAL";
+    const tel = market === "au" ? "tel:+611300886740" : "tel:+18889648644";
+    const disp = market === "au" ? "1300 886 740" : "(888) 964-8644";
+    const phone = document.getElementById("phone");
+    phone.href = tel;
+    phone.textContent = "☎ " + disp;
+    phone.addEventListener("click", () => VCContract.trackPhoneClick({ market: market, source: "thank_you_mock" }));
+    const cal = market === "au"
+      ? "https://calendly.com/apac-virtualcoworker/30min"
+      : "https://calendly.com/cheyenne-virtualcoworker/30min";
+    document.getElementById("cal").textContent = cal;
+    VCContract.trackValidEmployerSubmit({
+      market: market,
+      submissionId: sid,
+      conversionEligible: eligible,
+      category: q.get("category") || "",
+    });
+    document.getElementById("cal").closest("p").insertAdjacentHTML(
+      "beforeend",
+      ' · <button type="button" id="calCta" style="margin-left:.4rem">calendly_cta_clicked (mock, does not open)</button>'
+    );
+    document.getElementById("calCta").addEventListener("click", () => {
+      VCContract.trackCalendlyClick({ market: market, href: cal });
+    });
+  </script>
+</body>
+</html>

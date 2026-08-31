@@ -1,6 +1,7 @@
 /**
  * Server-only Zoho CRM V8 client.
  * Token refresh + in-memory cache; retry once on 401; bounded timeouts.
+ * Production path is create-only (never upsert/update).
  * Never log tokens / PII. zoho_synced requires a CRM record id.
  */
 
@@ -12,6 +13,7 @@ export type ZohoCrmResult = {
   ok: boolean;
   zoho_synced: boolean;
   recordId?: string;
+  code?: string;
   detail: string;
   duration_ms: number;
 };
@@ -129,6 +131,58 @@ function extractRecordId(payload: unknown): string | undefined {
   return undefined;
 }
 
+function extractZohoCode(payload: unknown): string | undefined {
+  if (!payload || typeof payload !== "object") return undefined;
+  const data = (payload as { data?: unknown }).data;
+  if (!Array.isArray(data) || !data[0] || typeof data[0] !== "object") return undefined;
+  const code = (data[0] as { code?: string }).code;
+  return typeof code === "string" && code.trim() ? code.trim() : undefined;
+}
+
+async function createOnce(
+  cfg: ZohoCrmConfig,
+  accessToken: string,
+  record: Record<string, unknown>,
+  fetchImpl: typeof fetch,
+): Promise<{ status: number; body: unknown; recordId?: string; code?: string }> {
+  const base = cfg.apiDomain.replace(/\/$/, "");
+  const url = `${base}/crm/v8/${encodeURIComponent(cfg.module)}`;
+  const body = {
+    data: [record],
+    trigger: [] as string[],
+    skip_feature_execution: [{ name: "cadences" }],
+  };
+
+  const res = await fetchWithTimeout(
+    url,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Zoho-oauthtoken ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    },
+    cfg.timeoutMs,
+    fetchImpl,
+  );
+
+  const text = await res.text().catch(() => "");
+  let parsed: unknown = text;
+  try {
+    parsed = text ? JSON.parse(text) : {};
+  } catch {
+    parsed = { raw: text.slice(0, 200) };
+  }
+
+  return {
+    status: res.status,
+    body: parsed,
+    recordId: extractRecordId(parsed),
+    code: extractZohoCode(parsed),
+  };
+}
+
 async function upsertOnce(
   cfg: ZohoCrmConfig,
   accessToken: string,
@@ -175,8 +229,107 @@ async function upsertOnce(
 }
 
 /**
- * Upsert employer lead to Zoho CRM V8.
- * Success for zoho_synced requires a CRM record id in the response.
+ * Create-only employer Sales Enquiry. Never upsert/update.
+ * Gated by ZOHO_SUBMISSION_ENABLED. Failure is returned, not thrown.
+ */
+export async function createEmployerLead(
+  lead: LeadRecord,
+  opts: {
+    env?: NodeJS.ProcessEnv;
+    verified?: VerifiedFieldSet | null;
+    fetchImpl?: typeof fetch;
+  } = {},
+): Promise<ZohoCrmResult> {
+  const started = Date.now();
+  const env = opts.env || process.env;
+  const cfg = parseZohoCrmConfig(env);
+
+  if (!cfg.enabled) {
+    return {
+      ok: false,
+      zoho_synced: false,
+      detail: "zoho_submission_disabled",
+      duration_ms: Date.now() - started,
+    };
+  }
+
+  const fetchImpl = opts.fetchImpl || fetch;
+
+  try {
+    const mapped = mapLeadToCrmPayload(lead, cfg, opts.verified ?? null);
+    let token = await refreshAccessToken(cfg, fetchImpl);
+    let result = await createOnce(cfg, token, mapped.data, fetchImpl);
+
+    if (result.status === 401) {
+      clearZohoTokenCache();
+      token = await refreshAccessToken(cfg, fetchImpl);
+      result = await createOnce(cfg, token, mapped.data, fetchImpl);
+    }
+
+    const duration_ms = Date.now() - started;
+    const recordId = result.recordId;
+    const synced = Boolean(recordId) && result.status >= 200 && result.status < 300;
+
+    console.info(
+      "[zoho-crm]",
+      JSON.stringify(
+        leadLogSafe({
+          submission_id: lead.submission_id,
+          market: lead.market,
+          channel: "zoho_crm",
+          ok: synced,
+          error: synced ? undefined : `HTTP ${result.status}`,
+          duration_ms,
+        }),
+      ),
+    );
+
+    if (!synced) {
+      return {
+        ok: false,
+        zoho_synced: false,
+        code: result.code,
+        detail: redactText(`create_failed HTTP ${result.status}`),
+        duration_ms,
+      };
+    }
+
+    return {
+      ok: true,
+      zoho_synced: true,
+      recordId,
+      code: result.code,
+      detail: "ok",
+      duration_ms,
+    };
+  } catch (err) {
+    const duration_ms = Date.now() - started;
+    const detail = err instanceof ZohoCrmError ? err.message : redactUnknown(err);
+    console.info(
+      "[zoho-crm]",
+      JSON.stringify(
+        leadLogSafe({
+          submission_id: lead.submission_id,
+          market: lead.market,
+          channel: "zoho_crm",
+          ok: false,
+          error: detail,
+          duration_ms,
+        }),
+      ),
+    );
+    return {
+      ok: false,
+      zoho_synced: false,
+      detail,
+      duration_ms,
+    };
+  }
+}
+
+/**
+ * Legacy upsert — unused by /api/lead. Kept for existing unit tests only.
+ * Do not call from production. Create-only path is createEmployerLead.
  */
 export async function upsertEmployerLead(
   lead: LeadRecord,

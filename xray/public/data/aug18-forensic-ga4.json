@@ -1,0 +1,1751 @@
+{
+  "generated_at_utc": "2026-08-20T10:41:46.465557+00:00",
+  "api": "ga4_data_api",
+  "window": "2026-08-17 \u2192 2026-08-20",
+  "focus_day": "2026-08-18",
+  "timezone_note": "GA4 property timezone (US and AU properties separately). Dates are property-local.",
+  "US": {
+    "ok": true,
+    "label": "US",
+    "property_id": "549075481",
+    "measurement_id": "G-2V3V0BS6JW",
+    "api_calls": [
+      {
+        "n": 1,
+        "name": "by_date",
+        "ok": true,
+        "rows": 4
+      },
+      {
+        "n": 2,
+        "name": "landing_by_date",
+        "ok": true,
+        "rows": 80
+      },
+      {
+        "n": 3,
+        "name": "events_by_date",
+        "ok": true,
+        "rows": 25
+      },
+      {
+        "n": 4,
+        "name": "channel_device_aug18",
+        "ok": true,
+        "rows": 34
+      },
+      {
+        "n": 5,
+        "name": "watched_paths_window",
+        "ok": true,
+        "rows": 40
+      }
+    ],
+    "by_date": [
+      {
+        "date": "2026-08-17",
+        "sessions": 129,
+        "users": 112,
+        "engaged_sessions": 114,
+        "engagement_rate_pct": 88.4,
+        "bounce_rate_pct": 11.6,
+        "conversions": 521.0,
+        "avg_session_seconds": 192.4
+      },
+      {
+        "date": "2026-08-18",
+        "sessions": 82,
+        "users": 67,
+        "engaged_sessions": 82,
+        "engagement_rate_pct": 100.0,
+        "bounce_rate_pct": 0.0,
+        "conversions": 531.0,
+        "avg_session_seconds": 203.3
+      },
+      {
+        "date": "2026-08-19",
+        "sessions": 101,
+        "users": 92,
+        "engaged_sessions": 95,
+        "engagement_rate_pct": 94.1,
+        "bounce_rate_pct": 5.9,
+        "conversions": 371.0,
+        "avg_session_seconds": 76.4
+      },
+      {
+        "date": "2026-08-20",
+        "sessions": 9,
+        "users": 9,
+        "engaged_sessions": 7,
+        "engagement_rate_pct": 77.8,
+        "bounce_rate_pct": 22.2,
+        "conversions": 30.0,
+        "avg_session_seconds": 29.1
+      }
+    ],
+    "focus": {
+      "date": "2026-08-18",
+      "sessions": 82,
+      "users": 67,
+      "engaged_sessions": 82,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "conversions": 531.0,
+      "avg_session_seconds": 203.3
+    },
+    "landings_aug18": [
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 18,
+        "engaged_sessions": 18,
+        "engagement_rate_pct": 100.0,
+        "conversions": 72.0,
+        "avg_session_seconds": 35.1
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 16,
+        "engaged_sessions": 16,
+        "engagement_rate_pct": 100.0,
+        "conversions": 139.0,
+        "avg_session_seconds": 337.2
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 8,
+        "engaged_sessions": 8,
+        "engagement_rate_pct": 100.0,
+        "conversions": 37.0,
+        "avg_session_seconds": 57.6
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 8,
+        "engaged_sessions": 8,
+        "engagement_rate_pct": 100.0,
+        "conversions": 38.0,
+        "avg_session_seconds": 53.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/customer-service",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 15.0,
+        "avg_session_seconds": 5.1
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/philippines-virtual-assistants",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 12.0,
+        "avg_session_seconds": 0.3
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 17.0,
+        "avg_session_seconds": 24.3
+      },
+      {
+        "date": "2026-08-18",
+        "path": "(not set)",
+        "sessions": 3,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 100.0,
+        "conversions": 7.0,
+        "avg_session_seconds": 95.5
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/customer-service",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "conversions": 8.0,
+        "avg_session_seconds": 243.7
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/real-estate",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "conversions": 23.0,
+        "avg_session_seconds": 670.3
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/sales",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "conversions": 6.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/how-it-works",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 3.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/prototype/staffing-partner/us",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 57.0,
+        "avg_session_seconds": 2044.2
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 4.0,
+        "avg_session_seconds": 1.4
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 4.0,
+        "avg_session_seconds": 9.6
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 4.0,
+        "avg_session_seconds": 26.1
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/digital-marketing",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 2.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/offer",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 7.0,
+        "avg_session_seconds": 409.5
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/social-media",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 5.0,
+        "avg_session_seconds": 22.1
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/staffing",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 60.0,
+        "avg_session_seconds": 4903.9
+      }
+    ],
+    "events_aug18": [
+      {
+        "date": "2026-08-18",
+        "event": "page_view",
+        "count": 202,
+        "conversions": 202.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "user_engagement",
+        "count": 136,
+        "conversions": 136.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "session_start",
+        "count": 83,
+        "conversions": 83.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "first_visit",
+        "count": 58,
+        "conversions": 58.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "scroll",
+        "count": 50,
+        "conversions": 50.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "form_start",
+        "count": 2,
+        "conversions": 2.0
+      }
+    ],
+    "channels_aug18": [
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/us",
+        "sessions": 17,
+        "engaged_sessions": 17,
+        "conversions": 68.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/us",
+        "sessions": 8,
+        "engaged_sessions": 8,
+        "conversions": 37.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/us",
+        "sessions": 7,
+        "engaged_sessions": 7,
+        "conversions": 34.0
+      },
+      {
+        "channel": "Direct",
+        "device": "desktop",
+        "path": "/us",
+        "sessions": 6,
+        "engaged_sessions": 6,
+        "conversions": 20.0
+      },
+      {
+        "channel": "Organic Search",
+        "device": "mobile",
+        "path": "/us",
+        "sessions": 5,
+        "engaged_sessions": 5,
+        "conversions": 26.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/us",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "conversions": 17.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/us/customer-service",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "conversions": 15.0
+      },
+      {
+        "channel": "Direct",
+        "device": "desktop",
+        "path": "/us/philippines-virtual-assistants",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "conversions": 6.0
+      },
+      {
+        "channel": "Organic Search",
+        "device": "desktop",
+        "path": "/us",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "conversions": 17.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/us",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "conversions": 73.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/us/customer-service",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "conversions": 8.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/us/sales",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "conversions": 6.0
+      },
+      {
+        "channel": "Cross-network",
+        "device": "mobile",
+        "path": "/us",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 4.0
+      },
+      {
+        "channel": "Cross-network",
+        "device": "mobile",
+        "path": "/us",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 4.0
+      },
+      {
+        "channel": "Direct",
+        "device": "desktop",
+        "path": "(not set)",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 2.0
+      },
+      {
+        "channel": "Direct",
+        "device": "desktop",
+        "path": "/prototype/staffing-partner/us",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 51.0
+      },
+      {
+        "channel": "Direct",
+        "device": "mobile",
+        "path": "/prototype/staffing-partner/us",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 6.0
+      },
+      {
+        "channel": "Direct",
+        "device": "mobile",
+        "path": "/us",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 3.0
+      },
+      {
+        "channel": "Organic Search",
+        "device": "desktop",
+        "path": "(not set)",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 3.0
+      },
+      {
+        "channel": "Organic Search",
+        "device": "desktop",
+        "path": "/us/philippines-virtual-assistants",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 3.0
+      },
+      {
+        "channel": "Organic Search",
+        "device": "mobile",
+        "path": "/us/offer",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 7.0
+      },
+      {
+        "channel": "Organic Search",
+        "device": "mobile",
+        "path": "/us/philippines-virtual-assistants",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 3.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "(not set)",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 2.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 4.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/us/real-estate",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 13.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/us/staffing",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 60.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/us",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 8.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/how-it-works",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 3.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 4.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 4.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/us/digital-marketing",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 2.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/us/social-media",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 5.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/us",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 3.0
+      },
+      {
+        "channel": "Referral",
+        "device": "desktop",
+        "path": "/us/real-estate",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 10.0
+      }
+    ],
+    "watched_paths": [
+      {
+        "date": "2026-08-17",
+        "path": "/us",
+        "sessions": 29,
+        "engaged_sessions": 26,
+        "engagement_rate_pct": 89.7,
+        "conversions": 81.0,
+        "avg_session_seconds": 95.9
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us",
+        "sessions": 17,
+        "engaged_sessions": 14,
+        "engagement_rate_pct": 82.4,
+        "conversions": 83.0,
+        "avg_session_seconds": 329.0
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us",
+        "sessions": 15,
+        "engaged_sessions": 11,
+        "engagement_rate_pct": 73.3,
+        "conversions": 38.0,
+        "avg_session_seconds": 46.3
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us",
+        "sessions": 12,
+        "engaged_sessions": 12,
+        "engagement_rate_pct": 100.0,
+        "conversions": 42.0,
+        "avg_session_seconds": 143.7
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/customer-service",
+        "sessions": 9,
+        "engaged_sessions": 8,
+        "engagement_rate_pct": 88.9,
+        "conversions": 31.0,
+        "avg_session_seconds": 9.5
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us",
+        "sessions": 7,
+        "engaged_sessions": 7,
+        "engagement_rate_pct": 100.0,
+        "conversions": 24.0,
+        "avg_session_seconds": 25.8
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/consult",
+        "sessions": 5,
+        "engaged_sessions": 5,
+        "engagement_rate_pct": 100.0,
+        "conversions": 32.0,
+        "avg_session_seconds": 1063.5
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/administrative-support",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 7.0,
+        "avg_session_seconds": 34.5
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us",
+        "sessions": 4,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 50.0,
+        "conversions": 5.0,
+        "avg_session_seconds": 23.0
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 15.0,
+        "avg_session_seconds": 13.8
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/social-media",
+        "sessions": 3,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 66.7,
+        "conversions": 4.0,
+        "avg_session_seconds": 7.6
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/capacity",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "conversions": 64.0,
+        "avg_session_seconds": 3112.6
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/administrative-support",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 17.9
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/administrative-support",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 6.1
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 4.0,
+        "avg_session_seconds": 17.5
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 5.0,
+        "avg_session_seconds": 54.8
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 4.0,
+        "avg_session_seconds": 15.2
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/customer-service",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 3.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/customer-service",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 4.0,
+        "avg_session_seconds": 15.4
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/customer-service",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 20.4
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/customer-service",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 4.0,
+        "avg_session_seconds": 37.7
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/digital-marketing",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 4.0,
+        "avg_session_seconds": 29.2
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/offer",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 5.0,
+        "avg_session_seconds": 15.4
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/quiz",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 44.0,
+        "avg_session_seconds": 487.8
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/sales",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 34.7
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/sales",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 73.4
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/social-media",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 7.0,
+        "avg_session_seconds": 40.4
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us/start",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 9.0,
+        "avg_session_seconds": 1020.2
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/us",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 25.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 18,
+        "engaged_sessions": 18,
+        "engagement_rate_pct": 100.0,
+        "conversions": 72.0,
+        "avg_session_seconds": 35.1
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 16,
+        "engaged_sessions": 16,
+        "engagement_rate_pct": 100.0,
+        "conversions": 139.0,
+        "avg_session_seconds": 337.2
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 8,
+        "engaged_sessions": 8,
+        "engagement_rate_pct": 100.0,
+        "conversions": 37.0,
+        "avg_session_seconds": 57.6
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 8,
+        "engaged_sessions": 8,
+        "engagement_rate_pct": 100.0,
+        "conversions": 38.0,
+        "avg_session_seconds": 53.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/customer-service",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 15.0,
+        "avg_session_seconds": 5.1
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/philippines-virtual-assistants",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 12.0,
+        "avg_session_seconds": 0.3
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 17.0,
+        "avg_session_seconds": 24.3
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/customer-service",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "conversions": 8.0,
+        "avg_session_seconds": 243.7
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/real-estate",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "conversions": 23.0,
+        "avg_session_seconds": 670.3
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/sales",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "conversions": 6.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/us/bookkeeping",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 4.0,
+        "avg_session_seconds": 1.4
+      }
+    ]
+  },
+  "AU": {
+    "ok": true,
+    "label": "AU",
+    "property_id": "549811743",
+    "measurement_id": "G-7X1K9V2LFE",
+    "api_calls": [
+      {
+        "n": 1,
+        "name": "by_date",
+        "ok": true,
+        "rows": 4
+      },
+      {
+        "n": 2,
+        "name": "landing_by_date",
+        "ok": true,
+        "rows": 47
+      },
+      {
+        "n": 3,
+        "name": "events_by_date",
+        "ok": true,
+        "rows": 25
+      },
+      {
+        "n": 4,
+        "name": "channel_device_aug18",
+        "ok": true,
+        "rows": 20
+      },
+      {
+        "n": 5,
+        "name": "watched_paths_window",
+        "ok": true,
+        "rows": 40
+      }
+    ],
+    "by_date": [
+      {
+        "date": "2026-08-17",
+        "sessions": 43,
+        "users": 39,
+        "engaged_sessions": 30,
+        "engagement_rate_pct": 69.8,
+        "bounce_rate_pct": 30.2,
+        "conversions": 0.0,
+        "avg_session_seconds": 125.0
+      },
+      {
+        "date": "2026-08-18",
+        "sessions": 50,
+        "users": 42,
+        "engaged_sessions": 33,
+        "engagement_rate_pct": 66.0,
+        "bounce_rate_pct": 34.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 104.4
+      },
+      {
+        "date": "2026-08-19",
+        "sessions": 11,
+        "users": 11,
+        "engaged_sessions": 5,
+        "engagement_rate_pct": 45.5,
+        "bounce_rate_pct": 54.5,
+        "conversions": 0.0,
+        "avg_session_seconds": 99.7
+      },
+      {
+        "date": "2026-08-20",
+        "sessions": 8,
+        "users": 7,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 4.3
+      }
+    ],
+    "focus": {
+      "date": "2026-08-18",
+      "sessions": 50,
+      "users": 42,
+      "engaged_sessions": 33,
+      "engagement_rate_pct": 66.0,
+      "bounce_rate_pct": 34.0,
+      "conversions": 0.0,
+      "avg_session_seconds": 104.4
+    },
+    "landings_aug18": [
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 10,
+        "engaged_sessions": 6,
+        "engagement_rate_pct": 60.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 17.4
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 8,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 37.5,
+        "conversions": 0.0,
+        "avg_session_seconds": 65.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 6,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 50.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 17.4
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 6,
+        "engaged_sessions": 6,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 33.9
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 360.6
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 3,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 33.3,
+        "conversions": 0.0,
+        "avg_session_seconds": 549.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/customer-service",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 30.9
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 9.5
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 16.8
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/administrative-support",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 11.8
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/administrative-support",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 63.5
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/consult",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 269.1
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/proof",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 550.2
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 27.2
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 93.5
+      }
+    ],
+    "events_aug18": [
+      {
+        "date": "2026-08-18",
+        "event": "page_view",
+        "count": 68,
+        "conversions": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "session_start",
+        "count": 50,
+        "conversions": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "user_engagement",
+        "count": 49,
+        "conversions": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "first_visit",
+        "count": 39,
+        "conversions": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "scroll",
+        "count": 17,
+        "conversions": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "event": "form_start",
+        "count": 2,
+        "conversions": 0.0
+      }
+    ],
+    "channels_aug18": [
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/au",
+        "sessions": 10,
+        "engaged_sessions": 6,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/au",
+        "sessions": 6,
+        "engaged_sessions": 3,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/au",
+        "sessions": 6,
+        "engaged_sessions": 6,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Direct",
+        "device": "mobile",
+        "path": "/au",
+        "sessions": 4,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/au/recruitment",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/au/customer-service",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/au/recruitment",
+        "sessions": 2,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/au",
+        "sessions": 2,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Unassigned",
+        "device": "desktop",
+        "path": "/au",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Unassigned",
+        "device": "desktop",
+        "path": "/au/recruitment",
+        "sessions": 2,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Cross-network",
+        "device": "mobile",
+        "path": "/au/administrative-support",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Organic Search",
+        "device": "desktop",
+        "path": "/au",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Organic Search",
+        "device": "mobile",
+        "path": "/au",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "desktop",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/au/administrative-support",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Paid Search",
+        "device": "mobile",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Unassigned",
+        "device": "desktop",
+        "path": "/au/consult",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      },
+      {
+        "channel": "Unassigned",
+        "device": "desktop",
+        "path": "/au/proof",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "conversions": 0.0
+      }
+    ],
+    "watched_paths": [
+      {
+        "date": "2026-08-17",
+        "path": "/au",
+        "sessions": 8,
+        "engaged_sessions": 7,
+        "engagement_rate_pct": 87.5,
+        "conversions": 0.0,
+        "avg_session_seconds": 370.7
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au",
+        "sessions": 7,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 57.1,
+        "conversions": 0.0,
+        "avg_session_seconds": 41.2
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au",
+        "sessions": 5,
+        "engaged_sessions": 5,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 79.0
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au/recruitment",
+        "sessions": 4,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 75.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 29.5
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au",
+        "sessions": 3,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 66.7,
+        "conversions": 0.0,
+        "avg_session_seconds": 26.5
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au/recruitment",
+        "sessions": 3,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 40.4
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au",
+        "sessions": 3,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 66.7,
+        "conversions": 0.0,
+        "avg_session_seconds": 207.2
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au/accounting",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 62.4
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au/capacity",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 235.7
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au/customer-service",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 1.3
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au/customer-service",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 56.4
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au/social-media",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-17",
+        "path": "/au/social-media",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 432.2
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 10,
+        "engaged_sessions": 6,
+        "engagement_rate_pct": 60.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 17.4
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 8,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 37.5,
+        "conversions": 0.0,
+        "avg_session_seconds": 65.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 6,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 50.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 17.4
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 6,
+        "engaged_sessions": 6,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 33.9
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 4,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 360.6
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 3,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 33.3,
+        "conversions": 0.0,
+        "avg_session_seconds": 549.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/customer-service",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 30.9
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 9.5
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au",
+        "sessions": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 16.8
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/administrative-support",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 11.8
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/administrative-support",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 63.5
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/consult",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 269.1
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/proof",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 550.2
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 27.2
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-18",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 93.5
+      },
+      {
+        "date": "2026-08-19",
+        "path": "/au",
+        "sessions": 3,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 66.7,
+        "conversions": 0.0,
+        "avg_session_seconds": 15.6
+      },
+      {
+        "date": "2026-08-19",
+        "path": "/au",
+        "sessions": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 12.0
+      },
+      {
+        "date": "2026-08-19",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 3.5
+      },
+      {
+        "date": "2026-08-19",
+        "path": "/au/recruitment",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 3.2
+      },
+      {
+        "date": "2026-08-19",
+        "path": "/au/sales",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-19",
+        "path": "/au/social-media",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-19",
+        "path": "/au/social-media",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 202.8
+      },
+      {
+        "date": "2026-08-19",
+        "path": "/au",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 816.9
+      },
+      {
+        "date": "2026-08-20",
+        "path": "/au",
+        "sessions": 2,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 0.0
+      },
+      {
+        "date": "2026-08-20",
+        "path": "/au/customer-service",
+        "sessions": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 6.5
+      }
+    ]
+  }
+}

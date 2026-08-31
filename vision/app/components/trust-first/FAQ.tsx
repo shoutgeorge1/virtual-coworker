@@ -2,7 +2,7 @@ import type { TrustFirstFaq } from "../../../config/trust-first";
 
 export default function FAQ({ items }: { items: readonly TrustFirstFaq[] }) {
   return (
-    <section className="tf-section tf-section-alt">
+    <section className="tf-section">
       <div className="tf-wrap tf-faq">
         <p className="tf-section-kicker">FAQ</p>
         <h2>Before you send the form</h2>

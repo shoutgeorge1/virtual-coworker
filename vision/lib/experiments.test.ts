@@ -33,42 +33,84 @@ describe("experiments", () => {
     });
   });
 
-  it("assigns a sticky variant for exit_popup", async () => {
+  it("is parked — frozen simplified LP, not random assignment", async () => {
+    const {
+      EXPERIMENTS_LIVE,
+      assignExperiment,
+      PARKED_DEFAULTS,
+      isExperimentLive,
+      SELECTIVE_LIVE_EXPERIMENTS,
+    } = await import("./experiments");
+    expect(EXPERIMENTS_LIVE).toBe(false);
+    expect(assignExperiment("exit_popup")).toBe(PARKED_DEFAULTS.exit_popup);
+    expect(assignExperiment("quiz_copy")).toBe("a");
+    expect(assignExperiment("chat_launcher")).toBe("a");
+    expect(assignExperiment("gate_headline")).toBe("a");
+    expect(assignExperiment("lp_density")).toBe("b");
+    expect(assignExperiment("role_imagery")).toBe("a");
+    expect(SELECTIVE_LIVE_EXPERIMENTS.us_hero_portrait).toBe(true);
+    expect(isExperimentLive("us_hero_portrait")).toBe(true);
+    expect(isExperimentLive("exit_popup")).toBe(false);
+  });
+
+  it("us_hero_portrait assigns and sticks while other tests stay parked", async () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.9);
     const { assignExperiment } = await import("./experiments");
-    const first = assignExperiment("exit_popup");
-    expect(["a", "b", "c"]).toContain(first);
-    expect(assignExperiment("exit_popup")).toBe(first);
+    expect(assignExperiment("us_hero_portrait")).toBe("b");
+    expect(localStorage.getItem("vc_exp_us_hero_portrait")).toBe("b");
+    expect(assignExperiment("us_hero_portrait")).toBe("b");
+    expect(assignExperiment("exit_popup")).toBe("a");
+  });
+
+  it("ignores old sticky storage while parked", async () => {
+    localStorage.setItem("vc_exp_lp_density", "a");
+    localStorage.setItem("vc_exp_exit_popup", "c");
+    const { assignExperiment } = await import("./experiments");
+    expect(assignExperiment("lp_density")).toBe("b");
+    expect(assignExperiment("exit_popup")).toBe("a");
+  });
+
+  it("does not fire experiment_* for parked ids; does for selective live", async () => {
+    const {
+      assignExperiment,
+      trackExperimentView,
+      trackExperimentClick,
+      trackExperimentConvert,
+    } = await import("./experiments");
+    const parked = assignExperiment("quiz_copy");
+    trackExperimentView("quiz_copy", parked);
+    trackExperimentClick("quiz_copy", parked);
+    trackExperimentConvert("form_submit");
+    const dl = (window as unknown as { dataLayer: { event: string }[] }).dataLayer;
+    expect(dl.filter((e) => String(e.event || "").startsWith("experiment_"))).toEqual(
+      [],
+    );
+
+    localStorage.setItem("vc_exp_us_hero_portrait", "b");
+    const hero = assignExperiment("us_hero_portrait");
+    trackExperimentView("us_hero_portrait", hero, { surface: "us_hub" });
+    expect(
+      dl.filter((e) => e.event === "experiment_view").map((e) => e.event),
+    ).toEqual(["experiment_view"]);
   });
 
   it("chat_launcher only allows a|b", async () => {
-    const { assignExperiment, EXPERIMENTS } = await import("./experiments");
+    const { EXPERIMENTS } = await import("./experiments");
     expect(EXPERIMENTS.chat_launcher.variants).toEqual(["a", "b"]);
-    const v = assignExperiment("chat_launcher");
-    expect(["a", "b"]).toContain(v);
-  });
-
-  it("fires experiment_view once per session key", async () => {
-    const { assignExperiment, trackExperimentView } = await import("./experiments");
-    const v = assignExperiment("quiz_copy");
-    trackExperimentView("quiz_copy", v);
-    trackExperimentView("quiz_copy", v);
-    const dl = (window as unknown as { dataLayer: { event: string }[] }).dataLayer;
-    const views = dl.filter((e) => e.event === "experiment_view");
-    expect(views.length).toBe(1);
   });
 
   it("forces variant from ?vc_exp=&vc_var= and sticks it", async () => {
     (window as unknown as { location: { search: string } }).location.search =
-      "?vc_exp=lp_density&vc_var=b";
+      "?vc_exp=lp_density&vc_var=a";
     const { assignExperiment, applyUrlForceVariant, densityFromVariant } =
       await import("./experiments");
     const forced = applyUrlForceVariant();
-    expect(forced).toEqual({ id: "lp_density", variant: "b" });
-    expect(localStorage.getItem("vc_exp_lp_density")).toBe("b");
-    expect(assignExperiment("lp_density")).toBe("b");
+    expect(forced).toEqual({ id: "lp_density", variant: "a" });
+    expect(localStorage.getItem("vc_exp_lp_density")).toBe("a");
+    expect(assignExperiment("lp_density")).toBe("a");
     expect(
       (document.documentElement.dataset as { lpDensity?: string }).lpDensity,
-    ).toBe(densityFromVariant("b"));
+    ).toBe(densityFromVariant("a"));
   });
 
   it("rejects invalid force params", async () => {
@@ -84,10 +126,30 @@ describe("experiments", () => {
     ).toBe("https://www.virtualcoworker.app/us?vc_exp=quiz_copy&vc_var=c");
   });
 
-  it("EXPERIMENTS_BOOT_SCRIPT applies force + density paint", async () => {
+  it("EXPERIMENTS_BOOT_SCRIPT paints lean while parked (ignores old sticky a)", async () => {
     const { EXPERIMENTS_BOOT_SCRIPT } = await import("./experiments");
     expect(EXPERIMENTS_BOOT_SCRIPT).toContain("vc_exp");
     expect(EXPERIMENTS_BOOT_SCRIPT).toContain("lpDensity");
+    expect(EXPERIMENTS_BOOT_SCRIPT).toContain('var live=0');
+    localStorage.setItem("vc_exp_lp_density", "a");
+    const classList = { add: vi.fn() };
+    const dataset: Record<string, string> = {};
+    vi.stubGlobal("document", {
+      cookie: "",
+      documentElement: {
+        classList,
+        dataset,
+      },
+    });
+    vi.stubGlobal("location", { search: "" });
+    // eslint-disable-next-line no-eval
+    eval(EXPERIMENTS_BOOT_SCRIPT);
+    expect(classList.add).toHaveBeenCalledWith("js");
+    expect(dataset.lpDensity).toBe("lean");
+  });
+
+  it("EXPERIMENTS_BOOT_SCRIPT still applies URL force", async () => {
+    const { EXPERIMENTS_BOOT_SCRIPT } = await import("./experiments");
     const classList = { add: vi.fn() };
     vi.stubGlobal("document", {
       cookie: "",

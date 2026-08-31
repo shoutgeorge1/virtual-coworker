@@ -16,12 +16,29 @@ import type { MarketId } from "../../config/markets";
  * trust marks are never marked secondary, so conversion paths are identical in
  * both arms — only the amount of supporting copy changes.
  *
- * Assignment is written to `<html data-lp-density>` by the inline script in
- * layout.tsx before first paint; this component only re-confirms it and fires
- * the view event once per session.
+ * PARKED 2026-08-12: form money LPs force lean; site A/B is off
+ * (`EXPERIMENTS_LIVE = false`). This component still paints lean and is
+ * ready to resume random assignment when the flag flips back on.
  */
-export default function LpDensity({ market }: { market: MarketId }) {
+export default function LpDensity({
+  market,
+  forceLean = false,
+}: {
+  market: MarketId;
+  /** Simplified form LPs: lean is the control (park wordy arm on money pages). */
+  forceLean?: boolean;
+}) {
   useEffect(() => {
+    if (forceLean) {
+      document.documentElement.dataset.lpDensity = "lean";
+      trackExperimentView("lp_density", "b", {
+        surface: "market_landing",
+        market,
+        density: "lean",
+        forced: "1",
+      });
+      return;
+    }
     const variant = assignExperiment("lp_density");
     const density = densityFromVariant(variant);
     document.documentElement.dataset.lpDensity = density;
@@ -30,7 +47,7 @@ export default function LpDensity({ market }: { market: MarketId }) {
       market,
       density,
     });
-  }, [market]);
+  }, [market, forceLean]);
 
   return null;
 }

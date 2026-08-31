@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-08-18T18:08:59Z",
+  "total_candidates_generated": 3468,
+  "urls_tested": 324,
+  "remote_gets_approx": 323,
+  "confirmed": [
+    "https://www.myoutdesk.com/lp/google-brand-search-campaign-b/",
+    "https://www.myoutdesk.com/lp/google-philippines-virtual-assistants/",
+    "https://www.myoutdesk.com/lp/google-real-estate-virtual-assistants/",
+    "https://www.myoutdesk.com/lp/google-brand-search-campaign/",
+    "https://www.myoutdesk.com/lp/google-virtual-assistants/"
+  ],
+  "confirmed_count": 5,
+  "stopped": "two_empty_or_queue_done",
+  "page_type_counts": {
+    "confirmed_paid_lp": 5,
+    "missing": 319
+  },
+  "hash_counts": {
+    "8bbc9b8f4dd498eb": 319,
+    "cbf4fa2bddf8f5a6": 1,
+    "8b1cdff322112604": 1,
+    "62b89126b5d4798d": 1,
+    "c8ca6af0cb5ad67b": 1,
+    "49e64a8cd8b2900e": 1
+  },
+  "pattern_hits": {
+    "google-*": {
+      "tested": 319,
+      "confirmed": 5
+    },
+    "lp-no-google-prefix": {
+      "tested": 5,
+      "confirmed": 0,
+      "note": "Unprefixed twins of all five confirmed slugs 404. google- prefix is required."
+    }
+  }
+}

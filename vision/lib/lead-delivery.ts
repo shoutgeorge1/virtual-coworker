@@ -115,6 +115,7 @@ type LeadEmailFields = {
   email?: string;
   phone?: string;
   company?: string;
+  company_website?: string;
   role?: string;
   category?: string;
   timeline?: string;
@@ -153,6 +154,7 @@ export function formatLeadEmailText(lead: LeadEmailFields): string {
     ["Email Address", lead.email || "(none)"],
     ["Phone", lead.phone || "(none)"],
     ["Company", lead.company || "(none)"],
+    ["Company website", lead.company_website || "(none)"],
     ["Market", (lead.market || "").toUpperCase() || "(none)"],
     ["Role / category", [lead.role, lead.category].filter(Boolean).join(" · ") || "(none)"],
     ["Company size", lead.company_size || "(none)"],

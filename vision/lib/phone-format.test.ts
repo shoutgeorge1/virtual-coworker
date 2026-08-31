@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatPhoneInput, normalizePhoneForStorage, phoneDigits } from "./phone-format";
+import { formatPhoneInput, normalizePhoneForStorage, phoneDigits, validateUsPhone } from "./phone-format";
 
 describe("formatPhoneInput US", () => {
   it("formats NANP as the user types", () => {
@@ -35,6 +35,18 @@ describe("formatPhoneInput AU", () => {
     expect(formatPhoneInput("+61412345678", "au")).toBe("+61 412 345 678");
   });
 
+  it("does not force +61 while the country code is still incomplete", () => {
+    expect(formatPhoneInput("+", "au")).toBe("+");
+    expect(formatPhoneInput("+6", "au")).toBe("+6");
+    expect(formatPhoneInput("+61", "au")).toBe("+61");
+    expect(formatPhoneInput("+614", "au")).toBe("+61 4");
+    expect(formatPhoneInput("+61412", "au")).toBe("+61 412");
+  });
+
+  it("does not force +61 on a non-AU plus number", () => {
+    expect(formatPhoneInput("+12015550123", "au")).toBe("+12015550123");
+  });
+
   it("formats landlines as (0X) XXXX XXXX", () => {
     expect(formatPhoneInput("0298765432", "au")).toBe("(02) 9876 5432");
   });
@@ -60,3 +72,40 @@ describe("normalizePhoneForStorage", () => {
     expect(phoneDigits("(201) 555-0123")).toBe("2015550123");
   });
 });
+
+describe("validateUsPhone", () => {
+  it("accepts formatted US numbers", () => {
+    expect(validateUsPhone("(951) 555-0123")).toEqual({
+      ok: true,
+      e164: "+19515550123",
+      national10: "9515550123",
+    });
+    expect(validateUsPhone("951-555-0123")).toMatchObject({ ok: true, e164: "+19515550123" });
+    expect(validateUsPhone("+1 951 555 0123")).toMatchObject({ ok: true, e164: "+19515550123" });
+  });
+
+  it("rejects Philippine numbers", () => {
+    expect(validateUsPhone("+63 917 123 4567")).toEqual({
+      ok: false,
+      code: "ph_job_seeker_phone",
+    });
+    expect(validateUsPhone("0917 123 4567")).toEqual({
+      ok: false,
+      code: "ph_job_seeker_phone",
+    });
+  });
+
+  it("rejects incomplete and overlong numbers", () => {
+    expect(validateUsPhone("951-555")).toEqual({ ok: false, code: "invalid_us_phone" });
+    expect(validateUsPhone("95155501231234")).toEqual({
+      ok: false,
+      code: "invalid_us_phone",
+    });
+    expect(validateUsPhone("")).toEqual({ ok: false, code: "invalid_us_phone" });
+  });
+
+  it("does not reject a legitimate US 917 area code as PH", () => {
+    expect(validateUsPhone("917-555-0123")).toMatchObject({ ok: true, e164: "+19175550123" });
+  });
+});
+

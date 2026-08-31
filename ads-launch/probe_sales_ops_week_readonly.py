@@ -38,9 +38,10 @@ CALLS = 0
 MAX_CALLS = 4
 STOPPED = None
 
-# This week: Mon Aug 10 – Sun Aug 16 2026 (inclusive).
-WINDOW_START = "2026-08-10T00:00:00+00:00"
-WINDOW_END = "2026-08-17T00:00:00+00:00"
+# This week: Mon Aug 10 – Sun Aug 16 2026 (inclusive), America/Los_Angeles.
+# UTC midnight Aug 17 cuts Sunday 17:00–23:59 PT — use PT midnight instead.
+WINDOW_START = "2026-08-17T00:00:00-07:00"
+WINDOW_END = "2026-08-24T00:00:00-07:00"
 
 
 def load_dotenv(path: Path) -> None:
@@ -171,7 +172,8 @@ def count_map(rows: list[dict[str, Any]], key: str) -> dict[str, int]:
 
 
 def main() -> int:
-    load_dotenv(ENV_PATH)
+    if not os.environ.get("GITHUB_ACTIONS"):
+        load_dotenv(ENV_PATH)
     if (os.environ.get("ZOHO_CRM_ENABLED") or "").lower() == "true":
         print("Refusing: ZOHO_CRM_ENABLED is true")
         return 2

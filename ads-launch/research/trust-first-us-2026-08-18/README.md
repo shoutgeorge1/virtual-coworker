@@ -9,8 +9,10 @@
 - Preview index: `/preview/trust-first` on the vision app
 - Pages: `/preview/trust-first/{slug}`
 - Code: `vision/config/trust-first.ts` + `vision/app/components/trust-first/`
-- This folder: analysis, ads recommendation (read-only), QA notes
+- This folder: `design-overview.md`, `keyword-rollout-recommendation.md`, `keyword-rollout-preview.csv` (paused/review-only — not an Editor import)
 
 ## One next step
 
-Open the preview index. Compare Simple vs Proof-heavy. Do not import Editor CSV and do not change Final URLs.
+Open the preview index. Default is proof-heavy. Simple is `?v=simple` only. Do not import the keyword CSV and do not change Final URLs.
+
+Keyword reality: see `cannot-scrape-full-keyword-list.md`. One tracked click is not their full bid book. Do not fetch utm/gclid URLs.

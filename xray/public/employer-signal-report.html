@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Employer signal report · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="employer-signal-report.html"] .main { max-width: 1020px; }
+    .esr-hero {
+      margin: 0 0 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      border: 1px solid var(--tint-cool-edge, #c5d4e8);
+      background: var(--tint-cool, #f0f5fb);
+    }
+    .esr-hero h1 { margin: 0 0 0.45rem; font-size: 1.25rem; }
+    .esr-hero p { margin: 0.28rem 0; font-size: 0.95rem; line-height: 1.45; }
+    .esr-box { margin: 0 0 0.85rem; padding: 0.85rem 1rem; border-radius: 10px; border: 1px solid var(--edge-soft); background: var(--panel); }
+    .esr-box h2 { margin: 0 0 0.45rem; font-size: 1rem; }
+    .esr-box h3 { margin: 0.65rem 0 0.3rem; font-size: 0.92rem; }
+    .esr-box p, .esr-box li { margin: 0.28rem 0; font-size: 0.88rem; line-height: 1.45; }
+    .esr-box ul { margin: 0.2rem 0 0.4rem; padding-left: 1.15rem; }
+    .tag { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700; }
+    .tag-ok { background: var(--tint-green-hd); }
+    .tag-mid { background: var(--tint-amber-hd); }
+    .tag-bad { background: var(--tint-rose-hd); }
+    .tag-unk { background: var(--tint-cool-hd); }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+    table.data-table th, table.data-table td { text-align: left; padding: 0.4rem 0.35rem; border-bottom: 1px solid var(--edge-soft); vertical-align: top; }
+    table.data-table th { color: var(--muted); font-weight: 650; }
+    .rid { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.7rem; color: var(--muted); }
+    .esr-meta { margin: 0 0 0.85rem; font-size: 0.8rem; color: var(--muted); }
+    .risk-low { color: #166534; font-weight: 600; }
+    .risk-mid { color: #b45309; font-weight: 600; }
+    .risk-high { color: #b91c1c; font-weight: 600; }
+  </style>
+</head>
+<body data-page="employer-signal-report.html" data-foot="Signal collection<br />Learn first">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <div class="esr-hero">
+        <h1>Employer conversion learnings — signal collection phase</h1>
+        <p><strong>Central question:</strong> What is the account teaching us about what a real Virtual Coworker employer looks like — and how do we cautiously make more of that happen without destroying the signal?</p>
+        <p><strong>Operating rhythm:</strong> Observe → Protect → Learn → Make small changes → Observe again. Stay on Maximize Clicks.</p>
+        <p class="esr-meta">Report generated 23 Aug 2026 PT · Zoho COQL refreshed 23 Aug · Ads snapshot 23 Aug · GA4 forensic 17–20 Aug · No account changes made from this report.</p>
+      </div>
+
+      <div class="esr-box">
+        <h2>Scoreboard (this week Mon 17 – Sun 23 Aug)</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Source</th><th>What it says</th><th>Trust level</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Zoho paid gclid people</td>
+              <td>5 people · 1 probable employer · 1 needs review · 3 junk</td>
+              <td><span class="tag tag-ok">Primary</span></td>
+            </tr>
+            <tr>
+              <td>Cheyenne US sales ops (Mon–Fri)</td>
+              <td>13 enquiries · 7 calls · 2 looking for work · 2 not a fit</td>
+              <td><span class="tag tag-ok">Primary</span></td>
+            </tr>
+            <tr>
+              <td>Holly AU sales ops (Mon–Fri)</td>
+              <td>8 enquiries · 7 calls · 2 looking for work · 2 not a fit</td>
+              <td><span class="tag tag-ok">Primary</span></td>
+            </tr>
+            <tr>
+              <td>Google Ads conversions (US+AU, scoreboard week)</td>
+              <td>4.0 conversion events vs 5 Zoho paid people (3 junk)</td>
+              <td><span class="tag tag-mid">Measurement only</span></td>
+            </tr>
+            <tr>
+              <td>GA4 “conversions” on /us</td>
+              <td>Hundreds of tagged micro-events — not employer score</td>
+              <td><span class="tag tag-bad">Do not bid on</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Rule:</strong> Zoho human outcome outranks Ads conversion tags. Junk Lead and Not a Fit are not winners. Form + booked call = one person, two steps.</p>
+      </div>
+
+      <div class="esr-box">
+        <h2>Qualified-conversion case studies</h2>
+
+        <h3>CS-01 · AU · <span class="tag tag-ok">Probable employer — PROTECT</span></h3>
+        <table class="data-table">
+          <tbody>
+            <tr><th>Search term</th><td><code>hire a social media manager</code></td></tr>
+            <tr><th>Keyword / match</th><td>Phrase · <code>Social_Media_Hire_PH</code> · VC_AU_S_ROLES</td></tr>
+            <tr><th>Device</th><td>Computer (from Ads notes)</td></tr>
+            <tr><th>Final URL / LP</th><td><code>/au/social-media</code> · <code>baseline_v1_2026_08</code> (trust-heavy baseline)</td></tr>
+            <tr><th>Role alignment</th><td>Query → ad group → LP all say social media. Company present. Size 1–10.</td></tr>
+            <tr><th>Zoho</th><td>Information Brochure Sent · Holly working it<br /><span class="rid">6724032000029986002</span></td></tr>
+            <tr><th>Why it converted</th><td>Employer shopping language (“hire a [role]”), role-specific path, company on form, baseline LP with credibility + Philippines staffing message.</td></tr>
+            <tr><th>GA4</th><td>/au/social-media had engaged sessions in window; low volume but aligned.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>CS-02 · US · <span class="tag tag-mid">Needs review — still PROTECT path</span></h3>
+        <table class="data-table">
+          <tbody>
+            <tr><th>Search term</th><td><code>virtual assistant agency in usa</code></td></tr>
+            <tr><th>Keyword / match</th><td>Exact + Phrase · <code>Hire_VA_PH</code> · VC_US_S_CORE</td></tr>
+            <tr><th>Final URL / LP</th><td><code>/us</code> · hit <code>stage1-v8</code> before baseline shipped (18 Aug 04:06 PT)</td></tr>
+            <tr><th>Role</th><td>Administrative / virtual assistant · no company · size 1–10</td></tr>
+            <tr><th>Zoho (23 Aug refresh)</th><td><strong>Unresponsive Clients</strong> (was Attempted to Contact)<br /><span class="rid">6724032000029876002</span></td></tr>
+            <tr><th>Why it looked good</th><td>“Agency in USA” = employer shopping. Generic /us still worked when query was specific enough.</td></tr>
+            <tr><th>Caution</th><td>Sales stopped responding — do not declare winner until repeat or progression. Freeze config anyway.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>CS-03 · US · <span class="tag tag-bad">Not a winner</span></h3>
+        <table class="data-table">
+          <tbody>
+            <tr><th>Search term</th><td><code>virtual assistant for real estate investors</code> (Broad)</td></tr>
+            <tr><th>Path</th><td>Hire_VA_PH → /us</td></tr>
+            <tr><th>Zoho (23 Aug)</th><td><strong>Junk Lead</strong> (was Decided Against / Not a Fit)<br /><span class="rid">6724032000029875002</span></td></tr>
+            <tr><th>Lesson</th><td>Do not expand real-estate investor VA from this row. Cheyenne: investor/wholesaler RE VA often poor fit.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>CS-04 &amp; CS-05 · AU · <span class="tag tag-bad">Junk — contract</span></h3>
+        <table class="data-table">
+          <tbody>
+            <tr><th>Search term</th><td><code>australia virtual assistant</code> × 2</td></tr>
+            <tr><th>Path</th><td>Recruitment_Hire_PH → /au/recruitment</td></tr>
+            <tr><th>Pattern</th><td>Generic country query + recruitment LP → form defaulted “Recruitment support”, no company, both Junk Lead.</td></tr>
+            <tr><th>Ads vs Zoho</th><td>AU Ads counted 4 conversions on 18 Aug — stacked tags on 2 junk submits, not 4 people.</td></tr>
+            <tr><th>Action</th><td>Pause keyword + negative (Editor file 02) — already on Checklist.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="esr-box">
+        <h2>Patterns — winners vs ordinary traffic</h2>
+        <table class="data-table">
+          <thead><tr><th>Dimension</th><th>Probable employers</th><th>Junk / not-a-fit</th></tr></thead>
+          <tbody>
+            <tr><td>Search language</td><td><code>hire a [role]</code>, <code>agency in [country]</code></td><td>Generic <code>australia virtual assistant</code>, Broad RE investor</td></tr>
+            <tr><td>Query specificity</td><td>Role or agency intent</td><td>Country-only or vague VA</td></tr>
+            <tr><td>Ad group ↔ LP</td><td>Aligned (SMM group → /au/social-media)</td><td>Recruitment group → recruitment LP on generic query</td></tr>
+            <tr><td>Company on form</td><td>Present on AU SMM</td><td>Absent on all junk + US agency</td></tr>
+            <tr><td>Philippines in query</td><td>Not required — employer language mattered more</td><td>Country name alone did not signal employer</td></tr>
+            <tr><td>Match type</td><td>Phrase (AU), Exact/Phrase (US agency)</td><td>Broad (RE), close variant to junk keyword</td></tr>
+            <tr><td>DKI</td><td>Reduced DKI on newer RSAs — cleaner human copy correlates with better paths (not proven causal)</td><td>Recruitment RSAs attracted hiring-language job seekers</td></tr>
+            <tr><td>LP family</td><td>Role LP + baseline trust elements</td><td>Recruitment LP on generic traffic</td></tr>
+            <tr><td>GA4 engagement (US role LPs, 10–16 Aug)</td><td>Customer-service 68% engaged · Sales 63%</td><td>Admin-support 21% · Digital-marketing 29%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="esr-box">
+        <h2>Protected paths (freeze — do not edit)</h2>
+        <ul>
+          <li><strong>PROTECT-AU-SMM:</strong> <code>hire a social media manager</code> Phrase · Social_Media_Hire_PH · /au/social-media · RSAs 820329868079/202/205</li>
+          <li><strong>PROTECT-US-AGENCY:</strong> <code>virtual assistant agency in usa</code> Exact+Phrase · Hire_VA_PH · /us · RSAs 820036923766/769/772 (not 820314203419 — wrong group)</li>
+        </ul>
+        <p>Registry: <code>ads-launch/aug18-winners/winning-path-registry.json</code> · Detail: <a href="aug18-conversions.html">Aug 18 conversions</a></p>
+      </div>
+
+      <div class="esr-box">
+        <h2>Bad-signal patterns to suppress</h2>
+        <ul>
+          <li>Generic <code>australia virtual assistant</code> → Recruitment_Hire_PH (2 junk, Editor pause ready)</li>
+          <li>Broad real-estate investor VA on Hire_VA_PH (junk — do not expand RE from this)</li>
+          <li>Job-seeker query themes: job, jobs, career, salary, apply, indeed, onlinejobs (daily negative habit)</li>
+          <li>Recruitment LP receiving generic country VA traffic</li>
+          <li>Stacked Ads conversion tags inflating AU counts (do not change settings reactively)</li>
+        </ul>
+      </div>
+
+      <div class="esr-box">
+        <h2>Adjacent opportunities (hypothesis only — controlled test)</h2>
+        <p>Follow: Proven signal → closely related hypothesis → controlled test. Not: one conversion → blow up account.</p>
+        <table class="data-table">
+          <thead><tr><th>Evidence</th><th>Adjacent hypothesis</th><th>Confidence</th></tr></thead>
+          <tbody>
+            <tr><td>AU SMM convert</td><td>US <code>hire social media manager</code> with role LP alignment (already have /us/social-media)</td><td class="risk-mid">Medium — mirror AU pattern</td></tr>
+            <tr><td>US agency convert</td><td><code>virtual assistant agency</code> variants, <code>staffing agency virtual assistant</code></td><td class="risk-mid">Medium — same employer-shopping theme</td></tr>
+            <tr><td>GA4 engagement on /us/customer-service, /us/sales</td><td>Dedicated ad groups + LP for CS and sales support (high engagement, no convert yet)</td><td class="risk-low">Low — engagement only</td></tr>
+            <tr><td>RE investor junk</td><td>Real estate ISA, transaction coordinator, property management VA</td><td class="risk-low">Low — wait for employer-shaped RE signal</td></tr>
+            <tr><td>Hire_VA_PH 3.0 conv / 227 clicks (Aug window)</td><td>Strongest Ads conv leader but mixed quality — watch Zoho on new leads before scaling</td><td class="risk-mid">Medium watch</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="esr-box">
+        <h2>Recommended small changes (ranked)</h2>
+        <table class="data-table">
+          <thead><tr><th>Change</th><th>Confidence</th><th>Risk</th></tr></thead>
+          <tbody>
+            <tr><td>Post AU recruitment junk pause (Editor file 02) if not done</td><td class="risk-low">High</td><td class="risk-low">Low — reversible</td></tr>
+            <tr><td>Keep protected paths frozen — no RSA/LP/match edits</td><td class="risk-low">High</td><td class="risk-low">Low</td></tr>
+            <tr><td>Daily search-term negatives for job-seeker themes</td><td class="risk-low">High</td><td class="risk-low">Low</td></tr>
+            <tr><td>Ask Holly/Cheyenne to classify paid gclid leads when status changes</td><td class="risk-mid">Medium</td><td class="risk-low">Low</td></tr>
+            <tr><td>Flag <code>VC_Inquiry_Class</code> picklist in Zoho (proposal only — no writes)</td><td class="risk-mid">Medium</td><td class="risk-low">Low</td></tr>
+            <tr><td>US SMM phrase test in own ad group (mirror AU winner)</td><td class="risk-mid">Medium</td><td class="risk-mid">Medium</td></tr>
+            <tr><td>Switch to Maximize Conversions</td><td class="risk-low">Not yet</td><td class="risk-high">High — polluted signal</td></tr>
+            <tr><td>Rewrite /us or winning RSAs</td><td class="risk-low">Not yet</td><td class="risk-high">High — destroys repeatability</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="esr-box">
+        <h2>Tracking &amp; Zoho issues</h2>
+        <ul>
+          <li><strong>No dedicated employer class field live.</strong> <code>Qualification_Status</code> exists but empty on all 5 paid rows.</li>
+          <li><strong>Job seeker bucket unreliable</strong> — no filled CRM field; form gate + sales labels only.</li>
+          <li><strong>AU conversion stacking</strong> — one junk submit can fire multiple Ads tags. Do not treat 4 AU conversions as 4 people.</li>
+          <li><strong>14 Aug US Ads conversion</strong> — no matching Zoho gclid person; action unnamed. Unresolved.</li>
+          <li><strong>GA4 conversion metric polluted</strong> — micro-events counted as conversions. Never Primary for bidding.</li>
+          <li><strong>Zoho offline upload deferred</strong> — correct. Do not activate until clean class + gclid + confirmed JO.</li>
+          <li><strong>Ads API OAuth</strong> — invalid_grant 20 Aug; executive snapshot 23 Aug succeeded (2 calls). Click-level RSA attribution still limited.</li>
+        </ul>
+      </div>
+
+      <div class="esr-box">
+        <h2>Maximize Conversions readiness</h2>
+        <p><strong>Not ready.</strong> Need more genuinely qualified employer conversions with clean signal separation. Current paid ledger: 1 probable + 1 unresponsive + 3 junk. Cheyenne/Holly weeks show real employer activity but mostly organic/direct — paid quality still thin.</p>
+        <p>Reassess only when: ≥ several qualified employers with gclid, dedicated inquiry class in Zoho, single Primary thank-you action verified, job-seeker/spam excluded from Primary.</p>
+      </div>
+
+      <p class="esr-meta">
+        <a href="launch-control.html">Checklist</a> ·
+        <a href="aug18-conversions.html">Aug 18 conversions</a> ·
+        <a href="executive.html">Executive</a> ·
+        <a href="sales-review.html">Were these real leads?</a>
+      </p>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Executive Report · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <link rel="stylesheet" href="executive-v2.css" />
+</head>
+<body data-page="executive-v2.html" data-foot="Executive Report · US + AU">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main" id="ev2-root">
+      <div class="ev2-loading">Loading…</div>
+
+      <header class="ev2-header">
+        <h1>Executive Report (Archived V2)</h1>
+        <p class="ev2-subtitle" id="ev2-subtitle">—</p>
+        <p class="ev2-fresh-line" id="ev2-fresh-line">—</p>
+      </header>
+
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.88rem;color:#1e40af;">
+        <strong>Consolidated Executive Dashboard:</strong> Executive reporting has been consolidated into the canonical <a href="executive.html" style="color:#1d4ed8;font-weight:600;text-decoration:underline;">Executive Performance</a> dashboard.
+      </div>
+
+      <section class="ev2-section ev2-lead" aria-label="Executive commentary">
+        <div class="ev2-card ev2-commentary ev2-commentary-lead" id="ev2-commentary"></div>
+        <p class="ev2-attrib-oneline" id="ev2-attrib-oneline"></p>
+      </section>
+
+      <div class="ev2-seg" role="tablist" aria-label="Reporting window">
+        <button type="button" data-ev2-window="month" aria-pressed="false">This month</button>
+        <button type="button" class="on" data-ev2-window="frozen" aria-pressed="true">Last complete week</button>
+        <button type="button" data-ev2-window="now" aria-pressed="false">This week so far</button>
+      </div>
+
+      <section class="ev2-section" aria-label="Market scorecard">
+        <div class="ev2-section-hd">
+          <h2>Scorecard</h2>
+          <span class="meta" id="ev2-scorecard-meta">—</span>
+        </div>
+        <div class="ev2-card">
+          <table class="ev2-scorecard">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th class="num">United States</th>
+                <th class="num">Australia</th>
+              </tr>
+            </thead>
+            <tbody id="ev2-scorecard-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="ev2-section" aria-label="Sales funnel">
+        <div class="ev2-section-hd">
+          <h2>Sales funnel</h2>
+          <span class="meta">Cheyenne / Holly counts</span>
+        </div>
+        <div class="ev2-funnels" id="ev2-funnels"></div>
+      </section>
+
+      <section class="ev2-section" aria-label="Weekly trend">
+        <div class="ev2-section-hd">
+          <h2>Weekly trend</h2>
+          <span class="meta">Sales-labeled · complete weeks + partial</span>
+        </div>
+        <div class="ev2-card ev2-trends" id="ev2-trends"></div>
+      </section>
+
+      <details class="ev2-details">
+        <summary>Budget &amp; bidding decisions</summary>
+        <div class="bd">
+          <p class="meta">Hold recommendations from current evidence — expand when planning changes.</p>
+          <div class="ev2-decisions" id="ev2-decisions"></div>
+        </div>
+      </details>
+
+      <details class="ev2-details" id="ev2-attrib-details">
+        <summary>Attribution &amp; data quality (detail)</summary>
+        <div class="bd" id="ev2-attribution"></div>
+      </details>
+
+      <details class="ev2-details">
+        <summary>Daily Ads pacing (US)</summary>
+        <div class="bd">
+          <table>
+            <thead>
+              <tr><th>Day</th><th class="num">Spend</th><th class="num">Clicks</th><th class="num">CTR</th></tr>
+            </thead>
+            <tbody id="ev2-daily-body"></tbody>
+          </table>
+        </div>
+      </details>
+
+      <details class="ev2-details">
+        <summary>Legacy agency comparison</summary>
+        <div class="bd">
+          <p id="ev2-legacy-summary">—</p>
+          <p><a href="executive.html#agency-baseline">Full comparison on classic Executive</a></p>
+        </div>
+      </details>
+
+      <footer class="ev2-foot">
+        Full detail tabs: <a href="executive.html">Executive (classic)</a>
+      </footer>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+  <script src="executive-v2.js"></script>
+</body>
+</html>

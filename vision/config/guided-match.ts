@@ -14,6 +14,11 @@ import {
   formLabelForSlug,
 } from "./categories";
 import {
+  REAL_ESTATE_CHIP,
+  REAL_ESTATE_FORM_LABEL,
+  REAL_ESTATE_SLUG,
+} from "./lp-real-estate";
+import {
   COMPANY_IDENTITY,
   PUBLIC_QUOTES,
   SITE,
@@ -122,11 +127,18 @@ export function hoursDefaultForMarket(market: MarketId): string {
   return market === "au" ? "AU business hours" : "US business hours";
 }
 
-export function roleForCategory(slug: CategorySlug): {
+export function roleForCategory(slug: CategorySlug | typeof REAL_ESTATE_SLUG): {
   formLabel: string;
   chip: string;
-  category: CategorySlug;
+  category: CategorySlug | typeof REAL_ESTATE_SLUG;
 } {
+  if (slug === REAL_ESTATE_SLUG) {
+    return {
+      formLabel: REAL_ESTATE_FORM_LABEL,
+      chip: REAL_ESTATE_CHIP,
+      category: REAL_ESTATE_SLUG,
+    };
+  }
   const fromChooser = GUIDED_MATCH_ROLES.find((r) => r.category === slug);
   if (fromChooser) {
     return {
@@ -146,12 +158,20 @@ export function roleByChip(chip: string): GuidedMatchRole | undefined {
   return GUIDED_MATCH_ROLES.find((r) => r.chip === chip);
 }
 
-export type GuidedMatchStep = "role" | "needs" | "contact";
+export type GuidedMatchStep =
+  | "role"
+  | "needs"
+  | "hours"
+  | "people"
+  | "size"
+  | "contact";
 
 export function firstGuidedMatchStep(
-  lockedCategory?: CategorySlug | null,
+  lockedCategory?: CategorySlug | typeof REAL_ESTATE_SLUG | null,
+  sequentialNeeds = false,
 ): GuidedMatchStep {
-  return lockedCategory ? "needs" : "role";
+  if (lockedCategory) return sequentialNeeds ? "hours" : "needs";
+  return "role";
 }
 
 export function buildHiringMessage(opts: {

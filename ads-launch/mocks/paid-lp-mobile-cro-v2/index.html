@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ribbon">LOCAL PROTOTYPE — not live. Does not post to production. <span class="review-only">Use ?preview=1 to hide this chrome.</span></div>
+  <div class="switcher">
+    <b>Market</b>
+    <div class="seg" id="mkt"></div>
+    <b>Page</b>
+    <div class="seg" id="surf"></div>
+    <span class="note">Guided-match sits after the sell. Submit is mocked.</span>
+    <pre class="event-log" id="log" aria-live="polite"></pre>
+  </div>
+
+  <div id="app"></div>
+  <a class="review-peek" href="?review=1">Show review chrome</a>
+
+  <script src="contract.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

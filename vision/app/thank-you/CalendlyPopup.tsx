@@ -2,27 +2,17 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import {
+  calendlyAssetsReady,
+  loadCalendlyAssets,
+  waitForInlineWidget,
+} from "../../lib/calendly-assets";
 import { claimCalendlyAutoOpen, THANK_YOU_BOOKING_COPY } from "../../lib/calendly";
 import { trackEvent } from "../../lib/tracking";
 
-const WIDGET_JS = "https://assets.calendly.com/assets/external/widget.js";
-const WIDGET_CSS = "https://assets.calendly.com/assets/external/widget.css";
 /** Short pause so Call paints before the overlay. Do not wait long enough to bounce. */
 const AUTO_OPEN_DELAY_MS = 300;
 const CAL_HEIGHT_PX = 660;
-
-declare global {
-  interface Window {
-    Calendly?: {
-      initPopupWidget: (opts: { url: string }) => void;
-      initInlineWidget: (opts: {
-        url: string;
-        parentElement: HTMLElement;
-      }) => void;
-      preload: (url: string) => void;
-    };
-  }
-}
 
 /** One embed-view event per widget URL for this page load. Not Ads Primary. */
 let embedViewedPopupUrl = "";
@@ -31,67 +21,6 @@ function claimCalendlyEmbedViewed(widgetUrl: string): boolean {
   if (!widgetUrl || embedViewedPopupUrl === widgetUrl) return false;
   embedViewedPopupUrl = widgetUrl;
   return true;
-}
-
-function calendlyReady(): boolean {
-  return Boolean(window.Calendly?.initInlineWidget);
-}
-
-function loadCalendlyAssets(): Promise<void> {
-  if (typeof window === "undefined") return Promise.resolve();
-  if (calendlyReady()) return Promise.resolve();
-
-  if (!document.querySelector(`link[href="${WIDGET_CSS}"]`)) {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = WIDGET_CSS;
-    document.head.appendChild(link);
-  }
-
-  const existing = document.querySelector(
-    `script[src="${WIDGET_JS}"]`,
-  ) as HTMLScriptElement | null;
-  if (existing) {
-    return new Promise((resolve, reject) => {
-      if (calendlyReady()) {
-        resolve();
-        return;
-      }
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener("error", () => reject(new Error("Calendly script failed")), {
-        once: true,
-      });
-    });
-  }
-
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = WIDGET_JS;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Calendly script failed"));
-    document.body.appendChild(script);
-  });
-}
-
-function waitForInlineWidget(timeoutMs = 2500): Promise<boolean> {
-  if (typeof window === "undefined") return Promise.resolve(false);
-  if (calendlyReady()) return Promise.resolve(true);
-  return new Promise((resolve) => {
-    const start = Date.now();
-    const tick = () => {
-      if (calendlyReady()) {
-        resolve(true);
-        return;
-      }
-      if (Date.now() - start >= timeoutMs) {
-        resolve(false);
-        return;
-      }
-      window.setTimeout(tick, 50);
-    };
-    tick();
-  });
 }
 
 /**
@@ -282,7 +211,7 @@ export default function CalendlyPopup({
         data-track="calendly_cta_clicked"
         data-market={market}
         onClick={(event) => {
-          if (!calendlyReady()) return;
+          if (!calendlyAssetsReady()) return;
           event.preventDefault();
           openOverlay();
         }}

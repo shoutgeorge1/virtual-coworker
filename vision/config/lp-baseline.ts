@@ -22,6 +22,10 @@ import {
   marketLandingCopy,
 } from "./guided-match";
 import {
+  AUTHORITATIVE_LP_VERSION,
+  US_BASELINE_LABEL,
+} from "./lp-version";
+import {
   COMPANY_IDENTITY,
   PUBLIC_QUOTES,
   SITE,
@@ -29,11 +33,10 @@ import {
   googleBusinessForMarket,
 } from "./site";
 
-/** Label for ops / deploy notes. Not Ads Primary. */
-export const BASELINE_LABEL =
-  "Paid Landing Page Baseline v1 - August 2026" as const;
+/** Ops freeze label. lp_version is AUTHORITATIVE_LP_VERSION. */
+export const BASELINE_LABEL = US_BASELINE_LABEL;
 
-export const BASELINE_LP_VERSION = "baseline_v1_2026_08" as const;
+export const BASELINE_LP_VERSION = AUTHORITATIVE_LP_VERSION;
 /** Visual lineage from the approved staffing-partner challenger. */
 export const BASELINE_LP_VARIANT = "price_staffing_v1" as const;
 
@@ -91,7 +94,6 @@ export type BaselineRouteConfig = {
   hero_alt: string;
   phone_display: string;
   phone_href: string;
-  phone_short: string;
   form_role: string;
   lp_version: typeof BASELINE_LP_VERSION;
   lp_variant: typeof BASELINE_LP_VARIANT;
@@ -230,6 +232,12 @@ export function buildBaselineRoute(opts: {
   const base = marketLandingCopy(market);
   const path = role ? `/${market}/${role}` : `/${market}`;
 
+  // Marketing LPs: Marketing A (orange sweater) — gut winner from Ads creative review.
+  // Not an A/B yet; measure form CVR vs prior weeks on these routes.
+  const marketingOrange =
+    market === "us" &&
+    (role === "digital-marketing" || role === "social-media");
+
   return {
     market,
     route: path,
@@ -245,11 +253,14 @@ export function buildBaselineRoute(opts: {
     ],
     role_tasks: role ? roleTaskCards(role) : coreRoleCards(market),
     rate_text: rateText(market, role),
-    hero_image: base.heroSrc,
-    hero_alt: base.heroAlt,
+    hero_image: marketingOrange
+      ? "/roles/marketing-a.png"
+      : base.heroSrc,
+    hero_alt: marketingOrange
+      ? "Philippines digital marketing professional in an orange sweater"
+      : base.heroAlt,
     phone_display: base.phoneDisplay,
     phone_href: base.phoneHref,
-    phone_short: market === "au" ? "1300 886 740" : "888-964-8644",
     form_role: role ? CATEGORIES[role].formLabel : "",
     lp_version: BASELINE_LP_VERSION,
     lp_variant: BASELINE_LP_VARIANT,

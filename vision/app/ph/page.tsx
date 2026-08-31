@@ -49,12 +49,12 @@ export default function PHHome() {
             <h1 className="anim-rise">This hiring site is for businesses.</h1>
             <p className="ph-lead anim-rise-d1">
               Job applications live on our Philippines careers site. Continue
-              there to search roles and apply — this page won’t take applications.
+              there to search roles and apply - this page won’t take applications.
             </p>
             <ul className="ph-ticks anim-rise-d1">
               <li>Opens our official PH careers WordPress site</li>
               <li>Not a business hiring form</li>
-              <li>Employers: use US or Australia pages in the footer</li>
+              <li>Looking for a job? Apply on the careers site</li>
             </ul>
             <div className="anim-rise-d2" style={{ marginTop: "1.25rem" }}>
               <a

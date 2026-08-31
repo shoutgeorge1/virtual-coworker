@@ -1,7 +1,11 @@
 import { COMPANY_IDENTITY, SITE } from "../../../config/site";
 import { JOB_SEEKER_DIVERSION, VERIFIED_PROOF } from "../../../config/trust-first";
 
-export default function CompanyFooter() {
+export default function CompanyFooter({
+  surface = "preview",
+}: {
+  surface?: "preview" | "production";
+}) {
   return (
     <footer className="tf-footer">
       <div className="tf-wrap tf-footer-grid">
@@ -21,26 +25,25 @@ export default function CompanyFooter() {
             {SITE.addressUs}
           </p>
           <p>
-            <strong>Australia office</strong>
+            <strong>Call</strong>
             <br />
-            {SITE.addressAu}
-          </p>
-          <p>
-            <strong>Philippines</strong>
-            <br />
-            {SITE.addressPhLabel}
+            <a
+              href={VERIFIED_PROOF.phoneHref}
+              data-track="phone_cta_clicked"
+              data-market="us"
+              data-cta-location="footer"
+            >
+              {SITE.usPhoneDisplay}
+            </a>
           </p>
         </div>
         <div>
-          <p>
-            <a href={VERIFIED_PROOF.phoneHref}>{SITE.usPhoneDisplay}</a>
-          </p>
-          <p>
-            <a href="/privacy">Privacy</a>
-            {" · "}
+          <p className="tf-footer-legal">
+            <a href="/privacy">Privacy Policy</a>
             <a href="/terms">Terms</a>
-          </p>
-          <p>
+            {surface === "preview" ? (
+              <a href="/preview/trust-first/trust-center">Trust center</a>
+            ) : null}
             <a href={VERIFIED_PROOF.careersUrl}>{JOB_SEEKER_DIVERSION.cta}</a>
           </p>
           <p>{SITE.copyright}</p>

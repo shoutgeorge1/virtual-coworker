@@ -3,10 +3,14 @@
  * Sticky localStorage assignment + dataLayer events for GTM/GA4 later.
  * No stats backend — George reviews winners weekly from Tag Assistant / GA4.
  *
+ * PARKED 2026-08-12: EXPERIMENTS_LIVE = false. Most tests stay frozen.
+ * Exception: SELECTIVE_LIVE_EXPERIMENTS (e.g. us_hero_portrait) can run
+ * alone without re-enabling exit popup / chat / density chaos.
+ *
  * Events: experiment_view · experiment_click · experiment_convert
  * Doc: vision/docs/SITE-EXPERIMENTS.md
  *
- * Force a variant (sticky): ?vc_exp=lp_density&vc_var=b
+ * Force a variant (sticky): ?vc_exp=us_hero_portrait&vc_var=b
  * Applied before first paint via inline script in app/layout.tsx.
  */
 
@@ -22,6 +26,32 @@ export type ExperimentDef = {
   /** Where it shows */
   surface: string;
 };
+
+/**
+ * Master switch. false = most tests frozen (simplified LP).
+ * Selective live IDs below can still random-assign + fire experiment_*.
+ * Not the old dark US shell or chip-quiz form.
+ */
+export const EXPERIMENTS_LIVE = false;
+
+/**
+ * Single-purpose tests that may run while the rest stay parked.
+ * 2026-08-21: US hub hero gender (female navy vs male AU portrait).
+ */
+export const SELECTIVE_LIVE_EXPERIMENTS = {
+  us_hero_portrait: true,
+} as const satisfies Partial<Record<string, boolean>>;
+
+/** Frozen arm while parked — keep in sync with SITE-EXPERIMENTS.md */
+export const PARKED_DEFAULTS = {
+  exit_popup: "a",
+  quiz_copy: "a",
+  chat_launcher: "a",
+  gate_headline: "a",
+  lp_density: "b",
+  role_imagery: "a",
+  us_hero_portrait: "a",
+} as const satisfies Record<string, ExpVariant>;
 
 /** Active site experiments — keep in sync with SITE-EXPERIMENTS.md + xray stub */
 export const EXPERIMENTS = {
@@ -61,7 +91,34 @@ export const EXPERIMENTS = {
     variants: ["a", "b"] as const,
     surface: "services page + market LPs + late trust",
   },
+  us_hero_portrait: {
+    id: "us_hero_portrait",
+    label: "US /us hero — female navy (a) vs male AU portrait (b)",
+    variants: ["a", "b"] as const,
+    surface: "US hub /us hero photo only",
+  },
 } as const satisfies Record<string, ExperimentDef>;
+
+/** US hub hero arms — shared by StaffingBaselineLanding + media report. */
+export const US_HERO_PORTRAIT_ARMS = {
+  a: {
+    src: "/brand/va-us.jpg",
+    alt: "Filipino teammate at work for a US business",
+    label: "female_navy",
+  },
+  b: {
+    src: "/brand/va-au.jpg",
+    alt: "Filipino teammate at work — male portrait challenger on US",
+    label: "male_portrait",
+  },
+} as const;
+
+export function isExperimentLive(id: ExperimentId): boolean {
+  if (EXPERIMENTS_LIVE) return true;
+  return Boolean(
+    (SELECTIVE_LIVE_EXPERIMENTS as Partial<Record<ExperimentId, boolean>>)[id],
+  );
+}
 
 /** Readable aliases for the density test — `a` is the current wordy page. */
 export type LpDensity = "wordy" | "lean";
@@ -71,6 +128,10 @@ export function densityFromVariant(v: ExpVariant): LpDensity {
 }
 
 export type ExperimentId = keyof typeof EXPERIMENTS;
+
+export function parkedVariant(id: ExperimentId): ExpVariant {
+  return PARKED_DEFAULTS[id];
+}
 
 const STORAGE_PREFIX = "vc_exp_";
 const VIEWED_PREFIX = "vc_exp_viewed_";
@@ -135,6 +196,13 @@ export function applyUrlForceVariant(
         /* ignore */
       }
     }
+    if (id === "us_hero_portrait") {
+      try {
+        document.documentElement.dataset.usHeroPortrait = variant;
+      } catch {
+        /* ignore */
+      }
+    }
   }
   return { id, variant };
 }
@@ -151,15 +219,25 @@ export function buildForceVariantUrl(
   return u.toString();
 }
 
-/** Sticky assign — same visitor keeps the same letter until storage cleared. */
+/** Sticky assign — same visitor keeps the same letter until storage cleared.
+ * While parked: ignore old sticky storage and return the frozen simplified arm,
+ * unless the experiment is selectively live (e.g. us_hero_portrait).
+ * `?vc_exp=&vc_var=` still forces a preview.
+ */
 export function assignExperiment(id: ExperimentId): ExpVariant {
   const def = EXPERIMENTS[id];
   const allowed = def.variants as readonly ExpVariant[];
-  if (typeof window === "undefined") return allowed[0];
+  const frozen = parkedVariant(id);
+  const live = isExperimentLive(id);
+  if (typeof window === "undefined") {
+    return live ? allowed[0] : frozen;
+  }
 
   // URL override wins (and sticks) before random / stored assignment.
   const forced = applyUrlForceVariant();
   if (forced && forced.id === id) return forced.variant;
+
+  if (!live) return frozen;
 
   try {
     const stored = normalizeVariant(localStorage.getItem(storageKey(id)), allowed);
@@ -178,6 +256,7 @@ export function getActiveAssignments(): Partial<Record<ExperimentId, ExpVariant>
   const out: Partial<Record<ExperimentId, ExpVariant>> = {};
   if (typeof window === "undefined") return out;
   for (const id of Object.keys(EXPERIMENTS) as ExperimentId[]) {
+    if (!isExperimentLive(id)) continue;
     const allowed = EXPERIMENTS[id].variants as readonly ExpVariant[];
     try {
       const v = normalizeVariant(localStorage.getItem(storageKey(id)), allowed);
@@ -195,6 +274,7 @@ export function trackExperimentView(
   extra: Record<string, string | number | boolean | undefined> = {},
 ): void {
   if (typeof window === "undefined") return;
+  if (!isExperimentLive(id)) return;
   // Once per session per experiment — avoid spam on remount.
   try {
     const key = `${VIEWED_PREFIX}${id}`;
@@ -215,6 +295,7 @@ export function trackExperimentClick(
   variant: ExpVariant,
   extra: Record<string, string | number | boolean | undefined> = {},
 ): void {
+  if (!isExperimentLive(id)) return;
   trackEvent("experiment_click", {
     experiment_id: id,
     experiment_variant: variant,
@@ -234,6 +315,7 @@ export function trackExperimentConvert(
   const ids = Object.keys(assignments) as ExperimentId[];
   if (!ids.length) return;
   for (const id of ids) {
+    if (!isExperimentLive(id)) continue;
     trackEvent("experiment_convert", {
       experiment_id: id,
       experiment_variant: assignments[id],
@@ -246,6 +328,9 @@ export function trackExperimentConvert(
 /**
  * Inline head snippet — keep in sync with applyUrlForceVariant / lp_density paint.
  * Applied in app/layout.tsx before first paint so forced arms never flash.
+ * While parked: always paint lean unless ?vc_exp=lp_density forces an arm.
+ * us_hero_portrait: assign sticky arm when selectively live so React can read
+ * documentElement.dataset.usHeroPortrait without a female→male flash.
  */
 export const EXPERIMENTS_BOOT_SCRIPT = [
   'document.documentElement.classList.add("js");',
@@ -253,17 +338,29 @@ export const EXPERIMENTS_BOOT_SCRIPT = [
   'var q=location.search||"";',
   'var m=q.match(/[?&]vc_exp=([^&]*)/);',
   'var n=q.match(/[?&]vc_var=([^&]*)/);',
+  'var forcedDensity="";',
+  'var forcedHero="";',
   "if(m&&n){",
   "var eid=decodeURIComponent(m[1]).trim();",
   'var ev=decodeURIComponent(n[1]).trim().toLowerCase();',
-  'var ok={exit_popup:"abc",quiz_copy:"abc",chat_launcher:"ab",gate_headline:"ab",lp_density:"ab",role_imagery:"ab"};',
+  'var ok={exit_popup:"abc",quiz_copy:"abc",chat_launcher:"ab",gate_headline:"ab",lp_density:"ab",role_imagery:"ab",us_hero_portrait:"ab"};',
   "if(ok[eid]&&ok[eid].indexOf(ev)>=0){",
   'localStorage.setItem("vc_exp_"+eid,ev);',
   'document.cookie="vc_exp_"+eid+"="+ev+";path=/;max-age=7776000;samesite=lax";',
   'try{sessionStorage.removeItem("vc_exp_viewed_"+eid)}catch(e){}',
+  'if(eid==="lp_density")forcedDensity=ev;',
+  'if(eid==="us_hero_portrait")forcedHero=ev;',
   "}",
   "}",
-  'var v=localStorage.getItem("vc_exp_lp_density");',
+  `var live=${EXPERIMENTS_LIVE ? "1" : "0"};`,
+  `var heroLive=${SELECTIVE_LIVE_EXPERIMENTS.us_hero_portrait ? "1" : "0"};`,
+  'var v=forcedDensity||(live?localStorage.getItem("vc_exp_lp_density"):"b");',
   'if(v==="a"||v==="b"){document.documentElement.dataset.lpDensity=v==="b"?"lean":"wordy"}',
+  'var hv=forcedHero;',
+  'if(!hv&&heroLive){',
+  'hv=localStorage.getItem("vc_exp_us_hero_portrait");',
+  'if(hv!=="a"&&hv!=="b"){hv=Math.random()<0.5?"a":"b";localStorage.setItem("vc_exp_us_hero_portrait",hv);document.cookie="vc_exp_us_hero_portrait="+hv+";path=/;max-age=7776000;samesite=lax"}',
+  "}",
+  'if(hv==="a"||hv==="b"){document.documentElement.dataset.usHeroPortrait=hv}',
   "}catch(e){}",
 ].join("");

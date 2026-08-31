@@ -1,0 +1,33 @@
+{
+  "label": "US_BASELINE_2026-08-18",
+  "url": "https://www.virtualcoworker.app/us",
+  "route": "/us",
+  "component": "StaffingBaselineLanding+GuidedMatchGate",
+  "git_commit_at_freeze": "3a67bf846c810a16de770d1ac8eb25fef0214198",
+  "git_commit_short": "3a67bf8",
+  "git_commit_subject": "Fix role H1s so RSA person nouns read as English.",
+  "production_deployment_id_evidence_brief": "dpl_GCevV6WPjn8Bkr1eMAWbV2QfoNz2",
+  "production_deploy_created_pdt": "2026-08-17T16:06:47-07:00",
+  "measurement_repair_deployment_id": "dpl_34uzqp6wzc4hkYDXRFkZ3U71TcG6",
+  "measurement_repair_deploy_created_pdt": "2026-08-18T09:36:20-07:00",
+  "code_tracking_version": "baseline_v1_2026_08",
+  "legacy_code_alias": "stage1-v8",
+  "stale_ads_suffix_version": "stage1-v7",
+  "headline": "Hire Dedicated Filipino Remote Staff From $7/Hour",
+  "primary_form": "guided_match_role_hours_people_contact",
+  "phone": "(888) 964-8644",
+  "screenshots": {
+    "evidence_brief": "reports/us-landing-page-evidence-brief-2026-08-18.md",
+    "desktop_note": "18 Aug 2026 Cursor snapshot of /us (then GuidedMatch ATF). Current committed page is StaffingBaselineLanding (e03d1dd onward).",
+    "mobile_note": "Same brief. Mobile photo sat below chips on the 18 Aug GuidedMatch snapshot."
+  },
+  "known_tracking_limitations": [
+    "employer_inquiry_submitted implemented in code, 0 in GA4 6-17 Aug",
+    "phone_cta_clicked implemented in code, 0 in GA4 6-17 Aug",
+    "Ads Final URL suffix still lp_version=stage1-v7",
+    "Zoho census 0 usa_with_gclid — missing GCLID is unattributed, not organic"
+  ],
+  "clean_measurement_start": "2026-08-18",
+  "market": "us",
+  "do_not_treat_as_ab_winner": true
+}

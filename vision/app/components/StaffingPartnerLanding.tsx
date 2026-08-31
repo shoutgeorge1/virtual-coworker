@@ -153,8 +153,7 @@ export default function StaffingPartnerLanding({
             </a>
           </div>
           <a className="gm-call" href={copy.phoneHref} onClick={onPhone}>
-            <span className="sp-phone-long">{copy.phoneDisplay}</span>
-            <span className="sp-phone-short">888-964-8644</span>
+            {copy.phoneDisplay}
           </a>
         </nav>
       </div>

@@ -1,8 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { assignVariant, normalizeVariant, variantFromSeed } from "./ab-variant";
+import {
+  assignVariant,
+  LP_CREATIVE_AB_LIVE,
+  normalizeVariant,
+  variantFromSeed,
+} from "./ab-variant";
 import { CATEGORY_SLUGS, resolveCategoryParam } from "../config/categories";
 
 describe("ab variant", () => {
+  it("is parked — freeze to A unless query override", () => {
+    expect(LP_CREATIVE_AB_LIVE).toBe(false);
+  });
+
   it("normalizes a|b only", () => {
     expect(normalizeVariant("A")).toBe("a");
     expect(normalizeVariant("b")).toBe("b");
@@ -18,13 +27,13 @@ describe("ab variant", () => {
     expect(r).toEqual({ variant: "b", source: "query" });
   });
 
-  it("cookie persists when no query", () => {
+  it("parked: ignores old B cookie and freezes to A", () => {
     const r = assignVariant({
       queryVariant: null,
-      cookieVariant: "a",
+      cookieVariant: "b",
       seed: "x",
     });
-    expect(r).toEqual({ variant: "a", source: "cookie" });
+    expect(r).toEqual({ variant: "a", source: "assigned" });
   });
 
   it("seed assignment is stable", () => {

@@ -5,6 +5,15 @@ import { trackEvent } from "../../lib/tracking";
 import { exitToCareers } from "../../lib/job-seeker-exit";
 import { focusGate } from "../../lib/focus-gate";
 import {
+  chatRevealDelayMs,
+  hasReachedChatScrollAssist,
+  isAssistPopupOpen,
+  markAssistEngaged,
+  setFormBusyClass,
+  shouldSuppressSecondaryAssist,
+  wasPrimaryConverted,
+} from "../../lib/conversion-assist";
+import {
   assignExperiment,
   trackExperimentClick,
   trackExperimentConvert,
@@ -13,6 +22,7 @@ import {
 } from "../../lib/experiments";
 import type { MarketId } from "../../config/markets";
 import type { AbVariant } from "../../config/categories";
+import { primaryHireCta } from "../../config/employer-cro";
 
 const LAUNCHER: Record<ExpVariant, string> = {
   a: "Chat with us",
@@ -25,9 +35,10 @@ type StepId = "open" | "role" | "path" | "done";
 const FACES = ["/brand/va-face-1.jpg", "/brand/va-face-2.jpg", "/brand/va-face-3.jpg"] as const;
 const FACE_KEY = "vc_chat_face";
 
+/** Off unless explicitly true. Hold 2026-08-14 — obscures LP, especially mobile. A/B later. */
 function flagEnabled(): boolean {
   const raw = (process.env.NEXT_PUBLIC_ENABLE_CHAT || "").trim().toLowerCase();
-  return raw !== "false";
+  return raw === "true";
 }
 
 function pickFace(): string {
@@ -49,7 +60,8 @@ function pickFace(): string {
 
 /**
  * Lightweight scripted chat - opt-in launcher only (never auto-opens).
- * Not live AI. Employer LPs only. Exit-intent popup stays separate.
+ * Hold 2026-08-14: off unless NEXT_PUBLIC_ENABLE_CHAT=true. A/B later.
+ * CTAs → form (#gate) or phone only. Exit popup stays separate (coordinated).
  */
 export default function EngageChat({
   market,
@@ -59,6 +71,7 @@ export default function EngageChat({
   phoneDisplay,
   gateHref = "#gate",
   careersHref,
+  skipIntentGate = false,
 }: {
   market: MarketId;
   category?: string;
@@ -67,10 +80,12 @@ export default function EngageChat({
   phoneDisplay?: string;
   gateHref?: string;
   careersHref: string;
+  /** Ungated employer LPs: skip hire vs job-seeker first step. */
+  skipIntentGate?: boolean;
 }) {
-  // Opt-in only - do not auto-open (avoids stacking on exit popup)
   const [open, setOpen] = useState(false);
-  const [nudge, setNudge] = useState(true);
+  const [revealed, setRevealed] = useState(false);
+  const [nudge, setNudge] = useState(false);
   const [step, setStep] = useState<StepId>("open");
   const [roleHint, setRoleHint] = useState("");
   const [face, setFace] = useState<string>(FACES[0]);
@@ -85,9 +100,87 @@ export default function EngageChat({
     const v = assignExperiment("chat_launcher");
     setLauncherVariant(v);
     trackExperimentView("chat_launcher", v, { market });
-    const t = window.setTimeout(() => setNudge(false), 4500);
-    return () => window.clearTimeout(t);
   }, [enabled, market]);
+
+  // Absorb first — do not paint the launcher on load. Never auto-opens the panel.
+  // Never reveal while the employer form is active or after a primary conversion.
+  useEffect(() => {
+    if (!enabled) return;
+    if (wasPrimaryConverted()) return;
+    let shown = false;
+    let cancelled = false;
+    let retryTimer: number | undefined;
+    let impressionFired = false;
+
+    const reveal = () => {
+      if (cancelled || shown) return;
+      if (shouldSuppressSecondaryAssist()) return;
+      if (isAssistPopupOpen()) {
+        retryTimer = window.setTimeout(reveal, 1200);
+        return;
+      }
+      shown = true;
+      setRevealed(true);
+      if (!impressionFired) {
+        impressionFired = true;
+        trackEvent("chat_widget_impression", {
+          market,
+          category: category || "",
+          variant: variant || "",
+          widget_version: "engage_chat_v1",
+        });
+      }
+      setNudge(true);
+      window.setTimeout(() => {
+        if (!cancelled) setNudge(false);
+      }, 4500);
+    };
+
+    const onScroll = () => {
+      if (shouldSuppressSecondaryAssist()) return;
+      if (hasReachedChatScrollAssist()) reveal();
+    };
+
+    const timer = window.setTimeout(reveal, chatRevealDelayMs());
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+      if (retryTimer !== undefined) window.clearTimeout(retryTimer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [enabled, market, category, variant]);
+
+  // Park launcher while form fields are focused / after primary convert.
+  useEffect(() => {
+    if (!enabled) return;
+
+    const syncBusy = () => {
+      const formFocus =
+        document.activeElement instanceof HTMLElement &&
+        Boolean(document.activeElement.closest("#gate, .gate-card, form"));
+      setFormBusyClass(formFocus);
+      if (wasPrimaryConverted()) {
+        setOpen(false);
+        setRevealed(false);
+        return;
+      }
+      if (formFocus) setOpen(false);
+    };
+    document.addEventListener("focusin", syncBusy, true);
+    document.addEventListener("focusout", syncBusy, true);
+    document.addEventListener("input", syncBusy, true);
+    window.addEventListener("vc-primary-converted", syncBusy);
+    return () => {
+      document.removeEventListener("focusin", syncBusy, true);
+      document.removeEventListener("focusout", syncBusy, true);
+      document.removeEventListener("input", syncBusy, true);
+      window.removeEventListener("vc-primary-converted", syncBusy);
+      setFormBusyClass(false);
+    };
+  }, [enabled]);
 
   useEffect(() => {
     if (!open) return;
@@ -95,7 +188,7 @@ export default function EngageChat({
     panelRef.current?.focus();
   }, [open]);
 
-  if (!enabled) return null;
+  if (!enabled || !revealed) return null;
 
   const track = (event: string, extra: Record<string, string | boolean> = {}) => {
     trackEvent(event, {
@@ -111,6 +204,7 @@ export default function EngageChat({
     const next = !open;
     setOpen(next);
     if (next) {
+      markAssistEngaged("chat");
       trackExperimentClick("chat_launcher", launcherVariant, {
         market,
         cta: "open",
@@ -120,6 +214,12 @@ export default function EngageChat({
         market,
         category: category || "",
         variant: variant || "",
+      });
+      trackEvent("chat_widget_open", {
+        market,
+        category: category || "",
+        variant: variant || "",
+        widget_version: "engage_chat_v1",
       });
     }
   };
@@ -149,7 +249,50 @@ export default function EngageChat({
           </header>
 
           <div className="engage-chat-body">
-            {step === "open" ? (
+            {skipIntentGate && step === "open" ? (
+              <>
+                <p className="engage-chat-bubble">
+                  The hiring form is on this page. Book a free strategy call when
+                  you’re ready.
+                </p>
+                <div className="engage-chat-choices">
+                  <a
+                    href={gateHref}
+                    className="engage-chat-primary"
+                    onClick={(e: MouseEvent<HTMLAnchorElement>) => {
+                      e.preventDefault();
+                      track("conversion_assist_cta_clicked", { cta: "form" });
+                      setStep("done");
+                      setOpen(false);
+                      window.setTimeout(
+                        () => focusGate({ behavior: "smooth" }),
+                        40,
+                      );
+                    }}
+                  >
+                    {primaryHireCta(market)}
+                  </a>
+                </div>
+                <p className="engage-chat-careers">
+                  <a
+                    href={careersHref}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      exitToCareers(careersHref, {
+                        market,
+                        category: category || "",
+                        variant: variant || "",
+                        source: "chat_ungated_link",
+                      });
+                    }}
+                  >
+                    Looking for work? Visit our Philippines careers site.
+                  </a>
+                </p>
+              </>
+            ) : null}
+
+            {!skipIntentGate && step === "open" ? (
               <>
                 <p className="engage-chat-bubble">
                   Hi - are you hiring staff for a business, or looking for a job?
@@ -182,7 +325,7 @@ export default function EngageChat({
               </>
             ) : null}
 
-            {step === "role" ? (
+            {!skipIntentGate && step === "role" ? (
               <>
                 <p className="engage-chat-bubble">
                   Got it. What kind of help do you need most right now?
@@ -211,7 +354,7 @@ export default function EngageChat({
               </>
             ) : null}
 
-            {step === "path" ? (
+            {!skipIntentGate && step === "path" ? (
               <>
                 <p className="engage-chat-bubble">
                   {roleHint
@@ -256,14 +399,14 @@ export default function EngageChat({
                         () =>
                           focusGate({
                             behavior: "smooth",
-                            selectEmployer: true,
-                            emphasize: "role",
+                            selectEmployer: skipIntentGate ? false : true,
+                            emphasize: skipIntentGate ? undefined : "role",
                           }),
                         40,
                       );
                     }}
                   >
-                    {market === "au" ? "Book a free consultation" : "Book Your Free Consultation"}
+                    {market === "au" ? "Book a free strategy call" : "Book a Free Strategy Call"}
                   </a>
                 </div>
               </>

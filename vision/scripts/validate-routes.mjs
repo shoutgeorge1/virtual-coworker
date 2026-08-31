@@ -44,9 +44,18 @@ const required = [
   "au/proof/page.tsx",
   "us/consult/page.tsx",
   "au/consult/page.tsx",
+  "us/book/page.tsx",
+  "au/book/page.tsx",
   "us/start/page.tsx",
   "au/start/page.tsx",
   "us/staffing/page.tsx",
+  "us/real-estate/page.tsx",
+  "us/tf/page.tsx",
+  "us/tf/hire/page.tsx",
+  "us/tf/real-estate/page.tsx",
+  "us/tf/bookkeeping/page.tsx",
+  "us/philippines-virtual-assistants/page.tsx",
+  "us/virtual-assistant-agency/page.tsx",
   "preview/trust-first/page.tsx",
   "preview/trust-first/[slug]/page.tsx",
   "api/lead-preview/route.ts",
@@ -70,9 +79,12 @@ for (const m of ["us", "au"]) {
 console.log("  /us/quiz · /au/quiz");
 console.log("  /us/offer · /au/offer · /us/proof · /au/proof");
 console.log("  /us/consult · /au/consult");
+console.log("  /us/book · /au/book (direct Calendly — sitelink / skip-form)");
 console.log("  /us/start · /au/start");
-console.log("  /us/real-estate (US only)");
-console.log("  /us/staffing (US candidate, not an Ads destination)");
+console.log("  /us/real-estate (US only, previous baseline — not TF)");
+console.log("  /us/staffing (unused candidate, noindex — not Ads)");
+console.log("  /us/tf/hire · /us/tf/real-estate · /us/tf/bookkeeping (TF tests only)");
+console.log("  /us/philippines-virtual-assistants (new TF URL)");
 console.log("  /preview/trust-first (internal review, noindex, not Ads)");
 console.log(`  alias: /{us|au}/human-resources → /{us|au}/hr (middleware 308)`);
 console.log(`Categories: ${CATEGORIES.length} × 2 markets`);

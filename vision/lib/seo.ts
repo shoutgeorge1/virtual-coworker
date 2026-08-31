@@ -179,6 +179,8 @@ export function sitemapPaths(): { path: string; priority: number }[] {
   const paths: { path: string; priority: number }[] = [
     { path: "/us", priority: 1 },
     { path: "/au", priority: 1 },
+    { path: "/us/book", priority: 0.85 },
+    { path: "/au/book", priority: 0.85 },
     { path: "/services?market=us", priority: 0.8 },
     { path: "/services?market=au", priority: 0.8 },
     { path: "/how-it-works?market=us", priority: 0.8 },
@@ -190,5 +192,7 @@ export function sitemapPaths(): { path: string; priority: number }[] {
     paths.push({ path: `/us/${slug}`, priority: 0.9 });
     paths.push({ path: `/au/${slug}`, priority: 0.9 });
   }
+  paths.push({ path: "/us/real-estate", priority: 0.9 });
+  paths.push({ path: "/us/philippines-virtual-assistants", priority: 0.9 });
   return paths;
 }

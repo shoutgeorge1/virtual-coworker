@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>LP QA · Virtual Coworker Search Pilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="lp-qa.html"] .main { max-width: 760px; }
+    .qa-head { margin: 0 0 1rem; padding: 0 0 0.75rem; border-bottom: 1px solid var(--edge); }
+    .qa-head .kicker { margin: 0 0 0.25rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); }
+    .qa-head h1 { margin: 0; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .qa-head p { margin: 0.35rem 0 0; font-size: 0.95rem; color: var(--body); line-height: 1.4; }
+    .qa-banner { margin: 0 0 1rem; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid var(--tint-amber-edge); background: var(--tint-amber); font-size: 0.9rem; line-height: 1.45; }
+    .qa-banner.ok { border-color: var(--tint-green-edge); background: var(--tint-green); }
+    table a { color: var(--link); font-weight: 500; }
+    td .muted { display: block; margin-top: 0.15rem; font-size: 0.8rem; color: var(--muted); }
+  </style>
+</head>
+<body data-page="lp-qa.html" data-foot="19 Aug 2026<br />Live page crawl + tracking">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <header class="qa-head">
+        <p class="kicker">Live crawl · 19 Aug 2026</p>
+        <h1>Trust pages, landing pages, conversion checks</h1>
+        <p>From the inbox QA brief. Pages were loaded on <code>www.virtualcoworker.app</code>. No real sales lead was sent.</p>
+        <p class="data-fresh">Crawl date 19 Aug 2026 · source: live page load on www · not a Google Ads import report · today is not in this crawl</p>
+      </header>
+
+      <div class="qa-banner ok">
+        <strong>Good to go.</strong>
+        Pages load. Thank-you pages load. Company is required.
+        The one open item is on the checklist: form → Ads import still unverified.
+      </div>
+
+      <section class="panel">
+        <div class="panel-hd">
+          <p class="kicker">Inbox checklist</p>
+          <h2>What was asked · what we found</h2>
+        </div>
+        <div class="panel-bd" style="padding:0">
+          <table>
+            <thead>
+              <tr><th>Check</th><th>Result</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>All trust-first variants load</td>
+                <td><span class="badge badge-ok">Pass</span>
+                  <span class="muted">4 live test URLs + 10 preview pages + trust-center. All 200.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Active LP URLs load and match intent</td>
+                <td><span class="badge badge-ok">Pass</span>
+                  <span class="muted">US + AU hubs and role pages 200. H1s match the role. <code>/us/consult</code> → <code>/us</code>. <code>/us/virtual-assistant-agency</code> → <code>/us</code>.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Thank-you pages</td>
+                <td><span class="badge badge-ok">Pass</span>
+                  <span class="muted">US “Thanks — you’re in.” AU “We’ve got your request.” Test path <code>eligible=0</code> does not look like a real win.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Form conversions fire</td>
+                <td><span class="badge badge-high">Partial</span>
+                  <span class="muted">Site path is wired: form → <code>/api/lead</code> → <code>/thank-you</code> → <code>employer_inquiry_submitted</code> after durable delivery. Preview form accept works. Missing company is rejected. Did not submit a live sales lead. Ads import of that event is still unverified.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Phone / click tracking</td>
+                <td><span class="badge badge-ok">Pass</span>
+                  <span class="muted">Live <code>/us</code>, thank-you, and trust-first header/footer all fire <code>phone_cta_clicked</code>. Rechecked on www after the Vision deploy.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Ad click → LP → form/CTA → thank-you → event</td>
+                <td><span class="badge badge-ok">Path OK</span>
+                  <span class="muted">Site path works: test click IDs land on the form as hidden fields. GTM <code>GTM-M92DX9BJ</code> and GA4 <code>G-2V3V0BS6JW</code> load on US pages. Path OK is not conversion proven. Google Ads import is still unverified. Full paid click with a real form was not sent.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>USA Company field required (Shannon)</td>
+                <td><span class="badge badge-ok">Already required</span>
+                  <span class="muted">Trust-first: required in the field, in JS, and on the server. Live <code>/us</code>: already blocked if blank; label now says required and the field is marked required. Quiz form still has no Company — quiz is not a traffic destination.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-hd">
+          <p class="kicker">Trust-first · isolated test URLs</p>
+          <h2>The four live test pages</h2>
+          <span class="badge badge-ok">200</span>
+        </div>
+        <div class="panel-bd" style="padding:0">
+          <table>
+            <thead>
+              <tr><th>Ad group</th><th>URL</th><th>H1 intent</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TF_PH_VA</td>
+                <td><a href="https://www.virtualcoworker.app/us/philippines-virtual-assistants" target="_blank" rel="noopener">/us/philippines-virtual-assistants</a></td>
+                <td>Hire a VA from the Philippines. Philippines market facts on page.</td>
+              </tr>
+              <tr>
+                <td>TF_Hire_Dedicated</td>
+                <td><a href="https://www.virtualcoworker.app/us/tf/hire" target="_blank" rel="noopener">/us/tf/hire</a></td>
+                <td>Same approved PH hire H1. Isolated test — live CORE still uses <code>/us</code>.</td>
+              </tr>
+              <tr>
+                <td>TF_Real_Estate</td>
+                <td><a href="https://www.virtualcoworker.app/us/tf/real-estate" target="_blank" rel="noopener">/us/tf/real-estate</a></td>
+                <td>Hire a real estate VA from the Philippines.</td>
+              </tr>
+              <tr>
+                <td>TF_Bookkeeping</td>
+                <td><a href="https://www.virtualcoworker.app/us/tf/bookkeeping" target="_blank" rel="noopener">/us/tf/bookkeeping</a></td>
+                <td>Hire a bookkeeping VA from the Philippines.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-hd">
+          <p class="kicker">Not ads destinations</p>
+          <h2>404s that are fine</h2>
+        </div>
+        <div class="panel-bd">
+          <p>
+            These exist in the preview family only. They are not in the paused TF sheet and are not live Final URLs:
+            <code>/us/tf/staffing</code>,
+            <code>/us/tf/virtual-assistant-agency</code>,
+            <code>/us/tf/customer-service</code>,
+            <code>/us/tf/sales</code>,
+            <code>/us/tf/administrative-support</code>,
+            <code>/us/tf/digital-marketing</code>.
+          </p>
+          <p>
+            Preview index:
+            <a href="https://www.virtualcoworker.app/preview/trust-first" target="_blank" rel="noopener">/preview/trust-first</a>
+            (noindex, no GTM, form does not send a live inquiry).
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-hd">
+          <p class="kicker">Shannon</p>
+          <h2>Company field on the USA form</h2>
+        </div>
+        <div class="panel-bd">
+          <p>
+            Keep it required. Sales follow-up needs the company name. It was already required on the trust-first form and on the live <code>/us</code> form (JavaScript + server). A blank company is rejected with <code>missing_fields</code>.
+          </p>
+          <p>
+            Today’s change: the live USA field now says <strong>Company name (required)</strong> and uses the browser required mark, so it matches Shannon’s request on the page itself — not only after submit.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-hd">
+          <p class="kicker">Not this pass</p>
+          <h2>Left alone on purpose</h2>
+        </div>
+        <div class="panel-bd">
+          <p>No live form was sent to us@ / sales. That would create a fake employer inquiry.</p>
+          <p>Ads conversion import into Google Ads is still unverified — same as Conversion path. Site events fire into dataLayer + GTM. That is not the same as a confirmed Ads conversion.</p>
+          <p>Quiz pages stay parked. They still use the older form without a Company field.</p>
+        </div>
+      </section>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="trust-first-rollout.html">TF test groups</a>
+        <a class="btn" href="landing-pages.html">All LP URLs</a>
+        <a class="btn" href="https://www.virtualcoworker.app/us/tf/hire" target="_blank" rel="noopener">Open TF hire</a>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js?v=20260819-lpqa"></script>
+</body>
+</html>

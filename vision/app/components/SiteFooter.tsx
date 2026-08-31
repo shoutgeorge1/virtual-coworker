@@ -56,17 +56,14 @@ export default function SiteFooter({
 
   /**
    * Employer footers deliberately carry no job-seeker promo (George, 2026-08-07).
-   * Job seekers are still diverted to the PH careers site by the gate and popup —
-   * the footer just stops advertising it to paid hiring traffic.
+   * Job seekers are diverted by the gate / chat / quiz link — not advertised here.
+   * PH interstitial: no “back to employer form” cross-links (CRO hygiene 2026-08-11).
    */
   const cross = isUs
     ? ([{ href: "/au", label: "Australia", external: false }] as const)
     : isAu
       ? ([{ href: "/us", label: "United States", external: false }] as const)
-      : ([
-          { href: "/us", label: "US employers", external: false },
-          { href: "/au", label: "AU employers", external: false },
-        ] as const);
+      : null;
 
   const renderLink = (
     item: { href: string; label: string; external?: boolean },
@@ -99,7 +96,7 @@ export default function SiteFooter({
             <p className="site-footer-name">{SITE.name}</p>
             <p className="site-footer-meta">
               {isPh
-                ? "Careers for talent — continue on our Philippines careers site."
+                ? "Careers for talent - continue on our Philippines careers site."
                 : SITE.disclaimer}
               {categoryLabel ? ` · ${categoryLabel}` : ""}
             </p>
@@ -120,7 +117,7 @@ export default function SiteFooter({
               <span>
                 {SITE.addressPh
                   ? SITE.addressPh
-                  : `${SITE.addressPhLabel} — Filipino talent recruitment & screening`}
+                  : `${SITE.addressPhLabel} - Filipino talent recruitment & screening`}
               </span>
             </p>
             {isUs ? (
@@ -132,7 +129,7 @@ export default function SiteFooter({
             {isAu ? (
               <p className="site-footer-phone site-footer-phone-muted">
                 <span className="site-footer-label">Contact</span>
-                <span>Send your role above — we’ll follow up.</span>
+                <span>Send your role above - we’ll follow up.</span>
               </p>
             ) : null}
           </div>
@@ -186,17 +183,19 @@ export default function SiteFooter({
         ) : null}
 
         <div className="site-footer-bottom">
-          <p className="site-footer-cross">
-            <span className="site-footer-cross-pref">Also looking at</span>
-            {cross.map((item, i) => (
-              <span key={item.href + item.label}>
-                {i > 0 ? <span aria-hidden> · </span> : (
-                  <span aria-hidden>{" "}</span>
-                )}
-                {renderLink(item, `cross-${item.href}`)}
-              </span>
-            ))}
-          </p>
+          {cross ? (
+            <p className="site-footer-cross">
+              <span className="site-footer-cross-pref">Also looking at</span>
+              {cross.map((item, i) => (
+                <span key={item.href + item.label}>
+                  {i > 0 ? <span aria-hidden> · </span> : (
+                    <span aria-hidden>{" "}</span>
+                  )}
+                  {renderLink(item, `cross-${item.href}`)}
+                </span>
+              ))}
+            </p>
+          ) : null}
           <p className="site-footer-copy">{SITE.copyright}</p>
         </div>
       </div>

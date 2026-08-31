@@ -11,9 +11,32 @@ vision/.env.local
 xray/.serve-logs/
 xray/.vercel/
 
+# Local GCP / GA4 service account keys (never commit)
+credentials/*.json
+!credentials/README.md
+!credentials/.gitkeep
+credentials/
+
 # Google Ads audit exports (may contain customer/PII)
 audit-data/
+historical_search_terms_mined.json
+ads-launch/historical_search_terms_mined.json
+ads-launch/_*.json
+ads-launch/research/*.json
+ads-launch/phone-call-reconciliation-summary.csv
+ads-launch/phone-number-inventory.csv
+ads-launch/extract_grasshopper_from_gmail_raw.py
+ads-launch/persist_gmail_raw_and_ingest.py
+ads-launch/analyze_grasshopper_export_readonly.py
+ads-launch/analyze_zoho_voice_export_readonly.py
 
 # Local Zoho CRM backups / extracts / tokens (never commit PII)
-.local/zoho/
-.local/zoho/**
+.local/
+.local/**
+
+reports/
+*.pyc
+__pycache__/
+
+# Downloaded live Google ad creatives (large PNGs; local research only)
+ads-launch/research/google-ad-images-*/

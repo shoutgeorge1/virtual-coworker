@@ -1,6 +1,6 @@
 # Editor preflight report
 
-- Generated: 2026-08-07 12:54 UTC
+- Generated: 2026-08-08 20:11 UTC
 - LP version (suffix): `stage1-v7` (unchanged)
 - Package hygiene: Editor ValueTrack + campaign CPC cap + US/AU split
 
@@ -9,7 +9,8 @@
 **Existing account remains unchanged. New `VC_*` campaigns are a separate Stage 1 system.**
 
 - Leave existing `PM_*` campaigns, shared negative lists, Zoho/Zapier conversion actions, and historical reporting alone.
-- This package attaches curated Stage1 campaign-level negatives (cap 220) plus a **separate labeled live cohort** `VC_Neg_JobSeekers_Live` on `VC_US_*` only — **not** account shared / `PM_*` large shared lists.
+- Campaign-level negatives ship in a **separate MMC CSV** (cap 220 curated + `VC_Neg_JobSeekers_Live` on `VC_US_*` only) — **not** inside the main Account Import, **not** account shared / `PM_*` mega lists.
+- **Why separate:** Account-importing `Keyword` + `Campaign negative` rows dual-writes blank/`Unkown` ad groups packed with Enabled Broad *positives* (confirmed AU Editor DB 2026-08-08). Main CSV has zero of those rows.
 - Do **not** attach older account shared / `PM_*` negative lists to `VC_*` after Import/Post.
 - Do **not** use audiences to restrict targeting for initial Search launch (Observation later; ignore customer-lifecycle warnings until Zoho/first-party data).
 - Import ≠ live. Every campaign stays **Paused**. No Enable from this package.
@@ -25,9 +26,11 @@
 
 | File | Use |
 |------|-----|
-| `google-ads-editor-import-us.csv` (1252 rows) | **Preferred** — import into USA `496-715-1855` only |
-| `google-ads-editor-import-au.csv` (1230 rows) | **Preferred** — import into AU `573-539-1940` only |
-| `google-ads-editor-import.csv` / `-multi-account.csv` (2482 rows) | Manager multi-account only — every row has Account |
+| `google-ads-editor-import-us.csv` (886 rows) | **Preferred** — Account Import into USA `496-715-1855` only |
+| `google-ads-editor-import-au.csv` (886 rows) | **Preferred** — Account Import into AU `573-539-1940` only |
+| `google-ads-editor-campaign-negatives-us.csv` (366 rows) | **Keywords, Negative → Make multiple changes** (USA) — do **not** Account Import |
+| `google-ads-editor-campaign-negatives-au.csv` (344 rows) | **Keywords, Negative → Make multiple changes** (AU) — do **not** Account Import |
+| `google-ads-editor-import.csv` / `-multi-account.csv` (1772 rows) | Manager multi-account only — every row has Account |
 | `phase1-enable-manifest-us.csv` / `-au.csv` | **Review-only** enable ladder (tiers 1A/1B/2/3 + PHRASE_HOLD + LIVE_PAUSED; all Paused) |
 | `PHASE1-REVIEW.md` | Tier definitions + per-market counts |
 | `VC-NEG-JOBSEEKERS-LIVE.md` | Live job-seeker Phrase cohort (`VC_Neg_JobSeekers_Live`) |
@@ -37,10 +40,10 @@
 
 - Campaigns: 4 (all Paused)
 - Ad groups: 40
-- Positive keywords: 1568
+- Positive keywords: 1568 (Exact + Phrase only — **zero Broad positives**)
 - Live-paused positives (`VC_Keywords_Paused_Live`): 538 rows (US+AU; keep Paused — George paused live USA Exact junk/general/job-seeker-y terms; synced from Editor DB ape_4967151855 (Get recent changes). Phrase stays paused (Exact-only bidding).)
 - RSAs: 116
-- Active campaign negatives: 710 rows (183 unique texts) — Stage1 curated Broad on all 4 VC_* campaigns + `VC_Neg_JobSeekers_Live` Phrase on `VC_US_*` only
+- Campaign negatives (MMC file): 710 rows (183 unique texts) — Stage1 curated Broad on all 4 VC_* campaigns + `VC_Neg_JobSeekers_Live` Phrase on `VC_US_*` only
 - `VC_Neg_JobSeekers_Live`: 11 Phrase terms × 2 US campaigns (22 rows) — job-seeker / WFH junk from live US search terms (2026-08-06)
 - Commercial holdouts (not imported): 19 (includes pay rate / hourly rate / virtual assistant reviews + cost/pricing/review research terms)
 - Employer-research Broad canaries: 12 (QA fails if active Broad negs would block them; includes `va workers ph`)
@@ -50,7 +53,7 @@
 ## Budgets + bid caps (campaign only)
 
 - `VC_US_S_CORE` · Account `496-715-1855` · Budget 75/day · Maximum CPC bid limit 12 · Maximize Clicks · Paused
-- `VC_US_S_ROLES` · Account `496-715-1855` · Budget 50/day · Maximum CPC bid limit 8 · Maximize Clicks · Paused
+- `VC_US_S_ROLES` · Account `496-715-1855` · Budget 50/day · Maximum CPC bid limit 10 · Maximize Clicks · Paused
 - `VC_AU_S_CORE` · Account `573-539-1940` · Budget 75/day · Maximum CPC bid limit 6 · Maximize Clicks · Paused
 - `VC_AU_S_ROLES` · Account `573-539-1940` · Budget 50/day · Maximum CPC bid limit 6 · Maximize Clicks · Paused
 
@@ -162,11 +165,12 @@ Details: `VC-NEG-JOBSEEKERS-LIVE.md`.
 2. Clear **TRAFFIC READY** (durable delivery + live test + named responder).
 3. **Domain live:** `www.virtualcoworker.app` — package Final URLs already on www. Confirm `/us` `/au` `/ph` LPs still 200 before Import.
 4. Download fresh USA + AU accounts into Editor (read-only sync).
-5. Import **US split** into USA → Check changes → leave **Paused**.
-6. Import **AU split** into AU → Check changes → leave **Paused**.
-7. Confirm every Final URL uses `www.virtualcoworker.app` (not `*.vercel.app`).
-8. Confirm `VC_*` Stage1 curated Broad negs + `VC_Neg_JobSeekers_Live` Phrase cohort on `VC_US_*` — **do not** attach older `PM_*` / account shared mega lists.
-9. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval. Skip tier **LIVE_PAUSED** (`VC_Keywords_Paused_Live`).
-10. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.
-11. Enable is a separate explicit decision after TRAFFIC READY — never from Import/Post alone. Still **NOT** paid-ready until TRAFFIC READY.
+5. Import **US split** (`google-ads-editor-import-us.csv`) into USA → Check changes → leave **Paused**. Do **not** Account-import the negatives CSV.
+6. Import **AU split** (`google-ads-editor-import-au.csv`) into AU → Check changes → leave **Paused**.
+7. Add campaign negatives via **Keywords and Targeting → Keywords, Negative → Make multiple changes** using `google-ads-editor-campaign-negatives-*.csv` (campaign column, no ad group; Add as campaign-level). If AU already has the 172 Stage1 campaign negs from an earlier import, skip re-adding — just delete any blank/`Unkown` ad groups with Broad positives.
+8. Confirm every Final URL uses `www.virtualcoworker.app` (not `*.vercel.app`).
+9. Confirm `VC_*` Stage1 curated Broad negs + `VC_Neg_JobSeekers_Live` Phrase cohort on `VC_US_*` — **do not** attach older `PM_*` / account shared mega lists.
+10. Review Phase 1 manifests (1A → 1B) — still Paused until enable approval. Skip tier **LIVE_PAUSED** (`VC_Keywords_Paused_Live`).
+11. Post only after review (still Paused). Then set campaign-specific goals in Ads UI.
+12. Enable is a separate explicit decision after TRAFFIC READY — never from Import/Post alone. Still **NOT** paid-ready until TRAFFIC READY.
 

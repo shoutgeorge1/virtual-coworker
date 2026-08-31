@@ -5,14 +5,14 @@
 Deep audit: [`CHATGPT-MEGA-AUDIT.md`](./CHATGPT-MEGA-AUDIT.md)  
 Short index: [`FULL-BUILD-REPORT.md`](./FULL-BUILD-REPORT.md)
 
-**Architecture:** 2 campaigns × 2 markets (`CORE` + `ROLES`) · Brand deferred · all **Paused**.
+**Architecture:** 2 campaigns × 2 markets (`CORE` + `ROLES`) · Brand deferred. **Zoho + offline conversions deferred during cold start** (not cancelled) — [`ZOHO-COLD-START-DEFERRED-2026-08-14.md`](./ZOHO-COLD-START-DEFERRED-2026-08-14.md).
 
 | # | Deliverable |
 |---|-------------|
 | DEBRIEF | [CHATGPT-DEBRIEF.md](./CHATGPT-DEBRIEF.md) |
 | TEAM | [TEAM-UPDATE-EMAIL.md](./TEAM-UPDATE-EMAIL.md) |
 | MEGA | [CHATGPT-MEGA-AUDIT.md](./CHATGPT-MEGA-AUDIT.md) |
-| 0 | [DECISIONS.md](./DECISIONS.md) · [LAUNCH-SHEET.md](./LAUNCH-SHEET.md) · [PHASED-ACTIVATION.md](./PHASED-ACTIVATION.md) |
+| 0 | [DECISIONS.md](./DECISIONS.md) · [ZOHO-COLD-START-DEFERRED-2026-08-14.md](./ZOHO-COLD-START-DEFERRED-2026-08-14.md) · [LAUNCH-SHEET.md](./LAUNCH-SHEET.md) · [PHASED-ACTIVATION.md](./PHASED-ACTIVATION.md) |
 | 1 | [01-current-state-audit.md](./01-current-state-audit.md) |
 | 2 | [02-historical-data-audit.md](./02-historical-data-audit.md) · [historical-performance-summary.json](./historical-performance-summary.json) |
 | 3 | [03-search-term-category-findings.md](./03-search-term-category-findings.md) |

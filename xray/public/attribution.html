@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Funnel &amp; CRM · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="attribution.html"] .main { max-width: 820px; }
+    .fc h1 { margin: 0 0 0.35rem; font-size: 1.35rem; }
+    .fc .lede { margin: 0 0 1rem; font-size: 0.95rem; line-height: 1.45; color: var(--body); }
+    .fc-box {
+      margin: 0 0 0.75rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+    }
+    .fc-box.ok { border-color: var(--tint-green-edge); background: var(--tint-green); }
+    .fc-box.go { border-color: var(--tint-amber-edge); background: var(--tint-amber); }
+    .fc-box h2 { margin: 0 0 0.4rem; font-size: 0.95rem; }
+    .fc-box p, .fc-box li { margin: 0.3rem 0; font-size: 0.92rem; line-height: 1.45; }
+    .fc-box ol { margin: 0; padding: 0 0 0 1.2rem; }
+    .fc-pipe {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center;
+      margin: 0 0 1rem; font-size: 0.85rem; font-weight: 650;
+    }
+    .fc-pipe span {
+      padding: 0.35rem 0.55rem; border-radius: 6px; background: var(--panel);
+      border: 1px solid var(--edge-soft);
+    }
+    .fc-pipe .on { background: var(--tint-green); border-color: var(--tint-green-edge); }
+    .fc-pipe .mid { background: var(--tint-amber); border-color: var(--tint-amber-edge); }
+    .fc-pipe .off { background: var(--tint-rose); border-color: var(--tint-rose-edge); }
+  </style>
+</head>
+<body data-page="attribution.html" data-foot="Where a lead goes">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main fc">
+      <h1>Where a lead goes</h1>
+      <p class="lede">
+        Archived reference. Live work is on <a href="launch-control.html">Checklist</a>
+        and the weekly numbers on <a href="executive.html">Executive</a>.
+      </p>
+
+      <div class="fc-pipe">
+        <span class="on">Ad click</span> →
+        <span class="on">Landing page</span> →
+        <span class="on">Email to sales</span> →
+        <span class="mid">Zoho enquiry</span> →
+        <span class="off">Job order</span> →
+        <span class="off">Placement</span>
+      </div>
+
+      <div class="fc-box ok">
+        <h2>Working now</h2>
+        <ol>
+          <li>Ads land on <code>/us</code> or <code>/au</code>.</li>
+          <li>The form emails Cheyenne (US) or Holly (AU).</li>
+          <li>The same form also creates a new Sales Enquiry in Zoho. Create-only — it does not update old rows.</li>
+        </ol>
+      </div>
+
+      <div class="fc-box go">
+        <h2>Still open — why Ads cannot score job orders yet</h2>
+        <ol>
+          <li>Most new Zoho rows have no Google click ID. Without that (or at least email + phone), Ads cannot match a later job order back to the click.</li>
+          <li>That matching work is the Data Manager block on Checklist. Do not rebuild the connection.</li>
+          <li>Most of what we are seeing so far is job-seekers, not employers. Do not bid on job orders until employer conversions are flowing.</li>
+        </ol>
+        <p style="margin:0.45rem 0 0;font-size:0.85rem">
+          Open tasks: <a href="launch-control.html#zoho-deferred-cold-start">Checklist · Data Manager</a>
+        </p>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+</body>
+</html>

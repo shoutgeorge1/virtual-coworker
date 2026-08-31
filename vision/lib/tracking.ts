@@ -9,27 +9,29 @@
  * - estimated_lead_value / lead_score = modeled site estimate only (not Ads conversion value yet)
  * - Do not over-optimize to raw form fills. Modeled $ is wired for analytics, not bidding.
  *
- * Canonical events (+ short aliases for GTM maps):
- * - employer_gate_selected
- * - employer_form_started
- * - employer_form_validation_error
- * - employer_inquiry_submitted  (+ alias form_submit_success) — delivery OK, not Ads Primary
+ * Canonical events (one dataLayer name each — no aliases):
+ * - lp_view
+ * - form_start
+ * - employer_form_step_completed
+ * - employer_inquiry_submitted  — delivery OK, not Ads Primary
  * - employer_inquiry_delivery_failed
- * - phone_cta_clicked           (+ alias phone_click) — click ≠ qualified call
- * - primary_cta_clicked         — sell-first hero CTA to #gate; not Ads Primary
- * - calendly_cta_clicked        (+ alias calendly_click) — thank-you popup / book click; not Ads Primary
- * - calendly_embed_viewed       — legacy inline calendar seen; not Ads Primary
- * - conversion_assist_opened
- * - conversion_assist_cta_clicked
- * - job_seeker_redirected       (interaction only — never Ads conversion)
- * - form_start                  (+ alias of employer_form_started)
- * - chat_widget_impression / chat_widget_open
- * - popup_impression / popup_close
+ * - phone_cta_clicked           — click ≠ qualified call
+ * - primary_cta_clicked
+ * - calendly_cta_clicked
+ * - calendly_embed_viewed
+ * - calendly_booking_complete  — calendly.event_scheduled only (/us/book · /au/book)
+ * - job_seeker_redirected
+ * - form_validation_error
  */
 
 import { markPrimaryConverted } from "./conversion-assist";
+import {
+  AUTHORITATIVE_LP_VERSION,
+  US_BASELINE_LABEL,
+} from "../config/lp-version";
 
-export const LP_VERSION = "stage1-v8";
+export const LP_VERSION = AUTHORITATIVE_LP_VERSION;
+export { US_BASELINE_LABEL, AUTHORITATIVE_LP_VERSION };
 
 export type Attribution = {
   utm_source: string;
@@ -37,6 +39,8 @@ export type Attribution = {
   utm_campaign: string;
   utm_term: string;
   utm_content: string;
+  utm_matchtype: string;
+  utm_device: string;
   gclid: string;
   gbraid: string;
   wbraid: string;
@@ -44,6 +48,8 @@ export type Attribution = {
   referrer: string;
   lp_version: string;
   lp_variant: string;
+  baseline_label: string;
+  session_id: string;
   market: string;
   category: string;
   variant: string;
@@ -51,11 +57,67 @@ export type Attribution = {
 };
 
 const ATTR_KEY = "vc_pilot_attribution";
+const CLICK_ID_KEY = "vc_pilot_click_ids";
+const CLICK_ID_TTL_MS = 90 * 24 * 60 * 60 * 1000;
 const PRIMARY_FIRED_KEY = "vc_primary_fired_ids";
+
+type DurableClickIds = {
+  gclid?: string;
+  gbraid?: string;
+  wbraid?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  saved_at?: string;
+};
+
+function readDurableClickIds(): DurableClickIds {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = window.localStorage?.getItem(CLICK_ID_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as DurableClickIds;
+    const saved = Date.parse(parsed.saved_at || "");
+    if (!saved || Date.now() - saved > CLICK_ID_TTL_MS) return {};
+    return parsed;
+  } catch {
+    return {};
+  }
+}
+
+function writeDurableClickIds(attr: Pick<Attribution, "gclid" | "gbraid" | "wbraid" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content">) {
+  if (!attr.gclid && !attr.gbraid && !attr.wbraid) return;
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage?.setItem(
+      CLICK_ID_KEY,
+      JSON.stringify({
+        gclid: attr.gclid,
+        gbraid: attr.gbraid,
+        wbraid: attr.wbraid,
+        utm_source: attr.utm_source,
+        utm_medium: attr.utm_medium,
+        utm_campaign: attr.utm_campaign,
+        utm_term: attr.utm_term,
+        utm_content: attr.utm_content,
+        saved_at: new Date().toISOString(),
+      }),
+    );
+  } catch {
+    /* private mode / quota */
+  }
+}
 
 function param(name: string): string {
   if (typeof window === "undefined") return "";
   return new URLSearchParams(window.location.search).get(name) || "";
+}
+
+function newSessionId(): string {
+  const rand = Math.random().toString(36).slice(2, 10);
+  return `vc_${Date.now().toString(36)}_${rand}`;
 }
 
 function emptyAttr(market = ""): Attribution {
@@ -65,6 +127,8 @@ function emptyAttr(market = ""): Attribution {
     utm_campaign: "",
     utm_term: "",
     utm_content: "",
+    utm_matchtype: "",
+    utm_device: "",
     gclid: "",
     gbraid: "",
     wbraid: "",
@@ -72,6 +136,8 @@ function emptyAttr(market = ""): Attribution {
     referrer: "",
     lp_version: LP_VERSION,
     lp_variant: "",
+    baseline_label: US_BASELINE_LABEL,
+    session_id: "",
     market,
     category: "",
     variant: "",
@@ -85,6 +151,7 @@ export type AttributionExtras = {
   lp_variant?: string;
   /** Optional page override (e.g. baseline_v1_2026_08). Default LP_VERSION. */
   lp_version?: string;
+  baseline_label?: string;
 };
 
 export function captureAttribution(
@@ -94,6 +161,7 @@ export function captureAttribution(
   if (typeof window === "undefined") return emptyAttr(market);
 
   const version = extras.lp_version || LP_VERSION;
+  const baselineLabel = extras.baseline_label || US_BASELINE_LABEL;
 
   const next: Attribution = {
     utm_source: param("utm_source"),
@@ -101,6 +169,8 @@ export function captureAttribution(
     utm_campaign: param("utm_campaign"),
     utm_term: param("utm_term"),
     utm_content: param("utm_content"),
+    utm_matchtype: param("utm_matchtype"),
+    utm_device: param("utm_device"),
     gclid: param("gclid"),
     gbraid: param("gbraid"),
     wbraid: param("wbraid"),
@@ -108,6 +178,8 @@ export function captureAttribution(
     referrer: document.referrer || "",
     lp_version: version,
     lp_variant: extras.lp_variant || param("lp_variant") || "",
+    baseline_label: baselineLabel,
+    session_id: "",
     market: market || param("market") || "",
     category: extras.category || param("category") || "",
     variant: extras.variant || param("variant") || "",
@@ -116,27 +188,35 @@ export function captureAttribution(
 
   try {
     const prev = JSON.parse(sessionStorage.getItem(ATTR_KEY) || "{}") as Partial<Attribution>;
+    const durable = readDurableClickIds();
     const merged: Attribution = {
-      utm_source: next.utm_source || prev.utm_source || "",
-      utm_medium: next.utm_medium || prev.utm_medium || "",
-      utm_campaign: next.utm_campaign || prev.utm_campaign || "",
-      utm_term: next.utm_term || prev.utm_term || "",
-      utm_content: next.utm_content || prev.utm_content || "",
-      gclid: next.gclid || prev.gclid || "",
-      gbraid: next.gbraid || prev.gbraid || "",
-      wbraid: next.wbraid || prev.wbraid || "",
-      landing_page_url: next.landing_page_url || prev.landing_page_url || "",
-      referrer: next.referrer || prev.referrer || "",
+      utm_source: next.utm_source || prev.utm_source || durable.utm_source || "",
+      utm_medium: next.utm_medium || prev.utm_medium || durable.utm_medium || "",
+      utm_campaign: next.utm_campaign || prev.utm_campaign || durable.utm_campaign || "",
+      utm_term: next.utm_term || prev.utm_term || durable.utm_term || "",
+      utm_content: next.utm_content || prev.utm_content || durable.utm_content || "",
+      utm_matchtype: next.utm_matchtype || prev.utm_matchtype || "",
+      utm_device: next.utm_device || prev.utm_device || "",
+      gclid: next.gclid || prev.gclid || durable.gclid || "",
+      gbraid: next.gbraid || prev.gbraid || durable.gbraid || "",
+      wbraid: next.wbraid || prev.wbraid || durable.wbraid || "",
+      landing_page_url: prev.landing_page_url || next.landing_page_url || "",
+      referrer: prev.referrer || next.referrer || "",
       lp_version: version || prev.lp_version || LP_VERSION,
       lp_variant: next.lp_variant || prev.lp_variant || "",
+      baseline_label: baselineLabel || prev.baseline_label || US_BASELINE_LABEL,
+      session_id: prev.session_id || newSessionId(),
       market: next.market || prev.market || market || "",
       category: next.category || prev.category || "",
       variant: next.variant || prev.variant || "",
       captured_at: prev.captured_at || next.captured_at,
     };
     sessionStorage.setItem(ATTR_KEY, JSON.stringify(merged));
+    writeDurableClickIds(merged);
     return merged;
   } catch {
+    next.session_id = newSessionId();
+    writeDurableClickIds(next);
     return next;
   }
 }
@@ -158,6 +238,7 @@ export function readAttribution(
           variant: extras.variant || prev.variant,
           lp_variant: extras.lp_variant || prev.lp_variant,
           lp_version: extras.lp_version || prev.lp_version,
+          baseline_label: extras.baseline_label || prev.baseline_label,
         }),
       };
     }
@@ -209,7 +290,10 @@ function sendExperimentToGa4(
   window.__vcExpGa4Queue.push([name, params]);
 }
 
-/** Diagnostic / secondary events — safe in all environments. */
+const PII_EVENT_KEYS =
+  /^(name|full_?name|first_?name|last_?name|email|phone|telephone|tel|message|form_message|company|company_website)$/i;
+
+/** Diagnostic / secondary events — safe in all environments. No PII. */
 export function trackEvent(
   name: string,
   payload: Record<string, string | number | boolean | undefined> = {},
@@ -225,12 +309,22 @@ export function trackEvent(
     payload.lp_version !== undefined && payload.lp_version !== ""
       ? String(payload.lp_version)
       : LP_VERSION;
+  const pagePath =
+    payload.page_path !== undefined && payload.page_path !== ""
+      ? String(payload.page_path)
+      : window.location.pathname || "";
+  const safePayload: Record<string, string | number | boolean | undefined> = {};
+  for (const [key, value] of Object.entries(payload)) {
+    if (PII_EVENT_KEYS.test(key)) continue;
+    safePayload[key] = value;
+  }
   const eventPayload: DataLayerEvent = {
     event: name,
-    ...payload,
+    ...safePayload,
     market,
     site_surface: market || undefined,
     lp_version: lpVersion,
+    page_path: pagePath,
     ...(lpVariant ? { lp_variant: lpVariant } : {}),
   };
   window.dataLayer.push(eventPayload);
@@ -245,29 +339,23 @@ export function trackEvent(
   }
 }
 
-/** Phone CTA click — canonical + short alias. Not a qualified call conversion. */
+/** Phone CTA click — canonical only. Not a qualified call conversion. */
 export function trackPhoneClick(
   payload: Record<string, string | number | boolean | undefined> = {},
 ) {
   trackEvent("phone_cta_clicked", { ...payload, is_qualified_call: false });
-  trackEvent("phone_click", {
-    ...payload,
-    is_qualified_call: false,
-    alias_of: "phone_cta_clicked",
-  });
   // Meaningful phone initiation — suppress secondary recovery for this session.
   markPrimaryConverted("phone_click");
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && typeof window.dispatchEvent === "function") {
     window.dispatchEvent(new Event("vc-primary-converted"));
   }
 }
 
-/** Calendly CTA click — canonical + short alias. Not Ads Primary. */
+/** Calendly CTA click — canonical only. Not Ads Primary. */
 export function trackCalendlyClick(
   payload: Record<string, string | number | boolean | undefined> = {},
 ) {
   trackEvent("calendly_cta_clicked", payload);
-  trackEvent("calendly_click", { ...payload, alias_of: "calendly_cta_clicked" });
 }
 
 /** Legacy thank-you inline Calendly viewed. Diagnostic only - not Ads Primary. */
@@ -306,10 +394,10 @@ function markPrimaryFired(submissionId: string) {
 
 /**
  * Durable form delivery event after server accept.
- * Name: employer_inquiry_submitted (+ alias form_submit_success).
+ * Name: employer_inquiry_submitted only (no aliases).
  * Funnel / observation only — NOT the Ads bidding Primary (spam risk).
- * Steering = duration-qualified phone; quality = Zoho Qualified lead offline.
  * Never fire for log_only / conversion_eligible=false.
+ * Never send PII or click ids to the dataLayer.
  */
 export function trackValidEmployerSubmit(opts: {
   market: string;
@@ -321,28 +409,22 @@ export function trackValidEmployerSubmit(opts: {
   companySize?: string;
   positionsNeeded?: string;
   hiringTimeline?: string;
+  schedule?: string;
   leadScore?: number;
   estimatedLeadValue?: number;
   valueKind?: string;
   fitLabel?: string;
   landingPage?: string;
-  utmSource?: string;
-  utmMedium?: string;
-  utmCampaign?: string;
-  utmTerm?: string;
-  utmContent?: string;
-  gclid?: string;
-  gbraid?: string;
-  wbraid?: string;
-  submittedAt?: string;
+  lpVersion?: string;
   lpSurface?: string;
   ctaMode?: string;
   lpVariant?: string;
+  pagePath?: string;
 }) {
   if (opts.conversionEligible === false) {
     trackEvent("employer_inquiry_log_only", {
       market: opts.market,
-      submission_id: opts.submissionId,
+      lead_reference: opts.submissionId,
       primary_eligible: false,
       bidding_primary: false,
       modeled_value_for_bidding: false,
@@ -352,46 +434,38 @@ export function trackValidEmployerSubmit(opts: {
   if (!opts.submissionId || alreadyFiredPrimary(opts.submissionId)) {
     trackEvent("employer_inquiry_submitted_deduped", {
       market: opts.market,
-      submission_id: opts.submissionId,
+      lead_reference: opts.submissionId,
     });
     return;
   }
   markPrimaryFired(opts.submissionId);
   markPrimaryConverted("form_submit");
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && typeof window.dispatchEvent === "function") {
     window.dispatchEvent(new Event("vc-primary-converted"));
   }
+  const landingType =
+    opts.ctaMode === "quiz_lp" || opts.lpSurface === "quiz" ? "quiz_lp" : "employer_paid_lp";
   const payload = {
     market: opts.market,
-    country: opts.market === "au" ? "AU" : "US",
-    submission_id: opts.submissionId,
-    role: opts.role || "",
-    role_category: opts.category || "",
+    lp_version: opts.lpVersion || LP_VERSION,
+    page_path: opts.pagePath || "",
+    landing_page_type: landingType,
+    role_selected: opts.role || "",
+    staff_count_range: opts.positionsNeeded || "",
+    work_schedule: opts.schedule || "",
+    lead_reference: opts.submissionId,
     category: opts.category || "",
     variant: opts.variant || "",
     company_size: opts.companySize || "",
-    positions_needed: opts.positionsNeeded || "",
     hiring_timeline: opts.hiringTimeline || "",
     lead_score: opts.leadScore,
     estimated_lead_value: opts.estimatedLeadValue,
     value_kind: opts.valueKind || "estimated_modeled",
     fit_label: opts.fitLabel || "",
     landing_page: opts.landingPage || "",
-    utm_source: opts.utmSource || "",
-    utm_medium: opts.utmMedium || "",
-    utm_campaign: opts.utmCampaign || "",
-    utm_term: opts.utmTerm || "",
-    utm_content: opts.utmContent || "",
-    gclid: opts.gclid || "",
-    gbraid: opts.gbraid || "",
-    wbraid: opts.wbraid || "",
-    submitted_at: opts.submittedAt || "",
     lp_surface: opts.lpSurface || "form",
     cta_mode: opts.ctaMode || (opts.lpSurface === "quiz" ? "quiz_lp" : "form_primary"),
-    landing_type:
-      opts.ctaMode === "quiz_lp" || opts.lpSurface === "quiz" ? "quiz_lp" : "form_lp",
     lp_variant: opts.lpVariant || (opts.lpSurface === "quiz" ? "quiz" : ""),
-    /** Durable delivery succeeded — still NOT Ads bidding Primary */
     primary_eligible: true,
     bidding_primary: false,
     modeled_value_for_bidding: false,
@@ -401,6 +475,4 @@ export function trackValidEmployerSubmit(opts: {
     is_qualified_call: false,
   };
   trackEvent("employer_inquiry_submitted", payload);
-  trackEvent("form_submit_success", { ...payload, alias_of: "employer_inquiry_submitted" });
-  trackEvent("form_submit", { ...payload, alias_of: "employer_inquiry_submitted" });
 }

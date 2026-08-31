@@ -14,7 +14,7 @@ export default function PreviewVariantToolbar() {
   const search = useSearchParams();
   if (!pathname.startsWith(TRUST_FIRST_NAMESPACE)) return null;
 
-  const current = search.get("v") === "proof" ? "proof_heavy" : "simple";
+  const current = search.get("v") === "simple" ? "simple" : "proof_heavy";
   const simpleHref = variantHref(pathname, "simple");
   const proofHref = variantHref(pathname, "proof_heavy");
   const onIndex = pathname === TRUST_FIRST_NAMESPACE;

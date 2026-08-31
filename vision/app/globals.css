@@ -198,12 +198,14 @@ button {
   font-weight: 800;
 }
 
+/* AU mist/foam shell: nudges must read as ink, not washed gray */
 .au .gate-nudges li {
-  color: #2c4459;
+  color: #17293c;
+  font-weight: 700;
 }
 
 .au .gate-nudges li::before {
-  color: #0d7a76;
+  color: #0a6562;
 }
 
 .industry-band {
@@ -245,8 +247,8 @@ button {
 
 .industry-band-light .trust-stat-card {
   background: #fff;
-  box-shadow: 0 10px 26px rgba(23, 51, 79, 0.07),
-    inset 0 0 0 1px rgba(33, 72, 115, 0.1);
+  box-shadow: 0 10px 26px rgba(23, 51, 79, 0.08),
+    inset 0 0 0 1.5px rgba(13, 122, 118, 0.2);
 }
 
 .industry-band-light .trust-stat-figure,
@@ -370,6 +372,34 @@ button {
   gap: 0.5rem;
 }
 
+/* Hero trust near the form — social scale first, then star ratings. */
+.trust-row-hero {
+  gap: 0.65rem;
+}
+
+.trust-chip-social img {
+  height: 36px;
+  width: 36px;
+  border-radius: 8px;
+}
+
+.trust-chip-social-lead {
+  padding: 0.72rem 1.1rem 0.72rem 0.72rem;
+  border-radius: 16px;
+}
+
+.trust-chip-social-count {
+  font-size: 1.35rem !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1.05 !important;
+}
+
+.trust-row-light .trust-chip-social-lead {
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(23, 51, 79, 0.12),
+    inset 0 0 0 1.5px rgba(10, 102, 194, 0.18);
+}
+
 .trust-chip {
   display: inline-flex;
   align-items: center;
@@ -439,6 +469,51 @@ button {
 
 .trust-row-light .trust-chip-stat em {
   color: #128f8b;
+}
+
+/* Google / Clutch — punchier hierarchy on the money LP hero. */
+.trust-row-hero .trust-chip-review {
+  gap: 0.75rem;
+  padding: 0.7rem 1.05rem 0.7rem 0.75rem;
+  border-radius: 16px;
+}
+
+.trust-row-hero .trust-chip-review img {
+  height: 46px;
+}
+
+.trust-row-hero .trust-chip-review > span > b,
+.trust-row-hero .trust-chip-review .trust-chip-rating-line {
+  font-size: 1.35rem;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.trust-chip-meta {
+  margin-top: 0.28rem !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.04em !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+}
+
+.trust-row-light .trust-chip-review {
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(23, 51, 79, 0.12),
+    inset 0 0 0 1.5px rgba(18, 143, 139, 0.22);
+}
+
+.trust-row-light .trust-chip-review .trust-chip-meta {
+  color: #2a4a5c;
+}
+
+.trust-row-hero .trust-chip-cred {
+  opacity: 0.92;
+}
+
+.trust-row-light .trust-chip-cred {
+  box-shadow: 0 8px 20px rgba(23, 51, 79, 0.07),
+    inset 0 0 0 1px rgba(33, 72, 115, 0.08);
 }
 
 /* Classic Google review gold — never inherit muted chip grey. */
@@ -710,13 +785,13 @@ button {
 /* Light-page variant — stronger ink for small type */
 .sell-grid-light .sell-card {
   background: #fff;
-  box-shadow: 0 10px 28px rgba(23, 51, 79, 0.07),
-    inset 0 0 0 1px rgba(33, 72, 115, 0.12);
+  box-shadow: 0 10px 28px rgba(23, 51, 79, 0.08),
+    inset 0 0 0 1.5px rgba(13, 122, 118, 0.22);
 }
 
 .sell-grid-light .sell-card:hover {
-  box-shadow: 0 18px 40px rgba(23, 51, 79, 0.11),
-    inset 0 0 0 1px rgba(18, 143, 139, 0.3);
+  box-shadow: 0 18px 40px rgba(23, 51, 79, 0.12),
+    inset 0 0 0 1.5px rgba(10, 101, 98, 0.4);
 }
 
 .sell-grid-light .sell-card strong {
@@ -798,6 +873,8 @@ button {
    Hides supporting copy and tightens vertical rhythm. CTAs, the form, the phone
    number and the core trust marks are never marked secondary — both arms convert
    through exactly the same elements. See docs/SITE-EXPERIMENTS.md. */
+/* Simplified money LPs: lean copy without waiting on lp_density assign. */
+main[data-lp-surface="form"] [data-lp="secondary"],
 [data-lp-density="lean"] [data-lp="secondary"] {
   display: none !important;
 }
@@ -882,10 +959,11 @@ button {
 
 .gate-card {
   --g-ink: #12283f;
-  --g-mute: #6f8296;
-  --g-line: rgba(18, 40, 63, 0.14);
+  /* Stronger than prior #6f8296 — “obligation free” reassure must read on white */
+  --g-mute: #3a5166;
+  --g-line: rgba(18, 40, 63, 0.18);
   --g-accent: var(--vc-gold);
-  --g-accent-ink: #1b3a5c;
+  --g-accent-ink: #143252;
   --g-sel: var(--vc-cyan);
   --g-sel-bg: rgba(51, 222, 216, 0.14);
   --g-radius: 18px;
@@ -896,6 +974,25 @@ button {
   overflow: hidden;
   box-shadow: 0 28px 72px rgba(4, 14, 26, 0.4),
     inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+/* AU light money LPs: foam/sea card chrome (shared US+AU shell) */
+.au .gate-card {
+  background:
+    linear-gradient(165deg, rgba(238, 248, 247, 0.95) 0%, #fff 42%),
+    #fff;
+  box-shadow:
+    0 24px 56px rgba(23, 51, 79, 0.14),
+    inset 0 0 0 1.5px rgba(13, 122, 118, 0.28);
+}
+
+.au .gate-card-head {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 143, 139, 0.14) 0%,
+    rgba(51, 222, 216, 0.06) 55%,
+    transparent 100%
+  );
 }
 
 @keyframes gate-focus-flash {
@@ -971,7 +1068,11 @@ button {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
-  color: #4d7ca8;
+  color: #0a6562;
+}
+
+.au .gate-card-eyebrow {
+  color: #0a6562;
 }
 
 .gate-card-head h2 {
@@ -1204,6 +1305,52 @@ button {
   text-align: center;
 }
 
+.au .gate-reassure {
+  color: #1f3548;
+  font-weight: 600;
+}
+
+.gate-careers,
+.gate-audience {
+  margin: 0.7rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--g-mute);
+  font-weight: 500;
+}
+
+.gate-audience {
+  margin-top: 0.4rem;
+  font-size: 0.74rem;
+  opacity: 0.92;
+}
+
+.gate-careers a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.au .gate-careers,
+.au .gate-audience {
+  color: #3d5368;
+}
+
+.engage-chat-careers {
+  margin: 0.65rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: inherit;
+  opacity: 0.78;
+}
+
+.engage-chat-careers a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .gate-or {
   display: flex;
   align-items: center;
@@ -1292,6 +1439,30 @@ a.gate-call:hover {
   text-transform: none;
   color: var(--g-mute);
   font-weight: 500;
+}
+
+/* Quiet phone — secondary to form submit (competitors push book/form, not phone hero). */
+.gate-phone-quiet {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--g-mute);
+}
+
+.gate-phone-quiet a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+
+.gate-phone-quiet a:hover {
+  color: var(--g-ink, #12283f);
+}
+
+.gate-phone-quiet-solo {
+  margin-top: 1rem;
 }
 
 .gate-call-solo {
@@ -1479,12 +1650,18 @@ a.gate-call:hover {
     inset: auto 0 0 0;
     z-index: 40;
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
     padding: 0.6rem 0.75rem calc(0.6rem + env(safe-area-inset-bottom));
     background: rgba(9, 21, 36, 0.86);
     backdrop-filter: blur(14px);
     border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .sticky-cta-book-first {
+    background: rgba(247, 250, 252, 0.94);
+    border-top: 1px solid rgba(18, 40, 63, 0.12);
   }
 
   .sticky-cta-call {
@@ -1524,6 +1701,22 @@ a.gate-call:hover {
     background: linear-gradient(180deg, #ffd57f 0%, #fac056 52%, #f0ae38 100%);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55),
       0 8px 18px rgba(240, 174, 56, 0.3);
+  }
+
+  .sticky-cta-phone-quiet {
+    display: block;
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    color: #1f3548;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.15rem 0 0.1rem;
+  }
+
+  .sticky-cta-phone-quiet:hover {
+    color: #0a6562;
+    text-decoration: underline;
   }
 
   /* Keep the footer clear of the fixed bar. */
@@ -2158,7 +2351,7 @@ a.gate-call:hover {
 }
 
 .site-nav-light {
-  background: rgba(247, 251, 251, 0.94);
+  background: rgba(238, 245, 244, 0.96);
   border-bottom: 1px solid rgba(33, 72, 115, 0.12);
   color: #143252;
 }
@@ -2218,9 +2411,12 @@ a.gate-call:hover {
 }
 
 .site-nav-light .site-nav-link-primary {
-  background: rgba(18, 143, 139, 0.12);
-  color: #0d7a76;
-  box-shadow: inset 0 0 0 1px rgba(18, 143, 139, 0.28);
+  background: linear-gradient(180deg, #ffd57f 0%, #fac056 55%, #f0ae38 100%);
+  color: #143252;
+  font-weight: 700;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 6px 14px rgba(240, 174, 56, 0.3);
 }
 
 .site-nav-right {
@@ -2619,9 +2815,12 @@ a.gate-call:hover {
   }
 }
 
-/* When popup is open, park sticky + chat so nothing stacks under the dialog */
+/* When popup is open, park sticky + chat so nothing stacks under the dialog.
+   Form focus / primary convert also hide chat (recovery must not compete). */
 html.vc-popup-open .sticky-cta,
-html.vc-popup-open .engage-chat {
+html.vc-popup-open .engage-chat,
+html.vc-form-busy .engage-chat,
+html.vc-primary-converted .engage-chat {
   visibility: hidden;
   pointer-events: none;
 }
@@ -2959,18 +3158,27 @@ html.vc-popup-open .engage-chat {
 
 @media (max-width: 759px) {
   .engage-chat {
-    bottom: 6.25rem;
+    /* Clear sticky book + quiet phone strip; recovery only, never over submit. */
+    bottom: calc(7.75rem + env(safe-area-inset-bottom, 0px));
     right: 0.75rem;
   }
   .engage-chat-launcher {
-    min-height: 2.75rem;
-    padding: 0.55rem 0.9rem 0.55rem 0.5rem;
+    min-height: 2.5rem;
+    padding: 0.45rem 0.75rem 0.45rem 0.45rem;
+    font-size: 0.92rem;
+    box-shadow:
+      0 0 0 1px rgba(212, 175, 55, 0.4),
+      0 8px 20px rgba(0, 0, 0, 0.28);
   }
   .engage-chat-launcher span {
-    max-width: 9.5rem;
+    max-width: 7.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .engage-chat-panel {
+    max-height: min(58vh, 22rem);
+    overflow: auto;
   }
   .exit-intent-primary,
   .exit-intent-secondary,
@@ -3637,7 +3845,21 @@ html.vc-popup-open .engage-chat {
 }
 
 .trust-band-light .trust-band-label {
-  color: #0d7a76;
+  color: #0a6562;
+}
+
+/* Light mist/foam: gold/cyan eyebrows wash out — use deep sea ink */
+.pain-gain-light .au-proof-label,
+.pain-gain-light .us-proof-label,
+.role-outcomes-light .au-proof-label,
+.role-outcomes-light .us-proof-label,
+.industry-band-light .au-proof-label,
+.industry-band-light .us-proof-label,
+.au-sell .au-proof-label,
+.au-sell .us-proof-label,
+.lp-close-light .au-proof-label,
+.lp-close-light .us-proof-label {
+  color: #0a6562;
 }
 
 .trust-band h2 {
@@ -4976,11 +5198,12 @@ html.vc-popup-open .engage-chat {
   font-family: var(--font-body);
 }
 
-/* AU market shell — match /au home mist / daylight system */
+/* AU market shell — match /au home mist / daylight system.
+ * Keep it cool foam, not near-white — white page + map edge fade = blown-out glow. */
 .micro-light {
   background:
-    radial-gradient(ellipse 70% 45% at 8% -5%, rgba(18, 143, 139, 0.08), transparent 52%),
-    linear-gradient(180deg, #f7fbfb 0%, #eef6f5 48%, #e8f2f1 100%);
+    radial-gradient(ellipse 70% 45% at 8% -5%, rgba(18, 143, 139, 0.07), transparent 52%),
+    linear-gradient(180deg, #eef5f4 0%, #e6f0ef 52%, #dde9e8 100%);
   color: #17293c;
 }
 
@@ -5019,15 +5242,11 @@ html.vc-popup-open .engage-chat {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Soft edge vignette — keeps map present, eases into page chrome */
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 5%, #000 90%, transparent 100%);
-  mask-image:
-    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 5%, #000 90%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  /* Full-bleed map — no soft mask. Mask-to-transparent over mist = washed white edges. */
+  -webkit-mask-image: none;
+  mask-image: none;
+  -webkit-mask: none;
+  mask: none;
 }
 
 /* Near-full cover — zoomed out from prior 108% mid-crop */
@@ -5102,27 +5321,59 @@ html.vc-popup-open .engage-chat {
     );
 }
 
-/* AU light pages: hero fades into mist so body isn’t a dark cliff */
-.micro-light .micro-hero--au .micro-hero-veil {
+/*
+ * Light hubs (Services / How it works): professional full-bleed map.
+ * Never fade the hero into white/mist — that reads as blown-out edges.
+ * Copy scrim stays dark; bottom stays navy. Body foam starts below.
+ */
+.micro-light .micro-hero--map {
+  color: #eaf3fb;
+  background: #0c1826;
+}
+
+.micro-light .micro-hero--map .micro-hero-map {
+  -webkit-mask-image: none;
+  mask-image: none;
+  -webkit-mask: none;
+  mask: none;
+  background: #0c1826;
+}
+
+.micro-light .micro-hero--map .micro-hero-veil {
   background:
     linear-gradient(
       95deg,
-      rgba(12, 24, 38, 0.78) 0%,
-      rgba(12, 24, 38, 0.42) 28%,
-      rgba(12, 24, 38, 0.12) 48%,
-      transparent 66%
+      rgba(12, 24, 38, 0.86) 0%,
+      rgba(12, 24, 38, 0.52) 28%,
+      rgba(12, 24, 38, 0.16) 50%,
+      transparent 70%
     ),
     linear-gradient(
       to bottom,
-      rgba(12, 24, 38, 0.14) 0%,
-      transparent 32%,
-      rgba(247, 251, 251, 0.35) 72%,
-      #f7fbfb 100%
+      rgba(12, 24, 38, 0.28) 0%,
+      transparent 22%,
+      transparent 70%,
+      rgba(12, 24, 38, 0.55) 100%
     );
 }
 
-.micro-light .micro-hero--map {
-  color: #eaf3fb;
+@media (max-width: 700px) {
+  .micro-light .micro-hero--map .micro-hero-veil {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(12, 24, 38, 0.5) 0%,
+        rgba(12, 24, 38, 0.22) 34%,
+        rgba(12, 24, 38, 0.4) 72%,
+        rgba(12, 24, 38, 0.68) 100%
+      ),
+      linear-gradient(
+        105deg,
+        rgba(12, 24, 38, 0.7) 0%,
+        rgba(12, 24, 38, 0.28) 48%,
+        transparent 78%
+      );
+  }
 }
 
 .micro-light .micro-hero--map .micro-lead {
@@ -5419,11 +5670,19 @@ html.vc-popup-open .engage-chat {
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   overflow: hidden;
   isolation: isolate;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
     box-shadow 0.2s ease,
     transform 0.2s ease;
+}
+
+a.services-card:focus-visible {
+  outline: 3px solid var(--vc-cyan);
+  outline-offset: 3px;
 }
 
 /* Thin brand accent — cyan / gold, not purple glow */
@@ -5624,8 +5883,14 @@ html.vc-popup-open .engage-chat {
   font-size: 0.95rem;
 }
 
-.services-card-links a {
+.services-card-links a,
+.services-card-cta {
   color: var(--vc-gold);
+}
+
+.services-card-details {
+  color: #9eb4c9;
+  font-weight: 600;
 }
 
 /* AU light — role cards on white panels, still framed (not AI grid mush) */
@@ -5667,8 +5932,17 @@ html.vc-popup-open .engage-chat {
   color: #5a7084 !important;
 }
 
-.micro-light .services-card-links a {
+.micro-light .services-card-links a,
+.micro-light .services-card-cta {
   color: #0d7a76;
+}
+
+.micro-light .services-card-details {
+  color: #5a7084;
+}
+
+.micro-light a.services-card:focus-visible {
+  outline-color: #128f8b;
 }
 
 .micro-light .services-card--mat .services-card-photo {
@@ -6025,7 +6299,8 @@ html.vc-popup-open .thank-you > .thank-you-book {
 }
 
 .thank-you.micro-light .thank-you-book-note {
-  color: #3a5166 !important;
+  color: #1f3548 !important;
+  font-weight: 600;
 }
 
 /* Calendly popup overlay is appended to body - keep clicks working on dark pages */
@@ -6056,13 +6331,9 @@ html.vc-popup-open .thank-you > .thank-you-book {
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(6, 14, 24, 0.72);
+  background: rgba(23, 51, 79, 0.28);
   cursor: pointer;
   pointer-events: auto;
-}
-
-.ty-cal-overlay-au .ty-cal-scrim {
-  background: rgba(20, 50, 82, 0.48);
 }
 
 .ty-cal-panel {
@@ -6073,25 +6344,22 @@ html.vc-popup-open .thank-you > .thank-you-book {
   flex: 0 0 auto;
   padding: 1.35rem 1.2rem 1.15rem;
   border-radius: 1.15rem;
+  border: 2px solid transparent;
   pointer-events: auto;
   isolation: isolate;
-}
-
-.ty-cal-overlay-us .ty-cal-panel {
+  /* Light sea → foam → gold ring (AU tokens). Fill stays foam; ink stays dark. */
   background:
-    linear-gradient(135deg, rgba(51, 222, 216, 0.12), transparent 42%),
-    linear-gradient(160deg, #143252, #0c2238);
-  box-shadow:
-    inset 0 0 0 2px #33ded8,
-    0 24px 60px rgba(0, 0, 0, 0.45);
-  color: #f4f8fc;
-}
-
-.ty-cal-overlay-au .ty-cal-panel {
-  background: #fff;
-  box-shadow:
-    inset 0 0 0 2px #214873,
-    0 24px 60px rgba(23, 51, 79, 0.18);
+    radial-gradient(ellipse 50% 70% at 100% 0%, rgba(51, 222, 216, 0.14), transparent 55%) padding-box,
+    linear-gradient(160deg, #f4fbfa 0%, #fff 55%) padding-box,
+    linear-gradient(
+      135deg,
+      rgba(18, 143, 139, 0.5) 0%,
+      rgba(238, 248, 247, 0.95) 28%,
+      rgba(250, 192, 86, 0.62) 52%,
+      rgba(51, 222, 216, 0.38) 76%,
+      rgba(18, 143, 139, 0.45) 100%
+    ) border-box;
+  box-shadow: 0 24px 60px rgba(23, 51, 79, 0.16);
   color: #143252;
 }
 
@@ -6103,17 +6371,12 @@ html.vc-popup-open .thank-you > .thank-you-book {
   height: 2.25rem;
   border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  color: inherit;
+  background: rgba(20, 50, 82, 0.08);
+  color: #143252;
   font-size: 1.45rem;
   line-height: 1;
   cursor: pointer;
   pointer-events: auto;
-}
-
-.ty-cal-overlay-au .ty-cal-close {
-  background: rgba(20, 50, 82, 0.08);
-  color: #143252;
 }
 
 .ty-cal-eyebrow {
@@ -6122,12 +6385,8 @@ html.vc-popup-open .thank-you > .thank-you-book {
   font-size: 0.75rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-weight: 700;
-  color: var(--vc-cyan);
-}
-
-.ty-cal-overlay-au .ty-cal-eyebrow {
-  color: #0d7a76;
+  font-weight: 800;
+  color: #0a6562;
 }
 
 .ty-cal-panel h2 {
@@ -6137,6 +6396,7 @@ html.vc-popup-open .thank-you > .thank-you-book {
   font-size: clamp(1.35rem, 1.4vw + 1rem, 1.75rem);
   letter-spacing: -0.02em;
   line-height: 1.15;
+  color: #143252;
 }
 
 .ty-cal-sub {
@@ -6144,14 +6404,7 @@ html.vc-popup-open .thank-you > .thank-you-book {
   font-size: 0.98rem;
   line-height: 1.5;
   max-width: 48ch;
-}
-
-.ty-cal-overlay-us .ty-cal-sub {
-  color: #d0e0ef;
-}
-
-.ty-cal-overlay-au .ty-cal-sub {
-  color: #3a5166;
+  color: #1f3548;
 }
 
 .ty-cal-call {
@@ -6160,18 +6413,10 @@ html.vc-popup-open .thank-you > .thank-you-book {
   margin: 0 0 0.9rem;
   font-size: 0.95rem;
   font-weight: 700;
-  color: inherit;
+  color: #0d5f9c;
   text-decoration: underline;
   text-underline-offset: 0.18em;
   pointer-events: auto;
-}
-
-.ty-cal-overlay-us .ty-cal-call {
-  color: #33ded8;
-}
-
-.ty-cal-overlay-au .ty-cal-call {
-  color: #0d5f9c;
 }
 
 .ty-cal-box {
@@ -6311,7 +6556,7 @@ html.vc-popup-open .thank-you > .thank-you-book {
   color: #e2eef8;
 }
 
-/* AU thank-you uses .micro-light — don't let .thank-you-au navy + dark ink collide */
+/* Thank-you: AU mist/foam for US + AU (park dark shell; match money LPs) */
 .thank-you.micro-light {
   background:
     radial-gradient(ellipse 70% 45% at 8% -5%, rgba(18, 143, 139, 0.08), transparent 52%),
@@ -6354,21 +6599,21 @@ html.vc-popup-open .thank-you > .thank-you-book {
 .thank-you.micro-light .thank-you-step {
   background: #fff;
   box-shadow:
-    0 12px 30px rgba(23, 51, 79, 0.08),
-    inset 0 0 0 1px rgba(33, 72, 115, 0.1);
+    0 12px 30px rgba(23, 51, 79, 0.1),
+    inset 0 0 0 1.5px rgba(13, 122, 118, 0.22);
 }
 
 .thank-you.micro-light .thank-you-step:nth-child(1) {
   background:
-    linear-gradient(160deg, rgba(13, 122, 118, 0.08), transparent 55%),
+    linear-gradient(160deg, rgba(13, 122, 118, 0.12), transparent 55%),
     #fff;
   box-shadow:
-    0 12px 30px rgba(23, 51, 79, 0.08),
-    inset 0 0 0 1px rgba(13, 122, 118, 0.22);
+    0 12px 30px rgba(23, 51, 79, 0.1),
+    inset 0 0 0 1.5px rgba(10, 101, 98, 0.34);
 }
 
 .thank-you.micro-light .thank-you-step em {
-  color: #0d7a76;
+  color: #0a6562;
 }
 
 .thank-you.micro-light .thank-you-step h3 {
@@ -6376,20 +6621,22 @@ html.vc-popup-open .thank-you > .thank-you-book {
 }
 
 .thank-you.micro-light .thank-you-step p {
-  color: #3a5166;
+  color: #1f3548;
 }
 
 .thank-you.micro-light .thank-you-book-inner {
   background:
-    linear-gradient(135deg, rgba(13, 122, 118, 0.08), transparent 45%),
-    #fff;
+    radial-gradient(ellipse 55% 80% at 100% 0%, rgba(51, 222, 216, 0.16), transparent 58%),
+    linear-gradient(145deg, rgba(18, 143, 139, 0.12) 0%, transparent 48%),
+    linear-gradient(180deg, #f4fbfa 0%, #fff 55%);
   box-shadow:
-    0 18px 40px rgba(23, 51, 79, 0.08),
-    inset 0 0 0 1px rgba(13, 122, 118, 0.22);
+    0 22px 48px rgba(23, 51, 79, 0.12),
+    inset 0 0 0 1.5px rgba(10, 101, 98, 0.34);
 }
 
 .thank-you.micro-light .thank-you-book-eyebrow {
-  color: #0d7a76;
+  color: #0a6562;
+  font-weight: 800;
 }
 
 .thank-you.micro-light .thank-you-book h2 {
@@ -6397,27 +6644,75 @@ html.vc-popup-open .thank-you > .thank-you-book {
 }
 
 .thank-you.micro-light .thank-you-book p {
-  color: #3a5166;
+  color: #1f3548;
+}
+
+/* Overlay chrome: beat .thank-you-book h2/p so copy stays dark on the light panel */
+.thank-you.micro-light .thank-you-book .ty-cal-panel {
+  background:
+    radial-gradient(ellipse 50% 70% at 100% 0%, rgba(51, 222, 216, 0.14), transparent 55%) padding-box,
+    linear-gradient(160deg, #f4fbfa 0%, #fff 55%) padding-box,
+    linear-gradient(
+      135deg,
+      rgba(18, 143, 139, 0.5) 0%,
+      rgba(238, 248, 247, 0.95) 28%,
+      rgba(250, 192, 86, 0.62) 52%,
+      rgba(51, 222, 216, 0.38) 76%,
+      rgba(18, 143, 139, 0.45) 100%
+    ) border-box;
+  color: #143252;
+}
+
+.thank-you.micro-light .thank-you-book .ty-cal-panel h2 {
+  color: #143252;
+}
+
+.thank-you.micro-light .thank-you-book .ty-cal-eyebrow {
+  color: #0a6562;
+}
+
+.thank-you.micro-light .thank-you-book .ty-cal-sub {
+  color: #1f3548;
+}
+
+.thank-you.micro-light .thank-you-book .ty-cal-call {
+  color: #0d5f9c;
+}
+
+.thank-you.micro-light .thank-you-book .ty-cal-close {
+  background: rgba(20, 50, 82, 0.08);
+  color: #143252;
+}
+
+.thank-you.micro-light .thank-you-book-primary,
+.thank-you.micro-light .thank-you-book .micro-btn-primary {
+  color: #143252;
+  background: linear-gradient(180deg, #ffd57f 0%, #fac056 52%, #f0ae38 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 12px 26px rgba(240, 174, 56, 0.38),
+    0 2px 5px rgba(23, 51, 79, 0.14);
 }
 
 .thank-you.micro-light .thank-you-book-secondary,
 .thank-you.micro-light .thank-you-book .micro-btn-ghost {
   color: #143252;
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px rgba(20, 50, 82, 0.28);
+  background: rgba(238, 248, 247, 0.85);
+  box-shadow: inset 0 0 0 1.5px rgba(13, 122, 118, 0.34);
 }
 
 .thank-you.micro-light .thank-you-book-secondary:hover,
 .thank-you.micro-light .thank-you-book .micro-btn-ghost:hover {
-  background: rgba(13, 122, 118, 0.1);
-  color: #0d4f4c;
+  background: rgba(13, 122, 118, 0.12);
+  color: #0a4f4c;
 }
 
 .thank-you.micro-light .thank-you-aside-inner {
-  background: #fff;
+  background:
+    linear-gradient(145deg, rgba(238, 248, 247, 0.9), #fff);
   box-shadow:
-    0 12px 30px rgba(23, 51, 79, 0.08),
-    inset 0 0 0 1px rgba(33, 72, 115, 0.1);
+    0 14px 32px rgba(23, 51, 79, 0.1),
+    inset 0 0 0 1.5px rgba(13, 122, 118, 0.22);
 }
 
 .thank-you.micro-light .thank-you-aside h2 {
@@ -6533,7 +6828,7 @@ html.vc-popup-open .thank-you > .thank-you-book {
 }
 
 .pain-gain-light {
-  background: rgba(240, 246, 250, 0.92);
+  background: rgba(230, 240, 239, 0.95);
 }
 
 .pain-gain-inner {
@@ -6585,7 +6880,8 @@ html.vc-popup-open .thank-you > .thank-you-book {
 
 .pain-gain-light .pain-gain-col {
   background: #fff;
-  box-shadow: inset 0 0 0 1px rgba(20, 50, 80, 0.1);
+  box-shadow: 0 10px 26px rgba(23, 51, 79, 0.08),
+    inset 0 0 0 1.5px rgba(13, 122, 118, 0.2);
 }
 
 .pain-gain-col h3 {
@@ -6823,142 +7119,65 @@ html.vc-popup-open .thank-you > .thank-you-book {
   border: 0;
 }
 
-/* ——— End-of-page STOP closer (scroll stopper) ——— */
-.lp-stop {
-  position: relative;
-  padding: clamp(2.5rem, 6vw, 4.75rem) var(--shell);
-  overflow: hidden;
-  isolation: isolate;
-  background:
-    radial-gradient(ellipse 70% 80% at 12% 80%, rgba(217, 43, 32, 0.38), transparent 58%),
-    radial-gradient(ellipse 50% 60% at 92% 8%, rgba(250, 192, 86, 0.18), transparent 55%),
-    linear-gradient(125deg, #14080c 0%, #1c0c12 42%, #1a1428 100%);
-  border-top: 3px solid #e23b2e;
+/* ——— End-of-page closing CTA (flows with sell bands) ——— */
+.lp-close-inner {
+  display: grid;
+  gap: 1.35rem;
+  align-items: end;
 }
 
-.lp-stop-inner {
-  display: grid;
-  gap: 1.75rem;
-  max-width: 84rem;
-  margin: 0 auto;
+@media (min-width: 820px) {
+  .lp-close-inner {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+    gap: 2rem;
+  }
+}
+
+.lp-close-head h2 {
+  margin: 0 0 0.65rem;
+  max-width: 28ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-h2);
+  letter-spacing: -0.028em;
+  line-height: 1.12;
+}
+
+.lp-close-lead {
+  margin: 0;
+  max-width: 52ch;
+  font-size: clamp(1.05rem, 0.4vw + 0.98rem, 1.18rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: #c2d3e4;
+}
+
+.lp-close-light .lp-close-lead,
+.au-sell.lp-close .lp-close-lead {
+  color: #2c4459;
+}
+
+.au-sell.lp-close .lp-close-head h2 {
+  color: var(--ocean);
+}
+
+.lp-close-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   align-items: center;
 }
 
 @media (min-width: 820px) {
-  .lp-stop-inner {
-    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-    gap: 2.75rem;
+  .lp-close-actions {
+    justify-content: flex-end;
   }
 }
 
-.lp-stop-visual {
-  position: relative;
-  margin: 0;
-}
-
-.lp-stop-visual img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  max-height: 28rem;
-  object-fit: cover;
-  object-position: 50% 50%;
-  border-radius: 22px;
-  box-shadow:
-    0 28px 60px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.16);
-}
-
-.lp-stop-copy h2 {
-  margin: 0 0 0.85rem;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(2.35rem, 8vw, 4.05rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  color: #fff;
-  text-shadow: 0 0 42px rgba(226, 59, 46, 0.45);
-}
-
-.lp-stop-lead {
-  margin: 0 0 1.5rem;
-  max-width: 42ch;
-  font-size: clamp(1.22rem, 2.4vw, 1.48rem);
-  font-weight: 650;
-  line-height: 1.4;
-  color: #f0e4dc;
-}
-
-.lp-stop-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem;
-}
-
-.lp-stop-primary,
-.lp-stop-call {
+.lp-close-primary,
+.lp-close-call {
   justify-content: center;
-  min-height: 3.5rem;
-  border-radius: 14px !important;
-  font-family: var(--font-display);
-  font-weight: 800 !important;
-  letter-spacing: -0.02em;
-  filter: none !important;
-}
-
-.lp-stop-primary {
-  font-size: 1.22rem !important;
-  padding: 1.18rem 1.85rem !important;
-  color: #fff !important;
-  background: linear-gradient(180deg, #e84a3c 0%, #c62828 48%, #a91b1b 100%) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    0 14px 28px rgba(169, 27, 27, 0.48),
-    0 2px 6px rgba(0, 0, 0, 0.35) !important;
-}
-
-.lp-stop-primary:hover {
-  transform: translateY(-2px);
-  color: #fff !important;
-  background: linear-gradient(180deg, #f05a4c 0%, #d32f2f 48%, #b71c1c 100%) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.32),
-    0 18px 36px rgba(169, 27, 27, 0.55),
-    0 3px 8px rgba(0, 0, 0, 0.4) !important;
-}
-
-.lp-stop-primary:active,
-.lp-stop-call:active {
-  transform: translateY(0);
-}
-
-.lp-stop-call {
-  font-size: 1.16rem !important;
-  padding: 1.14rem 1.7rem !important;
-  color: #1a1420 !important;
-  background: linear-gradient(180deg, #fff8f0 0%, #f3e6d8 100%) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    0 12px 24px rgba(0, 0, 0, 0.28),
-    0 2px 5px rgba(0, 0, 0, 0.2) !important;
-}
-
-.lp-stop-call:hover {
-  transform: translateY(-2px);
-  color: #1a1420 !important;
-  background: linear-gradient(180deg, #fffdf9 0%, #f7ece0 100%) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 16px 32px rgba(0, 0, 0, 0.32),
-    0 3px 7px rgba(0, 0, 0, 0.22) !important;
-}
-
-.lp-stop-light {
-  background:
-    radial-gradient(ellipse 70% 80% at 12% 80%, rgba(217, 43, 32, 0.16), transparent 58%),
-    radial-gradient(ellipse 50% 60% at 92% 8%, rgba(250, 192, 86, 0.2), transparent 55%),
-    linear-gradient(125deg, #1a0e12 0%, #241018 48%, #1c1828 100%);
+  min-height: 3.1rem;
 }
 
 /* ——— US/AU LP mobile type audit (~375px) ——— */
@@ -7070,6 +7289,21 @@ html.vc-popup-open .thank-you > .thank-you-book {
     font-size: 1rem;
   }
 
+  .lp-close-lead {
+    font-size: 1.12rem;
+  }
+
+  .lp-close-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lp-close-primary,
+  .lp-close-call {
+    width: 100%;
+    min-height: 3.25rem;
+  }
+
   .faq-acc-item summary {
     font-size: 1.28rem;
     padding: 1.1rem 1.15rem;
@@ -7091,21 +7325,153 @@ html.vc-popup-open .thank-you > .thank-you-book {
   .au-rate-note {
     font-size: 1.02rem;
   }
+}
 
-  .lp-stop-lead {
-    font-size: 1.28rem;
+/* Direct Calendly booking pages — /us/book · /au/book */
+.book-page {
+  min-height: 100vh;
+}
+
+.book-hero {
+  position: relative;
+  z-index: 1;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2.25rem 1.25rem 1.25rem;
+  text-align: center;
+}
+
+.book-hero h1 {
+  margin: 0.35rem 0 0.75rem;
+  font-size: clamp(1.85rem, 4.5vw, 2.55rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #12263a;
+}
+
+.book-hero .micro-lead {
+  margin: 0 auto 1rem;
+  max-width: 36rem;
+  color: #3a4d63;
+}
+
+.book-employer-note,
+.book-phone-alt {
+  margin: 0.65rem auto 0;
+  max-width: 34rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #4a5d73;
+}
+
+.book-employer-note a,
+.book-phone-alt a,
+.book-home-link a,
+.book-cal-fallback a {
+  color: #0d5f9c;
+  font-weight: 600;
+  text-underline-offset: 0.15em;
+}
+
+.book-embed-section {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 0.5rem 1rem 1.5rem;
+}
+
+.book-cal {
+  background: #fff;
+  border: 1px solid rgba(18, 38, 58, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(18, 38, 58, 0.08);
+  padding: 1rem 1rem 1.15rem;
+}
+
+.book-cal-box {
+  margin: 0 auto;
+}
+
+.book-cal-fallback {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  font-size: 0.92rem;
+  color: #4a5d73;
+}
+
+.book-cal-fallback-strong {
+  margin-top: 0.25rem;
+}
+
+.book-cal-fallback-quiet {
+  opacity: 0.9;
+}
+
+.book-home-link {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 759px) {
+  .book-hero {
+    padding-top: 1.5rem;
+    text-align: left;
   }
 
-  .lp-stop-actions {
+  .book-hero .micro-lead,
+  .book-employer-note,
+  .book-phone-alt {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .book-cal {
+    padding: 0.65rem 0.55rem 0.9rem;
+    border-radius: 12px;
+  }
+
+  .book-cal-box.ty-cal-box {
+    height: min(72vh, 640px) !important;
+  }
+}
+
+/* Secondary “skip the form” CTA on paid LPs */
+.sp-hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 0.85rem;
+  align-items: center;
+  margin-top: 0.15rem;
+}
+
+.sp-hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.85rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(18, 38, 58, 0.22);
+  background: transparent;
+  color: #12263a;
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+}
+
+.sp-hero-cta-secondary:hover {
+  border-color: rgba(13, 95, 156, 0.55);
+  color: #0d5f9c;
+}
+
+@media (max-width: 759px) {
+  .sp-hero-cta-row {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .lp-stop-primary,
-  .lp-stop-call {
+  .sp-hero-cta-secondary {
     width: 100%;
-    min-height: 3.75rem;
-    font-size: 1.28rem !important;
-    padding: 1.22rem 1.4rem !important;
+    text-align: center;
   }
 }

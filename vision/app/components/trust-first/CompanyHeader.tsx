@@ -16,7 +16,13 @@ export default function CompanyHeader({
           <img src="/brand/logo-vc.png" alt="Virtual Coworker" width={180} height={42} />
         </a>
         <div className="tf-header-right">
-          <a className="tf-phone" href={VERIFIED_PROOF.phoneHref}>
+          <a
+            className="tf-phone"
+            href={VERIFIED_PROOF.phoneHref}
+            data-track="phone_cta_clicked"
+            data-market="us"
+            data-cta-location="header"
+          >
             {SITE.usPhoneDisplay}
           </a>
           <a className="tf-header-cta" href={ctaHref}>

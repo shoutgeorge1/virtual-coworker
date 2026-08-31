@@ -1,0 +1,619 @@
+{
+  "generated_at_utc": "2026-08-13T16:02:35.875921+00:00",
+  "read_only": true,
+  "pages": [
+    {
+      "requested": "https://virtualcoworker.com/",
+      "final_url": "https://virtualcoworker.com/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 575,
+      "bytes": 558124,
+      "redirected": false,
+      "title": "Hire Virtual Assistants from the Philippines | Virtual CoworkerExpandExpandExpandToggle MenuExpandExpandExpand",
+      "gtm": [
+        "GTM-TTKNKT"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 0,
+      "employer_form_present": false,
+      "required_fields": [],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644",
+        "+18889648644",
+        "+611300886740",
+        "1300 886 740",
+        "1300886740"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "US WP home (historical Brand Final URL)"
+    },
+    {
+      "requested": "https://virtualcoworker.com/contact-us/",
+      "final_url": "https://virtualcoworker.com/contact-us/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 492,
+      "bytes": 194689,
+      "redirected": false,
+      "title": "Free Consultation - Virtual Coworker USAExpandExpandExpandToggle MenuExpandExpandExpand",
+      "gtm": [
+        "GTM-TTKNKT"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 1,
+      "employer_form_present": true,
+      "required_fields": [
+        "X/Twitter",
+        "First",
+        "Email Address*",
+        "Phone*",
+        "Company*",
+        "Country*",
+        "Message*"
+      ],
+      "optional_fields": [
+        "X/Twitter",
+        "Country*",
+        "Part Time: 20 hours per week (This is our Minimum)",
+        "Full Time: 40 hours per week",
+        "\u0394"
+      ],
+      "placeholders": [
+        "First Name",
+        "Last Name",
+        "Email Address",
+        "Phone",
+        "Company",
+        "Quick Message"
+      ],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644",
+        "+18889648644",
+        "+611300886740",
+        "1300 886 740",
+        "1300886740",
+        "888 964 8644"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "US WP contact / Gravity Form"
+    },
+    {
+      "requested": "https://virtualcoworker.com/contact/",
+      "final_url": "https://virtualcoworker.com/contact/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 912,
+      "bytes": 192605,
+      "redirected": false,
+      "title": "Contact Us - Virtual Coworker USAExpandExpandExpandToggle MenuExpandExpandExpand",
+      "gtm": [
+        "GTM-TTKNKT"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 1,
+      "employer_form_present": true,
+      "required_fields": [
+        "Email",
+        "First",
+        "Email Address*",
+        "Phone*",
+        "Company*",
+        "Country*",
+        "Message*"
+      ],
+      "optional_fields": [
+        "Email",
+        "\u0394"
+      ],
+      "placeholders": [
+        "First Name",
+        "Last Name",
+        "Email Address",
+        "Phone",
+        "Company",
+        "Quick Message"
+      ],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644",
+        "+18889648644",
+        "+611300886740",
+        "1300 886 740",
+        "1300886740",
+        "888 964 8644"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "US WP /contact alias"
+    },
+    {
+      "requested": "https://virtualcoworker.com/services/virtual-assistant-services/",
+      "final_url": "https://virtualcoworker.com/services/virtual-assistant-services/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 460,
+      "bytes": 330045,
+      "redirected": false,
+      "title": "Hire Virtual Assistant Services from the PhilippinesExpandExpandExpandToggle MenuExpandExpandExpand",
+      "gtm": [
+        "GTM-TTKNKT"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 0,
+      "employer_form_present": false,
+      "required_fields": [],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644",
+        "+18889648644",
+        "+611300886740",
+        "1300 886 740",
+        "1300886740"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "US WP VA services (typical sitelink)"
+    },
+    {
+      "requested": "https://virtualcoworker.com/lp-fb/",
+      "final_url": "https://virtualcoworker.com/lp-fb/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 1155,
+      "bytes": 561233,
+      "redirected": false,
+      "title": "Virtual Assistants - Virtual Coworker USA",
+      "gtm": [
+        "GTM-TTKNKT"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 1,
+      "employer_form_present": true,
+      "required_fields": [
+        "Comments",
+        "First",
+        "Email Address*",
+        "Phone*",
+        "Company*",
+        "Country*",
+        "Message*"
+      ],
+      "optional_fields": [
+        "Comments",
+        "Country*",
+        "Part Time: 20 Hours Per Week (This is our Minimum)",
+        "Full Time: 40 Hours Per Week",
+        "\u0394"
+      ],
+      "placeholders": [
+        "First Name",
+        "Last Name",
+        "Email Address",
+        "Phone",
+        "Company",
+        "Quick Message"
+      ],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "US WP Facebook landing"
+    },
+    {
+      "requested": "https://virtualcoworker.com/thank-you-landing/",
+      "final_url": "https://virtualcoworker.com/thank-you-landing/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 822,
+      "bytes": 70916,
+      "redirected": false,
+      "title": "Thank You - Virtual Coworker USA",
+      "gtm": [
+        "GTM-TTKNKT"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 0,
+      "employer_form_present": false,
+      "required_fields": [],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "US WP thank-you landing"
+    },
+    {
+      "requested": "https://virtualcoworker.com/pricing/",
+      "final_url": "https://virtualcoworker.com/pricing-savings-guide/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 1511,
+      "bytes": 186845,
+      "redirected": true,
+      "title": "Pricing & Savings Guide for Virtual Assistant ServicesExpandExpandExpandToggle MenuExpandExpandExpand",
+      "gtm": [
+        "GTM-TTKNKT"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 0,
+      "employer_form_present": false,
+      "required_fields": [],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644",
+        "+18889648644",
+        "+611300886740",
+        "1300 886 740",
+        "1300886740"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "US WP pricing"
+    },
+    {
+      "requested": "https://virtualcoworker.com.au/",
+      "final_url": "https://virtualcoworker.com.au/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 1405,
+      "bytes": 464473,
+      "redirected": false,
+      "title": "Hire Virtual Assistants from the Philippines | Virtual CoworkerExpandExpandExpandToggle MenuExpandExpandExpand",
+      "gtm": [
+        "GTM-KNDLKVW"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 0,
+      "employer_form_present": false,
+      "required_fields": [],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644",
+        "+611300886740",
+        "1300 886 740",
+        "1300886740"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "AU WP home (historical Brand Final URL)"
+    },
+    {
+      "requested": "https://virtualcoworker.com.au/contact-us/",
+      "final_url": "https://virtualcoworker.com.au/contact-us/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 1087,
+      "bytes": 222145,
+      "redirected": false,
+      "title": "Free Consultation - Virtual Coworker AustraliaExpandExpandExpandToggle MenuExpandExpandExpand",
+      "gtm": [
+        "GTM-KNDLKVW"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 1,
+      "employer_form_present": true,
+      "required_fields": [
+        "URL",
+        "First",
+        "Email Address*",
+        "Phone*",
+        "Company*",
+        "Country*",
+        "Message*"
+      ],
+      "optional_fields": [
+        "URL",
+        "Country*",
+        "Part Time: 20 hours per week (This is our Minimum)",
+        "Full Time: 40 hours per week"
+      ],
+      "placeholders": [
+        "First Name",
+        "Last Name",
+        "Email Address",
+        "Phone",
+        "Company",
+        "Quick Message"
+      ],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644",
+        "+611300886740",
+        "1300 886 740",
+        "1300886740"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "AU WP contact / Gravity Form"
+    },
+    {
+      "requested": "https://virtualcoworker.com.au/services/virtual-assistant-services/",
+      "final_url": "https://virtualcoworker.com.au/services/virtual-assistants/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 1512,
+      "bytes": 306539,
+      "redirected": true,
+      "title": "Hire Virtual Assistant Services from the PhilippinesExpandExpandExpandToggle MenuExpandExpandExpand",
+      "gtm": [
+        "GTM-KNDLKVW"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 0,
+      "employer_form_present": false,
+      "required_fields": [],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+1-888-964-8644",
+        "+611300886740",
+        "1300 886 740",
+        "1300886740"
+      ],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "AU WP VA services"
+    },
+    {
+      "requested": "https://try.virtualcoworker.com/us",
+      "final_url": "https://try.virtualcoworker.com/us",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 786,
+      "bytes": 362332,
+      "redirected": false,
+      "title": "Virtual Coworker | Top Filipino Talent",
+      "gtm": [
+        "GTM-KSMWT6QM"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 2,
+      "employer_form_present": true,
+      "required_fields": [
+        "hero-first-name",
+        "First Name",
+        "Last Name",
+        "Work Email",
+        "Phone",
+        "Company Name",
+        "Country"
+      ],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": false,
+      "phones_visible": [
+        "1300 886 740"
+      ],
+      "recaptcha": false,
+      "indexable_hint": false,
+      "role": "try.* US (paused Brand ad destination)"
+    },
+    {
+      "requested": "https://try.virtualcoworker.com/apac",
+      "final_url": "https://try.virtualcoworker.com/apac",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 570,
+      "bytes": 362690,
+      "redirected": false,
+      "title": "Virtual Coworker | Top Filipino Talent",
+      "gtm": [
+        "GTM-KSMWT6QM"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 2,
+      "employer_form_present": true,
+      "required_fields": [
+        "hero-first-name",
+        "First Name",
+        "Last Name",
+        "Work Email",
+        "Phone",
+        "Company Name",
+        "Country"
+      ],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": false,
+      "phones_visible": [
+        "1300 886 740"
+      ],
+      "recaptcha": false,
+      "indexable_hint": false,
+      "role": "try.* AU/APAC"
+    },
+    {
+      "requested": "https://try.virtualcoworker.com/us/thank-you",
+      "final_url": "https://try.virtualcoworker.com/us/thank-you",
+      "status": 404,
+      "error": "Not Found",
+      "elapsed_ms": 200,
+      "bytes": 12449,
+      "redirected": false,
+      "title": "404: This page could not be found.Virtual Coworker | Top Filipino Talent",
+      "gtm": [
+        "GTM-KSMWT6QM"
+      ],
+      "aw": [],
+      "ga4": [],
+      "forms": 0,
+      "employer_form_present": false,
+      "required_fields": [],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": false,
+      "phones_visible": [],
+      "recaptcha": false,
+      "indexable_hint": false,
+      "role": "try.* thank-you (historically 404)"
+    },
+    {
+      "requested": "https://www.virtualcoworker.app/us",
+      "final_url": "https://www.virtualcoworker.app/us",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 423,
+      "bytes": 80601,
+      "redirected": false,
+      "title": "Hire Dedicated Filipino Staff | Virtual Coworker US",
+      "gtm": [
+        "GTM-M92DX9BJ"
+      ],
+      "aw": [],
+      "ga4": [
+        "G-2V3V0BS6JW"
+      ],
+      "forms": 1,
+      "employer_form_present": true,
+      "required_fields": [],
+      "optional_fields": [
+        "Website",
+        "Full name",
+        "Work email",
+        "Phone",
+        "Company website (optional)"
+      ],
+      "placeholders": [
+        "Full name",
+        "Work email",
+        "(201) 555-0123",
+        "https://"
+      ],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+18889648644"
+      ],
+      "recaptcha": false,
+      "indexable_hint": true,
+      "role": "Current paid US hub"
+    },
+    {
+      "requested": "https://www.virtualcoworker.app/au",
+      "final_url": "https://www.virtualcoworker.app/au",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 408,
+      "bytes": 80340,
+      "redirected": false,
+      "title": "Hire Dedicated Filipino Staff | Virtual Coworker AU",
+      "gtm": [
+        "GTM-5T6KPVSF"
+      ],
+      "aw": [],
+      "ga4": [
+        "G-7X1K9V2LFE"
+      ],
+      "forms": 1,
+      "employer_form_present": true,
+      "required_fields": [],
+      "optional_fields": [
+        "Website",
+        "Full name",
+        "Work email",
+        "Phone",
+        "Company website (optional)"
+      ],
+      "placeholders": [
+        "Full name",
+        "Work email",
+        "0400 000 000",
+        "https://"
+      ],
+      "job_seeker_nav": true,
+      "phones_visible": [
+        "+611300886740",
+        "1300 886 740",
+        "1300886740"
+      ],
+      "recaptcha": false,
+      "indexable_hint": true,
+      "role": "Current paid AU hub"
+    },
+    {
+      "requested": "https://www.virtualcoworker.app/thank-you",
+      "final_url": "https://www.virtualcoworker.app/thank-you",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 283,
+      "bytes": 37472,
+      "redirected": false,
+      "title": "Thank you \u00b7 Virtual Coworker",
+      "gtm": [
+        "GTM-M92DX9BJ"
+      ],
+      "aw": [],
+      "ga4": [
+        "G-2V3V0BS6JW"
+      ],
+      "forms": 0,
+      "employer_form_present": false,
+      "required_fields": [],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": false,
+      "phones_visible": [
+        "+18889648644"
+      ],
+      "recaptcha": false,
+      "indexable_hint": true,
+      "role": "Current .app thank-you"
+    },
+    {
+      "requested": "https://virtualcoworker.com.ph/",
+      "final_url": "https://virtualcoworker.com.ph/",
+      "status": 200,
+      "error": null,
+      "elapsed_ms": 1208,
+      "bytes": 220989,
+      "redirected": false,
+      "title": "Virtual Assistant Careers with Virtual Coworker PhilippinesExpandExpandToggle MenuExpandExpand",
+      "gtm": [],
+      "aw": [],
+      "ga4": [
+        "G-KG893CWZH0"
+      ],
+      "forms": 0,
+      "employer_form_present": false,
+      "required_fields": [],
+      "optional_fields": [],
+      "placeholders": [],
+      "job_seeker_nav": true,
+      "phones_visible": [],
+      "recaptcha": true,
+      "indexable_hint": true,
+      "role": "PH careers / job-seeker site"
+    }
+  ],
+  "note": "Live HEAD/GET 13 Aug 2026. Form field lists are HTML-derived; Gravity Forms may mark required in JS."
+}

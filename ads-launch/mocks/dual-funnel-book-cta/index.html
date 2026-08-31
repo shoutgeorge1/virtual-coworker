@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Mock · Dual-funnel book CTA (not live)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ocean: #214873;
+      --deep: #17334f;
+      --foam: #eef8f7;
+      --mist: #f4f8fa;
+      --sand: #f7f3ea;
+      --gold: #fac056;
+      --sea: #128f8b;
+      --ink: #12263a;
+      --mute: #55697c;
+      --edge: rgba(18, 38, 58, 0.12);
+      --link: #0d5f9c;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      background: #e8eef3;
+      color: var(--ink);
+    }
+    a { color: var(--link); }
+
+    .ribbon {
+      background: #7a2e0e;
+      color: #fff7ee;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.65rem 1rem;
+      line-height: 1.4;
+    }
+    .ribbon strong { font-weight: 700; }
+
+    .intro {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1.1rem 1.2rem 0.4rem;
+    }
+    .intro h1 {
+      font-size: 1.35rem;
+      margin: 0 0 0.35rem;
+      letter-spacing: -0.02em;
+    }
+    .intro p {
+      margin: 0;
+      color: var(--mute);
+      font-size: 0.92rem;
+      max-width: 52rem;
+      line-height: 1.45;
+    }
+    .verdict {
+      margin: 0.85rem 0 0;
+      padding: 0.7rem 0.9rem;
+      background: #fff;
+      border: 1px solid var(--edge);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      max-width: 52rem;
+    }
+    .verdict b { color: var(--deep); }
+
+    .compare {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1rem 1.2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .compare { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--edge);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(23, 51, 79, 0.08);
+    }
+    .panel-head {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--edge);
+      display: flex;
+      gap: 0.55rem;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.5rem;
+      border-radius: 999px;
+    }
+    .badge-rec { background: #d9f3ef; color: #0b6b66; }
+    .badge-live { background: #ffe8c7; color: #8a4b00; }
+    .panel-head h2 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .panel-head p {
+      margin: 0.15rem 0 0;
+      width: 100%;
+      font-size: 0.8rem;
+      color: var(--mute);
+      line-height: 1.35;
+    }
+
+    .lp {
+      background: var(--mist);
+    }
+    .lp-inner { padding: 0 1rem 1.1rem; }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--edge);
+      font-size: 0.78rem;
+      color: var(--mute);
+      font-weight: 500;
+    }
+    .nav .brand {
+      font-weight: 700;
+      color: var(--ocean);
+      font-size: 0.88rem;
+    }
+    .nav .spacer { margin-left: auto; }
+    .nav .phone {
+      background: var(--gold);
+      color: var(--ocean);
+      font-weight: 700;
+      padding: 0.28rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+    }
+
+    .hero { padding: 1.1rem 0 0.85rem; }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.66rem;
+      color: var(--sea);
+      font-weight: 600;
+      margin: 0 0 0.4rem;
+    }
+    .hero h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1.28rem;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      margin: 0 0 0.85rem;
+      color: var(--mute);
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.65rem;
+      align-items: center;
+      margin-bottom: 0.65rem;
+    }
+    .cta-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.55rem;
+      padding: 0.55rem 1rem;
+      background: var(--gold);
+      color: var(--ocean);
+      font-weight: 700;
+      font-size: 0.88rem;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.55rem;
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      border: 1.5px solid rgba(18, 38, 58, 0.22);
+      background: transparent;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 0.86rem;
+      text-decoration: none;
+    }
+    .stars {
+      margin: 0;
+      font-size: 0.78rem;
+      color: var(--mute);
+    }
+    .stars .s { color: #c9a227; letter-spacing: 0.02em; }
+
+    .callout {
+      margin: 0.55rem 0 0;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    .callout-warn {
+      background: #fff1e0;
+      color: #8a4b00;
+      border: 1px dashed #e0a45a;
+    }
+    .callout-ok {
+      background: #e8f7f4;
+      color: #0b6b66;
+      border: 1px dashed #7bc4bb;
+    }
+
+    .band {
+      margin-top: 0.85rem;
+      padding: 0.85rem 0 0;
+      border-top: 1px solid var(--edge);
+    }
+    .band h4 {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
+    }
+    .band .lead { margin-bottom: 0.45rem; }
+
+    .form-card {
+      background: #fff;
+      border: 1px solid var(--edge);
+      border-radius: 12px;
+      padding: 0.85rem 0.9rem 1rem;
+      margin-top: 0.35rem;
+    }
+    .form-card label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--mute);
+      margin: 0.45rem 0 0.2rem;
+    }
+    .form-card .fake-input {
+      height: 2.1rem;
+      border: 1px solid var(--edge);
+      border-radius: 8px;
+      background: #fafcfd;
+    }
+    .form-card .submit {
+      margin-top: 0.7rem;
+      width: 100%;
+      min-height: 2.5rem;
+      border: 0;
+      border-radius: 8px;
+      background: var(--gold);
+      color: var(--ocean);
+      font-weight: 700;
+      font-size: 0.88rem;
+      font-family: inherit;
+    }
+    .escape {
+      margin: 0 0 0.55rem;
+      font-size: 0.82rem;
+      color: var(--mute);
+      line-height: 1.4;
+    }
+    .escape a {
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .ghost {
+      opacity: 0.45;
+      font-style: italic;
+      font-size: 0.78rem;
+      color: var(--mute);
+      margin: 0 0 0.45rem;
+    }
+
+    .legend {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 1.2rem 2.5rem;
+      font-size: 0.85rem;
+      color: var(--mute);
+      line-height: 1.5;
+    }
+    .legend ul { margin: 0.4rem 0 0; padding-left: 1.15rem; }
+    .legend li { margin: 0.2rem 0; }
+  </style>
+</head>
+<body>
+  <div class="ribbon">
+    <strong>VISUAL MOCK ONLY</strong> — not production. No LP changes ship until George OK’s.
+  </div>
+
+  <div class="intro">
+    <h1>Dual-funnel on /us · /au — quieter vs what’s live</h1>
+    <p>
+      Live pages already have two book escapes: a hero outline button
+      (“Book a call - skip the form”) plus a text link above the form
+      (“Book a consultation instead”). Both markets match.
+    </p>
+    <p class="verdict">
+      <b>Verdict:</b> Keep a book escape — good for sitelink landing + high-intent people who won’t fill a form —
+      but the <b>hero outline button is too loud</b> for paid Search employer LPs.
+      Primary should stay the form. Prefer Option A.
+    </p>
+  </div>
+
+  <div class="compare">
+    <!-- Option A: quieter -->
+    <section class="panel" aria-labelledby="opt-a">
+      <div class="panel-head">
+        <span class="badge badge-rec">Recommended</span>
+        <h2 id="opt-a">Option A · Quiet secondary near form</h2>
+        <p>
+          Hero = one primary (form). Book = soft text link above the quiz only.
+          Still works for Ads sitelink → /us/book · /au/book without competing in the hero.
+        </p>
+      </div>
+      <div class="lp">
+        <div class="lp-inner">
+          <div class="nav">
+            <span class="brand">Virtual Coworker</span>
+            <span>How it works</span>
+            <span>Roles</span>
+            <span class="spacer"></span>
+            <span class="phone">(310) 361-2382</span>
+          </div>
+
+          <div class="hero">
+            <p class="eyebrow">US employers · Philippines staff</p>
+            <h3>Hire a dedicated Philippines teammate — not a freelance bench</h3>
+            <p class="lead">
+              We recruit and screen. You interview the shortlist and choose who joins.
+              Full-time or part-time, on your hours.
+            </p>
+            <div class="cta-row">
+              <a class="cta-primary" href="#gate-a">Tell Us Who You Need</a>
+            </div>
+            <p class="stars"><span class="s">★★★★★</span> 5.0 Google · 39 reviews</p>
+            <p class="callout callout-ok">Hero: single primary → form. No book button fighting for attention.</p>
+          </div>
+
+          <div class="band" id="gate-a">
+            <h4>Tell us who you need</h4>
+            <p class="lead">Answer three quick questions so our staffing team can prepare the right shortlist. About one minute.</p>
+            <p class="escape">
+              Prefer not to fill a form?
+              <a href="https://www.virtualcoworker.app/us/book">Book a consultation instead</a>.
+            </p>
+            <div class="form-card">
+              <label>What role do you need?</label>
+              <div class="fake-input"></div>
+              <label>Work hours</label>
+              <div class="fake-input"></div>
+              <button type="button" class="submit">Send My Staffing Request</button>
+            </div>
+            <p class="callout callout-ok">Escape hatch sits with the form — hierarchy clear; form stays Ads Primary.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Option B: live -->
+    <section class="panel" aria-labelledby="opt-b">
+      <div class="panel-head">
+        <span class="badge badge-live">Live now</span>
+        <h2 id="opt-b">Option B · Current /us · /au</h2>
+        <p>
+          Hero dual CTAs (gold primary + outline “skip the form”) <em>and</em>
+          the same text link above the form. Feels like two primaries on mobile when both go full-width.
+        </p>
+      </div>
+      <div class="lp">
+        <div class="lp-inner">
+          <div class="nav">
+            <span class="brand">Virtual Coworker</span>
+            <span>How it works</span>
+            <span>Roles</span>
+            <span class="spacer"></span>
+            <span class="phone">(310) 361-2382</span>
+          </div>
+
+          <div class="hero">
+            <p class="eyebrow">US employers · Philippines staff</p>
+            <h3>Hire a dedicated Philippines teammate — not a freelance bench</h3>
+            <p class="lead">
+              We recruit and screen. You interview the shortlist and choose who joins.
+              Full-time or part-time, on your hours.
+            </p>
+            <div class="cta-row">
+              <a class="cta-primary" href="#gate-b">Tell Us Who You Need</a>
+              <a class="cta-secondary" href="https://www.virtualcoworker.app/us/book">Book a call - skip the form</a>
+            </div>
+            <p class="stars"><span class="s">★★★★★</span> 5.0 Google · 39 reviews</p>
+            <p class="callout callout-warn">Heavy: outline button sits next to primary; on mobile stacks to a second full-width CTA.</p>
+          </div>
+
+          <div class="band" id="gate-b">
+            <h4>Tell us who you need</h4>
+            <p class="lead">Answer three quick questions so our staffing team can prepare the right shortlist. About one minute.</p>
+            <p class="escape">
+              Prefer not to fill a form?
+              <a href="https://www.virtualcoworker.app/us/book">Book a consultation instead</a>.
+            </p>
+            <div class="form-card">
+              <label>What role do you need?</label>
+              <div class="fake-input"></div>
+              <label>Work hours</label>
+              <div class="fake-input"></div>
+              <button type="button" class="submit">Send My Staffing Request</button>
+            </div>
+            <p class="callout callout-warn">Same escape again below — fine as text, but stacked with hero book it over-sells Calendly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="legend">
+    <strong>If George picks Option A</strong> (no ship yet — waiting on OK):
+    <ul>
+      <li>Remove hero secondary button only (“Book a call - skip the form”).</li>
+      <li>Keep the quiet form-adjacent text link; preserve query params → /us/book · /au/book.</li>
+      <li>Form / employer_inquiry stays Ads Primary. Calendly stays secondary conversion (not bidding primary).</li>
+      <li>Sitelink can still land on /us/book · /au/book directly — on-page escape is optional, not required for that path.</li>
+    </ul>
+  </div>
+</body>
+</html>

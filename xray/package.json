@@ -1,11 +1,32 @@
 {
   "name": "vc-xray",
   "private": true,
-  "description": "Stage 1 command center — deploy from this directory only",
+  "description": "Stage 1 command center — static dashboard + read-only daily sync API",
   "scripts": {
     "bake": "python3 ../ads-launch/bake_xray_pages.py",
+    "sync-static": "node scripts/sync-static-to-public.mjs",
+    "prebuild": "node scripts/sync-static-to-public.mjs",
+    "build": "next build",
+    "dev": "node scripts/sync-static-to-public.mjs && next dev -p 4174",
+    "start": "next start -p 4174",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "smoke": "node smoke-live.mjs",
-    "predeploy": "python3 ../ads-launch/bake_xray_pages.py",
+    "predeploy": "python3 ../ads-launch/bake_xray_pages.py && node scripts/sync-static-to-public.mjs",
     "deploy": "npx --yes vercel@latest --prod --yes && node smoke-live.mjs"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
+    "google-ads-api": "^24.1.0",
+    "next": "^15.4.5",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "@types/react": "^19.1.9",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.7"
   }
 }

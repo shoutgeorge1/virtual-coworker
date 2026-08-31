@@ -8,7 +8,11 @@ Not a WordPress replacement. Not an SEO site. Phase 1 only.
 
 | Path | Purpose |
 |------|---------|
-| `/us` | US employer landing page |
+| `/us` | US employer landing page (restored live baseline) |
+| `/us/tf/hire` | Trust-first hire test only — not live CORE ads |
+| `/us/philippines-virtual-assistants` | Trust-first PH VA test (new URL) |
+| `/us/tf/real-estate` | Trust-first real-estate test |
+| `/us/tf/bookkeeping` | Trust-first bookkeeping test |
 | `/au` | Australian employer landing page |
 | `/thank-you` | Form confirmation |
 | `/privacy` | Privacy notice |

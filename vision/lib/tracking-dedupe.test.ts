@@ -27,12 +27,15 @@ describe("trackValidEmployerSubmit dedupe", () => {
   beforeEach(() => {
     vi.resetModules();
     const store = createSessionStore();
+    const durable = createSessionStore();
     vi.stubGlobal("window", {
       dataLayer: [] as Array<{ event: string }>,
       sessionStorage: store,
-      location: { href: "https://example.test/us", search: "" },
+      localStorage: durable,
+      location: { href: "https://example.test/us", search: "", pathname: "/us" },
     });
     vi.stubGlobal("sessionStorage", store);
+    vi.stubGlobal("localStorage", durable);
     vi.stubGlobal("document", { referrer: "" });
   });
 
@@ -57,7 +60,28 @@ describe("trackValidEmployerSubmit dedupe", () => {
       (e) => e.event,
     );
     expect(events.filter((e) => e === "employer_inquiry_submitted")).toHaveLength(1);
-    expect(events.filter((e) => e === "form_submit_success")).toHaveLength(1);
+    expect(events.filter((e) => e === "form_submit_success")).toHaveLength(0);
     expect(events).toContain("employer_inquiry_submitted_deduped");
+  });
+
+  it("marks calendly embed view as diagnostic, not Ads primary", async () => {
+    const { trackCalendlyEmbedViewed, trackCalendlyClick } = await import("./tracking");
+    trackCalendlyEmbedViewed({ market: "us", href: "https://calendly.com/cheyenne-virtualcoworker/30min" });
+    trackCalendlyClick({ market: "us", href: "https://calendly.com/cheyenne-virtualcoworker/30min" });
+
+    const events = (
+      window as unknown as {
+        dataLayer: Array<Record<string, unknown>>;
+      }
+    ).dataLayer;
+    const viewed = events.find((e) => e.event === "calendly_embed_viewed");
+    expect(viewed).toMatchObject({
+      event: "calendly_embed_viewed",
+      market: "us",
+      bidding_primary: false,
+      is_qualified_call: false,
+    });
+    expect(events.some((e) => e.event === "calendly_cta_clicked")).toBe(true);
+    expect(events.some((e) => e.event === "calendly_click")).toBe(false);
   });
 });

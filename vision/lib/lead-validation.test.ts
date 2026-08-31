@@ -27,7 +27,7 @@ describe("validateEmployerLead", () => {
     market: "us",
     name: "Alex Employer",
     email: "alex@acme.com",
-    phone: "+15551212",
+    phone: "(951) 555-0123",
     company: "Acme LLC",
     form_started_at: Date.now() - MIN_COMPLETION_MS - 100,
   };
@@ -53,16 +53,62 @@ describe("validateEmployerLead", () => {
     if (!r.ok) expect(r.code).toBe("honeypot");
   });
 
+  it("allows optional company website and does not treat it as honeypot", () => {
+    expect(validateEmployerLead({ ...base, company_website: "" }).ok).toBe(true);
+    expect(
+      validateEmployerLead({ ...base, company_website: "https://acme.com" }).ok,
+    ).toBe(true);
+    expect(validateEmployerLead({ ...base, company_website: "not a url" }).ok).toBe(
+      true,
+    );
+  });
+
+  it("still rejects the hidden website honeypot when company_website is also sent", () => {
+    const r = validateEmployerLead({
+      ...base,
+      website: "http://spam.test",
+      company_website: "https://acme.com",
+    });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.code).toBe("honeypot");
+  });
+
   it("rejects too-fast completion", () => {
     const r = validateEmployerLead({ ...base, form_started_at: Date.now() });
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.code).toBe("too_fast");
   });
 
-  it("requires company + phone", () => {
-    const r = validateEmployerLead({ ...base, company: "", phone: "" });
+  it("requires company", () => {
+    const r = validateEmployerLead({ ...base, company: "" });
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.code).toBe("missing_fields");
+  });
+
+  it("requires phone", () => {
+    const r = validateEmployerLead({ ...base, phone: "" });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.code).toBe("missing_fields");
+  });
+
+  it("rejects invalid US phones and Philippine mobiles on the US form", () => {
+    expect(validateEmployerLead({ ...base, phone: "+63 917 123 4567" }).ok).toBe(false);
+    const ph = validateEmployerLead({ ...base, phone: "+63 917 123 4567" });
+    if (!ph.ok) expect(ph.code).toBe("job_seeker");
+    const bad = validateEmployerLead({ ...base, phone: "951-555" });
+    expect(bad.ok).toBe(false);
+    if (!bad.ok) expect(bad.code).toBe("invalid_us_phone");
+  });
+
+  it("still accepts a non-empty AU phone without NANP rules", () => {
+    const r = validateEmployerLead({
+      ...base,
+      market: "au",
+      phone: "0412 345 678",
+    });
+    expect(r.ok).toBe(true);
+    const short = validateEmployerLead({ ...base, market: "au", phone: "04" });
+    expect(short.ok).toBe(true);
   });
 });
 
@@ -87,7 +133,7 @@ describe("duplicate + rate limit", () => {
 
 describe("attribution + reject logging", () => {
   it("exposes lp version constant", () => {
-    expect(LP_VERSION).toBe("stage1-v7");
+    expect(LP_VERSION).toBe("baseline_v1_2026_08");
   });
 
   it("reject logs omit sensitive body content", () => {
@@ -117,7 +163,7 @@ describe("attribution field contract", () => {
       market: "us",
       name: "Pat",
       email: "pat@biz.com",
-      phone: "555",
+      phone: "(951) 555-0123",
       company: "Biz",
       form_started_at: Date.now() - 5000,
     });

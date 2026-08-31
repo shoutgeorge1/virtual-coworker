@@ -22,6 +22,12 @@ const ROLE_REDIRECT: Record<string, string> = {
   sales: "sales",
 };
 
+const US_ONLY_ROLE_REDIRECT: Record<string, string> = {
+  "real-estate": "real-estate",
+  real_estate: "real-estate",
+  realestate: "real-estate",
+};
+
 export function middleware(req: NextRequest) {
   const { pathname, searchParams } = req.nextUrl;
 
@@ -39,7 +45,10 @@ export function middleware(req: NextRequest) {
   if (pathname === "/us" || pathname === "/au") {
     const role = searchParams.get("role");
     if (role) {
-      const slug = ROLE_REDIRECT[role.trim().toLowerCase()];
+      const key = role.trim().toLowerCase();
+      const slug =
+        (pathname === "/us" ? US_ONLY_ROLE_REDIRECT[key] : undefined) ||
+        ROLE_REDIRECT[key];
       if (slug) {
         const url = req.nextUrl.clone();
         url.pathname = `${pathname}/${slug}`;
@@ -63,8 +72,8 @@ function withAbCookie(req: NextRequest, res: NextResponse): NextResponse {
     seed: `${Date.now()}_${Math.random().toString(36).slice(2)}`,
   });
 
-  // Always refresh cookie when QA override present; else set if missing
-  if (q || !existing) {
+  // Refresh when QA override, missing cookie, or parked freeze disagrees with old B.
+  if (q || !existing || existing !== variant) {
     res.cookies.set(AB_COOKIE, variant, {
       path: "/",
       maxAge: 60 * 60 * 24 * 90,

@@ -10,13 +10,14 @@ export default function PreviewIndex() {
     <div className="tf tf-index">
       <div className="tf-wrap">
         <p className="tf-banner" style={{ marginBottom: "1rem" }}>
-          PREVIEW ONLY — NOTHING LAUNCHED
+          PREVIEW INDEX — live pages are /us
         </p>
         <p className="tf-eyebrow">Internal review</p>
         <h1>Trust-first US landing pages</h1>
         <p className="tf-lead">
-          Isolated under {TRUST_FIRST_NAMESPACE}. Live /us, /au, and /ph are unchanged.
-          Forms do not go to Zoho. This index is noindex and is not in public nav.
+          Isolated under {TRUST_FIRST_NAMESPACE} (noindex). Default view is proof-heavy.
+          Simple stays at <code>?v=simple</code>. Live paid pages are the <code>/us</code> routes.
+          Preview forms still do not go to Zoho.
         </p>
         <div className="tf-table-wrap">
           <table className="tf-table">

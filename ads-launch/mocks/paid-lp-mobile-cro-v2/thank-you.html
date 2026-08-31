@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Thanks — Virtual Coworker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: "Century Gothic Paneuropean";
+      src: url("../assets/fonts/CenturyGothicPaneuropean-Bold.woff2") format("woff2");
+      font-weight: 700; font-display: swap;
+    }
+    :root { --ocean: #214873; --gold: #fac056; --ink: #17293c; --mute: #3d5163; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Poppins, system-ui, sans-serif; color: var(--ink); background: #f7fbfb; }
+    .ribbon { background: #7a2e0e; color: #fff7ee; text-align: center; font-weight: 600; padding: .5rem 1rem; font-size: .82rem; }
+    html.preview .ribbon { display: none !important; }
+    .wrap { max-width: 36rem; margin: 0 auto; padding: 3.4rem 1.4rem 4rem; }
+    h1 { font-family: "Century Gothic Paneuropean", Poppins, sans-serif; font-size: 2.5rem; line-height: 1.12; letter-spacing: -.03em; margin: 0 0 1rem; }
+    p { font-size: 1.2rem; line-height: 1.6; color: var(--mute); }
+    .call {
+      display: flex; align-items: center; justify-content: center;
+      background: var(--gold); color: var(--ocean); font-weight: 700;
+      padding: 1rem; border-radius: 8px; text-decoration: none; min-height: 56px;
+      font-family: "Century Gothic Paneuropean", Poppins, sans-serif;
+      margin: 1.6rem 0 .8rem;
+    }
+    .hint { font-size: 1.05rem; }
+    .overlay {
+      position: fixed; inset: 0; background: rgba(23, 41, 60, .55);
+      display: flex; align-items: flex-end; justify-content: center; z-index: 20;
+    }
+    .sheet {
+      background: #fff; width: min(100%, 32rem); max-height: 82vh;
+      border-radius: 16px 16px 0 0; padding: 1.6rem 1.4rem 2rem;
+    }
+    .sheet h2 { font-family: "Century Gothic Paneuropean", Poppins, sans-serif; font-size: 1.7rem; margin: 0 0 .6rem; }
+    .fake-cal {
+      border: 1.5px dashed rgba(33,72,115,.28); padding: 1.4rem; color: var(--mute);
+      min-height: 12rem; margin: 1rem 0; font-size: 1.05rem;
+    }
+    .close { background: transparent; border: 0; color: var(--ocean); font-weight: 600; padding: .7rem 0; cursor: pointer; }
+    a.back { color: var(--ocean); font-weight: 600; }
+    @media (min-width: 720px) {
+      .overlay { align-items: center; }
+      .sheet { border-radius: 12px; }
+      h1 { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ribbon">MOCK thank-you — same query keys as production. Calendly overlay is visual only; it does not open a live scheduler.</div>
+  <div class="wrap">
+    <h1>Thanks — you are in.</h1>
+    <p id="meta"></p>
+    <p>A staffing specialist will follow up for a short hiring consult. You can also call us or book a time — production uses this overlay with the real Calendly widget.</p>
+    <a class="call" id="phone" href="#">Call</a>
+    <p class="hint">Or book a 30-minute slot (mocked below).</p>
+    <p><a class="back" href="index.html?preview=1">← Back to prototype</a></p>
+  </div>
+  <div class="overlay" id="overlay" hidden>
+    <div class="sheet" role="dialog" aria-labelledby="cal-title">
+      <h2 id="cal-title">Pick a time</h2>
+      <p>This is the production Calendly overlay pattern. The live scheduler is not loaded here so nobody gets booked by accident.</p>
+      <div class="fake-cal">
+        Mock Calendly<br />
+        <span id="cal"></span>
+      </div>
+      <button class="call" type="button" id="calCta">calendly_cta_clicked (does not open)</button>
+      <button class="close" type="button" id="close">Close</button>
+    </div>
+  </div>
+  <script src="contract.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    if (params.get("preview") === "1") document.documentElement.classList.add("preview");
+    const q = params;
+    const market = q.get("market") === "au" ? "au" : "us";
+    const sid = q.get("sid") || "";
+    const eligible = q.get("eligible") !== "0";
+    document.getElementById("meta").textContent =
+      "market=" + market + " · sid=" + sid + " · category=" + (q.get("category") || "(core)") +
+      " · eligible=" + eligible;
+    const tel = market === "au" ? "tel:+611300886740" : "tel:+18889648644";
+    const disp = market === "au" ? "1300 886 740" : "(888) 964-8644";
+    const phone = document.getElementById("phone");
+    phone.href = tel;
+    phone.textContent = "Call " + disp;
+    phone.addEventListener("click", () => VCContract.trackPhoneClick({ market: market, source: "thank_you_mock" }));
+    const cal = market === "au"
+      ? "https://calendly.com/apac-virtualcoworker/30min"
+      : "https://calendly.com/cheyenne-virtualcoworker/30min";
+    document.getElementById("cal").textContent = cal;
+    const overlay = document.getElementById("overlay");
+    overlay.hidden = false;
+    document.getElementById("close").onclick = () => { overlay.hidden = true; };
+    document.getElementById("calCta").onclick = () => {
+      VCContract.trackCalendlyClick({ market: market, href: cal, mock: true, opened: false });
+    };
+  </script>
+</body>
+</html>

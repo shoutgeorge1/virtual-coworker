@@ -1,0 +1,3128 @@
+{
+  "generated_at_utc": "2026-08-17T17:57:51.669303+00:00",
+  "pull_started_utc": "2026-08-17T17:57:48.305031+00:00",
+  "customer_ids": {
+    "us": "4967151855",
+    "au": "5735391940"
+  },
+  "filter": "VC_US_% 2026-08-03\u21922026-08-16 + AU active campaigns 2026-08-03\u21922026-08-16 (14d by-date \u00b7 last 7 vs prior 7 in Python)",
+  "api_calls_used": 2,
+  "api_calls_max": 2,
+  "api_calls": [
+    {
+      "n": 1,
+      "name": "campaign_metrics_vc_us_date_range",
+      "ok": true,
+      "row_count": 22,
+      "date_range": "2026-08-03_to_2026-08-16"
+    },
+    {
+      "n": 2,
+      "name": "campaign_metrics_au_active_14d",
+      "ok": true,
+      "row_count": 27,
+      "date_range": "2026-08-03_to_2026-08-16"
+    }
+  ],
+  "hard_stop": null,
+  "conversions_note": "US CORE/ROLES on Maximize Conversions. Primary stack (George): phone click, 60s calls from ads, 60s website calls, VC_US_Thank_You (GTM v5). Old actions Secondary, not deleted. Thank-you may show Inactive until a gclid-attributed fire. Phone click is a tap \u2014 demote when volume exists. Job seekers never count. Early CPL still uses sales-ops enquiry counts. AU GTM + GA4 are live on Production (GTM-5T6KPVSF / G-7X1K9V2LFE).",
+  "performance_us": {
+    "window": "2026-08-03_to_2026-08-16",
+    "focus_day": "2026-08-16",
+    "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in pull window",
+    "totals_focus_day": {
+      "impressions": 765,
+      "clicks": 95,
+      "ctr_pct": 12.42,
+      "cost_usd": 276.78,
+      "avg_cpc_usd": 2.91
+    },
+    "totals_last_7_days": {
+      "impressions": 4518,
+      "clicks": 493,
+      "ctr_pct": 10.91,
+      "cost_usd": 1439.73,
+      "avg_cpc_usd": 2.92,
+      "conversions": 1.0
+    },
+    "totals_prior_7_days": {
+      "impressions": 1755,
+      "clicks": 184,
+      "ctr_pct": 10.48,
+      "cost_usd": 526.84,
+      "avg_cpc_usd": 2.86
+    },
+    "totals_stage1_last_7_days": {
+      "impressions": 4518,
+      "clicks": 493,
+      "ctr_pct": 10.91,
+      "cost_usd": 1439.73,
+      "avg_cpc_usd": 2.92,
+      "conversions": 1.0
+    },
+    "totals_stage1_prior_7_days": {
+      "impressions": 1755,
+      "clicks": 184,
+      "ctr_pct": 10.48,
+      "cost_usd": 526.84,
+      "avg_cpc_usd": 2.86
+    },
+    "totals_legacy_last_7_days": {
+      "impressions": 0,
+      "clicks": 0,
+      "ctr_pct": null,
+      "cost_usd": 0,
+      "avg_cpc_usd": null
+    },
+    "compare_7v7": {
+      "last_7": {
+        "start": "2026-08-10",
+        "end": "2026-08-16",
+        "impressions": 4518,
+        "clicks": 493,
+        "ctr_pct": 10.91,
+        "cost_usd": 1439.73,
+        "avg_cpc_usd": 2.92,
+        "conversions": 1.0
+      },
+      "prior_7": {
+        "start": "2026-08-03",
+        "end": "2026-08-09",
+        "impressions": 1755,
+        "clicks": 184,
+        "ctr_pct": 10.48,
+        "cost_usd": 526.84,
+        "avg_cpc_usd": 2.86
+      },
+      "note_30d": "30-day vs 30-day: next \u2014 not enough Stage 1 history yet (no extra Ads call)."
+    },
+    "campaigns": [
+      {
+        "name": "VC_US_S_CORE",
+        "status": "ENABLED",
+        "cohort": "stage1",
+        "bidding_strategy_type": "TARGET_SPEND",
+        "last_7_days": {
+          "impressions": 2680,
+          "clicks": 342,
+          "ctr_pct": 12.76,
+          "cost_usd": 874.66,
+          "avg_cpc_usd": 2.56,
+          "conversions": 1.0
+        },
+        "prior_7_days": {
+          "impressions": 958,
+          "clicks": 124,
+          "ctr_pct": 12.94,
+          "cost_usd": 315.22,
+          "avg_cpc_usd": 2.54
+        },
+        "focus_day": {
+          "impressions": 429,
+          "clicks": 67,
+          "ctr_pct": 15.62,
+          "cost_usd": 174.78,
+          "avg_cpc_usd": 2.61
+        }
+      },
+      {
+        "name": "VC_US_S_ROLES",
+        "status": "ENABLED",
+        "cohort": "stage1",
+        "bidding_strategy_type": "TARGET_SPEND",
+        "last_7_days": {
+          "impressions": 1838,
+          "clicks": 151,
+          "ctr_pct": 8.22,
+          "cost_usd": 565.07,
+          "avg_cpc_usd": 3.74
+        },
+        "prior_7_days": {
+          "impressions": 797,
+          "clicks": 60,
+          "ctr_pct": 7.53,
+          "cost_usd": 211.63,
+          "avg_cpc_usd": 3.53
+        },
+        "focus_day": {
+          "impressions": 336,
+          "clicks": 28,
+          "ctr_pct": 8.33,
+          "cost_usd": 102.01,
+          "avg_cpc_usd": 3.64
+        }
+      }
+    ],
+    "by_date": {
+      "2026-08-06": {
+        "impressions": 230,
+        "clicks": 40,
+        "ctr_pct": 17.39,
+        "cost_usd": 90.6,
+        "avg_cpc_usd": 2.26
+      },
+      "2026-08-07": {
+        "impressions": 510,
+        "clicks": 62,
+        "ctr_pct": 12.16,
+        "cost_usd": 164.74,
+        "avg_cpc_usd": 2.66
+      },
+      "2026-08-08": {
+        "impressions": 134,
+        "clicks": 14,
+        "ctr_pct": 10.45,
+        "cost_usd": 42.3,
+        "avg_cpc_usd": 3.02
+      },
+      "2026-08-09": {
+        "impressions": 881,
+        "clicks": 68,
+        "ctr_pct": 7.72,
+        "cost_usd": 229.2,
+        "avg_cpc_usd": 3.37
+      },
+      "2026-08-10": {
+        "impressions": 608,
+        "clicks": 54,
+        "ctr_pct": 8.88,
+        "cost_usd": 123.29,
+        "avg_cpc_usd": 2.28
+      },
+      "2026-08-11": {
+        "impressions": 515,
+        "clicks": 56,
+        "ctr_pct": 10.87,
+        "cost_usd": 129.86,
+        "avg_cpc_usd": 2.32
+      },
+      "2026-08-12": {
+        "impressions": 334,
+        "clicks": 49,
+        "ctr_pct": 14.67,
+        "cost_usd": 117.25,
+        "avg_cpc_usd": 2.39
+      },
+      "2026-08-13": {
+        "impressions": 652,
+        "clicks": 74,
+        "ctr_pct": 11.35,
+        "cost_usd": 194.65,
+        "avg_cpc_usd": 2.63
+      },
+      "2026-08-14": {
+        "impressions": 977,
+        "clicks": 91,
+        "ctr_pct": 9.31,
+        "cost_usd": 330.19,
+        "avg_cpc_usd": 3.63,
+        "conversions": 1.0
+      },
+      "2026-08-15": {
+        "impressions": 667,
+        "clicks": 74,
+        "ctr_pct": 11.09,
+        "cost_usd": 267.71,
+        "avg_cpc_usd": 3.62
+      },
+      "2026-08-16": {
+        "impressions": 765,
+        "clicks": 95,
+        "ctr_pct": 12.42,
+        "cost_usd": 276.78,
+        "avg_cpc_usd": 2.91
+      }
+    },
+    "by_date_stage1": {
+      "2026-08-06": {
+        "impressions": 230,
+        "clicks": 40,
+        "ctr_pct": 17.39,
+        "cost_usd": 90.6,
+        "avg_cpc_usd": 2.26
+      },
+      "2026-08-07": {
+        "impressions": 510,
+        "clicks": 62,
+        "ctr_pct": 12.16,
+        "cost_usd": 164.74,
+        "avg_cpc_usd": 2.66
+      },
+      "2026-08-08": {
+        "impressions": 134,
+        "clicks": 14,
+        "ctr_pct": 10.45,
+        "cost_usd": 42.3,
+        "avg_cpc_usd": 3.02
+      },
+      "2026-08-09": {
+        "impressions": 881,
+        "clicks": 68,
+        "ctr_pct": 7.72,
+        "cost_usd": 229.2,
+        "avg_cpc_usd": 3.37
+      },
+      "2026-08-10": {
+        "impressions": 608,
+        "clicks": 54,
+        "ctr_pct": 8.88,
+        "cost_usd": 123.29,
+        "avg_cpc_usd": 2.28
+      },
+      "2026-08-11": {
+        "impressions": 515,
+        "clicks": 56,
+        "ctr_pct": 10.87,
+        "cost_usd": 129.86,
+        "avg_cpc_usd": 2.32
+      },
+      "2026-08-12": {
+        "impressions": 334,
+        "clicks": 49,
+        "ctr_pct": 14.67,
+        "cost_usd": 117.25,
+        "avg_cpc_usd": 2.39
+      },
+      "2026-08-13": {
+        "impressions": 652,
+        "clicks": 74,
+        "ctr_pct": 11.35,
+        "cost_usd": 194.65,
+        "avg_cpc_usd": 2.63
+      },
+      "2026-08-14": {
+        "impressions": 977,
+        "clicks": 91,
+        "ctr_pct": 9.31,
+        "cost_usd": 330.19,
+        "avg_cpc_usd": 3.63,
+        "conversions": 1.0
+      },
+      "2026-08-15": {
+        "impressions": 667,
+        "clicks": 74,
+        "ctr_pct": 11.09,
+        "cost_usd": 267.71,
+        "avg_cpc_usd": 3.62
+      },
+      "2026-08-16": {
+        "impressions": 765,
+        "clicks": 95,
+        "ctr_pct": 12.42,
+        "cost_usd": 276.78,
+        "avg_cpc_usd": 2.91
+      }
+    },
+    "dates_in_pull": [
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08",
+      "2026-08-09",
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16"
+    ],
+    "last_7_dates": [
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16"
+    ],
+    "prior_7_dates": [
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08",
+      "2026-08-09"
+    ],
+    "window_note": "VC_US_% \u00b7 segments.date BETWEEN 2026-08-03 AND 2026-08-16 (14-day by-date \u00b7 last 7 vs prior 7 split in Python \u00b7 no 3rd Ads call)"
+  },
+  "performance_au": {
+    "window": "2026-08-03_to_2026-08-16",
+    "focus_day": "2026-08-16",
+    "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in pull window",
+    "totals_focus_day": {
+      "impressions": 187,
+      "clicks": 28,
+      "ctr_pct": 14.97,
+      "cost_usd": 112.63,
+      "avg_cpc_usd": 4.02
+    },
+    "totals_last_7_days": {
+      "impressions": 1925,
+      "clicks": 250,
+      "ctr_pct": 12.99,
+      "cost_usd": 884.2,
+      "avg_cpc_usd": 3.54
+    },
+    "totals_prior_7_days": {
+      "impressions": 1082,
+      "clicks": 140,
+      "ctr_pct": 12.94,
+      "cost_usd": 1130.5,
+      "avg_cpc_usd": 8.07
+    },
+    "totals_stage1_last_7_days": {
+      "impressions": 1925,
+      "clicks": 250,
+      "ctr_pct": 12.99,
+      "cost_usd": 884.2,
+      "avg_cpc_usd": 3.54
+    },
+    "totals_stage1_prior_7_days": {
+      "impressions": 162,
+      "clicks": 24,
+      "ctr_pct": 14.81,
+      "cost_usd": 98.77,
+      "avg_cpc_usd": 4.12
+    },
+    "totals_legacy_last_7_days": {
+      "impressions": 0,
+      "clicks": 0,
+      "ctr_pct": null,
+      "cost_usd": 0.0,
+      "avg_cpc_usd": null
+    },
+    "compare_7v7": {
+      "last_7": {
+        "start": "2026-08-10",
+        "end": "2026-08-16",
+        "impressions": 1925,
+        "clicks": 250,
+        "ctr_pct": 12.99,
+        "cost_usd": 884.2,
+        "avg_cpc_usd": 3.54
+      },
+      "prior_7": {
+        "start": "2026-08-03",
+        "end": "2026-08-09",
+        "impressions": 162,
+        "clicks": 24,
+        "ctr_pct": 14.81,
+        "cost_usd": 98.77,
+        "avg_cpc_usd": 4.12
+      },
+      "note_30d": "30-day vs 30-day: next \u2014 not enough Stage 1 history yet (no extra Ads call)."
+    },
+    "campaigns": [
+      {
+        "name": "VC_AU_S_CORE",
+        "status": "ENABLED",
+        "cohort": "stage1",
+        "bidding_strategy_type": "TARGET_SPEND",
+        "last_7_days": {
+          "impressions": 1049,
+          "clicks": 161,
+          "ctr_pct": 15.35,
+          "cost_usd": 536.75,
+          "avg_cpc_usd": 3.33
+        },
+        "prior_7_days": {
+          "impressions": 88,
+          "clicks": 9,
+          "ctr_pct": 10.23,
+          "cost_usd": 39.85,
+          "avg_cpc_usd": 4.43
+        },
+        "focus_day": {
+          "impressions": 117,
+          "clicks": 14,
+          "ctr_pct": 11.97,
+          "cost_usd": 48.48,
+          "avg_cpc_usd": 3.46
+        }
+      },
+      {
+        "name": "PM_AU_RSA_Generic_Pain-Point Intent_Custom LP",
+        "status": "PAUSED",
+        "cohort": "legacy",
+        "bidding_strategy_type": "MAXIMIZE_CONVERSIONS",
+        "last_7_days": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        },
+        "prior_7_days": {
+          "impressions": 747,
+          "clicks": 91,
+          "ctr_pct": 12.18,
+          "cost_usd": 455.86,
+          "avg_cpc_usd": 5.01
+        },
+        "focus_day": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        }
+      },
+      {
+        "name": "VC_AU_S_ROLES",
+        "status": "ENABLED",
+        "cohort": "stage1",
+        "bidding_strategy_type": "TARGET_SPEND",
+        "last_7_days": {
+          "impressions": 876,
+          "clicks": 89,
+          "ctr_pct": 10.16,
+          "cost_usd": 347.44,
+          "avg_cpc_usd": 3.9
+        },
+        "prior_7_days": {
+          "impressions": 74,
+          "clicks": 15,
+          "ctr_pct": 20.27,
+          "cost_usd": 58.92,
+          "avg_cpc_usd": 3.93
+        },
+        "focus_day": {
+          "impressions": 70,
+          "clicks": 14,
+          "ctr_pct": 20.0,
+          "cost_usd": 64.15,
+          "avg_cpc_usd": 4.58
+        }
+      },
+      {
+        "name": "PM_AU_DSA_Generic_Catch-all_Custom LP",
+        "status": "PAUSED",
+        "cohort": "legacy",
+        "bidding_strategy_type": "MAXIMIZE_CONVERSIONS",
+        "last_7_days": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        },
+        "prior_7_days": {
+          "impressions": 19,
+          "clicks": 1,
+          "ctr_pct": 5.26,
+          "cost_usd": 321.19,
+          "avg_cpc_usd": 321.19
+        },
+        "focus_day": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        }
+      },
+      {
+        "name": "PM_AU_RSA_Brand",
+        "status": "PAUSED",
+        "cohort": "legacy_brand",
+        "bidding_strategy_type": "MAXIMIZE_CONVERSIONS",
+        "last_7_days": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        },
+        "prior_7_days": {
+          "impressions": 47,
+          "clicks": 17,
+          "ctr_pct": 36.17,
+          "cost_usd": 241.04,
+          "avg_cpc_usd": 14.18
+        },
+        "focus_day": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        }
+      },
+      {
+        "name": "PM_AU_RSA_Competitors_Custom LP",
+        "status": "PAUSED",
+        "cohort": "legacy",
+        "bidding_strategy_type": "MAXIMIZE_CONVERSIONS",
+        "last_7_days": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        },
+        "prior_7_days": {
+          "impressions": 107,
+          "clicks": 7,
+          "ctr_pct": 6.54,
+          "cost_usd": 13.64,
+          "avg_cpc_usd": 1.95
+        },
+        "focus_day": {
+          "impressions": 0,
+          "clicks": 0,
+          "ctr_pct": null,
+          "cost_usd": 0.0,
+          "avg_cpc_usd": null
+        }
+      }
+    ],
+    "by_date": {
+      "2026-08-03": {
+        "impressions": 740,
+        "clicks": 92,
+        "ctr_pct": 12.43,
+        "cost_usd": 709.5,
+        "avg_cpc_usd": 7.71
+      },
+      "2026-08-04": {
+        "impressions": 158,
+        "clicks": 15,
+        "ctr_pct": 9.49,
+        "cost_usd": 160.86,
+        "avg_cpc_usd": 10.72
+      },
+      "2026-08-05": {
+        "impressions": 6,
+        "clicks": 2,
+        "ctr_pct": 33.33,
+        "cost_usd": 59.56,
+        "avg_cpc_usd": 29.78
+      },
+      "2026-08-06": {
+        "impressions": 6,
+        "clicks": 3,
+        "ctr_pct": 50.0,
+        "cost_usd": 24.34,
+        "avg_cpc_usd": 8.11
+      },
+      "2026-08-07": {
+        "impressions": 7,
+        "clicks": 3,
+        "ctr_pct": 42.86,
+        "cost_usd": 59.15,
+        "avg_cpc_usd": 19.72
+      },
+      "2026-08-08": {
+        "impressions": 3,
+        "clicks": 1,
+        "ctr_pct": 33.33,
+        "cost_usd": 18.32,
+        "avg_cpc_usd": 18.32
+      },
+      "2026-08-09": {
+        "impressions": 162,
+        "clicks": 24,
+        "ctr_pct": 14.81,
+        "cost_usd": 98.77,
+        "avg_cpc_usd": 4.12
+      },
+      "2026-08-10": {
+        "impressions": 305,
+        "clicks": 31,
+        "ctr_pct": 10.16,
+        "cost_usd": 167.83,
+        "avg_cpc_usd": 5.41
+      },
+      "2026-08-11": {
+        "impressions": 266,
+        "clicks": 40,
+        "ctr_pct": 15.04,
+        "cost_usd": 121.02,
+        "avg_cpc_usd": 3.03
+      },
+      "2026-08-12": {
+        "impressions": 315,
+        "clicks": 42,
+        "ctr_pct": 13.33,
+        "cost_usd": 128.28,
+        "avg_cpc_usd": 3.05
+      },
+      "2026-08-13": {
+        "impressions": 297,
+        "clicks": 39,
+        "ctr_pct": 13.13,
+        "cost_usd": 122.99,
+        "avg_cpc_usd": 3.15
+      },
+      "2026-08-14": {
+        "impressions": 334,
+        "clicks": 41,
+        "ctr_pct": 12.28,
+        "cost_usd": 130.39,
+        "avg_cpc_usd": 3.18
+      },
+      "2026-08-15": {
+        "impressions": 221,
+        "clicks": 29,
+        "ctr_pct": 13.12,
+        "cost_usd": 101.06,
+        "avg_cpc_usd": 3.48
+      },
+      "2026-08-16": {
+        "impressions": 187,
+        "clicks": 28,
+        "ctr_pct": 14.97,
+        "cost_usd": 112.63,
+        "avg_cpc_usd": 4.02
+      }
+    },
+    "by_date_stage1": {
+      "2026-08-09": {
+        "impressions": 162,
+        "clicks": 24,
+        "ctr_pct": 14.81,
+        "cost_usd": 98.77,
+        "avg_cpc_usd": 4.12
+      },
+      "2026-08-10": {
+        "impressions": 305,
+        "clicks": 31,
+        "ctr_pct": 10.16,
+        "cost_usd": 167.83,
+        "avg_cpc_usd": 5.41
+      },
+      "2026-08-11": {
+        "impressions": 266,
+        "clicks": 40,
+        "ctr_pct": 15.04,
+        "cost_usd": 121.02,
+        "avg_cpc_usd": 3.03
+      },
+      "2026-08-12": {
+        "impressions": 315,
+        "clicks": 42,
+        "ctr_pct": 13.33,
+        "cost_usd": 128.28,
+        "avg_cpc_usd": 3.05
+      },
+      "2026-08-13": {
+        "impressions": 297,
+        "clicks": 39,
+        "ctr_pct": 13.13,
+        "cost_usd": 122.99,
+        "avg_cpc_usd": 3.15
+      },
+      "2026-08-14": {
+        "impressions": 334,
+        "clicks": 41,
+        "ctr_pct": 12.28,
+        "cost_usd": 130.39,
+        "avg_cpc_usd": 3.18
+      },
+      "2026-08-15": {
+        "impressions": 221,
+        "clicks": 29,
+        "ctr_pct": 13.12,
+        "cost_usd": 101.06,
+        "avg_cpc_usd": 3.48
+      },
+      "2026-08-16": {
+        "impressions": 187,
+        "clicks": 28,
+        "ctr_pct": 14.97,
+        "cost_usd": 112.63,
+        "avg_cpc_usd": 4.02
+      }
+    },
+    "dates_in_pull": [
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08",
+      "2026-08-09",
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16"
+    ],
+    "last_7_dates": [
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16"
+    ],
+    "prior_7_dates": [
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08",
+      "2026-08-09"
+    ],
+    "window_note": "AU campaigns with impressions \u00b7 BETWEEN 2026-08-03 AND 2026-08-16 (14-day by-date \u00b7 last 7 vs prior 7 split in Python)"
+  },
+  "early_cpl_us": {
+    "market": "US",
+    "window_start": "2026-08-08",
+    "window_end": "2026-08-10",
+    "label": "Sat Aug 8 \u2013 Mon Aug 10",
+    "source": "Sales ops handoff (Cheyenne) \u2014 US enquiries Aug 8\u201310 inclusive",
+    "enquiries": 4,
+    "sales_calls_booked": 2,
+    "junk_job_seeker": 1,
+    "not_a_fit": 1,
+    "not_a_fit_detail": "Project-based \u2014 not a fit for ongoing hire",
+    "campaigns_for_spend": [
+      "VC_US_S_CORE",
+      "VC_US_S_ROLES"
+    ],
+    "caveat": "Early / small sample \u2014 do not treat as steady-state CPL. Job-seeker junk never counts as a win.",
+    "spend_usd": 394.79,
+    "impressions": 1623,
+    "clicks": 136,
+    "avg_cpc_usd": 2.9,
+    "cost_per_enquiry_usd": 98.7,
+    "cost_per_sales_call_booked_usd": 197.4,
+    "math_plain": "$394.79 spend \u00f7 4 enquiries = $98.70 per enquiry",
+    "math_booked_call": "$394.79 spend \u00f7 2 sales calls booked = $197.40 per booked call",
+    "breakdown": "4 enquiries \u00b7 2 sales calls booked \u00b7 1 junk (job seeker) \u00b7 1 not a fit",
+    "by_day": [
+      {
+        "date": "2026-08-08",
+        "impressions": 134,
+        "clicks": 14,
+        "ctr_pct": 10.45,
+        "cost_usd": 42.3,
+        "avg_cpc_usd": 3.02
+      },
+      {
+        "date": "2026-08-09",
+        "impressions": 881,
+        "clicks": 68,
+        "ctr_pct": 7.72,
+        "cost_usd": 229.2,
+        "avg_cpc_usd": 3.37
+      },
+      {
+        "date": "2026-08-10",
+        "impressions": 608,
+        "clicks": 54,
+        "ctr_pct": 8.88,
+        "cost_usd": 123.29,
+        "avg_cpc_usd": 2.28
+      }
+    ],
+    "dates_with_spend": [
+      "2026-08-08",
+      "2026-08-09",
+      "2026-08-10"
+    ]
+  },
+  "early_cpl_au": {
+    "market": "AU",
+    "status": "waiting_on_leads",
+    "window_start": "2026-08-08",
+    "window_end": "2026-08-10",
+    "label": "Sat Aug 8 \u2013 Mon Aug 10",
+    "spend_window_note": "VC_AU_* spend started Sun Aug 9 (nothing Aug 8)",
+    "source": "No AU enquiry counts in ops email yet \u2014 Cheyenne Aug 10 handoff was US-only. Holly owns APAC Monday updates; waiting on first AU lead report.",
+    "enquiries": null,
+    "sales_calls_booked": null,
+    "junk_job_seeker": null,
+    "not_a_fit": null,
+    "campaigns_for_spend": [
+      "VC_AU_S_CORE",
+      "VC_AU_S_ROLES"
+    ],
+    "caveat": "Cost per enquiry: not yet (no AU lead report in email).",
+    "spend_usd": 884.2,
+    "impressions": 1925,
+    "clicks": 250,
+    "avg_cpc_usd": 3.54,
+    "cost_per_enquiry_usd": null,
+    "cost_per_sales_call_booked_usd": null,
+    "math_plain": "Cost per enquiry: not yet (no AU lead report in email).",
+    "math_booked_call": null,
+    "breakdown": "Lead counts not reported yet",
+    "by_day": [
+      {
+        "date": "2026-08-08",
+        "impressions": 3,
+        "clicks": 1,
+        "ctr_pct": 33.33,
+        "cost_usd": 18.32,
+        "avg_cpc_usd": 18.32
+      },
+      {
+        "date": "2026-08-09",
+        "impressions": 162,
+        "clicks": 24,
+        "ctr_pct": 14.81,
+        "cost_usd": 98.77,
+        "avg_cpc_usd": 4.12
+      },
+      {
+        "date": "2026-08-10",
+        "impressions": 305,
+        "clicks": 31,
+        "ctr_pct": 10.16,
+        "cost_usd": 167.83,
+        "avg_cpc_usd": 5.41
+      }
+    ],
+    "dates_with_spend": [
+      "2026-08-08",
+      "2026-08-09",
+      "2026-08-10"
+    ]
+  },
+  "performance": {
+    "window": "2026-08-03_to_2026-08-16",
+    "focus_day": "2026-08-16",
+    "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in pull window",
+    "totals_focus_day": {
+      "impressions": 765,
+      "clicks": 95,
+      "ctr_pct": 12.42,
+      "cost_usd": 276.78,
+      "avg_cpc_usd": 2.91
+    },
+    "totals_last_7_days": {
+      "impressions": 4518,
+      "clicks": 493,
+      "ctr_pct": 10.91,
+      "cost_usd": 1439.73,
+      "avg_cpc_usd": 2.92,
+      "conversions": 1.0
+    },
+    "totals_prior_7_days": {
+      "impressions": 1755,
+      "clicks": 184,
+      "ctr_pct": 10.48,
+      "cost_usd": 526.84,
+      "avg_cpc_usd": 2.86
+    },
+    "totals_stage1_last_7_days": {
+      "impressions": 4518,
+      "clicks": 493,
+      "ctr_pct": 10.91,
+      "cost_usd": 1439.73,
+      "avg_cpc_usd": 2.92,
+      "conversions": 1.0
+    },
+    "totals_stage1_prior_7_days": {
+      "impressions": 1755,
+      "clicks": 184,
+      "ctr_pct": 10.48,
+      "cost_usd": 526.84,
+      "avg_cpc_usd": 2.86
+    },
+    "totals_legacy_last_7_days": {
+      "impressions": 0,
+      "clicks": 0,
+      "ctr_pct": null,
+      "cost_usd": 0,
+      "avg_cpc_usd": null
+    },
+    "compare_7v7": {
+      "last_7": {
+        "start": "2026-08-10",
+        "end": "2026-08-16",
+        "impressions": 4518,
+        "clicks": 493,
+        "ctr_pct": 10.91,
+        "cost_usd": 1439.73,
+        "avg_cpc_usd": 2.92,
+        "conversions": 1.0
+      },
+      "prior_7": {
+        "start": "2026-08-03",
+        "end": "2026-08-09",
+        "impressions": 1755,
+        "clicks": 184,
+        "ctr_pct": 10.48,
+        "cost_usd": 526.84,
+        "avg_cpc_usd": 2.86
+      },
+      "note_30d": "30-day vs 30-day: next \u2014 not enough Stage 1 history yet (no extra Ads call)."
+    },
+    "campaigns": [
+      {
+        "name": "VC_US_S_CORE",
+        "status": "ENABLED",
+        "cohort": "stage1",
+        "bidding_strategy_type": "TARGET_SPEND",
+        "last_7_days": {
+          "impressions": 2680,
+          "clicks": 342,
+          "ctr_pct": 12.76,
+          "cost_usd": 874.66,
+          "avg_cpc_usd": 2.56,
+          "conversions": 1.0
+        },
+        "prior_7_days": {
+          "impressions": 958,
+          "clicks": 124,
+          "ctr_pct": 12.94,
+          "cost_usd": 315.22,
+          "avg_cpc_usd": 2.54
+        },
+        "focus_day": {
+          "impressions": 429,
+          "clicks": 67,
+          "ctr_pct": 15.62,
+          "cost_usd": 174.78,
+          "avg_cpc_usd": 2.61
+        }
+      },
+      {
+        "name": "VC_US_S_ROLES",
+        "status": "ENABLED",
+        "cohort": "stage1",
+        "bidding_strategy_type": "TARGET_SPEND",
+        "last_7_days": {
+          "impressions": 1838,
+          "clicks": 151,
+          "ctr_pct": 8.22,
+          "cost_usd": 565.07,
+          "avg_cpc_usd": 3.74
+        },
+        "prior_7_days": {
+          "impressions": 797,
+          "clicks": 60,
+          "ctr_pct": 7.53,
+          "cost_usd": 211.63,
+          "avg_cpc_usd": 3.53
+        },
+        "focus_day": {
+          "impressions": 336,
+          "clicks": 28,
+          "ctr_pct": 8.33,
+          "cost_usd": 102.01,
+          "avg_cpc_usd": 3.64
+        }
+      }
+    ],
+    "by_date": {
+      "2026-08-06": {
+        "impressions": 230,
+        "clicks": 40,
+        "ctr_pct": 17.39,
+        "cost_usd": 90.6,
+        "avg_cpc_usd": 2.26
+      },
+      "2026-08-07": {
+        "impressions": 510,
+        "clicks": 62,
+        "ctr_pct": 12.16,
+        "cost_usd": 164.74,
+        "avg_cpc_usd": 2.66
+      },
+      "2026-08-08": {
+        "impressions": 134,
+        "clicks": 14,
+        "ctr_pct": 10.45,
+        "cost_usd": 42.3,
+        "avg_cpc_usd": 3.02
+      },
+      "2026-08-09": {
+        "impressions": 881,
+        "clicks": 68,
+        "ctr_pct": 7.72,
+        "cost_usd": 229.2,
+        "avg_cpc_usd": 3.37
+      },
+      "2026-08-10": {
+        "impressions": 608,
+        "clicks": 54,
+        "ctr_pct": 8.88,
+        "cost_usd": 123.29,
+        "avg_cpc_usd": 2.28
+      },
+      "2026-08-11": {
+        "impressions": 515,
+        "clicks": 56,
+        "ctr_pct": 10.87,
+        "cost_usd": 129.86,
+        "avg_cpc_usd": 2.32
+      },
+      "2026-08-12": {
+        "impressions": 334,
+        "clicks": 49,
+        "ctr_pct": 14.67,
+        "cost_usd": 117.25,
+        "avg_cpc_usd": 2.39
+      },
+      "2026-08-13": {
+        "impressions": 652,
+        "clicks": 74,
+        "ctr_pct": 11.35,
+        "cost_usd": 194.65,
+        "avg_cpc_usd": 2.63
+      },
+      "2026-08-14": {
+        "impressions": 977,
+        "clicks": 91,
+        "ctr_pct": 9.31,
+        "cost_usd": 330.19,
+        "avg_cpc_usd": 3.63,
+        "conversions": 1.0
+      },
+      "2026-08-15": {
+        "impressions": 667,
+        "clicks": 74,
+        "ctr_pct": 11.09,
+        "cost_usd": 267.71,
+        "avg_cpc_usd": 3.62
+      },
+      "2026-08-16": {
+        "impressions": 765,
+        "clicks": 95,
+        "ctr_pct": 12.42,
+        "cost_usd": 276.78,
+        "avg_cpc_usd": 2.91
+      }
+    },
+    "by_date_stage1": {
+      "2026-08-06": {
+        "impressions": 230,
+        "clicks": 40,
+        "ctr_pct": 17.39,
+        "cost_usd": 90.6,
+        "avg_cpc_usd": 2.26
+      },
+      "2026-08-07": {
+        "impressions": 510,
+        "clicks": 62,
+        "ctr_pct": 12.16,
+        "cost_usd": 164.74,
+        "avg_cpc_usd": 2.66
+      },
+      "2026-08-08": {
+        "impressions": 134,
+        "clicks": 14,
+        "ctr_pct": 10.45,
+        "cost_usd": 42.3,
+        "avg_cpc_usd": 3.02
+      },
+      "2026-08-09": {
+        "impressions": 881,
+        "clicks": 68,
+        "ctr_pct": 7.72,
+        "cost_usd": 229.2,
+        "avg_cpc_usd": 3.37
+      },
+      "2026-08-10": {
+        "impressions": 608,
+        "clicks": 54,
+        "ctr_pct": 8.88,
+        "cost_usd": 123.29,
+        "avg_cpc_usd": 2.28
+      },
+      "2026-08-11": {
+        "impressions": 515,
+        "clicks": 56,
+        "ctr_pct": 10.87,
+        "cost_usd": 129.86,
+        "avg_cpc_usd": 2.32
+      },
+      "2026-08-12": {
+        "impressions": 334,
+        "clicks": 49,
+        "ctr_pct": 14.67,
+        "cost_usd": 117.25,
+        "avg_cpc_usd": 2.39
+      },
+      "2026-08-13": {
+        "impressions": 652,
+        "clicks": 74,
+        "ctr_pct": 11.35,
+        "cost_usd": 194.65,
+        "avg_cpc_usd": 2.63
+      },
+      "2026-08-14": {
+        "impressions": 977,
+        "clicks": 91,
+        "ctr_pct": 9.31,
+        "cost_usd": 330.19,
+        "avg_cpc_usd": 3.63,
+        "conversions": 1.0
+      },
+      "2026-08-15": {
+        "impressions": 667,
+        "clicks": 74,
+        "ctr_pct": 11.09,
+        "cost_usd": 267.71,
+        "avg_cpc_usd": 3.62
+      },
+      "2026-08-16": {
+        "impressions": 765,
+        "clicks": 95,
+        "ctr_pct": 12.42,
+        "cost_usd": 276.78,
+        "avg_cpc_usd": 2.91
+      }
+    },
+    "dates_in_pull": [
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08",
+      "2026-08-09",
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16"
+    ],
+    "last_7_dates": [
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16"
+    ],
+    "prior_7_dates": [
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08",
+      "2026-08-09"
+    ],
+    "window_note": "VC_US_% \u00b7 segments.date BETWEEN 2026-08-03 AND 2026-08-16 (14-day by-date \u00b7 last 7 vs prior 7 split in Python \u00b7 no 3rd Ads call)"
+  },
+  "customer_id": "4967151855",
+  "search_terms": {
+    "window": "LAST_7_DAYS",
+    "source": "skipped_by_design",
+    "row_count_raw": 0,
+    "unique_terms": 0,
+    "top_by_clicks": [],
+    "negatives": {
+      "source": "editor_csv_vc_us_campaign_negatives",
+      "label": "operator-negatived",
+      "unique_count": 0,
+      "jobseekers_live": [],
+      "note": "Search terms not pulled (2-call budget = US + AU campaigns only)."
+    }
+  },
+  "search_terms_executive": {
+    "surface": false,
+    "reason": "No search-term dump on Executive."
+  },
+  "keywords": {
+    "label": "Employer agency-hire Exact themes",
+    "note": "Curated bidding themes \u2014 not raw search terms. Priority = agency/firm/company seekers.",
+    "executive_surface": true,
+    "themes": [
+      {
+        "theme": "PH VA / staffing agency \u00b7 firm \u00b7 company",
+        "market": "US + AU",
+        "campaign": "VC_*_S_CORE",
+        "why": "Highest intent \u2014 employer shopping for an agency to staff PH remote workers"
+      },
+      {
+        "theme": "Philippines outsourcing agency",
+        "market": "US + AU",
+        "campaign": "VC_*_S_CORE",
+        "why": "Outsourcing-agency language \u00b7 clear B2B provider search"
+      },
+      {
+        "theme": "hire VA / Filipino VA (supporting)",
+        "market": "US + AU",
+        "campaign": "VC_*_S_CORE",
+        "why": "Useful but messier \u2014 hire/recruit can mix employer + job-seeker"
+      },
+      {
+        "theme": "bookkeeping / accounting hire",
+        "market": "US + AU",
+        "campaign": "VC_*_S_ROLES",
+        "why": "Role LP Final URLs"
+      },
+      {
+        "theme": "customer service / admin / EA",
+        "market": "US + AU",
+        "campaign": "VC_*_S_ROLES",
+        "why": "Role LP Final URLs"
+      },
+      {
+        "theme": "digital marketing / social media hire",
+        "market": "US + AU",
+        "campaign": "VC_*_S_ROLES",
+        "why": "Role LP Final URLs"
+      }
+    ]
+  },
+  "landing_pages": {
+    "window": "2026-08-03_to_2026-08-16",
+    "source": "derived_from_campaign_final_urls",
+    "source_note": "Hub metrics = VC_US_S_CORE. Role LPs are live; per-URL split skipped (API budget = US+AU campaigns only).",
+    "label": "US LP catalog + CORE traffic",
+    "roles_unmapped_clicks": 151,
+    "roles_campaign_clicks": 151,
+    "pages": [
+      {
+        "name": "US hub",
+        "path": "/us",
+        "url": "https://www.virtualcoworker.app/us",
+        "why": "CORE campaign Final URL \u2014 main hire/VA traffic lands here.",
+        "attribution": "VC_US_S_CORE Final URL \u2192 /us",
+        "signal_terms": [],
+        "impressions": 2680,
+        "clicks": 342,
+        "ctr_pct": 12.76,
+        "cost_usd": 874.66,
+        "avg_cpc_usd": 2.56,
+        "conversions": 1.0
+      },
+      {
+        "name": "Admin / EA",
+        "path": "/us/administrative-support",
+        "url": "https://www.virtualcoworker.app/us/administrative-support",
+        "why": "ROLES admin Final URL \u2014 EA / admin intent.",
+        "attribution": "Live category LP (ROLES campaign 151 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Bookkeeping",
+        "path": "/us/bookkeeping",
+        "url": "https://www.virtualcoworker.app/us/bookkeeping",
+        "why": "ROLES bookkeeping Final URL \u2014 bookkeeper searches.",
+        "attribution": "Live category LP (ROLES campaign 151 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Accounting",
+        "path": "/us/accounting",
+        "url": "https://www.virtualcoworker.app/us/accounting",
+        "why": "ROLES accounting Final URL \u2014 live category LP.",
+        "attribution": "Live category LP (ROLES campaign 151 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Customer service",
+        "path": "/us/customer-service",
+        "url": "https://www.virtualcoworker.app/us/customer-service",
+        "why": "ROLES CSR Final URL \u2014 support / CSR searches.",
+        "attribution": "Live category LP (ROLES campaign 151 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Digital marketing",
+        "path": "/us/digital-marketing",
+        "url": "https://www.virtualcoworker.app/us/digital-marketing",
+        "why": "ROLES marketing Final URL \u2014 live category LP.",
+        "attribution": "Live category LP (ROLES campaign 151 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      },
+      {
+        "name": "Social media",
+        "path": "/us/social-media",
+        "url": "https://www.virtualcoworker.app/us/social-media",
+        "why": "ROLES social Final URL \u2014 live category LP.",
+        "attribution": "Live category LP (ROLES campaign 151 clicks / 7d \u2014 not split by URL here)",
+        "signal_terms": [],
+        "impressions": 0,
+        "clicks": 0,
+        "ctr_pct": null,
+        "cost_usd": 0.0,
+        "avg_cpc_usd": null
+      }
+    ]
+  },
+  "operator": {
+    "narrative_as_of": "2026-08-17",
+    "status_banner": "US and Australia Search are live. Paying per click until call tracking is trusted. Clear Google Ads recommendations daily (account score).",
+    "budgets": [
+      {
+        "market": "US",
+        "amount": "$250/day",
+        "detail": "Core $150 + Roles $100"
+      },
+      {
+        "market": "AU",
+        "amount": "A$125/day",
+        "detail": "Core A$75 + Roles A$50",
+        "note": "AU JSON field cost_usd is AUD (account currency), not USD."
+      }
+    ],
+    "whats_working": {
+      "ad_copy_themes": [
+        "Hire a Filipino / Philippines VA \u2014 employer copy, not job-seeker copy",
+        "You interview. You pick. \u2014 matches the real hiring process",
+        "Dedicated teammate, not a gig marketplace",
+        "Agency / firm / company \u2014 same words buyers type"
+      ],
+      "note": "Themes in the live US ads. One high-click Offshore ad was left unchanged on purpose."
+    },
+    "insights": [
+      "US sales ops (Mon Aug 10 \u2013 Sun Aug 16): 18 enquiries \u00b7 9 calls completed \u00b7 $79.98/enquiry.",
+      "AU sales ops (Mon Aug 10 \u2013 Sun Aug 16): 8 enquiries \u00b7 5 sales calls \u00b7 6 job orders \u00b7 4 placements \u00b7 A$110.53/enquiry.",
+      "US Core: Search IS 29.9% \u00b7 lost rank 37.8% \u00b7 lost budget 32.2% (2680 impr / $875 \u00b7 last 7 complete days).",
+      "US Roles: Search IS 22.3% \u00b7 lost rank 56.1% \u00b7 lost budget 21.6% (1838 impr / $565 \u00b7 last 7 complete days).",
+      "AU Core: Search IS 33.6% \u00b7 lost rank 39.5% \u00b7 lost budget 27.0% (1049 impr / A$537 \u00b7 last 7 complete days).",
+      "AU Roles: Search IS 27.0% \u00b7 lost rank 49.1% \u00b7 lost budget 24.0% (876 impr / A$347 \u00b7 last 7 complete days).",
+      "Lost IS (Rank) is the bigger hole \u2014 ads are eligible but often lose the auction (CPC cap / Quality / relevance), not because the daily budget ran out.",
+      "US early cost per lead (Sat Aug 8 \u2013 Mon Aug 10): $394.79 spend \u00f7 4 enquiries = $98.70 per enquiry. $394.79 spend \u00f7 2 sales calls booked = $197.40 per booked call. 4 enquiries \u00b7 2 sales calls booked \u00b7 1 junk (job seeker) \u00b7 1 not a fit. Early / small sample \u2014 do not treat as steady-state CPL. Job-seeker junk never counts as a win.",
+      "US (pull window): $1,440 spent \u00b7 493 clicks \u00b7 $2.92 each. Core Search is cheaper and busier. Role Search is more specific and costs more.",
+      "US daily plan is about $125. Latest day in pull ran about $277 \u2014 watch spend vs budget.",
+      "Almost all US ad clicks still land on the US home page. Role pages are live but quiet.",
+      "Australia new Search: $884 \u00b7 250 clicks \u00b7 about $4 each. Older paused campaigns are not in the VC_* table.",
+      "Still paying per click. US phone \u00b7 Australia 1300. A tap is not the same as a real conversation."
+    ],
+    "buyer_signals": [
+      {
+        "term": "philippines virtual assistant agency",
+        "why": "Employer shopping for a PH VA agency",
+        "market": "US"
+      },
+      {
+        "term": "philippines outsourcing agency",
+        "why": "Business looking for a provider, not a job",
+        "market": "US"
+      },
+      {
+        "term": "remote staffing agency",
+        "why": "Staffing language buyers actually use",
+        "market": "US"
+      },
+      {
+        "term": "virtual assistant firm / company",
+        "why": "Shopping for a company, not a gig listing",
+        "market": "US"
+      },
+      {
+        "term": "va workers ph",
+        "why": "Messy shorthand \u2014 watch if spend climbs",
+        "market": "US"
+      }
+    ],
+    "lp_highlights": [
+      {
+        "name": "US home (/us)",
+        "why": "Takes almost all US paid clicks right now",
+        "url": "https://www.virtualcoworker.app/us"
+      },
+      {
+        "name": "Role pages (admin, bookkeeping, marketing\u2026)",
+        "why": "Live for Role Search \u2014 little paid traffic yet",
+        "url": "https://www.virtualcoworker.app/us/administrative-support"
+      },
+      {
+        "name": "Australia home (/au)",
+        "why": "Live with 1300 \u00b7 new ads just started",
+        "url": "https://www.virtualcoworker.app/au"
+      },
+      {
+        "name": "Quiz pages",
+        "why": "Built, not in paid traffic yet",
+        "url": "https://www.virtualcoworker.app/us/quiz"
+      }
+    ],
+    "whats_next": [
+      "<strong>Daily</strong> \u2014 clear Google Ads recommendations + review search terms",
+      "<strong>Australia GTM + GA4</strong> \u2014 visit tags first (prerequisite)",
+      "<strong>Then</strong> AU website calls 60+ seconds \u00b7 AU calls from ads (US website-call already live)",
+      "<strong>Then</strong> CRM"
+    ],
+    "coming_soon": [
+      "Quiz ~70% \u00b7 not on live path \u00b7 ads Paused",
+      "Booked consult as a stronger later signal (click \u2260 booked)",
+      "Zoho \u2192 Job Order \u2192 Placement (CRM value overrides site $)",
+      "Site tests scoreboard still blank"
+    ],
+    "done_today": [
+      "US Search live \u00b7 Brand off \u00b7 GTM/GA4 live \u00b7 ~$125/day",
+      "US phone 310 on site + Call \u00b7 888 unlinked from new Ads",
+      "Human RSAs on CORE + ROLES (winners left alone)",
+      "US sitelinks cleaned \u00b7 callouts/snippet already good",
+      "AU phone 1300 on site \u00b7 Stage 1 waiting on traffic",
+      "Form chips + modeled $ on /us /au \u00b7 Google + Clutch stars",
+      "Job-seeker hard redirect to virtualcoworker.com.ph",
+      "Thank-you overlay live (call + book \u00b7 not Ads primary)",
+      "Quiz parked ~70% \u00b7 ads Paused"
+    ],
+    "honesty": "US and Australia Search are live. Paying per click until call tracking is trusted.",
+    "lp_ab_note": "Homepage H1 locked unless George asks. Site tests scoreboard still blank.",
+    "early_cpl_summary": "$394.79 spend \u00f7 4 enquiries = $98.70 per enquiry",
+    "early_au_summary": "A$884.20 spend \u00f7 8 enquiries = A$110.53 per enquiry",
+    "impression_share_verdict": "rank",
+    "auction_competitor_status": {
+      "available": false,
+      "attempted": false,
+      "reason": "Competitor-domain Auction Insights metrics are allowlist-only in the Google Ads API and are not available for this account. Dashboard shows campaign Search IS / lost rank / lost budget / top / abs-top only. Do not invent competitor findings."
+    },
+    "narrative_source": "baked_from_api_snapshot",
+    "au_leads_status": {
+      "status": "holly_week",
+      "plain": "AU sales ops (Mon Aug 10 \u2013 Sun Aug 16): 8 enquiries \u00b7 5 sales calls \u00b7 6 job orders \u00b7 4 placements \u00b7 A$110.53/enquiry."
+    }
+  },
+  "sales_ops_us": {
+    "market": "US",
+    "window_start": "2026-08-10",
+    "window_end": "2026-08-16",
+    "label": "Mon Aug 10 \u2013 Sun Aug 16",
+    "source": "Cheyenne Gichana emails 2026-08-14 15:40 PT (weekdays Aug 10\u201314) + 2026-08-17 10:27 PT (Sat Aug 15\u2013beginning of Mon Aug 17)",
+    "gmail_thread_id": "1a010c3767f3e44e",
+    "gmail_thread_id_weekday": "1a0026f806356417",
+    "enquiries": 18,
+    "sales_calls_completed": 9,
+    "sales_calls_booked": 1,
+    "looking_for_work": 5,
+    "not_a_fit": 2,
+    "philippines_job_seekers": 3,
+    "sources": [
+      {
+        "label": "Google Organic",
+        "count": 11
+      },
+      {
+        "label": "Bing Organic",
+        "count": 1
+      },
+      {
+        "label": "Facebook",
+        "count": 3
+      },
+      {
+        "label": "Referral Partner",
+        "count": 1
+      },
+      {
+        "label": "Phone Call",
+        "count": 1
+      },
+      {
+        "label": "Forbes",
+        "count": 1
+      }
+    ],
+    "campaigns_for_spend": [
+      "VC_US_S_CORE",
+      "VC_US_S_ROLES"
+    ],
+    "zoho_census": {
+      "pinged_utc": "2026-08-17T17:57:55.862831+00:00",
+      "usa_sales_enquiries": 18,
+      "usa_with_gclid": 0,
+      "discovery_scheduled": 3,
+      "job_order_submitted": 1
+    },
+    "job_orders_total": 4,
+    "placements": 1,
+    "spend_usd": 1439.73,
+    "spend_note": "US Core+Roles 2026-08-10\u20132026-08-16 through Ads pull 2026-08-17 17:57 UTC.",
+    "impressions": 4518,
+    "clicks": 493,
+    "avg_cpc_usd": 2.92,
+    "cost_per_enquiry_usd": 79.98,
+    "cost_per_sales_call_completed_usd": 159.97,
+    "math_plain": "$1,439.73 spend \u00f7 18 enquiries = $79.98 per enquiry",
+    "math_completed_call": "$1,439.73 spend \u00f7 9 sales calls completed = $159.97 per completed call",
+    "caveat": "Sales-ops cost uses Cheyenne\u2019s 18 enquiries.",
+    "cost_per_job_order_usd": 1439.73,
+    "cost_per_job_order_source": "zoho_census",
+    "math_job_order": "$1,439.73 spend \u00f7 1 Zoho census job order = $1,439.73 per JO",
+    "why_plain": "18 enquiries \u00b7 9 completed calls.",
+    "insight_plain": "US sales ops (Mon Aug 10 \u2013 Sun Aug 16): 18 enquiries \u00b7 9 calls completed \u00b7 $79.98/enquiry."
+  },
+  "sales_ops_au": {
+    "market": "AU",
+    "window_start": "2026-08-10",
+    "window_end": "2026-08-16",
+    "label": "Mon Aug 10 \u2013 Sun Aug 16",
+    "source": "Holly Wallace email 2026-08-16 15:28 PT \u2014 10\u201316 August 2026",
+    "gmail_thread_id": "1a001d3605fc50db",
+    "gmail_message_id": "1a00cb0afd271333",
+    "owner": "Holly Wallace",
+    "owner_market": "APAC / Australia",
+    "scoreboard": "holly",
+    "weekly_scoreboard": "sales_ops",
+    "enquiries": 8,
+    "sales_calls_completed": 5,
+    "junk_leads": 3,
+    "new_job_orders": 3,
+    "returning_job_orders": 1,
+    "replacement_job_orders": 2,
+    "job_orders_total": 6,
+    "placements": 4,
+    "campaigns_for_spend": [
+      "VC_AU_S_CORE",
+      "VC_AU_S_ROLES"
+    ],
+    "zoho_census": {
+      "pinged_utc": "2026-08-17T17:57:55.862831+00:00",
+      "au_sales_enquiries": 14,
+      "au_with_gclid": 0,
+      "discovery_scheduled": 0,
+      "job_order_submitted": 4
+    },
+    "holly_context": "Holly labeled week: 3 junk \u00b7 8 enquiries \u00b7 5 sales calls \u00b7 3 new / 1 returning / 2 replacement job orders (6 total) \u00b7 4 placements.",
+    "spend_usd": 884.2,
+    "spend_note": "AU Core+Roles 2026-08-10\u20132026-08-16 from performance_au by_date (AUD).",
+    "impressions": 1925,
+    "clicks": 250,
+    "avg_cpc_usd": 3.54,
+    "cost_per_enquiry_usd": 110.53,
+    "cost_per_sales_call_completed_usd": 176.84,
+    "cost_per_job_order_usd": 147.37,
+    "cost_per_sales_call_booked_usd": null,
+    "math_plain": "A$884.20 spend \u00f7 8 enquiries = A$110.53 per enquiry",
+    "math_completed_call": "A$884.20 spend \u00f7 5 sales calls = A$176.84 per sales call",
+    "math_job_order": "A$884.20 spend \u00f7 6 job orders = A$147.37 per JO",
+    "caveat": "Sales-ops cost uses Holly\u2019s 8 enquiries.",
+    "why_plain": "8 enquiries \u00b7 5 sales calls \u00b7 6 job orders \u00b7 4 placements.",
+    "insight_plain": "AU sales ops (Mon Aug 10 \u2013 Sun Aug 16): 8 enquiries \u00b7 5 sales calls \u00b7 6 job orders \u00b7 4 placements \u00b7 A$110.53/enquiry.",
+    "ops_note": "Holly labeled week: 3 junk \u00b7 8 enquiries \u00b7 5 sales calls \u00b7 3 new / 1 returning / 2 replacement job orders (6 total) \u00b7 4 placements.",
+    "gclid_count": 0,
+    "sales_calls_booked": null,
+    "call_proxy": null,
+    "call_proxy_estimated": false
+  },
+  "impression_share": {
+    "generated_at_utc": "2026-08-17T17:57:57.911267+00:00",
+    "pull_started_utc": "2026-08-17T17:57:54.642772+00:00",
+    "customer_ids": {
+      "us": "4967151855",
+      "au": "5735391940"
+    },
+    "filter": "VC_US_% + VC_AU_% segments.date BETWEEN 2026-08-10 AND 2026-08-16 (complete days; Brand deferred)",
+    "api_calls_used": 2,
+    "api_calls_max": 2,
+    "api_calls": [
+      {
+        "n": 1,
+        "name": "us_campaign_is_last_7_complete_days",
+        "ok": true,
+        "row_count": 14
+      },
+      {
+        "n": 2,
+        "name": "au_campaign_is_last_7_complete_days",
+        "ok": true,
+        "row_count": 14
+      }
+    ],
+    "hard_stop": null,
+    "read_only": true,
+    "performance_us": {
+      "market": "US",
+      "window": "LAST_7_COMPLETE_DAYS",
+      "complete_day_end": "2026-08-16",
+      "campaigns": [
+        {
+          "name": "VC_US_S_CORE",
+          "status": "ENABLED",
+          "bidding_strategy_type": "TARGET_SPEND",
+          "cpc_bid_ceiling_usd": 30.0,
+          "max_conv_target_cpa_usd": 0.0,
+          "daily_budget_usd": 150.0,
+          "impressions": 2680,
+          "clicks": 342,
+          "cost_usd": 874.66,
+          "avg_cpc_usd": 2.56,
+          "conversions": 1.0,
+          "all_conversions": 2.0,
+          "search_is_pct": 29.9,
+          "lost_is_rank_pct": 37.8,
+          "lost_is_budget_pct": 32.2,
+          "search_top_is_pct": 20.4,
+          "search_abs_top_is_pct": 10.7
+        },
+        {
+          "name": "VC_US_S_ROLES",
+          "status": "ENABLED",
+          "bidding_strategy_type": "TARGET_SPEND",
+          "cpc_bid_ceiling_usd": 30.0,
+          "max_conv_target_cpa_usd": 0.0,
+          "daily_budget_usd": 100.0,
+          "impressions": 1838,
+          "clicks": 151,
+          "cost_usd": 565.08,
+          "avg_cpc_usd": 3.74,
+          "conversions": 0.0,
+          "all_conversions": 0.0,
+          "search_is_pct": 22.3,
+          "lost_is_rank_pct": 56.1,
+          "lost_is_budget_pct": 21.6,
+          "search_top_is_pct": 13.6,
+          "search_abs_top_is_pct": 10.0
+        }
+      ],
+      "row_count": 14,
+      "windows": {
+        "last_2_complete_days": {
+          "start": "2026-08-15",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_US_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 150.0,
+              "impressions": 875,
+              "clicks": 116,
+              "cost_usd": 334.3,
+              "avg_cpc_usd": 2.88,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 29.1,
+              "lost_is_rank_pct": 42.2,
+              "lost_is_budget_pct": 28.7,
+              "search_top_is_pct": 19.8,
+              "search_abs_top_is_pct": 10.7
+            },
+            {
+              "name": "VC_US_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 100.0,
+              "impressions": 557,
+              "clicks": 53,
+              "cost_usd": 210.2,
+              "avg_cpc_usd": 3.97,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 19.8,
+              "lost_is_rank_pct": 34.0,
+              "lost_is_budget_pct": 46.1,
+              "search_top_is_pct": 11.4,
+              "search_abs_top_is_pct": 10.0
+            }
+          ]
+        },
+        "last_3_complete_days": {
+          "start": "2026-08-14",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_US_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 150.0,
+              "impressions": 1422,
+              "clicks": 175,
+              "cost_usd": 514.1,
+              "avg_cpc_usd": 2.94,
+              "conversions": 1.0,
+              "all_conversions": 2.0,
+              "search_is_pct": 28.8,
+              "lost_is_rank_pct": 49.2,
+              "lost_is_budget_pct": 22.1,
+              "search_top_is_pct": 19.6,
+              "search_abs_top_is_pct": 10.7
+            },
+            {
+              "name": "VC_US_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 100.0,
+              "impressions": 987,
+              "clicks": 85,
+              "cost_usd": 360.59,
+              "avg_cpc_usd": 4.24,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 23.0,
+              "lost_is_rank_pct": 48.7,
+              "lost_is_budget_pct": 28.3,
+              "search_top_is_pct": 14.3,
+              "search_abs_top_is_pct": 10.0
+            }
+          ]
+        },
+        "last_7_complete_days": {
+          "start": "2026-08-10",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_US_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 150.0,
+              "impressions": 2680,
+              "clicks": 342,
+              "cost_usd": 874.66,
+              "avg_cpc_usd": 2.56,
+              "conversions": 1.0,
+              "all_conversions": 2.0,
+              "search_is_pct": 29.9,
+              "lost_is_rank_pct": 37.8,
+              "lost_is_budget_pct": 32.2,
+              "search_top_is_pct": 20.4,
+              "search_abs_top_is_pct": 10.7
+            },
+            {
+              "name": "VC_US_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 100.0,
+              "impressions": 1838,
+              "clicks": 151,
+              "cost_usd": 565.08,
+              "avg_cpc_usd": 3.74,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 22.3,
+              "lost_is_rank_pct": 56.1,
+              "lost_is_budget_pct": 21.6,
+              "search_top_is_pct": 13.6,
+              "search_abs_top_is_pct": 10.0
+            }
+          ]
+        }
+      },
+      "currency_note": "US amounts are USD."
+    },
+    "performance_au": {
+      "market": "AU",
+      "window": "LAST_7_COMPLETE_DAYS",
+      "complete_day_end": "2026-08-16",
+      "campaigns": [
+        {
+          "name": "VC_AU_S_CORE",
+          "status": "ENABLED",
+          "bidding_strategy_type": "TARGET_SPEND",
+          "cpc_bid_ceiling_usd": 25.0,
+          "max_conv_target_cpa_usd": 0.0,
+          "daily_budget_usd": 75.0,
+          "impressions": 1049,
+          "clicks": 161,
+          "cost_usd": 536.76,
+          "avg_cpc_usd": 3.33,
+          "conversions": 0.0,
+          "all_conversions": 0.0,
+          "search_is_pct": 33.6,
+          "lost_is_rank_pct": 39.5,
+          "lost_is_budget_pct": 27.0,
+          "search_top_is_pct": 24.3,
+          "search_abs_top_is_pct": 14.5
+        },
+        {
+          "name": "VC_AU_S_ROLES",
+          "status": "ENABLED",
+          "bidding_strategy_type": "TARGET_SPEND",
+          "cpc_bid_ceiling_usd": 25.0,
+          "max_conv_target_cpa_usd": 0.0,
+          "daily_budget_usd": 50.0,
+          "impressions": 876,
+          "clicks": 89,
+          "cost_usd": 347.44,
+          "avg_cpc_usd": 3.9,
+          "conversions": 0.0,
+          "all_conversions": 0.0,
+          "search_is_pct": 27.0,
+          "lost_is_rank_pct": 49.1,
+          "lost_is_budget_pct": 24.0,
+          "search_top_is_pct": 18.3,
+          "search_abs_top_is_pct": 11.9
+        }
+      ],
+      "row_count": 14,
+      "windows": {
+        "last_2_complete_days": {
+          "start": "2026-08-15",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_AU_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 75.0,
+              "impressions": 248,
+              "clicks": 33,
+              "cost_usd": 109.74,
+              "avg_cpc_usd": 3.33,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 35.7,
+              "lost_is_rank_pct": 64.3,
+              "lost_is_budget_pct": 0.0,
+              "search_top_is_pct": 24.9,
+              "search_abs_top_is_pct": 14.6
+            },
+            {
+              "name": "VC_AU_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 50.0,
+              "impressions": 160,
+              "clicks": 24,
+              "cost_usd": 103.95,
+              "avg_cpc_usd": 4.33,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 30.9,
+              "lost_is_rank_pct": 69.1,
+              "lost_is_budget_pct": 0.0,
+              "search_top_is_pct": 23.1,
+              "search_abs_top_is_pct": 14.6
+            }
+          ]
+        },
+        "last_3_complete_days": {
+          "start": "2026-08-14",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_AU_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 75.0,
+              "impressions": 439,
+              "clicks": 60,
+              "cost_usd": 187.55,
+              "avg_cpc_usd": 3.13,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 36.3,
+              "lost_is_rank_pct": 63.7,
+              "lost_is_budget_pct": 0.0,
+              "search_top_is_pct": 25.6,
+              "search_abs_top_is_pct": 14.5
+            },
+            {
+              "name": "VC_AU_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 50.0,
+              "impressions": 303,
+              "clicks": 38,
+              "cost_usd": 156.53,
+              "avg_cpc_usd": 4.12,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 31.8,
+              "lost_is_rank_pct": 62.3,
+              "lost_is_budget_pct": 5.9,
+              "search_top_is_pct": 22.8,
+              "search_abs_top_is_pct": 12.8
+            }
+          ]
+        },
+        "last_7_complete_days": {
+          "start": "2026-08-10",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_AU_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 75.0,
+              "impressions": 1049,
+              "clicks": 161,
+              "cost_usd": 536.76,
+              "avg_cpc_usd": 3.33,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 33.6,
+              "lost_is_rank_pct": 39.5,
+              "lost_is_budget_pct": 27.0,
+              "search_top_is_pct": 24.3,
+              "search_abs_top_is_pct": 14.5
+            },
+            {
+              "name": "VC_AU_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 50.0,
+              "impressions": 876,
+              "clicks": 89,
+              "cost_usd": 347.44,
+              "avg_cpc_usd": 3.9,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 27.0,
+              "lost_is_rank_pct": 49.1,
+              "lost_is_budget_pct": 24.0,
+              "search_top_is_pct": 18.3,
+              "search_abs_top_is_pct": 11.9
+            }
+          ]
+        }
+      },
+      "currency_note": "AU amounts are account currency (AUD). Field name cost_usd is historical."
+    },
+    "bottleneck_us": {
+      "verdict": "rank",
+      "plain": "Lost IS (Rank) is the bigger hole \u2014 ads are eligible but often lose the auction (CPC cap / Quality / relevance), not because the daily budget ran out.",
+      "max_lost_is_rank_pct": 56.1,
+      "max_lost_is_budget_pct": 32.2,
+      "max_search_is_pct": 29.9,
+      "core": "rank",
+      "roles": "rank"
+    },
+    "bottleneck_au": {
+      "verdict": "rank",
+      "plain": "Lost IS (Rank) is the bigger hole \u2014 ads are eligible but often lose the auction (CPC cap / Quality / relevance), not because the daily budget ran out.",
+      "max_lost_is_rank_pct": 49.1,
+      "max_lost_is_budget_pct": 27.0,
+      "max_search_is_pct": 33.6,
+      "core": "rank",
+      "roles": "rank"
+    },
+    "windows": {
+      "US": {
+        "last_2_complete_days": {
+          "start": "2026-08-15",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_US_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 150.0,
+              "impressions": 875,
+              "clicks": 116,
+              "cost_usd": 334.3,
+              "avg_cpc_usd": 2.88,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 29.1,
+              "lost_is_rank_pct": 42.2,
+              "lost_is_budget_pct": 28.7,
+              "search_top_is_pct": 19.8,
+              "search_abs_top_is_pct": 10.7
+            },
+            {
+              "name": "VC_US_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 100.0,
+              "impressions": 557,
+              "clicks": 53,
+              "cost_usd": 210.2,
+              "avg_cpc_usd": 3.97,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 19.8,
+              "lost_is_rank_pct": 34.0,
+              "lost_is_budget_pct": 46.1,
+              "search_top_is_pct": 11.4,
+              "search_abs_top_is_pct": 10.0
+            }
+          ]
+        },
+        "last_3_complete_days": {
+          "start": "2026-08-14",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_US_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 150.0,
+              "impressions": 1422,
+              "clicks": 175,
+              "cost_usd": 514.1,
+              "avg_cpc_usd": 2.94,
+              "conversions": 1.0,
+              "all_conversions": 2.0,
+              "search_is_pct": 28.8,
+              "lost_is_rank_pct": 49.2,
+              "lost_is_budget_pct": 22.1,
+              "search_top_is_pct": 19.6,
+              "search_abs_top_is_pct": 10.7
+            },
+            {
+              "name": "VC_US_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 100.0,
+              "impressions": 987,
+              "clicks": 85,
+              "cost_usd": 360.59,
+              "avg_cpc_usd": 4.24,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 23.0,
+              "lost_is_rank_pct": 48.7,
+              "lost_is_budget_pct": 28.3,
+              "search_top_is_pct": 14.3,
+              "search_abs_top_is_pct": 10.0
+            }
+          ]
+        },
+        "last_7_complete_days": {
+          "start": "2026-08-10",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_US_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 150.0,
+              "impressions": 2680,
+              "clicks": 342,
+              "cost_usd": 874.66,
+              "avg_cpc_usd": 2.56,
+              "conversions": 1.0,
+              "all_conversions": 2.0,
+              "search_is_pct": 29.9,
+              "lost_is_rank_pct": 37.8,
+              "lost_is_budget_pct": 32.2,
+              "search_top_is_pct": 20.4,
+              "search_abs_top_is_pct": 10.7
+            },
+            {
+              "name": "VC_US_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 30.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 100.0,
+              "impressions": 1838,
+              "clicks": 151,
+              "cost_usd": 565.08,
+              "avg_cpc_usd": 3.74,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 22.3,
+              "lost_is_rank_pct": 56.1,
+              "lost_is_budget_pct": 21.6,
+              "search_top_is_pct": 13.6,
+              "search_abs_top_is_pct": 10.0
+            }
+          ]
+        }
+      },
+      "AU": {
+        "last_2_complete_days": {
+          "start": "2026-08-15",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_AU_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 75.0,
+              "impressions": 248,
+              "clicks": 33,
+              "cost_usd": 109.74,
+              "avg_cpc_usd": 3.33,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 35.7,
+              "lost_is_rank_pct": 64.3,
+              "lost_is_budget_pct": 0.0,
+              "search_top_is_pct": 24.9,
+              "search_abs_top_is_pct": 14.6
+            },
+            {
+              "name": "VC_AU_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 50.0,
+              "impressions": 160,
+              "clicks": 24,
+              "cost_usd": 103.95,
+              "avg_cpc_usd": 4.33,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 30.9,
+              "lost_is_rank_pct": 69.1,
+              "lost_is_budget_pct": 0.0,
+              "search_top_is_pct": 23.1,
+              "search_abs_top_is_pct": 14.6
+            }
+          ]
+        },
+        "last_3_complete_days": {
+          "start": "2026-08-14",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_AU_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 75.0,
+              "impressions": 439,
+              "clicks": 60,
+              "cost_usd": 187.55,
+              "avg_cpc_usd": 3.13,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 36.3,
+              "lost_is_rank_pct": 63.7,
+              "lost_is_budget_pct": 0.0,
+              "search_top_is_pct": 25.6,
+              "search_abs_top_is_pct": 14.5
+            },
+            {
+              "name": "VC_AU_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 50.0,
+              "impressions": 303,
+              "clicks": 38,
+              "cost_usd": 156.53,
+              "avg_cpc_usd": 4.12,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 31.8,
+              "lost_is_rank_pct": 62.3,
+              "lost_is_budget_pct": 5.9,
+              "search_top_is_pct": 22.8,
+              "search_abs_top_is_pct": 12.8
+            }
+          ]
+        },
+        "last_7_complete_days": {
+          "start": "2026-08-10",
+          "end": "2026-08-16",
+          "campaigns": [
+            {
+              "name": "VC_AU_S_CORE",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 75.0,
+              "impressions": 1049,
+              "clicks": 161,
+              "cost_usd": 536.76,
+              "avg_cpc_usd": 3.33,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 33.6,
+              "lost_is_rank_pct": 39.5,
+              "lost_is_budget_pct": 27.0,
+              "search_top_is_pct": 24.3,
+              "search_abs_top_is_pct": 14.5
+            },
+            {
+              "name": "VC_AU_S_ROLES",
+              "status": "ENABLED",
+              "bidding_strategy_type": "TARGET_SPEND",
+              "cpc_bid_ceiling_usd": 25.0,
+              "max_conv_target_cpa_usd": 0.0,
+              "daily_budget_usd": 50.0,
+              "impressions": 876,
+              "clicks": 89,
+              "cost_usd": 347.44,
+              "avg_cpc_usd": 3.9,
+              "conversions": 0.0,
+              "all_conversions": 0.0,
+              "search_is_pct": 27.0,
+              "lost_is_rank_pct": 49.1,
+              "lost_is_budget_pct": 24.0,
+              "search_top_is_pct": 18.3,
+              "search_abs_top_is_pct": 11.9
+            }
+          ]
+        }
+      }
+    },
+    "auction_us": {
+      "available": false,
+      "attempted": false,
+      "reason": "Competitor-domain Auction Insights metrics are allowlist-only in the Google Ads API and are not available for this account. Dashboard shows campaign Search IS / lost rank / lost budget / top / abs-top only. Do not invent competitor findings."
+    },
+    "insights_plain": [
+      "US Core: Search IS 29.9% \u00b7 lost rank 37.8% \u00b7 lost budget 32.2% (2680 impr / $875 \u00b7 last 7 complete days).",
+      "US Roles: Search IS 22.3% \u00b7 lost rank 56.1% \u00b7 lost budget 21.6% (1838 impr / $565 \u00b7 last 7 complete days).",
+      "AU Core: Search IS 33.6% \u00b7 lost rank 39.5% \u00b7 lost budget 27.0% (1049 impr / A$537 \u00b7 last 7 complete days).",
+      "AU Roles: Search IS 27.0% \u00b7 lost rank 49.1% \u00b7 lost budget 24.0% (876 impr / A$347 \u00b7 last 7 complete days).",
+      "Lost IS (Rank) is the bigger hole \u2014 ads are eligible but often lose the auction (CPC cap / Quality / relevance), not because the daily budget ran out."
+    ],
+    "cpc_caps_note": "Operator-set CPC caps (not from this pull): US CORE $15 / ROLES $12 \u00b7 AU CORE A$10 / ROLES A$8. Daily budgets from API: US Core $150.0 / Roles $100.0 \u00b7 AU Core A$75.0 / Roles A$50.0."
+  },
+  "impression_share_merged_at_utc": "2026-08-17T17:57:57.911267+00:00",
+  "ga4": {
+    "generated_at_utc": "2026-08-18T16:34:46Z",
+    "api": "ga4_data_api",
+    "api_note": "GA4 Data API (analyticsdata.googleapis.com) \u2014 NOT Google Ads API. Does not consume the Ads developer-token ops budget.",
+    "metric_labels": {
+      "ad_ctr": "Ad CTR \u2014 clicks \u00f7 impressions in Google Ads",
+      "stayed_and_looked": "Stayed and looked around \u2014 engaged sessions \u00f7 sessions",
+      "left_right_away": "Left right away \u2014 sessions that were not engaged"
+    },
+    "property_id": "549075481",
+    "measurement_id_us": "G-2V3V0BS6JW",
+    "window": "2026-08-10 \u2192 2026-08-16",
+    "window_prior": "2026-08-03 \u2192 2026-08-09",
+    "run_report_requests": 5,
+    "run_report_max": 5,
+    "api_calls": [
+      {
+        "n": 1,
+        "name": "overview_engagement_conversions",
+        "ok": true
+      },
+      {
+        "n": 2,
+        "name": "landing_pages_engagement",
+        "ok": true
+      },
+      {
+        "n": 3,
+        "name": "channels_engagement",
+        "ok": true
+      },
+      {
+        "n": 4,
+        "name": "device_by_channel",
+        "ok": true
+      },
+      {
+        "n": 5,
+        "name": "top_events",
+        "ok": true
+      }
+    ],
+    "quota_note": "GA4 standard properties typically allow on the order of 25k\u2013200k tokens/day (property-dependent). A few small RunReport calls are negligible. Separate from Google Ads API quota (~15k ops/day).",
+    "totals_last_7_days": {
+      "sessions": 615,
+      "users": 643,
+      "engaged_sessions": 281,
+      "engagement_rate_pct": 45.7,
+      "bounce_rate_pct": 54.3,
+      "conversions": 0.0,
+      "avg_session_seconds": 122.7
+    },
+    "totals_prior_7_days": {
+      "sessions": 176,
+      "users": 138,
+      "engaged_sessions": 89,
+      "engagement_rate_pct": 50.6,
+      "bounce_rate_pct": 49.4,
+      "conversions": 0.0,
+      "avg_session_seconds": 280.7
+    },
+    "paid_search_sessions_prior": 92,
+    "market_from_landing_path": {
+      "US": 585,
+      "AU": 0,
+      "PH": 0,
+      "other": 31
+    },
+    "path_kind_sessions": {
+      "us_home": 446,
+      "role_lp": 138,
+      "quiz": 1,
+      "au": 0,
+      "thank_you": 4,
+      "other_site": 8,
+      "other": 0,
+      "unknown": 19
+    },
+    "landing_compare": {
+      "us_home_sessions": 446,
+      "role_lp_sessions": 138,
+      "quiz_sessions": 1,
+      "thank_you_sessions": 4,
+      "note": "Path buckets from landingPage dimension. Role LPs = /us/* except home/quiz."
+    },
+    "top_landing_pages": [
+      {
+        "path": "/us",
+        "path_display": "/us",
+        "path_kind": "us_home",
+        "sessions": 446,
+        "users": 396,
+        "engaged_sessions": 204,
+        "engagement_rate_pct": 45.7,
+        "bounce_rate_pct": 54.3,
+        "market_guess": "US"
+      },
+      {
+        "path": "/us/bookkeeping",
+        "path_display": "/us/bookkeeping",
+        "path_kind": "role_lp",
+        "sessions": 40,
+        "users": 40,
+        "engaged_sessions": 19,
+        "engagement_rate_pct": 47.5,
+        "bounce_rate_pct": 52.5,
+        "market_guess": "US"
+      },
+      {
+        "path": "/us/customer-service",
+        "path_display": "/us/customer-service",
+        "path_kind": "role_lp",
+        "sessions": 22,
+        "users": 22,
+        "engaged_sessions": 15,
+        "engagement_rate_pct": 68.2,
+        "bounce_rate_pct": 31.8,
+        "market_guess": "US"
+      },
+      {
+        "path": "(not set)",
+        "path_display": "untagged",
+        "path_kind": "unknown",
+        "sessions": 19,
+        "users": 176,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 5.3,
+        "bounce_rate_pct": 94.7,
+        "market_guess": "other"
+      },
+      {
+        "path": "/us/sales",
+        "path_display": "/us/sales",
+        "path_kind": "role_lp",
+        "sessions": 19,
+        "users": 19,
+        "engaged_sessions": 12,
+        "engagement_rate_pct": 63.2,
+        "bounce_rate_pct": 36.8,
+        "market_guess": "US"
+      },
+      {
+        "path": "/us/digital-marketing",
+        "path_display": "/us/digital-marketing",
+        "path_kind": "role_lp",
+        "sessions": 17,
+        "users": 16,
+        "engaged_sessions": 5,
+        "engagement_rate_pct": 29.4,
+        "bounce_rate_pct": 70.6,
+        "market_guess": "US"
+      },
+      {
+        "path": "/us/social-media",
+        "path_display": "/us/social-media",
+        "path_kind": "role_lp",
+        "sessions": 15,
+        "users": 15,
+        "engaged_sessions": 6,
+        "engagement_rate_pct": 40.0,
+        "bounce_rate_pct": 60.0,
+        "market_guess": "US"
+      },
+      {
+        "path": "/us/administrative-support",
+        "path_display": "/us/administrative-support",
+        "path_kind": "role_lp",
+        "sessions": 14,
+        "users": 14,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 21.4,
+        "bounce_rate_pct": 78.6,
+        "market_guess": "US"
+      },
+      {
+        "path": "/how-it-works",
+        "path_display": "/how-it-works",
+        "path_kind": "other_site",
+        "sessions": 6,
+        "users": 6,
+        "engaged_sessions": 5,
+        "engagement_rate_pct": 83.3,
+        "bounce_rate_pct": 16.7,
+        "market_guess": "other"
+      },
+      {
+        "path": "/thank-you",
+        "path_display": "/thank-you",
+        "path_kind": "thank_you",
+        "sessions": 4,
+        "users": 2,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 100.0,
+        "bounce_rate_pct": 0.0,
+        "market_guess": "other"
+      },
+      {
+        "path": "/us/hr",
+        "path_display": "/us/hr",
+        "path_kind": "role_lp",
+        "sessions": 4,
+        "users": 4,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 75.0,
+        "bounce_rate_pct": 25.0,
+        "market_guess": "US"
+      },
+      {
+        "path": "/us/recruitment",
+        "path_display": "/us/recruitment",
+        "path_kind": "role_lp",
+        "sessions": 4,
+        "users": 3,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 25.0,
+        "bounce_rate_pct": 75.0,
+        "market_guess": "US"
+      },
+      {
+        "path": "/us/accounting",
+        "path_display": "/us/accounting",
+        "path_kind": "role_lp",
+        "sessions": 3,
+        "users": 3,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 100.0,
+        "market_guess": "US"
+      },
+      {
+        "path": "/services",
+        "path_display": "/services",
+        "path_kind": "other_site",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "bounce_rate_pct": 0.0,
+        "market_guess": "other"
+      },
+      {
+        "path": "/us/quiz",
+        "path_display": "/us/quiz",
+        "path_kind": "quiz",
+        "sessions": 1,
+        "users": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "bounce_rate_pct": 0.0,
+        "market_guess": "US"
+      }
+    ],
+    "channels": [
+      {
+        "channel": "Paid Search",
+        "sessions": 458,
+        "users": 432,
+        "engaged_sessions": 219,
+        "engagement_rate_pct": 47.8
+      },
+      {
+        "channel": "Direct",
+        "sessions": 113,
+        "users": 91,
+        "engaged_sessions": 31,
+        "engagement_rate_pct": 27.4
+      },
+      {
+        "channel": "Referral",
+        "sessions": 27,
+        "users": 3,
+        "engaged_sessions": 19,
+        "engagement_rate_pct": 70.4
+      },
+      {
+        "channel": "Organic Search",
+        "sessions": 13,
+        "users": 7,
+        "engaged_sessions": 6,
+        "engagement_rate_pct": 46.2
+      },
+      {
+        "channel": "Cross-network",
+        "sessions": 3,
+        "users": 3,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 100.0
+      },
+      {
+        "channel": "Unassigned",
+        "sessions": 3,
+        "users": 167,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 100.0
+      }
+    ],
+    "devices": [
+      {
+        "device": "desktop",
+        "sessions": 319,
+        "engaged_sessions": 156,
+        "engagement_rate_pct": 48.9
+      },
+      {
+        "device": "mobile",
+        "sessions": 293,
+        "engaged_sessions": 125,
+        "engagement_rate_pct": 42.7
+      },
+      {
+        "device": "tablet",
+        "sessions": 5,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 20.0
+      }
+    ],
+    "devices_by_channel": [
+      {
+        "device": "mobile",
+        "channel": "Paid Search",
+        "sessions": 262,
+        "engaged_sessions": 114,
+        "engagement_rate_pct": 43.5
+      },
+      {
+        "device": "desktop",
+        "channel": "Paid Search",
+        "sessions": 190,
+        "engaged_sessions": 104,
+        "engagement_rate_pct": 54.7
+      },
+      {
+        "device": "desktop",
+        "channel": "Direct",
+        "sessions": 95,
+        "engaged_sessions": 27,
+        "engagement_rate_pct": 28.4
+      },
+      {
+        "device": "desktop",
+        "channel": "Referral",
+        "sessions": 24,
+        "engaged_sessions": 17,
+        "engagement_rate_pct": 70.8
+      },
+      {
+        "device": "mobile",
+        "channel": "Direct",
+        "sessions": 18,
+        "engaged_sessions": 4,
+        "engagement_rate_pct": 22.2
+      },
+      {
+        "device": "mobile",
+        "channel": "Organic Search",
+        "sessions": 8,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 37.5
+      },
+      {
+        "device": "desktop",
+        "channel": "Organic Search",
+        "sessions": 5,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 60.0
+      },
+      {
+        "device": "tablet",
+        "channel": "Paid Search",
+        "sessions": 5,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 20.0
+      },
+      {
+        "device": "mobile",
+        "channel": "Referral",
+        "sessions": 4,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 75.0
+      },
+      {
+        "device": "desktop",
+        "channel": "Unassigned",
+        "sessions": 3,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 100.0
+      },
+      {
+        "device": "desktop",
+        "channel": "Cross-network",
+        "sessions": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0
+      },
+      {
+        "device": "mobile",
+        "channel": "Cross-network",
+        "sessions": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0
+      }
+    ],
+    "device_finding": {
+      "site_desktop": 319,
+      "site_mobile": 293,
+      "paid_search_mobile": 262,
+      "paid_search_desktop": 190,
+      "paid_search_mobile_pct": 58,
+      "verdict": "early",
+      "note": "Paid Search 58% mobile \u2014 closer to normal, not yet ~80%. Small pilot."
+    },
+    "events_top": [
+      {
+        "event": "page_view",
+        "event_count": 995,
+        "conversions": 0.0,
+        "users": 531,
+        "is_noise": true
+      },
+      {
+        "event": "experiment_view",
+        "event_count": 947,
+        "conversions": 0.0,
+        "users": 135,
+        "is_noise": false
+      },
+      {
+        "event": "session_start",
+        "event_count": 622,
+        "conversions": 0.0,
+        "users": 532,
+        "is_noise": true
+      },
+      {
+        "event": "first_visit",
+        "event_count": 525,
+        "conversions": 0.0,
+        "users": 523,
+        "is_noise": true
+      },
+      {
+        "event": "user_engagement",
+        "event_count": 488,
+        "conversions": 0.0,
+        "users": 326,
+        "is_noise": true
+      },
+      {
+        "event": "scroll",
+        "event_count": 146,
+        "conversions": 0.0,
+        "users": 84,
+        "is_noise": true
+      },
+      {
+        "event": "experiment_convert",
+        "event_count": 61,
+        "conversions": 0.0,
+        "users": 6,
+        "is_noise": false
+      },
+      {
+        "event": "form_start",
+        "event_count": 24,
+        "conversions": 0.0,
+        "users": 21,
+        "is_noise": false
+      },
+      {
+        "event": "lp_micro_quiz_start",
+        "event_count": 24,
+        "conversions": 0.0,
+        "users": 23,
+        "is_noise": false
+      },
+      {
+        "event": "lp_micro_hiring_path_cta",
+        "event_count": 21,
+        "conversions": 0.0,
+        "users": 17,
+        "is_noise": false
+      },
+      {
+        "event": "lp_micro_role_tile",
+        "event_count": 19,
+        "conversions": 0.0,
+        "users": 17,
+        "is_noise": false
+      },
+      {
+        "event": "experiment_click",
+        "event_count": 18,
+        "conversions": 0.0,
+        "users": 6,
+        "is_noise": false
+      }
+    ],
+    "events_interesting": [
+      {
+        "event": "experiment_view",
+        "event_count": 947,
+        "conversions": 0.0,
+        "users": 135,
+        "is_noise": false
+      },
+      {
+        "event": "experiment_convert",
+        "event_count": 61,
+        "conversions": 0.0,
+        "users": 6,
+        "is_noise": false
+      },
+      {
+        "event": "form_start",
+        "event_count": 24,
+        "conversions": 0.0,
+        "users": 21,
+        "is_noise": false
+      },
+      {
+        "event": "lp_micro_quiz_start",
+        "event_count": 24,
+        "conversions": 0.0,
+        "users": 23,
+        "is_noise": false
+      },
+      {
+        "event": "lp_micro_hiring_path_cta",
+        "event_count": 21,
+        "conversions": 0.0,
+        "users": 17,
+        "is_noise": false
+      },
+      {
+        "event": "lp_micro_role_tile",
+        "event_count": 19,
+        "conversions": 0.0,
+        "users": 17,
+        "is_noise": false
+      },
+      {
+        "event": "experiment_click",
+        "event_count": 18,
+        "conversions": 0.0,
+        "users": 6,
+        "is_noise": false
+      }
+    ],
+    "insights": [
+      "Most paid clicks still open the US home page \u2014 role ads exist, but Final URLs haven\u2019t shifted traffic onto role pages yet.",
+      "/us/sales: 63% stayed and looked around (19 visits) vs /us at 46% \u2014 maybe the sales pitch matches the search better. Tiny sample; not \u201cretention.\u201d",
+      "\u201cDirect\u201d is 113 sessions (Paid Search 458): typed URL, bookmarks, team checks, and some paid clicks that lose the ad tag \u2014 not mysterious organic growth.",
+      "About 46% stayed and looked around; 54% left right away. (Website behavior \u2014 not Ad CTR.)",
+      "Paid Search is 58% mobile (262 vs 190 desktop) \u2014 closer to normal search mix than site-wide, but not the ~80% we\u2019d expect yet. Small pilot; watch next week.",
+      "This US property has no /au landings \u2014 Australia tags go to a separate AU property."
+    ],
+    "notes": [
+      "US site tags only. Australia is a separate GA4 property \u2014 see the AU block."
+    ],
+    "summary_plain": "Last 7 days (US site tags): 615 sessions \u00b7 643 users. About 46% stayed and looked around. Top landings: /us, /us/bookkeeping, /us/customer-service, /us/sales. Traffic: Paid Search, Direct, Referral. US site tags only. Australia is a separate GA4 property \u2014 see the AU block.",
+    "au": {
+      "ok": true,
+      "property_id": "549811743",
+      "measurement_id": "G-7X1K9V2LFE",
+      "window": "2026-08-10 \u2192 2026-08-16",
+      "window_prior": "2026-08-03 \u2192 2026-08-09",
+      "tags_live_since": "2026-08-12",
+      "run_report_requests": 3,
+      "api_calls": [
+        {
+          "n": 1,
+          "name": "au_overview",
+          "ok": true
+        },
+        {
+          "n": 2,
+          "name": "au_landing_pages",
+          "ok": true
+        },
+        {
+          "n": 3,
+          "name": "au_channels",
+          "ok": true
+        }
+      ],
+      "totals_last_7_days": {
+        "sessions": 149,
+        "users": 132,
+        "engaged_sessions": 81,
+        "engagement_rate_pct": 54.4,
+        "bounce_rate_pct": 45.6,
+        "conversions": 0.0,
+        "avg_session_seconds": 104.0
+      },
+      "totals_prior_7_days": {
+        "sessions": 0,
+        "users": 0,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 0.0,
+        "conversions": 0.0,
+        "avg_session_seconds": 0.0
+      },
+      "paid_search_sessions": 124,
+      "paid_search_sessions_prior": 0,
+      "paid_search_engagement_rate_pct": 53.2,
+      "au_path_sessions": 137,
+      "thank_you_sessions": 4,
+      "top_landing_pages": [
+        {
+          "path": "/au",
+          "path_display": "/au",
+          "path_kind": "au",
+          "sessions": 88,
+          "users": 80,
+          "engaged_sessions": 50,
+          "engagement_rate_pct": 56.8,
+          "bounce_rate_pct": 43.2,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/au/administrative-support",
+          "path_display": "/au/administrative-support",
+          "path_kind": "au",
+          "sessions": 13,
+          "users": 12,
+          "engaged_sessions": 5,
+          "engagement_rate_pct": 38.5,
+          "bounce_rate_pct": 61.5,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/au/recruitment",
+          "path_display": "/au/recruitment",
+          "path_kind": "au",
+          "sessions": 12,
+          "users": 12,
+          "engaged_sessions": 7,
+          "engagement_rate_pct": 58.3,
+          "bounce_rate_pct": 41.7,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/au/customer-service",
+          "path_display": "/au/customer-service",
+          "path_kind": "au",
+          "sessions": 7,
+          "users": 7,
+          "engaged_sessions": 6,
+          "engagement_rate_pct": 85.7,
+          "bounce_rate_pct": 14.3,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/au/social-media",
+          "path_display": "/au/social-media",
+          "path_kind": "au",
+          "sessions": 7,
+          "users": 7,
+          "engaged_sessions": 3,
+          "engagement_rate_pct": 42.9,
+          "bounce_rate_pct": 57.1,
+          "market_guess": "AU"
+        },
+        {
+          "path": "(not set)",
+          "path_display": "untagged",
+          "path_kind": "unknown",
+          "sessions": 5,
+          "users": 6,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 20.0,
+          "bounce_rate_pct": 80.0,
+          "market_guess": "other"
+        },
+        {
+          "path": "/au/accounting",
+          "path_display": "/au/accounting",
+          "path_kind": "au",
+          "sessions": 4,
+          "users": 4,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 25.0,
+          "bounce_rate_pct": 75.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/thank-you",
+          "path_display": "/thank-you",
+          "path_kind": "thank_you",
+          "sessions": 4,
+          "users": 4,
+          "engaged_sessions": 2,
+          "engagement_rate_pct": 50.0,
+          "bounce_rate_pct": 50.0,
+          "market_guess": "other"
+        },
+        {
+          "path": "/au/digital-marketing",
+          "path_display": "/au/digital-marketing",
+          "path_kind": "au",
+          "sessions": 2,
+          "users": 2,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 50.0,
+          "bounce_rate_pct": 50.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/au/hr",
+          "path_display": "/au/hr",
+          "path_kind": "au",
+          "sessions": 2,
+          "users": 2,
+          "engaged_sessions": 2,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/how-it-works",
+          "path_display": "/how-it-works",
+          "path_kind": "other_site",
+          "sessions": 2,
+          "users": 2,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 50.0,
+          "bounce_rate_pct": 50.0,
+          "market_guess": "other"
+        },
+        {
+          "path": "/au/bookkeeping",
+          "path_display": "/au/bookkeeping",
+          "path_kind": "au",
+          "sessions": 1,
+          "users": 1,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 100.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/au/sales",
+          "path_display": "/au/sales",
+          "path_kind": "au",
+          "sessions": 1,
+          "users": 1,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "market_guess": "AU"
+        },
+        {
+          "path": "/services",
+          "path_display": "/services",
+          "path_kind": "other_site",
+          "sessions": 1,
+          "users": 1,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "market_guess": "other"
+        }
+      ],
+      "channels": [
+        {
+          "channel": "Paid Search",
+          "sessions": 124,
+          "users": 118,
+          "engaged_sessions": 66,
+          "engagement_rate_pct": 53.2
+        },
+        {
+          "channel": "Direct",
+          "sessions": 18,
+          "users": 9,
+          "engaged_sessions": 9,
+          "engagement_rate_pct": 50.0
+        },
+        {
+          "channel": "Cross-network",
+          "sessions": 4,
+          "users": 4,
+          "engaged_sessions": 4,
+          "engagement_rate_pct": 100.0
+        },
+        {
+          "channel": "Organic Search",
+          "sessions": 3,
+          "users": 3,
+          "engaged_sessions": 2,
+          "engagement_rate_pct": 66.7
+        },
+        {
+          "channel": "Unassigned",
+          "sessions": 0,
+          "users": 3,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0
+        }
+      ],
+      "insights": [
+        "About 54% stayed and looked around (149 visits)."
+      ],
+      "notes": [
+        "/au pages received 137 landing visits \u2014 tags are firing on the Australia microsite.",
+        "Paid Google ads visits: 124 (the useful volume). Thank-you / form hits are likely internal testing, not leads.",
+        "4 thank-you landings \u2014 treat as George/sales/agent tests, not leads."
+      ],
+      "summary_plain": "Last 7 days (AU site tags): 149 sessions \u00b7 132 users. Paid Google ads visits: 124. About 54% stayed and looked around. Top landings: /au, /au/administrative-support, /au/recruitment, /au/customer-service. /au pages received 137 landing visits \u2014 tags are firing on the Australia microsite."
+    },
+    "run_report_requests_total": 8
+  },
+  "ga4_merged_at_utc": "2026-08-18T16:34:46Z"
+}

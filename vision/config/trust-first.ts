@@ -1,9 +1,11 @@
 /**
- * Trust-first US paid-search challenger.
- * Preview-only. Not a live Ads destination. Do not import from /us pages.
+ * Trust-first US paid-search landing pages.
+ * Isolated test routes only: /us/tf/* plus /us/philippines-virtual-assistants.
+ * Live paid /us and role LPs stay on StaffingBaselineLanding. Preview stays under /preview/trust-first (noindex).
  *
- * Copy is original Virtual Coworker employer language.
- * Do not paste MyOutDesk sentences, stats, or claims.
+ * Body copy is original Virtual Coworker employer language.
+ * H1s are George-approved 2026-08-18 (core / role / EA). Sentence 2 is the 80% line.
+ * Do not name competitors on-page. Do not use their 70% / SOC2 / HIPAA claims.
  */
 
 import {
@@ -16,15 +18,50 @@ import {
 
 export const TRUST_FIRST_NAMESPACE = "/preview/trust-first" as const;
 export const TRUST_FIRST_LP_VERSION = "trust_first_preview_2026_08_18" as const;
+export const TRUST_FIRST_PRODUCTION_LP_VERSION = "trust_first_2026_08_18" as const;
 export const TRUST_FIRST_EXPERIMENT_ID = "us_trust_first_lp" as const;
 export const TRUST_FIRST_LANDING_PAGE_TYPE = "trust_first_preview" as const;
+export const TRUST_FIRST_PRODUCTION_LANDING_PAGE_TYPE = "employer_paid_lp" as const;
+
+/**
+ * George-approved H1s (2026-08-18). Sentence 1 is navy; sentence 2 is `#0071c9`.
+ * Sentence 2 tightened 2026-08-18: keep 80%, cut clauses. Do not name competitors.
+ */
+export const APPROVED_H1_SENTENCE_2 =
+  "Save up to 80% on staffing — no recruitment fees, dedicated support on your hours.";
+
+function approvedH1(sentence1: string): string {
+  return `${sentence1}. ${APPROVED_H1_SENTENCE_2}`;
+}
+
+export const APPROVED_H1_CORE = approvedH1(
+  "Hire a Virtual Assistant From the Philippines",
+);
+export const APPROVED_H1_EA = approvedH1(
+  "Hire an Executive Assistant From the Philippines",
+);
+export const APPROVED_H1_BOOKKEEPING = approvedH1(
+  "Hire a Bookkeeping Virtual Assistant From the Philippines",
+);
+export const APPROVED_H1_CUSTOMER_SERVICE = approvedH1(
+  "Hire a Customer Service Virtual Assistant From the Philippines",
+);
+export const APPROVED_H1_SALES = approvedH1(
+  "Hire a Sales Virtual Assistant From the Philippines",
+);
+export const APPROVED_H1_REAL_ESTATE = approvedH1(
+  "Hire a Real Estate Virtual Assistant From the Philippines",
+);
+export const APPROVED_H1_DIGITAL_MARKETING = approvedH1(
+  "Hire a Digital Marketing Virtual Assistant From the Philippines",
+);
 
 /** Preview toolbar + query override only. Production assignment stays off. */
 export const TRUST_FIRST_SPLIT_LIVE = false;
 
 export type TrustFirstVariant = "simple" | "proof_heavy";
 export const TRUST_FIRST_VARIANTS = ["simple", "proof_heavy"] as const;
-export const DEFAULT_TRUST_FIRST_VARIANT: TrustFirstVariant = "simple";
+export const DEFAULT_TRUST_FIRST_VARIANT: TrustFirstVariant = "proof_heavy";
 
 export type TrustFirstPageKey =
   | "us"
@@ -45,13 +82,21 @@ export type TrustFirstConfidence = "high" | "medium" | "observed";
 export type TrustFirstCard = { title: string; body: string };
 export type TrustFirstFaq = { q: string; a: string };
 export type TrustFirstStep = { k: string; t: string; d: string };
-export type TrustFirstCompareRow = { label: string; vc: string; other: string };
+export type TrustFirstCompareMark = "yes" | "no";
+export type TrustFirstCompareRow = {
+  label: string;
+  other: string;
+  otherMark: TrustFirstCompareMark;
+  vc: string;
+  vcMark: TrustFirstCompareMark;
+};
 
 export type TrustFirstPageConfig = {
   key: TrustFirstPageKey;
   name: string;
   previewPath: string;
   proposedProductionPath: string;
+  productionPath: string;
   currentProductionEquivalent: string;
   keywordCluster: string;
   intendedCampaign: string;
@@ -60,6 +105,8 @@ export type TrustFirstPageConfig = {
   description: string;
   eyebrow: string;
   h1: string;
+  /** Stored for a later A/B. Preview still renders `h1` only. Do not wire a live experiment. */
+  h1_alt: string;
   supporting: string;
   heroBullets: readonly string[];
   cta: string;
@@ -68,6 +115,7 @@ export type TrustFirstPageConfig = {
   roles: readonly TrustFirstCard[];
   process: readonly TrustFirstStep[];
   whyItems: readonly TrustFirstCard[];
+  comparisonLead: string;
   comparison: readonly TrustFirstCompareRow[];
   proofModules: readonly TrustFirstCard[];
   objections: readonly TrustFirstFaq[];
@@ -120,6 +168,77 @@ export const EMPLOYER_ROLE_OPTIONS = [
 ] as const;
 
 const YEARS = yearsTrading();
+
+export const H1_HIGHLIGHTS: Record<TrustFirstPageKey, string> = {
+  us: APPROVED_H1_SENTENCE_2,
+  "philippines-virtual-assistants": APPROVED_H1_SENTENCE_2,
+  "virtual-assistant-agency": APPROVED_H1_SENTENCE_2,
+  staffing: APPROVED_H1_SENTENCE_2,
+  "real-estate": APPROVED_H1_SENTENCE_2,
+  bookkeeping: APPROVED_H1_SENTENCE_2,
+  "customer-service": APPROVED_H1_SENTENCE_2,
+  sales: APPROVED_H1_SENTENCE_2,
+  "administrative-support": APPROVED_H1_SENTENCE_2,
+  "digital-marketing": APPROVED_H1_SENTENCE_2,
+};
+
+/** Company-owned floors and published review marks. Not competitor stats. */
+export const TRUST_STAT_CHIPS = [
+  {
+    value: `${YEARS} years`,
+    label: `Staffing since ${TRUST_PROOF.sinceYear}`,
+  },
+  {
+    value: TRUST_PROOF.socialReach.linkedinDisplay,
+    label: "LinkedIn followers",
+  },
+  {
+    value: TRUST_PROOF.socialReach.facebookDisplay,
+    label: "Facebook followers",
+  },
+  {
+    value: "Your hours",
+    label: "US business time zone",
+  },
+] as const;
+
+export const REVIEW_BADGES = {
+  google: {
+    rating: TRUST_PROOF.googleBusinessUs.rating,
+    reviewCount: TRUST_PROOF.googleBusinessUs.reviewCount,
+    showCount: true,
+    label: "Google",
+    caption: "West Hollywood Google listing",
+    src: "/brand/badge-google-5star.webp",
+    alt: "Google reviews",
+  },
+  clutch: {
+    rating: TRUST_PROOF.clutch.rating,
+    reviewCount: TRUST_PROOF.clutch.reviewCount,
+    showCount: false,
+    label: "Clutch",
+    caption: "Rated on Clutch",
+    src: "/brand/trust/badge-clutch-us-2024.webp",
+    alt: "Clutch",
+  },
+} as const;
+
+/**
+ * Philippines talent-market facts. Not Virtual Coworker company metrics.
+ * Shown only on the PH preview page. Cite the public source on-page.
+ */
+export const PH_MARKET_FACTS = [
+  {
+    title: "English for business work",
+    body: "The 2025 EF English Proficiency Index places the Philippines in the high-proficiency band (28th of 123 countries, score 569). That is a country ranking, not a Virtual Coworker score.",
+    sourceLabel: "EF English Proficiency Index 2025",
+  },
+  {
+    title: "A large support workforce",
+    body: "IBPAP's 2025 industry overview reports about 1.68 million contact-center and business-process full-time employees in the Philippines. We recruit from that market. We do not claim that headcount as our roster.",
+    sourceLabel: "IT & Business Process Association of the Philippines, 2025 industry overview",
+  },
+] as const;
 
 export const VERIFIED_PROOF = {
   foundedYear: TRUST_PROOF.sinceYear,
@@ -197,23 +316,68 @@ const SHARED_WHY: TrustFirstCard[] = [
   },
 ];
 
+const SHARED_COMPARE_LEAD =
+  "A marketplace, a resume pile, and a staffing company are not the same hire.";
+
 const SHARED_COMPARE: TrustFirstCompareRow[] = [
   {
-    label: "Who you work with",
-    vc: "A staffing company that recruits, vets, and stays after the hire",
-    other: "A marketplace of freelancers, or a resume dump",
+    label: "Time to a shortlist",
+    otherMark: "no",
+    other: "DIY posting or a marketplace can take weeks, then you still screen.",
+    vcMark: "yes",
+    vc: "We recruit against your brief. Timing depends on the seat. We talk it through on the first call.",
   },
   {
-    label: "Who decides",
-    vc: "You interview the shortlist and choose",
-    other: "Someone assigns you a person you have not met",
+    label: "Vetting",
+    otherMark: "no",
+    other: "You sort resumes yourself, or take a freelancer's word.",
+    vcMark: "yes",
+    vc: "We recruit and vet. You interview the shortlist before anyone starts.",
   },
   {
-    label: "After they start",
-    vc: "Payroll, HR support, and a named team if you need help",
-    other: "You are on your own once the contract is signed",
+    label: "The seat",
+    otherMark: "no",
+    other: "Shared freelancers or whoever is free this week.",
+    vcMark: "yes",
+    vc: "Dedicated staff on your US hours. Full-time or eligible part-time.",
+  },
+  {
+    label: "Cost",
+    otherMark: "no",
+    other: "A local W2 means salary, benefits, and overhead you carry.",
+    vcMark: "yes",
+    vc: "You hire dedicated Philippines staff through an agency. Rates follow the role. We talk them through once we understand the seat.",
+  },
+  {
+    label: "If it is not a fit",
+    otherMark: "no",
+    other: "You start the search over.",
+    vcMark: "yes",
+    vc: "You interview. If it is not the right person, we keep recruiting.",
+  },
+  {
+    label: "Day-to-day",
+    otherMark: "no",
+    other: "A marketplace leaves you with a contractor and no agency behind them.",
+    vcMark: "yes",
+    vc: "You manage the work. We remain the staffing company after you hire.",
+  },
+  {
+    label: "Employment",
+    otherMark: "no",
+    other: "You may have to figure out contractor or overseas payroll yourself.",
+    vcMark: "yes",
+    vc: "After you hire, we employ them and handle payroll. You do not run Philippines payroll yourself.",
   },
 ];
+
+function tweakCompare(
+  label: string,
+  vc: string,
+  rows: TrustFirstCompareRow[] = SHARED_COMPARE,
+): TrustFirstCompareRow[] {
+  return rows.map((row) => (row.label === label ? { ...row, vc } : row));
+}
 
 const SHARED_PROOF: TrustFirstCard[] = [
   {
@@ -264,7 +428,7 @@ const SHARED_FAQS: TrustFirstFaq[] = [
   },
   {
     q: "Do you publish rates here?",
-    a: "No. Rates depend on the role. We talk through them after we understand what you need.",
+    a: "Typical admin is around $8 an hour — the same language we use in ads. Other seats vary. We talk through the role on the first call.",
   },
 ];
 
@@ -273,6 +437,7 @@ function page(
     TrustFirstPageConfig,
     | "process"
     | "whyItems"
+    | "comparisonLead"
     | "comparison"
     | "proofModules"
     | "objections"
@@ -284,6 +449,7 @@ function page(
         TrustFirstPageConfig,
         | "process"
         | "whyItems"
+        | "comparisonLead"
         | "comparison"
         | "proofModules"
         | "objections"
@@ -295,6 +461,7 @@ function page(
   return {
     process: SHARED_PROCESS,
     whyItems: SHARED_WHY,
+    comparisonLead: SHARED_COMPARE_LEAD,
     comparison: SHARED_COMPARE,
     proofModules: SHARED_PROOF,
     objections: SHARED_OBJECTIONS,
@@ -309,22 +476,26 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     key: "us",
     name: "US master challenger",
     previewPath: `${TRUST_FIRST_NAMESPACE}/us`,
-    proposedProductionPath: "/us (challenger only; not a live swap)",
+    proposedProductionPath: "/us/tf/hire",
+    productionPath: "/us/tf/hire",
     currentProductionEquivalent: "/us",
     keywordCluster: "Employer PH staffing / dedicated Filipino staff (not generic virtual assistants)",
     intendedCampaign: "VC_US_S_CORE",
     intendedAdGroup: "Offshore_VA_PH / Hire_VA_PH employer phrases only",
-    title: "Hire Dedicated Filipino Staff | Virtual Coworker",
+    title: "Hire a Virtual Assistant From the Philippines | Virtual Coworker",
     description:
       "Virtual Coworker recruits and vets dedicated Filipino staff for US businesses. You interview the shortlist. We handle payroll.",
     eyebrow: "Philippines staffing for US businesses",
-    h1: "Hire dedicated Filipino staff who work your hours",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_CORE,
+    h1_alt:
+      "Typical admin around $8 an hour. Dedicated Filipino staff you interview first.",
     supporting:
-      "Virtual Coworker recruits and vets. You interview the shortlist and choose who joins. After you hire, we employ them and handle payroll. This is a staffing company, not a gig marketplace.",
+      "Typical admin around $8 an hour. We recruit and vet. You interview the shortlist. After you hire, we employ them and handle payroll. A staffing company, not a gig marketplace.",
     heroBullets: [
+      "Typical admin around $8 an hour",
       "Dedicated people on your US hours",
       "You interview before anyone starts",
-      "Full-time or eligible part-time seats",
     ],
     trustStrip: [
       `Staffing since ${TRUST_PROOF.sinceYear}`,
@@ -341,7 +512,7 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Virtual assistant / admin",
     jobSeekerRisk: "medium",
     pageKind: "replacement",
-    recommendedStatus: "Preview only. Do not replace live /us.",
+    recommendedStatus: "Live /us master. Indexable like the previous US paid home.",
     notes:
       "Master format for US paid Search. Not a bid on the head term virtual assistants. Keep job-seeker diversion visible.",
     confidence: "high",
@@ -352,20 +523,24 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     name: "Philippines virtual assistants",
     previewPath: `${TRUST_FIRST_NAMESPACE}/philippines-virtual-assistants`,
     proposedProductionPath: "/us/philippines-virtual-assistants",
+    productionPath: "/us/philippines-virtual-assistants",
     currentProductionEquivalent: "/us",
     keywordCluster: "virtual assistant in the philippines / philippines virtual assistant / filipino VA hire",
     intendedCampaign: "VC_US_S_CORE",
     intendedAdGroup: "Offshore_VA_PH (keep; tighten). Hire_VA_PH only on 3+ word employer phrases.",
-    title: "Hire a Virtual Assistant in the Philippines | Virtual Coworker",
+    title: "Hire a Virtual Assistant From the Philippines | Virtual Coworker",
     description:
       "Hire a dedicated virtual assistant in the Philippines for US hours. Virtual Coworker recruits and vets. You interview. We handle payroll.",
     eyebrow: "Philippines virtual assistants for US teams",
-    h1: "Hire a virtual assistant in the Philippines",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_CORE,
+    h1_alt:
+      "Typical admin around $8 an hour. A dedicated virtual assistant in the Philippines.",
     supporting:
       "A dedicated Filipino teammate for inbox, scheduling, and follow-ups on your US hours. We recruit and vet. You interview. Nobody starts until you say yes.",
     heroBullets: [
+      "Typical admin around $8 an hour",
       "Dedicated seat, not a shared freelancer",
-      "Matched to your US business hours",
       "You meet them before they join",
     ],
     trustStrip: [
@@ -389,32 +564,40 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Virtual assistant / admin",
     jobSeekerRisk: "medium",
     pageKind: "new",
-    recommendedStatus: "Highest-leverage new page. Preview only.",
+    recommendedStatus: "Live. Indexable — same policy as other US role LPs.",
     notes:
       "Message match for the observed competitor keyword virtual assistant in the philippines (exact). Do not copy competitor claims.",
     confidence: "observed",
+    comparison: tweakCompare(
+      "Vetting",
+      "Our Philippines team recruits and vets. You interview the shortlist before anyone starts.",
+    ),
   }),
 
   "virtual-assistant-agency": page({
     key: "virtual-assistant-agency",
     name: "Virtual assistant agency",
     previewPath: `${TRUST_FIRST_NAMESPACE}/virtual-assistant-agency`,
-    proposedProductionPath: "/us/virtual-assistant-agency",
+    proposedProductionPath: "/us/tf/virtual-assistant-agency",
+    productionPath: "/us/tf/virtual-assistant-agency",
     currentProductionEquivalent: "/us",
     keywordCluster: "virtual assistant agency / VA firm / VA company / Filipino VA agency",
     intendedCampaign: "VC_US_S_CORE",
     intendedAdGroup: "VA_Agency_Firm_PH",
-    title: "Virtual Assistant Agency | Virtual Coworker",
+    title: "Hire a Virtual Assistant From the Philippines | Virtual Coworker",
     description:
       "A virtual assistant agency that recruits and vets dedicated Filipino staff. You interview. Virtual Coworker handles payroll.",
     eyebrow: "A staffing agency, not a gig listing",
-    h1: "A virtual assistant agency that lets you interview first",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_CORE,
+    h1_alt:
+      "Typical admin around $8 an hour. A VA agency — you interview, then we employ them.",
     supporting:
       "Virtual Coworker is the agency. We recruit and screen dedicated Filipino staff. You meet the shortlist. After you hire, we employ them. This is not a job board and not a freelance marketplace.",
     heroBullets: [
-      "Agency recruiting against your brief",
+      "Typical admin around $8 an hour",
       "You keep the hire decision",
-      "Payroll and HR stay with us after you hire",
+      "Payroll stays with us after you hire",
     ],
     trustStrip: [
       "Agency model since 2011",
@@ -436,7 +619,7 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Virtual assistant / admin",
     jobSeekerRisk: "medium",
     pageKind: "new",
-    recommendedStatus: "Preview. Strong match to existing agency search terms.",
+    recommendedStatus: "Live. Indexable — same policy as other US role LPs.",
     notes: "Competitor has no dedicated agency paid URL. Ours should read as a firm, not VA jobs.",
     confidence: "observed",
   }),
@@ -445,20 +628,28 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     key: "staffing",
     name: "Remote staffing",
     previewPath: `${TRUST_FIRST_NAMESPACE}/staffing`,
-    proposedProductionPath: "/us/staffing",
-    currentProductionEquivalent: "/us/staffing (candidate, noindex, not Ads)",
+    proposedProductionPath: "/us/tf/staffing",
+    productionPath: "/us/tf/staffing",
+    currentProductionEquivalent: "/us/staffing",
     keywordCluster: "remote staffing agency / philippines staffing / PH outsourcing agency",
     intendedCampaign: "VC_US_S_CORE",
     intendedAdGroup: "Staffing_Agency_PH",
-    title: "Philippines Remote Staffing | Virtual Coworker",
+    comparison: tweakCompare(
+      "The seat",
+      "A staffing partner for dedicated seats on your US hours. Full-time or eligible part-time.",
+    ),
+    title: "Hire a Virtual Assistant From the Philippines | Virtual Coworker",
     description:
       "A Philippines remote staffing partner for US businesses. We recruit and vet. You interview. We employ the person and handle payroll.",
     eyebrow: "Philippines remote staffing",
-    h1: "A staffing partner for dedicated Filipino teammates",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_CORE,
+    h1_alt:
+      "Staff without US overhead. A Philippines staffing partner, not a temp board.",
     supporting:
       "Use Virtual Coworker when you want a staffing company, not a personal concierge and not a temp board. We recruit and vet. You interview. We employ them after you hire.",
     heroBullets: [
-      "Staffing company for US employers",
+      "Typical admin around $8 an hour",
       "Dedicated seats on your hours",
       "We stay on payroll after you hire",
     ],
@@ -487,7 +678,7 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Several roles / a small team",
     jobSeekerRisk: "medium",
     pageKind: "existing-challenger",
-    recommendedStatus: "Challenger for the unused /us/staffing candidate. Still not an Ads URL.",
+    recommendedStatus: "Live. Was noindex unused candidate; now indexable like other paid role LPs.",
     notes: "Must read as a staffing company. Watch temp-job bleed on remote staffing agency.",
     confidence: "observed",
   }),
@@ -496,21 +687,25 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     key: "real-estate",
     name: "Real estate support",
     previewPath: `${TRUST_FIRST_NAMESPACE}/real-estate`,
-    proposedProductionPath: "/us/real-estate",
+    proposedProductionPath: "/us/tf/real-estate",
+    productionPath: "/us/tf/real-estate",
     currentProductionEquivalent: "/us/real-estate",
     keywordCluster: "real estate virtual assistant / real estate admin / transaction coordinator support",
     intendedCampaign: "Not live. Do not create a Brand group. Test later under roles or a dedicated RE campaign.",
     intendedAdGroup: "None live. Do not add a duplicate if one is created later.",
-    title: "Hire a Real Estate Virtual Assistant | Virtual Coworker",
+    title: "Hire a Real Estate Virtual Assistant From the Philippines | Virtual Coworker",
     description:
       "Hire dedicated Philippines staff for US brokerages, teams, investors, and property managers. Admin, lead follow-up, transaction support, and database work.",
     eyebrow: "For brokerages, teams, and property managers",
-    h1: "Hire a real estate virtual assistant for the work behind the deals",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_REAL_ESTATE,
+    h1_alt:
+      "Typical admin around $8 an hour. A real estate virtual assistant on your US hours.",
     supporting:
-      "Lead follow-up, listing admin, transaction files, and database hygiene. We recruit dedicated Philippines staff for US hours. You interview. This is not an ISA-only pitch and not a cold-call machine.",
+      "Lead follow-up, listing files, and database hygiene. We recruit dedicated Philippines staff for US hours. You interview. This is not an ISA-only pitch and not a cold-call machine.",
     heroBullets: [
-      "Admin, follow-up, and transaction support",
-      "Database and CRM kept current",
+      "Follow-up, files, and database work",
+      "Dedicated staff on your US hours",
       "You interview before anyone joins",
     ],
     trustStrip: [
@@ -539,7 +734,7 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Real estate support",
     jobSeekerRisk: "low",
     pageKind: "existing-challenger",
-    recommendedStatus: "Page exists live. This is a visual challenger only. Do not point ads yet.",
+    recommendedStatus: "Live. Indexable — same policy as the previous /us/real-estate LP.",
     notes: "Keep ISA and cold-call out of the H1. Competitor has a dedicated RE paid LP; we already have the URL.",
     confidence: "medium",
   }),
@@ -548,16 +743,20 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     key: "bookkeeping",
     name: "Bookkeeping",
     previewPath: `${TRUST_FIRST_NAMESPACE}/bookkeeping`,
-    proposedProductionPath: "/us/bookkeeping",
+    proposedProductionPath: "/us/tf/bookkeeping",
+    productionPath: "/us/tf/bookkeeping",
     currentProductionEquivalent: "/us/bookkeeping",
     keywordCluster: "bookkeeping VA / philippines bookkeeper / hire bookkeeper PH",
     intendedCampaign: "VC_US_S_ROLES",
     intendedAdGroup: "Bookkeeping_Hire_PH",
-    title: "Hire a Philippines Bookkeeper | Virtual Coworker",
+    title: "Hire a Bookkeeping Virtual Assistant From the Philippines | Virtual Coworker",
     description:
       "Hire dedicated Filipino bookkeeping support for US hours. Invoices, records, and reconciliations. You interview. We handle payroll.",
     eyebrow: "Books support for US businesses",
-    h1: "Hire a dedicated Filipino bookkeeper",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_BOOKKEEPING,
+    h1_alt:
+      "Skip the cost of a local hire. Dedicated Filipino support for invoices and records.",
     supporting:
       "Invoices, records, and routine reconciliations owned by one person on your hours. We recruit against your tools. You interview. Extra capacity for the work, not a claim of licensed advice.",
     heroBullets: [
@@ -589,25 +788,33 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Bookkeeping support",
     jobSeekerRisk: "low",
     pageKind: "replacement",
-    recommendedStatus: "Challenger for the strongest role URL (GA4 ~40 sessions / 47.5% engaged).",
+    recommendedStatus: "Live. Indexable — same policy as the previous /us/bookkeeping LP.",
     notes: "Keep this URL. Do not merge onto /us. Competitor has no dedicated paid bookkeeping LP.",
     confidence: "observed",
+    comparison: tweakCompare(
+      "Vetting",
+      "We recruit for a bookkeeping seat. You interview before anyone starts.",
+    ),
   }),
 
   "customer-service": page({
     key: "customer-service",
     name: "Customer service",
     previewPath: `${TRUST_FIRST_NAMESPACE}/customer-service`,
-    proposedProductionPath: "/us/customer-service",
+    proposedProductionPath: "/us/tf/customer-service",
+    productionPath: "/us/tf/customer-service",
     currentProductionEquivalent: "/us/customer-service",
     keywordCluster: "customer service VA / philippines customer support / hire support PH",
     intendedCampaign: "VC_US_S_ROLES",
     intendedAdGroup: "Customer_Service_Hire_PH",
-    title: "Hire Philippines Customer Service Staff | Virtual Coworker",
+    title: "Hire a Customer Service Virtual Assistant From the Philippines | Virtual Coworker",
     description:
       "Hire dedicated Filipino customer service staff for US hours. We shortlist. You interview. We handle payroll.",
     eyebrow: "Dedicated support seats",
-    h1: "Hire dedicated Filipino customer service staff",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_CUSTOMER_SERVICE,
+    h1_alt:
+      "Skip the cost of a local hire. Dedicated Filipino staff for the support queue.",
     supporting:
       "A named person for the queue: email, chat, or tickets. We shortlist. You interview. More consistent replies without turning support into a freelance roster.",
     heroBullets: [
@@ -639,7 +846,7 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Customer service",
     jobSeekerRisk: "medium",
     pageKind: "replacement",
-    recommendedStatus: "Challenger for the best role engagement (GA4 ~22 / 68.2%).",
+    recommendedStatus: "Live. Indexable — same policy as the previous /us/customer-service LP.",
     notes: "CSR job titles bleed. Keep employer language. Do not merge onto /us.",
     confidence: "observed",
   }),
@@ -648,16 +855,20 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     key: "sales",
     name: "Sales support",
     previewPath: `${TRUST_FIRST_NAMESPACE}/sales`,
-    proposedProductionPath: "/us/sales",
+    proposedProductionPath: "/us/tf/sales",
+    productionPath: "/us/tf/sales",
     currentProductionEquivalent: "/us/sales",
     keywordCluster: "sales support VA / CRM follow-up / sales admin PH",
     intendedCampaign: "VC_US_S_ROLES",
     intendedAdGroup: "Sales_Hire_PH",
-    title: "Hire Philippines Sales Support | Virtual Coworker",
+    title: "Hire a Sales Virtual Assistant From the Philippines | Virtual Coworker",
     description:
       "Hire dedicated Filipino sales support for research, CRM, and follow-up. You interview. Not a cold-call machine.",
     eyebrow: "Sales support, not a dialer farm",
-    h1: "Hire sales support for follow-up and CRM, not cold calling",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_SALES,
+    h1_alt:
+      "Skip the cost of a local hire. Dedicated follow-up and CRM, not cold calling.",
     supporting:
       "Research, CRM hygiene, and follow-ups so closers spend time with buyers. We shortlist dedicated Filipino staff. You interview. This is not a promise of a cold-call machine.",
     heroBullets: [
@@ -689,7 +900,7 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Sales support",
     jobSeekerRisk: "medium",
     pageKind: "replacement",
-    recommendedStatus: "Challenger for /us/sales. Do not expand setter groups.",
+    recommendedStatus: "Live. Indexable. Do not expand setter groups.",
     notes: "Account evidence already said pause setters. Keep this page on support language.",
     confidence: "observed",
   }),
@@ -698,16 +909,20 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     key: "administrative-support",
     name: "Administrative support",
     previewPath: `${TRUST_FIRST_NAMESPACE}/administrative-support`,
-    proposedProductionPath: "/us/administrative-support",
+    proposedProductionPath: "/us/tf/administrative-support",
+    productionPath: "/us/tf/administrative-support",
     currentProductionEquivalent: "/us/administrative-support",
     keywordCluster: "administrative support / executive assistant / virtual assistant admin",
     intendedCampaign: "VC_US_S_ROLES",
     intendedAdGroup: "Administration_EA_PH",
-    title: "Hire Philippines Administrative Support | Virtual Coworker",
+    title: "Hire an Executive Assistant From the Philippines | Virtual Coworker",
     description:
       "Hire a dedicated Filipino virtual assistant or admin for US hours. Inbox, calendar, and follow-ups. You interview.",
     eyebrow: "Admin and executive support",
-    h1: "Hire a dedicated Filipino assistant for inbox and calendar",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_EA,
+    h1_alt:
+      "Typical admin around $8 an hour. A dedicated Filipino assistant for inbox and calendar.",
     supporting:
       "Inbox, scheduling, and follow-ups owned by one person so leadership hours go back to customers and decisions. We recruit and vet. You interview. Clear admin work, not a vague VA promise.",
     heroBullets: [
@@ -736,7 +951,7 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Virtual assistant / admin",
     jobSeekerRisk: "medium",
     pageKind: "replacement",
-    recommendedStatus: "Priority redesign. Live page engagement is weak (GA4 ~21.4%).",
+    recommendedStatus: "Live. Indexable — same policy as the previous /us/administrative-support LP.",
     notes: "Fix the page before adding keywords. Keep employer language. Job-seeker risk on VA titles.",
     confidence: "observed",
   }),
@@ -745,16 +960,20 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     key: "digital-marketing",
     name: "Digital marketing",
     previewPath: `${TRUST_FIRST_NAMESPACE}/digital-marketing`,
-    proposedProductionPath: "/us/digital-marketing",
+    proposedProductionPath: "/us/tf/digital-marketing",
+    productionPath: "/us/tf/digital-marketing",
     currentProductionEquivalent: "/us/digital-marketing",
     keywordCluster: "digital marketing VA / marketing support PH / campaign ops",
     intendedCampaign: "VC_US_S_ROLES",
     intendedAdGroup: "Digital_Marketing_Hire_PH",
-    title: "Hire Philippines Digital Marketing Staff | Virtual Coworker",
+    title: "Hire a Digital Marketing Virtual Assistant From the Philippines | Virtual Coworker",
     description:
       "Hire dedicated Filipino marketing support for campaigns, reporting, and content ops. You interview. Execution, not a strategy retainers shop.",
     eyebrow: "Marketing execution support",
-    h1: "Hire marketing support for campaigns, reporting, and content ops",
+    // A/B later: preview renders h1 only. h1_alt is stored, not assigned.
+    h1: APPROVED_H1_DIGITAL_MARKETING,
+    h1_alt:
+      "Skip the cost of a local hire. Dedicated Filipino execution, not a retainers shop.",
     supporting:
       "Day-to-day marketing work needs an owner. We recruit dedicated Filipino staff for campaign coordination, reporting pulls, and content ops. You interview. Strategists stay on judgment work.",
     heroBullets: [
@@ -782,7 +1001,7 @@ export const TRUST_FIRST_PAGES: Record<TrustFirstPageKey, TrustFirstPageConfig> 
     formRoleDefault: "Digital marketing support",
     jobSeekerRisk: "low",
     pageKind: "replacement",
-    recommendedStatus: "Challenger for a soft role URL (GA4 ~17 / 29.4% engaged).",
+    recommendedStatus: "Live. Indexable — same policy as the previous /us/digital-marketing LP.",
     notes: "Keep execution language. Do not promise agency-of-record outcomes.",
     confidence: "observed",
   }),

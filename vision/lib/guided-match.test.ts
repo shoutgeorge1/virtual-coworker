@@ -150,6 +150,9 @@ describe("guided-match contract", () => {
     expect(gate).toContain("hoursQuestionSplit = false");
     expect(gate).toContain("spQuiz = false");
     expect(gate).toContain("allowRoleChange = false");
+    expect(gate).toContain('name="company"');
+    expect(gate).toContain("required");
+    expect(gate).toContain("Enter your company name.");
     const us = readFileSync(join(__dirname, "..", "app/us/page.tsx"), "utf8");
     expect(us).toContain("StaffingBaselineLanding");
     expect(us).not.toContain("GuidedMatchLanding");

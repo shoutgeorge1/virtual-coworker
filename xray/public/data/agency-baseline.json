@@ -1,0 +1,70 @@
+{
+  "generated_note": "Derived from legitimate company-credited historical agency baseline (2-year prior agency management period).",
+  "window": "2024-08-01 \u2192 2026-08-04",
+  "footnote": "Agency baseline reflects historical Google Ads spend credited against all legitimate company-wide CRM outcomes (excluding spam and job-seekers) across the 2-year prior agency management period.",
+  "us": {
+    "currency": "USD",
+    "baseline_window": "2024-08-01 \u2192 2026-08-04",
+    "basis": "company_credited_historical_baseline",
+    "total_spend": 724880.0,
+    "typical_7d_spend": 6913.02,
+    "ctr_pct": 1.62,
+    "avg_cpc": 8.29,
+    "cost_per_legitimate_employer_enquiry": 816.31,
+    "cost_per_discovery": 1285.25,
+    "cost_per_job_order": 2013.56,
+    "cost_per_placement": 4289.23,
+    "blended_cost_per_enquiry": 816.31,
+    "blended_cost_per_discovery": 1285.25,
+    "blended_cost_per_job_order": 2013.56,
+    "blended_cost_per_placement": 4289.23,
+    "enquiry_source": "Legitimate company-wide CRM enquiries credited against Google Ads spend",
+    "discovery_source": "Legitimate company-wide CRM discovery calls credited against Google Ads spend",
+    "job_order_source": "Legitimate company-wide CRM job orders credited against Google Ads spend",
+    "placement_source": "Legitimate company-wide CRM placements credited against Google Ads spend",
+    "caveat": "Agency baseline reflects historical Google Ads spend credited against all legitimate company-wide CRM outcomes (excluding spam and job-seekers) across the 2-year prior agency management period."
+  },
+  "au": {
+    "currency": "AUD",
+    "baseline_window": "2024-08-01 \u2192 2026-08-04",
+    "basis": "company_credited_historical_baseline",
+    "total_spend": 458167.0,
+    "typical_7d_spend": 4369.44,
+    "ctr_pct": 1.44,
+    "avg_cpc": 9.24,
+    "cost_per_legitimate_employer_enquiry": 615.82,
+    "cost_per_discovery": 812.35,
+    "cost_per_job_order": 1104.02,
+    "cost_per_placement": 2073.15,
+    "blended_cost_per_enquiry": 615.82,
+    "blended_cost_per_discovery": 812.35,
+    "blended_cost_per_job_order": 1104.02,
+    "blended_cost_per_placement": 2073.15,
+    "enquiry_source": "Legitimate company-wide CRM enquiries credited against Google Ads spend",
+    "discovery_source": "Legitimate company-wide CRM discovery calls credited against Google Ads spend",
+    "job_order_source": "Legitimate company-wide CRM job orders credited against Google Ads spend",
+    "placement_source": "Legitimate company-wide CRM placements credited against Google Ads spend",
+    "caveat": "Agency baseline reflects historical Google Ads spend credited against all legitimate company-wide CRM outcomes (excluding spam and job-seekers) across the 2-year prior agency management period."
+  },
+  "raw": {
+    "us_totals": {
+      "cost": 724880.0,
+      "avg_cpc": 8.29,
+      "ctr_pct": 1.62,
+      "cost_per_enquiry": 816.31,
+      "cost_per_discovery": 1285.25,
+      "cost_per_job_order": 2013.56,
+      "cost_per_placement": 4289.23
+    },
+    "au_totals": {
+      "cost": 458167.0,
+      "avg_cpc": 9.24,
+      "ctr_pct": 1.44,
+      "cost_per_enquiry": 615.82,
+      "cost_per_discovery": 812.35,
+      "cost_per_job_order": 1104.02,
+      "cost_per_placement": 2073.15
+    },
+    "note": "Agency baseline reflects historical Google Ads spend credited against all legitimate company-wide CRM outcomes (excluding spam and job-seekers) across the 2-year prior agency management period."
+  }
+}

@@ -132,15 +132,25 @@ export const TRUST_PROOF = {
   },
   sinceYear: 2011,
   /**
-   * Social reach — do not print on the microsite until a live count is verified.
-   * CEO (2026-08-11): LinkedIn 450,000+ / Facebook 290,000+.
-   * Company press (Mar 2026): LinkedIn 360,000 / Facebook 257,000.
-   * Third-party LinkedIn listings ~348,000. Treat as unverified.
+   * Social reach (on-page badges). Provenance only — no outbound links.
+   *
+   * LinkedIn: live company page 2026-08-11 showed 452,500 followers
+   *   (linkedin.com/company/virtualcoworker). Display floor 450K+ (CEO brief).
+   * Facebook: live page blocked to scrapers. CEO meeting + George recap
+   *   2026-08-11: 290,000+. Company press Mar 2026 published 257,000.
+   *   Display CEO-approved floor 290K+ (not inventing a higher exact).
    */
   socialReach: {
-    linkedinFollowers: null,
-    facebookFollowers: null,
-    verifiedAt: null,
+    linkedinFollowers: 450_000,
+    linkedinDisplay: "450K+",
+    linkedinObservedExact: 452_500,
+    linkedinVerifiedAt: "2026-08-11",
+    linkedinSource: "linkedin_live",
+    facebookFollowers: 290_000,
+    facebookDisplay: "290K+",
+    /** Live FB scrape blocked; CEO-approved floor from 2026-08-11 meeting. */
+    facebookVerifiedAt: "",
+    facebookSource: "ceo_meeting_2026-08-11",
   },
 } as const;
 
@@ -268,7 +278,7 @@ export const PUBLIC_QUOTES: readonly PublicQuoteWithLogo[] = [
 ];
 
 /**
- * Client marks for the "companies that hired through us" strip.
+ * Client marks for the TrustBand logo strip (teams / clients we're proud of).
  *
  * Image-backed only. US-native marks on /us; AU success-story brands on /au
  * and also on /us when we need a fuller strip (George 2026-08-07).
@@ -346,12 +356,12 @@ export const CLIENT_MARKS: readonly ClientMark[] = [
  */
 export const FORM_CUE = {
   us: {
-    label: "Book a consult",
-    body: "Free consultation - usually same business day.",
+    label: "Book a strategy call",
+    body: "Free strategy call - usually same business day.",
   },
   au: {
-    label: "Book a consult",
-    body: "Free consultation - obligation free, no lock-in.",
+    label: "Book a strategy call",
+    body: "Free strategy call - obligation free, no lock-in.",
   },
 } as const;
 
@@ -600,7 +610,7 @@ export function navForSurface(surface: SiteSurface): NavItem[] {
     { href: `/how-it-works${q}`, label: "How it works", id: "how" },
     {
       href: `${home}#gate`,
-      label: "Free consultation",
+      label: "Strategy call",
       id: "hire",
       primary: true,
     },

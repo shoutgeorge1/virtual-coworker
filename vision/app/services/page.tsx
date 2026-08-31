@@ -15,7 +15,7 @@ import { breadcrumbJsonLd, buildPageMetadata } from "../../lib/seo";
 export const metadata: Metadata = buildPageMetadata({
   title: "Roles to Hire · Filipino Staff | Virtual Coworker",
   description:
-    "Browse dedicated Filipino staffing roles — marketing, admin, bookkeeping, support, HR, sales, and more for US and Australian businesses.",
+    "Browse dedicated Filipino staffing roles - marketing, admin, bookkeeping, support, HR, sales, and more for US and Australian businesses.",
   path: "/services",
   indexable: true,
 });
@@ -42,9 +42,11 @@ export default async function ServicesPage({
   const cta = primaryHireCta(market);
   const phone = resolvePhone(market);
   const showPhone = phone.configured && Boolean(phone.href);
+  // Employer hubs match simplified money LPs — AU light for US + AU.
+  const light = true;
 
   return (
-    <main className={`micro${isAu ? " micro-light" : ""}`}>
+    <main className={`micro${light ? " micro-light" : ""}`}>
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: home },
@@ -53,7 +55,7 @@ export default async function ServicesPage({
       />
       <MarketGtm surface={surface} />
       <SiteNav
-        tone={isAu ? "light" : "dark"}
+        tone={light ? "light" : "dark"}
         market={surface}
         active="services"
       />
@@ -92,7 +94,7 @@ export default async function ServicesPage({
         </p>
       </HubMapHero>
 
-      <PainGain market={market} light={isAu} ctaHref={`${home}#gate`} />
+      <PainGain market={market} light={light} ctaHref={`${home}#gate`} />
 
       <section className="micro-section">
         <ServicesRoleGrid market={market} />
@@ -106,7 +108,7 @@ export default async function ServicesPage({
           {isAu
             ? "Take the hiring quiz, or have a chat and we’ll sort it with you."
             : showPhone
-              ? "Take the hiring quiz — or call us if you’d rather talk it through."
+              ? "Take the hiring quiz - or call us if you’d rather talk it through."
               : "Take the hiring quiz, or talk to a specialist and we’ll sort it with you."}
         </p>
         <div className="micro-actions">
@@ -121,7 +123,7 @@ export default async function ServicesPage({
       </section>
 
       <SiteFooter
-        tone={isAu ? "light" : "dark"}
+        tone={light ? "light" : "dark"}
         market={surface}
       />
     </main>

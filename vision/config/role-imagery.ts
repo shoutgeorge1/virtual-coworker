@@ -21,8 +21,9 @@ export type CategoryImageryArm = Record<CategorySlug, string> & {
  */
 export const ROLE_IMAGERY: Record<"a" | "b", CategoryImageryArm> = {
   a: {
-    "digital-marketing": "/roles/marketing-v2.png",
-    "social-media": "/roles/marketing-a.png",
+    // Marketing A = orange sweater (priority LP test on digital-marketing)
+    "digital-marketing": "/roles/marketing-a.png",
+    "social-media": "/roles/marketing-v2.png",
     accounting: "/roles/accounting-v2.png",
     bookkeeping: "/roles/bookkeeper-v2.png",
     "administrative-support": "/roles/admin-a.png",

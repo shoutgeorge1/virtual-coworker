@@ -1,0 +1,54 @@
+# Default: Allow all crawlers
+User-agent: *
+Allow: /
+Content-Signal: search=yes, ai-train=yes, ai-input=yes
+
+# Google (Traditional Search + AI Overview)
+User-agent: Googlebot
+Allow: /
+
+# Bing (Traditional Search + Microsoft Copilot)
+User-agent: Bingbot
+Allow: /
+
+# OpenAI - GPTBot (Training) and ChatGPT-User (Browsing)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic - Claude AI
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# Apple (Siri, Spotlight)
+User-agent: Applebot
+Allow: /
+
+# Common crawlers for AI training
+User-agent: CCBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.myoutdesk.com/sitemap-index.xml

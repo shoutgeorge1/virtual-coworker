@@ -66,6 +66,7 @@ export default function SiteNav({
             href={phone.href}
             className="site-nav-call"
             data-track="phone_cta_clicked"
+            data-cta-location="header"
           >
             <span aria-hidden>☎</span> {phone.display}
           </a>
@@ -75,7 +76,7 @@ export default function SiteNav({
           </Link>
         ) : !hireAlreadyInNav ? (
           <a href={hireHref} className="site-nav-call">
-            {employerMarket ? primaryHireCta(employerMarket) : "Book Your Free Consultation"}
+            {employerMarket ? primaryHireCta(employerMarket) : "Book a Free Strategy Call"}
           </a>
         ) : null}
         <span className="site-nav-tag">{SITE.tagline}</span>

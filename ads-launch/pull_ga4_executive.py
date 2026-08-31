@@ -42,9 +42,28 @@ MAX_REPORTS = 5
 # AU extra: overview + landings + channels (no device/events)
 MAX_REPORTS_AU = 3
 # Same face week as Executive Ads (not rolling 7daysAgo).
-GA4_WEEK_START = "2026-08-10"
-GA4_WEEK_END = "2026-08-16"
+GA4_WEEK_START = "2026-08-17"
+GA4_WEEK_END = "2026-08-23"
 GA4_WINDOW_LABEL = f"{GA4_WEEK_START} → {GA4_WEEK_END}"
+GA4_PRIOR_START = "2026-08-10"
+GA4_PRIOR_END = "2026-08-16"
+GA4_PRIOR_LABEL = f"{GA4_PRIOR_START} → {GA4_PRIOR_END}"
+THIS_RANGE = "date_range_0"
+PRIOR_RANGE = "date_range_1"
+
+
+def _range_key(row: Any, extra_dims: int) -> str:
+    dvs = list(row.dimension_values or [])
+    if len(dvs) > extra_dims:
+        return dvs[-1].value or THIS_RANGE
+    return THIS_RANGE
+
+
+def _week_date_ranges(DateRange: Any) -> list:
+    return [
+        DateRange(start_date=GA4_WEEK_START, end_date=GA4_WEEK_END),
+        DateRange(start_date=GA4_PRIOR_START, end_date=GA4_PRIOR_END),
+    ]
 
 
 def _load_dotenv_quiet() -> None:
@@ -315,15 +334,19 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
     resp1 = client.run_report(
         RunReportRequest(
             property=prop,
-            date_ranges=[DateRange(start_date=GA4_WEEK_START, end_date=GA4_WEEK_END)],
+            date_ranges=_week_date_ranges(DateRange),
             metrics=[Metric(name=m) for m in overview_metrics],
         )
     )
     calls.append({"n": 1, "name": "au_overview", "ok": True})
     last7_raw: dict[str, Any] = {m: 0 for m in overview_metrics}
-    rows = list(resp1.rows or [])
-    if rows:
-        last7_raw = _metric_map(rows[0], overview_metrics)
+    prior_raw: dict[str, Any] = {m: 0 for m in overview_metrics}
+    for row in resp1.rows or []:
+        mets = _metric_map(row, overview_metrics)
+        if _range_key(row, 0) == PRIOR_RANGE:
+            prior_raw = mets
+        else:
+            last7_raw = mets
     sess = int(last7_raw.get("sessions") or 0)
     eng = int(last7_raw.get("engagedSessions") or 0)
     last7 = {
@@ -335,6 +358,15 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
         "conversions": float(last7_raw.get("conversions") or 0),
         "avg_session_seconds": round(float(last7_raw.get("averageSessionDuration") or 0), 1),
     }
+    prior7 = {
+        "sessions": int(prior_raw.get("sessions") or 0),
+        "users": int(prior_raw.get("totalUsers") or 0),
+        "engaged_sessions": int(prior_raw.get("engagedSessions") or 0),
+        "engagement_rate_pct": _pct_rate(prior_raw.get("engagementRate")),
+        "bounce_rate_pct": _pct_rate(prior_raw.get("bounceRate")),
+        "conversions": float(prior_raw.get("conversions") or 0),
+        "avg_session_seconds": round(float(prior_raw.get("averageSessionDuration") or 0), 1),
+    }
 
     land_metrics = [
         "sessions",
@@ -342,6 +374,7 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
         "engagedSessions",
         "engagementRate",
         "bounceRate",
+        "averageSessionDuration",
     ]
     resp2 = client.run_report(
         RunReportRequest(
@@ -379,6 +412,8 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
                 "engaged_sessions": int(mets.get("engagedSessions") or 0),
                 "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
                 "bounce_rate_pct": _pct_rate(mets.get("bounceRate")),
+                "avg_session_seconds": round(float(mets.get("averageSessionDuration") or 0), 1),
+                "duration_metric": "averageSessionDuration",
                 "market_guess": _infer_market(path),
             }
         )
@@ -387,23 +422,30 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
     resp3 = client.run_report(
         RunReportRequest(
             property=prop,
-            date_ranges=[DateRange(start_date=GA4_WEEK_START, end_date=GA4_WEEK_END)],
+            date_ranges=_week_date_ranges(DateRange),
             dimensions=[Dimension(name="sessionDefaultChannelGroup")],
             metrics=[Metric(name=m) for m in ch_metrics],
             order_bys=[OrderBy(metric={"metric_name": "sessions"}, desc=True)],
-            limit=10,
+            limit=20,
         )
     )
     calls.append({"n": 3, "name": "au_channels", "ok": True})
 
     channels: list[dict[str, Any]] = []
+    paid_search_sessions_prior = 0
     for row in resp3.rows or []:
         ch = row.dimension_values[0].value if row.dimension_values else "(not set)"
         mets = _metric_map(row, ch_metrics)
+        rng = _range_key(row, 1)
+        sess_n = int(mets.get("sessions") or 0)
+        if rng == PRIOR_RANGE:
+            if "paid" in (ch or "").lower():
+                paid_search_sessions_prior += sess_n
+            continue
         channels.append(
             {
                 "channel": ch,
-                "sessions": int(mets.get("sessions") or 0),
+                "sessions": sess_n,
                 "users": int(mets.get("totalUsers") or 0),
                 "engaged_sessions": int(mets.get("engagedSessions") or 0),
                 "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
@@ -480,11 +522,14 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
         "property_id": property_id,
         "measurement_id": MEASUREMENT_ID_AU,
         "window": GA4_WINDOW_LABEL,
+        "window_prior": GA4_PRIOR_LABEL,
         "tags_live_since": "2026-08-12",
         "run_report_requests": len(calls),
         "api_calls": calls,
         "totals_last_7_days": last7,
+        "totals_prior_7_days": prior7,
         "paid_search_sessions": paid_n,
+        "paid_search_sessions_prior": paid_search_sessions_prior,
         "paid_search_engagement_rate_pct": paid_eng,
         "au_path_sessions": au_path_sessions,
         "thank_you_sessions": thank_you_sessions,
@@ -524,16 +569,20 @@ def pull_ga4() -> dict[str, Any]:
     ]
     req1 = RunReportRequest(
         property=prop,
-        date_ranges=[DateRange(start_date=GA4_WEEK_START, end_date=GA4_WEEK_END)],
+        date_ranges=_week_date_ranges(DateRange),
         metrics=[Metric(name=m) for m in overview_metrics],
     )
     resp1 = client.run_report(req1)
     calls.append({"n": 1, "name": "overview_engagement_conversions", "ok": True})
 
     last7_raw: dict[str, Any] = {m: 0 for m in overview_metrics}
-    rows = list(resp1.rows or [])
-    if len(rows) >= 1:
-        last7_raw = _metric_map(rows[0], overview_metrics)
+    prior_raw: dict[str, Any] = {m: 0 for m in overview_metrics}
+    for row in resp1.rows or []:
+        mets = _metric_map(row, overview_metrics)
+        if _range_key(row, 0) == PRIOR_RANGE:
+            prior_raw = mets
+        else:
+            last7_raw = mets
 
     def _totals(raw: dict[str, Any]) -> dict[str, Any]:
         sess = int(raw.get("sessions") or 0)
@@ -549,6 +598,7 @@ def pull_ga4() -> dict[str, Any]:
         }
 
     last7 = _totals(last7_raw)
+    prior7 = _totals(prior_raw)
 
     # --- 2) Landing pages + engagement ---
     land_metrics = [
@@ -557,6 +607,7 @@ def pull_ga4() -> dict[str, Any]:
         "engagedSessions",
         "engagementRate",
         "bounceRate",
+        "averageSessionDuration",
     ]
     req2 = RunReportRequest(
         property=prop,
@@ -601,6 +652,8 @@ def pull_ga4() -> dict[str, Any]:
                 "engaged_sessions": int(mets.get("engagedSessions") or 0),
                 "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
                 "bounce_rate_pct": _pct_rate(mets.get("bounceRate")),
+                "avg_session_seconds": round(float(mets.get("averageSessionDuration") or 0), 1),
+                "duration_metric": "averageSessionDuration",
                 "market_guess": market,
             }
         )
@@ -609,23 +662,30 @@ def pull_ga4() -> dict[str, Any]:
     ch_metrics = ["sessions", "totalUsers", "engagedSessions", "engagementRate"]
     req3 = RunReportRequest(
         property=prop,
-        date_ranges=[DateRange(start_date=GA4_WEEK_START, end_date=GA4_WEEK_END)],
+        date_ranges=_week_date_ranges(DateRange),
         dimensions=[Dimension(name="sessionDefaultChannelGroup")],
         metrics=[Metric(name=m) for m in ch_metrics],
         order_bys=[OrderBy(metric={"metric_name": "sessions"}, desc=True)],
-        limit=10,
+        limit=20,
     )
     resp3 = client.run_report(req3)
     calls.append({"n": 3, "name": "channels_engagement", "ok": True})
 
     channels: list[dict[str, Any]] = []
+    paid_search_sessions_prior = 0
     for row in resp3.rows or []:
         ch = row.dimension_values[0].value if row.dimension_values else "(not set)"
         mets = _metric_map(row, ch_metrics)
+        rng = _range_key(row, 1)
+        sess_n = int(mets.get("sessions") or 0)
+        if rng == PRIOR_RANGE:
+            if "paid" in (ch or "").lower():
+                paid_search_sessions_prior += sess_n
+            continue
         channels.append(
             {
                 "channel": ch,
-                "sessions": int(mets.get("sessions") or 0),
+                "sessions": sess_n,
                 "users": int(mets.get("totalUsers") or 0),
                 "engaged_sessions": int(mets.get("engagedSessions") or 0),
                 "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
@@ -866,6 +926,7 @@ def pull_ga4() -> dict[str, Any]:
         "property_id": property_id,
         "measurement_id_us": MEASUREMENT_ID_US,
         "window": GA4_WINDOW_LABEL,
+        "window_prior": GA4_PRIOR_LABEL,
         "run_report_requests": len(calls),
         "run_report_max": MAX_REPORTS,
         "api_calls": calls,
@@ -875,6 +936,8 @@ def pull_ga4() -> dict[str, Any]:
             "negligible. Separate from Google Ads API quota (~15k ops/day)."
         ),
         "totals_last_7_days": last7,
+        "totals_prior_7_days": prior7,
+        "paid_search_sessions_prior": paid_search_sessions_prior,
         "market_from_landing_path": market_sessions,
         "path_kind_sessions": kind_sessions,
         "landing_compare": compare,

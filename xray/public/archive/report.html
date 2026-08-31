@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Long write-up · Virtual Coworker · Interview prep</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../xray.css" />
+</head>
+<body data-root="../" data-page="report.html" data-foot="Archive · long form<br />Superseded by the command center">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+
+    <main class="main">
+      <div class="notice notice-quiet">
+        <p>
+          <strong>Archived long write-up.</strong>
+          Kept for reference. The current plan lives on the
+          <a href="../index.html">Executive Overview</a>, and the site observations below are
+          summarised more usefully on the <a href="findings.html">Findings Archive</a>.
+        </p>
+      </div>
+      <header class="page-head">
+        <p class="kicker">Productized sample · External Funnel Audit</p>
+        <h1>Virtual Coworker — public funnel &amp; tracking snapshot</h1>
+        <p>
+          Target: <strong style="color:var(--ink)"><a href="https://virtualcoworker.com/">virtualcoworker.com</a></strong>
+          · Audited <strong style="color:var(--ink)">2026-07-29</strong>
+          · Page-load HTML + public GTM only · <strong style="color:var(--ink)">No forms submitted</strong>
+        </p>
+      </header>
+
+      <div class="scope">
+        <strong style="color:var(--ink)">Reusable sample deliverable</strong> for an External Funnel Audit:
+        what public sites reveal about stack, tracking, lead paths, and buyer vs talent hygiene —
+        before CRM access. Login-gated systems are out of scope.
+      </div>
+
+      <div class="report-stack">
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Section 1</p>
+            <h2>Public properties found</h2>
+          </div>
+          <div class="panel-bd" style="padding-top:0.35rem;overflow-x:auto">
+            <table>
+              <thead><tr><th>Property</th><th>Role (from public copy)</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="https://virtualcoworker.com/">virtualcoworker.com</a></td>
+                  <td>US buyer site — hire PH VAs / remote staff</td>
+                  <td>WordPress (Kadence + Yoast), Kinsta + Cloudflare</td>
+                </tr>
+                <tr>
+                  <td><a href="https://virtualcoworker.com.au/">virtualcoworker.com.au</a></td>
+                  <td>AU buyer site (parallel product)</td>
+                  <td>Separate GTM; Zopim/Zendesk chat pattern</td>
+                </tr>
+                <tr>
+                  <td><a href="https://virtualcoworker.com.ph/">virtualcoworker.com.ph</a></td>
+                  <td>PH careers / talent site</td>
+                  <td>Linked from US footer (“Looking for career opportunities?”)</td>
+                </tr>
+                <tr>
+                  <td><a href="https://admin.virtualcoworker.com/users/sign_in">admin.virtualcoworker.com</a></td>
+                  <td>Client/ops login</td>
+                  <td>Rails + Devise, Turbolinks/Webpacker packs, <span class="mono">v2.1.15</span></td>
+                </tr>
+                <tr>
+                  <td><a href="https://virtualcoworker.zohorecruit.com/jobs/Careers">virtualcoworker.zohorecruit.com</a></td>
+                  <td>Candidate ATS / jobs</td>
+                  <td>Zoho Recruit careers + candidate portal</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="muted" style="margin-top:0.65rem">
+              Probed but not responding: <span class="mono">careers.</span>, <span class="mono">app.</span>, <span class="mono">go.</span>, <span class="mono">lp.</span>, <span class="mono">blog.</span>, <span class="mono">staging.</span>
+              — main site uses path-based blog.
+            </p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Section 2</p>
+            <h2>Tech stack clues (page-load)</h2>
+          </div>
+          <div class="panel-bd">
+            <div class="chips">
+              <span class="chip"><strong>CMS</strong> WordPress</span>
+              <span class="chip"><strong>Theme</strong> Kadence (+ child)</span>
+              <span class="chip"><strong>SEO</strong> Yoast</span>
+              <span class="chip"><strong>Host</strong> Kinsta → Cloudflare</span>
+              <span class="chip"><strong>Forms</strong> Gravity Forms</span>
+              <span class="chip"><strong>Chat</strong> Zendesk (US)</span>
+              <span class="chip"><strong>Bot</strong> reCAPTCHA v3</span>
+              <span class="chip"><strong>App</strong> Rails admin portal</span>
+            </div>
+            <ul>
+              <li>US primary CTA: homepage / service pages → <span class="mono">/contact-us/</span> and <span class="mono">/contact/</span>.</li>
+              <li>Gravity Forms IDs: <span class="mono">gform_9</span> (contact-us), <span class="mono">gform_10</span> (contact).</li>
+              <li>No HubSpot, Salesforce, Marketo, CallRail, Hotjar, or Clarity on sampled US pages.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Section 3</p>
+            <h2>Tracking &amp; ads clues</h2>
+          </div>
+          <div class="panel-bd" style="padding-top:0.35rem;overflow-x:auto">
+            <table>
+              <thead><tr><th>Signal</th><th>US (.com)</th><th>AU (.com.au)</th><th>PH (.com.ph)</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>GTM</td>
+                  <td><span class="mono">GTM-TTKNKT</span></td>
+                  <td><span class="mono">GTM-KNDLKVW</span></td>
+                  <td><span class="badge badge-crit">None</span> in homepage HTML</td>
+                </tr>
+                <tr>
+                  <td>GA4 (in GTM)</td>
+                  <td><span class="mono">G-JCQKGCTYCQ</span></td>
+                  <td><span class="mono">G-W57WKPRGV9</span></td>
+                  <td class="muted">—</td>
+                </tr>
+                <tr>
+                  <td>Google Ads</td>
+                  <td><span class="mono">AW-962672995</span></td>
+                  <td><span class="mono">AW-1010248779</span></td>
+                  <td class="muted">—</td>
+                </tr>
+                <tr>
+                  <td>Meta Pixel</td>
+                  <td><span class="mono">233132881256273</span> <span class="badge badge-high">hardcoded</span></td>
+                  <td class="muted">Not on homepage HTML</td>
+                  <td class="muted">Not found</td>
+                </tr>
+                <tr>
+                  <td>LinkedIn Insight</td>
+                  <td class="muted">No clear partner pixel</td>
+                  <td class="muted">—</td>
+                  <td class="muted">—</td>
+                </tr>
+                <tr>
+                  <td>Chat / support</td>
+                  <td>Zendesk Web Widget</td>
+                  <td>Zopim / Zendesk pattern</td>
+                  <td class="muted">None obvious</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="margin-top:0.65rem">
+              GTM US references conversion-ish language (<span class="mono">generate_lead</span>, <span class="mono">purchase</span>, <span class="mono">Schedule</span>, <span class="mono">utm_</span>).
+              Ads + analytics are wired somehow — but pixel placement is uneven, and Meta sits partly outside GTM on US.
+            </p>
+            <p class="muted">
+              No dedicated paid landing subdomain (<span class="mono">lp.</span> / <span class="mono">go.</span>). UTMs not baked into static HTML (expected).
+            </p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Section 4</p>
+            <h2>CRM / lead routing clues</h2>
+          </div>
+          <div class="panel-bd">
+            <ul>
+              <li><strong>Buyer leads:</strong> Gravity Forms POST back to WordPress. Destination unknown without submitting.</li>
+              <li><strong>Ops system:</strong> <span class="mono">admin.virtualcoworker.com</span> is a custom Rails app — fulfillment / portal likely outside WP.</li>
+              <li><strong>Talent leads:</strong> PH site routes to <strong>Zoho Recruit</strong> — separate from buyer forms.</li>
+              <li><strong>Support:</strong> Zendesk can become a second sales-ish inbox if not routed cleanly.</li>
+            </ul>
+            <p class="muted">Cannot confirm form → CRM is 1:1, duplicated, or manual. Discovery item for a paid engagement.</p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Section 5</p>
+            <h2>Buyer vs candidate funnel contamination</h2>
+          </div>
+          <div class="panel-bd">
+            <p class="finding">
+              <span class="badge badge-crit">Critical</span>
+              <strong>Consultation form includes a job-seeker option.</strong>
+              On <a href="https://virtualcoworker.com/contact-us/" target="_blank" rel="noopener"><span class="mono">/contact-us/</span></a>, fields include staffing hours <em>and</em>
+              <strong>“I am searching for a job”</strong> next to buyer fields — mixes candidate traffic into the paid consult path.
+              Proof: <a href="https://virtualcoworker.com/contact-us/" target="_blank" rel="noopener">live contact form</a>
+              · <a href="findings.html#consult-form">Findings write-up</a>
+            </p>
+            <p class="finding">
+              <span class="badge badge-high">High</span>
+              <strong>US buyer chrome constantly points to PH careers.</strong>
+              Footer CTA → <span class="mono">virtualcoworker.com.ph</span>. Good intent, but candidate traffic is one click from every buyer page — and tracking stacks diverge.
+            </p>
+            <p class="finding">
+              <span class="badge badge-high">High</span>
+              <strong>PH site still exposes buyer-ish URLs</strong> (pricing, services, link back to US/AU) while primary job is careers.
+              Cross-links without hard funnel walls = analytics and SEO bleed.
+            </p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Section 6</p>
+            <h2>CTAs &amp; conversion paths</h2>
+          </div>
+          <div class="panel-bd">
+            <h3>Primary buyer path (US)</h3>
+            <ol>
+              <li>Land on homepage / industry / role service page</li>
+              <li>CTA: <strong>Book A Free Consultation</strong> → <span class="mono">/contact-us/</span></li>
+              <li>Alternate: <span class="mono">/contact/</span> (second GF)</li>
+              <li>Secondary: Zendesk chat widget</li>
+              <li>Supporting: pricing guide, how-it-works, success stories, FAQ, blog</li>
+            </ol>
+            <h3>Talent path</h3>
+            <ol>
+              <li>US footer → PH site <em>or</em> direct .ph visit</li>
+              <li>Zoho Recruit careers / candidate portal</li>
+            </ol>
+            <p class="muted">Calendly URLs not in page HTML; GTM mentions Calendly (tag residue or conditional). Live booking appears form-led.</p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Section 7</p>
+            <h2>Org / marketing ownership clues</h2>
+          </div>
+          <div class="panel-bd">
+            <ul>
+              <li><strong>Braden Yuill</strong> — Founder / CEO (public About).</li>
+              <li><strong>Caitlin</strong> — Chief Operating Officer (public About).</li>
+              <li>Also listed: Ops &amp; IT, US + APAC regional managers, L&amp;D, recruitment managers.</li>
+              <li>Press includes older AU coverage. Social: Facebook, Instagram, LinkedIn, Mastodon, Twitter in meta.</li>
+            </ul>
+            <p class="muted">No public “marketing director / growth lead” on About. Tracking ownership is a discovery question.</p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Section 8</p>
+            <h2>Ownership &amp; structure signals</h2>
+          </div>
+          <div class="panel-bd">
+            <ul class="list-plain">
+              <li><span class="badge badge-high">Watch</span> <strong>Three regions, three tracking postures</strong> — hard to roll up company performance.</li>
+              <li><span class="badge badge-high">Watch</span> <strong>Meta pixel hardcoded on US</strong> while Google stack lives in GTM — ownership unclear.</li>
+              <li><span class="badge badge-ok">Solid</span> Custom Rails admin exists — not a pure brochure site.</li>
+              <li><span class="badge badge-high">Risk</span> Dual contact forms + chat + Zoho = multiple front doors.</li>
+              <li><span class="badge badge-crit">Risk</span> Job-seeker option on buyer consult form — clear lead-quality risk.</li>
+              <li>No CallRail / obvious call tracking — phone attribution likely weak.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Section 9</p>
+            <h2>Client discovery questions</h2>
+          </div>
+          <div class="panel-bd">
+            <p class="muted" style="margin-bottom:0.65rem">Framed for a paid engagement — not role/interview questions.</p>
+            <div class="q">
+              <strong>1. Who owns GTM / GA4 / Google Ads / Meta — internal, freelancer, or agency — and is there one source of truth?</strong>
+              <span>Explains hardcoded Meta vs GTM Google tags, and US vs AU container drift.</span>
+            </div>
+            <div class="q">
+              <strong>2. Where do Gravity Forms submissions land, and is “I am searching for a job” still supposed to be on the consult form?</strong>
+              <span>Highest-ROI cleanup; also maps lead routing for offline conversion work.</span>
+            </div>
+            <div class="q">
+              <strong>3. How should buyer (.com / .com.au) vs talent (.ph + Zoho) analytics be separated?</strong>
+              <span>Prevents candidate traffic from contaminating paid buyer conversion reporting.</span>
+            </div>
+            <div class="q">
+              <strong>4. Which conversion is the money event — and which fire in GTM / Ads / Meta today?</strong>
+              <span>GTM mentions generate_lead / purchase / Schedule; match to real sales stages.</span>
+            </div>
+            <div class="q">
+              <strong>5. Should Zendesk chat create sales leads, support tickets, or both?</strong>
+              <span>Second front door; often invisible in ROAS math.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-hd">
+            <p class="kicker">Executive</p>
+            <h2>Top findings</h2>
+          </div>
+          <div class="panel-bd">
+            <ol>
+              <li>US stack is mature-ish (WP + GTM + GA4 + Ads + Meta + Zendesk) but Meta is partially outside GTM.</li>
+              <li>AU and US run <em>different</em> GTM/GA4/Ads IDs — regional silos.</li>
+              <li>PH careers site is a separate funnel (Zoho Recruit) with basically no marketing tag parity.</li>
+              <li><strong>Buyer consult form explicitly accepts job seekers</strong> — clearest public hygiene failure.</li>
+              <li>Custom Rails admin suggests real ops backend; form→CRM glue is the next paid-audit map.</li>
+            </ol>
+          </div>
+        </section>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="../index.html">Executive Overview</a>
+        <a class="btn" href="findings.html">Findings Archive</a>
+        <a class="btn" href="package.html">Discovery questions</a>
+      </div>
+
+      <p class="report-foot">
+        External Funnel Audit sample · Public crawl only · No form submits · No login · No ads mutations<br />
+        See README for how to rerun on another domain.
+      </p>
+    </main>
+  </div>
+  <script src="../nav.js?v=20260809c"></script>
+</body>
+</html>

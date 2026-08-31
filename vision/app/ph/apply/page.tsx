@@ -43,7 +43,7 @@ export default function PHApply() {
         <h1 className="anim-rise">Applications move to Philippines careers</h1>
         <p className="anim-rise-d1">
           We don’t collect job applications on this hiring microsite. Continue to
-          our Philippines careers site to apply — opens in a new tab.
+          our Philippines careers site to apply - opens in a new tab.
         </p>
         <a
           href={careers}
@@ -62,7 +62,8 @@ export default function PHApply() {
           Go to Philippines careers →
         </a>
         <p className="ph-gate-note" style={{ marginTop: "1.5rem" }}>
-          Businesses hiring staff: use the US or Australia pages in the footer.
+          Looking for a job? Apply on the Philippines careers site — this
+          microsite does not take applications.
         </p>
       </div>
 

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { MarketId } from "../../config/markets";
 import type { CategorySlug } from "../../config/categories";
+import { REAL_ESTATE_SLUG } from "../../config/lp-real-estate";
 import {
   GUIDED_MATCH_HOURS_MINIMUM_NOTE,
   GUIDED_MATCH_POSITIONS,
@@ -25,8 +26,22 @@ import {
   trackEvent,
   trackValidEmployerSubmit,
 } from "../../lib/tracking";
+import { trackExperimentConvert } from "../../lib/experiments";
+import {
+  trackEmployerFormStepCompleted,
+  trackFormStart,
+  trackFormValidationError,
+} from "../../lib/lp-events";
+import { exitToCareers } from "../../lib/job-seeker-exit";
+import {
+  formatPhoneInput,
+  PH_PHONE_CAREERS_MESSAGE,
+  US_PHONE_ERROR,
+  validateUsPhone,
+} from "../../lib/phone-format";
 import { DEFAULT_CAREERS_URL } from "../../config/markets";
 import { scoreLeadValue } from "../../config/lead-value";
+import { AUTHORITATIVE_LP_VERSION } from "../../config/lp-version";
 import {
   canGoBack,
   diagnosticMatchPayload,
@@ -38,7 +53,7 @@ import {
 
 type Props = {
   market: MarketId;
-  category?: CategorySlug | null;
+  category?: CategorySlug | typeof REAL_ESTATE_SLUG | null;
   variant?: string;
   careersHref?: string;
   /** Skip the role/hours quiz. Name, email, and phone are the first fields. */
@@ -166,12 +181,24 @@ export default function GuidedMatchGate({
     setStep("role");
   }
 
+  function eventBase() {
+    return {
+      market,
+      lp_version: lpVersion || AUTHORITATIVE_LP_VERSION,
+      landing_page_type: "employer_paid_lp",
+      role_selected: selected?.formLabel || selected?.chip || "",
+    };
+  }
+
   function markMatchStarted(stepN: string, answer: string) {
+    trackFormStart({
+      ...eventBase(),
+      start_reason: "guided_match_interaction",
+    });
     const extra = { ...ctx(), step: stepN, answer };
     if (!matchStartedRef.current) {
       matchStartedRef.current = true;
       trackEvent("quiz_started", extra);
-      trackEvent("guided_match_started", { ...extra, alias_of: "quiz_started" });
     }
     trackEvent("quiz_step", extra);
   }
@@ -181,22 +208,9 @@ export default function GuidedMatchGate({
     startedRef.current = true;
     const t = Date.now();
     setStartedAt(t);
-    const flags = guidedMatchLandingFlags(lpVariant, lpVersion || undefined);
-    trackEvent("employer_form_started", {
-      market,
-      category: selected?.category || category || "",
-      variant: variant || "",
-      gate_variant: "inline",
+    trackFormStart({
+      ...eventBase(),
       start_reason: "field_interaction",
-      ...flags,
-    });
-    trackEvent("form_start", {
-      market,
-      category: selected?.category || category || "",
-      variant: variant || "",
-      alias_of: "employer_form_started",
-      start_reason: "field_interaction",
-      ...flags,
     });
   }
 
@@ -204,11 +218,22 @@ export default function GuidedMatchGate({
     if (locked) return;
     setRoleChip(chip);
     markMatchStarted("1", chip);
+    trackEmployerFormStepCompleted({
+      ...eventBase(),
+      role_selected: chip,
+      step_number: 1,
+      step_name: "role",
+    });
     if (!explicitContinue) setStep("needs");
   }
 
   function continueRole() {
     if (!roleChip) return;
+    trackEmployerFormStepCompleted({
+      ...eventBase(),
+      step_number: 1,
+      step_name: "role",
+    });
     setStep(useSequentialNeeds ? "hours" : "needs");
   }
 
@@ -228,26 +253,16 @@ export default function GuidedMatchGate({
   }
 
   function reachContact() {
-    trackEvent("quiz_step_completed", {
-      ...ctx(),
-      step: "2",
-      answer: "complete",
-    });
+    if (!useSequentialNeeds) {
+      trackEmployerFormStepCompleted({
+        ...eventBase(),
+        step_number: 2,
+        step_name: "needs",
+      });
+    }
     setStep("contact");
     if (!contactReachedRef.current) {
       contactReachedRef.current = true;
-      const extra = {
-        ...ctx(),
-        result: selected?.formLabel || "",
-        funnel_step: "contact_step_reached",
-      };
-      trackEvent("quiz_completed", extra);
-      trackEvent("contact_step_reached", extra);
-      trackEvent("lead_magnet_completed", {
-        ...ctx(),
-        magnet: "guided_match",
-        result_role: selected?.formLabel || "",
-      });
     }
   }
 
@@ -258,15 +273,30 @@ export default function GuidedMatchGate({
 
   function continueHours() {
     if (!schedule) return;
+    trackEmployerFormStepCompleted({
+      ...eventBase(),
+      step_number: 2,
+      step_name: "hours",
+    });
     setStep("people");
   }
 
   function continuePeople() {
     if (!positions) return;
+    trackEmployerFormStepCompleted({
+      ...eventBase(),
+      step_number: 3,
+      step_name: "people",
+    });
     setStep("size");
   }
 
   function continueSize() {
+    trackEmployerFormStepCompleted({
+      ...eventBase(),
+      step_number: 4,
+      step_name: "company_size",
+    });
     reachContact();
   }
 
@@ -285,19 +315,13 @@ export default function GuidedMatchGate({
     e.preventDefault();
     if (exitingSeeker.current) return;
     exitingSeeker.current = true;
-    const flags = guidedMatchLandingFlags(lpVariant, lpVersion || undefined);
-    trackEvent("job_seeker_redirected", {
+    exitToCareers(careersHref, {
       market,
-      category: selected?.category || category || "",
-      variant: variant || "",
-      intent: "job_seeker",
-      destination: careersHref,
-      primary_eligible: false,
-      bidding_primary: false,
-      source: "lead_gate_ungated_link",
-      ...flags,
+      lp_version: lpVersion || AUTHORITATIVE_LP_VERSION,
+      landing_page_type: "employer_paid_lp",
+      redirect_location: "gate_careers_link",
+      redirect_reason: "careers_escape",
     });
-    window.location.replace(careersHref);
   }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -307,42 +331,76 @@ export default function GuidedMatchGate({
     const fd = new FormData(form);
     const name = String(fd.get("name") || "").trim();
     const email = String(fd.get("email") || "").trim();
+    const company = String(fd.get("company") || "").trim();
     const errs: Record<string, string> = {};
     if (!name) errs.name = "Enter your name.";
+    if (!company) errs.company = "Enter your company name.";
     if (!email) errs.email = "Enter your work email.";
-    if (!phone.trim()) errs.phone = "Enter a phone number.";
+    if (!phone.trim()) {
+      errs.phone = "Enter a phone number.";
+    } else if (market === "us") {
+      const usPhone = validateUsPhone(phone);
+      if (!usPhone.ok) {
+        errs.phone =
+          usPhone.code === "ph_job_seeker_phone"
+            ? PH_PHONE_CAREERS_MESSAGE
+            : US_PHONE_ERROR;
+        trackFormValidationError({
+          ...eventBase(),
+          error_category:
+            usPhone.code === "ph_job_seeker_phone"
+              ? "job_seeker_intent"
+              : "invalid_us_phone",
+          form_step: "contact",
+        });
+        if (usPhone.code === "ph_job_seeker_phone") {
+          setFieldErrors(errs);
+          setError(PH_PHONE_CAREERS_MESSAGE);
+          exitToCareers(careersHref, {
+            market,
+            lp_version: lpVersion || AUTHORITATIVE_LP_VERSION,
+            landing_page_type: "employer_paid_lp",
+            redirect_location: "us_phone_validation",
+            redirect_reason: "ph_phone_number",
+          });
+          return;
+        }
+      }
+    }
     setFieldErrors(errs);
     setError("");
     if (Object.keys(errs).length) {
-      trackEvent("employer_form_validation_error", {
-        market,
-        category: selected?.category || category || "",
-        variant: variant || "",
-        fields: Object.keys(errs).join(","),
-        ...guidedMatchLandingFlags(lpVariant),
+      trackFormValidationError({
+        ...eventBase(),
+        error_category: "missing_required_field",
+        form_step: "contact",
       });
       return;
     }
 
     setSubmitting(true);
-    const flags = guidedMatchLandingFlags(lpVariant);
+    const flags = guidedMatchLandingFlags(lpVariant, lpVersion || undefined);
     const attr = readAttribution(market, {
       category: selected?.category || category || "",
       variant: variant || "",
       ...(lpVariant ? { lp_variant: lpVariant } : {}),
+      ...(lpVersion ? { lp_version: lpVersion } : {}),
     });
     const scored = scoreLeadValue({
       intent: "employer",
       companySize: size,
       positionsNeeded: positions,
     });
+    const usChecked = market === "us" ? validateUsPhone(phone) : null;
+    const phoneForPayload =
+      usChecked && usChecked.ok ? usChecked.e164 : phone.trim();
     const payload = {
       ...attr,
       ...flags,
       name,
       email,
-      phone: phone.trim(),
-      company: String(fd.get("company") || "").trim(),
+      phone: phoneForPayload,
+      company,
       role: selected?.formLabel || "",
       category: selected?.category || category || "",
       variant: variant || "",
@@ -382,11 +440,31 @@ export default function GuidedMatchGate({
       };
 
       if (!res.ok || !data.ok || !data.submission_id) {
-        if (
-          data.code === "job_seeker" ||
-          data.code === "honeypot" ||
-          data.code === "too_fast"
-        ) {
+        if (data.code === "job_seeker") {
+          trackFormValidationError({
+            ...eventBase(),
+            error_category: "job_seeker_intent",
+            form_step: "contact",
+          });
+          trackEvent("spam_or_applicant_rejected", {
+            market,
+            code: data.code,
+          });
+          setError(data.error || PH_PHONE_CAREERS_MESSAGE);
+          setSubmitting(false);
+          return;
+        }
+        if (data.code === "invalid_us_phone") {
+          trackFormValidationError({
+            ...eventBase(),
+            error_category: "invalid_us_phone",
+            form_step: "contact",
+          });
+          setFieldErrors({ phone: data.error || US_PHONE_ERROR });
+          setSubmitting(false);
+          return;
+        }
+        if (data.code === "honeypot" || data.code === "too_fast") {
           trackEvent("spam_or_applicant_rejected", {
             market,
             code: data.code || "rejected",
@@ -405,6 +483,11 @@ export default function GuidedMatchGate({
             code: data.code || `http_${res.status}`,
           });
         }
+        trackFormValidationError({
+          ...eventBase(),
+          error_category: "server_rejection",
+          form_step: "contact",
+        });
         setError(
           data.error ||
             "We could not deliver your request just now. Please try again, or call us.",
@@ -425,6 +508,7 @@ export default function GuidedMatchGate({
         companySize: size || "",
         positionsNeeded: positions || "",
         hiringTimeline: "",
+        schedule: schedule || "",
         leadScore:
           typeof data.lead_score === "number" ? data.lead_score : scored.lead_score,
         estimatedLeadValue:
@@ -434,18 +518,17 @@ export default function GuidedMatchGate({
         valueKind: data.value_kind || scored.value_kind,
         fitLabel: data.fit_label || scored.fit_label,
         landingPage: attr.landing_page_url,
-        utmSource: attr.utm_source,
-        utmMedium: attr.utm_medium,
-        utmCampaign: attr.utm_campaign,
-        utmTerm: attr.utm_term,
-        utmContent: attr.utm_content,
-        gclid: attr.gclid,
-        gbraid: attr.gbraid,
-        wbraid: attr.wbraid,
-        submittedAt: payload.submitted_at,
+        lpVersion: attr.lp_version || lpVersion || AUTHORITATIVE_LP_VERSION,
         lpSurface: "form",
         ctaMode: "form_primary",
         lpVariant: lpVariant || attr.lp_variant || "",
+        pagePath: typeof window !== "undefined" ? window.location.pathname : "",
+      });
+      trackExperimentConvert("form_submit", {
+        market,
+        surface: "guided_match_gate",
+        page_path:
+          typeof window !== "undefined" ? window.location.pathname : "",
       });
 
       const q = new URLSearchParams({ market, sid: data.submission_id });
@@ -891,7 +974,7 @@ export default function GuidedMatchGate({
           </h2>
           {contactFirst ? (
             <p className="gm-hint">
-              Employers only. Name, email, and phone start a hiring conversation. Not an instant hire.
+              Employers only. Name, company, email, and phone start a hiring conversation. Not an instant hire.
             </p>
           ) : (
             <p className="gm-hint">{hiringSummary}</p>
@@ -923,7 +1006,7 @@ export default function GuidedMatchGate({
               </div>
               <div>
                 <label className="gm-label" htmlFor="gm-email">
-                  Work email
+                  Business Email Address
                 </label>
                 <input
                   id="gm-email"
@@ -941,6 +1024,24 @@ export default function GuidedMatchGate({
               </div>
             </div>
 
+            <label className="gm-label" htmlFor="gm-company">
+              Company name{market === "us" ? " (required)" : ""}
+            </label>
+            <input
+              id="gm-company"
+              name="company"
+              autoComplete="organization"
+              required
+              aria-required="true"
+              aria-invalid={Boolean(fieldErrors.company)}
+              onFocus={markFormStarted}
+            />
+            {fieldErrors.company ? (
+              <span className="gm-err" role="alert">
+                {fieldErrors.company}
+              </span>
+            ) : null}
+
             <label className="gm-label" htmlFor="gm-phone">
               Phone
             </label>
@@ -955,7 +1056,11 @@ export default function GuidedMatchGate({
               aria-invalid={Boolean(fieldErrors.phone)}
               onFocus={markFormStarted}
               onChange={(e) => {
-                setPhone(e.target.value);
+                const next =
+                  market === "us" || market === "au"
+                    ? formatPhoneInput(e.target.value, market)
+                    : e.target.value;
+                setPhone(next);
                 markFormStarted();
               }}
             />

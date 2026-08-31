@@ -28,13 +28,13 @@ export default function PrivacyPage() {
           Virtual Coworker Inc. and Virtual Coworker Pty. Ltd. (ABN 49 154 746
           004) (“Virtual Coworker,” “we,” “us”) respect your privacy. This
           notice explains how we handle personal information submitted through
-          this website — including US and Australia hiring pages, the
+          this website - including US and Australia hiring pages, the
           Philippines careers path, services, how-it-works, and related forms.
         </p>
         <p>
           By using this website or submitting a form, you acknowledge this
-          notice. We do not sell, rent, or share your personal information —
-          including mobile numbers — with third parties for their marketing.
+          notice. We do not sell, rent, or share your personal information -
+          including mobile numbers - with third parties for their marketing.
         </p>
 
         <h2>Who this covers</h2>
@@ -46,8 +46,8 @@ export default function PrivacyPage() {
 
         <h2>What we collect</h2>
         <p>
-          When you send a hiring request we collect the details you provide —
-          typically name, work email, phone, company, and role context — plus
+          When you send a hiring request we collect the details you provide -
+          typically name, work email, phone, company, and role context - plus
           standard web attribution such as campaign tags, click identifiers when
           present, landing-page URL, referrer, and submission time. Career
           applications on the Philippines path collect the details you enter on
@@ -84,7 +84,7 @@ export default function PrivacyPage() {
           Lead and application details are delivered to Virtual Coworker (email
           and/or systems we designate). We may share information with trusted
           service providers who help us operate email, hosting, analytics, or
-          communications — under obligations to protect it — and with
+          communications - under obligations to protect it - and with
           authorities when required by law. Analytics on these pages may use
           separate Google Tag Manager / GA4 setups for the US, Australia, and
           Philippines paths.
@@ -116,7 +116,7 @@ export default function PrivacyPage() {
           <a href="mailto:dpo@virtualcoworker.com">dpo@virtualcoworker.com</a>.
           US business line:{" "}
           <a href={SITE.usPhoneHref}>{SITE.usPhoneDisplay}</a>. You may also
-          reach the teammate who follows up on your request.
+          reach a member of our team who follows up on your request.
         </p>
         <p>
           We review this notice as our practices evolve. The version on this

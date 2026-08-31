@@ -153,6 +153,40 @@ def http_form(
         return status, redact_text(raw)
 
 
+def http_post_json(
+    url: str,
+    payload: dict[str, Any],
+    *,
+    access_token: str,
+    timeout: float = 30.0,
+) -> tuple[int, dict[str, Any] | str]:
+    body = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        url,
+        data=body,
+        method="POST",
+        headers={
+            "Authorization": f"Zoho-oauthtoken {access_token}",
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as res:
+            raw = res.read().decode("utf-8", errors="replace")
+            status = res.getcode() or 200
+    except urllib.error.HTTPError as e:
+        raw = e.read().decode("utf-8", errors="replace")
+        status = e.code
+    except urllib.error.URLError as e:
+        raise SystemExit(f"Network error calling Zoho: {e.reason}") from e
+
+    try:
+        return status, json.loads(raw)
+    except json.JSONDecodeError:
+        return status, redact_text(raw)
+
+
 def http_get_json(
     url: str,
     *,

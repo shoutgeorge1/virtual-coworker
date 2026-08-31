@@ -1,0 +1,161 @@
+name: Daily Executive Dashboard Refresh
+
+on:
+  schedule:
+    # 12:30 UTC daily (displays Google Ads data through previous complete UTC day due to reporting latency)
+    - cron: '30 12 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (validate without committing/publishing/deploying)'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: daily-executive-refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    name: Executive Data Refresh & Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install python-dotenv requests google-ads
+
+      - name: Verify Python & Node syntax
+        run: |
+          python3 -m py_compile ads-launch/refresh_executive_dashboard.py ads-launch/pull_executive_snapshot.py ads-launch/validate_executive_snapshot.py ads-launch/bake_xray_pages.py ads-launch/probe_sales_ops_now_readonly.py ads-launch/probe_sales_ops_week_readonly.py
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'xray/package-lock.json'
+
+      - name: Install Node dependencies
+        working-directory: xray
+        run: npm ci
+
+      - name: Run Safe Executive Refresh Orchestrator
+        env:
+          GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
+          GOOGLE_ADS_CLIENT_ID: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
+          GOOGLE_ADS_CLIENT_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
+          GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
+          GOOGLE_ADS_LOGIN_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_LOGIN_CUSTOMER_ID }}
+          GOOGLE_ADS_CUSTOMER_ID_US: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID_US || '4967151855' }}
+          GOOGLE_ADS_CUSTOMER_ID_AU: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID_AU || '5735391940' }}
+          ZOHO_CRM_CLIENT_ID: ${{ secrets.ZOHO_CRM_CLIENT_ID }}
+          ZOHO_CRM_CLIENT_SECRET: ${{ secrets.ZOHO_CRM_CLIENT_SECRET }}
+          ZOHO_CRM_REFRESH_TOKEN: ${{ secrets.ZOHO_CRM_REFRESH_TOKEN }}
+          ZOHO_CRM_ACCOUNTS_URL: ${{ secrets.ZOHO_CRM_ACCOUNTS_URL || 'https://accounts.zoho.com' }}
+          ZOHO_CRM_API_DOMAIN: ${{ secrets.ZOHO_CRM_API_DOMAIN || 'https://www.zohoapis.com' }}
+          ZOHO_CRM_MODULE: Leads
+          ZOHO_SUBMISSION_ENABLED: 'false'
+          ZOHO_CRM_ENABLED: 'false'
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          EXTRA_FLAGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            EXTRA_FLAGS="--dry-run"
+          elif [ -n "${{ secrets.VERCEL_TOKEN }}" ]; then
+            EXTRA_FLAGS="--deploy"
+          fi
+          python3 ads-launch/refresh_executive_dashboard.py $EXTRA_FLAGS
+
+      - name: Validate Generated Dashboard & Smoke Checks
+        working-directory: xray
+        run: |
+          node -e '
+            const fs = require("fs");
+            const snap = JSON.parse(fs.readFileSync("data/executive-snapshot.json", "utf8"));
+            if (!snap.freshness || !snap.freshness.google_ads_through) throw new Error("Missing freshness in snapshot");
+            console.log("Local snapshot check passed: " + snap.freshness.status + " (Ads through " + snap.freshness.google_ads_through + ")");
+          '
+
+      - name: Commit and push changes
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add xray/data/ \
+                  xray/executive.html \
+                  xray/executive-weekly.html \
+                  xray/sales-review.html \
+                  xray/public/ \
+                  2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "[Automated] Daily executive snapshot refresh [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+
+      - name: Generate Job Summary
+        if: always()
+        run: |
+          python3 -c '
+          import json, os
+          from pathlib import Path
+
+          p = Path("xray/data/executive-snapshot.json")
+          if not p.is_file():
+              print("Snapshot not found")
+              exit(0)
+
+          data = json.loads(p.read_text(encoding="utf-8"))
+          fresh = data.get("freshness") or {}
+          perf_us = data.get("performance_us") or {}
+          perf_au = data.get("performance_au") or {}
+          sales_us = data.get("sales_ops_us") or {}
+          sales_au = data.get("sales_ops_au") or {}
+
+          summary = []
+          summary.append("## 📊 Virtual Coworker Executive Dashboard Refresh")
+          summary.append("")
+          summary.append(f"**Status:** `{fresh.get(\"status\", \"Unknown\")}`")
+          summary.append(f"**Detail:** {fresh.get(\"status_detail\", \"—\")}")
+          summary.append("")
+          summary.append("| Metric / Source | Value |")
+          summary.append("| --- | --- |")
+          summary.append(f"| **Google Ads Through** | {fresh.get(\"google_ads_through\", \"—\")} (reporting latency buffer) |")
+          summary.append(f"| **Zoho Refreshed (UTC)** | {fresh.get(\"zoho_refreshed_at_utc\", \"—\")} |")
+          summary.append(f"| **US Sales Confirmed** | {fresh.get(\"us_sales_confirmed_through\", \"—\")} (Cheyenne) |")
+          summary.append(f"| **AU Sales Confirmed** | {fresh.get(\"au_sales_confirmed_through\", \"—\")} (Holly) |")
+          summary.append(f"| **US MTD Enquiries / Calls** | {sales_us.get(\"enquiries\", \"—\")} enquiries / {sales_us.get(\"sales_calls_completed\", \"—\")} calls |")
+          summary.append(f"| **AU MTD Enquiries / Calls** | {sales_au.get(\"enquiries\", \"—\")} enquiries / {sales_au.get(\"sales_calls_completed\", \"—\")} calls |")
+          summary.append(f"| **Dashboard Generated (UTC)** | {fresh.get(\"dashboard_generated_at_utc\", \"—\")} |")
+          summary.append("")
+          summary.append("Live dashboard: [https://vc-xray.vercel.app/executive](https://vc-xray.vercel.app/executive)")
+
+          summary_text = "\n".join(summary)
+          step_summary_file = os.environ.get("GITHUB_STEP_SUMMARY")
+          if step_summary_file:
+              with open(step_summary_file, "a", encoding="utf-8") as f:
+                  f.write(summary_text + "\n")
+          print(summary_text)
+          '

@@ -239,8 +239,10 @@
   max-width: 18ch;
 }
 
-.us-hero h1 em {
+.us-hero h1 em,
+.us-hero h1 .h1-role {
   font-style: normal;
+  font-weight: 800;
   color: var(--cyan);
 }
 

@@ -38,9 +38,11 @@ export default async function HowItWorksPage({
   const isAu = market === "au";
   const steps = hiringProcessSteps(market);
   const cta = primaryHireCta(market);
+  // Employer hubs match simplified money LPs — AU light for US + AU.
+  const light = true;
 
   return (
-    <main className={`micro${isAu ? " micro-light" : ""}`}>
+    <main className={`micro${light ? " micro-light" : ""}`}>
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: home },
@@ -49,7 +51,7 @@ export default async function HowItWorksPage({
       />
       <MarketGtm surface={surface} />
       <SiteNav
-        tone={isAu ? "light" : "dark"}
+        tone={light ? "light" : "dark"}
         market={surface}
         active="how"
       />
@@ -84,7 +86,7 @@ export default async function HowItWorksPage({
         </p>
       </HubMapHero>
 
-      <PainGain market={market} light={isAu} ctaHref={`${home}#gate`} />
+      <PainGain market={market} light={light} ctaHref={`${home}#gate`} />
 
       <section className="micro-section">
         <div className="how-steps">
@@ -104,7 +106,7 @@ export default async function HowItWorksPage({
         </div>
       </section>
 
-      <SiteFooter tone={isAu ? "light" : "dark"} market={surface} />
+      <SiteFooter tone={light ? "light" : "dark"} market={surface} />
     </main>
   );
 }

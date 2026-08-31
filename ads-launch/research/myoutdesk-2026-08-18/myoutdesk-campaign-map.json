@@ -1,0 +1,176 @@
+{
+  "generated_at_utc": "2026-08-18T18:09:20Z",
+  "advertiser": "MyOutDesk, LLC",
+  "public_site": "https://www.myoutdesk.com/",
+  "stack_observed": {
+    "cms": "Astro (not WordPress; /wp-json/ is HTML 404)",
+    "gtm": "GTM-N589823",
+    "ab": "GrowthBook",
+    "forms": "Conversion.ai + ChiliPiper chat + Fillout savings report on pricing",
+    "consent": "CookieYes",
+    "other": [
+      "Microsoft Clarity e4i40pe530",
+      "LinkedIn Insight 7070116",
+      "Clutch widget"
+    ]
+  },
+  "naming_conventions": {
+    "paid_lp_grammar": "/lp/google-{theme}/",
+    "confirmed_themes": [
+      "philippines-virtual-assistants",
+      "virtual-assistants",
+      "real-estate-virtual-assistants",
+      "brand-search-campaign",
+      "brand-search-campaign-b"
+    ],
+    "learned": [
+              "Prefix google- is required: unprefixed twins of all five confirmed slugs returned HTTP 404",
+      "Country-first + plural service: philippines-virtual-assistants (singular and reversed word order 404)",
+      "Industry-first + plural VA: real-estate-virtual-assistants (most other industry slugs 404)",
+      "Head-term plural: virtual-assistants",
+      "Brand family uses campaign-type slugs, including a -b challenger",
+      "utm_campaign LM_US_{Theme}_{Angle}; utm_content {Theme}_{Angle}; utm_term {keyword}_{e|?}; utm_placement=c",
+      "LM likely = Lead Management / Lead Magnet style prefix; US geo; not proven beyond this click",
+      "Match-type suffix _e on utm_term = high-confidence exact"
+    ],
+    "sitemap_is_not_paid": "368 sitemap URLs; 0 /lp/. Paid LPs are noindex and excluded."
+  },
+  "campaigns": [
+    {
+      "name": "LM_US_Virtual_Assistants_Outsourcing",
+      "confidence": "high-confidence inference",
+      "evidence": [
+        "utm_campaign on original seed click (analyzed locally; URL not re-requested with params)",
+        "utm_content=Virtual_Assistants_Outsourcing",
+        "utm_term=virtual assistant in the philippines_e",
+        "utm_placement=c",
+        "gad_campaignid=23338767511",
+        "Final URL /lp/google-philippines-virtual-assistants/"
+      ],
+      "network": "Google Search (inferred from /lp/google-* + gad_campaignid + utm_placement=c)",
+      "geo": "US",
+      "ad_groups": [
+        {
+          "name": "Virtual_Assistants_Outsourcing",
+          "confidence": "high-confidence inference",
+          "evidence": "utm_content"
+        }
+      ],
+      "keywords": [
+        {
+          "keyword": "virtual assistant in the philippines",
+          "match_type": "exact",
+          "confidence": "high-confidence inference",
+          "evidence": "utm_term suffix _e"
+        }
+      ],
+      "landing_page": "https://www.myoutdesk.com/lp/google-philippines-virtual-assistants/"
+    },
+    {
+      "name": "Brand Search (official name unknown)",
+      "confidence": "high-confidence inference",
+      "evidence": [
+        "Live LPs named google-brand-search-campaign and google-brand-search-campaign-b",
+        "H1 on -b is an explicit brand-SERP handshake",
+        "Indexed URL previously exposed gad_campaignid=12320808679 on -b (not re-requested)"
+      ],
+      "network": "Google Search",
+      "geo": "US (inferred; Transparency Center HTML is an app shell with no creatives this pass)",
+      "ad_groups": [
+        {
+          "name": "Brand / Brand_B",
+          "confidence": "speculative",
+          "evidence": "two distinct brand LP layouts"
+        }
+      ],
+      "keywords": [
+        {
+          "keyword": "myoutdesk",
+          "match_type": "exact",
+          "confidence": "high-confidence inference",
+          "evidence": "LP H1 + slug"
+        }
+      ],
+      "landing_pages": [
+        "https://www.myoutdesk.com/lp/google-brand-search-campaign/",
+        "https://www.myoutdesk.com/lp/google-brand-search-campaign-b/"
+      ]
+    },
+    {
+      "name": "LM_US_Virtual_Assistants (generic; name not observed)",
+      "confidence": "speculative",
+      "evidence": [
+        "Live /lp/google-virtual-assistants/ noindex paid template"
+      ],
+      "landing_page": "https://www.myoutdesk.com/lp/google-virtual-assistants/"
+    },
+    {
+      "name": "LM_US_Real_Estate_* (name not observed)",
+      "confidence": "speculative",
+      "evidence": [
+        "Live /lp/google-real-estate-virtual-assistants/",
+        "Public indexed sibling /industries/real-estate-virtual-assistants/"
+      ],
+      "landing_page": "https://www.myoutdesk.com/lp/google-real-estate-virtual-assistants/"
+    }
+  ],
+  "public_ia_not_paid_lps": {
+    "services": [
+      "administrative-virtual-assistants",
+      "ai",
+      "bookkeeping",
+      "customer-service-virtual-assistant",
+      "help-desk-outsourcing",
+      "inside-sales-agent",
+      "loan-processor-assistant",
+      "marketing-virtual-assistants",
+      "medical-billing-virtual-assistant",
+      "real-estate-isa",
+      "recruiting-assistant",
+      "sales-development-representative",
+      "transaction-coordinator",
+      "virtual-medical-receptionist",
+      "virtual-personal-assistant",
+      "virtual-receptionist"
+    ],
+    "industries": [
+      "ecommerce",
+      "financial-planning",
+      "healthcare",
+      "hr",
+      "insurance",
+      "legal",
+      "marketing-agency",
+      "mortgage",
+      "property-management",
+      "real-estate-virtual-assistants",
+      "tech"
+    ],
+    "regions_talent_hubs": [
+      "africa",
+      "apac",
+      "latam"
+    ],
+    "employer_conversion": [
+      "/signup/",
+      "/signup-discovery-call/",
+      "/pricing/",
+      "/enterprise/",
+      "/contact/"
+    ],
+    "jobseeker_split": {
+      "url": "https://www.myoutdesk.com/careers/",
+      "us_corporate": "ZipRecruiter",
+      "va_applicants": "MyOutDesk Philippines apply path"
+    },
+    "note": "Mirrored /lp/google-{service|industry}/ for almost all sitemap slugs returned HTTP 404. Only real-estate-virtual-assistants exists as a paid twin."
+  },
+  "discovery_stats": {
+    "local_candidates_generated": 3468,
+      "urls_tested_at_write": 324,
+    "confirmed_paid_lps": 5,
+    "ads_transparency": "Fetched adstransparency.google.com?region=US&domain=myoutdesk.com \u2014 Angular shell, no creatives in HTML (same as 18 Aug RE research).",
+    "third_party_keyword_tools": "No Semrush/SpyFu/DataForSEO/SerpAPI credentials. Ads Keyword Planner not called (quota cap)."
+  },
+  "do_not_copy": "Do not reuse MyOutDesk proprietary sentences in VC ads. Facts only: strategy-call CTA pattern, PH geo LP, RE industry LP, brand variants, 70% savings claim (VC should not copy the claim)."
+}

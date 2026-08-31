@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>TF test ad groups · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    .banner { background:#1a1a1a; color:#fff; padding:1rem 1.2rem; border-radius:10px; border-left:6px solid #e8a317; margin:0 0 1.15rem; }
+    .banner strong { color:#ffd56a; }
+    .banner.warn { border-left-color:#c44; }
+    .stats { display:flex; flex-wrap:wrap; gap:.7rem; margin:0 0 1.15rem; }
+    .stat { background:#fff; border:1px solid var(--edge); padding:.7rem 1rem; border-radius:10px; min-width:7.2rem; }
+    .stat b { display:block; font-size:1.25rem; }
+    .toc { display:flex; flex-wrap:wrap; gap:.5rem 1rem; margin:0 0 1rem; }
+    article.ag { background:#fff; border:1px solid var(--edge); border-radius:14px; padding:1.1rem 1.2rem 1.3rem; margin:0 0 1.2rem; }
+    article.ag h2 { margin:.1rem 0 .35rem; font-size:1.25rem; }
+    .meta, .tiny { color:var(--muted); }
+    .tiny { font-size:.78rem; }
+    .h1-live { margin:.15rem 0 .7rem; font-size:.95rem; line-height:1.45; }
+    .chips { display:flex; flex-wrap:wrap; gap:.35rem; margin:.2rem 0 .7rem; }
+    .chip { background:var(--tint-cool); border:1px solid var(--tint-cool-edge); font-size:.75rem; padding:.15rem .45rem; border-radius:4px; font-family:var(--mono); }
+    .chip-phrase { background:var(--tint-amber); border-color:var(--tint-amber-edge); }
+    .chip-neg { background:var(--tint-rose); border-color:var(--tint-rose-edge); }
+    .rsa { background:var(--panel-inset); border:1px solid var(--edge-soft); border-radius:10px; padding:.85rem .95rem; }
+    .cols { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+    @media (max-width:700px) { .cols { grid-template-columns:1fr; } }
+    .assets { font-family:var(--mono); font-size:.74rem; margin:.2rem 0 .4rem; padding-left:1.1rem; }
+    .serp { border:1px solid #e8eaed; border-radius:8px; padding:.65rem .8rem; margin:0 0 .5rem; background:#fff; }
+    .serp-label { font-size:.68rem; color:#5f6368; margin:0 0 .15rem; }
+    .serp-url { color:#202124; font-size:.78rem; margin:0; }
+    .serp-url span { color:#4d5156; }
+    .serp-title { color:#1a0dab; font-size:1.05rem; line-height:1.3; margin:.1rem 0; font-weight:400; }
+    .serp-desc { color:#4d5156; font-size:.86rem; margin:0; }
+    .note { font-size:.88rem; margin:.2rem 0 .6rem; }
+  </style>
+</head>
+<body data-page="trust-first-rollout.html" data-foot="TF test groups<br />New paused AGs only">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <header class="page-head">
+        <p class="kicker">US Search · 18 Aug 2026 · replacement Editor sheet</p>
+        <h1>Four new paused groups — test the new landing pages</h1>
+        <p>New ad groups only. Same keyword lists. Live groups are not in this sheet. Campaign status is left blank so budget stays on <code>VC_US_S_CORE</code> and <code>VC_US_S_ROLES</code>. Ad groups, keywords, and RSAs are all <strong>Paused</strong>. You Post, then enable.</p>
+      </header>
+
+      <div class="banner warn" role="status">
+        <strong>Live /us is restored.</strong> Trust-first is only on isolated test URLs. If Editor still has the old import, <strong>discard it — do not Post</strong>. Do not import <code>keyword-rollout-launch.csv</code> (it writes Final URLs onto live groups). Replacement sheet: four paused <code>TF_*</code> groups only. If you already Posted the launch sheet, import <code>keyword-rollout-restore-live-urls.csv</code> (Paused/review) to put live Final URLs back.
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>4</b> new paused groups</div>
+        <div class="stat"><b>53</b> keyword rows</div>
+        <div class="stat"><b>51 Exact</b> + 2 Phrase</div>
+        <div class="stat"><b>4</b> paused RSAs</div>
+        <div class="stat"><b>0</b> writes to live AGs</div>
+      </div>
+
+      <p class="note">Source: <code>ads-launch/research/trust-first-us-2026-08-18/keyword-rollout-narrow.csv</code>. RSA copy is original VC copy from the live US pull (and the RE draft) — no competitor name. Keyword overlap with live groups is OK. Shared job-seeker block: job, jobs, salary, career, careers, apply, application, resume, work from home. Do not negative hire / hiring.</p>
+
+      <nav class="toc">
+        <a href="#tf-ph-va">TF_PH_VA</a>
+        <a href="#tf-hire-dedicated">TF_Hire_Dedicated</a>
+        <a href="#tf-real-estate">TF_Real_Estate</a>
+        <a href="#tf-bookkeeping">TF_Bookkeeping</a>
+      </nav>
+
+      <article class="ag" id="tf-ph-va">
+        <header>
+          <p class="kicker">VC_US_S_CORE · <strong>new paused ad group</strong> · does not touch Offshore_VA_PH</p>
+          <h2>TF_PH_VA</h2>
+          <p class="meta">14 Exact. No Phrase. Ad group Paused. Keywords Paused. RSA Paused.</p>
+        </header>
+        <p class="tiny">Final URL</p>
+        <p><a href="https://www.virtualcoworker.app/us/philippines-virtual-assistants" target="_blank" rel="noopener">https://www.virtualcoworker.app/us/philippines-virtual-assistants</a></p>
+        <p class="tiny">Live H1</p>
+        <p class="h1-live">Hire a Virtual Assistant From the Philippines. Save up to 80% on staffing — no recruitment fees, dedicated support on your hours.</p>
+        <p class="kicker">Keywords in this sheet (Paused)</p>
+        <div class="chips">
+          <span class="chip">[virtual assistant in the philippines]</span>
+          <span class="chip">[philippines virtual assistant]</span>
+          <span class="chip">[philippines virtual assistants]</span>
+          <span class="chip">[virtual assistants in the philippines]</span>
+          <span class="chip">[hire a virtual assistant from the philippines]</span>
+          <span class="chip">[hire a virtual assistant in the philippines]</span>
+          <span class="chip">[hire virtual assistant philippines]</span>
+          <span class="chip">[hire philippines virtual assistant]</span>
+          <span class="chip">[hire a filipino virtual assistant]</span>
+          <span class="chip">[hire filipino virtual assistant]</span>
+          <span class="chip">[filipino virtual assistant]</span>
+          <span class="chip">[virtual assistant from the philippines]</span>
+          <span class="chip">[dedicated filipino virtual assistant]</span>
+          <span class="chip">[dedicated philippines virtual assistant]</span>
+        </div>
+        <p class="kicker">Left out</p>
+        <div class="chips">
+          <span class="chip chip-neg">virtual assistant / virtual assistants</span>
+          <span class="chip chip-neg">philippines va / filipino va / offshore va</span>
+          <span class="chip chip-neg">offshore virtual assistants</span>
+          <span class="chip chip-neg">filipino virtual assistant company</span>
+          <span class="chip chip-neg">jobs / careers / salary</span>
+          <span class="chip chip-neg">hire / dedicated without PH or Filipino</span>
+        </div>
+        <p class="note">RSA in this sheet reuses the live offshore copy. Original VC copy. No competitor name.</p>
+        <div class="rsa">
+          <p class="kicker">RSA in this sheet · Paused</p>
+          <p class="tiny">Path <code>ph/va</code> · reused from live <code>Offshore_VA_PH</code> (not writing into that group)</p>
+          <p class="kicker">How it can look in Google</p>
+          <div class="serp">
+            <p class="serp-label">Sponsored</p>
+            <p class="serp-url">www.virtualcoworker.app/us/philippines-virtual-assistants <span>› ph › va</span></p>
+            <p class="serp-title">Filipino Virtual Assistant · VA Philippines Staffing · Philippines VA Company</p>
+            <p class="serp-desc">Philippines VA and remote staff for US business ops capacity.</p>
+          </div>
+          <div class="cols">
+            <div>
+              <p class="kicker">15 headlines</p>
+              <ol class="assets">
+                <li>Filipino Virtual Assistant</li>
+                <li>VA Philippines Staffing</li>
+                <li>Philippines VA Company</li>
+                <li>US PH Remote Hire</li>
+                <li>Offshore VA Partner</li>
+                <li>Virtual Staff Philippines</li>
+                <li>Dedicated PH VA Seat</li>
+                <li>Outsource Admin to PH</li>
+                <li>Not Gig Offshore VA</li>
+                <li>Vetted Filipino Talent</li>
+                <li>Remote Staff From PH</li>
+                <li>Employer PH Hire Path</li>
+                <li>Interview Before Place</li>
+                <li>Staffing Not Freelance</li>
+                <li>{KeyWord:Philippines Virtual Assistant}</li>
+              </ol>
+            </div>
+            <div>
+              <p class="kicker">4 descriptions</p>
+              <ol class="assets">
+                <li>Philippines VA and remote staff for US business ops capacity.</li>
+                <li>Filipino talent shortlist — you interview; we recruit, vet, and support.</li>
+                <li>Offshore staffing partner model. Not Upwork. Not a job board.</li>
+                <li>Businesses only. An accepted form is not a hire or placement.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="ag" id="tf-hire-dedicated">
+        <header>
+          <p class="kicker">VC_US_S_CORE · <strong>new paused ad group</strong> · does not touch Hire_VA_PH</p>
+          <h2>TF_Hire_Dedicated</h2>
+          <p class="meta">12 Exact. No Phrase. Ad group Paused. Keywords Paused. RSA Paused.</p>
+        </header>
+        <p class="tiny">Final URL</p>
+        <p><a href="https://www.virtualcoworker.app/us/tf/hire" target="_blank" rel="noopener">https://www.virtualcoworker.app/us/tf/hire</a></p>
+        <p class="tiny">TF H1</p>
+        <p class="h1-live">Isolated hire test — live CORE ads still use restored <code>/us</code>.</p>
+        <p class="kicker">Keywords in this sheet (Paused)</p>
+        <div class="chips">
+          <span class="chip">[hire a virtual assistant]</span>
+          <span class="chip">[hire virtual assistant]</span>
+          <span class="chip">[looking for a virtual assistant]</span>
+          <span class="chip">[dedicated virtual assistant]</span>
+          <span class="chip">[remote virtual assistant for business]</span>
+          <span class="chip">[hire a dedicated virtual assistant]</span>
+          <span class="chip">[hire dedicated virtual assistant]</span>
+          <span class="chip">[hire a virtual assistant for business]</span>
+          <span class="chip">[dedicated virtual assistant for business]</span>
+          <span class="chip">[hire a remote virtual assistant]</span>
+          <span class="chip">[looking to hire a virtual assistant]</span>
+          <span class="chip">[hire dedicated remote virtual assistant]</span>
+        </div>
+        <p class="kicker">Left out</p>
+        <div class="chips">
+          <span class="chip chip-neg">virtual assistant / virtual assistants</span>
+          <span class="chip chip-neg">virtual assistant jobs</span>
+          <span class="chip chip-neg">va workers ph / va business</span>
+          <span class="chip chip-neg">virtual staffing company / virtual assistant companies</span>
+          <span class="chip chip-neg">PH / Filipino Exact (those sit on TF_PH_VA)</span>
+        </div>
+        <p class="note">RSA in this sheet reuses the live hire copy. Original VC copy. No competitor name.</p>
+        <div class="rsa">
+          <p class="kicker">RSA in this sheet · Paused</p>
+          <p class="tiny">Path <code>hire/va</code> · reused from live <code>Hire_VA_PH</code> (not writing into that group)</p>
+          <p class="kicker">How it can look in Google</p>
+          <div class="serp">
+            <p class="serp-label">Sponsored</p>
+            <p class="serp-url">www.virtualcoworker.app/us/tf/hire <span>› hire › va</span></p>
+            <p class="serp-title">Hire Virtual Assistant PH · Hire Filipino VA · US Employer VA Hire</p>
+            <p class="serp-desc">Hire dedicated Philippines VAs for your US business.</p>
+          </div>
+          <div class="cols">
+            <div>
+              <p class="kicker">15 headlines</p>
+              <ol class="assets">
+                <li>Hire Virtual Assistant PH</li>
+                <li>Hire Filipino VA</li>
+                <li>US Employer VA Hire</li>
+                <li>Philippines VA Staffing</li>
+                <li>Dedicated Remote VA</li>
+                <li>Vetted VA Shortlist</li>
+                <li>Interview Before Hire</li>
+                <li>Not Gig Platform VA</li>
+                <li>How to Hire a VA</li>
+                <li>Core VA Hire Process</li>
+                <li>Hire PH Role Staff</li>
+                <li>Remote Admin Capacity</li>
+                <li>Clear Employer Process</li>
+                <li>Staffing Partner Hire</li>
+                <li>{KeyWord:Hire Virtual Assistant}</li>
+              </ol>
+            </div>
+            <div>
+              <p class="kicker">4 descriptions</p>
+              <ol class="assets">
+                <li>Hire dedicated Philippines VAs for your US business.</li>
+                <li>Tell us who you need. We recruit and screen — you interview the shortlist.</li>
+                <li>For businesses only. A form submit is not a hire or placement.</li>
+                <li>Staffing partner for established businesses — not DIY training or job ads.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="ag" id="tf-real-estate">
+        <header>
+          <p class="kicker">VC_US_S_ROLES · <strong>new paused ad group</strong> · does not touch any live RE group</p>
+          <h2>TF_Real_Estate</h2>
+          <p class="meta">12 Exact. No Phrase. Ad group Paused. Keywords Paused. RSA Paused.</p>
+        </header>
+        <p class="tiny">Final URL</p>
+        <p><a href="https://www.virtualcoworker.app/us/tf/real-estate" target="_blank" rel="noopener">https://www.virtualcoworker.app/us/tf/real-estate</a></p>
+        <p class="tiny">Live H1</p>
+        <p class="h1-live">Hire a Real Estate Virtual Assistant From the Philippines. Save up to 80% on staffing — no recruitment fees, dedicated support on your hours.</p>
+        <p class="kicker">Keywords in this sheet (Paused)</p>
+        <div class="chips">
+          <span class="chip">[real estate virtual assistant]</span>
+          <span class="chip">[real estate virtual assistants]</span>
+          <span class="chip">[hire real estate virtual assistant]</span>
+          <span class="chip">[hire a real estate virtual assistant]</span>
+          <span class="chip">[hire a real estate virtual assistant from the philippines]</span>
+          <span class="chip">[filipino real estate virtual assistant]</span>
+          <span class="chip">[philippines real estate virtual assistant]</span>
+          <span class="chip">[dedicated real estate virtual assistant]</span>
+          <span class="chip">[real estate admin virtual assistant]</span>
+          <span class="chip">[hire filipino real estate virtual assistant]</span>
+          <span class="chip">[virtual assistant for real estate]</span>
+          <span class="chip">[real estate virtual assistant philippines]</span>
+        </div>
+        <p class="kicker">Left out</p>
+        <div class="chips">
+          <span class="chip chip-neg">ISA / setter / cold-call / appointment setter</span>
+          <span class="chip chip-neg">transaction coordinator virtual assistant</span>
+          <span class="chip chip-neg">property-management / listing VA</span>
+          <span class="chip chip-neg">hire real estate va</span>
+          <span class="chip chip-neg">virtual assistant (bare)</span>
+        </div>
+        <p class="note">RSA in this sheet is the 18 Aug RE draft control. Philippines RE VA — not ISA or setter-first. Original VC copy. No competitor name.</p>
+        <div class="rsa">
+          <p class="kicker">RSA in this sheet · Paused</p>
+          <p class="tiny">Path <code>real-estate/hire</code> · from <code>ads-launch/real-estate-2026-08-18</code> draft</p>
+          <p class="kicker">How it can look in Google</p>
+          <div class="serp">
+            <p class="serp-label">Sponsored</p>
+            <p class="serp-url">www.virtualcoworker.app/us/tf/real-estate <span>› real-estate › hire</span></p>
+            <p class="serp-title">Hire a Real Estate VA · We Recruit. You Interview. · Book a Hiring Consultation</p>
+            <p class="serp-desc">Tell us the role. We recruit and vet candidates. You interview and choose who joins.</p>
+          </div>
+          <div class="cols">
+            <div>
+              <p class="kicker">15 headlines</p>
+              <ol class="assets">
+                <li>Hire a Real Estate VA</li>
+                <li>Real Estate VA Philippines</li>
+                <li>For Your Real Estate Team</li>
+                <li>We Recruit. You Interview.</li>
+                <li>Dedicated Staff, Your Hours</li>
+                <li>Vetted Staff for Your Team</li>
+                <li>Hire Remote Real Estate Staff</li>
+                <li>Not a Freelance Marketplace</li>
+                <li>Build Your Hiring Shortlist</li>
+                <li>Filipino VA for Business</li>
+                <li>You Interview and Choose</li>
+                <li>Book a Hiring Consultation</li>
+                <li>Dedicated Remote Staff</li>
+                <li>Staff for US Real Estate</li>
+                <li>Employers Hiring Staff</li>
+              </ol>
+            </div>
+            <div>
+              <p class="kicker">4 descriptions</p>
+              <ol class="assets">
+                <li>Tell us the role. We recruit and vet candidates. You interview and choose who joins.</li>
+                <li>Hire dedicated Philippines staff who work your US hours, not marketplace freelancers.</li>
+                <li>Virtual Coworker shortlists people for your real-estate team. You decide who starts.</li>
+                <li>For companies hiring staff. Book a hiring consultation to start the shortlist.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="ag" id="tf-bookkeeping">
+        <header>
+          <p class="kicker">VC_US_S_ROLES · <strong>new paused ad group</strong> · does not touch Bookkeeping_Hire_PH</p>
+          <h2>TF_Bookkeeping</h2>
+          <p class="meta">13 Exact + 2 Phrase. Ad group Paused. Keywords Paused. RSA Paused.</p>
+        </header>
+        <p class="tiny">Final URL</p>
+        <p><a href="https://www.virtualcoworker.app/us/tf/bookkeeping" target="_blank" rel="noopener">https://www.virtualcoworker.app/us/tf/bookkeeping</a></p>
+        <p class="tiny">Live H1</p>
+        <p class="h1-live">Hire a Bookkeeping Virtual Assistant From the Philippines. Save up to 80% on staffing — no recruitment fees, dedicated support on your hours.</p>
+        <p class="kicker">Keywords in this sheet (Paused)</p>
+        <div class="chips">
+          <span class="chip">[bookkeeping virtual assistant]</span>
+          <span class="chip">[virtual assistant bookkeeping]</span>
+          <span class="chip">[virtual assistant bookkeeper]</span>
+          <span class="chip">[hire a bookkeeping virtual assistant]</span>
+          <span class="chip">[hire bookkeeping virtual assistant]</span>
+          <span class="chip">[hire a virtual bookkeeper]</span>
+          <span class="chip">[hire virtual bookkeeper]</span>
+          <span class="chip">[filipino bookkeeping virtual assistant]</span>
+          <span class="chip">[philippines bookkeeping virtual assistant]</span>
+          <span class="chip">[virtual assistant for bookkeeping]</span>
+          <span class="chip">[hire a filipino bookkeeper]</span>
+          <span class="chip">[hire bookkeeper philippines]</span>
+          <span class="chip">[quickbooks virtual assistant]</span>
+          <span class="chip chip-phrase">"virtual assistant bookkeeping"</span>
+          <span class="chip chip-phrase">"bookkeeping virtual assistant"</span>
+        </div>
+        <p class="kicker">Left out</p>
+        <div class="chips">
+          <span class="chip chip-neg">remote bookkeeper / bookkeeping assistant remote</span>
+          <span class="chip chip-neg">virtual bookkeeper (bare freelancer)</span>
+          <span class="chip chip-neg">accountant / CPA / AP job titles</span>
+          <span class="chip chip-neg">Accounting_Hire_PH (thin, leave off this sheet)</span>
+        </div>
+        <p class="note">RSA in this sheet reuses the live bookkeeping copy. Books support, you interview — not licensed CPA advice. Original VC copy. No competitor name.</p>
+        <div class="rsa">
+          <p class="kicker">RSA in this sheet · Paused</p>
+          <p class="tiny">Path <code>books/va</code> · reused from live <code>Bookkeeping_Hire_PH</code> (not writing into that group)</p>
+          <p class="kicker">How it can look in Google</p>
+          <div class="serp">
+            <p class="serp-label">Sponsored</p>
+            <p class="serp-url">www.virtualcoworker.app/us/tf/bookkeeping <span>› books › va</span></p>
+            <p class="serp-title">Philippines Books VA · Filipino Books Specialist · Dedicated Books Talent</p>
+            <p class="serp-desc">Fill bookkeeping roles with vetted Philippines specialists.</p>
+          </div>
+          <div class="cols">
+            <div>
+              <p class="kicker">15 headlines</p>
+              <ol class="assets">
+                <li>{KeyWord:Hire Bookkeeper}</li>
+                <li>Philippines Books VA</li>
+                <li>Remote Reconciliation Hire</li>
+                <li>Filipino Books Specialist</li>
+                <li>Weekly Close Support</li>
+                <li>Transaction Coding VA</li>
+                <li>Scale Bookkeeping Ops</li>
+                <li>US SMBs Hiring</li>
+                <li>Dedicated Books Talent</li>
+                <li>Virtual Books Assistant</li>
+                <li>Partner-Managed Hire</li>
+                <li>Interview-Ready Bookkeepers</li>
+                <li>Clear Employer Process</li>
+                <li>Tools You Already Use</li>
+                <li>Request Hiring Shortlist</li>
+              </ol>
+            </div>
+            <div>
+              <p class="kicker">4 descriptions</p>
+              <ol class="assets">
+                <li>Fill bookkeeping roles with vetted Philippines specialists.</li>
+                <li>Support for categorization, reconciliations, and weekly books rhythm.</li>
+                <li>Staffing support shaped for your US business books stack.</li>
+                <li>We specialize in remote bookkeeping hires for employers.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <section class="panel">
+        <div class="panel-hd">
+          <p class="kicker">After you look</p>
+          <h2>What you still do</h2>
+        </div>
+        <div class="panel-bd">
+          <ul class="glance-bullets">
+            <li>If the old sheet is already in Editor, revert/discard those pending changes first.</li>
+            <li>Then load <code>keyword-rollout-narrow.csv</code> — it only creates the four <code>TF_*</code> groups.</li>
+            <li>Campaign status stays untouched. New groups stay Paused until you Post.</li>
+            <li>Post when you are ready. Enable yourself. This sheet does not enable anything.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="nav.js?v=20260818-tf-test"></script>
+</body>
+</html>

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ...buildPageMetadata({
     title: `${SITE.name} · Hire Filipino Staff`,
     description:
-      "Hire dedicated Filipino staff for US and Australian businesses — recruit, screen, interview, and hire with Virtual Coworker.",
+      "Hire dedicated Filipino staff for US and Australian businesses - recruit, screen, interview, and hire with Virtual Coworker.",
     path: "/",
     indexable: true,
   }),
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Root shell — no shared GTM.
+ * Root shell - no shared GTM.
  * US / AU / PH each load their own container via market layouts.
  */
 export default function RootLayout({
@@ -52,8 +52,8 @@ export default function RootLayout({
         {/* Runs before first paint. Marks the document as JS-capable (scroll
             reveal animations only arm themselves when it is, so content is never
             stuck invisible without JS), applies ?vc_exp=&vc_var= force overrides
-            into sticky storage, and paints lp_density so the lean arm never
-            flashes the wordy layout. */}
+            into sticky storage, and paints lp_density lean (parked default) so
+            old sticky wordy arms never flash. */}
         <script
           dangerouslySetInnerHTML={{
             __html: EXPERIMENTS_BOOT_SCRIPT,

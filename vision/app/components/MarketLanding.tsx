@@ -2,17 +2,14 @@ import Link from "next/link";
 import LeadGate, { type GateCopy } from "./LeadGate";
 import StickyCta from "./StickyCta";
 import EngageChat from "./EngageChat";
-import RoleQuiz from "./RoleQuiz";
+import ExitIntent from "./ExitIntent";
 import QuizConversionSlot from "./QuizConversionSlot";
 import LpDensity from "./LpDensity";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
 import TrustBand from "./TrustBand";
 import PressBand from "./PressBand";
-import PainGain from "./PainGain";
 import RoleOutcomes from "./RoleOutcomes";
-import FaqAccordion from "./FaqAccordion";
-import StopCloser from "./StopCloser";
 import { RoleHeroCard } from "./RoleImagery";
 import JsonLd from "./JsonLd";
 import {
@@ -37,11 +34,10 @@ import {
   SITE,
   TRUST_PROOF,
   googleBusinessForMarket,
-  industryStatsForMarket,
   yearsTrading,
 } from "../../config/site";
 import GoogleReviewBadge, { RatingStars } from "./GoogleReviewBadge";
-import { StatsGrid } from "./TrustAnimated";
+import SocialReachBadges from "./SocialReachBadges";
 import {
   breadcrumbJsonLd,
   faqPageJsonLd,
@@ -49,6 +45,8 @@ import {
   professionalServiceJsonLd,
   websiteJsonLd,
 } from "../../lib/seo";
+import { highlightH1Role } from "../../lib/h1-role-highlight";
+import { isUngatedEmployerLp } from "../../lib/ungated-us-home";
 
 export default function MarketLanding({
   market,
@@ -69,13 +67,18 @@ export default function MarketLanding({
   const v = cat ? cat.variants[variant] : null;
   const isAu = market === "au";
   const isQuiz = conversionSurface === "quiz";
+  const ungated = isUngatedEmployerLp({
+    market,
+    category,
+    conversionSurface,
+  });
   const years = yearsTrading();
   const gbp = googleBusinessForMarket(market);
 
   const quizHero = isAu
     ? {
         h1: "Find the right virtual assistant for your business",
-        sub: "Take the employer hiring quiz. We’ll name the role that takes the load - then you can book a free consultation.",
+        sub: "Take the employer hiring quiz. We’ll name the role that takes the load - then you can book a free strategy call.",
       }
     : {
         h1: "Find the right virtual assistant for your business",
@@ -112,60 +115,67 @@ export default function MarketLanding({
   const processSteps = hiringProcessStrip(market);
 
   const showPhone = phone.configured && Boolean(phone.href);
-  const shell = market === "us" ? "us" : "au";
-  const light = market === "au";
+  // Simplified paid form LPs: AU light chrome for both markets (park dark US shell).
+  // Quiz routes keep market shell so richer quiz UX stays intact.
+  const shell = isQuiz ? (market === "us" ? "us" : "au") : "au";
+  const light = isQuiz ? market === "au" : true;
 
   const formCue = isQuiz
     ? isAu
-      ? { label: "Take the quiz", body: "A few taps - then book a free consultation." }
-      : { label: "Take the quiz", body: "A few taps - then book a free consultation." }
+      ? { label: "Take the quiz", body: "A few taps - then book a free strategy call." }
+      : { label: "Take the quiz", body: "A few taps - then book a free strategy call." }
     : FORM_CUE[market];
-  const industryStats = industryStatsForMarket(market);
 
   const gate: GateCopy = {
-    eyebrow: isAu ? "Businesses only · 2 minutes" : "Employers only · 2 minutes",
+    eyebrow: isAu ? "About a minute · obligation free" : "About a minute · free strategy call",
     title: cat
       ? isAu
-        ? `Chat about ${cat.label}`
-        : `Hire ${cat.label}`
+        ? `Book a free chat about ${cat.label}`
+        : `Book a free strategy call for ${cat.label}`
       : isAu
-        ? "Book a free consultation - obligation free, at no cost."
-        : "Book your free consultation.",
-    intentLabel: "First - who are you?",
-    intentPrimary: "I’m hiring for a business.",
-    intentSecondary: "I’m looking for a job.",
+        ? "Book a free strategy call"
+        : "Book a free strategy call",
+    intentLabel: "Are you hiring?",
+    intentPrimary: "Yes - hiring for my business",
+    intentSecondary: "No - looking for work",
     divertTitle: "Looking for work?",
     divertBody:
-      "This page is for businesses hiring staff. Job applications open on our Philippines careers site - not this form.",
-    divertCta: "Go to Philippines careers →",
+      "Happy to help - job applications live on our Philippines careers site.",
+    divertCta: "Philippines careers →",
     careersHref: careers,
     roleLabel: "What do you need help with?",
     roles: cfg.servicesProposed,
-    detailsLabel: "Your business details",
+    detailsLabel: "How can we reach you?",
     nameLabel: "Full name",
     namePlaceholder: "Full name",
-    emailLabel: "Work email",
-    emailPlaceholder: "Work email",
-    phoneLabel: "Business phone",
+    emailLabel: "Business Email Address",
+    emailPlaceholder: "Business Email Address",
+    phoneLabel: "Phone",
     phonePlaceholder: isAu ? "0400 000 000" : "(201) 555-0123",
-    companyLabel: "Company",
-    companyPlaceholder: "Company name",
     submit: primaryCta,
-    reassure: isAu
-      ? "Obligation free, at no cost. No lock-in. Businesses only. A member of our team will follow up for a short chat - this is not an instant hire. We don’t sell your information. Privacy notice applies."
-      : "Obligation free, at no cost. Employers only. A member of our team follows up - usually within one business day. We don’t sell your information. Privacy notice applies.",
-    callLabel: showPhone
+    reassure: ungated
       ? isAu
-        ? "Prefer to give us a call?"
-        : "Prefer to call?"
-      : "",
+        ? "Obligation free, at no cost. About a minute. A teammate will follow up for a short chat - not an instant hire. We don’t sell your information."
+        : "Obligation free, at no cost. About a minute. A teammate follows up within one business day. We don’t sell your information."
+      : isAu
+        ? "Obligation free, at no cost. A teammate will follow up for a short chat - not an instant hire. We don’t sell your information."
+        : "Obligation free, at no cost. A teammate follows up within one business day. We don’t sell your information.",
+    callLabel: showPhone ? "Prefer to talk?" : "",
     phoneDisplay: phone.display,
     phoneHref: phone.href,
     showPhone,
-    doneTitle: "Got it - thanks.",
+    doneTitle: "Thanks - you’re in.",
     doneBody: isAu
-      ? "A member of our team will follow up for a short chat about the role and next steps."
-      : "A member of our team will call you to talk through the role and next steps.",
+      ? "A teammate will follow up shortly about the role and next steps."
+      : "A teammate will call you to talk through the role and next steps.",
+    websiteLabel: ungated ? "Company website (optional)" : undefined,
+    websitePlaceholder: ungated ? "https://" : undefined,
+    careersUnderForm: ungated
+      ? "Looking for work? Visit our Philippines careers site."
+      : undefined,
+    audienceLine: ungated
+      ? "For businesses hiring staff - not a job board."
+      : undefined,
   };
 
   const breadcrumbs = cat
@@ -186,11 +196,12 @@ export default function MarketLanding({
 
   return (
     <main
-      className={`${shell}${isQuiz ? " quiz-lp" : ""}`}
+      className={`${shell}${isQuiz ? " quiz-lp" : ""}${ungated ? " ungated-us-home" : ""}`}
       data-variant={variant}
       data-category={category || "generic"}
       data-cta-mode={isQuiz ? "quiz_lp" : "form_primary"}
       data-lp-surface={conversionSurface}
+      data-ungated-us-home={ungated ? "true" : undefined}
     >
       <JsonLd
         data={[
@@ -201,11 +212,11 @@ export default function MarketLanding({
           faqPageJsonLd(faq),
         ]}
       />
-      <LpDensity market={market} />
+      <LpDensity market={market} forceLean={!isQuiz} />
       <SiteNav tone={light ? "light" : "dark"} market={market} />
 
       <section className={`${shell}-hero`}>
-        <div className={market === "us" ? "us-hero-bg" : "au-hero-veil"} aria-hidden />
+        <div className={shell === "us" ? "us-hero-bg" : "au-hero-veil"} aria-hidden />
 
         <div className={`${shell}-hero-inner`}>
           <div className={`${shell}-hero-copy`}>
@@ -215,7 +226,7 @@ export default function MarketLanding({
               {isQuiz ? " · Employer hiring quiz" : ""}
               {" · "}Philippines staffing
             </p>
-            <h1 className="anim-rise">{h1}</h1>
+            <h1 className="anim-rise">{highlightH1Role(h1)}</h1>
             <p className={`${shell}-lead anim-rise-d1`}>{sub}</p>
           </div>
 
@@ -250,12 +261,13 @@ export default function MarketLanding({
             </p>
 
             <div
-              className={`trust-row anim-rise-d2${light ? " trust-row-light" : ""}`}
+              className={`trust-row trust-row-hero anim-rise-d2${light ? " trust-row-light" : ""}`}
             >
+              <SocialReachBadges />
               <GoogleReviewBadge proof={gbp} />
               <span
-                className="trust-chip"
-                aria-label={`Clutch ${TRUST_PROOF.clutch.rating} out of 5 from ${TRUST_PROOF.clutch.reviewCount} reviews`}
+                className="trust-chip trust-chip-review"
+                aria-label={`Clutch ${TRUST_PROOF.clutch.rating} out of 5`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -264,48 +276,20 @@ export default function MarketLanding({
                 />
                 <span>
                   <b className="trust-chip-rating-line">
-                    <RatingStars size={13} />
+                    <RatingStars size={15} />
                     {TRUST_PROOF.clutch.rating}
                   </b>
-                  <span>
-                    Clutch · {TRUST_PROOF.clutch.reviewCount} reviews
-                  </span>
+                  <span className="trust-chip-meta">Clutch</span>
                 </span>
               </span>
-              <span className="trust-chip">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={
-                    light
-                      ? "/brand/badge-forbes-navy.webp"
-                      : "/brand/badge-forbes-white.webp"
-                  }
-                  alt="Forbes Business Council"
-                />
-                <span>
-                  <b>Forbes</b>
-                  <span>Business Council</span>
-                </span>
-              </span>
-              <span className="trust-chip trust-chip-stat">
+              <span className="trust-chip trust-chip-stat trust-chip-cred">
                 <em>{years}+</em>
                 <span>
                   <b>Years</b>
                   <span>placing Filipino staff</span>
                 </span>
               </span>
-              <span className="trust-chip trust-chip-stat">
-                <em>PH</em>
-                <span>
-                  <b>Filipino</b>
-                  <span>Dedicated hires</span>
-                </span>
-              </span>
             </div>
-
-            <p className={`${shell}-rate-note anim-rise-d2`}>
-              Rates discussed once we understand the role - not buried in fine print.
-            </p>
           </div>
 
           <div className="gate-wrap">
@@ -336,11 +320,12 @@ export default function MarketLanding({
                 preselectedRole={cat ? cat.formLabel : null}
                 lpSurface="form"
                 ctaMode="form_primary"
+                ungated={ungated}
               />
             )}
             <ul className="gate-nudges">
               <li>Obligation free</li>
-              <li>{isQuiz ? "A few taps" : "2-minute brief"}</li>
+              <li>{isQuiz ? "A few taps" : "About a minute"}</li>
               <li>Specialist follows up</li>
               <li>We don’t sell your info</li>
             </ul>
@@ -348,104 +333,48 @@ export default function MarketLanding({
         </div>
       </section>
 
-      <PressBand light={light} market={market} />
-
-      {industryStats.length > 0 ? (
-        <section
-          className={`industry-band${light ? " industry-band-light" : ""}`}
-          aria-labelledby="industry-stats-title"
-        >
-          <div className="industry-band-inner">
-            <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
-              Why businesses hire offshore
-            </p>
-            <h2 id="industry-stats-title">
-              The #1 reason isn’t cheaper. It’s better people.
-            </h2>
-            <p className="industry-band-lead">
-              Published research - not our marketing.
-            </p>
-            <StatsGrid stats={industryStats} />
-          </div>
-        </section>
-      ) : null}
-
-      <PainGain market={market} light={light} />
+      {/* Form money LPs: keep TrustBand (testimonials + client marks + legitimacy).
+          Park press / how-hiring sell brochure bands — quiz LPs keep the richer stack.
+          Category form keeps RoleOutcomes. */}
+      {isQuiz ? <PressBand light={light} market={market} /> : null}
 
       {category ? (
         <RoleOutcomes category={category} market={market} light={light} />
       ) : null}
 
-      <section className={`${shell}-sell`}>
-        <div className={`${shell}-sell-inner`}>
-          <div className={`${shell}-sell-head`}>
-            <p className={market === "us" ? "us-proof-label" : "au-proof-label"}>
-              How hiring works
-            </p>
-            <h2>White-glove hiring. Not a freelancer marketplace.</h2>
-            <p className={`${shell}-sell-sub`} data-lp="secondary">
-              {isAu
-                ? "Free consultation. Job description. We recruit and vet. You get profiles with hourly rates, then you interview. We handle employment admin and stay on after they start. "
-                : "Free consultation. Job description. We recruit and vet. You get profiles with hourly rates, then you interview. We handle payroll, HR, and time tracking. "}
-              <Link href={`/how-it-works?market=${market}`}>
-                See the full process →
-              </Link>
-              {" · "}
-              <Link href={`/services?market=${market}`}>Browse roles →</Link>
-            </p>
-          </div>
-          <div className={`sell-grid sell-grid-4${light ? " sell-grid-light" : ""}`}>
-            {processSteps.map((b) => (
-              <div className="sell-card" key={b.k}>
-                <em>{b.k}</em>
-                <strong>{b.t}</strong>
-                <p>{b.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <TrustBand light={light} market={market} />
-
-      {!isQuiz ? (
-        <RoleQuiz
-          market={market}
-          category={category || undefined}
-          variant={variant}
-          light={light}
-          phoneDisplay={showPhone ? phone.display : undefined}
-          phoneHref={showPhone ? phone.href : null}
-        />
-      ) : null}
-
-      {faq.length > 0 ? (
-        <section className={`${shell}-sell faq-section`}>
+      {isQuiz ? (
+        <section className={`${shell}-sell`}>
           <div className={`${shell}-sell-inner`}>
             <div className={`${shell}-sell-head`}>
-              <p
-                className={
-                  market === "us" ? "us-proof-label" : "au-proof-label"
-                }
-              >
-                Quick answers
+              <p className={shell === "us" ? "us-proof-label" : "au-proof-label"}>
+                How hiring works
               </p>
-              <h2>Tap a question.</h2>
+              <h2>White-glove hiring. Not a freelancer marketplace.</h2>
+              <p className={`${shell}-sell-sub`} data-lp="secondary">
+                {isAu
+                  ? "Free strategy call. Job description. We recruit and vet. You get profiles with hourly rates, then you interview. We handle employment admin and stay on after they start. "
+                  : "Free strategy call. Job description. We recruit and vet. You get profiles with hourly rates, then you interview. We handle payroll, HR, and time tracking. "}
+                <Link href={`/how-it-works?market=${market}`}>
+                  See the full process →
+                </Link>
+                {" · "}
+                <Link href={`/services?market=${market}`}>Browse roles →</Link>
+              </p>
             </div>
-            <FaqAccordion items={faq} light={light} />
+            <div className={`sell-grid sell-grid-4${light ? " sell-grid-light" : ""}`}>
+              {processSteps.map((b) => (
+                <div className="sell-card" key={b.k}>
+                  <em>{b.k}</em>
+                  <strong>{b.t}</strong>
+                  <p>{b.d}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       ) : null}
 
-      <StopCloser
-        market={market}
-        light={light}
-        showPhone={showPhone}
-        phoneDisplay={phone.display}
-        phoneHref={phone.href}
-        surface={category || "home"}
-        ctaHref={isQuiz ? "#role-quiz" : "#gate"}
-      />
+      <TrustBand light={light} market={market} />
 
       <SiteFooter
         tone={light ? "light" : "dark"}
@@ -465,6 +394,7 @@ export default function MarketLanding({
         phoneHref={showPhone ? phone.href : null}
         category={category || undefined}
         variant={variant}
+        observeSubmit={ungated}
       />
 
       <EngageChat
@@ -474,7 +404,19 @@ export default function MarketLanding({
         phoneHref={showPhone ? phone.href : null}
         phoneDisplay={showPhone ? phone.display : undefined}
         careersHref={careers}
+        skipIntentGate={ungated}
       />
+
+      {ungated ? null : (
+        <ExitIntent
+          market={market}
+          category={category || undefined}
+          variant={variant}
+          phoneHref={showPhone ? phone.href : null}
+          phoneDisplay={showPhone ? phone.display : undefined}
+          careersHref={careers}
+        />
+      )}
     </main>
   );
 }

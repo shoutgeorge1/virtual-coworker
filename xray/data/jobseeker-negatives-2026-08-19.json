@@ -1,0 +1,159 @@
+{
+  "id": "jobseeker-negatives-2026-08-19",
+  "label": "VC_Neg_JobSeekers_Daily_2026-08-19",
+  "checklist_item": 9,
+  "date": "2026-08-19",
+  "match_type": "Phrase",
+  "never_broad": true,
+  "editor_csv": "ads-launch/jobseeker-negatives-2026-08-19/google-ads-editor-jobseeker-negatives.csv",
+  "import": "Keywords, Negative · Make multiple changes only",
+  "accounts": {
+    "US": "496-715-1855",
+    "AU": "573-539-1940"
+  },
+  "campaigns": [
+    "VC_US_S_CORE",
+    "VC_US_S_ROLES",
+    "VC_AU_S_CORE",
+    "VC_AU_S_ROLES"
+  ],
+  "do_not_touch": ["Brand", "COMP"],
+  "competitor_brands_omitted": [
+    "24x7",
+    "outsourcing angel",
+    "belay",
+    "myoutdesk",
+    "wing",
+    "virtualstaff",
+    "rippling"
+  ],
+  "phrase_terms": [
+    "job",
+    "jobs",
+    "career",
+    "careers",
+    "salary",
+    "apply",
+    "indeed",
+    "onlinejobs"
+  ],
+  "extra_terms": [],
+  "row_counts": {
+    "VC_US_S_CORE": 8,
+    "VC_US_S_ROLES": 8,
+    "VC_AU_S_CORE": 8,
+    "VC_AU_S_ROLES": 8,
+    "total": 32
+  },
+  "already_broad_in_stage1": {
+    "files": [
+      "ads-launch/google-ads-editor-campaign-negatives-us.csv",
+      "ads-launch/google-ads-editor-campaign-negatives-au.csv"
+    ],
+    "campaigns": [
+      "VC_US_S_CORE",
+      "VC_US_S_ROLES",
+      "VC_AU_S_CORE",
+      "VC_AU_S_ROLES"
+    ],
+    "terms": [
+      "job",
+      "jobs",
+      "career",
+      "careers",
+      "salary",
+      "apply",
+      "indeed",
+      "onlinejobs"
+    ],
+    "note": "Stage 1 CSVs left untouched. This file re-adds the same roots as Phrase."
+  },
+  "leaking_search_terms": {
+    "sources": [
+      "ads-launch/_last7_search_terms.json",
+      "ads-launch/_today_search_terms.json",
+      "ads-launch/_tmp_search_terms_2026-08-08-to-14.json"
+    ],
+    "au_leaks": [],
+    "paid_us": [
+      {
+        "term": "virtual assistant jobs",
+        "cost_usd": 44.38,
+        "clicks": 14,
+        "campaigns": ["VC_US_S_CORE", "VC_US_S_ROLES"],
+        "covered_by": "jobs"
+      },
+      {
+        "term": "virtual assistant jobs remote",
+        "cost_usd": 18.08,
+        "clicks": 6,
+        "campaigns": ["VC_US_S_CORE", "VC_US_S_ROLES"],
+        "covered_by": "jobs"
+      },
+      {
+        "term": "virtual assistant job board",
+        "cost_usd": 8.48,
+        "clicks": 2,
+        "campaigns": ["VC_US_S_ROLES"],
+        "covered_by": "job"
+      },
+      {
+        "term": "va jobs",
+        "cost_usd": 8.4,
+        "clicks": 2,
+        "campaigns": ["VC_US_S_ROLES"],
+        "covered_by": "jobs"
+      },
+      {
+        "term": "virtual assistant careers",
+        "cost_usd": 8.12,
+        "clicks": 2,
+        "campaigns": ["VC_US_S_ROLES"],
+        "covered_by": "careers"
+      },
+      {
+        "term": "digital assistant remote jobs",
+        "cost_usd": 4.86,
+        "clicks": 2,
+        "campaigns": ["VC_US_S_CORE"],
+        "covered_by": "jobs"
+      },
+      {
+        "term": "virtual assistant job",
+        "cost_usd": 4.74,
+        "clicks": 2,
+        "campaigns": ["VC_US_S_CORE", "VC_US_S_ROLES"],
+        "covered_by": "job"
+      },
+      {
+        "term": "remote job philippines",
+        "cost_usd": 4.7,
+        "clicks": 2,
+        "campaigns": ["VC_US_S_CORE"],
+        "covered_by": "job"
+      }
+    ],
+    "zero_cost_us": [
+      "find a virtual assistant job",
+      "freelance virtual assistant jobs",
+      "online job virtual assistant",
+      "online jobs va",
+      "remote assistant jobs",
+      "remote job virtual assistant",
+      "remote virtual assistant jobs",
+      "virtual assistant jobs near me",
+      "virtual assistant work careers",
+      "online social media manager jobs",
+      "social media assistant jobs",
+      "administrative assistant jobs remote",
+      "virtual assistant apply",
+      "virtual assistant apply now",
+      "virtual assistant job remote",
+      "where can i apply to be a virtual assistant",
+      "appointment setter jobs remote",
+      "i need a va careers",
+      "how to apply in va",
+      "outsourced doers apply online"
+    ]
+  }
+}

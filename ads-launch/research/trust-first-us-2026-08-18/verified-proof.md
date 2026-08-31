@@ -17,6 +17,29 @@
 | US phone (888) 964-8644 | George-verified | Header / footer |
 | Legal names + ABN | `COMPANY_IDENTITY` | Footer |
 
+## Used in the 18 Aug ATF upgrade
+
+| Fact | How shown |
+| --- | --- |
+| Google 5.0 / 39 (West Hollywood GBP) | Yellow stars + mid-page badge. No outbound link. |
+| Clutch 4.9 / 7 | Yellow stars + mid-page badge. No outbound link. |
+| 15 years / since 2011 | Stat chips |
+| LinkedIn 450K+ / Facebook 290K+ floors | Stat chips (wow proof instead of invented client counts) |
+| Approved client marks | Logo row in the hero |
+| One published client quote | ATF highlight |
+| PH EF EPI 2025 high band, 28/123, score 569 | PH page only, labeled as a country ranking |
+| IBPAP ~1.68M contact-center / BPS FTEs | PH page only, labeled as industry headcount, not our roster |
+
+## Skipped
+
+| Asset | Why |
+| --- | --- |
+| People photos | No named CEO, staff, or client headshot in the repo. `va-face-*`, `va-us.jpg`, `va-team.webp`, `talent-*`, and `/roles` portraits read as stock or AI LP art (`IMAGE-CHOICES.md` documents GenerateImage). `talent-arvin` / `talent-john` are named PH staff with unknown ad permission. Client marks stay in the hero. Testimonials use initials. |
+| Video testimonials | None on disk. Inventory 16 Aug: no official YouTube channel confirmed. |
+| Testimonial videos | CRO backlog: no approved sales-video file yet. Do not fake embeds. |
+| Client counts, dollars saved, 70% cost cut | Not documented for Virtual Coworker. |
+| Mid-page client logo strip | Removed 18 Aug. Same marks already sit in the hero. |
+
 ## Not used (needs George if we ever want them)
 
 See `PROOF_NEEDING_CONFIRMATION` in `vision/config/trust-first.ts`.

@@ -9,7 +9,7 @@ import {
 
 /**
  * Fires dataLayer events for anchors/buttons marked with data-track="…".
- * Phone / Calendly use helpers that also emit short aliases for GTM maps.
+ * Phone / Calendly use the canonical helpers (one event name each).
  */
 export default function DataTrackClicks() {
   useEffect(() => {
@@ -31,7 +31,11 @@ export default function DataTrackClicks() {
           : el.getAttribute("href") || undefined;
 
       if (name === "phone_cta_clicked" || name === "phone_click") {
-        trackPhoneClick({ market, href });
+        trackPhoneClick({
+          market,
+          href,
+          cta_location: el.getAttribute("data-cta-location") || "nav",
+        });
         return;
       }
       if (name === "calendly_cta_clicked" || name === "calendly_click") {

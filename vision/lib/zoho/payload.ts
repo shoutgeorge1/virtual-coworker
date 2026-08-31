@@ -1,10 +1,14 @@
 /**
- * Map employer lead → Zoho CRM fields using verified / configured API names only.
- * Do not invent custom fields. Prefer $gclid when gclid present.
- * Prefer VC_Submission_ID (configurable) as external id for upsert idempotency.
+ * Map employer lead → Zoho Sales Enquiry (Leads) using verified API names only.
+ * Create-only. Do not invent fields. Do not write Ads-filter status values.
  */
 
-import type { ZohoCrmConfig, ZohoFieldOverrides } from "./config";
+import {
+  SAFE_LEAD_SOURCE_VALUES,
+  VERIFIED_SALES_ENQUIRY,
+  type ZohoCrmConfig,
+  type ZohoFieldOverrides,
+} from "./config";
 
 export type LeadRecord = {
   submission_id: string;
@@ -13,6 +17,7 @@ export type LeadRecord = {
   email: string;
   phone?: string;
   company?: string;
+  company_website?: string;
   role?: string;
   category?: string;
   variant?: string;
@@ -28,6 +33,8 @@ export type LeadRecord = {
   message?: string;
   market: string;
   intent?: string;
+  lead_source?: string;
+  form_source?: string;
   utm_source?: string;
   utm_medium?: string;
   utm_campaign?: string;
@@ -36,28 +43,42 @@ export type LeadRecord = {
   gclid?: string;
   gbraid?: string;
   wbraid?: string;
+  adgroup?: string;
+  keyword?: string;
+  match_type?: string;
+  device?: string;
   landing_page_url?: string;
   referrer?: string;
   lp_version?: string;
   submitted_at?: string;
+  session_id?: string;
   is_job_order?: boolean;
   is_placement?: boolean;
 };
 
-/** Standard Zoho Leads API names (documented platform fields — not custom invent). */
 export const STANDARD_LEAD_FIELDS = {
   First_Name: "First_Name",
   Last_Name: "Last_Name",
   Email: "Email",
   Phone: "Phone",
   Company: "Company",
-  Description: "Description",
 } as const;
 
+/** Status values that Google Ads Data Manager connections are named after. Never write these. */
+export const ADS_FILTER_STATUS_VALUES = new Set([
+  "Discovery Scheduled",
+  "Job Order Submitted",
+  "Placement",
+  "Create Job Opening",
+  "Pre-Qualified",
+  "Contact Successful",
+  "Discovery Booked",
+  "Discovery Completed",
+  "Qualified",
+]);
+
 export type VerifiedFieldSet = {
-  /** When provided, only these API names (+ $gclid) may be written besides standards if included */
   apiNames: Set<string>;
-  /** If true, include First_Name/Last_Name/Email/Phone/Company/Description when present in apiNames or allowStandards */
   allowStandards: boolean;
 };
 
@@ -70,7 +91,6 @@ export type FieldProposal = {
 export type MappedPayload = {
   module: string;
   data: Record<string, unknown>;
-  /** Fields requested by lead but absent from verified set */
   omitted: string[];
   proposals: FieldProposal[];
   duplicateCheckFields: string[];
@@ -98,13 +118,75 @@ function setIf(
   data[apiName] = v;
 }
 
+export function regionForMarket(market: string): string {
+  const m = (market || "").trim().toLowerCase();
+  if (m === "us" || m === "usa") return "USA";
+  if (m === "au") return "AU";
+  return "";
+}
+
+/** Zoho CRM datetime: `YYYY-MM-DDTHH:MM:SS+00:00`. Rejects JS `...Z` and fractional seconds. */
+export function formatZohoDateTime(raw: string): string | undefined {
+  const v = raw.trim();
+  if (!v) return undefined;
+  const ms = Date.parse(v);
+  if (!Number.isFinite(ms)) return undefined;
+  const d = new Date(ms);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return (
+    `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}` +
+    `T${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}+00:00`
+  );
+}
+
+export function buildEnquiryNotes(lead: LeadRecord): string {
+  const lines: string[] = [];
+  const banner = (lead.message || "").trim();
+  if (banner) lines.push(banner);
+  const extras: [string, string][] = [
+    ["submission_id", lead.submission_id],
+    ["lead_source_requested", lead.lead_source || ""],
+    ["market", lead.market],
+    ["role", lead.role || ""],
+    ["category", lead.category || ""],
+    ["company_size", lead.company_size || ""],
+    ["positions_needed", lead.positions_needed || ""],
+    ["schedule", lead.schedule || ""],
+    ["hiring_timeline", lead.hiring_timeline || lead.timeline || ""],
+    ["gclid", lead.gclid || ""],
+    ["gbraid", lead.gbraid || ""],
+    ["wbraid", lead.wbraid || ""],
+    ["utm_source", lead.utm_source || ""],
+    ["utm_medium", lead.utm_medium || ""],
+    ["utm_campaign", lead.utm_campaign || ""],
+    ["utm_term", lead.utm_term || ""],
+    ["utm_content", lead.utm_content || ""],
+    ["adgroup", lead.adgroup || ""],
+    ["keyword", lead.keyword || ""],
+    ["match_type", lead.match_type || ""],
+    ["device", lead.device || ""],
+    ["landing_page_url", lead.landing_page_url || ""],
+    ["referrer", lead.referrer || ""],
+    ["lp_version", lead.lp_version || ""],
+    ["session_id", lead.session_id || ""],
+    ["submitted_at", lead.submitted_at || ""],
+  ];
+  const filled = extras.filter(([, v]) => v.trim());
+  if (filled.length) {
+    lines.push("");
+    lines.push("--- VC LP payload ---");
+    for (const [k, v] of filled) lines.push(`${k}: ${v}`);
+  }
+  return lines.join("\n").slice(0, 30000);
+}
+
 /**
- * Build CRM record body. If `verified` is null, only standard Lead fields + $gclid +
- * explicitly configured override fields are used (override names assumed verified by operator).
+ * Build a create-only Sales Enquiry body.
+ * Never writes Ads-filter statuses, JO flags, discovery dates, or qualification.
  */
 export function mapLeadToCrmPayload(
   lead: LeadRecord,
-  config: Pick<ZohoCrmConfig, "module" | "submissionIdField" | "fields">,
+  config: Pick<ZohoCrmConfig, "module" | "submissionIdField" | "notesField" | "leadStatus" | "fields">,
   verified: VerifiedFieldSet | null = null,
 ): MappedPayload {
   const data: Record<string, unknown> = {};
@@ -117,8 +199,8 @@ export function mapLeadToCrmPayload(
     if (!allowStd) {
       if (verified && verified.apiNames.has(api)) {
         setIf(data, api, value, omitted, logical, verified);
-      } else {
-        if ((value || "").trim()) omitted.push(logical);
+      } else if ((value || "").trim()) {
+        omitted.push(logical);
       }
       return;
     }
@@ -136,104 +218,63 @@ export function mapLeadToCrmPayload(
   std("Phone", lead.phone, "phone");
   std("Company", lead.company, "company");
 
-  const descParts = [
-    lead.role ? `Role: ${lead.role}` : "",
-    lead.company_size ? `Company size: ${lead.company_size}` : "",
-    lead.positions_needed ? `Positions needed: ${lead.positions_needed}` : "",
-    lead.schedule ? `Schedule: ${lead.schedule}` : "",
-    lead.hiring_timeline || lead.timeline
-      ? `Timeline: ${lead.hiring_timeline || lead.timeline}`
-      : "",
-    lead.lead_score !== undefined && lead.lead_score !== ""
-      ? `Modeled lead score: ${lead.lead_score} (website estimate — not revenue)`
-      : "",
-    lead.estimated_lead_value !== undefined && lead.estimated_lead_value !== ""
-      ? `Modeled lead value USD: ${lead.estimated_lead_value} (${lead.value_kind || "estimated_modeled"})`
-      : "",
-    lead.message || "",
-  ].filter(Boolean);
-  if (descParts.length) {
-    std("Description", descParts.join("\n"), "message");
+  const notes = buildEnquiryNotes(lead);
+  if (notes) {
+    setIf(data, config.notesField || fields.message, notes, omitted, "message", verified);
   }
 
-  // Idempotency external id
-  setIf(
-    data,
-    config.submissionIdField,
-    lead.submission_id,
-    omitted,
-    "submission_id",
-    verified,
-  );
+  setIf(data, config.submissionIdField, lead.submission_id, omitted, "submission_id", verified);
+  setIf(data, fields.website, lead.company_website, omitted, "company_website", verified);
+  setIf(data, fields.role, lead.role, omitted, "role", verified);
+  setIf(data, fields.landing_page_url, lead.landing_page_url, omitted, "landing_page_url", verified);
 
-  // Prefer Zoho system key when gclid present
-  let usesGclidSystemKey = false;
-  const gclid = (lead.gclid || "").trim();
-  if (gclid) {
-    const customGclid = fields.gclid;
-    if (!customGclid || customGclid === "$gclid") {
-      if (!verified || verified.apiNames.has("$gclid")) {
-        data["$gclid"] = gclid;
-        usesGclidSystemKey = true;
-      } else {
-        omitted.push("gclid");
-      }
-    } else if (!verified || verified.apiNames.has(customGclid)) {
-      data[customGclid] = gclid;
-    } else {
-      omitted.push("gclid");
-    }
+  const region = regionForMarket(lead.market);
+  setIf(data, fields.market, region, omitted, "market", verified);
+
+  const requestedSource = (lead.lead_source || "").trim();
+  if (requestedSource && SAFE_LEAD_SOURCE_VALUES.has(requestedSource)) {
+    setIf(data, fields.lead_source, requestedSource, omitted, "lead_source", verified);
+  } else if (requestedSource) {
+    omitted.push("lead_source_picklist");
   }
 
-  setIf(data, fields.gbraid, lead.gbraid, omitted, "gbraid", verified);
-  setIf(data, fields.wbraid, lead.wbraid, omitted, "wbraid", verified);
+  const formSource = (lead.form_source || lead.lead_source || "").trim();
+  setIf(data, fields.form_source, formSource, omitted, "form_source", verified);
+
+  const safeStatus = (config.leadStatus || VERIFIED_SALES_ENQUIRY.leadStatus).trim();
+  if (safeStatus && !ADS_FILTER_STATUS_VALUES.has(safeStatus)) {
+    data.Lead_Status = safeStatus;
+  }
+
   setIf(data, fields.utm_source, lead.utm_source, omitted, "utm_source", verified);
   setIf(data, fields.utm_medium, lead.utm_medium, omitted, "utm_medium", verified);
   setIf(data, fields.utm_campaign, lead.utm_campaign, omitted, "utm_campaign", verified);
   setIf(data, fields.utm_term, lead.utm_term, omitted, "utm_term", verified);
   setIf(data, fields.utm_content, lead.utm_content, omitted, "utm_content", verified);
-  setIf(data, fields.market, lead.market, omitted, "market", verified);
-  setIf(data, fields.category, lead.category, omitted, "category", verified);
-  setIf(data, fields.variant, lead.variant, omitted, "variant", verified);
-  setIf(data, fields.lp_version, lead.lp_version, omitted, "lp_version", verified);
-  setIf(data, fields.landing_page_url, lead.landing_page_url, omitted, "landing_page_url", verified);
-  setIf(data, fields.referrer, lead.referrer, omitted, "referrer", verified);
-  setIf(data, fields.role, lead.role, omitted, "role", verified);
-  setIf(data, fields.timeline, lead.hiring_timeline || lead.timeline, omitted, "timeline", verified);
-  setIf(data, fields.company_size, lead.company_size, omitted, "company_size", verified);
-  setIf(data, fields.positions_needed, lead.positions_needed, omitted, "positions_needed", verified);
-  setIf(data, fields.hiring_timeline, lead.hiring_timeline, omitted, "hiring_timeline", verified);
-  setIf(
-    data,
-    fields.lead_score,
-    lead.lead_score !== undefined ? String(lead.lead_score) : "",
-    omitted,
-    "lead_score",
-    verified,
-  );
-  setIf(
-    data,
-    fields.estimated_lead_value,
-    lead.estimated_lead_value !== undefined ? String(lead.estimated_lead_value) : "",
-    omitted,
-    "estimated_lead_value",
-    verified,
-  );
+  setIf(data, fields.campaign_name, lead.utm_campaign, omitted, "campaign_name", verified);
 
-  // Honesty flags — only if verified custom fields exist (never invent)
-  // is_job_order / is_placement intentionally not written unless schema has them later.
+  const gclid = (lead.gclid || "").trim();
+  if (gclid) {
+    setIf(data, fields.gclid || VERIFIED_SALES_ENQUIRY.gclid, gclid, omitted, "gclid", verified);
+  }
+  if ((lead.gbraid || "").trim()) omitted.push("gbraid");
+  if ((lead.wbraid || "").trim()) omitted.push("wbraid");
+  if ((lead.referrer || "").trim()) omitted.push("referrer");
+
+  const submitted = formatZohoDateTime(lead.submitted_at || "");
+  if (submitted) {
+    data.Submission_Timestamp = submitted;
+  }
 
   const proposals = proposeMissingFields(omitted, config.submissionIdField);
-  const duplicateCheckFields =
-    data[config.submissionIdField] != null ? [config.submissionIdField] : [];
 
   return {
     module: config.module,
     data,
     omitted: [...new Set(omitted)],
     proposals,
-    duplicateCheckFields,
-    usesGclidSystemKey,
+    duplicateCheckFields: [],
+    usesGclidSystemKey: false,
   };
 }
 
@@ -242,76 +283,32 @@ export function proposeMissingFields(
   submissionIdField: string,
 ): FieldProposal[] {
   const catalog: Record<string, FieldProposal> = {
-    submission_id: {
-      proposed_api_name: submissionIdField,
-      purpose: "Idempotent employer inquiry id",
-      required_for: "upsert / zoho_synced reliability",
-    },
-    gclid: {
-      proposed_api_name: "$gclid or GCLID",
-      purpose: "Google click id",
-      required_for: "Ads attribution",
-    },
     gbraid: {
-      proposed_api_name: "GBRAID",
+      proposed_api_name: "(none — fold into Enquiry Notes)",
       purpose: "iOS click id",
       required_for: "Ads attribution",
     },
     wbraid: {
-      proposed_api_name: "WBRAID",
+      proposed_api_name: "(none — fold into Enquiry Notes)",
       purpose: "Web click id",
       required_for: "Ads attribution",
     },
-    utm_source: { proposed_api_name: "UTM_Source", purpose: "UTM", required_for: "campaign reporting" },
-    utm_medium: { proposed_api_name: "UTM_Medium", purpose: "UTM", required_for: "campaign reporting" },
-    utm_campaign: {
-      proposed_api_name: "UTM_Campaign",
-      purpose: "UTM",
-      required_for: "campaign reporting",
-    },
-    utm_term: { proposed_api_name: "UTM_Term", purpose: "UTM", required_for: "campaign reporting" },
-    utm_content: {
-      proposed_api_name: "UTM_Content",
-      purpose: "UTM",
-      required_for: "campaign reporting",
-    },
-    market: { proposed_api_name: "VC_Market", purpose: "us|au", required_for: "routing" },
-    category: { proposed_api_name: "VC_Category", purpose: "role category", required_for: "reporting" },
-    variant: { proposed_api_name: "VC_Variant", purpose: "LP variant", required_for: "A/B" },
-    lp_version: { proposed_api_name: "VC_LP_Version", purpose: "package version", required_for: "QA" },
-    landing_page_url: {
-      proposed_api_name: "VC_Landing_Page_URL",
-      purpose: "landing URL",
+    referrer: {
+      proposed_api_name: "Referrer (read-only) — fold into Enquiry Notes",
+      purpose: "HTTP referrer",
       required_for: "attribution",
     },
-    referrer: { proposed_api_name: "VC_Referrer", purpose: "referrer", required_for: "attribution" },
-    company_size: {
-      proposed_api_name: "VC_Company_Size",
-      purpose: "employer headcount band",
-      required_for: "lead value / qualification",
+    lead_source_picklist: {
+      proposed_api_name: "Form_Source + Enquiry Notes",
+      purpose: "Requested source is not an existing Lead_Source picklist value",
+      required_for: "do not invent picklist values",
     },
-    positions_needed: {
-      proposed_api_name: "VC_Positions_Needed",
-      purpose: "seats requested",
-      required_for: "lead value / qualification",
-    },
-    hiring_timeline: {
-      proposed_api_name: "VC_Hiring_Timeline",
-      purpose: "urgency band",
-      required_for: "lead value / qualification",
-    },
-    lead_score: {
-      proposed_api_name: "VC_Lead_Score",
-      purpose: "website modeled score 0–100",
-      required_for: "history — CRM qualification supersedes",
-    },
-    estimated_lead_value: {
-      proposed_api_name: "VC_Estimated_Lead_Value",
-      purpose: "website modeled $ (not revenue, not Ads bidding)",
-      required_for: "history — CRM value supersedes",
+    submission_id: {
+      proposed_api_name: submissionIdField,
+      purpose: "External submission id",
+      required_for: "traceability",
     },
   };
-
   const out: FieldProposal[] = [];
   for (const key of omittedLogical) {
     if (catalog[key]) out.push(catalog[key]);
@@ -319,18 +316,11 @@ export function proposeMissingFields(
   return out;
 }
 
-/**
- * Docs-only: `--apply-schema` field creation requires explicit George approval.
- * This helper never calls Zoho; it only formats a proposal list.
- */
 export function formatSchemaApplyProposal(proposals: FieldProposal[]): string {
   if (!proposals.length) return "No missing-field proposals.";
   const lines = [
     "SCHEMA APPLY PROPOSAL (requires George approval; do not auto-create)",
-    "Flag reference only: --apply-schema",
-    ...proposals.map(
-      (p) => `- ${p.proposed_api_name}: ${p.purpose} (${p.required_for})`,
-    ),
+    ...proposals.map((p) => `- ${p.proposed_api_name}: ${p.purpose} (${p.required_for})`),
   ];
   return lines.join("\n");
 }

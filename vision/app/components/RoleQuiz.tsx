@@ -876,7 +876,7 @@ export default function RoleQuiz({
                     onRevealForm?.();
                   }}
                 >
-                  {isAu ? "Book a free consultation →" : "Book Your Free Consultation →"}
+                  {isAu ? "Book a free strategy call →" : "Book a Free Strategy Call →"}
                 </button>
               ) : (
                 <a

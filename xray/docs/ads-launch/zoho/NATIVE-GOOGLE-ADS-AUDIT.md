@@ -1,11 +1,15 @@
 # Native Zoho ↔ Google Ads audit (verification checklist only)
 
+**Status (2026-08-14):** **DEFERRED DURING COLD START.** Observe-only if already documented. Do **not** build a new Zoho-to-Google Ads offline conversion integration. Do **not** make any existing Zoho-related Google Ads conversion Primary. Do **not** add Zapier.
+
 **MCC:** `119-318-9031` (Shout George)  
 **Children:** USA `496-715-1855` · AU `573-539-1940`
 
 This file is a **verification checklist**. Do **not** authorize the Zoho Google Ads connector from this workstream. Do **not** change auto-tagging. Do **not** run a custom offline conversion uploader while the native path / token decision is pending.
 
 **Separate from** platform discovery (`DEFERRED-PLATFORM-DISCOVERY.md`) and from George’s pending **Google Ads developer token**. Native Zoho↔Ads wiring may exist (or not) independent of Ads API access — audit by observation only; do not assume the developer token is required to complete this checklist.
+
+Cold-start lock: `../ZOHO-COLD-START-DEFERRED-2026-08-14.md`.
 
 ## Conversion honesty lock (Stage 1)
 

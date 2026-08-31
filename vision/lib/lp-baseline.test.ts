@@ -16,7 +16,7 @@ const ROOT = join(__dirname, "..");
 
 describe("Paid Landing Page Baseline v1 — August 2026", () => {
   it("labels the production baseline (not a winning A/B variant)", () => {
-    expect(BASELINE_LABEL).toBe("Paid Landing Page Baseline v1 - August 2026");
+    expect(BASELINE_LABEL).toBe("US_BASELINE_2026-08-18");
     expect(BASELINE_LP_VERSION).toBe("baseline_v1_2026_08");
     expect(BASELINE_LP_VARIANT).toBe("price_staffing_v1");
   });
@@ -154,7 +154,7 @@ describe("Paid Landing Page Baseline v1 — August 2026", () => {
       "utf8",
     );
     expect(landing).toContain("seekerLine");
-    expect(landing).toContain("job_seeker_redirected");
+    expect(landing).toContain("exitToCareers");
     expect(landing).not.toContain("employer-only");
     expect(gate).toContain("JOB_SEEKER_LINE");
     expect(gate).toContain("Seeker");

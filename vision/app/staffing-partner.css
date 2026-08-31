@@ -29,14 +29,6 @@
   flex: 0 0 auto;
 }
 
-.sp-phone-long {
-  display: none;
-}
-
-.sp-phone-short {
-  display: inline;
-}
-
 .sp-eyebrow {
   margin: 0 0 0.55rem;
   font-size: 0.75rem;
@@ -495,14 +487,6 @@
     min-height: 44px;
     font-size: 1rem;
     padding: 0.5rem 1rem;
-  }
-
-  .sp-phone-long {
-    display: inline;
-  }
-
-  .sp-phone-short {
-    display: none;
   }
 
   .sp .gm-hero {

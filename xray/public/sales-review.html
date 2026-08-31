@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Were these real leads? · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="sales-review.html"] .main { max-width: 880px; }
+    .sr-hero {
+      margin: 0 0 1rem;
+      padding: 1.05rem 1.1rem;
+      border-radius: 10px;
+      border: 1px solid var(--tint-amber-edge);
+      background: var(--tint-amber);
+    }
+    .sr-hero h1 { margin: 0 0 0.45rem; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .sr-hero p { margin: 0.3rem 0; font-size: 1.02rem; line-height: 1.45; }
+    .sr-box {
+      margin: 0 0 0.85rem;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+    }
+    .sr-box h2 { margin: 0 0 0.4rem; font-size: 1rem; }
+    .sr-box p, .sr-box li { margin: 0.3rem 0; font-size: 0.95rem; line-height: 1.45; }
+    .sr-box ol { margin: 0.2rem 0 0; padding: 0 0 0 1.2rem; }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    table.data-table th, table.data-table td {
+      text-align: left; padding: 0.5rem 0.4rem;
+      border-bottom: 1px solid var(--edge-soft); vertical-align: top;
+    }
+    table.data-table th { color: var(--muted); font-weight: 650; }
+    .tag { display: inline-block; padding: 0.12rem 0.42rem; border-radius: 4px; font-size: 0.78rem; font-weight: 700; }
+    .tag-ok { background: var(--tint-green-hd); }
+    .tag-mid { background: var(--tint-amber-hd); }
+    .tag-bad { background: var(--tint-rose-hd); }
+    .tag-unk { background: var(--tint-cool-hd); }
+    .tag-seek { background: var(--tint-violet-hd); }
+  </style>
+</head>
+<body data-page="sales-review.html" data-foot="Were these real leads?">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <div class="sr-hero">
+        <h1>Google said 7 conversions. That was 5 people. None are a confirmed hire yet.</h1>
+        <p>If someone fills in the form and later books a call, that is still one person — not two wins.</p>
+        <p>Do not treat the 7 as seven good leads.</p>
+      </div>
+
+      <div class="sr-box">
+        <h2>The five people</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>When</th>
+              <th>Where</th>
+              <th>What they searched</th>
+              <th>What page</th>
+              <th>What sales did</th>
+              <th>So what</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>19 Aug</td><td>Australia</td><td>hire a social media manager</td><td>Australia social-media page</td><td>Holly sent a brochure. No call booked yet.</td><td><span class="tag tag-mid">Maybe — sales is still on it</span></td></tr><tr><td>18 Aug</td><td>US</td><td>virtual assistant agency in usa</td><td>US home page</td><td>Unresponsive Clients</td><td><span class="tag tag-unk">Sales has not said yet</span></td></tr><tr><td>18 Aug</td><td>US</td><td>virtual assistant for real estate investors</td><td>US home page</td><td>Sales marked this junk.</td><td><span class="tag tag-bad">Junk</span></td></tr><tr><td>17 Aug</td><td>Australia</td><td>australia virtual assistant</td><td>Australia recruitment page</td><td>Sales marked this junk.</td><td><span class="tag tag-bad">Junk</span></td></tr><tr><td>17 Aug</td><td>Australia</td><td>australia virtual assistant</td><td>Australia recruitment page</td><td>Sales marked this junk.</td><td><span class="tag tag-bad">Junk</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sr-box">
+        <h2>In English</h2>
+        <ol>
+          <li>Two Australia people searched “australia virtual assistant.” Junk. Google still counted them.</li>
+          <li>One US person searched real-estate virtual assistant. Sales said not a fit.</li>
+          <li>One US person searched “virtual assistant agency in usa.” Cheyenne is still trying to reach them.</li>
+          <li>One Australia person searched “hire a social media manager.” Holly sent a brochure. No call yet.</li>
+        </ol>
+        <p>So: two junk, one wrong customer, two maybes. Zero “yes, this is a real employer who wants to hire.”</p>
+      </div>
+
+      <div class="sr-box">
+        <h2>What I need from Cheyenne and Holly</h2>
+        <p>For each new paid lead, mark one of these: <strong>real employer</strong>, <strong>looking for a job</strong>, <strong>junk</strong>, or <strong>our test</strong>.</p>
+        <p>They have not done that in Zoho yet. I can see they moved some rows (junk, not a fit, brochure). I cannot see a simple “this is a real employer” box. Ash is looking at Zoho this week.</p>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+</body>
+</html>

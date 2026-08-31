@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Phone call forensic · Virtual Coworker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="xray.css" />
+  <style>
+    body[data-page="phone-call-forensic.html"] .main { max-width: 1040px; }
+    .pcf-hero {
+      margin: 0 0 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      border: 1px solid var(--tint-amber-edge, #e8d4b8);
+      background: var(--tint-amber, #fbf6ee);
+    }
+    .pcf-hero h1 { margin: 0 0 0.4rem; font-size: 1.25rem; }
+    .pcf-hero p { margin: 0.28rem 0; font-size: 0.92rem; line-height: 1.45; }
+    .pcf-box {
+      margin: 0 0 0.85rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--edge-soft);
+      background: var(--panel);
+    }
+    .pcf-box h2 { margin: 0 0 0.45rem; font-size: 1rem; }
+    .pcf-box p, .pcf-box li { margin: 0.28rem 0; font-size: 0.88rem; line-height: 1.45; }
+    .pcf-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.45rem;
+      margin: 0.5rem 0 0;
+    }
+    @media (max-width: 900px) { .pcf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .pcf-kpi {
+      padding: 0.55rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.75);
+      min-height: 4.5rem;
+    }
+    .pcf-kpi .k { font-size: 0.68rem; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+    .pcf-kpi .v { font-size: 1.15rem; font-weight: 650; margin-top: 0.2rem; font-variant-numeric: tabular-nums; }
+    .pcf-kpi .sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; line-height: 1.35; }
+    .tag {
+      display: inline-block;
+      padding: 0.08rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+    }
+    .tag-live { background: var(--tint-green-hd); }
+    .tag-der { background: var(--tint-cool-hd); }
+    .tag-inf { background: var(--tint-amber-hd); }
+    .tag-man { background: #e8e4f0; }
+    .tag-una { background: var(--tint-rose-hd); }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    table.data-table th, table.data-table td {
+      text-align: left; padding: 0.4rem 0.35rem; border-bottom: 1px solid var(--edge-soft); vertical-align: top;
+    }
+    table.data-table th { color: var(--muted); font-weight: 650; }
+    .pcf-meta { font-size: 0.78rem; color: var(--muted); margin: 0 0 0.75rem; }
+  </style>
+</head>
+<body data-page="phone-call-forensic.html" data-foot="Phone forensic<br />Aggregate only · no PII">
+  <div class="app">
+    <aside class="sidebar" data-nav></aside>
+    <main class="main">
+      <div class="pcf-hero">
+        <h1>Phone call → CRM forensic</h1>
+        <p><strong>Verdict:</strong> Zoho Voice → Zoho CRM is <strong>partial CTI logging</strong>, not a complete sales intake. Calls can exist in Voice / email alerts without becoming owned Sales Enquiries with dispositions.</p>
+        <p class="pcf-meta">Read-only audit 24 Aug 2026 · Full write-up: <a href="docs/ads-launch/PHONE_CALL_CRM_FORENSIC_AUDIT.md">PHONE_CALL_CRM_FORENSIC_AUDIT.md</a> · No caller PII on this page · Offline conversion uploads stay deferred.</p>
+      </div>
+
+      <div class="pcf-box">
+        <h2>Evidence labels</h2>
+        <p>
+          <span class="tag tag-live">LIVE</span> system read ·
+          <span class="tag tag-der">DERIVED</span> from live ·
+          <span class="tag tag-inf">INFERRED</span> labeled guess ·
+          <span class="tag tag-man">MANUAL</span> human statement ·
+          <span class="tag tag-una">UNAVAILABLE</span> missing — not zero
+        </p>
+      </div>
+
+      <div class="pcf-box">
+        <h2>US scoreboard (aggregate)</h2>
+        <div class="pcf-grid" id="us-kpis"></div>
+      </div>
+
+      <div class="pcf-box">
+        <h2>Coverage gaps</h2>
+        <table class="data-table" id="coverage-table">
+          <thead><tr><th>Window</th><th>Status</th><th>Note</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="pcf-box">
+        <h2>Integration matrix (summary)</h2>
+        <ul id="verdict-list"></ul>
+      </div>
+
+      <div class="pcf-box">
+        <h2>Australia</h2>
+        <div class="pcf-grid" id="au-kpis"></div>
+      </div>
+
+      <div class="pcf-box">
+        <h2>Current owner · next decision</h2>
+        <p id="next-owner"></p>
+        <p>Checklist parent: <a href="launch-control.html#phone-lead-recovery">Phone lead recovery and CRM integration</a>.</p>
+        <p>Do not launch reactivation. Braden + Ash approval required before any outreach.</p>
+      </div>
+    </main>
+  </div>
+  <script src="nav.js"></script>
+  <script>
+    function tag(label) {
+      var cls = ({
+        LIVE: "tag-live",
+        DERIVED: "tag-der",
+        INFERRED: "tag-inf",
+        MANUAL: "tag-man",
+        UNAVAILABLE: "tag-una",
+        PARTIAL: "tag-inf"
+      })[label] || "tag-una";
+      return '<span class="tag ' + cls + '">' + label + "</span>";
+    }
+    function kpi(title, value, label, note) {
+      var show = value === null || value === undefined ? "—" : value;
+      return (
+        '<div class="pcf-kpi"><div class="k">' + title + "</div>" +
+        '<div class="v">' + show + "</div>" +
+        '<div class="sub">' + tag(label) + (note ? " · " + note : "") + "</div></div>"
+      );
+    }
+    function load(data) {
+      var us = data.us || {};
+      document.getElementById("us-kpis").innerHTML = [
+        kpi("Phone-link clicks", us.phone_link_clicks_ads_period && us.phone_link_clicks_ads_period.value, us.phone_link_clicks_ads_period && us.phone_link_clicks_ads_period.label, "Not completed calls"),
+        kpi("CRM Calls since Aug 6", (us.crm_calls_since_aug6.outbound + us.crm_calls_since_aug6.inbound + us.crm_calls_since_aug6.missed), us.crm_calls_since_aug6.label, us.crm_calls_since_aug6.outbound + " out · " + us.crm_calls_since_aug6.inbound + " in · " + us.crm_calls_since_aug6.missed + " missed"),
+        kpi("DID-as-caller stubs (Aug 19+)", us.crm_inbound_missed_aug19_plus_did_as_caller.value, us.crm_inbound_missed_aug19_plus_did_as_caller.label, "External ANI unavailable in CRM"),
+        kpi("Unique Voice callers", us.unique_external_callers_voice.value, us.unique_external_callers_voice.label, "Export not ingested"),
+        kpi("Answered / missed / VM", "—", "UNAVAILABLE", "Need Voice dispositions"),
+        kpi("Callback Tasks", us.callback_tasks_since_aug6.value, us.callback_tasks_since_aug6.label, "Since Aug 6"),
+        kpi("Call_Result on stubs", us.call_result_populated_on_those_12.value, us.call_result_populated_on_those_12.label, "Of 12 DID stubs"),
+        kpi("Employer review queue", us.potential_employer_review_queue.value, us.potential_employer_review_queue.label, "Not invented as zero")
+      ].join("");
+
+      var cov = data.coverage || {};
+      var tb = document.querySelector("#coverage-table tbody");
+      tb.innerHTML = Object.keys(cov).map(function (k) {
+        var row = cov[k];
+        return "<tr><td>" + k.replace(/_/g, " ") + "</td><td>" + tag(row.label) + "</td><td>" + (row.note || "") + "</td></tr>";
+      }).join("");
+
+      var v = data.verdict || {};
+      document.getElementById("verdict-list").innerHTML = Object.keys(v).map(function (k) {
+        var row = v[k];
+        return "<li><strong>" + k.replace(/_/g, " ") + ":</strong> " + row.value + " " + tag(row.label) + "<br /><span style=\"color:var(--muted)\">" + (row.detail || "") + "</span></li>";
+      }).join("");
+
+      var au = data.au || {};
+      document.getElementById("au-kpis").innerHTML = [
+        kpi("Public number", au.public_number, "LIVE", "Owner: Holly"),
+        kpi("Phone-link clicks", au.phone_link_clicks && au.phone_link_clicks.value, au.phone_link_clicks && au.phone_link_clicks.label, "Low volume"),
+        kpi("Inbound CRM/Voice proof", "—", "UNAVAILABLE", "No AU export this pass"),
+        kpi("Voicemail says Alex", "Waiting", "MANUAL", "Launch Control item")
+      ].join("");
+
+      document.getElementById("next-owner").textContent = data.owner_next || "";
+    }
+    fetch("data/phone-call-forensic.json", { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(load)
+      .catch(function (e) {
+        document.getElementById("us-kpis").innerHTML = "<p>Could not load data/phone-call-forensic.json (" + e + ").</p>";
+      });
+  </script>
+</body>
+</html>
