@@ -2,7 +2,7 @@
 
 Which form boxes save into which Zoho boxes so we can see paid leads in CRM.
 
-Generated: `2026-08-31T05:44:29.244195+00:00` · **writes OFF** · owner: **Cursor** (not George homework)
+Generated: `2026-08-31T05:59:21.462770+00:00` · **writes OFF** · owner: **Cursor** (not George homework)
 
 **Status (2026-08-14):** Draft parked. Zoho + offline conversions are **DEFERRED DURING COLD START** — not cancelled. Production writes remain OFF. No Zoho writes. No Ads mutate. No new Zapier. No Primary Zoho conversions.
 

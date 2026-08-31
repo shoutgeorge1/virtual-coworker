@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-08-31T05:44:27.680930+00:00",
-  "pull_started_utc": "2026-08-31T05:44:27.240202+00:00",
+  "generated_at_utc": "2026-08-31T05:59:19.936820+00:00",
+  "pull_started_utc": "2026-08-31T05:59:19.535699+00:00",
   "customer_ids": {
     "us": "4967151855",
     "au": "5735391940"
@@ -2366,10 +2366,10 @@
     "status_detail": "Google Ads refresh failed; verified snapshot through 2026-08-28 was preserved.",
     "google_ads_through": "2026-08-28",
     "google_ads_period_note": "Displayed Google Ads period ends on the previous complete day because of reporting latency.",
-    "zoho_refreshed_at_utc": "2026-08-31T05:44:29.073025+00:00",
+    "zoho_refreshed_at_utc": "2026-08-31T05:59:21.001662+00:00",
     "us_sales_confirmed_through": "2026-08-25",
     "au_sales_confirmed_through": "2026-08-25",
-    "dashboard_generated_at_utc": "2026-08-31T05:44:27.680930+00:00",
+    "dashboard_generated_at_utc": "2026-08-31T05:59:19.936820+00:00",
     "sources": {
       "google_ads": {
         "ok": false,
@@ -2379,7 +2379,7 @@
       },
       "zoho": {
         "ok": true,
-        "refreshed_at_utc": "2026-08-31T01:50:48.186017+00:00",
+        "refreshed_at_utc": "2026-08-31T05:54:16.688541+00:00",
         "mode": "read_only_census"
       },
       "sales_us": {
@@ -2494,7 +2494,7 @@
       "job_order_submitted": 3
     },
     "spend_usd": 2036.15,
-    "spend_note": "US Core+Roles 2026-08-17\u20132026-08-23 through Ads pull 2026-08-31 05:44 UTC.",
+    "spend_note": "US Core+Roles 2026-08-17\u20132026-08-23 through Ads pull 2026-08-31 05:59 UTC.",
     "impressions": 7474,
     "clicks": 597,
     "avg_cpc_usd": 3.41,
@@ -2541,7 +2541,7 @@
       "VC_US_S_ROLES"
     ],
     "spend_usd": 621.12,
-    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 05:44 UTC.",
+    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 05:59 UTC.",
     "impressions": 1608,
     "clicks": 169,
     "avg_cpc_usd": 3.68,
@@ -2614,11 +2614,11 @@
     "caveat": "Sales-ops cost uses Holly\u2019s 8 enquiries.",
     "why_plain": "8 enquiries \u00b7 7 sales calls \u00b7 0 job orders \u00b7 0 placements.",
     "insight_plain": "AU sales ops (Mon Aug 17 \u2013 Sun Aug 23): 8 enquiries \u00b7 7 sales calls \u00b7 0 job orders \u00b7 0 placements \u00b7 A$116.71/enquiry.",
+    "ops_note": "Holly labeled week: 0 junk \u00b7 8 enquiries \u00b7 7 sales calls \u00b7 0 new / 0 returning / 0 replacement job orders (0 total) \u00b7 0 placements.",
+    "gclid_count": 3,
     "sales_calls_booked": null,
     "call_proxy": null,
-    "call_proxy_estimated": false,
-    "ops_note": "Holly labeled week: 0 junk \u00b7 8 enquiries \u00b7 7 sales calls \u00b7 0 new / 0 returning / 0 replacement job orders (0 total) \u00b7 0 placements.",
-    "gclid_count": 3
+    "call_proxy_estimated": false
   },
   "sales_ops_au_now": {
     "market": "AU",
@@ -2645,7 +2645,7 @@
       "VC_AU_S_ROLES"
     ],
     "spend_usd": 303.65,
-    "spend_note": "AU Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 05:44 UTC.",
+    "spend_note": "AU Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 05:59 UTC.",
     "impressions": 551,
     "clicks": 35,
     "avg_cpc_usd": 8.68,
