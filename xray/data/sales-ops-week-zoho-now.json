@@ -1,50 +1,37 @@
 {
-  "generated_at_utc": "2026-08-31T06:07:37.360094+00:00",
-  "window_start": "2026-08-24T00:00:00-07:00",
-  "window_end_exclusive": "2026-08-31T00:00:00-07:00",
+  "generated_at_utc": "2026-08-31T19:11:13.039963+00:00",
+  "window_start": "2026-08-31T00:00:00-07:00",
+  "window_end_exclusive": "2026-09-01T00:00:00-07:00",
   "api_calls": 1,
-  "leads_in_window": 29,
+  "leads_in_window": 4,
   "usa": {
-    "n": 14,
+    "n": 2,
     "with_utm_gclid": 0,
-    "discovery_scheduled": 1,
-    "job_order_submitted": 2,
+    "discovery_scheduled": 2,
+    "job_order_submitted": 0,
     "by_source": {
-      "Website": 7,
-      "Phone": 5,
-      "Referral Partner": 1,
-      "Forbes": 1
+      "Website": 2
     },
     "by_status": {
-      "Information Brochure Sent": 4,
-      "Junk Lead": 4,
-      "Job Order Submitted": 2,
-      "New Enquiry (Auto)": 1,
-      "Discovery Scheduled": 1,
-      "Attempted to Contact 1 (Auto)": 1,
-      "Attempted to Contact 3 (Auto)": 1
+      "Discovery Scheduled": 2
     }
   },
   "au": {
-    "n": 11,
+    "n": 2,
     "with_utm_gclid": 0,
     "discovery_scheduled": 0,
-    "job_order_submitted": 5,
+    "job_order_submitted": 0,
     "by_source": {
-      "Website": 6,
-      "(blank)": 5
+      "Website": 1,
+      "(blank)": 1
     },
     "by_status": {
-      "Job Order Submitted": 5,
-      "Information Brochure Sent": 4,
-      "Sales Call Follow Up 2": 1,
-      "Decided Against / Not a Fit": 1
+      "New Enquiry (Auto)": 2
     }
   },
   "all_regions": {
-    "USA": 14,
-    "AU": 11,
-    "(blank)": 4
+    "USA": 2,
+    "AU": 2
   },
   "cheyenne_note": "Zoho census only \u2014 US Cost / enquiry on Executive uses Cheyenne\u2019s labeled count from Gmail, not this row total."
 }

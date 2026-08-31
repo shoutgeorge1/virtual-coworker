@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-08-31T06:40:33.531889+00:00",
-  "pull_started_utc": "2026-08-31T06:40:30.273345+00:00",
+  "generated_at_utc": "2026-08-31T19:11:11.788188+00:00",
+  "pull_started_utc": "2026-08-31T19:11:08.687024+00:00",
   "customer_ids": {
     "us": "4967151855",
     "au": "5735391940"
@@ -2803,10 +2803,10 @@
     "status_detail": "Google Ads data through complete day 2026-08-30 \u00b7 Zoho refreshed 2026-08-31 06:07 UTC \u00b7 US sales (Cheyenne) through 2026-08-25 \u00b7 AU sales (Holly) through 2026-08-25",
     "google_ads_through": "2026-08-30",
     "google_ads_period_note": "Displayed Google Ads period ends on the previous complete day because of reporting latency.",
-    "zoho_refreshed_at_utc": "2026-08-31T06:07:37.360094+00:00",
+    "zoho_refreshed_at_utc": "2026-08-31T19:11:13.039963+00:00",
     "us_sales_confirmed_through": "2026-08-25",
     "au_sales_confirmed_through": "2026-08-25",
-    "dashboard_generated_at_utc": "2026-08-31T06:40:33.531889+00:00",
+    "dashboard_generated_at_utc": "2026-08-31T19:11:11.788188+00:00",
     "sources": {
       "google_ads": {
         "ok": true,
@@ -2931,7 +2931,7 @@
       "job_order_submitted": 3
     },
     "spend_usd": 2036.15,
-    "spend_note": "US Core+Roles 2026-08-17\u20132026-08-23 through Ads pull 2026-08-31 06:40 UTC.",
+    "spend_note": "US Core+Roles 2026-08-17\u20132026-08-23 through Ads pull 2026-08-31 19:11 UTC.",
     "impressions": 7474,
     "clicks": 597,
     "avg_cpc_usd": 3.41,
@@ -2978,7 +2978,7 @@
       "VC_US_S_ROLES"
     ],
     "spend_usd": 621.12,
-    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 06:40 UTC.",
+    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 19:11 UTC.",
     "impressions": 1608,
     "clicks": 169,
     "avg_cpc_usd": 3.68,
@@ -3082,7 +3082,7 @@
       "VC_AU_S_ROLES"
     ],
     "spend_usd": 303.65,
-    "spend_note": "AU Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 06:40 UTC.",
+    "spend_note": "AU Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 19:11 UTC.",
     "impressions": 551,
     "clicks": 35,
     "avg_cpc_usd": 8.68,
