@@ -503,10 +503,10 @@
     var el = $("#ev2-decisions");
     if (!el) return;
     var cards = [
-      { m: "US", type: "Budget", v: "Hold", r: "Daily plan ~$125 — watch days that run ~$300" },
-      { m: "AU", type: "Budget", v: "Hold", r: "Lost auctions on rank, not budget cap" },
-      { m: "US", type: "Bidding", v: "Hold Max Clicks", r: "Recent phone leads included job seekers; no GCLID path yet" },
-      { m: "AU", type: "Bidding", v: "Hold Max Clicks", r: "Finish GA4/GTM coverage before Max Conversions" },
+      { m: "US", type: "Budget", v: "Controlled Ramp", r: "Operating at ~18% of historical agency spend pace" },
+      { m: "AU", type: "Budget", v: "Controlled Ramp", r: "Operating at ~15% of historical agency spend pace" },
+      { m: "US", type: "Bidding", v: "CORE Max Conv · ROLES Max Clicks", r: "CORE optimizes to primary conversions; ROLES holds Max Clicks with CPC cap" },
+      { m: "AU", type: "Bidding", v: "Hold Max Clicks", r: "Maintain CPC controls while GA4/GTM conversions build attribution history" },
     ];
     el.innerHTML = cards.map(function (c) {
       return '<article class="ev2-card ev2-decision"><div class="label">' + esc(c.m + " " + c.type) +

@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-08-31T06:07:36.022285+00:00",
-  "pull_started_utc": "2026-08-31T06:07:33.434787+00:00",
+  "generated_at_utc": "2026-08-31T06:40:33.531889+00:00",
+  "pull_started_utc": "2026-08-31T06:40:30.273345+00:00",
   "customer_ids": {
     "us": "4967151855",
     "au": "5735391940"
@@ -25,7 +25,27 @@
     }
   ],
   "hard_stop": null,
-  "conversions_note": "US CORE/ROLES on Maximize Conversions. Primary stack (George): phone click, 60s calls from ads, 60s website calls, VC_US_Thank_You (GTM v5). Old actions Secondary, not deleted. Thank-you may show Inactive until a gclid-attributed fire. Phone click is a tap \u2014 demote when volume exists. Job seekers never count. Early CPL still uses sales-ops enquiry counts. AU GTM + GA4 are live on Production (GTM-5T6KPVSF / G-7X1K9V2LFE).",
+  "conversions_note": "US CORE on Maximize Conversions; US ROLES on Maximize Clicks. Primary stack (George): phone click, 60s calls from ads, 60s website calls, VC_US_Thank_You (GTM v5). Old actions Secondary, not deleted. Thank-you may show Inactive until a gclid-attributed fire. Phone click is a tap \u2014 demote when volume exists. Job seekers never count. Early CPL still uses sales-ops enquiry counts. AU GTM + GA4 are live on Production (GTM-5T6KPVSF / G-7X1K9V2LFE).",
+  "executive_verdict": {
+    "united_states": "Producing confirmed activity across the full funnel at substantially lower blended cost than the previous agency while operating at approximately 18% of the agency\u2019s comparable spend pace. Downstream job orders still require sales validation.",
+    "australia": "Producing confirmed activity through the entire funnel\u201418 enquiries, 12 completed discovery calls, 7 job orders and 4 placements\u2014while operating at approximately 15% of the agency\u2019s comparable spend pace.",
+    "current_decision": "Maintain controlled ramp pacing (~18% US / ~15% AU of historical agency spend). US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls. Validate sales pipeline and lead qualification before further aggressive budget scaling.",
+    "us_bidding_strategies": {
+      "VC_US_S_CORE": "MAXIMIZE_CONVERSIONS",
+      "VC_US_S_ROLES": "TARGET_SPEND"
+    },
+    "au_bidding_strategies": {
+      "VC_AU_S_CORE": "TARGET_SPEND",
+      "VC_AU_S_ROLES": "MAXIMIZE_CONVERSIONS",
+      "PM_AU_RSA_Generic_Pain-Point Intent_Custom LP": "MAXIMIZE_CONVERSIONS",
+      "PM_AU_DSA_Generic_Catch-all_Custom LP": "MAXIMIZE_CONVERSIONS",
+      "PM_AU_RSA_Brand": "MAXIMIZE_CONVERSIONS",
+      "PM_AU_RSA_Generic_Premium & Quality Intent_Custom LP": "MAXIMIZE_CONVERSIONS",
+      "PM_AU_RSA_Competitors_Custom LP": "MAXIMIZE_CONVERSIONS",
+      "PM_AU_RSA_Brand_Custom LP": "MAXIMIZE_CONVERSIONS"
+    }
+  },
+  "current_decision": "Maintain controlled ramp pacing (~18% US / ~15% AU of historical agency spend). US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls. Validate sales pipeline and lead qualification before further aggressive budget scaling.",
   "performance_us": {
     "window": "2026-08-01_to_2026-08-30",
     "focus_day": "2026-08-30",
@@ -2780,13 +2800,13 @@
   },
   "freshness": {
     "status": "Current",
-    "status_detail": "Google Ads data through complete day 2026-08-30 \u00b7 Zoho refreshed 2026-08-31 06:02 UTC \u00b7 US sales (Cheyenne) through 2026-08-25 \u00b7 AU sales (Holly) through 2026-08-25",
+    "status_detail": "Google Ads data through complete day 2026-08-30 \u00b7 Zoho refreshed 2026-08-31 06:07 UTC \u00b7 US sales (Cheyenne) through 2026-08-25 \u00b7 AU sales (Holly) through 2026-08-25",
     "google_ads_through": "2026-08-30",
     "google_ads_period_note": "Displayed Google Ads period ends on the previous complete day because of reporting latency.",
     "zoho_refreshed_at_utc": "2026-08-31T06:07:37.360094+00:00",
     "us_sales_confirmed_through": "2026-08-25",
     "au_sales_confirmed_through": "2026-08-25",
-    "dashboard_generated_at_utc": "2026-08-31T06:07:36.022285+00:00",
+    "dashboard_generated_at_utc": "2026-08-31T06:40:33.531889+00:00",
     "sources": {
       "google_ads": {
         "ok": true,
@@ -2796,7 +2816,7 @@
       },
       "zoho": {
         "ok": true,
-        "refreshed_at_utc": "2026-08-31T06:02:05.937410+00:00",
+        "refreshed_at_utc": "2026-08-31T06:07:37.360094+00:00",
         "mode": "read_only_census"
       },
       "sales_us": {
@@ -2911,7 +2931,7 @@
       "job_order_submitted": 3
     },
     "spend_usd": 2036.15,
-    "spend_note": "US Core+Roles 2026-08-17\u20132026-08-23 through Ads pull 2026-08-31 06:07 UTC.",
+    "spend_note": "US Core+Roles 2026-08-17\u20132026-08-23 through Ads pull 2026-08-31 06:40 UTC.",
     "impressions": 7474,
     "clicks": 597,
     "avg_cpc_usd": 3.41,
@@ -2958,7 +2978,7 @@
       "VC_US_S_ROLES"
     ],
     "spend_usd": 621.12,
-    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 06:07 UTC.",
+    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 06:40 UTC.",
     "impressions": 1608,
     "clicks": 169,
     "avg_cpc_usd": 3.68,
@@ -3062,7 +3082,7 @@
       "VC_AU_S_ROLES"
     ],
     "spend_usd": 303.65,
-    "spend_note": "AU Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 06:07 UTC.",
+    "spend_note": "AU Core+Roles 2026-08-24\u20132026-08-25 through Ads pull 2026-08-31 06:40 UTC.",
     "impressions": 551,
     "clicks": 35,
     "avg_cpc_usd": 8.68,

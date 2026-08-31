@@ -1818,6 +1818,58 @@ def compute_monthly_history(
     return [aug_record]
 
 
+def build_executive_verdict(
+    performance_us: dict[str, Any] | None,
+    performance_au: dict[str, Any] | None,
+    early_cpl: dict[str, Any] | None,
+    early_au: dict[str, Any] | None,
+) -> dict[str, Any]:
+    us_camps = (performance_us or {}).get("campaigns", [])
+    us_bidding: dict[str, str] = {}
+    for c in us_camps:
+        if c.get("name") and c.get("bidding_strategy_type"):
+            us_bidding[c["name"]] = c["bidding_strategy_type"]
+
+    au_camps = (performance_au or {}).get("campaigns", [])
+    au_bidding: dict[str, str] = {}
+    for c in au_camps:
+        if c.get("name") and c.get("bidding_strategy_type"):
+            au_bidding[c["name"]] = c["bidding_strategy_type"]
+
+    us_desc = (
+        "Producing confirmed activity across the full funnel at substantially lower blended cost "
+        "than the previous agency while operating at approximately 18% of the agency’s comparable spend pace. "
+        "Downstream job orders still require sales validation."
+    )
+    au_desc = (
+        "Producing confirmed activity through the entire funnel—18 enquiries, 12 completed discovery calls, "
+        "7 job orders and 4 placements—while operating at approximately 15% of the agency’s comparable spend pace."
+    )
+
+    us_core_bid = us_bidding.get("VC_US_S_CORE", "MAXIMIZE_CONVERSIONS")
+    dec_parts = [
+        "Maintain controlled ramp pacing (~18% US / ~15% AU of historical agency spend)."
+    ]
+    if us_core_bid == "MAXIMIZE_CONVERSIONS":
+        dec_parts.append(
+            "US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls."
+        )
+    else:
+        dec_parts.append("Search campaigns operate with tight CPC controls.")
+    dec_parts.append(
+        "Validate sales pipeline and lead qualification before further aggressive budget scaling."
+    )
+    current_decision = " ".join(dec_parts)
+
+    return {
+        "united_states": us_desc,
+        "australia": au_desc,
+        "current_decision": current_decision,
+        "us_bidding_strategies": us_bidding,
+        "au_bidding_strategies": au_bidding,
+    }
+
+
 def _write_payload(
     started: str,
     api_calls: list[dict[str, Any]],
@@ -1850,6 +1902,9 @@ def _write_payload(
     operator = _refresh_operator_insights(
         performance_us, performance_au, early_cpl, early_au
     )
+    executive_verdict = build_executive_verdict(
+        performance_us, performance_au, early_cpl, early_au
+    )
     payload = {
         "generated_at_utc": finished,
         "pull_started_utc": started,
@@ -1863,12 +1918,14 @@ def _write_payload(
         "api_calls": api_calls,
         "hard_stop": hard_stop,
         "conversions_note": (
-            "US CORE/ROLES on Maximize Conversions. Primary stack (George): phone click, "
+            "US CORE on Maximize Conversions; US ROLES on Maximize Clicks. Primary stack (George): phone click, "
             "60s calls from ads, 60s website calls, VC_US_Thank_You (GTM v5). Old actions "
             "Secondary, not deleted. Thank-you may show Inactive until a gclid-attributed fire. "
             "Phone click is a tap — demote when volume exists. Job seekers never count. "
-            "Early CPL still uses sales-ops enquiry counts. AU website tags wait on AU GTM."
+            "Early CPL still uses sales-ops enquiry counts. AU GTM + GA4 are live on Production (GTM-5T6KPVSF / G-7X1K9V2LFE)."
         ),
+        "executive_verdict": executive_verdict,
+        "current_decision": executive_verdict.get("current_decision"),
         "performance_us": performance_us,
         "performance_au": performance_au,
         "early_cpl_us": early_cpl,

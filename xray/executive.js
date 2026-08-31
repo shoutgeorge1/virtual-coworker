@@ -285,17 +285,22 @@
     var auEl = $("#ex-verdict-au");
     var decEl = $("#ex-verdict-dec");
 
+    var snap = STATE.snapshot || {};
+    var verdict = snap.executive_verdict || {};
+
     var usSpendPacePct = us.agPeriodEquivSpend > 0 ? Math.round((us.spend / us.agPeriodEquivSpend) * 100) : 18;
     var auSpendPacePct = au.agPeriodEquivSpend > 0 ? Math.round((au.spend / au.agPeriodEquivSpend) * 100) : 15;
 
     if (usEl) {
-      var usJo = us.funnel.jobOrders || 13;
-      var usPl = us.funnel.placements || 3;
+      var usEnq = us.funnel.enquiries != null ? us.funnel.enquiries : 31;
+      var usDisc = us.funnel.discoveries != null ? us.funnel.discoveries : 16;
+      var usJo = us.funnel.jobOrders != null ? us.funnel.jobOrders : 13;
+      var usPl = us.funnel.placements != null ? us.funnel.placements : 3;
       usEl.textContent =
         "Producing confirmed activity across the full funnel—" +
-        (us.funnel.enquiries || 31) +
+        usEnq +
         " enquiries, " +
-        (us.funnel.discoveries || 16) +
+        usDisc +
         " completed discovery calls, " +
         usJo +
         " job orders and " +
@@ -306,13 +311,15 @@
     }
 
     if (auEl) {
-      var auJo = au.funnel.jobOrders || 7;
-      var auPl = au.funnel.placements || 4;
+      var auEnq = au.funnel.enquiries != null ? au.funnel.enquiries : 18;
+      var auDisc = au.funnel.discoveries != null ? au.funnel.discoveries : 12;
+      var auJo = au.funnel.jobOrders != null ? au.funnel.jobOrders : 7;
+      var auPl = au.funnel.placements != null ? au.funnel.placements : 4;
       auEl.textContent =
         "Producing confirmed activity through the entire funnel—" +
-        (au.funnel.enquiries || 18) +
+        auEnq +
         " enquiries, " +
-        (au.funnel.discoveries || 12) +
+        auDisc +
         " completed discovery calls, " +
         auJo +
         " job orders and " +
@@ -323,8 +330,28 @@
     }
 
     if (decEl) {
-      decEl.textContent =
-        "Continue the controlled ramp without changing bidding strategy. Complete direct click-ID and phone-call tracking before aggressive scaling.";
+      if (snap.current_decision) {
+        decEl.textContent = snap.current_decision;
+      } else if (verdict.current_decision) {
+        decEl.textContent = verdict.current_decision;
+      } else {
+        var perfUs = snap.performance_us || {};
+        var usCamps = perfUs.campaigns || [];
+        var isMaxConv = usCamps.some(function (c) {
+          return c.name === "VC_US_S_CORE" && c.bidding_strategy_type === "MAXIMIZE_CONVERSIONS";
+        });
+        var bidNote = isMaxConv
+          ? "US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls."
+          : "Search campaigns operate with tight CPC controls.";
+        decEl.textContent =
+          "Maintain controlled ramp pacing (~" +
+          usSpendPacePct +
+          "% US / ~" +
+          auSpendPacePct +
+          "% AU of historical agency spend). " +
+          bidNote +
+          " Validate sales pipeline and lead qualification before further aggressive budget scaling.";
+      }
     }
   }
 
