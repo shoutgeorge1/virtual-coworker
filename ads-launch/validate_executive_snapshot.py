@@ -344,7 +344,8 @@ def validate_page_source_parity(xray_dir: Path | None = None) -> list[str]:
         errors.append("executive.js still blends US+AU pace into one figure")
 
     required_ids = (
-        'id="ex-summary-august"',
+        'id="ex-summary-us"',
+        'id="ex-summary-au"',
         'id="ex-summary-september"',
         'id="ex-us-tbody"',
         'id="ex-au-tbody"',

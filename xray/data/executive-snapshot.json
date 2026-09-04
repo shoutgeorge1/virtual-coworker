@@ -1,35 +1,20 @@
 {
-  "generated_at_utc": "2026-09-04T18:12:05.781487+00:00",
-  "pull_started_utc": "2026-09-04T18:12:02.243827+00:00",
+  "generated_at_utc": "2026-09-04T18:22:06.001576+00:00",
+  "pull_started_utc": "2026-09-04T18:22:06.000395+00:00",
   "customer_ids": {
     "us": "4967151855",
     "au": "5735391940"
   },
   "filter": "VC_US_% 2026-08-01\u21922026-09-03 + AU active campaigns 2026-08-01\u21922026-09-03 (by-date \u00b7 frozen week locked \u00b7 now vs same weekdays)",
-  "api_calls_used": 2,
+  "api_calls_used": 0,
   "api_calls_max": 2,
-  "api_calls": [
-    {
-      "n": 1,
-      "name": "campaign_metrics_vc_us_date_range",
-      "ok": true,
-      "row_count": 58,
-      "date_range": "2026-08-01_to_2026-09-03"
-    },
-    {
-      "n": 2,
-      "name": "campaign_metrics_au_active_14d",
-      "ok": true,
-      "row_count": 75,
-      "date_range": "2026-08-01_to_2026-09-03"
-    }
-  ],
+  "api_calls": [],
   "hard_stop": null,
   "conversions_note": "US CORE on Maximize Conversions; US ROLES on Maximize Clicks. Primary stack (George): phone click, 60s calls from ads, 60s website calls, VC_US_Thank_You (GTM v5). Old actions Secondary, not deleted. Thank-you may show Inactive until a gclid-attributed fire. Phone click is a tap \u2014 demote when volume exists. Job seekers never count. Early CPL still uses sales-ops enquiry counts. AU GTM + GA4 are live on Production (GTM-5T6KPVSF / G-7X1K9V2LFE).",
   "executive_verdict": {
-    "united_states": "August closed: $6,595 \u2192 45 employer enquiries \u2192 24 completed calls \u2192 13 job orders* \u2192 3 placements*. Open month spend $1,254 at 42% of agency-equivalent pace; sales outcomes await the next labeled update.",
-    "australia": "August closed: A$3,044 \u2192 23 employer enquiries \u2192 18 completed calls \u2192 7 job orders* \u2192 4 placements*. Open month spend A$577 at 31% of agency-equivalent pace; sales outcomes await the next labeled update.",
-    "current_decision": "Hold current budgets until lead quality and pipeline outcomes are validated (~42% US / ~31% AU of agency-equivalent pace for the open month). US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls.",
+    "united_states": "August closed: $6,595 \u2192 45 employer enquiries \u2192 24 completed calls \u2192 13 job orders* \u2192 3 placements*. Cost/enquiry $146.55; cost/call $274.78. Agency pace 21% (closed-month baseline). September MTD spend $1,254 (42% early MTD pace); sales outcomes await the next labeled update.",
+    "australia": "August closed: A$3,044 \u2192 23 employer enquiries \u2192 18 completed calls \u2192 7 job orders* \u2192 4 placements*. Cost/enquiry A$132.34; cost/call A$169.10. Agency pace 16% (closed-month baseline). September MTD spend A$577 (31% early MTD pace); sales outcomes await the next labeled update.",
+    "current_decision": "Hold current budgets. August closed remains the agency-comparison baseline (~21% US / ~16% AU of agency-equivalent pace). Early September MTD pace (~42% US / ~31% AU over 3 days) is a short-window burn rate, not a replacement for August. US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls.",
     "us_bidding_strategies": {
       "VC_US_S_CORE": "MAXIMIZE_CONVERSIONS",
       "VC_US_S_ROLES": "TARGET_SPEND"
@@ -45,7 +30,7 @@
       "PM_AU_RSA_Brand_Custom LP": "MAXIMIZE_CONVERSIONS"
     }
   },
-  "current_decision": "Hold current budgets until lead quality and pipeline outcomes are validated (~42% US / ~31% AU of agency-equivalent pace for the open month). US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls.",
+  "current_decision": "Hold current budgets. August closed remains the agency-comparison baseline (~21% US / ~16% AU of agency-equivalent pace). Early September MTD pace (~42% US / ~31% AU over 3 days) is a short-window burn rate, not a replacement for August. US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls.",
   "performance_us": {
     "window": "2026-08-01_to_2026-09-03",
     "focus_day": "2026-09-03",
@@ -3307,7 +3292,7 @@
       "job_order_submitted": 3
     },
     "spend_usd": 2361.76,
-    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-30 through Ads pull 2026-09-04 18:12 UTC.",
+    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-30 through Ads pull 2026-09-04 18:22 UTC.",
     "impressions": 4709,
     "clicks": 467,
     "avg_cpc_usd": 5.06,
@@ -3345,7 +3330,7 @@
       "VC_US_S_ROLES"
     ],
     "spend_usd": 1253.5,
-    "spend_note": "US Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:12 UTC.",
+    "spend_note": "US Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:22 UTC.",
     "impressions": 2173,
     "clicks": 142,
     "avg_cpc_usd": 8.83,
@@ -3425,11 +3410,11 @@
     "caveat": "Sales-ops cost uses Holly\u2019s 8 enquiries.",
     "why_plain": "8 enquiries \u00b7 7 sales calls \u00b7 0 job orders \u00b7 0 placements.",
     "insight_plain": "AU sales ops (Mon Aug 17 \u2013 Sun Aug 23): 8 enquiries \u00b7 7 sales calls \u00b7 0 job orders \u00b7 0 placements \u00b7 A$116.71/enquiry.",
-    "ops_note": "Holly labeled week: 0 junk \u00b7 8 enquiries \u00b7 7 sales calls \u00b7 0 new / 0 returning / 0 replacement job orders (0 total) \u00b7 0 placements.",
-    "gclid_count": 3,
     "sales_calls_booked": null,
     "call_proxy": null,
-    "call_proxy_estimated": false
+    "call_proxy_estimated": false,
+    "ops_note": "Holly labeled week: 0 junk \u00b7 8 enquiries \u00b7 7 sales calls \u00b7 0 new / 0 returning / 0 replacement job orders (0 total) \u00b7 0 placements.",
+    "gclid_count": 3
   },
   "sales_ops_au_now": {
     "market": "AU",
@@ -3457,7 +3442,7 @@
       "VC_AU_S_ROLES"
     ],
     "spend_usd": 576.82,
-    "spend_note": "AU Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:12 UTC.",
+    "spend_note": "AU Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:22 UTC.",
     "impressions": 778,
     "clicks": 57,
     "avg_cpc_usd": 10.12,
@@ -3474,7 +3459,7 @@
     "zoho_refreshed_at_utc": "2026-09-04T18:12:07.514574+00:00",
     "us_sales_confirmed_through": "2026-08-31",
     "au_sales_confirmed_through": "2026-08-30",
-    "dashboard_generated_at_utc": "2026-09-04T18:12:05.781487+00:00",
+    "dashboard_generated_at_utc": "2026-09-04T18:22:06.001576+00:00",
     "sources": {
       "google_ads": {
         "ok": true,
@@ -3484,7 +3469,7 @@
       },
       "zoho": {
         "ok": true,
-        "refreshed_at_utc": "2026-09-04T17:49:10.766352+00:00",
+        "refreshed_at_utc": "2026-09-04T18:12:07.514574+00:00",
         "mode": "read_only_census"
       },
       "sales_us": {

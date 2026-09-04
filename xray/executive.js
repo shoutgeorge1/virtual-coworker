@@ -192,25 +192,28 @@
     return safeDiv(spend, den);
   }
 
-  /* —— Market Data Construction (monthly_history first) —— */
+  function costValue(c) {
+    if (c == null) return null;
+    if (typeof c === "object") return c.value != null ? Number(c.value) : null;
+    var n = Number(c);
+    return Number.isFinite(n) ? n : null;
+  }
 
-  function buildMarketData(market) {
+  /* —— Market Data: August closed is the scoreboard baseline —— */
+
+  function buildMarketFromRecord(market, rec, fallbackAdsStart, fallbackAdsEnd) {
     var cur = market === "AU" ? "AUD" : "USD";
     var snap = STATE.snapshot || {};
     var perf = market === "US" ? snap.performance_us : snap.performance_au;
     var by = (perf || {}).by_date_stage1 || (perf || {}).by_date || {};
-    var period = reportingPeriod();
-    var rec = activeMonthRecord();
     var side = market === "US" ? "us" : "au";
     var m = (rec && rec[side]) || {};
-
-    var start = period.start;
-    var end = period.end;
+    var start = (rec && rec.period_start) || fallbackAdsStart;
+    var end = (rec && rec.period_end) || fallbackAdsEnd;
     var ads = sumAdsByDate(by, start, end, cur);
 
     var spend = m.spend != null ? Number(m.spend) : ads ? ads.spend : null;
     var funnel = funnelFromMonthSide(m);
-
     var cpe = costFromMonth(m, spend, funnel, "cost_per_enquiry", funnel.enquiriesPending ? null : funnel.enquiries);
     var cpd = costFromMonth(m, spend, funnel, "cost_per_discovery", funnel.discoveries);
     var cpjo =
@@ -225,16 +228,7 @@
     var agBlock = agencyBlock(market);
     var daysInPeriod = daysInclusive(start, end);
     var agPeriodEquivSpend = agencyPeriodEquiv(market, daysInPeriod);
-    var agCpe = Number(agBlock.cost_per_legitimate_employer_enquiry || (market === "US" ? 816.31 : 615.82));
-    var agCpd = Number(agBlock.cost_per_discovery || (market === "US" ? 1285.25 : 812.35));
-    var agCpjo = Number(agBlock.cost_per_job_order || (market === "US" ? 2013.56 : 1104.02));
-    var agCpp = Number(agBlock.cost_per_placement || (market === "US" ? 4289.23 : 2073.15));
-    var agCpc = Number(agBlock.avg_cpc || (market === "US" ? 8.29 : 9.24));
-    var agCtr = Number(agBlock.ctr_pct || (market === "US" ? 1.62 : 1.44));
-
-    if (ads && spend != null) {
-      ads = Object.assign({}, ads, { spend: spend });
-    }
+    if (ads && spend != null) ads = Object.assign({}, ads, { spend: spend });
 
     return {
       market: market,
@@ -247,43 +241,43 @@
       cpjo: cpjo,
       cpp: cpp,
       daysInPeriod: daysInPeriod,
-      periodLabel: period.label,
+      periodLabel: (rec && rec.label) || reportingPeriod().label,
+      periodStart: start,
+      periodEnd: end,
+      status: (rec && rec.status) || "active_mtd",
       agPeriodEquivSpend: agPeriodEquivSpend,
-      agCpe: agCpe,
-      agCpd: agCpd,
-      agCpjo: agCpjo,
-      agCpp: agCpp,
-      agCpc: agCpc,
-      agCtr: agCtr,
+      agCpe: Number(agBlock.cost_per_legitimate_employer_enquiry || (market === "US" ? 816.31 : 615.82)),
+      agCpd: Number(agBlock.cost_per_discovery || (market === "US" ? 1285.25 : 812.35)),
+      agCpjo: Number(agBlock.cost_per_job_order || (market === "US" ? 2013.56 : 1104.02)),
+      agCpp: Number(agBlock.cost_per_placement || (market === "US" ? 4289.23 : 2073.15)),
+      agCpc: Number(agBlock.avg_cpc || (market === "US" ? 8.29 : 9.24)),
+      agCtr: Number(agBlock.ctr_pct || (market === "US" ? 1.62 : 1.44)),
       pacePct: spendPacePct(spend, agPeriodEquivSpend),
     };
+  }
+
+  function buildMarketData(market) {
+    // Scorecards always prefer the last closed month (August) so Pending MTD
+    // never replaces confirmed pilot economics.
+    var closed = closedMonthRecord();
+    var active = activeMonthRecord();
+    var period = reportingPeriod();
+    if (closed) {
+      return buildMarketFromRecord(market, closed, closed.period_start, closed.period_end);
+    }
+    return buildMarketFromRecord(market, active, period.start, period.end);
+  }
+
+  function buildMtdMarketData(market) {
+    var active = activeMonthRecord();
+    var period = reportingPeriod();
+    return buildMarketFromRecord(market, active, period.start, period.end);
   }
 
   function buildClosedMarketData(market) {
     var closed = closedMonthRecord();
     if (!closed) return null;
-    var cur = market === "AU" ? "AUD" : "USD";
-    var side = market === "US" ? "us" : "au";
-    var m = closed[side] || {};
-    var funnel = funnelFromMonthSide(m);
-    var spend = m.spend != null ? Number(m.spend) : null;
-    var daysInPeriod = daysInclusive(closed.period_start, closed.period_end);
-    var agPeriodEquivSpend = agencyPeriodEquiv(market, daysInPeriod);
-    var agBlock = agencyBlock(market);
-    return {
-      market: market,
-      currency: cur,
-      label: closed.label || "August 2026",
-      periodStart: closed.period_start,
-      periodEnd: closed.period_end,
-      spend: spend,
-      funnel: funnel,
-      cpe: m.cost_per_enquiry != null ? Number(m.cost_per_enquiry) : null,
-      cpd: m.cost_per_discovery != null ? Number(m.cost_per_discovery) : null,
-      pacePct: spendPacePct(spend, agPeriodEquivSpend),
-      agCpe: Number(agBlock.cost_per_legitimate_employer_enquiry || (market === "US" ? 816.31 : 615.82)),
-      agCpd: Number(agBlock.cost_per_discovery || (market === "US" ? 1285.25 : 812.35)),
-    };
+    return buildMarketFromRecord(market, closed, closed.period_start, closed.period_end);
   }
 
   function diffPercentHtml(pilotCost, agCost) {
@@ -346,15 +340,24 @@
 
     var periodEl = $("#ex-period");
     if (periodEl) {
-      periodEl.textContent =
-        period.label.indexOf("MTD") >= 0
+      var closed = closedMonthRecord();
+      periodEl.textContent = closed
+        ? (closed.label || "August 2026") + " closed · " + period.label
+        : period.label.indexOf("MTD") >= 0
           ? period.label.replace(" MTD", " · Month to Date")
           : period.label;
     }
     var mobPeriod = $("#ex-mob-period-badge");
-    if (mobPeriod) mobPeriod.textContent = period.label;
+    if (mobPeriod) {
+      var closedMob = closedMonthRecord();
+      mobPeriod.textContent = closedMob ? (closedMob.label || "August") + " closed" : period.label;
+    }
 
-    var volLabel = period.label.indexOf("MTD") >= 0 ? period.label.replace(" MTD", " MTD volume") : period.label + " volume";
+    var volLabel = "August volume";
+    var closedRec = closedMonthRecord();
+    if (closedRec && closedRec.label) {
+      volLabel = closedRec.label.replace(" 2026", "") + " volume";
+    }
     ["#ex-us-vol-th", "#ex-au-vol-th"].forEach(function (sel) {
       var th = $(sel);
       if (th) th.textContent = volLabel;
@@ -362,8 +365,15 @@
 
     var freshEl = $("#ex-fresh");
     if (freshEl) {
+      var closedFresh = closedMonthRecord();
+      var scoreboardSpan = closedFresh
+        ? (closedFresh.period_start + " → " + closedFresh.period_end + " (August closed)")
+        : (period.start + " → " + period.end);
       freshEl.innerHTML =
-        '<span class="ex-fresh-item"><strong>Reporting period:</strong> ' +
+        '<span class="ex-fresh-item"><strong>Scoreboard:</strong> ' +
+        scoreboardSpan +
+        "</span> · " +
+        '<span class="ex-fresh-item"><strong>Open MTD:</strong> ' +
         period.start +
         " → " +
         period.end +
@@ -392,194 +402,189 @@
 
     var mobFreshEl = $("#ex-mob-fresh");
     if (mobFreshEl) {
+      var closedFresh = closedMonthRecord();
       mobFreshEl.textContent =
-        period.label + " · Ads through " + adsStr + " · US sales " + usStr + " · AU sales " + auStr + " · " + status;
+        (closedFresh ? (closedFresh.label || "August") + " closed · " : "") +
+        "Ads through " +
+        adsStr +
+        " · US sales " +
+        usStr +
+        " · AU sales " +
+        auStr +
+        " · " +
+        status;
     }
   }
 
-  /* —— Render: Above-the-fold summary —— */
+  /* —— Render: Above-the-fold summary (scannable, August-first) —— */
+
+  function marketSummaryHtml(data) {
+    if (!data) return "—";
+    var f = data.funnel || {};
+    var pace = data.pacePct != null ? data.pacePct + "%" : "—";
+    var cpe = data.cpe && data.cpe.value != null ? formatMoney2(data.cpe.value, data.currency) : "—";
+    var cpd = data.cpd && data.cpd.value != null ? formatMoney2(data.cpd.value, data.currency) : "—";
+    return (
+      '<div class="ex-summary-mkt-name">' +
+      (data.market === "US" ? "United States · USD" : "Australia · AUD") +
+      ' <span class="ex-pill ok ex-pill-sm">Closed</span></div>' +
+      '<div class="ex-summary-mkt-spend">' +
+      formatMoney(data.spend, data.currency) +
+      ' spend · <strong>' +
+      pace +
+      "</strong> of agency-equivalent pace</div>" +
+      '<div class="ex-summary-mkt-funnel">' +
+      (f.enquiries != null ? formatNum(f.enquiries) : "—") +
+      " enquiries → " +
+      (f.discoveries != null ? formatNum(f.discoveries) : "—") +
+      " calls → " +
+      (f.jobOrders != null ? formatNum(f.jobOrders) + "*" : "—") +
+      " job orders → " +
+      (f.placements != null ? formatNum(f.placements) + "*" : "—") +
+      " placements</div>" +
+      '<div class="ex-summary-mkt-costs">Cost/enquiry ' +
+      cpe +
+      " · Cost/call " +
+      cpd +
+      "</div>"
+    );
+  }
 
   function renderExecutiveSummary(us, au) {
-    var closedUs = buildClosedMarketData("US");
-    var closedAu = buildClosedMarketData("AU");
+    var mtdUs = buildMtdMarketData("US");
+    var mtdAu = buildMtdMarketData("AU");
     var fresh = ((STATE.snapshot || {}).freshness || {});
     var usConfirmed = fresh.us_sales_confirmed_through || "—";
     var auConfirmed = fresh.au_sales_confirmed_through || "—";
     var period = reportingPeriod();
 
-    var augLine = "";
-    if (closedUs && closedAu) {
-      augLine =
-        "August closed: US " +
-        funnelChain(closedUs, "USD") +
-        ". AU " +
-        funnelChain(closedAu, "AUD") +
-        ".";
-    }
+    var usBox = $("#ex-summary-us");
+    var auBox = $("#ex-summary-au");
+    if (usBox) usBox.innerHTML = marketSummaryHtml(us);
+    if (auBox) auBox.innerHTML = marketSummaryHtml(au);
 
     var usPace = us.pacePct != null ? us.pacePct + "%" : "—";
     var auPace = au.pacePct != null ? au.pacePct + "%" : "—";
-    var sepLine =
-      period.label.replace(" MTD", "") +
-      " through " +
-      fmtShortDate(period.end) +
-      ": US spend " +
-      formatMoney(us.spend, "USD") +
-      " at " +
-      usPace +
-      " of agency-equivalent pace; AU spend " +
-      formatMoney(au.spend, "AUD") +
-      " at " +
-      auPace +
-      ". Sales outcomes await the next labeled update. Hold current budgets until lead quality and pipeline outcomes are validated.";
+    var mtdUsPace = mtdUs.pacePct != null ? mtdUs.pacePct + "%" : "—";
+    var mtdAuPace = mtdAu.pacePct != null ? mtdAu.pacePct + "%" : "—";
 
-    var decision =
-      "US sales confirmed through " +
-      fmtShortDate(usConfirmed) +
-      "; AU through " +
-      fmtShortDate(auConfirmed) +
-      ". " +
-      "Awaiting sales update. Current daily budgets (context only): US $250 Core + $100 Roles = $350/day; AU A$150 Core + A$65 Roles = A$215/day.";
+    var sepEl = $("#ex-summary-september");
+    if (sepEl) {
+      sepEl.innerHTML =
+        "<strong>September through " +
+        fmtShortDate(period.end) +
+        ":</strong> US spend " +
+        formatMoney(mtdUs.spend, "USD") +
+        " (" +
+        mtdUsPace +
+        " early MTD pace) · AU spend " +
+        formatMoney(mtdAu.spend, "AUD") +
+        " (" +
+        mtdAuPace +
+        ' early MTD pace). Sales: <span class="ex-status-tag pending">Awaiting sales update</span>' +
+        " (US confirmed " +
+        fmtShortDate(usConfirmed) +
+        ", AU " +
+        fmtShortDate(auConfirmed) +
+        ").";
+    }
 
-    var footnote =
-      "*Blended sales-confirmed company outcomes; not all Google Ads-attributed. Management reporting uses blended, sales-confirmed company outcomes. Optimization reporting requires direct GCLID and usable phone attribution.";
+    var decEl = $("#ex-summary-decision");
+    if (decEl) {
+      decEl.textContent =
+        "Hold current budgets. August closed at ~" +
+        usPace +
+        " US / ~" +
+        auPace +
+        " AU of agency-equivalent pace — that is the validated pilot baseline vs the two-year agency run. Early September MTD pace is a short-window burn rate (only " +
+        (mtdUs.daysInPeriod || 3) +
+        " days), not a replacement for August. Daily budgets for context: US $350/day · AU A$215/day.";
+    }
 
-    var deskAug = $("#ex-summary-august");
-    var deskSep = $("#ex-summary-september");
-    var deskDec = $("#ex-summary-decision");
-    var deskNote = $("#ex-summary-footnote");
-    if (deskAug) deskAug.textContent = augLine;
-    if (deskSep) deskSep.textContent = sepLine;
-    if (deskDec) deskDec.textContent = decision;
-    if (deskNote) deskNote.textContent = footnote;
+    var footnote = $("#ex-summary-footnote");
+    if (footnote) {
+      footnote.textContent =
+        "*Blended sales-confirmed company outcomes; not all Google Ads-attributed. Management reporting uses blended company outcomes. Optimization needs GCLID + usable phone attribution.";
+    }
 
     var mobSnap = $("#ex-mob-snapshot-text");
     if (mobSnap) {
-      mobSnap.textContent = (augLine ? augLine + " " : "") + sepLine;
+      mobSnap.textContent =
+        "August closed at ~" +
+        usPace +
+        " US / ~" +
+        auPace +
+        " AU of agency pace. US " +
+        formatMoney(us.spend, "USD") +
+        " → " +
+        formatNum(us.funnel.enquiries) +
+        " enquiries → " +
+        formatNum(us.funnel.discoveries) +
+        " calls. AU " +
+        formatMoney(au.spend, "AUD") +
+        " → " +
+        formatNum(au.funnel.enquiries) +
+        " enquiries → " +
+        formatNum(au.funnel.discoveries) +
+        " calls. September sales still awaiting labeled update.";
     }
 
     var mobPace = $("#ex-mob-snap-pace");
-    if (mobPace) {
-      mobPace.textContent =
-        "US " + (us.pacePct != null ? us.pacePct + "%" : "—") + " · AU " + (au.pacePct != null ? au.pacePct + "%" : "—");
-    }
+    if (mobPace) mobPace.textContent = "US " + usPace + " · AU " + auPace;
     var mobPaceLbl = $("#ex-mob-snap-pace-lbl");
-    if (mobPaceLbl) mobPaceLbl.textContent = "Agency-equiv pace";
+    if (mobPaceLbl) mobPaceLbl.textContent = "Aug agency pace";
     var mobPaceSub = $("#ex-mob-snap-pace-sub");
-    if (mobPaceSub) mobPaceSub.textContent = "Sep MTD · markets separate";
+    if (mobPaceSub) mobPaceSub.textContent = "Closed month baseline";
 
-    var closedForCosts = closedUs;
     var cpePct =
-      closedForCosts && closedForCosts.cpe != null && closedForCosts.agCpe
-        ? Math.round(((closedForCosts.agCpe - closedForCosts.cpe) / closedForCosts.agCpe) * 100)
+      us.cpe.value != null && us.agCpe
+        ? Math.round(((us.agCpe - us.cpe.value) / us.agCpe) * 100)
         : null;
     var cpdPct =
-      closedForCosts && closedForCosts.cpd != null && closedForCosts.agCpd
-        ? Math.round(((closedForCosts.agCpd - closedForCosts.cpd) / closedForCosts.agCpd) * 100)
+      us.cpd.value != null && us.agCpd
+        ? Math.round(((us.agCpd - us.cpd.value) / us.agCpd) * 100)
         : null;
-
     var mobCpe = $("#ex-mob-snap-cpe");
     if (mobCpe) mobCpe.textContent = cpePct != null ? "-" + cpePct + "%" : "—";
     var mobCpeSub = $("#ex-mob-snap-cpe-sub");
     if (mobCpeSub) {
       mobCpeSub.textContent =
-        closedUs && closedUs.cpe != null
-          ? "US " + formatMoney2(closedUs.cpe, "USD") + " · Aug closed"
-          : "Awaiting sales update";
+        us.cpe.value != null ? "US " + formatMoney2(us.cpe.value, "USD") + " · Aug closed" : "—";
     }
-
     var mobCpd = $("#ex-mob-snap-cpd");
     if (mobCpd) mobCpd.textContent = cpdPct != null ? "-" + cpdPct + "%" : "—";
     var mobCpdSub = $("#ex-mob-snap-cpd-sub");
     if (mobCpdSub) {
       mobCpdSub.textContent =
-        closedUs && closedUs.cpd != null
-          ? "US " + formatMoney2(closedUs.cpd, "USD") + " · Aug closed"
-          : "Awaiting sales update";
-    }
-
-    var usEl = $("#ex-verdict-us");
-    var auEl = $("#ex-verdict-au");
-    var decEl = $("#ex-verdict-dec");
-    if (usEl) {
-      usEl.textContent =
-        closedUs
-          ? "August closed: " +
-            funnelChain(closedUs, "USD") +
-            ". Cost/enquiry " +
-            formatMoney2(closedUs.cpe, "USD") +
-            "; cost/completed call " +
-            formatMoney2(closedUs.cpd, "USD") +
-            ". September through " +
-            fmtShortDate(period.end) +
-            ": spend " +
-            formatMoney(us.spend, "USD") +
-            " at " +
-            usPace +
-            " of agency-equivalent pace. Sales outcomes pending labeled update."
-          : "Ads spend " + formatMoney(us.spend, "USD") + " (~" + usPace + " agency pace). Sales outcomes pending.";
-    }
-    if (auEl) {
-      auEl.textContent =
-        closedAu
-          ? "August closed: " +
-            funnelChain(closedAu, "AUD") +
-            ". Cost/enquiry " +
-            formatMoney2(closedAu.cpe, "AUD") +
-            "; cost/completed call " +
-            formatMoney2(closedAu.cpd, "AUD") +
-            ". September through " +
-            fmtShortDate(period.end) +
-            ": spend " +
-            formatMoney(au.spend, "AUD") +
-            " at " +
-            auPace +
-            " of agency-equivalent pace. Sales outcomes pending labeled update."
-          : "Ads spend " + formatMoney(au.spend, "AUD") + " (~" + auPace + " agency pace). Sales outcomes pending.";
-    }
-    if (decEl) {
-      decEl.textContent =
-        "Hold current budgets until lead quality and pipeline outcomes are validated. " +
-        "US ~" +
-        usPace +
-        " / AU ~" +
-        auPace +
-        " of agency-equivalent pace (September MTD). " +
-        decision;
+        us.cpd.value != null ? "US " + formatMoney2(us.cpd.value, "USD") + " · Aug closed" : "—";
     }
 
     var working = $("#ex-mob-working-text");
-    if (working && closedUs && closedAu) {
+    if (working) {
       working.textContent =
-        "August closed at lower blended unit costs than the agency baseline — US " +
-        formatMoney2(closedUs.cpe, "USD") +
-        "/enquiry and " +
-        formatMoney2(closedUs.cpd, "USD") +
-        "/call; AU " +
-        formatMoney2(closedAu.cpe, "AUD") +
-        "/enquiry and " +
-        formatMoney2(closedAu.cpd, "AUD") +
-        "/call. September spend is live at US " +
+        "August closed with confirmed funnel outcomes at lower blended unit costs than the two-year agency baseline, at about " +
         usPace +
-        " / AU " +
+        " (US) / " +
         auPace +
-        " agency-equivalent pace.";
+        " (AU) of agency-equivalent pace.";
     }
     var uncertain = $("#ex-mob-uncertain-text");
     if (uncertain) {
       uncertain.textContent =
-        "September sales outcomes are pending the next properly labeled Cheyenne (US) and Holly (AU) update. " +
-        "US sales confirmed through " +
+        "September sales outcomes await the next Cheyenne / Holly labeled update. US confirmed through " +
         fmtShortDate(usConfirmed) +
         "; AU through " +
         fmtShortDate(auConfirmed) +
-        ". Awaiting sales update.";
+        ". Early MTD pace (US " +
+        mtdUsPace +
+        " / AU " +
+        mtdAuPace +
+        ") is a short-window burn rate — not a replacement for the August baseline.";
     }
     var next = $("#ex-mob-next-text");
     if (next) {
       next.textContent =
-        "Hold current budgets. Validate lead quality and pipeline outcomes before scaling. " +
-        "Keep US and AU reporting separate by currency — never blend USD and AUD.";
+        "Hold current budgets. Keep August closed as the pilot baseline. Do not scale on September Pending sales boxes.";
     }
   }
 
@@ -826,32 +831,21 @@
 
     var statusEl = $("#ex-mob-mkt-status");
     if (statusEl) {
-      statusEl.textContent = mktData.funnel.enquiriesPending ? "Awaiting sales update" : "Active Search Pilot";
+      statusEl.textContent = mktData.status === "complete" ? "August closed" : "Active Search Pilot";
     }
 
     var metricGrid = $("#ex-mob-metric-cards");
     if (metricGrid) {
       var cur = mktData.currency;
-      var showClosed = mktData.funnel.enquiriesPending && closed;
-      var display = showClosed
-        ? {
-            enq: closed.funnel.enquiries,
-            disc: closed.funnel.discoveries,
-            jo: closed.funnel.jobOrders,
-            pl: closed.funnel.placements,
-            cpe: closed.cpe,
-            cpd: closed.cpd,
-            note: "Aug closed",
-          }
-        : {
-            enq: mktData.funnel.enquiries,
-            disc: mktData.funnel.discoveries,
-            jo: mktData.funnel.jobOrders,
-            pl: mktData.funnel.placements,
-            cpe: mktData.cpe.value,
-            cpd: mktData.cpd.value,
-            note: null,
-          };
+      var display = {
+        enq: mktData.funnel.enquiries,
+        disc: mktData.funnel.discoveries,
+        jo: mktData.funnel.jobOrders,
+        pl: mktData.funnel.placements,
+        cpe: mktData.cpe.value,
+        cpd: mktData.cpd.value,
+        note: mktData.status === "complete" ? "Aug closed" : null,
+      };
 
       function card(title, vol, cost, agCost, pending) {
         var volHtml = pending || vol == null ? '<span class="ex-status-tag pending">Pending</span>' : formatNum(vol);
@@ -920,10 +914,10 @@
 
     var funnelWrap = $("#ex-mob-funnel-steps");
     if (funnelWrap) {
-      var src = mktData.funnel.enquiriesPending && closed ? closed.funnel : mktData.funnel;
-      var cpeV = mktData.funnel.enquiriesPending && closed ? closed.cpe : mktData.cpe.value;
-      var cpdV = mktData.funnel.enquiriesPending && closed ? closed.cpd : mktData.cpd.value;
-      var tag = mktData.funnel.enquiriesPending && closed ? " (Aug closed)" : "";
+      var src = mktData.funnel;
+      var cpeV = mktData.cpe.value;
+      var cpdV = mktData.cpd.value;
+      var tag = mktData.status === "complete" ? " (Aug closed)" : "";
       funnelWrap.innerHTML =
         '<div class="ex-mob-funnel-step"><div class="ex-mob-funnel-left"><span class="ex-mob-funnel-num-tag">Stage 1</span><div class="ex-mob-funnel-name">Employer Enquiries' +
         tag +
@@ -954,8 +948,8 @@
 
     var barsWrap = $("#ex-mob-bars-container");
     if (barsWrap) {
-      var pilotEnq = closed && closed.cpe != null ? closed.cpe : mktData.cpe.value;
-      var pilotDisc = closed && closed.cpd != null ? closed.cpd : mktData.cpd.value;
+      var pilotEnq = mktData.cpe.value;
+      var pilotDisc = mktData.cpd.value;
       if (pilotEnq == null || pilotDisc == null) {
         barsWrap.innerHTML =
           '<p class="ex-mob-bars-pending">Unit-cost bars use the last closed month. September sales outcomes are pending the next labeled update.</p>';
@@ -994,21 +988,31 @@
     if (agencyBox) {
       var cUs = buildClosedMarketData("US");
       var cAu = buildClosedMarketData("AU");
+      var mtdUs = buildMtdMarketData("US");
+      var mtdAu = buildMtdMarketData("AU");
       agencyBox.innerHTML =
-        '<div class="ex-mob-comp-row"><div class="ex-mob-comp-left"><span class="ex-mob-comp-tag good">US separate</span><div class="ex-mob-comp-label">United States pace</div></div><div class="ex-mob-comp-desc">September MTD spend ' +
-        formatMoney(us.spend, "USD") +
+        '<div class="ex-mob-comp-row"><div class="ex-mob-comp-left"><span class="ex-mob-comp-tag good">US separate</span><div class="ex-mob-comp-label">United States · August closed</div></div><div class="ex-mob-comp-desc">August spend ' +
+        formatMoney(cUs && cUs.spend, "USD") +
         " at " +
-        (us.pacePct != null ? us.pacePct + "%" : "—") +
-        " of agency-equivalent pace. August closed cost/enquiry " +
-        (cUs && cUs.cpe != null ? formatMoney2(cUs.cpe, "USD") : "—") +
-        ".</div></div>" +
-        '<div class="ex-mob-comp-row"><div class="ex-mob-comp-left"><span class="ex-mob-comp-tag good">AU separate</span><div class="ex-mob-comp-label">Australia pace</div></div><div class="ex-mob-comp-desc">September MTD spend ' +
-        formatMoney(au.spend, "AUD") +
+        (cUs && cUs.pacePct != null ? cUs.pacePct + "%" : "—") +
+        " of agency-equivalent pace (31-day basis). Cost/enquiry " +
+        (cUs ? formatMoney2(costValue(cUs.cpe), "USD") : "—") +
+        ". September MTD " +
+        formatMoney(mtdUs.spend, "USD") +
+        " (" +
+        (mtdUs.pacePct != null ? mtdUs.pacePct + "%" : "—") +
+        " early MTD pace) — sales pending.</div></div>" +
+        '<div class="ex-mob-comp-row"><div class="ex-mob-comp-left"><span class="ex-mob-comp-tag good">AU separate</span><div class="ex-mob-comp-label">Australia · August closed</div></div><div class="ex-mob-comp-desc">August spend ' +
+        formatMoney(cAu && cAu.spend, "AUD") +
         " at " +
-        (au.pacePct != null ? au.pacePct + "%" : "—") +
-        " of agency-equivalent pace. August closed cost/enquiry " +
-        (cAu && cAu.cpe != null ? formatMoney2(cAu.cpe, "AUD") : "—") +
-        ".</div></div>" +
+        (cAu && cAu.pacePct != null ? cAu.pacePct + "%" : "—") +
+        " of agency-equivalent pace (31-day basis). Cost/enquiry " +
+        (cAu ? formatMoney2(costValue(cAu.cpe), "AUD") : "—") +
+        ". September MTD " +
+        formatMoney(mtdAu.spend, "AUD") +
+        " (" +
+        (mtdAu.pacePct != null ? mtdAu.pacePct + "%" : "—") +
+        " early MTD pace) — sales pending.</div></div>" +
         '<div class="ex-mob-comp-row"><div class="ex-mob-comp-left"><span class="ex-mob-comp-tag neutral">Equal basis</span><div class="ex-mob-comp-label">Attribution methodology</div></div><div class="ex-mob-comp-desc">Same company-wide CRM outcome attribution for pilot and agency baseline. USD and AUD are never combined.</div></div>';
     }
 

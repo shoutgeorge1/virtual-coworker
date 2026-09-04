@@ -35,13 +35,13 @@
         <!-- SECTION 1: EXECUTIVE SNAPSHOT (filled from snapshot JSON) -->
         <section class="ex-mob-section" aria-label="Executive snapshot">
           <div class="ex-mob-card ex-mob-snapshot-card" id="ex-mob-snapshot">
-            <div class="ex-mob-card-label">Executive Snapshot</div>
+            <div class="ex-mob-card-label">August closed · primary baseline</div>
             <div class="ex-mob-snapshot-lead" id="ex-mob-snapshot-text">Loading…</div>
             
             <div class="ex-mob-snapshot-stats">
               <div class="ex-mob-stat-box">
                 <div class="ex-mob-stat-val delta-good" id="ex-mob-snap-pace">—</div>
-                <div class="ex-mob-stat-lbl" id="ex-mob-snap-pace-lbl">Agency-equiv pace</div>
+                <div class="ex-mob-stat-lbl" id="ex-mob-snap-pace-lbl">Aug agency pace</div>
                 <div class="ex-mob-stat-sub" id="ex-mob-snap-pace-sub">US · AU separate</div>
               </div>
               <div class="ex-mob-stat-box">
@@ -62,7 +62,7 @@
         <section class="ex-mob-section" aria-label="Market performance">
           <div class="ex-mob-section-title-row">
             <h2 class="ex-mob-section-title">Market Economics</h2>
-            <span class="ex-mob-section-sub">Month to Date</span>
+            <span class="ex-mob-section-sub">August closed</span>
           </div>
 
           <!-- Market Segmented Switcher -->
@@ -235,41 +235,26 @@
           </div>
         </header>
 
-        <!-- B. Executive summary (August closed first, then September MTD) -->
+        <!-- B. Compact executive summary: August closed is the baseline -->
         <section class="ex-section" aria-label="Executive summary">
           <div class="ex-summary-card" id="ex-summary-card">
-            <div class="ex-summary-label">August closed · then September MTD</div>
-            <p class="ex-summary-line" id="ex-summary-august">Loading August closed results…</p>
-            <p class="ex-summary-line" id="ex-summary-september">Loading September MTD…</p>
-            <p class="ex-summary-line ex-summary-decision" id="ex-summary-decision">Loading decision…</p>
+            <div class="ex-summary-label">Pilot baseline · August 2026 closed</div>
+            <div class="ex-summary-grid" id="ex-summary-grid">
+              <div class="ex-summary-market" id="ex-summary-us">Loading US…</div>
+              <div class="ex-summary-market" id="ex-summary-au">Loading AU…</div>
+            </div>
+            <p class="ex-summary-mtd" id="ex-summary-september">Loading September MTD…</p>
+            <p class="ex-summary-decision" id="ex-summary-decision">Loading decision…</p>
             <p class="ex-summary-footnote" id="ex-summary-footnote"></p>
           </div>
         </section>
 
-        <!-- B2. Market verdict detail -->
-        <section class="ex-section" aria-label="Executive verdict">
-          <div class="ex-briefing-card" id="ex-verdict-card">
-            <div class="ex-briefing-item">
-              <div class="ex-briefing-label">United States</div>
-              <div class="ex-briefing-text" id="ex-verdict-us">Loading…</div>
-            </div>
-            <div class="ex-briefing-item">
-              <div class="ex-briefing-label">Australia</div>
-              <div class="ex-briefing-text" id="ex-verdict-au">Loading…</div>
-            </div>
-            <div class="ex-briefing-item">
-              <div class="ex-briefing-label">Current decision</div>
-              <div class="ex-briefing-text" id="ex-verdict-dec">Loading…</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- C. United States Scorecard -->
+        <!-- C. United States Scorecard (August closed) -->
         <section class="ex-section" aria-label="United States scorecard">
           <div class="ex-section-hd">
             <div>
               <h2>United States · USD</h2>
-              <p class="ex-section-sub">Google Search pilot compared with the two-year agency baseline</p>
+              <p class="ex-section-sub">August closed vs two-year agency baseline</p>
             </div>
           </div>
           <div class="ex-card ex-table-wrap">
@@ -277,7 +262,7 @@
               <thead>
                 <tr>
                   <th style="width: 26%;">Funnel metric</th>
-                  <th class="num" style="width: 16%;" id="ex-us-vol-th">MTD volume</th>
+                  <th class="num" style="width: 16%;" id="ex-us-vol-th">August volume</th>
                   <th class="num" style="width: 18%;">Pilot blended cost</th>
                   <th class="num" style="width: 23%;">Agency blended baseline</th>
                   <th class="num" style="width: 17%;">Difference</th>
@@ -290,16 +275,16 @@
           </div>
           <div class="ex-traffic-note" id="ex-us-traffic">Loading traffic efficiency…</div>
           <p class="ex-footnote" style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem; margin-bottom: 0;">
-            * Preliminary blended CRM outcomes completed during the pilot period. These totals include paid, organic, direct, returning-pipeline, and existing-client activity. They should not all be interpreted as Google Ads-attributed conversions.
+            * Blended sales-confirmed company outcomes; not all Google Ads-attributed.
           </p>
         </section>
 
-        <!-- D. Australia Scorecard -->
+        <!-- D. Australia Scorecard (August closed) -->
         <section class="ex-section" aria-label="Australia scorecard">
           <div class="ex-section-hd">
             <div>
               <h2>Australia · AUD</h2>
-              <p class="ex-section-sub">Google Search pilot compared with the two-year agency baseline</p>
+              <p class="ex-section-sub">August closed vs two-year agency baseline</p>
             </div>
           </div>
           <div class="ex-card ex-table-wrap">
@@ -307,7 +292,7 @@
               <thead>
                 <tr>
                   <th style="width: 26%;">Funnel metric</th>
-                  <th class="num" style="width: 16%;" id="ex-au-vol-th">MTD volume</th>
+                  <th class="num" style="width: 16%;" id="ex-au-vol-th">August volume</th>
                   <th class="num" style="width: 18%;">Pilot blended cost</th>
                   <th class="num" style="width: 23%;">Agency blended baseline</th>
                   <th class="num" style="width: 17%;">Difference</th>
@@ -320,7 +305,7 @@
           </div>
           <div class="ex-traffic-note" id="ex-au-traffic">Loading traffic efficiency…</div>
           <p class="ex-footnote" style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem; margin-bottom: 0;">
-            * Preliminary blended CRM outcomes completed during the pilot period. These totals include paid, organic, direct, returning-pipeline, and existing-client activity. They should not all be interpreted as Google Ads-attributed conversions.
+            * Blended sales-confirmed company outcomes; not all Google Ads-attributed.
           </p>
         </section>
 
