@@ -1956,7 +1956,15 @@ def build_executive_verdict(
     def _side_line(side: str, currency_label: str) -> str:
         c = (closed or {}).get(side) or {}
         a = (active or {}).get(side) or {}
+        days_c = 31
         days_a = 1
+        if closed and closed.get("period_start") and closed.get("period_end"):
+            try:
+                d0 = date.fromisoformat(str(closed["period_start"])[:10])
+                d1 = date.fromisoformat(str(closed["period_end"])[:10])
+                days_c = max(1, (d1 - d0).days + 1)
+            except Exception:
+                days_c = 31
         if active and active.get("period_start") and active.get("period_end"):
             try:
                 d0 = date.fromisoformat(str(active["period_start"])[:10])
@@ -1965,42 +1973,64 @@ def build_executive_verdict(
             except Exception:
                 days_a = 1
         market = "US" if side == "us" else "AU"
-        pace = _agency_pace_pct(a.get("spend"), days_a, market)
-        pace_s = f"{pace}%" if pace is not None else "—"
+        closed_pace = _agency_pace_pct(c.get("spend"), days_c, market)
+        mtd_pace = _agency_pace_pct(a.get("spend"), days_a, market)
+        closed_s = f"{closed_pace}%" if closed_pace is not None else "—"
+        mtd_s = f"{mtd_pace}%" if mtd_pace is not None else "—"
         if c.get("enquiries") is not None:
+            cpe = c.get("cost_per_enquiry")
+            cpd = c.get("cost_per_discovery")
+            cpe_s = f"{currency_label}{float(cpe):,.2f}" if cpe is not None else "—"
+            cpd_s = f"{currency_label}{float(cpd):,.2f}" if cpd is not None else "—"
             return (
                 f"August closed: {currency_label}{float(c.get('spend') or 0):,.0f} → "
                 f"{c.get('enquiries')} employer enquiries → {c.get('sales_calls_completed')} completed calls → "
                 f"{c.get('job_orders_total')} job orders* → {c.get('placements')} placements*. "
-                f"Open month spend {currency_label}{float(a.get('spend') or 0):,.0f} at {pace_s} of agency-equivalent pace; "
-                f"sales outcomes await the next labeled update."
+                f"Cost/enquiry {cpe_s}; cost/call {cpd_s}. "
+                f"Agency pace {closed_s} (closed-month baseline). "
+                f"September MTD spend {currency_label}{float(a.get('spend') or 0):,.0f} "
+                f"({mtd_s} early MTD pace); sales outcomes await the next labeled update."
             )
         return (
-            f"Ads spend {currency_label}{float(a.get('spend') or 0):,.0f} (~{pace_s} agency pace). "
+            f"Ads spend {currency_label}{float(a.get('spend') or 0):,.0f} (~{mtd_s} early MTD pace). "
             f"Sales outcomes pending labeled update."
         )
 
     us_desc = _side_line("us", "$")
     au_desc = _side_line("au", "A$")
 
-    us_days = 1
-    au_days = 1
+    us_days_c = au_days_c = 31
+    us_days_a = au_days_a = 1
+    if closed and closed.get("period_start") and closed.get("period_end"):
+        try:
+            d0 = date.fromisoformat(str(closed["period_start"])[:10])
+            d1 = date.fromisoformat(str(closed["period_end"])[:10])
+            us_days_c = au_days_c = max(1, (d1 - d0).days + 1)
+        except Exception:
+            pass
     if active and active.get("period_start") and active.get("period_end"):
         try:
             d0 = date.fromisoformat(str(active["period_start"])[:10])
             d1 = date.fromisoformat(str(active["period_end"])[:10])
-            us_days = au_days = max(1, (d1 - d0).days + 1)
+            us_days_a = au_days_a = max(1, (d1 - d0).days + 1)
         except Exception:
             pass
-    us_pace = _agency_pace_pct(((active or {}).get("us") or {}).get("spend"), us_days, "US")
-    au_pace = _agency_pace_pct(((active or {}).get("au") or {}).get("spend"), au_days, "AU")
+    us_pace = _agency_pace_pct(((closed or {}).get("us") or {}).get("spend"), us_days_c, "US")
+    au_pace = _agency_pace_pct(((closed or {}).get("au") or {}).get("spend"), au_days_c, "AU")
     us_pace_s = f"{us_pace}%" if us_pace is not None else "—"
     au_pace_s = f"{au_pace}%" if au_pace is not None else "—"
 
+    us_mtd = _agency_pace_pct(((active or {}).get("us") or {}).get("spend"), us_days_a, "US")
+    au_mtd = _agency_pace_pct(((active or {}).get("au") or {}).get("spend"), au_days_a, "AU")
+    us_mtd_s = f"{us_mtd}%" if us_mtd is not None else "—"
+    au_mtd_s = f"{au_mtd}%" if au_mtd is not None else "—"
+
     us_core_bid = us_bidding.get("VC_US_S_CORE", "MAXIMIZE_CONVERSIONS")
     dec_parts = [
-        f"Hold current budgets until lead quality and pipeline outcomes are validated "
-        f"(~{us_pace_s} US / ~{au_pace_s} AU of agency-equivalent pace for the open month)."
+        f"Hold current budgets. August closed remains the agency-comparison baseline "
+        f"(~{us_pace_s} US / ~{au_pace_s} AU of agency-equivalent pace). "
+        f"Early September MTD pace (~{us_mtd_s} US / ~{au_mtd_s} AU over {us_days_a} days) "
+        f"is a short-window burn rate, not a replacement for August."
     ]
     if us_core_bid == "MAXIMIZE_CONVERSIONS":
         dec_parts.append(
