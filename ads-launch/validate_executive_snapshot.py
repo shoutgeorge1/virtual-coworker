@@ -39,7 +39,21 @@ REQUIRED_TOP_LEVEL = [
     "sales_ops_us_now",
     "sales_ops_au",
     "sales_ops_au_now",
+    "monthly_history",
 ]
+
+# Stale strings that must never reappear as "current" September pace / mobile hardcodes.
+FORBIDDEN_STALE_NARRATIVE = (
+    "approximately 18% of the agency",
+    "approximately 15% of the agency",
+    "~18% US / ~15% AU",
+    "Operating at ~16%",
+    "$159.40",
+    "$308.85",
+    "16 completed US discovery",
+    "18 enquiries, 12 completed",
+    "~$3.8k/mo blended",
+)
 
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}")
 MALFORMED_STR_RE = re.compile(r"\b(NaN|Infinity|-Infinity|undefined)\b", re.I)
@@ -218,11 +232,133 @@ def validate_snapshot_payload(
         if us_sales.get("cost_per_placement_usd") == 0:
             errors.append("US cost_per_placement_usd must not be 0 when placements are 0 or unconfirmed")
 
-    # 8. Check agency baselines and frozen snapshots
+    # 8. monthly_history integrity, arithmetic, closed-month preservation, no cross-currency
+    hist = new_data.get("monthly_history")
+    if not isinstance(hist, list) or not hist:
+        errors.append("monthly_history must be a non-empty list")
+    else:
+        complete_months = [h for h in hist if h.get("status") == "complete"]
+        active_months = [h for h in hist if h.get("status") == "active_mtd"]
+        if not complete_months:
+            errors.append("monthly_history must retain at least one complete (closed) month")
+        if len(active_months) > 1:
+            errors.append("monthly_history must have at most one active_mtd month")
+
+        for rec in hist:
+            for side, cur_expected in (("us", "USD"), ("au", "AUD")):
+                block = rec.get(side) or {}
+                if block.get("currency") and block.get("currency") != cur_expected:
+                    errors.append(
+                        f"{rec.get('month')}.{side}.currency must be {cur_expected}, got {block.get('currency')}"
+                    )
+                spend = block.get("spend")
+                enq = block.get("enquiries")
+                calls = block.get("sales_calls_completed")
+                cpe = block.get("cost_per_enquiry")
+                cpd = block.get("cost_per_discovery")
+                if spend is not None and enq not in (None, 0) and cpe is not None:
+                    expected = round(float(spend) / float(enq), 2)
+                    if abs(expected - float(cpe)) > 0.05:
+                        errors.append(
+                            f"{rec.get('month')}.{side} cost_per_enquiry {cpe} != spend/enquiries {expected}"
+                        )
+                if spend is not None and calls not in (None, 0) and cpd is not None:
+                    expected = round(float(spend) / float(calls), 2)
+                    if abs(expected - float(cpd)) > 0.05:
+                        errors.append(
+                            f"{rec.get('month')}.{side} cost_per_discovery {cpd} != spend/calls {expected}"
+                        )
+                if rec.get("status") == "complete":
+                    for req in ("enquiries", "sales_calls_completed", "job_orders_total", "placements", "spend"):
+                        if block.get(req) is None:
+                            errors.append(
+                                f"Complete month {rec.get('month')}.{side} missing required field '{req}' "
+                                "(never publish null/Pending over closed-month data)"
+                            )
+
+        # Guard: never let a refresh erase prior closed-month outcomes
+        if prev_data:
+            prev_hist = prev_data.get("monthly_history") or []
+            prev_complete = {
+                h.get("month"): h for h in prev_hist if h.get("status") == "complete"
+            }
+            new_complete = {
+                h.get("month"): h for h in hist if h.get("status") == "complete"
+            }
+            for month, prev_rec in prev_complete.items():
+                new_rec = new_complete.get(month)
+                if not new_rec:
+                    errors.append(f"Closed month {month} disappeared from monthly_history")
+                    continue
+                for side in ("us", "au"):
+                    for field in ("enquiries", "sales_calls_completed", "job_orders_total", "placements"):
+                        pv = ((prev_rec.get(side) or {}).get(field))
+                        nv = ((new_rec.get(side) or {}).get(field))
+                        if pv is not None and nv != pv:
+                            errors.append(
+                                f"Closed month {month}.{side}.{field} mutated: {pv} → {nv}"
+                            )
+
+    # 9. Stale August pacing / hardcoded narratives must not be the current decision
+    verdict = new_data.get("executive_verdict") or {}
+    decision = str(new_data.get("current_decision") or "") + " " + str(verdict.get("current_decision") or "")
+    united = str(verdict.get("united_states") or "")
+    australia = str(verdict.get("australia") or "")
+    narrative = decision + " " + united + " " + australia
+    for phrase in FORBIDDEN_STALE_NARRATIVE:
+        if phrase in narrative:
+            errors.append(f"Stale narrative still present in executive_verdict/current_decision: '{phrase}'")
+
+    # 10. Check agency baselines and frozen snapshots
     errors.extend(validate_agency_baseline())
     errors.extend(validate_frozen_snapshots())
 
     return errors
+
+
+def validate_page_source_parity(xray_dir: Path | None = None) -> list[str]:
+    """Ensure executive.html has no hardcoded stale metrics; JS is the sole renderer."""
+    errors: list[str] = []
+    root = xray_dir or (REPO / "xray")
+    html_path = root / "executive.html"
+    js_path = root / "executive.js"
+    if not html_path.is_file():
+        return [f"Missing {html_path}"]
+    if not js_path.is_file():
+        return [f"Missing {js_path}"]
+    html = html_path.read_text(encoding="utf-8")
+    js = js_path.read_text(encoding="utf-8")
+
+    for phrase in FORBIDDEN_STALE_NARRATIVE:
+        if phrase in html:
+            errors.append(f"executive.html contains hardcoded stale phrase: '{phrase}'")
+        if phrase in js and phrase in ("$159.40", "$308.85"):
+            errors.append(f"executive.js contains hardcoded cost fallback: '{phrase}'")
+
+    # Hardcoded numeric pace fallbacks
+    if "market === \"US\" ? 18 : 15" in js or "market === 'US' ? 18 : 15" in js:
+        errors.append("executive.js still hardcodes 18/15 agency pace fallback")
+    if "159.40" in js or "308.85" in js:
+        errors.append("executive.js still hardcodes stale US unit-cost fallbacks")
+    if "blendedPace" in js or "usSpendPace + auSpendPace" in js:
+        errors.append("executive.js still blends US+AU pace into one figure")
+
+    required_ids = (
+        'id="ex-summary-august"',
+        'id="ex-summary-september"',
+        'id="ex-us-tbody"',
+        'id="ex-au-tbody"',
+        'id="ex-ramp-us-tbody"',
+        'id="ex-ramp-au-tbody"',
+        'id="ex-mob-metric-cards"',
+        'id="ex-mob-agency-box"',
+    )
+    for rid in required_ids:
+        if rid not in html:
+            errors.append(f"executive.html missing required hook {rid}")
+
+    return errors
+
 
 
 def validate_snapshot_file(target_file: Path, prev_file: Path | None = None) -> tuple[bool, list[str]]:
@@ -249,12 +385,11 @@ def atomic_replace_snapshot(tmp_path: Path, prod_path: Path = PROD_SNAPSHOT_PATH
     """Atomically replaces prod_path with tmp_path after successful validation."""
     if not tmp_path.is_file():
         raise FileNotFoundError(f"Temporary snapshot file not found: {tmp_path}")
-    
+
     ok, errors = validate_snapshot_file(tmp_path, prod_path if prod_path.is_file() else None)
     if not ok:
         raise ValidationError(f"Snapshot validation failed: {'; '.join(errors)}")
-    
-    # Atomic rename/replace
+
     tmp_path.replace(prod_path)
     return True
 
@@ -264,14 +399,15 @@ def main() -> int:
     prev = Path(sys.argv[2]) if len(sys.argv) > 2 else (PROD_SNAPSHOT_PATH if path != PROD_SNAPSHOT_PATH else None)
     print(f"Validating snapshot {path} ...")
     ok, errors = validate_snapshot_file(path, prev)
-    if ok:
+    page_errors = validate_page_source_parity()
+    if ok and not page_errors:
         print("✓ Snapshot validation passed successfully!")
+        print("✓ Page source parity checks passed!")
         return 0
-    else:
-        print(f"✗ Snapshot validation failed with {len(errors)} error(s):", file=sys.stderr)
-        for err in errors:
-            print(f"  - {err}", file=sys.stderr)
-        return 1
+    print(f"✗ Validation failed with {len(errors) + len(page_errors)} error(s):", file=sys.stderr)
+    for err in errors + page_errors:
+        print(f"  - {err}", file=sys.stderr)
+    return 1
 
 
 if __name__ == "__main__":

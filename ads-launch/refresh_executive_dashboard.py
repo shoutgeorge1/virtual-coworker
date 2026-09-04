@@ -138,8 +138,12 @@ def step_3_and_4_sales_confirmation_and_reconciliation(tmp_out: Path) -> tuple[b
         return False, f"Failed to reconcile sales outcomes: {exc}"
 
 
-def step_5_and_6_atomic_snapshot_update(tmp_out: Path, dry_run: bool = False) -> tuple[bool, str]:
-    """Step 5 & 6: Validate proposed snapshot and atomically replace production snapshot."""
+def step_5_and_6_atomic_snapshot_update(tmp_out: Path, dry_run: bool = False) -> tuple[bool, str, Path | None]:
+    """Step 5 & 6: Validate proposed snapshot and atomically replace production snapshot.
+
+    Returns (ok, message, backup_path). backup_path is set when production was replaced,
+    so later bake failures can restore the last good snapshot.
+    """
     print("\n--- [Step 5 & 6/9] Validating snapshot and atomically updating current open month ---")
     if str(ADS_DIR) not in sys.path:
         sys.path.insert(0, str(ADS_DIR))
@@ -150,21 +154,35 @@ def step_5_and_6_atomic_snapshot_update(tmp_out: Path, dry_run: bool = False) ->
         print("VALIDATION FAILED:")
         for err in errors:
             print(f"  ✗ {err}")
-        return False, f"Snapshot validation failed ({len(errors)} errors)"
+        return False, f"Snapshot validation failed ({len(errors)} errors)", None
 
     print("✓ Snapshot validation passed all safety checks!")
 
     if dry_run:
         print("[DRY-RUN] Verified atomic replacement readiness. Production snapshot NOT mutated.")
-        return True, "Dry-run validation successful"
+        return True, "Dry-run validation successful", None
 
+    backup_path = None
     try:
+        if SNAPSHOT_PROD.is_file():
+            backup_path = DATA_DIR / "executive-snapshot.last-good.json"
+            backup_path.write_text(SNAPSHOT_PROD.read_text(encoding="utf-8"), encoding="utf-8")
         atomic_replace_snapshot(tmp_out, SNAPSHOT_PROD)
         print(f"✓ Atomically updated production snapshot at {SNAPSHOT_PROD}")
-        return True, "Atomic snapshot replacement complete"
+        return True, "Atomic snapshot replacement complete", backup_path
     except Exception as exc:
-        return False, f"Atomic replace failed: {exc}"
+        return False, f"Atomic replace failed: {exc}", None
 
+
+def restore_last_good_snapshot(backup_path: Path | None) -> None:
+    """Fail closed: restore last good snapshot if post-replace bake/validate fails."""
+    if backup_path is None or not backup_path.is_file():
+        return
+    try:
+        SNAPSHOT_PROD.write_text(backup_path.read_text(encoding="utf-8"), encoding="utf-8")
+        print(f"✓ Restored last good snapshot from {backup_path}")
+    except Exception as exc:
+        print(f"WARNING: failed to restore last good snapshot: {exc}", file=sys.stderr)
 
 def step_7_bake_xray_pages() -> tuple[bool, str]:
     """Step 7: Run bake_xray_pages.py and sync static assets."""
@@ -189,12 +207,10 @@ def step_7_bake_xray_pages() -> tuple[bool, str]:
 def step_8_validate_executive_page() -> tuple[bool, str]:
     """Step 8: Run local verification and smoke checks on generated executive dashboard."""
     print("\n--- [Step 8/9] Validating generated executive page ---")
-    # Verify executive.html exists and is non-empty
     exec_html = XRAY_DIR / "executive.html"
     if not exec_html.is_file() or exec_html.stat().st_size < 1000:
         return False, "executive.html is missing or empty"
 
-    # Verify JSON files exist and are valid JSON
     for fname in ["executive-snapshot.json", "agency-baseline.json"]:
         p = DATA_DIR / fname
         if not p.is_file():
@@ -204,9 +220,19 @@ def step_8_validate_executive_page() -> tuple[bool, str]:
         except Exception as exc:
             return False, f"Invalid JSON in {fname}: {exc}"
 
+    if str(ADS_DIR) not in sys.path:
+        sys.path.insert(0, str(ADS_DIR))
+    from validate_executive_snapshot import validate_page_source_parity, validate_snapshot_file
+
+    ok, errors = validate_snapshot_file(SNAPSHOT_PROD)
+    if not ok:
+        return False, "Snapshot re-validation failed: " + "; ".join(errors[:5])
+    page_errors = validate_page_source_parity(XRAY_DIR)
+    if page_errors:
+        return False, "Page parity failed: " + "; ".join(page_errors[:5])
+
     print("✓ Local executive page and data integrity checks passed")
     return True, "Executive page validation passed"
-
 
 def step_9_deploy_to_vercel(dry_run: bool = False, skip_deploy: bool = False) -> tuple[bool, str]:
     """Step 9: Publish via repository Vercel deployment process."""
@@ -262,7 +288,7 @@ def main() -> int:
         return 1
 
     # Step 5 & 6: Validation & Atomic Update
-    ok, msg = step_5_and_6_atomic_snapshot_update(tmp_snapshot, dry_run=args.dry_run)
+    ok, msg, backup_path = step_5_and_6_atomic_snapshot_update(tmp_snapshot, dry_run=args.dry_run)
     if not ok:
         print(f"FAILED Step 5/6: {msg}", file=sys.stderr)
         return 1
@@ -272,14 +298,16 @@ def main() -> int:
         ok, msg = step_7_bake_xray_pages()
         if not ok:
             print(f"FAILED Step 7: {msg}", file=sys.stderr)
+            restore_last_good_snapshot(backup_path)
             return 1
 
     # Step 8: Validate generated executive page
     ok, msg = step_8_validate_executive_page()
     if not ok:
         print(f"FAILED Step 8: {msg}", file=sys.stderr)
+        if not args.dry_run:
+            restore_last_good_snapshot(backup_path)
         return 1
-
     # Step 9: Deploy
     should_deploy = args.deploy and not args.dry_run and not args.no_deploy
     ok, msg = step_9_deploy_to_vercel(dry_run=args.dry_run, skip_deploy=(not should_deploy))
