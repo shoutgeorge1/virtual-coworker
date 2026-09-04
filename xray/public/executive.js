@@ -1,12 +1,15 @@
 /**
  * Executive Performance — Leadership Dashboard Renderer.
  *
+ * Single source of truth: executive-snapshot.json → monthly_history (+ freshness).
+ * Desktop and mobile render from the same computed model. No hardcoded metrics.
+ *
  * Rules:
  * 1. Blended cost per outcome = Google Ads spend ÷ sales-confirmed employer outcomes.
- * 2. Neutral stakeholder scoreboard — no amber warning banners, no busywork diagnostics.
- * 3. US Job Orders & Placements: If unconfirmed, display neutral "Pending validation" and "—".
- * 4. Never calculate or display $0, Infinity, NaN, or job-order cost when no job orders are confirmed.
- * 5. Mobile & Desktop synchronized from identical data model.
+ * 2. Neutral stakeholder scoreboard — no amber warning banners.
+ * 3. Missing outcomes → Pending / —, never $0 or invented figures.
+ * 4. Never combine USD and AUD.
+ * 5. Prefer monthly_history over week slices for month-level scoreboards.
  */
 (function () {
   "use strict";
@@ -28,8 +31,6 @@
       return r.json();
     });
   }
-
-  /* —— Math & Formatting Helpers —— */
 
   function safeDiv(num, den) {
     if (num == null || den == null || Number.isNaN(Number(num))) {
@@ -71,21 +72,67 @@
     return Number(v).toFixed(1) + "%";
   }
 
-  function isEnquiryPending(ops) {
-    if (!ops) return true;
-    var caveat = String(ops.caveat || "").toLowerCase();
-    if (caveat.indexOf("count pending") >= 0 || caveat.indexOf("enquiry count pending") >= 0) return true;
-    return ops.enquiries == null;
-  }
-
-  function addNull(a, b) {
-    if (a == null && b == null) return null;
-    return Number(a || 0) + Number(b || 0);
-  }
-
   function asOfDate() {
     var fresh = ((STATE.snapshot || {}).freshness || {});
-    return fresh.google_ads_through || ((STATE.snapshot || {}).generated_at_utc || "").slice(0, 10) || "2026-08-27";
+    return fresh.google_ads_through || ((STATE.snapshot || {}).generated_at_utc || "").slice(0, 10) || "2026-09-03";
+  }
+
+  function monthName(ym) {
+    var names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var parts = String(ym || "").split("-");
+    var m = parseInt(parts[1], 10);
+    var y = parts[0] || "";
+    if (!m || m < 1 || m > 12) return String(ym || "");
+    return names[m - 1] + " " + y;
+  }
+
+  function daysInclusive(start, end) {
+    try {
+      var a = new Date(start.slice(0, 10) + "T12:00:00Z");
+      var b = new Date(end.slice(0, 10) + "T12:00:00Z");
+      var n = Math.round((b - a) / 86400000) + 1;
+      return n > 0 ? n : 1;
+    } catch (e) {
+      return parseInt(String(end).slice(8, 10), 10) || 1;
+    }
+  }
+
+  function monthlyHistory() {
+    return ((STATE.snapshot || {}).monthly_history || []).slice();
+  }
+
+  function activeMonthRecord() {
+    var hist = monthlyHistory();
+    for (var i = hist.length - 1; i >= 0; i--) {
+      if (hist[i] && hist[i].status === "active_mtd") return hist[i];
+    }
+    var end = asOfDate();
+    var start = end.slice(0, 8) + "01";
+    return {
+      month: end.slice(0, 7),
+      label: monthName(end.slice(0, 7)) + " MTD",
+      period_start: start,
+      period_end: end,
+      status: "active_mtd",
+    };
+  }
+
+  function closedMonthRecord() {
+    var hist = monthlyHistory();
+    for (var i = hist.length - 1; i >= 0; i--) {
+      if (hist[i] && hist[i].status === "complete") return hist[i];
+    }
+    return null;
+  }
+
+  function reportingPeriod() {
+    var rec = activeMonthRecord();
+    return {
+      start: rec.period_start || (asOfDate().slice(0, 8) + "01"),
+      end: rec.period_end || asOfDate(),
+      label: rec.label || (monthName((rec.period_start || asOfDate()).slice(0, 7)) + " MTD"),
+      monthKey: rec.month || (asOfDate().slice(0, 7)),
+    };
   }
 
   function sumAdsByDate(byDate, start, end, currency) {
@@ -113,94 +160,81 @@
     };
   }
 
-  function sumSalesLabeled(slices, start, end) {
-    var enquiries = null;
-    var discoveries = null;
-    var jobOrders = null;
-    var placements = null;
-    var anyPending = false;
-    var any = false;
+  function agencyBlock(market) {
+    return ((STATE.agency || {})[market.toLowerCase()]) || {};
+  }
 
-    slices.forEach(function (ops) {
-      if (!ops) return;
-      var ws = String(ops.window_start || "").slice(0, 10);
-      var we = String(ops.window_end || "").slice(0, 10);
-      if (!ws || !we) return;
-      if (we < start || ws > end) return;
-      any = true;
-      if (isEnquiryPending(ops)) {
-        anyPending = true;
-      } else {
-        enquiries = addNull(enquiries, ops.enquiries);
-      }
-      if (ops.sales_calls_completed != null) {
-        discoveries = addNull(discoveries, ops.sales_calls_completed);
-      }
-      if (ops.job_orders_total != null) {
-        jobOrders = addNull(jobOrders, ops.job_orders_total);
-      }
-      if (ops.placements != null) {
-        placements = addNull(placements, ops.placements);
-      }
-    });
+  function agencyPeriodEquiv(market, daysInPeriod) {
+    var agBlock = agencyBlock(market);
+    var agSpendTotal = Number(agBlock.total_spend || (market === "US" ? 724880 : 458167));
+    var agMonthlySpend = agSpendTotal / 24;
+    return (agMonthlySpend / 30.4167) * daysInPeriod;
+  }
 
-    if (!any) {
-      return {
-        enquiries: null,
-        discoveries: null,
-        jobOrders: null,
-        placements: null,
-        enquiriesPending: true,
-      };
-    }
+  function spendPacePct(spend, agPeriodEquiv) {
+    if (spend == null || !(agPeriodEquiv > 0)) return null;
+    return Math.round((Number(spend) / agPeriodEquiv) * 100);
+  }
 
+  function funnelFromMonthSide(m) {
+    m = m || {};
     return {
-      enquiries: anyPending && enquiries == null ? null : enquiries,
-      discoveries: discoveries,
-      jobOrders: jobOrders,
-      placements: placements,
-      enquiriesPending: anyPending && enquiries == null,
+      enquiries: m.enquiries != null ? Number(m.enquiries) : null,
+      discoveries: m.sales_calls_completed != null ? Number(m.sales_calls_completed) : null,
+      jobOrders: m.job_orders_total != null ? Number(m.job_orders_total) : null,
+      placements: m.placements != null ? Number(m.placements) : null,
+      enquiriesPending: m.enquiries == null,
     };
   }
 
-  /* —— Market Data Construction —— */
+  function costFromMonth(m, spend, funnel, key, den) {
+    if (m && m[key] != null) return { value: Number(m[key]), status: "ok" };
+    return safeDiv(spend, den);
+  }
+
+  /* —— Market Data Construction (monthly_history first) —— */
 
   function buildMarketData(market) {
     var cur = market === "AU" ? "AUD" : "USD";
     var snap = STATE.snapshot || {};
-    var arch = STATE.archiveW1 || {};
     var perf = market === "US" ? snap.performance_us : snap.performance_au;
     var by = (perf || {}).by_date_stage1 || (perf || {}).by_date || {};
+    var period = reportingPeriod();
+    var rec = activeMonthRecord();
+    var side = market === "US" ? "us" : "au";
+    var m = (rec && rec[side]) || {};
 
-    var w1 = market === "US" ? arch.sales_ops_us : arch.sales_ops_au;
-    var w2 = market === "US" ? snap.sales_ops_us : snap.sales_ops_au;
-    var w3 = market === "US" ? snap.sales_ops_us_now : snap.sales_ops_au_now;
-
-    var start = "2026-08-01";
-    var end = asOfDate();
-
-    var funnel = sumSalesLabeled([w1, w2, w3], start, end);
+    var start = period.start;
+    var end = period.end;
     var ads = sumAdsByDate(by, start, end, cur);
-    var spend = ads ? ads.spend : null;
 
-    var cpe = safeDiv(spend, funnel.enquiriesPending ? null : funnel.enquiries);
-    var cpd = safeDiv(spend, funnel.discoveries);
-    var cpjo = funnel.jobOrders && funnel.jobOrders > 0 ? safeDiv(spend, funnel.jobOrders) : { value: null, status: "pending" };
-    var cpp = funnel.placements && funnel.placements > 0 ? safeDiv(spend, funnel.placements) : { value: null, status: "pending" };
+    var spend = m.spend != null ? Number(m.spend) : ads ? ads.spend : null;
+    var funnel = funnelFromMonthSide(m);
 
-    var agBlock = ((STATE.agency || {})[market.toLowerCase()]) || {};
-    var agSpendTotal = Number(agBlock.total_spend || (market === "US" ? 724880 : 458167));
-    // 2-year baseline (24 months ~ 730.5 days, 30.4167 days/mo)
-    var agMonthlySpend = agSpendTotal / 24;
-    var daysInPeriod = parseInt(end.slice(8, 10), 10) || 27; // Days in period through end date
-    var agPeriodEquivSpend = (agMonthlySpend / 30.4167) * daysInPeriod;
+    var cpe = costFromMonth(m, spend, funnel, "cost_per_enquiry", funnel.enquiriesPending ? null : funnel.enquiries);
+    var cpd = costFromMonth(m, spend, funnel, "cost_per_discovery", funnel.discoveries);
+    var cpjo =
+      funnel.jobOrders != null && funnel.jobOrders > 0
+        ? costFromMonth(m, spend, funnel, "cost_per_job_order", funnel.jobOrders)
+        : { value: null, status: "pending" };
+    var cpp =
+      funnel.placements != null && funnel.placements > 0
+        ? costFromMonth(m, spend, funnel, "cost_per_placement", funnel.placements)
+        : { value: null, status: "pending" };
 
+    var agBlock = agencyBlock(market);
+    var daysInPeriod = daysInclusive(start, end);
+    var agPeriodEquivSpend = agencyPeriodEquiv(market, daysInPeriod);
     var agCpe = Number(agBlock.cost_per_legitimate_employer_enquiry || (market === "US" ? 816.31 : 615.82));
     var agCpd = Number(agBlock.cost_per_discovery || (market === "US" ? 1285.25 : 812.35));
     var agCpjo = Number(agBlock.cost_per_job_order || (market === "US" ? 2013.56 : 1104.02));
     var agCpp = Number(agBlock.cost_per_placement || (market === "US" ? 4289.23 : 2073.15));
     var agCpc = Number(agBlock.avg_cpc || (market === "US" ? 8.29 : 9.24));
     var agCtr = Number(agBlock.ctr_pct || (market === "US" ? 1.62 : 1.44));
+
+    if (ads && spend != null) {
+      ads = Object.assign({}, ads, { spend: spend });
+    }
 
     return {
       market: market,
@@ -213,7 +247,7 @@
       cpjo: cpjo,
       cpp: cpp,
       daysInPeriod: daysInPeriod,
-      agTotalSpend: agSpendTotal,
+      periodLabel: period.label,
       agPeriodEquivSpend: agPeriodEquivSpend,
       agCpe: agCpe,
       agCpd: agCpd,
@@ -221,6 +255,34 @@
       agCpp: agCpp,
       agCpc: agCpc,
       agCtr: agCtr,
+      pacePct: spendPacePct(spend, agPeriodEquivSpend),
+    };
+  }
+
+  function buildClosedMarketData(market) {
+    var closed = closedMonthRecord();
+    if (!closed) return null;
+    var cur = market === "AU" ? "AUD" : "USD";
+    var side = market === "US" ? "us" : "au";
+    var m = closed[side] || {};
+    var funnel = funnelFromMonthSide(m);
+    var spend = m.spend != null ? Number(m.spend) : null;
+    var daysInPeriod = daysInclusive(closed.period_start, closed.period_end);
+    var agPeriodEquivSpend = agencyPeriodEquiv(market, daysInPeriod);
+    var agBlock = agencyBlock(market);
+    return {
+      market: market,
+      currency: cur,
+      label: closed.label || "August 2026",
+      periodStart: closed.period_start,
+      periodEnd: closed.period_end,
+      spend: spend,
+      funnel: funnel,
+      cpe: m.cost_per_enquiry != null ? Number(m.cost_per_enquiry) : null,
+      cpd: m.cost_per_discovery != null ? Number(m.cost_per_discovery) : null,
+      pacePct: spendPacePct(spend, agPeriodEquivSpend),
+      agCpe: Number(agBlock.cost_per_legitimate_employer_enquiry || (market === "US" ? 816.31 : 615.82)),
+      agCpd: Number(agBlock.cost_per_discovery || (market === "US" ? 1285.25 : 812.35)),
     };
   }
 
@@ -235,125 +297,293 @@
     return "0.0%";
   }
 
-  /* —— Render Functions: Desktop —— */
+  function fmtShortDate(iso) {
+    if (!iso || iso === "—") return "—";
+    try {
+      var d = new Date(iso.slice(0, 10) + "T12:00:00Z");
+      return d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+    } catch (e) {
+      return iso;
+    }
+  }
+
+  function funnelChain(data, currency) {
+    var f = data.funnel || {};
+    var spendStr = formatMoney(data.spend, currency);
+    var enq = f.enquiries != null ? formatNum(f.enquiries) : "Pending";
+    var disc = f.discoveries != null ? formatNum(f.discoveries) : "Pending";
+    var jo = f.jobOrders != null ? formatNum(f.jobOrders) + " job orders*" : "Pending job orders";
+    var pl = f.placements != null ? formatNum(f.placements) + " placements*" : "Pending placements";
+    return (
+      spendStr +
+      " → " +
+      enq +
+      " employer enquiries → " +
+      disc +
+      " completed calls → " +
+      jo +
+      " → " +
+      pl
+    );
+  }
+
+  /* —— Render: Header —— */
 
   function renderHeader() {
     var snap = STATE.snapshot || {};
     var fresh = snap.freshness || {};
-    var adsThru = fresh.google_ads_through || asOfDate() || "2026-08-27";
-    var zohoRefreshed = (fresh.zoho_refreshed_at_utc || "").slice(0, 16).replace("T", " ") || "2026-08-28 12:30";
-    var usConfirmed = fresh.us_sales_confirmed_through || "2026-08-25";
-    var auConfirmed = fresh.au_sales_confirmed_through || "2026-08-25";
+    var period = reportingPeriod();
+    var adsThru = fresh.google_ads_through || asOfDate() || period.end;
+    var zohoRefreshed = (fresh.zoho_refreshed_at_utc || "").slice(0, 16).replace("T", " ") || "—";
+    var usConfirmed = fresh.us_sales_confirmed_through || "—";
+    var auConfirmed = fresh.au_sales_confirmed_through || "—";
     var generatedUtc = (fresh.dashboard_generated_at_utc || snap.generated_at_utc || "").slice(0, 16).replace("T", " ");
     var status = fresh.status || "Current";
 
-    function fmtDate(iso) {
-      if (!iso) return "—";
-      try {
-        var d = new Date(iso.slice(0, 10) + "T12:00:00Z");
-        return d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
-      } catch (e) {
-        return iso;
-      }
-    }
+    var adsStr = fmtShortDate(adsThru);
+    var usStr = fmtShortDate(usConfirmed);
+    var auStr = fmtShortDate(auConfirmed);
 
-    var adsStr = fmtDate(adsThru);
-    var usStr = fmtDate(usConfirmed);
-    var auStr = fmtDate(auConfirmed);
-    var zohoStr = fmtDate(zohoRefreshed);
+    var periodEl = $("#ex-period");
+    if (periodEl) {
+      periodEl.textContent =
+        period.label.indexOf("MTD") >= 0
+          ? period.label.replace(" MTD", " · Month to Date")
+          : period.label;
+    }
+    var mobPeriod = $("#ex-mob-period-badge");
+    if (mobPeriod) mobPeriod.textContent = period.label;
+
+    var volLabel = period.label.indexOf("MTD") >= 0 ? period.label.replace(" MTD", " MTD volume") : period.label + " volume";
+    ["#ex-us-vol-th", "#ex-au-vol-th"].forEach(function (sel) {
+      var th = $(sel);
+      if (th) th.textContent = volLabel;
+    });
 
     var freshEl = $("#ex-fresh");
     if (freshEl) {
       freshEl.innerHTML =
-        '<span class="ex-fresh-item"><strong>Google Ads through:</strong> ' + adsStr + ' <span class="text-muted">(prev complete day)</span></span> · ' +
-        '<span class="ex-fresh-item"><strong>Zoho refreshed:</strong> ' + zohoRefreshed + ' UTC</span> · ' +
-        '<span class="ex-fresh-item"><strong>US sales confirmed:</strong> ' + usStr + ' (Cheyenne)</span> · ' +
-        '<span class="ex-fresh-item"><strong>AU sales confirmed:</strong> ' + auStr + ' (Holly)</span> · ' +
-        '<span class="ex-fresh-item"><strong>Generated:</strong> ' + generatedUtc + ' UTC</span> · ' +
-        '<span class="ex-fresh-status ' + (status === "Current" ? "ok" : status === "Awaiting sales update" ? "warn" : "err") + '">' + status + '</span>';
+        '<span class="ex-fresh-item"><strong>Reporting period:</strong> ' +
+        period.start +
+        " → " +
+        period.end +
+        "</span> · " +
+        '<span class="ex-fresh-item"><strong>Google Ads through:</strong> ' +
+        adsStr +
+        ' <span class="text-muted">(prev complete day)</span></span> · ' +
+        '<span class="ex-fresh-item"><strong>Zoho refreshed:</strong> ' +
+        zohoRefreshed +
+        " UTC</span> · " +
+        '<span class="ex-fresh-item"><strong>US sales confirmed:</strong> ' +
+        usStr +
+        " (Cheyenne)</span> · " +
+        '<span class="ex-fresh-item"><strong>AU sales confirmed:</strong> ' +
+        auStr +
+        " (Holly)</span> · " +
+        '<span class="ex-fresh-item"><strong>Generated:</strong> ' +
+        generatedUtc +
+        " UTC</span> · " +
+        '<span class="ex-fresh-status ' +
+        (status === "Current" ? "ok" : status === "Awaiting sales update" ? "warn" : "err") +
+        '">' +
+        status +
+        "</span>";
     }
 
     var mobFreshEl = $("#ex-mob-fresh");
     if (mobFreshEl) {
       mobFreshEl.textContent =
-        "Ads: " + adsStr + " · Zoho: " + zohoStr + " · US Sales: " + usStr + " · AU Sales: " + auStr + " · " + status;
+        period.label + " · Ads through " + adsStr + " · US sales " + usStr + " · AU sales " + auStr + " · " + status;
     }
   }
 
-  function renderVerdict(us, au) {
+  /* —— Render: Above-the-fold summary —— */
+
+  function renderExecutiveSummary(us, au) {
+    var closedUs = buildClosedMarketData("US");
+    var closedAu = buildClosedMarketData("AU");
+    var fresh = ((STATE.snapshot || {}).freshness || {});
+    var usConfirmed = fresh.us_sales_confirmed_through || "—";
+    var auConfirmed = fresh.au_sales_confirmed_through || "—";
+    var period = reportingPeriod();
+
+    var augLine = "";
+    if (closedUs && closedAu) {
+      augLine =
+        "August closed: US " +
+        funnelChain(closedUs, "USD") +
+        ". AU " +
+        funnelChain(closedAu, "AUD") +
+        ".";
+    }
+
+    var usPace = us.pacePct != null ? us.pacePct + "%" : "—";
+    var auPace = au.pacePct != null ? au.pacePct + "%" : "—";
+    var sepLine =
+      period.label.replace(" MTD", "") +
+      " through " +
+      fmtShortDate(period.end) +
+      ": US spend " +
+      formatMoney(us.spend, "USD") +
+      " at " +
+      usPace +
+      " of agency-equivalent pace; AU spend " +
+      formatMoney(au.spend, "AUD") +
+      " at " +
+      auPace +
+      ". Sales outcomes await the next labeled update. Hold current budgets until lead quality and pipeline outcomes are validated.";
+
+    var decision =
+      "US sales confirmed through " +
+      fmtShortDate(usConfirmed) +
+      "; AU through " +
+      fmtShortDate(auConfirmed) +
+      ". " +
+      "Awaiting sales update. Current daily budgets (context only): US $250 Core + $100 Roles = $350/day; AU A$150 Core + A$65 Roles = A$215/day.";
+
+    var footnote =
+      "*Blended sales-confirmed company outcomes; not all Google Ads-attributed. Management reporting uses blended, sales-confirmed company outcomes. Optimization reporting requires direct GCLID and usable phone attribution.";
+
+    var deskAug = $("#ex-summary-august");
+    var deskSep = $("#ex-summary-september");
+    var deskDec = $("#ex-summary-decision");
+    var deskNote = $("#ex-summary-footnote");
+    if (deskAug) deskAug.textContent = augLine;
+    if (deskSep) deskSep.textContent = sepLine;
+    if (deskDec) deskDec.textContent = decision;
+    if (deskNote) deskNote.textContent = footnote;
+
+    var mobSnap = $("#ex-mob-snapshot-text");
+    if (mobSnap) {
+      mobSnap.textContent = (augLine ? augLine + " " : "") + sepLine;
+    }
+
+    var mobPace = $("#ex-mob-snap-pace");
+    if (mobPace) {
+      mobPace.textContent =
+        "US " + (us.pacePct != null ? us.pacePct + "%" : "—") + " · AU " + (au.pacePct != null ? au.pacePct + "%" : "—");
+    }
+    var mobPaceLbl = $("#ex-mob-snap-pace-lbl");
+    if (mobPaceLbl) mobPaceLbl.textContent = "Agency-equiv pace";
+    var mobPaceSub = $("#ex-mob-snap-pace-sub");
+    if (mobPaceSub) mobPaceSub.textContent = "Sep MTD · markets separate";
+
+    var closedForCosts = closedUs;
+    var cpePct =
+      closedForCosts && closedForCosts.cpe != null && closedForCosts.agCpe
+        ? Math.round(((closedForCosts.agCpe - closedForCosts.cpe) / closedForCosts.agCpe) * 100)
+        : null;
+    var cpdPct =
+      closedForCosts && closedForCosts.cpd != null && closedForCosts.agCpd
+        ? Math.round(((closedForCosts.agCpd - closedForCosts.cpd) / closedForCosts.agCpd) * 100)
+        : null;
+
+    var mobCpe = $("#ex-mob-snap-cpe");
+    if (mobCpe) mobCpe.textContent = cpePct != null ? "-" + cpePct + "%" : "—";
+    var mobCpeSub = $("#ex-mob-snap-cpe-sub");
+    if (mobCpeSub) {
+      mobCpeSub.textContent =
+        closedUs && closedUs.cpe != null
+          ? "US " + formatMoney2(closedUs.cpe, "USD") + " · Aug closed"
+          : "Awaiting sales update";
+    }
+
+    var mobCpd = $("#ex-mob-snap-cpd");
+    if (mobCpd) mobCpd.textContent = cpdPct != null ? "-" + cpdPct + "%" : "—";
+    var mobCpdSub = $("#ex-mob-snap-cpd-sub");
+    if (mobCpdSub) {
+      mobCpdSub.textContent =
+        closedUs && closedUs.cpd != null
+          ? "US " + formatMoney2(closedUs.cpd, "USD") + " · Aug closed"
+          : "Awaiting sales update";
+    }
+
     var usEl = $("#ex-verdict-us");
     var auEl = $("#ex-verdict-au");
     var decEl = $("#ex-verdict-dec");
-
-    var snap = STATE.snapshot || {};
-    var verdict = snap.executive_verdict || {};
-
-    var usSpendPacePct = us.agPeriodEquivSpend > 0 ? Math.round((us.spend / us.agPeriodEquivSpend) * 100) : 18;
-    var auSpendPacePct = au.agPeriodEquivSpend > 0 ? Math.round((au.spend / au.agPeriodEquivSpend) * 100) : 15;
-
     if (usEl) {
-      var usEnq = us.funnel.enquiries != null ? us.funnel.enquiries : 31;
-      var usDisc = us.funnel.discoveries != null ? us.funnel.discoveries : 16;
-      var usJo = us.funnel.jobOrders != null ? us.funnel.jobOrders : 13;
-      var usPl = us.funnel.placements != null ? us.funnel.placements : 3;
       usEl.textContent =
-        "Producing confirmed activity across the full funnel—" +
-        usEnq +
-        " enquiries, " +
-        usDisc +
-        " completed discovery calls, " +
-        usJo +
-        " job orders and " +
-        usPl +
-        " placements—at substantially lower blended cost than the previous agency while operating at approximately " +
-        usSpendPacePct +
-        "% of the agency’s comparable spend pace.";
+        closedUs
+          ? "August closed: " +
+            funnelChain(closedUs, "USD") +
+            ". Cost/enquiry " +
+            formatMoney2(closedUs.cpe, "USD") +
+            "; cost/completed call " +
+            formatMoney2(closedUs.cpd, "USD") +
+            ". September through " +
+            fmtShortDate(period.end) +
+            ": spend " +
+            formatMoney(us.spend, "USD") +
+            " at " +
+            usPace +
+            " of agency-equivalent pace. Sales outcomes pending labeled update."
+          : "Ads spend " + formatMoney(us.spend, "USD") + " (~" + usPace + " agency pace). Sales outcomes pending.";
     }
-
     if (auEl) {
-      var auEnq = au.funnel.enquiries != null ? au.funnel.enquiries : 18;
-      var auDisc = au.funnel.discoveries != null ? au.funnel.discoveries : 12;
-      var auJo = au.funnel.jobOrders != null ? au.funnel.jobOrders : 7;
-      var auPl = au.funnel.placements != null ? au.funnel.placements : 4;
       auEl.textContent =
-        "Producing confirmed activity through the entire funnel—" +
-        auEnq +
-        " enquiries, " +
-        auDisc +
-        " completed discovery calls, " +
-        auJo +
-        " job orders and " +
-        auPl +
-        " placements—while operating at approximately " +
-        auSpendPacePct +
-        "% of the agency’s comparable spend pace.";
+        closedAu
+          ? "August closed: " +
+            funnelChain(closedAu, "AUD") +
+            ". Cost/enquiry " +
+            formatMoney2(closedAu.cpe, "AUD") +
+            "; cost/completed call " +
+            formatMoney2(closedAu.cpd, "AUD") +
+            ". September through " +
+            fmtShortDate(period.end) +
+            ": spend " +
+            formatMoney(au.spend, "AUD") +
+            " at " +
+            auPace +
+            " of agency-equivalent pace. Sales outcomes pending labeled update."
+          : "Ads spend " + formatMoney(au.spend, "AUD") + " (~" + auPace + " agency pace). Sales outcomes pending.";
+    }
+    if (decEl) {
+      decEl.textContent =
+        "Hold current budgets until lead quality and pipeline outcomes are validated. " +
+        "US ~" +
+        usPace +
+        " / AU ~" +
+        auPace +
+        " of agency-equivalent pace (September MTD). " +
+        decision;
     }
 
-    if (decEl) {
-      if (snap.current_decision) {
-        decEl.textContent = snap.current_decision;
-      } else if (verdict.current_decision) {
-        decEl.textContent = verdict.current_decision;
-      } else {
-        var perfUs = snap.performance_us || {};
-        var usCamps = perfUs.campaigns || [];
-        var isMaxConv = usCamps.some(function (c) {
-          return c.name === "VC_US_S_CORE" && c.bidding_strategy_type === "MAXIMIZE_CONVERSIONS";
-        });
-        var bidNote = isMaxConv
-          ? "US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls."
-          : "Search campaigns operate with tight CPC controls.";
-        decEl.textContent =
-          "Maintain controlled ramp pacing (~" +
-          usSpendPacePct +
-          "% US / ~" +
-          auSpendPacePct +
-          "% AU of historical agency spend). " +
-          bidNote +
-          " Validate sales pipeline and lead qualification before further aggressive budget scaling.";
-      }
+    var working = $("#ex-mob-working-text");
+    if (working && closedUs && closedAu) {
+      working.textContent =
+        "August closed at lower blended unit costs than the agency baseline — US " +
+        formatMoney2(closedUs.cpe, "USD") +
+        "/enquiry and " +
+        formatMoney2(closedUs.cpd, "USD") +
+        "/call; AU " +
+        formatMoney2(closedAu.cpe, "AUD") +
+        "/enquiry and " +
+        formatMoney2(closedAu.cpd, "AUD") +
+        "/call. September spend is live at US " +
+        usPace +
+        " / AU " +
+        auPace +
+        " agency-equivalent pace.";
+    }
+    var uncertain = $("#ex-mob-uncertain-text");
+    if (uncertain) {
+      uncertain.textContent =
+        "September sales outcomes are pending the next properly labeled Cheyenne (US) and Holly (AU) update. " +
+        "US sales confirmed through " +
+        fmtShortDate(usConfirmed) +
+        "; AU through " +
+        fmtShortDate(auConfirmed) +
+        ". Awaiting sales update.";
+    }
+    var next = $("#ex-mob-next-text");
+    if (next) {
+      next.textContent =
+        "Hold current budgets. Validate lead quality and pipeline outcomes before scaling. " +
+        "Keep US and AU reporting separate by currency — never blend USD and AUD.";
     }
   }
+
+  /* —— Render: Scorecard tables —— */
 
   function renderScorecardTable(market, data, tbodyId, trafficId) {
     var tbody = $(tbodyId);
@@ -363,54 +593,71 @@
     var cur = data.currency;
     var spend = data.spend;
     var agSpendEquiv = data.agPeriodEquivSpend;
-    var spendPacePct = agSpendEquiv > 0 ? Math.round((spend / agSpendEquiv) * 100) : (market === "US" ? 18 : 15);
+    var pace = data.pacePct != null ? data.pacePct + "% of agency pace" : "—";
 
     var rows = [];
-
-    // 1. Google Ads spend
-    var daysText = (data.daysInPeriod || 27) + " days";
+    var daysText = (data.daysInPeriod || 1) + " days";
     rows.push(
       "<tr>" +
         "<td><strong>Google Ads spend</strong></td>" +
         '<td class="num font-mono text-muted">—</td>' +
-        '<td class="num font-mono"><strong>' + formatMoney(spend, cur) + "</strong></td>" +
+        '<td class="num font-mono"><strong>' +
+        formatMoney(spend, cur) +
+        "</strong></td>" +
         '<td class="num font-mono text-muted">' +
-          formatMoney(agSpendEquiv, cur) +
-          '<div class="ex-cell-sub">Agency-equiv (' + daysText + ')</div>' +
+        formatMoney(agSpendEquiv, cur) +
+        '<div class="ex-cell-sub">Agency-equiv (' +
+        daysText +
+        ")</div>" +
         "</td>" +
-        '<td class="num font-mono">' + spendPacePct + "% of agency pace</td>" +
-      "</tr>"
+        '<td class="num font-mono">' +
+        pace +
+        "</td>" +
+        "</tr>"
     );
 
-    // 2. Employer enquiries
     var enqVol = data.funnel.enquiries != null ? formatNum(data.funnel.enquiries) : '<span class="ex-status-tag pending">Pending</span>';
     var enqPilotCost = data.cpe.value != null ? formatMoney2(data.cpe.value, cur) : "—";
     var enqDiff = data.cpe.value != null ? diffPercentHtml(data.cpe.value, data.agCpe) : "—";
     rows.push(
       "<tr>" +
         "<td><strong>Employer enquiries</strong></td>" +
-        '<td class="num font-mono">' + enqVol + "</td>" +
-        '<td class="num font-mono"><strong>' + enqPilotCost + "</strong></td>" +
-        '<td class="num font-mono text-muted">' + formatMoney2(data.agCpe, cur) + "</td>" +
-        '<td class="num font-mono">' + enqDiff + "</td>" +
-      "</tr>"
+        '<td class="num font-mono">' +
+        enqVol +
+        "</td>" +
+        '<td class="num font-mono"><strong>' +
+        enqPilotCost +
+        "</strong></td>" +
+        '<td class="num font-mono text-muted">' +
+        formatMoney2(data.agCpe, cur) +
+        "</td>" +
+        '<td class="num font-mono">' +
+        enqDiff +
+        "</td>" +
+        "</tr>"
     );
 
-    // 3. Completed discovery calls
     var discVol = data.funnel.discoveries != null ? formatNum(data.funnel.discoveries) : '<span class="ex-status-tag pending">Pending</span>';
     var discPilotCost = data.cpd.value != null ? formatMoney2(data.cpd.value, cur) : "—";
     var discDiff = data.cpd.value != null ? diffPercentHtml(data.cpd.value, data.agCpd) : "—";
     rows.push(
       "<tr>" +
         "<td><strong>Completed discovery calls</strong></td>" +
-        '<td class="num font-mono">' + discVol + "</td>" +
-        '<td class="num font-mono"><strong>' + discPilotCost + "</strong></td>" +
-        '<td class="num font-mono text-muted">' + formatMoney2(data.agCpd, cur) + "</td>" +
-        '<td class="num font-mono">' + discDiff + "</td>" +
-      "</tr>"
+        '<td class="num font-mono">' +
+        discVol +
+        "</td>" +
+        '<td class="num font-mono"><strong>' +
+        discPilotCost +
+        "</strong></td>" +
+        '<td class="num font-mono text-muted">' +
+        formatMoney2(data.agCpd, cur) +
+        "</td>" +
+        '<td class="num font-mono">' +
+        discDiff +
+        "</td>" +
+        "</tr>"
     );
 
-    // 4. Confirmed job orders
     var joConfirmed = data.funnel.jobOrders != null && data.funnel.jobOrders > 0;
     var joVol = joConfirmed
       ? formatNum(data.funnel.jobOrders) + "*"
@@ -420,14 +667,21 @@
     rows.push(
       "<tr>" +
         "<td><strong>Confirmed job orders</strong></td>" +
-        '<td class="num font-mono">' + joVol + "</td>" +
-        '<td class="num font-mono">' + joPilotCost + "</td>" +
-        '<td class="num font-mono text-muted">' + formatMoney2(data.agCpjo, cur) + "</td>" +
-        '<td class="num font-mono">' + joDiff + "</td>" +
-      "</tr>"
+        '<td class="num font-mono">' +
+        joVol +
+        "</td>" +
+        '<td class="num font-mono">' +
+        joPilotCost +
+        "</td>" +
+        '<td class="num font-mono text-muted">' +
+        formatMoney2(data.agCpjo, cur) +
+        "</td>" +
+        '<td class="num font-mono">' +
+        joDiff +
+        "</td>" +
+        "</tr>"
     );
 
-    // 5. Confirmed placements
     var plConfirmed = data.funnel.placements != null && data.funnel.placements > 0;
     var plVol = plConfirmed
       ? formatNum(data.funnel.placements) + "*"
@@ -437,93 +691,112 @@
     rows.push(
       "<tr>" +
         "<td><strong>Confirmed placements</strong></td>" +
-        '<td class="num font-mono">' + plVol + "</td>" +
-        '<td class="num font-mono">' + plPilotCost + "</td>" +
-        '<td class="num font-mono text-muted">' + formatMoney2(data.agCpp, cur) + "</td>" +
-        '<td class="num font-mono">' + plDiff + "</td>" +
-      "</tr>"
+        '<td class="num font-mono">' +
+        plVol +
+        "</td>" +
+        '<td class="num font-mono">' +
+        plPilotCost +
+        "</td>" +
+        '<td class="num font-mono text-muted">' +
+        formatMoney2(data.agCpp, cur) +
+        "</td>" +
+        '<td class="num font-mono">' +
+        plDiff +
+        "</td>" +
+        "</tr>"
     );
 
     tbody.innerHTML = rows.join("");
 
-    // Traffic efficiency note
     if (trafficEl && data.ads) {
-      var cpcStr = formatMoney2(data.ads.avgCpc, cur);
-      var agCpcStr = formatMoney2(data.agCpc, cur);
-      var ctrStr = formatPct1(data.ads.ctrPct);
-      var agCtrStr = formatPct1(data.agCtr);
       trafficEl.textContent =
-        "Supporting traffic efficiency: " + cpcStr + " CPC vs " + agCpcStr + " agency · " + ctrStr + " CTR vs " + agCtrStr + " agency";
+        "Supporting traffic efficiency: " +
+        formatMoney2(data.ads.avgCpc, cur) +
+        " CPC vs " +
+        formatMoney2(data.agCpc, cur) +
+        " agency · " +
+        formatPct1(data.ads.ctrPct) +
+        " CTR vs " +
+        formatPct1(data.agCtr) +
+        " agency";
     }
   }
 
-  function renderMonthlyRamp(us, au) {
+  function renderMonthlyRamp() {
     var usBody = $("#ex-ramp-us-tbody");
     var auBody = $("#ex-ramp-au-tbody");
+    var hist = monthlyHistory();
 
-    if (usBody) {
-      var usSpend = formatMoney(us.spend, "USD");
-      var usEnq = us.funnel.enquiries != null ? formatNum(us.funnel.enquiries) : "31";
-      var usDisc = us.funnel.discoveries != null ? formatNum(us.funnel.discoveries) : "16";
-      var usJo = us.funnel.jobOrders && us.funnel.jobOrders > 0 ? formatNum(us.funnel.jobOrders) + "*" : "13*";
-      var usPl = us.funnel.placements && us.funnel.placements > 0 ? formatNum(us.funnel.placements) + "*" : "3*";
-      var usCpe = us.cpe.value != null ? formatMoney2(us.cpe.value, "USD") : "$159.40";
-      var usCpd = us.cpd.value != null ? formatMoney2(us.cpd.value, "USD") : "$308.85";
-
-      usBody.innerHTML =
-        "<tr>" +
-          "<td><strong>August 2026 MTD</strong></td>" +
-          '<td class="num font-mono"><strong>' + usSpend + "</strong></td>" +
-          '<td class="num font-mono">' + usEnq + "</td>" +
-          '<td class="num font-mono">' + usDisc + "</td>" +
-          '<td class="num font-mono">' + usJo + "</td>" +
-          '<td class="num font-mono">' + usPl + "</td>" +
-          '<td class="num font-mono"><strong>' + usCpe + "</strong></td>" +
-          '<td class="num font-mono"><strong>' + usCpd + "</strong></td>" +
-          '<td class="num font-mono"><span class="ex-pill ok ex-pill-sm">Active · MTD</span></td>' +
-        "</tr>";
+    function statusPill(status) {
+      if (status === "complete") {
+        return '<span class="ex-pill ok ex-pill-sm">Closed</span>';
+      }
+      return '<span class="ex-pill ok ex-pill-sm">Active · MTD</span>';
     }
 
-    if (auBody) {
-      var auSpend = formatMoney(au.spend, "AUD");
-      var auEnq = au.funnel.enquiries != null ? formatNum(au.funnel.enquiries) : "18";
-      var auDisc = au.funnel.discoveries != null ? formatNum(au.funnel.discoveries) : "12";
-      var auJo = au.funnel.jobOrders != null ? formatNum(au.funnel.jobOrders) + "*" : "7*";
-      var auPl = au.funnel.placements != null ? formatNum(au.funnel.placements) + "*" : "4*";
-      var auCpe = au.cpe.value != null ? formatMoney2(au.cpe.value, "AUD") : "A$141.38";
-      var auCpd = au.cpd.value != null ? formatMoney2(au.cpd.value, "AUD") : "A$212.06";
-
-      auBody.innerHTML =
+    function rowHtml(rec, side, currency) {
+      var m = (rec && rec[side]) || {};
+      var spend = formatMoney(m.spend, currency);
+      var enq = m.enquiries != null ? formatNum(m.enquiries) : '<span class="ex-status-tag pending">Pending</span>';
+      var disc = m.sales_calls_completed != null ? formatNum(m.sales_calls_completed) : '<span class="ex-status-tag pending">Pending</span>';
+      var jo =
+        m.job_orders_total != null && m.job_orders_total > 0
+          ? formatNum(m.job_orders_total) + "*"
+          : m.job_orders_total === 0
+            ? "0"
+            : '<span class="ex-status-tag pending">Pending</span>';
+      var pl =
+        m.placements != null && m.placements > 0
+          ? formatNum(m.placements) + "*"
+          : m.placements === 0
+            ? "0"
+            : '<span class="ex-status-tag pending">Pending</span>';
+      var cpe = m.cost_per_enquiry != null ? formatMoney2(m.cost_per_enquiry, currency) : "—";
+      var cpd = m.cost_per_discovery != null ? formatMoney2(m.cost_per_discovery, currency) : "—";
+      return (
         "<tr>" +
-          "<td><strong>August 2026 MTD</strong></td>" +
-          '<td class="num font-mono"><strong>' + auSpend + "</strong></td>" +
-          '<td class="num font-mono">' + auEnq + "</td>" +
-          '<td class="num font-mono">' + auDisc + "</td>" +
-          '<td class="num font-mono">' + auJo + "</td>" +
-          '<td class="num font-mono">' + auPl + "</td>" +
-          '<td class="num font-mono"><strong>' + auCpe + "</strong></td>" +
-          '<td class="num font-mono"><strong>' + auCpd + "</strong></td>" +
-          '<td class="num font-mono"><span class="ex-pill ok ex-pill-sm">Active · MTD</span></td>' +
-        "</tr>";
+        "<td><strong>" +
+        (rec.label || rec.month) +
+        "</strong></td>" +
+        '<td class="num font-mono"><strong>' +
+        spend +
+        "</strong></td>" +
+        '<td class="num font-mono">' +
+        enq +
+        "</td>" +
+        '<td class="num font-mono">' +
+        disc +
+        "</td>" +
+        '<td class="num font-mono">' +
+        jo +
+        "</td>" +
+        '<td class="num font-mono">' +
+        pl +
+        "</td>" +
+        '<td class="num font-mono"><strong>' +
+        cpe +
+        "</strong></td>" +
+        '<td class="num font-mono"><strong>' +
+        cpd +
+        "</strong></td>" +
+        '<td class="num font-mono">' +
+        statusPill(rec.status) +
+        "</td>" +
+        "</tr>"
+      );
     }
+
+    if (usBody) usBody.innerHTML = hist.map(function (rec) { return rowHtml(rec, "us", "USD"); }).join("");
+    if (auBody) auBody.innerHTML = hist.map(function (rec) { return rowHtml(rec, "au", "AUD"); }).join("");
   }
 
-  /* —— Render Functions: Mobile —— */
+  /* —— Render: Mobile —— */
 
   function renderMobileView(us, au) {
     var curMkt = STATE.activeMobileMarket || "US";
     var mktData = curMkt === "US" ? us : au;
-    var otherData = curMkt === "US" ? au : us;
+    var closed = buildClosedMarketData(curMkt);
 
-    // 1. Snapshot Section
-    var usSpendPace = us.agPeriodEquivSpend > 0 ? Math.round((us.spend / us.agPeriodEquivSpend) * 100) : 18;
-    var auSpendPace = au.agPeriodEquivSpend > 0 ? Math.round((au.spend / au.agPeriodEquivSpend) * 100) : 15;
-    var blendedPace = Math.round((usSpendPace + auSpendPace) / 2);
-
-    var snapPaceEl = $("#ex-mob-snap-pace");
-    if (snapPaceEl) snapPaceEl.textContent = "~" + blendedPace + "%";
-
-    // 2. Market Switcher Button States
     var btnUs = $("#ex-mob-tab-us");
     var btnAu = $("#ex-mob-tab-au");
     if (btnUs && btnAu) {
@@ -540,257 +813,281 @@
       }
     }
 
-    // 3. Active Market Head Card
     var titleEl = $("#ex-mob-mkt-title");
-    if (titleEl) {
-      titleEl.textContent = curMkt === "US" ? "United States (USD)" : "Australia (AUD)";
-    }
+    if (titleEl) titleEl.textContent = curMkt === "US" ? "United States (USD)" : "Australia (AUD)";
+
     var spendEl = $("#ex-mob-mkt-spend");
-    if (spendEl) {
-      spendEl.textContent = formatMoney(mktData.spend, mktData.currency);
-    }
+    if (spendEl) spendEl.textContent = formatMoney(mktData.spend, mktData.currency);
+
     var paceEl = $("#ex-mob-mkt-ag-pace");
-    var agPaceVal = curMkt === "US" ? usSpendPace : auSpendPace;
     if (paceEl) {
-      paceEl.textContent = agPaceVal + "% of agency pace";
+      paceEl.textContent = mktData.pacePct != null ? mktData.pacePct + "% of agency pace" : "—";
     }
 
-    // 4. Metric Cards (4 key stages: Enquiries, Discoveries, Job Orders, Placements)
+    var statusEl = $("#ex-mob-mkt-status");
+    if (statusEl) {
+      statusEl.textContent = mktData.funnel.enquiriesPending ? "Awaiting sales update" : "Active Search Pilot";
+    }
+
     var metricGrid = $("#ex-mob-metric-cards");
     if (metricGrid) {
       var cur = mktData.currency;
-      
-      // Stage 1: Enquiries
-      var enqVol = mktData.funnel.enquiries != null ? formatNum(mktData.funnel.enquiries) : "—";
-      var enqCost = mktData.cpe.value != null ? formatMoney2(mktData.cpe.value, cur) : "—";
-      var enqDiff = mktData.cpe.value != null ? diffPercentHtml(mktData.cpe.value, mktData.agCpe) : "—";
+      var showClosed = mktData.funnel.enquiriesPending && closed;
+      var display = showClosed
+        ? {
+            enq: closed.funnel.enquiries,
+            disc: closed.funnel.discoveries,
+            jo: closed.funnel.jobOrders,
+            pl: closed.funnel.placements,
+            cpe: closed.cpe,
+            cpd: closed.cpd,
+            note: "Aug closed",
+          }
+        : {
+            enq: mktData.funnel.enquiries,
+            disc: mktData.funnel.discoveries,
+            jo: mktData.funnel.jobOrders,
+            pl: mktData.funnel.placements,
+            cpe: mktData.cpe.value,
+            cpd: mktData.cpd.value,
+            note: null,
+          };
 
-      // Stage 2: Discoveries
-      var discVol = mktData.funnel.discoveries != null ? formatNum(mktData.funnel.discoveries) : "—";
-      var discCost = mktData.cpd.value != null ? formatMoney2(mktData.cpd.value, cur) : "—";
-      var discDiff = mktData.cpd.value != null ? diffPercentHtml(mktData.cpd.value, mktData.agCpd) : "—";
+      function card(title, vol, cost, agCost, pending) {
+        var volHtml = pending || vol == null ? '<span class="ex-status-tag pending">Pending</span>' : formatNum(vol);
+        var costHtml = cost != null ? formatMoney2(cost, cur) : "—";
+        var diffHtml = cost != null ? diffPercentHtml(cost, agCost) : "—";
+        return (
+          '<div class="ex-mob-metric-card">' +
+          '<div class="ex-mob-metric-top">' +
+          '<div class="ex-mob-metric-title">' +
+          title +
+          (display.note ? ' <span class="text-muted">(' + display.note + ")</span>" : "") +
+          "</div>" +
+          '<div class="ex-mob-metric-count">' +
+          volHtml +
+          "</div>" +
+          "</div>" +
+          '<div class="ex-mob-metric-cost-row">' +
+          '<span class="ex-mob-metric-cost-lbl">Blended cost</span>' +
+          '<div class="ex-mob-metric-cost">' +
+          costHtml +
+          "</div>" +
+          '<div class="ex-mob-metric-delta">' +
+          diffHtml +
+          "</div>" +
+          "</div>" +
+          "</div>"
+        );
+      }
 
-      // Stage 3: Job Orders
-      var joConfirmed = mktData.funnel.jobOrders != null && mktData.funnel.jobOrders > 0;
-      var joVol = joConfirmed ? formatNum(mktData.funnel.jobOrders) + "*" : '<span class="ex-status-tag pending">Pending</span>';
-      var joCost = joConfirmed && mktData.cpjo.value != null ? formatMoney2(mktData.cpjo.value, cur) : "—";
-      var joDiff = joConfirmed && mktData.cpjo.value != null ? diffPercentHtml(mktData.cpjo.value, mktData.agCpjo) : '<span class="text-muted">vs ' + formatMoney2(mktData.agCpjo, cur) + '</span>';
-
-      // Stage 4: Placements
-      var plConfirmed = mktData.funnel.placements != null && mktData.funnel.placements > 0;
-      var plVol = plConfirmed ? formatNum(mktData.funnel.placements) + "*" : '<span class="ex-status-tag pending">Pending</span>';
-      var plCost = plConfirmed && mktData.cpp.value != null ? formatMoney2(mktData.cpp.value, cur) : "—";
-      var plDiff = plConfirmed && mktData.cpp.value != null ? diffPercentHtml(mktData.cpp.value, mktData.agCpp) : '<span class="text-muted">vs ' + formatMoney2(mktData.agCpp, cur) + '</span>';
-
+      var joPending = display.jo == null || display.jo <= 0;
+      var plPending = display.pl == null || display.pl <= 0;
       metricGrid.innerHTML =
-        '<div class="ex-mob-metric-card">' +
-          '<div class="ex-mob-metric-top">' +
-            '<div class="ex-mob-metric-title">Employer enquiries</div>' +
-            '<div class="ex-mob-metric-count">' + enqVol + '</div>' +
-          '</div>' +
-          '<div class="ex-mob-metric-cost-row">' +
-            '<span class="ex-mob-metric-cost-lbl">Blended cost</span>' +
-            '<div class="ex-mob-metric-cost">' + enqCost + '</div>' +
-            '<div class="ex-mob-metric-delta">' + enqDiff + '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="ex-mob-metric-card">' +
-          '<div class="ex-mob-metric-top">' +
-            '<div class="ex-mob-metric-title">Completed calls</div>' +
-            '<div class="ex-mob-metric-count">' + discVol + '</div>' +
-          '</div>' +
-          '<div class="ex-mob-metric-cost-row">' +
-            '<span class="ex-mob-metric-cost-lbl">Blended cost</span>' +
-            '<div class="ex-mob-metric-cost">' + discCost + '</div>' +
-            '<div class="ex-mob-metric-delta">' + discDiff + '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="ex-mob-metric-card">' +
-          '<div class="ex-mob-metric-top">' +
-            '<div class="ex-mob-metric-title">Confirmed job orders</div>' +
-            '<div class="ex-mob-metric-count">' + joVol + '</div>' +
-          '</div>' +
-          '<div class="ex-mob-metric-cost-row">' +
-            '<span class="ex-mob-metric-cost-lbl">Blended cost</span>' +
-            '<div class="ex-mob-metric-cost">' + joCost + '</div>' +
-            '<div class="ex-mob-metric-delta">' + joDiff + '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="ex-mob-metric-card">' +
-          '<div class="ex-mob-metric-top">' +
-            '<div class="ex-mob-metric-title">Confirmed placements</div>' +
-            '<div class="ex-mob-metric-count">' + plVol + '</div>' +
-          '</div>' +
-          '<div class="ex-mob-metric-cost-row">' +
-            '<span class="ex-mob-metric-cost-lbl">Blended cost</span>' +
-            '<div class="ex-mob-metric-cost">' + plCost + '</div>' +
-            '<div class="ex-mob-metric-delta">' + plDiff + '</div>' +
-          '</div>' +
-        '</div>';
+        card("Employer enquiries", display.enq, display.cpe, mktData.agCpe, display.enq == null) +
+        card("Completed calls", display.disc, display.cpd, mktData.agCpd, display.disc == null) +
+        card(
+          "Confirmed job orders",
+          display.jo,
+          null,
+          mktData.agCpjo,
+          joPending
+        ) +
+        card(
+          "Confirmed placements",
+          display.pl,
+          null,
+          mktData.agCpp,
+          plPending
+        );
     }
 
-    // 5. Traffic Efficiency Banner
     var trafficBox = $("#ex-mob-traffic-text");
     if (trafficBox && mktData.ads) {
-      var cpcStr = formatMoney2(mktData.ads.avgCpc, mktData.currency);
-      var agCpcStr = formatMoney2(mktData.agCpc, mktData.currency);
-      var ctrStr = formatPct1(mktData.ads.ctrPct);
-      var agCtrStr = formatPct1(mktData.agCtr);
-      trafficBox.textContent = cpcStr + " CPC vs " + agCpcStr + " agency · " + ctrStr + " CTR vs " + agCtrStr + " agency";
+      trafficBox.textContent =
+        formatMoney2(mktData.ads.avgCpc, mktData.currency) +
+        " CPC vs " +
+        formatMoney2(mktData.agCpc, mktData.currency) +
+        " agency · " +
+        formatPct1(mktData.ads.ctrPct) +
+        " CTR vs " +
+        formatPct1(mktData.agCtr) +
+        " agency";
     }
 
-    // 6. Visual Funnel Steps
     var funnelLabel = $("#ex-mob-funnel-mkt-label");
-    if (funnelLabel) {
-      funnelLabel.textContent = curMkt === "US" ? "US Pipeline" : "AU Pipeline";
-    }
+    if (funnelLabel) funnelLabel.textContent = curMkt === "US" ? "US Pipeline" : "AU Pipeline";
+
     var funnelWrap = $("#ex-mob-funnel-steps");
     if (funnelWrap) {
-      var enqCount = mktData.funnel.enquiries || (curMkt === "US" ? 31 : 18);
-      var discCount = mktData.funnel.discoveries || (curMkt === "US" ? 16 : 12);
-      var joCount = mktData.funnel.jobOrders;
-      var plCount = mktData.funnel.placements;
-
-      var enqToDiscRate = enqCount > 0 && discCount > 0 ? ((discCount / enqCount) * 100).toFixed(1) + "% to discovery" : "—";
-      var discToJoRate = discCount > 0 && joCount != null && joCount > 0 ? ((joCount / discCount) * 100).toFixed(1) + "% to job order" : "Validation pending";
-      var joToPlRate = joCount != null && joCount > 0 && plCount != null && plCount > 0 ? ((plCount / joCount) * 100).toFixed(1) + "% to placement" : "Validation pending";
-
-      var curSym = mktData.currency;
-      var enqC = mktData.cpe.value != null ? formatMoney2(mktData.cpe.value, curSym) : "—";
-      var discC = mktData.cpd.value != null ? formatMoney2(mktData.cpd.value, curSym) : "—";
-      var joC = mktData.cpjo.value != null ? formatMoney2(mktData.cpjo.value, curSym) : "—";
-      var plC = mktData.cpp.value != null ? formatMoney2(mktData.cpp.value, curSym) : "—";
-
+      var src = mktData.funnel.enquiriesPending && closed ? closed.funnel : mktData.funnel;
+      var cpeV = mktData.funnel.enquiriesPending && closed ? closed.cpe : mktData.cpe.value;
+      var cpdV = mktData.funnel.enquiriesPending && closed ? closed.cpd : mktData.cpd.value;
+      var tag = mktData.funnel.enquiriesPending && closed ? " (Aug closed)" : "";
       funnelWrap.innerHTML =
-        '<div class="ex-mob-funnel-step">' +
-          '<div class="ex-mob-funnel-left">' +
-            '<span class="ex-mob-funnel-num-tag">Stage 1</span>' +
-            '<div class="ex-mob-funnel-name">Employer Enquiries</div>' +
-            '<div class="ex-mob-funnel-cost">' + enqC + ' / enquiry</div>' +
-          '</div>' +
-          '<div class="ex-mob-funnel-right">' +
-            '<div class="ex-mob-funnel-vol">' + formatNum(enqCount) + '</div>' +
-            '<span class="ex-mob-funnel-rate-tag">' + enqToDiscRate + '</span>' +
-          '</div>' +
-        '</div>' +
+        '<div class="ex-mob-funnel-step"><div class="ex-mob-funnel-left"><span class="ex-mob-funnel-num-tag">Stage 1</span><div class="ex-mob-funnel-name">Employer Enquiries' +
+        tag +
+        '</div><div class="ex-mob-funnel-cost">' +
+        (cpeV != null ? formatMoney2(cpeV, mktData.currency) + " / enquiry" : "—") +
+        '</div></div><div class="ex-mob-funnel-right"><div class="ex-mob-funnel-vol">' +
+        (src.enquiries != null ? formatNum(src.enquiries) : "—") +
+        "</div></div></div>" +
         '<div class="ex-mob-funnel-arrow">↓</div>' +
-        '<div class="ex-mob-funnel-step">' +
-          '<div class="ex-mob-funnel-left">' +
-            '<span class="ex-mob-funnel-num-tag">Stage 2</span>' +
-            '<div class="ex-mob-funnel-name">Completed Discovery Calls</div>' +
-            '<div class="ex-mob-funnel-cost">' + discC + ' / completed call</div>' +
-          '</div>' +
-          '<div class="ex-mob-funnel-right">' +
-            '<div class="ex-mob-funnel-vol">' + formatNum(discCount) + '</div>' +
-            '<span class="ex-mob-funnel-rate-tag' + (joCount != null && joCount > 0 ? '' : ' pending') + '">' + discToJoRate + '</span>' +
-          '</div>' +
-        '</div>' +
+        '<div class="ex-mob-funnel-step"><div class="ex-mob-funnel-left"><span class="ex-mob-funnel-num-tag">Stage 2</span><div class="ex-mob-funnel-name">Completed Discovery Calls</div><div class="ex-mob-funnel-cost">' +
+        (cpdV != null ? formatMoney2(cpdV, mktData.currency) + " / completed call" : "—") +
+        '</div></div><div class="ex-mob-funnel-right"><div class="ex-mob-funnel-vol">' +
+        (src.discoveries != null ? formatNum(src.discoveries) : "—") +
+        "</div></div></div>" +
         '<div class="ex-mob-funnel-arrow">↓</div>' +
-        '<div class="ex-mob-funnel-step">' +
-          '<div class="ex-mob-funnel-left">' +
-            '<span class="ex-mob-funnel-num-tag">Stage 3</span>' +
-            '<div class="ex-mob-funnel-name">Confirmed Job Orders</div>' +
-            '<div class="ex-mob-funnel-cost">' + (joCount != null && joCount > 0 ? joC + ' / job order' : 'Pending sales validation') + '</div>' +
-          '</div>' +
-          '<div class="ex-mob-funnel-right">' +
-            '<div class="ex-mob-funnel-vol">' + (joCount != null && joCount > 0 ? formatNum(joCount) : '—') + '</div>' +
-            '<span class="ex-mob-funnel-rate-tag' + (joCount != null && joCount > 0 ? '' : ' pending') + '">' + joToPlRate + '</span>' +
-          '</div>' +
-        '</div>' +
+        '<div class="ex-mob-funnel-step"><div class="ex-mob-funnel-left"><span class="ex-mob-funnel-num-tag">Stage 3</span><div class="ex-mob-funnel-name">Confirmed Job Orders</div><div class="ex-mob-funnel-cost">' +
+        (src.jobOrders != null && src.jobOrders > 0 ? formatNum(src.jobOrders) + "*" : "Pending sales validation") +
+        '</div></div><div class="ex-mob-funnel-right"><div class="ex-mob-funnel-vol">' +
+        (src.jobOrders != null && src.jobOrders > 0 ? formatNum(src.jobOrders) : "—") +
+        "</div></div></div>" +
         '<div class="ex-mob-funnel-arrow">↓</div>' +
-        '<div class="ex-mob-funnel-step">' +
-          '<div class="ex-mob-funnel-left">' +
-            '<span class="ex-mob-funnel-num-tag">Stage 4</span>' +
-            '<div class="ex-mob-funnel-name">Confirmed Placements</div>' +
-            '<div class="ex-mob-funnel-cost">' + (plCount != null && plCount > 0 ? plC + ' / placement' : 'Pending sales validation') + '</div>' +
-          '</div>' +
-          '<div class="ex-mob-funnel-right">' +
-            '<div class="ex-mob-funnel-vol">' + (plCount != null && plCount > 0 ? formatNum(plCount) : '—') + '</div>' +
-            '<span class="ex-mob-funnel-rate-tag' + (plCount != null && plCount > 0 ? '' : ' pending') + '">' + (plCount != null && plCount > 0 ? 'Full funnel closed' : 'Pending validation') + '</span>' +
-          '</div>' +
-        '</div>';
+        '<div class="ex-mob-funnel-step"><div class="ex-mob-funnel-left"><span class="ex-mob-funnel-num-tag">Stage 4</span><div class="ex-mob-funnel-name">Confirmed Placements</div><div class="ex-mob-funnel-cost">' +
+        (src.placements != null && src.placements > 0 ? formatNum(src.placements) + "*" : "Pending sales validation") +
+        '</div></div><div class="ex-mob-funnel-right"><div class="ex-mob-funnel-vol">' +
+        (src.placements != null && src.placements > 0 ? formatNum(src.placements) : "—") +
+        "</div></div></div>";
     }
 
-    // 7. Visual Trend Bars (Cost Comparison vs Baseline)
     var barsWrap = $("#ex-mob-bars-container");
     if (barsWrap) {
-      var curSym2 = mktData.currency;
-      var pilotEnq = mktData.cpe.value || (curMkt === "US" ? 159.40 : 141.38);
-      var agEnq = mktData.agCpe;
-      var enqPct = Math.min(100, Math.round((pilotEnq / agEnq) * 100));
-
-      var pilotDisc = mktData.cpd.value || (curMkt === "US" ? 308.85 : 212.06);
-      var agDisc = mktData.agCpd;
-      var discPct = Math.min(100, Math.round((pilotDisc / agDisc) * 100));
-
-      barsWrap.innerHTML =
-        '<div class="ex-mob-bar-group">' +
-          '<div class="ex-mob-bar-header">' +
-            '<span class="ex-mob-bar-title">Cost per Enquiry (' + curMkt + ')</span>' +
-            '<span class="ex-mob-bar-diff">' + (100 - enqPct) + '% lower</span>' +
-          '</div>' +
-          '<div class="ex-mob-bar-track">' +
-            '<div class="ex-mob-bar-fill-pilot" style="width: ' + enqPct + '%;"></div>' +
-          '</div>' +
-          '<div class="ex-mob-bar-legend">' +
-            '<span>Pilot: ' + formatMoney2(pilotEnq, curSym2) + '</span>' +
-            '<span>Agency: ' + formatMoney2(agEnq, curSym2) + '</span>' +
-          '</div>' +
-        '</div>' +
-        '<div class="ex-mob-bar-group">' +
-          '<div class="ex-mob-bar-header">' +
-            '<span class="ex-mob-bar-title">Cost per Discovery Call (' + curMkt + ')</span>' +
-            '<span class="ex-mob-bar-diff">' + (100 - discPct) + '% lower</span>' +
-          '</div>' +
-          '<div class="ex-mob-bar-track">' +
-            '<div class="ex-mob-bar-fill-pilot" style="width: ' + discPct + '%;"></div>' +
-          '</div>' +
-          '<div class="ex-mob-bar-legend">' +
-            '<span>Pilot: ' + formatMoney2(pilotDisc, curSym2) + '</span>' +
-            '<span>Agency: ' + formatMoney2(agDisc, curSym2) + '</span>' +
-          '</div>' +
-        '</div>';
+      var pilotEnq = closed && closed.cpe != null ? closed.cpe : mktData.cpe.value;
+      var pilotDisc = closed && closed.cpd != null ? closed.cpd : mktData.cpd.value;
+      if (pilotEnq == null || pilotDisc == null) {
+        barsWrap.innerHTML =
+          '<p class="ex-mob-bars-pending">Unit-cost bars use the last closed month. September sales outcomes are pending the next labeled update.</p>';
+      } else {
+        var agEnq = mktData.agCpe;
+        var agDisc = mktData.agCpd;
+        var enqPct = Math.min(100, Math.round((pilotEnq / agEnq) * 100));
+        var discPct = Math.min(100, Math.round((pilotDisc / agDisc) * 100));
+        barsWrap.innerHTML =
+          '<div class="ex-mob-bar-group"><div class="ex-mob-bar-header"><span class="ex-mob-bar-title">Cost per Enquiry (' +
+          curMkt +
+          " · Aug closed)</span><span class=\"ex-mob-bar-diff\">" +
+          (100 - enqPct) +
+          '% lower</span></div><div class="ex-mob-bar-track"><div class="ex-mob-bar-fill-pilot" style="width: ' +
+          enqPct +
+          '%;"></div></div><div class="ex-mob-bar-legend"><span>Pilot: ' +
+          formatMoney2(pilotEnq, mktData.currency) +
+          "</span><span>Agency: " +
+          formatMoney2(agEnq, mktData.currency) +
+          "</span></div></div>" +
+          '<div class="ex-mob-bar-group"><div class="ex-mob-bar-header"><span class="ex-mob-bar-title">Cost per Discovery Call (' +
+          curMkt +
+          " · Aug closed)</span><span class=\"ex-mob-bar-diff\">" +
+          (100 - discPct) +
+          '% lower</span></div><div class="ex-mob-bar-track"><div class="ex-mob-bar-fill-pilot" style="width: ' +
+          discPct +
+          '%;"></div></div><div class="ex-mob-bar-legend"><span>Pilot: ' +
+          formatMoney2(pilotDisc, mktData.currency) +
+          "</span><span>Agency: " +
+          formatMoney2(agDisc, mktData.currency) +
+          "</span></div></div>";
+      }
     }
 
-    // 8. Monthly Ramp History Cards
+    var agencyBox = $("#ex-mob-agency-box");
+    if (agencyBox) {
+      var cUs = buildClosedMarketData("US");
+      var cAu = buildClosedMarketData("AU");
+      agencyBox.innerHTML =
+        '<div class="ex-mob-comp-row"><div class="ex-mob-comp-left"><span class="ex-mob-comp-tag good">US separate</span><div class="ex-mob-comp-label">United States pace</div></div><div class="ex-mob-comp-desc">September MTD spend ' +
+        formatMoney(us.spend, "USD") +
+        " at " +
+        (us.pacePct != null ? us.pacePct + "%" : "—") +
+        " of agency-equivalent pace. August closed cost/enquiry " +
+        (cUs && cUs.cpe != null ? formatMoney2(cUs.cpe, "USD") : "—") +
+        ".</div></div>" +
+        '<div class="ex-mob-comp-row"><div class="ex-mob-comp-left"><span class="ex-mob-comp-tag good">AU separate</span><div class="ex-mob-comp-label">Australia pace</div></div><div class="ex-mob-comp-desc">September MTD spend ' +
+        formatMoney(au.spend, "AUD") +
+        " at " +
+        (au.pacePct != null ? au.pacePct + "%" : "—") +
+        " of agency-equivalent pace. August closed cost/enquiry " +
+        (cAu && cAu.cpe != null ? formatMoney2(cAu.cpe, "AUD") : "—") +
+        ".</div></div>" +
+        '<div class="ex-mob-comp-row"><div class="ex-mob-comp-left"><span class="ex-mob-comp-tag neutral">Equal basis</span><div class="ex-mob-comp-label">Attribution methodology</div></div><div class="ex-mob-comp-desc">Same company-wide CRM outcome attribution for pilot and agency baseline. USD and AUD are never combined.</div></div>';
+    }
+
     var rampBody = $("#ex-mob-ramp-body");
     if (rampBody) {
-      var usSpendStr = formatMoney(us.spend, "USD");
-      var auSpendStr = formatMoney(au.spend, "AUD");
-      var usEnqStr = us.funnel.enquiries != null ? formatNum(us.funnel.enquiries) : "31";
-      var auEnqStr = au.funnel.enquiries != null ? formatNum(au.funnel.enquiries) : "18";
-      var usDiscStr = us.funnel.discoveries != null ? formatNum(us.funnel.discoveries) : "16";
-      var auDiscStr = au.funnel.discoveries != null ? formatNum(au.funnel.discoveries) : "12";
+      var hist = monthlyHistory();
+      rampBody.innerHTML = hist
+        .map(function (rec) {
+          var status = rec.status === "complete" ? "Closed" : "Active · MTD";
+          var u = rec.us || {};
+          var a = rec.au || {};
+          return (
+            '<div class="ex-mob-ramp-card">' +
+            '<div class="ex-mob-ramp-row"><strong>US · ' +
+            (rec.label || "") +
+            '</strong> <span class="ex-pill ok ex-pill-sm">' +
+            status +
+            "</span></div>" +
+            '<div class="ex-mob-ramp-row text-muted"><span>Spend: ' +
+            formatMoney(u.spend, "USD") +
+            "</span><span>Enquiries: " +
+            (u.enquiries != null ? formatNum(u.enquiries) : "Pending") +
+            "</span></div>" +
+            '<div class="ex-mob-ramp-row text-muted"><span>Calls: ' +
+            (u.sales_calls_completed != null ? formatNum(u.sales_calls_completed) : "Pending") +
+            "</span><span>Cost/call: " +
+            (u.cost_per_discovery != null ? formatMoney2(u.cost_per_discovery, "USD") : "—") +
+            "</span></div>" +
+            "</div>" +
+            '<div class="ex-mob-ramp-card">' +
+            '<div class="ex-mob-ramp-row"><strong>AU · ' +
+            (rec.label || "") +
+            '</strong> <span class="ex-pill ok ex-pill-sm">' +
+            status +
+            "</span></div>" +
+            '<div class="ex-mob-ramp-row text-muted"><span>Spend: ' +
+            formatMoney(a.spend, "AUD") +
+            "</span><span>Enquiries: " +
+            (a.enquiries != null ? formatNum(a.enquiries) : "Pending") +
+            "</span></div>" +
+            '<div class="ex-mob-ramp-row text-muted"><span>Calls: ' +
+            (a.sales_calls_completed != null ? formatNum(a.sales_calls_completed) : "Pending") +
+            (a.job_orders_total != null ? " · JOs: " + a.job_orders_total + "*" : "") +
+            "</span><span>Placements: " +
+            (a.placements != null ? a.placements + "*" : "—") +
+            "</span></div>" +
+            "</div>"
+          );
+        })
+        .join("");
+    }
 
-      rampBody.innerHTML =
-        '<div class="ex-mob-ramp-card">' +
-          '<div class="ex-mob-ramp-row"><strong>🇺🇸 US · August 2026 MTD</strong> <span class="ex-pill ok ex-pill-sm">Active</span></div>' +
-          '<div class="ex-mob-ramp-row text-muted"><span>Spend: ' + usSpendStr + '</span><span>Enquiries: ' + usEnqStr + '</span></div>' +
-          '<div class="ex-mob-ramp-row text-muted"><span>Discovery calls: ' + usDiscStr + '</span><span>Cost/call: ' + formatMoney2(us.cpd.value, "USD") + '</span></div>' +
-        '</div>' +
-        '<div class="ex-mob-ramp-card">' +
-          '<div class="ex-mob-ramp-row"><strong>🇦🇺 AU · August 2026 MTD</strong> <span class="ex-pill ok ex-pill-sm">Active</span></div>' +
-          '<div class="ex-mob-ramp-row text-muted"><span>Spend: ' + auSpendStr + '</span><span>Enquiries: ' + auEnqStr + '</span></div>' +
-          '<div class="ex-mob-ramp-row text-muted"><span>Discovery: ' + auDiscStr + ' · JOs: 7</span><span>Placements: 4</span></div>' +
-        '</div>';
+    var notesList = $("#ex-mob-action-list");
+    if (notesList) {
+      var fresh = ((STATE.snapshot || {}).freshness || {});
+      notesList.innerHTML =
+        "<li><strong>Cheyenne / Holly:</strong> next labeled September update (US confirmed through " +
+        fmtShortDate(fresh.us_sales_confirmed_through) +
+        "; AU through " +
+        fmtShortDate(fresh.au_sales_confirmed_through) +
+        ").</li>" +
+        "<li><strong>Technical:</strong> pass GCLID, campaign, and usable phone-call outcomes into Zoho.</li>";
     }
   }
 
   function setupMobileEvents(us, au) {
     var btnUs = $("#ex-mob-tab-us");
     var btnAu = $("#ex-mob-tab-au");
-
     if (btnUs) {
-      btnUs.addEventListener("click", function () {
+      btnUs.onclick = function () {
         STATE.activeMobileMarket = "US";
         renderMobileView(us, au);
-      });
+      };
     }
     if (btnAu) {
-      btnAu.addEventListener("click", function () {
+      btnAu.onclick = function () {
         STATE.activeMobileMarket = "AU";
         renderMobileView(us, au);
-      });
+      };
     }
   }
 
@@ -799,12 +1096,10 @@
     var au = buildMarketData("AU");
 
     renderHeader();
-    renderVerdict(us, au);
+    renderExecutiveSummary(us, au);
     renderScorecardTable("US", us, "#ex-us-tbody", "#ex-us-traffic");
     renderScorecardTable("AU", au, "#ex-au-tbody", "#ex-au-traffic");
-    renderMonthlyRamp(us, au);
-
-    // Render mobile view and wire tab listeners
+    renderMonthlyRamp();
     renderMobileView(us, au);
     setupMobileEvents(us, au);
   }
@@ -815,14 +1110,17 @@
 
     Promise.all([
       fetchJson("data/executive-snapshot.json"),
-      fetchJson("data/executive-snapshot-frozen-2026-08-10.json").catch(function () { return null; }),
-      fetchJson("data/agency-baseline.json").catch(function () { return null; }),
+      fetchJson("data/executive-snapshot-frozen-2026-08-10.json").catch(function () {
+        return null;
+      }),
+      fetchJson("data/agency-baseline.json").catch(function () {
+        return null;
+      }),
     ])
       .then(function (res) {
         STATE.snapshot = res[0];
         STATE.archiveW1 = res[1];
         STATE.agency = res[2];
-
         if (loadingEl) loadingEl.style.display = "none";
         renderAll();
       })

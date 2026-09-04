@@ -26,35 +26,33 @@
         <header class="ex-mob-header">
           <div class="ex-mob-header-top">
             <span class="ex-mob-pill ok"><span class="ex-mob-pulse"></span> Controlled Ramp · On Track</span>
-            <span class="ex-mob-period" id="ex-mob-period-badge">August 2026 MTD</span>
+            <span class="ex-mob-period" id="ex-mob-period-badge">September 2026 MTD</span>
           </div>
           <h1 class="ex-mob-title">Executive Performance</h1>
-          <p class="ex-mob-freshness" id="ex-mob-fresh">Data through Aug 27 · Confirmed by Cheyenne (US) &amp; Holly (AU)</p>
+          <p class="ex-mob-freshness" id="ex-mob-fresh">Loading current period…</p>
         </header>
 
-        <!-- SECTION 1: EXECUTIVE SNAPSHOT -->
+        <!-- SECTION 1: EXECUTIVE SNAPSHOT (filled from snapshot JSON) -->
         <section class="ex-mob-section" aria-label="Executive snapshot">
           <div class="ex-mob-card ex-mob-snapshot-card" id="ex-mob-snapshot">
             <div class="ex-mob-card-label">Executive Snapshot</div>
-            <div class="ex-mob-snapshot-lead" id="ex-mob-snapshot-text">
-              Operating at ~16% of prior agency spend pace while delivering qualified employer leads and discovery calls at ~80% lower blended unit costs.
-            </div>
+            <div class="ex-mob-snapshot-lead" id="ex-mob-snapshot-text">Loading…</div>
             
             <div class="ex-mob-snapshot-stats">
               <div class="ex-mob-stat-box">
-                <div class="ex-mob-stat-val delta-good" id="ex-mob-snap-pace">~16%</div>
-                <div class="ex-mob-stat-lbl">Agency spend pace</div>
-                <div class="ex-mob-stat-sub">Controlled ramp</div>
+                <div class="ex-mob-stat-val delta-good" id="ex-mob-snap-pace">—</div>
+                <div class="ex-mob-stat-lbl" id="ex-mob-snap-pace-lbl">Agency-equiv pace</div>
+                <div class="ex-mob-stat-sub" id="ex-mob-snap-pace-sub">US · AU separate</div>
               </div>
               <div class="ex-mob-stat-box">
-                <div class="ex-mob-stat-val delta-good" id="ex-mob-snap-cpe">-80%</div>
+                <div class="ex-mob-stat-val delta-good" id="ex-mob-snap-cpe">—</div>
                 <div class="ex-mob-stat-lbl">Cost / enquiry</div>
-                <div class="ex-mob-stat-sub">vs $700+ baseline</div>
+                <div class="ex-mob-stat-sub" id="ex-mob-snap-cpe-sub">vs agency baseline</div>
               </div>
               <div class="ex-mob-stat-box">
-                <div class="ex-mob-stat-val delta-good" id="ex-mob-snap-cpd">-75%</div>
+                <div class="ex-mob-stat-val delta-good" id="ex-mob-snap-cpd">—</div>
                 <div class="ex-mob-stat-lbl">Cost / discovery</div>
-                <div class="ex-mob-stat-sub">vs $1k+ baseline</div>
+                <div class="ex-mob-stat-sub" id="ex-mob-snap-cpd-sub">vs agency baseline</div>
               </div>
             </div>
           </div>
@@ -88,12 +86,12 @@
               <div class="ex-mob-mkt-spend-row">
                 <div class="ex-mob-spend-item">
                   <span class="ex-mob-spend-label">Pilot spend:</span>
-                  <strong class="font-mono" id="ex-mob-mkt-spend">$2,036</strong>
+                  <strong class="font-mono" id="ex-mob-mkt-spend">—</strong>
                 </div>
                 <div class="ex-mob-spend-divider">·</div>
                 <div class="ex-mob-spend-item">
                   <span class="ex-mob-spend-label">Agency pace:</span>
-                  <span class="font-mono text-muted" id="ex-mob-mkt-ag-pace">18% of pace</span>
+                  <span class="font-mono text-muted" id="ex-mob-mkt-ag-pace">—</span>
                 </div>
               </div>
             </div>
@@ -106,9 +104,7 @@
             <!-- Supporting Traffic Banner -->
             <div class="ex-mob-traffic-card" id="ex-mob-traffic-box">
               <div class="ex-mob-traffic-label">Supporting Search Traffic</div>
-              <div class="ex-mob-traffic-detail" id="ex-mob-traffic-text">
-                $3.22 CPC vs $8.29 agency · 9.4% CTR vs 1.6% agency
-              </div>
+              <div class="ex-mob-traffic-detail" id="ex-mob-traffic-text">Loading…</div>
             </div>
           </div>
         </section>
@@ -158,37 +154,7 @@
           </div>
 
           <div class="ex-mob-card ex-mob-agency-card" id="ex-mob-agency-box">
-            <div class="ex-mob-comp-row">
-              <div class="ex-mob-comp-left">
-                <span class="ex-mob-comp-tag good">~83% lower</span>
-                <div class="ex-mob-comp-label">Google Ads Spend Pace</div>
-              </div>
-              <div class="ex-mob-comp-desc">Operating at ~$3.8k/mo blended run-rate vs ~$23.8k/mo agency historical pace.</div>
-            </div>
-
-            <div class="ex-mob-comp-row">
-              <div class="ex-mob-comp-left">
-                <span class="ex-mob-comp-tag good">~80% lower</span>
-                <div class="ex-mob-comp-label">Cost per Employer Enquiry</div>
-              </div>
-              <div class="ex-mob-comp-desc">Blended cost ~$150/enquiry vs $740+ historical agency baseline.</div>
-            </div>
-
-            <div class="ex-mob-comp-row">
-              <div class="ex-mob-comp-left">
-                <span class="ex-mob-comp-tag good">~75% lower</span>
-                <div class="ex-mob-comp-label">Cost per Completed Discovery</div>
-              </div>
-              <div class="ex-mob-comp-desc">Blended cost ~$260/call vs $1,100+ historical agency baseline.</div>
-            </div>
-
-            <div class="ex-mob-comp-row">
-              <div class="ex-mob-comp-left">
-                <span class="ex-mob-comp-tag neutral">Equal basis</span>
-                <div class="ex-mob-comp-label">Attribution Methodology</div>
-              </div>
-              <div class="ex-mob-comp-desc">Same generous company-wide CRM outcome attribution applied to both pilot and agency baseline.</div>
-            </div>
+            <!-- Filled from snapshot JSON — US and AU kept separate; never blend USD+AUD -->
           </div>
         </section>
 
@@ -202,23 +168,17 @@
           <div class="ex-mob-card ex-mob-leadership-card">
             <div class="ex-mob-brief-item">
               <div class="ex-mob-brief-badge good">What is working</div>
-              <div class="ex-mob-brief-text" id="ex-mob-working-text">
-                Australia is delivering confirmed outcomes through the full funnel (18 enquiries, 12 completed calls, 7 job orders, 4 placements) at ~15% spend pace. US is producing steady enquiry and discovery volume at 80% lower unit costs.
-              </div>
+              <div class="ex-mob-brief-text" id="ex-mob-working-text">Loading…</div>
             </div>
 
             <div class="ex-mob-brief-item">
               <div class="ex-mob-brief-badge warn">What is uncertain / blocked</div>
-              <div class="ex-mob-brief-text" id="ex-mob-uncertain-text">
-                US downstream CRM outcomes (job orders and placements) remain unconfirmed pending sales validation on the 16 completed US discovery calls.
-              </div>
+              <div class="ex-mob-brief-text" id="ex-mob-uncertain-text">Loading…</div>
             </div>
 
             <div class="ex-mob-brief-item">
               <div class="ex-mob-brief-badge next">What happens next</div>
-              <div class="ex-mob-brief-text" id="ex-mob-next-text">
-                Maintain controlled ramp without changing bidding strategy. Validate US pipeline and complete direct click-ID and call tracking before aggressive budget scaling.
-              </div>
+              <div class="ex-mob-brief-text" id="ex-mob-next-text">Loading…</div>
             </div>
           </div>
         </section>
@@ -239,9 +199,8 @@
               </div>
               <div class="ex-mob-note-block">
                 <strong>Immediate action items:</strong>
-                <ul class="ex-mob-note-list">
-                  <li><strong>Cheyenne:</strong> confirm downstream outcomes from 16 completed US discovery calls.</li>
-                  <li><strong>Technical:</strong> pass GCLID, campaign, and usable phone-call outcomes into Zoho.</li>
+                <ul class="ex-mob-note-list" id="ex-mob-action-list">
+                  <li>Loading…</li>
                 </ul>
               </div>
               <div class="ex-mob-diag-links">
@@ -271,31 +230,36 @@
         <header class="ex-header">
           <div class="ex-header-titles">
             <h1>Executive Performance</h1>
-            <p class="ex-subtitle" id="ex-period">August 2026 · Month to Date</p>
-            <p class="ex-fresh" id="ex-fresh">Data through August 27 · Google Ads through August 27 · Sales outcomes confirmed by Cheyenne (US) and Holly (AU)</p>
+            <p class="ex-subtitle" id="ex-period">September 2026 · Month to Date</p>
+            <p class="ex-fresh" id="ex-fresh">Loading current period…</p>
           </div>
         </header>
 
-        <!-- B. Executive Verdict -->
+        <!-- B. Executive summary (August closed first, then September MTD) -->
+        <section class="ex-section" aria-label="Executive summary">
+          <div class="ex-summary-card" id="ex-summary-card">
+            <div class="ex-summary-label">August closed · then September MTD</div>
+            <p class="ex-summary-line" id="ex-summary-august">Loading August closed results…</p>
+            <p class="ex-summary-line" id="ex-summary-september">Loading September MTD…</p>
+            <p class="ex-summary-line ex-summary-decision" id="ex-summary-decision">Loading decision…</p>
+            <p class="ex-summary-footnote" id="ex-summary-footnote"></p>
+          </div>
+        </section>
+
+        <!-- B2. Market verdict detail -->
         <section class="ex-section" aria-label="Executive verdict">
           <div class="ex-briefing-card" id="ex-verdict-card">
             <div class="ex-briefing-item">
               <div class="ex-briefing-label">United States</div>
-              <div class="ex-briefing-text" id="ex-verdict-us">
-                Producing employer enquiries and completed discovery calls at substantially lower blended cost than the previous agency while operating at approximately 18% of the agency’s comparable spend pace. Downstream job orders still require sales validation.
-              </div>
+              <div class="ex-briefing-text" id="ex-verdict-us">Loading…</div>
             </div>
             <div class="ex-briefing-item">
               <div class="ex-briefing-label">Australia</div>
-              <div class="ex-briefing-text" id="ex-verdict-au">
-                Producing confirmed activity through the entire funnel—18 enquiries, 12 completed discovery calls, 7 job orders and 4 placements—while operating at approximately 15% of the agency’s comparable spend pace.
-              </div>
+              <div class="ex-briefing-text" id="ex-verdict-au">Loading…</div>
             </div>
             <div class="ex-briefing-item">
               <div class="ex-briefing-label">Current decision</div>
-              <div class="ex-briefing-text" id="ex-verdict-dec">
-                Maintain controlled ramp pacing (~18% US / ~15% AU of historical agency spend). US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls. Validate sales pipeline and lead qualification before further aggressive budget scaling.
-              </div>
+              <div class="ex-briefing-text" id="ex-verdict-dec">Loading…</div>
             </div>
           </div>
         </section>
@@ -313,7 +277,7 @@
               <thead>
                 <tr>
                   <th style="width: 26%;">Funnel metric</th>
-                  <th class="num" style="width: 16%;">August MTD volume</th>
+                  <th class="num" style="width: 16%;" id="ex-us-vol-th">MTD volume</th>
                   <th class="num" style="width: 18%;">Pilot blended cost</th>
                   <th class="num" style="width: 23%;">Agency blended baseline</th>
                   <th class="num" style="width: 17%;">Difference</th>
@@ -324,9 +288,7 @@
               </tbody>
             </table>
           </div>
-          <div class="ex-traffic-note" id="ex-us-traffic">
-            Supporting traffic efficiency: $3.22 CPC vs $8.29 agency · 9.4% CTR vs 1.6% agency
-          </div>
+          <div class="ex-traffic-note" id="ex-us-traffic">Loading traffic efficiency…</div>
           <p class="ex-footnote" style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem; margin-bottom: 0;">
             * Preliminary blended CRM outcomes completed during the pilot period. These totals include paid, organic, direct, returning-pipeline, and existing-client activity. They should not all be interpreted as Google Ads-attributed conversions.
           </p>
@@ -345,7 +307,7 @@
               <thead>
                 <tr>
                   <th style="width: 26%;">Funnel metric</th>
-                  <th class="num" style="width: 16%;">August MTD volume</th>
+                  <th class="num" style="width: 16%;" id="ex-au-vol-th">MTD volume</th>
                   <th class="num" style="width: 18%;">Pilot blended cost</th>
                   <th class="num" style="width: 23%;">Agency blended baseline</th>
                   <th class="num" style="width: 17%;">Difference</th>
@@ -356,9 +318,7 @@
               </tbody>
             </table>
           </div>
-          <div class="ex-traffic-note" id="ex-au-traffic">
-            Supporting traffic efficiency: A$4.77 CPC vs A$9.24 agency · 13.0% CTR vs 1.4% agency
-          </div>
+          <div class="ex-traffic-note" id="ex-au-traffic">Loading traffic efficiency…</div>
           <p class="ex-footnote" style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem; margin-bottom: 0;">
             * Preliminary blended CRM outcomes completed during the pilot period. These totals include paid, organic, direct, returning-pipeline, and existing-client activity. They should not all be interpreted as Google Ads-attributed conversions.
           </p>

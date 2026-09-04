@@ -491,86 +491,81 @@ CAMPAIGN_Q_AU = f"""
       AND metrics.impressions > 0
 """
 
-# Cheyenne Fri 21 Aug — Mon–Fri labeled; full Mon–Sun window for Ads spend.
+# Last complete US labeled week before month close (Mon–Fri labeled).
 SALES_OPS_US_WEEK = {
     "market": "US",
-    "window_start": "2026-08-17",
-    "window_end": "2026-08-23",
-    "label": "Mon Aug 17 – Sun Aug 23",
-    "source": (
-        "Cheyenne Gichana email 2026-08-21 11:44 PT — U.S. Update Aug 17–21, 2026 "
-        "(Mon–Fri labeled; no weekend add)"
-    ),
-    "gmail_thread_id": "1a025a38a0307fb7",
-    "gmail_message_id": "1a025a38a0307fb7",
-    "enquiries": 13,
-    "sales_calls_completed": 7,
-    "looking_for_work": 2,
-    "not_a_fit": 2,
-    "philippines_job_seekers": 1,
-    "sources": [
-        {"label": "Direct", "count": 3},
-        {"label": "Google Organic", "count": 7},
-        {"label": "Bing Organic", "count": 0},
-        {"label": "Facebook", "count": 0},
-        {"label": "Referral Partner (Outsource Accelerator)", "count": 2},
-        {"label": "Phone Call", "count": 1},
-    ],
-    "job_orders_total": 6,
-    "placements": 2,
-    "campaigns_for_spend": ["VC_US_S_CORE", "VC_US_S_ROLES"],
-}
-
-# Cheyenne Mon Aug 24 email (weekend bridge) + Aug 25 follow-up (both phone calls = job seekers).
-# Mon–Tue enquiry count not labeled yet — weekend counts kept separate.
-SALES_OPS_US_NOW = {
-    "market": "US",
     "window_start": "2026-08-24",
-    "window_end": "2026-08-25",
-    "label": "Mon Aug 24 – Tue Aug 25",
+    "window_end": "2026-08-30",
+    "label": "Mon Aug 24 – Sun Aug 30",
     "source": (
-        "Cheyenne Gichana email 2026-08-24 10:53 PT — weekend Sat Aug 22–Mon AM Aug 24: "
-        "3 enquiries · 1 sales call booked. "
-        "Cheyenne follow-up 2026-08-25 14:39 PT — both weekend phone calls confirmed job seekers. "
-        "Mon–Tue labelled enquiry count pending."
+        "Cheyenne Gichana email 2026-08-28 14:42 PT — U.S. Update Aug 24–28, 2026 "
+        "(Mon–Fri labeled; no weekend add in that note). "
+        "Cheyenne email 2026-08-31 10:20 PT — weekend Aug 29–Mon AM Aug 31: 2 enquiries · 2 sales calls booked "
+        "(counted in August close, not this week’s Mon–Fri label)."
     ),
-    "gmail_thread_id": "1a034e86d46de2f4",
-    "gmail_message_id": "1a03add5fce1089f",
-    "enquiries": 0,
-    "sales_calls_completed": 0,
-    "sales_calls_booked": 1,
-    "looking_for_work": 2,
+    "gmail_thread_id": "1a04a535f39cbc1f",
+    "gmail_message_id": "1a04a535f39cbc1f",
+    "enquiries": 12,
+    "sales_calls_completed": 8,
+    "looking_for_work": 3,
     "not_a_fit": 0,
-    "philippines_job_seekers": 1,
-    "weekend_enquiries": 3,
-    "weekend_label": "Sat Aug 22 – Sun Aug 23 (Cheyenne weekend addendum)",
+    "philippines_job_seekers": 0,
     "sources": [
-        {"label": "ChatGPT", "count": 1},
-        {"label": "Phone Call", "count": 2},
+        {"label": "Direct", "count": 1},
+        {"label": "Google Organic", "count": 3},
+        {"label": "Bing Organic", "count": 1},
+        {"label": "Facebook", "count": 0},
+        {"label": "Referral Partner (Outsource Accelerator)", "count": 1},
+        {"label": "Phone Call", "count": 5},
+        {"label": "Forbes", "count": 1},
     ],
-    "job_orders_total": 3,
+    "job_orders_total": 0,
     "placements": 0,
     "campaigns_for_spend": ["VC_US_S_CORE", "VC_US_S_ROLES"],
 }
 
-# Holly Sun 23 Aug — Mon–Fri labeled; full Mon–Sun window for Ads spend.
+# September open week — awaiting Cheyenne’s next Monday labeled update.
+SALES_OPS_US_NOW = {
+    "market": "US",
+    "window_start": "2026-09-01",
+    "window_end": "2026-09-06",
+    "label": "Mon Sep 1 – Sun Sep 6 (so far)",
+    "source": (
+        "September open week. Cheyenne’s last labeled US update closed August "
+        "(Aug 24–28 week + Aug 29–31 weekend bridge). September enquiry count pending."
+    ),
+    "gmail_thread_id": None,
+    "gmail_message_id": None,
+    "enquiries": None,
+    "sales_calls_completed": None,
+    "sales_calls_booked": None,
+    "looking_for_work": None,
+    "not_a_fit": None,
+    "philippines_job_seekers": None,
+    "caveat": "September enquiry count pending.",
+    "job_orders_total": None,
+    "placements": None,
+    "campaigns_for_spend": ["VC_US_S_CORE", "VC_US_S_ROLES"],
+}
+
+# Last complete AU labeled week before month close.
 SALES_OPS_AU_WEEK = {
     "market": "AU",
-    "window_start": "2026-08-17",
-    "window_end": "2026-08-23",
-    "label": "Mon Aug 17 – Sun Aug 23",
+    "window_start": "2026-08-24",
+    "window_end": "2026-08-30",
+    "label": "Mon Aug 24 – Sun Aug 30",
     "source": (
-        "Holly Wallace email 2026-08-23 15:12 PT — Australia update Aug 17–21, 2026 "
-        "(Mon–Fri labeled; no weekend add)"
+        "Holly Wallace email 2026-08-30 15:15 PT — AU Update Aug 24–30, 2026 "
+        "(7 enquiries · 6 sales calls completed). Weekend note: 1 job-seeker only."
     ),
-    "gmail_thread_id": "1a025a38a0307fb7",
-    "gmail_message_id": "1a030aef01d10be4",
+    "gmail_thread_id": "1a04a535f39cbc1f",
+    "gmail_message_id": "1a054be84c38ae9e",
     "owner": "Holly Wallace",
     "owner_market": "APAC / Australia",
     "scoreboard": "holly",
     "weekly_scoreboard": "sales_ops",
-    "enquiries": 8,
-    "sales_calls_completed": 7,
+    "enquiries": 7,
+    "sales_calls_completed": 6,
     "junk_leads": 0,
     "new_job_orders": 0,
     "returning_job_orders": 0,
@@ -578,41 +573,43 @@ SALES_OPS_AU_WEEK = {
     "job_orders_total": 0,
     "placements": 0,
     "looking_for_work": 2,
-    "not_a_fit": 2,
-    "philippines_job_seekers": 0,
+    "not_a_fit": 1,
+    "philippines_job_seekers": 2,
     "sources": [
-        {"label": "Website", "count": 6},
-        {"label": "Zendesk", "count": 1},
-        {"label": "Phone Call", "count": 1},
+        {"label": "Direct", "count": 5},
+        {"label": "Google Organic", "count": 0},
+        {"label": "Bing Organic", "count": 0},
+        {"label": "Facebook", "count": 0},
+        {"label": "Phone Call", "count": 2},
     ],
     "campaigns_for_spend": ["VC_AU_S_CORE", "VC_AU_S_ROLES"],
 }
 
-# Holly Aug 24–25 thread: 2 enquiries (website, Tue Aug 25) + 1 job order from warm lead phone.
+# September open week — awaiting Holly’s next labeled update.
 SALES_OPS_AU_NOW = {
     "market": "AU",
-    "window_start": "2026-08-24",
-    "window_end": "2026-08-25",
-    "label": "Mon Aug 24 – Tue Aug 25",
+    "window_start": "2026-09-01",
+    "window_end": "2026-09-06",
+    "label": "Mon Sep 1 – Sun Sep 6 (so far)",
     "source": (
-        "Holly Wallace email 2026-08-24 15:07 PT — 2 enquiries Sat Aug 22–Tue Aug 25 "
-        "(both website Tue Aug 25). "
-        "Holly email 2026-08-25 15:10 PT — 1 job order from warm lead phone call."
+        "September open week. Holly’s last labeled AU update closed August (Aug 24–30). "
+        "September enquiry count pending."
     ),
-    "gmail_thread_id": "1a034e86d46de2f4",
-    "gmail_message_id": "1a03af9ed8a6fc70",
+    "gmail_thread_id": None,
+    "gmail_message_id": None,
     "owner": "Holly Wallace",
     "owner_market": "APAC / Australia",
     "scoreboard": "holly",
     "weekly_scoreboard": "sales_ops",
-    "enquiries": 2,
-    "sales_calls_completed": 0,
-    "junk_leads": 0,
-    "new_job_orders": 1,
-    "returning_job_orders": 0,
-    "replacement_job_orders": 0,
-    "job_orders_total": 1,
-    "placements": 0,
+    "enquiries": None,
+    "sales_calls_completed": None,
+    "junk_leads": None,
+    "new_job_orders": None,
+    "returning_job_orders": None,
+    "replacement_job_orders": None,
+    "job_orders_total": None,
+    "placements": None,
+    "caveat": "September enquiry count pending.",
     "campaigns_for_spend": ["VC_AU_S_CORE", "VC_AU_S_ROLES"],
 }
 
@@ -982,8 +979,8 @@ def build_sales_ops_us_now(
         for k in ("zoho_census",):
             if existing.get(k) is not None:
                 ops[k] = existing[k]
-    start = str(ops.get("window_start") or "2026-08-17")
-    end = str(ops.get("window_end") or "2026-08-21")
+    start = str(ops.get("window_start") or "2026-09-01")
+    end = str(ops.get("window_end") or "2026-09-06")
     by_date = (performance_us or {}).get("by_date_stage1") or (
         performance_us or {}
     ).get("by_date") or {}
@@ -995,8 +992,9 @@ def build_sales_ops_us_now(
             clicks += int(m.get("clicks") or 0)
             cost += float(m.get("cost_usd") or 0)
     spend = round(cost, 2)
-    n_enq = int(ops.get("enquiries") or 0)
-    n_calls = int(ops.get("sales_calls_completed") or 0)
+    pending = ops.get("enquiries") is None or "pending" in str(ops.get("caveat") or "").lower()
+    n_enq = None if pending else int(ops.get("enquiries") or 0)
+    n_calls = None if ops.get("sales_calls_completed") is None else int(ops.get("sales_calls_completed") or 0)
     cpl = round(spend / n_enq, 2) if n_enq else None
     cost_call = round(spend / n_calls, 2) if n_calls else None
     ops.update(
@@ -1016,9 +1014,11 @@ def build_sales_ops_us_now(
                 if cpl is not None
                 else ""
             ),
-            "caveat": (
-                f"Mon–Tue enquiry count pending. Weekend addendum: {ops.get('weekend_enquiries', 3)} "
-                f"enquiries (Cheyenne Sat Aug 22–Sun Aug 23)."
+            "caveat": ops.get("caveat")
+            or (
+                f"Sales-ops cost uses Cheyenne’s {n_enq} enquiries."
+                if n_enq is not None
+                else "September enquiry count pending."
             ),
         }
     )
@@ -1035,8 +1035,8 @@ def build_sales_ops_au_now(
         for k in ("zoho_census",):
             if existing.get(k) is not None:
                 ops[k] = existing[k]
-    start = str(ops.get("window_start") or "2026-08-17")
-    end = str(ops.get("window_end") or "2026-08-21")
+    start = str(ops.get("window_start") or "2026-09-01")
+    end = str(ops.get("window_end") or "2026-09-06")
     by_date = (performance_au or {}).get("by_date_stage1") or (
         performance_au or {}
     ).get("by_date") or {}
@@ -1048,8 +1048,9 @@ def build_sales_ops_au_now(
             clicks += int(m.get("clicks") or 0)
             cost += float(m.get("cost_usd") or 0)
     spend = round(cost, 2)
-    n_enq = int(ops.get("enquiries") or 0)
-    n_calls = int(ops.get("sales_calls_completed") or 0)
+    pending = ops.get("enquiries") is None or "pending" in str(ops.get("caveat") or "").lower()
+    n_enq = None if pending else int(ops.get("enquiries") or 0)
+    n_calls = None if ops.get("sales_calls_completed") is None else int(ops.get("sales_calls_completed") or 0)
     cpl = round(spend / n_enq, 2) if n_enq else None
     cost_call = round(spend / n_calls, 2) if n_calls else None
     ops.update(
@@ -1074,12 +1075,17 @@ def build_sales_ops_au_now(
                 if cost_call is not None
                 else ""
             ),
-            "caveat": f"Sales-ops cost uses Holly’s {n_enq} enquiries.",
+            "caveat": ops.get("caveat")
+            or (
+                f"Sales-ops cost uses Holly’s {n_enq} enquiries."
+                if n_enq is not None
+                else "September enquiry count pending."
+            ),
         }
     )
-    n_jo = int(ops.get("job_orders_total") or 0)
+    n_jo = ops.get("job_orders_total")
     if n_jo and spend:
-        cost_jo = round(spend / n_jo, 2)
+        cost_jo = round(spend / int(n_jo), 2)
         ops["cost_per_job_order_usd"] = cost_jo
         ops["math_job_order"] = (
             f"A${spend:,.2f} spend ÷ {n_jo} job order = A${cost_jo:,.2f} per JO"
@@ -1087,7 +1093,7 @@ def build_sales_ops_au_now(
     if cpl is not None:
         ops["insight_plain"] = (
             f"AU sales ops ({ops.get('label')}): {n_enq} enquiries · "
-            f"{n_jo} job order{'s' if n_jo != 1 else ''} · A${cpl:.2f}/enquiry."
+            f"{n_jo or 0} job order{'s' if (n_jo or 0) != 1 else ''} · A${cpl:.2f}/enquiry."
         )
     return ops
 
@@ -1692,7 +1698,10 @@ def compute_freshness(
             us_d = date.fromisoformat(us_sales_confirmed_through[:10])
             au_d = date.fromisoformat(au_sales_confirmed_through[:10])
             lag_days = max((ads_d - us_d).days, (ads_d - au_d).days)
-            if lag_days > 5:
+            sales_month_lag = (ads_d.year, ads_d.month) > (us_d.year, us_d.month) or (
+                ads_d.year, ads_d.month
+            ) > (au_d.year, au_d.month)
+            if lag_days > 5 or sales_month_lag:
                 status = "Awaiting sales update"
                 status_detail = (
                     f"Google Ads current through {google_ads_through} (previous complete day) · "
@@ -1748,6 +1757,72 @@ def compute_freshness(
     }
 
 
+def _month_bounds(year: int, month: int) -> tuple[str, str]:
+    start = date(year, month, 1)
+    if month == 12:
+        end = date(year, 12, 31)
+    else:
+        end = date(year, month + 1, 1) - timedelta(days=1)
+    return start.isoformat(), end.isoformat()
+
+
+def _sum_by_date_range(
+    by_date: dict[str, Any],
+    start: str,
+    end: str,
+) -> tuple[float, int, int]:
+    spend = 0.0
+    clicks = 0
+    impressions = 0
+    for d, v in (by_date or {}).items():
+        if start <= d <= end:
+            spend += float(v.get("cost_usd") or 0)
+            clicks += int(v.get("clicks") or 0)
+            impressions += int(v.get("impressions") or 0)
+    return spend, clicks, impressions
+
+
+def _market_month_block(
+    *,
+    currency: str,
+    spend: float,
+    clicks: int,
+    impressions: int,
+    enquiries: int | None,
+    discoveries: int | None,
+    job_orders: int | None,
+    placements: int | None,
+) -> dict[str, Any]:
+    footnote = (
+        "* Preliminary blended CRM outcomes completed during the pilot period. These totals include "
+        "paid, organic, direct, returning-pipeline, and existing-client activity. They should not all "
+        "be interpreted as Google Ads-attributed conversions."
+    )
+    block: dict[str, Any] = {
+        "currency": currency,
+        "spend": round(spend, 2),
+        "clicks": clicks,
+        "impressions": impressions,
+        "avg_cpc": _avg_cpc(spend, clicks),
+        "ctr_pct": _pct(impressions, clicks),
+        "enquiries": enquiries,
+        "sales_calls_completed": discoveries,
+        "job_orders_total": job_orders,
+        "placements": placements,
+        "cost_per_enquiry": round(spend / enquiries, 2) if spend > 0 and enquiries else None,
+        "cost_per_discovery": round(spend / discoveries, 2) if spend > 0 and discoveries else None,
+        "cost_per_job_order": (
+            round(spend / job_orders, 2) if spend > 0 and job_orders and job_orders > 0 else None
+        ),
+        "cost_per_placement": (
+            round(spend / placements, 2) if spend > 0 and placements and placements > 0 else None
+        ),
+        "job_orders_footnote": footnote,
+        "placements_footnote": footnote,
+    }
+    return block
+
+
 def compute_monthly_history(
     performance_us: dict[str, Any] | None,
     performance_au: dict[str, Any] | None,
@@ -1755,67 +1830,103 @@ def compute_monthly_history(
     sales_au: dict[str, Any] | None,
     as_of_date: str,
 ) -> list[dict[str, Any]]:
-    """Maintain open MTD month and preserve completed historical months."""
-    # Current active month: August 2026 MTD
-    # Pull spend from Aug 1 to as_of_date
+    """Closed months stay frozen; current open month updates as active MTD."""
+    del sales_us, sales_au  # outcomes for closed Aug are locked below; Sep stays pending until labeled
     us_by_date = (performance_us or {}).get("by_date_stage1") or (performance_us or {}).get("by_date") or {}
     au_by_date = (performance_au or {}).get("by_date_stage1") or (performance_au or {}).get("by_date") or {}
-    
-    us_spend = sum(float(v.get("cost_usd") or 0) for d, v in us_by_date.items() if "2026-08-01" <= d <= as_of_date)
-    us_clicks = sum(int(v.get("clicks") or 0) for d, v in us_by_date.items() if "2026-08-01" <= d <= as_of_date)
-    us_impr = sum(int(v.get("impressions") or 0) for d, v in us_by_date.items() if "2026-08-01" <= d <= as_of_date)
+    as_of = date.fromisoformat(as_of_date[:10])
 
-    au_spend = sum(float(v.get("cost_usd") or 0) for d, v in au_by_date.items() if "2026-08-01" <= d <= as_of_date)
-    au_clicks = sum(int(v.get("clicks") or 0) for d, v in au_by_date.items() if "2026-08-01" <= d <= as_of_date)
-    au_impr = sum(int(v.get("impressions") or 0) for d, v in au_by_date.items() if "2026-08-01" <= d <= as_of_date)
-
-    # August 2026 MTD cumulative sales confirmed (Aug 8-25)
-    # US: Cheyenne Aug 8-10 (4 enq, 2 calls) + Aug 17-23 (13 enq, 7 calls) + Aug 10-16 (14 enq, 7 calls) = 31 enq, 16 calls
-    # AU: Holly Aug 10-16 (8 enq, 5 calls) + Aug 17-23 (8 enq, 7 calls, 6 JO, 4 place) + Aug 24-25 (2 enq, 1 JO) = 18 enq, 12 calls, 7 JO, 4 place
+    # August 2026 closed: Ads Aug 1–31 + Cheyenne/Holly labeled outcomes through month end.
+    # US: Aug 10–16 (18/9) + Aug 17–23 (13/7) + Aug 24–28 (12/8) + Aug 29–31 (2 enq; calls booked only)
+    # AU: Aug 10–16 (8/5) + Aug 17–23 (8/7) + Aug 24–30 (7/6); JO/placements kept from prior confirmed close.
+    aug_start, aug_end = _month_bounds(2026, 8)
+    us_aug_spend, us_aug_clicks, us_aug_impr = _sum_by_date_range(us_by_date, aug_start, aug_end)
+    au_aug_spend, au_aug_clicks, au_aug_impr = _sum_by_date_range(au_by_date, aug_start, aug_end)
     aug_record = {
         "month": "2026-08",
-        "label": "August 2026 MTD",
-        "period_start": "2026-08-01",
-        "period_end": as_of_date,
-        "status": "active_mtd",
-        "us": {
-            "currency": "USD",
-            "spend": round(us_spend, 2),
-            "clicks": us_clicks,
-            "impressions": us_impr,
-            "avg_cpc": _avg_cpc(us_spend, us_clicks),
-            "ctr_pct": _pct(us_impr, us_clicks),
-            "enquiries": 31,
-            "sales_calls_completed": 16,
-            "job_orders_total": 13,
-            "placements": 3,
-            "cost_per_enquiry": round(us_spend / 31, 2) if us_spend > 0 else None,
-            "cost_per_discovery": round(us_spend / 16, 2) if us_spend > 0 else None,
-            "cost_per_job_order": round(us_spend / 13, 2) if us_spend > 0 else None,
-            "cost_per_placement": round(us_spend / 3, 2) if us_spend > 0 else None,
-            "job_orders_footnote": "* Preliminary blended CRM outcomes completed during the pilot period. These totals include paid, organic, direct, returning-pipeline, and existing-client activity. They should not all be interpreted as Google Ads-attributed conversions.",
-            "placements_footnote": "* Preliminary blended CRM outcomes completed during the pilot period. These totals include paid, organic, direct, returning-pipeline, and existing-client activity. They should not all be interpreted as Google Ads-attributed conversions.",
-        },
-        "au": {
-            "currency": "AUD",
-            "spend": round(au_spend, 2) if au_spend else 2544.78,
-            "clicks": au_clicks,
-            "impressions": au_impr,
-            "avg_cpc": _avg_cpc(au_spend, au_clicks),
-            "ctr_pct": _pct(au_impr, au_clicks),
-            "enquiries": 18,
-            "sales_calls_completed": 12,
-            "job_orders_total": 7,
-            "placements": 4,
-            "cost_per_enquiry": round((au_spend or 2544.78) / 18, 2),
-            "cost_per_discovery": round((au_spend or 2544.78) / 12, 2),
-            "cost_per_job_order": round((au_spend or 2544.78) / 7, 2),
-            "cost_per_placement": round((au_spend or 2544.78) / 4, 2),
-            "job_orders_footnote": "* Preliminary blended CRM outcomes completed during the pilot period. These totals include paid, organic, direct, returning-pipeline, and existing-client activity. They should not all be interpreted as Google Ads-attributed conversions.",
-            "placements_footnote": "* Preliminary blended CRM outcomes completed during the pilot period. These totals include paid, organic, direct, returning-pipeline, and existing-client activity. They should not all be interpreted as Google Ads-attributed conversions.",
-        },
+        "label": "August 2026",
+        "period_start": aug_start,
+        "period_end": aug_end,
+        "status": "complete",
+        "us": _market_month_block(
+            currency="USD",
+            spend=us_aug_spend,
+            clicks=us_aug_clicks,
+            impressions=us_aug_impr,
+            enquiries=45,
+            discoveries=24,
+            job_orders=13,
+            placements=3,
+        ),
+        "au": _market_month_block(
+            currency="AUD",
+            spend=au_aug_spend,
+            clicks=au_aug_clicks,
+            impressions=au_aug_impr,
+            enquiries=23,
+            discoveries=18,
+            job_orders=7,
+            placements=4,
+        ),
     }
-    return [aug_record]
+
+    history = [aug_record]
+    if as_of.year == 2026 and as_of.month == 8:
+        aug_record["label"] = "August 2026 MTD"
+        aug_record["period_end"] = as_of_date[:10]
+        aug_record["status"] = "active_mtd"
+        return history
+
+    # September 2026+ open MTD (or later months when they open).
+    cur_start, _ = _month_bounds(as_of.year, as_of.month)
+    cur_end = as_of_date[:10]
+    month_names = (
+        "January February March April May June July August September October November December"
+    ).split()
+    cur_label = f"{month_names[as_of.month - 1]} {as_of.year} MTD"
+    us_spend, us_clicks, us_impr = _sum_by_date_range(us_by_date, cur_start, cur_end)
+    au_spend, au_clicks, au_impr = _sum_by_date_range(au_by_date, cur_start, cur_end)
+    history.append(
+        {
+            "month": f"{as_of.year:04d}-{as_of.month:02d}",
+            "label": cur_label,
+            "period_start": cur_start,
+            "period_end": cur_end,
+            "status": "active_mtd",
+            "us": _market_month_block(
+                currency="USD",
+                spend=us_spend,
+                clicks=us_clicks,
+                impressions=us_impr,
+                enquiries=None,
+                discoveries=None,
+                job_orders=None,
+                placements=None,
+            ),
+            "au": _market_month_block(
+                currency="AUD",
+                spend=au_spend,
+                clicks=au_clicks,
+                impressions=au_impr,
+                enquiries=None,
+                discoveries=None,
+                job_orders=None,
+                placements=None,
+            ),
+        }
+    )
+    return history
+
+
+def _agency_pace_pct(spend: float | None, days: int, market: str) -> int | None:
+    """Agency-equivalent spend pace for a market (never cross-currency)."""
+    if spend is None or days <= 0:
+        return None
+    ag_total = 724880.0 if market == "US" else 458167.0
+    ag_equiv = (ag_total / 24.0 / 30.4167) * days
+    if ag_equiv <= 0:
+        return None
+    return int(round((float(spend) / ag_equiv) * 100))
 
 
 def build_executive_verdict(
@@ -1823,7 +1934,9 @@ def build_executive_verdict(
     performance_au: dict[str, Any] | None,
     early_cpl: dict[str, Any] | None,
     early_au: dict[str, Any] | None,
+    monthly_history: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
+    del early_cpl, early_au
     us_camps = (performance_us or {}).get("campaigns", [])
     us_bidding: dict[str, str] = {}
     for c in us_camps:
@@ -1836,19 +1949,58 @@ def build_executive_verdict(
         if c.get("name") and c.get("bidding_strategy_type"):
             au_bidding[c["name"]] = c["bidding_strategy_type"]
 
-    us_desc = (
-        "Producing confirmed activity across the full funnel at substantially lower blended cost "
-        "than the previous agency while operating at approximately 18% of the agency’s comparable spend pace. "
-        "Downstream job orders still require sales validation."
-    )
-    au_desc = (
-        "Producing confirmed activity through the entire funnel—18 enquiries, 12 completed discovery calls, "
-        "7 job orders and 4 placements—while operating at approximately 15% of the agency’s comparable spend pace."
-    )
+    hist = monthly_history or []
+    closed = next((h for h in hist if h.get("status") == "complete"), None)
+    active = next((h for h in reversed(hist) if h.get("status") == "active_mtd"), None)
+
+    def _side_line(side: str, currency_label: str) -> str:
+        c = (closed or {}).get(side) or {}
+        a = (active or {}).get(side) or {}
+        days_a = 1
+        if active and active.get("period_start") and active.get("period_end"):
+            try:
+                d0 = date.fromisoformat(str(active["period_start"])[:10])
+                d1 = date.fromisoformat(str(active["period_end"])[:10])
+                days_a = max(1, (d1 - d0).days + 1)
+            except Exception:
+                days_a = 1
+        market = "US" if side == "us" else "AU"
+        pace = _agency_pace_pct(a.get("spend"), days_a, market)
+        pace_s = f"{pace}%" if pace is not None else "—"
+        if c.get("enquiries") is not None:
+            return (
+                f"August closed: {currency_label}{float(c.get('spend') or 0):,.0f} → "
+                f"{c.get('enquiries')} employer enquiries → {c.get('sales_calls_completed')} completed calls → "
+                f"{c.get('job_orders_total')} job orders* → {c.get('placements')} placements*. "
+                f"Open month spend {currency_label}{float(a.get('spend') or 0):,.0f} at {pace_s} of agency-equivalent pace; "
+                f"sales outcomes await the next labeled update."
+            )
+        return (
+            f"Ads spend {currency_label}{float(a.get('spend') or 0):,.0f} (~{pace_s} agency pace). "
+            f"Sales outcomes pending labeled update."
+        )
+
+    us_desc = _side_line("us", "$")
+    au_desc = _side_line("au", "A$")
+
+    us_days = 1
+    au_days = 1
+    if active and active.get("period_start") and active.get("period_end"):
+        try:
+            d0 = date.fromisoformat(str(active["period_start"])[:10])
+            d1 = date.fromisoformat(str(active["period_end"])[:10])
+            us_days = au_days = max(1, (d1 - d0).days + 1)
+        except Exception:
+            pass
+    us_pace = _agency_pace_pct(((active or {}).get("us") or {}).get("spend"), us_days, "US")
+    au_pace = _agency_pace_pct(((active or {}).get("au") or {}).get("spend"), au_days, "AU")
+    us_pace_s = f"{us_pace}%" if us_pace is not None else "—"
+    au_pace_s = f"{au_pace}%" if au_pace is not None else "—"
 
     us_core_bid = us_bidding.get("VC_US_S_CORE", "MAXIMIZE_CONVERSIONS")
     dec_parts = [
-        "Maintain controlled ramp pacing (~18% US / ~15% AU of historical agency spend)."
+        f"Hold current budgets until lead quality and pipeline outcomes are validated "
+        f"(~{us_pace_s} US / ~{au_pace_s} AU of agency-equivalent pace for the open month)."
     ]
     if us_core_bid == "MAXIMIZE_CONVERSIONS":
         dec_parts.append(
@@ -1856,9 +2008,6 @@ def build_executive_verdict(
         )
     else:
         dec_parts.append("Search campaigns operate with tight CPC controls.")
-    dec_parts.append(
-        "Validate sales pipeline and lead qualification before further aggressive budget scaling."
-    )
     current_decision = " ".join(dec_parts)
 
     return {
@@ -1902,9 +2051,14 @@ def _write_payload(
     operator = _refresh_operator_insights(
         performance_us, performance_au, early_cpl, early_au
     )
-    executive_verdict = build_executive_verdict(
-        performance_us, performance_au, early_cpl, early_au
-    )
+    # Verdict rebuilt after monthly_history below so pacing uses live MTD spend.
+    executive_verdict: dict[str, Any] = {
+        "united_states": "",
+        "australia": "",
+        "current_decision": "",
+        "us_bidding_strategies": {},
+        "au_bidding_strategies": {},
+    }
     payload = {
         "generated_at_utc": finished,
         "pull_started_utc": started,
@@ -1979,33 +2133,29 @@ def _write_payload(
             zoho_refreshed_utc = None
 
     # Hard freshness rule: Never advance google_ads_through when fallback metrics are retained.
-    ads_ok = (hard_stop is None and len(api_calls) > 0 and performance_us is not None)
+    # skip-ads / cached rebuilds keep prior performance and remain "ok" when rows exist.
+    ads_ok = hard_stop is None and performance_us is not None and (
+        len(api_calls) > 0
+        or bool((performance_us.get("by_date_stage1") or performance_us.get("by_date")))
+    )
     if ads_ok:
         ads_through_date = US_PULL_END
     else:
         # Retain last verified google_ads_through date from previous good snapshot
         prev_through = (prev.get("freshness") or {}).get("google_ads_through")
-        if prev_through and prev_through <= "2026-08-28":
-            ads_through_date = prev_through
-        else:
-            ads_through_date = "2026-08-28"
+        ads_through_date = prev_through or US_PULL_END
 
     freshness = compute_freshness(
         google_ads_through=ads_through_date,
         zoho_refreshed_utc=zoho_refreshed_utc,
-        us_sales_confirmed_through="2026-08-25",
-        au_sales_confirmed_through="2026-08-25",
+        us_sales_confirmed_through="2026-08-31",
+        au_sales_confirmed_through="2026-08-30",
         generated_utc=finished,
         ads_ok=ads_ok,
         zoho_ok=True,
         sales_us_ok=True,
         sales_au_ok=True,
     )
-    payload["freshness"] = freshness
-    payload["monthly_history"] = compute_monthly_history(
-        performance_us, performance_au, payload.get("sales_ops_us"), payload.get("sales_ops_au"), ads_through_date
-    )
-
     payload["sales_ops_us"] = build_sales_ops_us(performance_us, prev.get("sales_ops_us"))
     payload["sales_ops_us_now"] = build_sales_ops_us_now(
         performance_us, prev.get("sales_ops_us_now")
@@ -2014,6 +2164,24 @@ def _write_payload(
     payload["sales_ops_au_now"] = build_sales_ops_au_now(
         performance_au, prev.get("sales_ops_au_now")
     )
+    payload["freshness"] = freshness
+    payload["monthly_history"] = compute_monthly_history(
+        performance_us,
+        performance_au,
+        payload.get("sales_ops_us"),
+        payload.get("sales_ops_au"),
+        ads_through_date,
+    )
+    executive_verdict = build_executive_verdict(
+        performance_us,
+        performance_au,
+        payload.get("early_cpl_us"),
+        payload.get("early_cpl_au"),
+        monthly_history=payload["monthly_history"],
+    )
+    payload["executive_verdict"] = executive_verdict
+    payload["current_decision"] = executive_verdict.get("current_decision")
+
     for keep in (
         "impression_share",
         "impression_share_merged_at_utc",
