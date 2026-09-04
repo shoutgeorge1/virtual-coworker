@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-09-04T18:12:05.781487+00:00",
-  "pull_started_utc": "2026-09-04T18:12:02.243827+00:00",
+  "generated_at_utc": "2026-09-04T18:17:15.642595+00:00",
+  "pull_started_utc": "2026-09-04T18:17:12.512862+00:00",
   "customer_ids": {
     "us": "4967151855",
     "au": "5735391940"
@@ -3307,7 +3307,7 @@
       "job_order_submitted": 3
     },
     "spend_usd": 2361.76,
-    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-30 through Ads pull 2026-09-04 18:12 UTC.",
+    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-30 through Ads pull 2026-09-04 18:17 UTC.",
     "impressions": 4709,
     "clicks": 467,
     "avg_cpc_usd": 5.06,
@@ -3345,7 +3345,7 @@
       "VC_US_S_ROLES"
     ],
     "spend_usd": 1253.5,
-    "spend_note": "US Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:12 UTC.",
+    "spend_note": "US Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:17 UTC.",
     "impressions": 2173,
     "clicks": 142,
     "avg_cpc_usd": 8.83,
@@ -3457,7 +3457,7 @@
       "VC_AU_S_ROLES"
     ],
     "spend_usd": 576.82,
-    "spend_note": "AU Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:12 UTC.",
+    "spend_note": "AU Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:17 UTC.",
     "impressions": 778,
     "clicks": 57,
     "avg_cpc_usd": 10.12,
@@ -3471,10 +3471,10 @@
     "status_detail": "Google Ads current through 2026-09-03 (previous complete day) \u00b7 Awaiting sales update (US confirmed through 2026-08-31, AU confirmed through 2026-08-30).",
     "google_ads_through": "2026-09-03",
     "google_ads_period_note": "Displayed Google Ads period ends on the previous complete day because of reporting latency.",
-    "zoho_refreshed_at_utc": "2026-09-04T18:12:07.514574+00:00",
+    "zoho_refreshed_at_utc": "2026-09-04T18:17:17.044170+00:00",
     "us_sales_confirmed_through": "2026-08-31",
     "au_sales_confirmed_through": "2026-08-30",
-    "dashboard_generated_at_utc": "2026-09-04T18:12:05.781487+00:00",
+    "dashboard_generated_at_utc": "2026-09-04T18:17:15.642595+00:00",
     "sources": {
       "google_ads": {
         "ok": true,
@@ -3484,7 +3484,7 @@
       },
       "zoho": {
         "ok": true,
-        "refreshed_at_utc": "2026-09-04T17:49:10.766352+00:00",
+        "refreshed_at_utc": "2026-09-04T18:12:07.514574+00:00",
         "mode": "read_only_census"
       },
       "sales_us": {
