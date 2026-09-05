@@ -1,25 +1,28 @@
 {
-  "generated_at_utc": "2026-09-04T18:17:17.044170+00:00",
+  "generated_at_utc": "2026-09-05T15:23:41.685854+00:00",
   "window_start": "2026-08-31T00:00:00-07:00",
-  "window_end_exclusive": "2026-09-05T00:00:00-07:00",
+  "window_end_exclusive": "2026-09-06T00:00:00-07:00",
   "api_calls": 1,
-  "leads_in_window": 30,
+  "leads_in_window": 35,
   "usa": {
-    "n": 16,
+    "n": 20,
     "with_utm_gclid": 0,
     "discovery_scheduled": 1,
     "job_order_submitted": 3,
     "by_source": {
-      "Website": 10,
-      "Phone": 4,
+      "Website": 11,
+      "Phone": 7,
       "External Referral": 1,
       "(blank)": 1
     },
     "by_status": {
-      "Junk Lead": 5,
+      "Junk Lead": 6,
       "Not Ready - 1 Month": 3,
       "Job Order Submitted": 3,
       "No Shows": 2,
+      "New Enquiry (Auto)": 1,
+      "Attempted to Contact 1 (Auto)": 1,
+      "Decided Against / Not a Fit": 1,
       "Discovery Scheduled": 1,
       "Information Brochure Sent": 1,
       "Attempted to Contact 3 (Auto)": 1
@@ -47,9 +50,9 @@
     }
   },
   "all_regions": {
-    "USA": 16,
+    "USA": 20,
     "AU": 12,
-    "(blank)": 1,
+    "(blank)": 2,
     "Philippines": 1
   },
   "cheyenne_note": "Zoho census only \u2014 US Cost / enquiry on Executive uses Cheyenne\u2019s labeled count from Gmail, not this row total."
