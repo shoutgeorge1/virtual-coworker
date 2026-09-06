@@ -1,20 +1,35 @@
 {
-  "generated_at_utc": "2026-09-04T18:22:06.001576+00:00",
-  "pull_started_utc": "2026-09-04T18:22:06.000395+00:00",
+  "generated_at_utc": "2026-09-05T15:23:40.136801+00:00",
+  "pull_started_utc": "2026-09-05T15:23:37.004110+00:00",
   "customer_ids": {
     "us": "4967151855",
     "au": "5735391940"
   },
-  "filter": "VC_US_% 2026-08-01\u21922026-09-03 + AU active campaigns 2026-08-01\u21922026-09-03 (by-date \u00b7 frozen week locked \u00b7 now vs same weekdays)",
-  "api_calls_used": 0,
+  "filter": "VC_US_% 2026-08-01\u21922026-09-04 + AU active campaigns 2026-08-01\u21922026-09-04 (by-date \u00b7 frozen week locked \u00b7 now vs same weekdays)",
+  "api_calls_used": 2,
   "api_calls_max": 2,
-  "api_calls": [],
+  "api_calls": [
+    {
+      "n": 1,
+      "name": "campaign_metrics_vc_us_date_range",
+      "ok": true,
+      "row_count": 60,
+      "date_range": "2026-08-01_to_2026-09-04"
+    },
+    {
+      "n": 2,
+      "name": "campaign_metrics_au_active_14d",
+      "ok": true,
+      "row_count": 77,
+      "date_range": "2026-08-01_to_2026-09-04"
+    }
+  ],
   "hard_stop": null,
   "conversions_note": "US CORE on Maximize Conversions; US ROLES on Maximize Clicks. Primary stack (George): phone click, 60s calls from ads, 60s website calls, VC_US_Thank_You (GTM v5). Old actions Secondary, not deleted. Thank-you may show Inactive until a gclid-attributed fire. Phone click is a tap \u2014 demote when volume exists. Job seekers never count. Early CPL still uses sales-ops enquiry counts. AU GTM + GA4 are live on Production (GTM-5T6KPVSF / G-7X1K9V2LFE).",
   "executive_verdict": {
-    "united_states": "August closed: $6,595 \u2192 45 employer enquiries \u2192 24 completed calls \u2192 13 job orders* \u2192 3 placements*. Cost/enquiry $146.55; cost/call $274.78. Agency pace 21% (closed-month baseline). September MTD spend $1,254 (42% early MTD pace); sales outcomes await the next labeled update.",
-    "australia": "August closed: A$3,044 \u2192 23 employer enquiries \u2192 18 completed calls \u2192 7 job orders* \u2192 4 placements*. Cost/enquiry A$132.34; cost/call A$169.10. Agency pace 16% (closed-month baseline). September MTD spend A$577 (31% early MTD pace); sales outcomes await the next labeled update.",
-    "current_decision": "Hold current budgets. August closed remains the agency-comparison baseline (~21% US / ~16% AU of agency-equivalent pace). Early September MTD pace (~42% US / ~31% AU over 3 days) is a short-window burn rate, not a replacement for August. US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls.",
+    "united_states": "August closed: $6,595 \u2192 45 employer enquiries \u2192 24 completed calls \u2192 13 job orders* \u2192 3 placements*. Cost/enquiry $146.55; cost/call $274.78. Agency pace 21% (closed-month baseline). September MTD spend $1,651 (42% early MTD pace); sales outcomes await the next labeled update.",
+    "australia": "August closed: A$3,044 \u2192 23 employer enquiries \u2192 18 completed calls \u2192 7 job orders* \u2192 4 placements*. Cost/enquiry A$132.34; cost/call A$169.10. Agency pace 16% (closed-month baseline). September MTD spend A$740 (29% early MTD pace); sales outcomes await the next labeled update.",
+    "current_decision": "Hold current budgets. August closed remains the agency-comparison baseline (~21% US / ~16% AU of agency-equivalent pace). Early September MTD pace (~42% US / ~29% AU over 4 days) is a short-window burn rate, not a replacement for August. US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls.",
     "us_bidding_strategies": {
       "VC_US_S_CORE": "MAXIMIZE_CONVERSIONS",
       "VC_US_S_ROLES": "TARGET_SPEND"
@@ -30,17 +45,17 @@
       "PM_AU_RSA_Brand_Custom LP": "MAXIMIZE_CONVERSIONS"
     }
   },
-  "current_decision": "Hold current budgets. August closed remains the agency-comparison baseline (~21% US / ~16% AU of agency-equivalent pace). Early September MTD pace (~42% US / ~31% AU over 3 days) is a short-window burn rate, not a replacement for August. US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls.",
+  "current_decision": "Hold current budgets. August closed remains the agency-comparison baseline (~21% US / ~16% AU of agency-equivalent pace). Early September MTD pace (~42% US / ~29% AU over 4 days) is a short-window burn rate, not a replacement for August. US CORE operates on Maximize Conversions with primary conversion tracking, while US ROLES and AU remain on Maximize Clicks with CPC controls.",
   "performance_us": {
-    "window": "2026-08-01_to_2026-09-03",
-    "focus_day": "2026-09-03",
+    "window": "2026-08-01_to_2026-09-04",
+    "focus_day": "2026-09-04",
     "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in pull window",
     "totals_focus_day": {
-      "impressions": 705,
-      "clicks": 47,
-      "ctr_pct": 6.67,
-      "cost_usd": 422.67,
-      "avg_cpc_usd": 8.99
+      "impressions": 652,
+      "clicks": 40,
+      "ctr_pct": 6.13,
+      "cost_usd": 397.26,
+      "avg_cpc_usd": 9.93
     },
     "totals_last_7_days": {
       "impressions": 7474,
@@ -127,11 +142,11 @@
           "conversions": 1.0
         },
         "focus_day": {
-          "impressions": 296,
-          "clicks": 21,
-          "ctr_pct": 7.09,
-          "cost_usd": 333.18,
-          "avg_cpc_usd": 15.87
+          "impressions": 327,
+          "clicks": 17,
+          "ctr_pct": 5.2,
+          "cost_usd": 300.55,
+          "avg_cpc_usd": 17.68
         }
       },
       {
@@ -155,11 +170,11 @@
           "avg_cpc_usd": 3.74
         },
         "focus_day": {
-          "impressions": 409,
-          "clicks": 26,
-          "ctr_pct": 6.36,
-          "cost_usd": 89.49,
-          "avg_cpc_usd": 3.44
+          "impressions": 325,
+          "clicks": 23,
+          "ctr_pct": 7.08,
+          "cost_usd": 96.71,
+          "avg_cpc_usd": 4.2
         }
       }
     ],
@@ -374,6 +389,13 @@
         "ctr_pct": 6.67,
         "cost_usd": 422.67,
         "avg_cpc_usd": 8.99
+      },
+      "2026-09-04": {
+        "impressions": 652,
+        "clicks": 40,
+        "ctr_pct": 6.13,
+        "cost_usd": 397.26,
+        "avg_cpc_usd": 9.93
       }
     },
     "by_date_stage1": {
@@ -587,6 +609,13 @@
         "ctr_pct": 6.67,
         "cost_usd": 422.67,
         "avg_cpc_usd": 8.99
+      },
+      "2026-09-04": {
+        "impressions": 652,
+        "clicks": 40,
+        "ctr_pct": 6.13,
+        "cost_usd": 397.26,
+        "avg_cpc_usd": 9.93
       }
     },
     "dates_in_pull": [
@@ -618,7 +647,8 @@
       "2026-08-31",
       "2026-09-01",
       "2026-09-02",
-      "2026-09-03"
+      "2026-09-03",
+      "2026-09-04"
     ],
     "last_7_dates": [
       "2026-08-17",
@@ -640,7 +670,7 @@
     ],
     "scoreboard_now": {
       "start": "2026-08-24",
-      "end": "2026-09-03",
+      "end": "2026-09-04",
       "dates": [
         "2026-08-24",
         "2026-08-25",
@@ -652,7 +682,8 @@
         "2026-08-31",
         "2026-09-01",
         "2026-09-02",
-        "2026-09-03"
+        "2026-09-03",
+        "2026-09-04"
       ],
       "same_weekday_dates": [
         "2026-08-17",
@@ -665,24 +696,25 @@
         "2026-08-24",
         "2026-08-25",
         "2026-08-26",
-        "2026-08-27"
+        "2026-08-27",
+        "2026-08-28"
       ],
-      "label": "Mon Aug 24 \u2013 Thu Sep 3 so far",
+      "label": "Mon Aug 24 \u2013 Fri Sep 4 so far",
       "compare_note": "Same weekdays last week, not a full 7 vs 7.",
       "totals": {
-        "impressions": 7110,
-        "clicks": 637,
-        "ctr_pct": 8.96,
-        "cost_usd": 3845.6,
-        "avg_cpc_usd": 6.04,
+        "impressions": 7762,
+        "clicks": 677,
+        "ctr_pct": 8.72,
+        "cost_usd": 4242.86,
+        "avg_cpc_usd": 6.27,
         "conversions": 5.0
       },
       "same_weekdays": {
-        "impressions": 10788,
-        "clicks": 928,
-        "ctr_pct": 8.6,
-        "cost_usd": 3225.51,
-        "avg_cpc_usd": 3.48,
+        "impressions": 11290,
+        "clicks": 980,
+        "ctr_pct": 8.68,
+        "cost_usd": 3616.45,
+        "avg_cpc_usd": 3.69,
         "conversions": 6.0
       },
       "days": [
@@ -903,21 +935,40 @@
             "cost_usd": 264.4,
             "avg_cpc_usd": 3.53
           }
+        },
+        {
+          "date": "2026-09-04",
+          "dow": "Fri",
+          "same_weekday_date": "2026-08-28",
+          "now": {
+            "impressions": 652,
+            "clicks": 40,
+            "ctr_pct": 6.13,
+            "cost_usd": 397.26,
+            "avg_cpc_usd": 9.93
+          },
+          "same_weekday": {
+            "impressions": 502,
+            "clicks": 52,
+            "ctr_pct": 10.36,
+            "cost_usd": 390.94,
+            "avg_cpc_usd": 7.52
+          }
         }
       ]
     },
-    "window_note": "VC_US_% \u00b7 segments.date BETWEEN 2026-08-01 AND 2026-09-03 (previous complete day \u00b7 reporting latency buffer \u00b7 max 2 calls)"
+    "window_note": "VC_US_% \u00b7 segments.date BETWEEN 2026-08-01 AND 2026-09-04 (previous complete day \u00b7 reporting latency buffer \u00b7 max 2 calls)"
   },
   "performance_au": {
-    "window": "2026-08-01_to_2026-09-03",
-    "focus_day": "2026-09-03",
+    "window": "2026-08-01_to_2026-09-04",
+    "focus_day": "2026-09-04",
     "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in pull window",
     "totals_focus_day": {
-      "impressions": 264,
-      "clicks": 12,
-      "ctr_pct": 4.55,
-      "cost_usd": 105.15,
-      "avg_cpc_usd": 8.76
+      "impressions": 169,
+      "clicks": 17,
+      "ctr_pct": 10.06,
+      "cost_usd": 162.95,
+      "avg_cpc_usd": 9.59
     },
     "totals_last_7_days": {
       "impressions": 1172,
@@ -999,11 +1050,11 @@
           "avg_cpc_usd": 3.33
         },
         "focus_day": {
-          "impressions": 238,
-          "clicks": 11,
-          "ctr_pct": 4.62,
-          "cost_usd": 98.91,
-          "avg_cpc_usd": 8.99
+          "impressions": 155,
+          "clicks": 16,
+          "ctr_pct": 10.32,
+          "cost_usd": 152.98,
+          "avg_cpc_usd": 9.56
         }
       },
       {
@@ -1027,11 +1078,11 @@
           "avg_cpc_usd": 3.9
         },
         "focus_day": {
-          "impressions": 26,
+          "impressions": 14,
           "clicks": 1,
-          "ctr_pct": 3.85,
-          "cost_usd": 6.24,
-          "avg_cpc_usd": 6.24
+          "ctr_pct": 7.14,
+          "cost_usd": 9.97,
+          "avg_cpc_usd": 9.97
         }
       },
       {
@@ -1440,6 +1491,13 @@
         "ctr_pct": 4.55,
         "cost_usd": 105.15,
         "avg_cpc_usd": 8.76
+      },
+      "2026-09-04": {
+        "impressions": 169,
+        "clicks": 17,
+        "ctr_pct": 10.06,
+        "cost_usd": 162.95,
+        "avg_cpc_usd": 9.59
       }
     },
     "by_date_stage1": {
@@ -1629,6 +1687,13 @@
         "ctr_pct": 4.55,
         "cost_usd": 105.15,
         "avg_cpc_usd": 8.76
+      },
+      "2026-09-04": {
+        "impressions": 169,
+        "clicks": 17,
+        "ctr_pct": 10.06,
+        "cost_usd": 162.95,
+        "avg_cpc_usd": 9.59
       }
     },
     "dates_in_pull": [
@@ -1665,7 +1730,8 @@
       "2026-08-31",
       "2026-09-01",
       "2026-09-02",
-      "2026-09-03"
+      "2026-09-03",
+      "2026-09-04"
     ],
     "last_7_dates": [
       "2026-08-17",
@@ -1687,7 +1753,7 @@
     ],
     "scoreboard_now": {
       "start": "2026-08-24",
-      "end": "2026-09-03",
+      "end": "2026-09-04",
       "dates": [
         "2026-08-24",
         "2026-08-25",
@@ -1699,7 +1765,8 @@
         "2026-08-31",
         "2026-09-01",
         "2026-09-02",
-        "2026-09-03"
+        "2026-09-03",
+        "2026-09-04"
       ],
       "same_weekday_dates": [
         "2026-08-17",
@@ -1712,24 +1779,25 @@
         "2026-08-24",
         "2026-08-25",
         "2026-08-26",
-        "2026-08-27"
+        "2026-08-27",
+        "2026-08-28"
       ],
-      "label": "Mon Aug 24 \u2013 Thu Sep 3 so far",
+      "label": "Mon Aug 24 \u2013 Fri Sep 4 so far",
       "compare_note": "Same weekdays last week, not a full 7 vs 7.",
       "totals": {
-        "impressions": 2276,
-        "clicks": 202,
-        "ctr_pct": 8.88,
-        "cost_usd": 1703.98,
-        "avg_cpc_usd": 8.44,
+        "impressions": 2445,
+        "clicks": 219,
+        "ctr_pct": 8.96,
+        "cost_usd": 1866.93,
+        "avg_cpc_usd": 8.52,
         "conversions": 4.0
       },
       "same_weekdays": {
-        "impressions": 2025,
-        "clicks": 260,
-        "ctr_pct": 12.84,
-        "cost_usd": 1561.8,
-        "avg_cpc_usd": 6.01,
+        "impressions": 2165,
+        "clicks": 275,
+        "ctr_pct": 12.7,
+        "cost_usd": 1662.78,
+        "avg_cpc_usd": 6.05,
         "conversions": 5.0
       },
       "days": [
@@ -1946,10 +2014,29 @@
             "cost_usd": 184.14,
             "avg_cpc_usd": 7.08
           }
+        },
+        {
+          "date": "2026-09-04",
+          "dow": "Fri",
+          "same_weekday_date": "2026-08-28",
+          "now": {
+            "impressions": 169,
+            "clicks": 17,
+            "ctr_pct": 10.06,
+            "cost_usd": 162.95,
+            "avg_cpc_usd": 9.59
+          },
+          "same_weekday": {
+            "impressions": 140,
+            "clicks": 15,
+            "ctr_pct": 10.71,
+            "cost_usd": 100.98,
+            "avg_cpc_usd": 6.73
+          }
         }
       ]
     },
-    "window_note": "AU campaigns with impressions \u00b7 BETWEEN 2026-08-01 AND 2026-09-03 (previous complete day \u00b7 reporting latency buffer \u00b7 max 2 calls)"
+    "window_note": "AU campaigns with impressions \u00b7 BETWEEN 2026-08-01 AND 2026-09-04 (previous complete day \u00b7 reporting latency buffer \u00b7 max 2 calls)"
   },
   "early_cpl_us": {
     "market": "US",
@@ -2067,15 +2154,15 @@
     ]
   },
   "performance": {
-    "window": "2026-08-01_to_2026-09-03",
-    "focus_day": "2026-09-03",
+    "window": "2026-08-01_to_2026-09-04",
+    "focus_day": "2026-09-04",
     "focus_day_note": "UTC today not in rows yet \u2014 showing latest date in pull window",
     "totals_focus_day": {
-      "impressions": 705,
-      "clicks": 47,
-      "ctr_pct": 6.67,
-      "cost_usd": 422.67,
-      "avg_cpc_usd": 8.99
+      "impressions": 652,
+      "clicks": 40,
+      "ctr_pct": 6.13,
+      "cost_usd": 397.26,
+      "avg_cpc_usd": 9.93
     },
     "totals_last_7_days": {
       "impressions": 7474,
@@ -2162,11 +2249,11 @@
           "conversions": 1.0
         },
         "focus_day": {
-          "impressions": 296,
-          "clicks": 21,
-          "ctr_pct": 7.09,
-          "cost_usd": 333.18,
-          "avg_cpc_usd": 15.87
+          "impressions": 327,
+          "clicks": 17,
+          "ctr_pct": 5.2,
+          "cost_usd": 300.55,
+          "avg_cpc_usd": 17.68
         }
       },
       {
@@ -2190,11 +2277,11 @@
           "avg_cpc_usd": 3.74
         },
         "focus_day": {
-          "impressions": 409,
-          "clicks": 26,
-          "ctr_pct": 6.36,
-          "cost_usd": 89.49,
-          "avg_cpc_usd": 3.44
+          "impressions": 325,
+          "clicks": 23,
+          "ctr_pct": 7.08,
+          "cost_usd": 96.71,
+          "avg_cpc_usd": 4.2
         }
       }
     ],
@@ -2409,6 +2496,13 @@
         "ctr_pct": 6.67,
         "cost_usd": 422.67,
         "avg_cpc_usd": 8.99
+      },
+      "2026-09-04": {
+        "impressions": 652,
+        "clicks": 40,
+        "ctr_pct": 6.13,
+        "cost_usd": 397.26,
+        "avg_cpc_usd": 9.93
       }
     },
     "by_date_stage1": {
@@ -2622,6 +2716,13 @@
         "ctr_pct": 6.67,
         "cost_usd": 422.67,
         "avg_cpc_usd": 8.99
+      },
+      "2026-09-04": {
+        "impressions": 652,
+        "clicks": 40,
+        "ctr_pct": 6.13,
+        "cost_usd": 397.26,
+        "avg_cpc_usd": 9.93
       }
     },
     "dates_in_pull": [
@@ -2653,7 +2754,8 @@
       "2026-08-31",
       "2026-09-01",
       "2026-09-02",
-      "2026-09-03"
+      "2026-09-03",
+      "2026-09-04"
     ],
     "last_7_dates": [
       "2026-08-17",
@@ -2675,7 +2777,7 @@
     ],
     "scoreboard_now": {
       "start": "2026-08-24",
-      "end": "2026-09-03",
+      "end": "2026-09-04",
       "dates": [
         "2026-08-24",
         "2026-08-25",
@@ -2687,7 +2789,8 @@
         "2026-08-31",
         "2026-09-01",
         "2026-09-02",
-        "2026-09-03"
+        "2026-09-03",
+        "2026-09-04"
       ],
       "same_weekday_dates": [
         "2026-08-17",
@@ -2700,24 +2803,25 @@
         "2026-08-24",
         "2026-08-25",
         "2026-08-26",
-        "2026-08-27"
+        "2026-08-27",
+        "2026-08-28"
       ],
-      "label": "Mon Aug 24 \u2013 Thu Sep 3 so far",
+      "label": "Mon Aug 24 \u2013 Fri Sep 4 so far",
       "compare_note": "Same weekdays last week, not a full 7 vs 7.",
       "totals": {
-        "impressions": 7110,
-        "clicks": 637,
-        "ctr_pct": 8.96,
-        "cost_usd": 3845.6,
-        "avg_cpc_usd": 6.04,
+        "impressions": 7762,
+        "clicks": 677,
+        "ctr_pct": 8.72,
+        "cost_usd": 4242.86,
+        "avg_cpc_usd": 6.27,
         "conversions": 5.0
       },
       "same_weekdays": {
-        "impressions": 10788,
-        "clicks": 928,
-        "ctr_pct": 8.6,
-        "cost_usd": 3225.51,
-        "avg_cpc_usd": 3.48,
+        "impressions": 11290,
+        "clicks": 980,
+        "ctr_pct": 8.68,
+        "cost_usd": 3616.45,
+        "avg_cpc_usd": 3.69,
         "conversions": 6.0
       },
       "days": [
@@ -2938,10 +3042,29 @@
             "cost_usd": 264.4,
             "avg_cpc_usd": 3.53
           }
+        },
+        {
+          "date": "2026-09-04",
+          "dow": "Fri",
+          "same_weekday_date": "2026-08-28",
+          "now": {
+            "impressions": 652,
+            "clicks": 40,
+            "ctr_pct": 6.13,
+            "cost_usd": 397.26,
+            "avg_cpc_usd": 9.93
+          },
+          "same_weekday": {
+            "impressions": 502,
+            "clicks": 52,
+            "ctr_pct": 10.36,
+            "cost_usd": 390.94,
+            "avg_cpc_usd": 7.52
+          }
         }
       ]
     },
-    "window_note": "VC_US_% \u00b7 segments.date BETWEEN 2026-08-01 AND 2026-09-03 (previous complete day \u00b7 reporting latency buffer \u00b7 max 2 calls)"
+    "window_note": "VC_US_% \u00b7 segments.date BETWEEN 2026-08-01 AND 2026-09-04 (previous complete day \u00b7 reporting latency buffer \u00b7 max 2 calls)"
   },
   "customer_id": "4967151855",
   "search_terms": {
@@ -3006,7 +3129,7 @@
     ]
   },
   "landing_pages": {
-    "window": "2026-08-01_to_2026-09-03",
+    "window": "2026-08-01_to_2026-09-04",
     "source": "derived_from_campaign_final_urls",
     "source_note": "Hub metrics = VC_US_S_CORE. Role LPs are live; per-URL split skipped (API budget = US+AU campaigns only).",
     "label": "US LP catalog + CORE traffic",
@@ -3108,7 +3231,7 @@
     ]
   },
   "operator": {
-    "narrative_as_of": "2026-09-04",
+    "narrative_as_of": "2026-09-05",
     "status_banner": "US and Australia Search are live. Paying per click until call tracking is trusted. Clear Google Ads recommendations daily (account score).",
     "budgets": [
       {
@@ -3142,7 +3265,7 @@
       "Lost IS (Rank) is the bigger hole \u2014 ads are eligible but often lose the auction (CPC cap / Quality / relevance), not because the daily budget ran out.",
       "US early cost per lead (Sat Aug 8 \u2013 Mon Aug 10): $394.79 spend \u00f7 4 enquiries = $98.70 per enquiry. $394.79 spend \u00f7 2 sales calls booked = $197.40 per booked call. 4 enquiries \u00b7 2 sales calls booked \u00b7 1 junk (job seeker) \u00b7 1 not a fit. Early / small sample \u2014 do not treat as steady-state CPL. Job-seeker junk never counts as a win.",
       "US (pull window): $2,036 spent \u00b7 597 clicks \u00b7 $3.41 each. Core Search is cheaper and busier. Role Search is more specific and costs more.",
-      "US daily plan is about $125. Latest day in pull ran about $423 \u2014 watch spend vs budget.",
+      "US daily plan is about $125. Latest day in pull ran about $397 \u2014 watch spend vs budget.",
       "Almost all US ad clicks still land on the US home page. Role pages are live but quiet.",
       "Australia new Search: $934 \u00b7 178 clicks \u00b7 about $5 each. Older paused campaigns are not in the VC_* table.",
       "Still paying per click. US phone \u00b7 Australia 1300. A tap is not the same as a real conversation.",
@@ -3292,7 +3415,7 @@
       "job_order_submitted": 3
     },
     "spend_usd": 2361.76,
-    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-30 through Ads pull 2026-09-04 18:22 UTC.",
+    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-30 through Ads pull 2026-09-05 15:23 UTC.",
     "impressions": 4709,
     "clicks": 467,
     "avg_cpc_usd": 5.06,
@@ -3329,11 +3452,11 @@
       "VC_US_S_CORE",
       "VC_US_S_ROLES"
     ],
-    "spend_usd": 1253.5,
-    "spend_note": "US Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:22 UTC.",
-    "impressions": 2173,
-    "clicks": 142,
-    "avg_cpc_usd": 8.83,
+    "spend_usd": 1650.76,
+    "spend_note": "US Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-05 15:23 UTC.",
+    "impressions": 2825,
+    "clicks": 182,
+    "avg_cpc_usd": 9.07,
     "cost_per_enquiry_usd": null,
     "cost_per_sales_call_completed_usd": null,
     "math_plain": ""
@@ -3410,11 +3533,11 @@
     "caveat": "Sales-ops cost uses Holly\u2019s 8 enquiries.",
     "why_plain": "8 enquiries \u00b7 7 sales calls \u00b7 0 job orders \u00b7 0 placements.",
     "insight_plain": "AU sales ops (Mon Aug 17 \u2013 Sun Aug 23): 8 enquiries \u00b7 7 sales calls \u00b7 0 job orders \u00b7 0 placements \u00b7 A$116.71/enquiry.",
+    "ops_note": "Holly labeled week: 0 junk \u00b7 8 enquiries \u00b7 7 sales calls \u00b7 0 new / 0 returning / 0 replacement job orders (0 total) \u00b7 0 placements.",
+    "gclid_count": 3,
     "sales_calls_booked": null,
     "call_proxy": null,
-    "call_proxy_estimated": false,
-    "ops_note": "Holly labeled week: 0 junk \u00b7 8 enquiries \u00b7 7 sales calls \u00b7 0 new / 0 returning / 0 replacement job orders (0 total) \u00b7 0 placements.",
-    "gclid_count": 3
+    "call_proxy_estimated": false
   },
   "sales_ops_au_now": {
     "market": "AU",
@@ -3441,11 +3564,11 @@
       "VC_AU_S_CORE",
       "VC_AU_S_ROLES"
     ],
-    "spend_usd": 576.82,
-    "spend_note": "AU Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-04 18:22 UTC.",
-    "impressions": 778,
-    "clicks": 57,
-    "avg_cpc_usd": 10.12,
+    "spend_usd": 739.77,
+    "spend_note": "AU Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-05 15:23 UTC.",
+    "impressions": 947,
+    "clicks": 74,
+    "avg_cpc_usd": 10.0,
     "cost_per_enquiry_usd": null,
     "cost_per_sales_call_completed_usd": null,
     "math_plain": "",
@@ -3453,23 +3576,23 @@
   },
   "freshness": {
     "status": "Awaiting sales update",
-    "status_detail": "Google Ads current through 2026-09-03 (previous complete day) \u00b7 Awaiting sales update (US confirmed through 2026-08-31, AU confirmed through 2026-08-30).",
-    "google_ads_through": "2026-09-03",
+    "status_detail": "Google Ads current through 2026-09-04 (previous complete day) \u00b7 Awaiting sales update (US confirmed through 2026-08-31, AU confirmed through 2026-08-30).",
+    "google_ads_through": "2026-09-04",
     "google_ads_period_note": "Displayed Google Ads period ends on the previous complete day because of reporting latency.",
-    "zoho_refreshed_at_utc": "2026-09-04T18:12:07.514574+00:00",
+    "zoho_refreshed_at_utc": "2026-09-05T15:23:41.685854+00:00",
     "us_sales_confirmed_through": "2026-08-31",
     "au_sales_confirmed_through": "2026-08-30",
-    "dashboard_generated_at_utc": "2026-09-04T18:22:06.001576+00:00",
+    "dashboard_generated_at_utc": "2026-09-05T15:23:40.136801+00:00",
     "sources": {
       "google_ads": {
         "ok": true,
-        "through": "2026-09-03",
+        "through": "2026-09-04",
         "scope": "VC_US_* (USD) and VC_AU_* (AUD) enabled Search campaigns",
         "reporting_latency_handled": true
       },
       "zoho": {
         "ok": true,
-        "refreshed_at_utc": "2026-09-04T18:12:07.514574+00:00",
+        "refreshed_at_utc": "2026-09-04T18:17:17.044170+00:00",
         "mode": "read_only_census"
       },
       "sales_us": {
@@ -3534,15 +3657,15 @@
       "month": "2026-09",
       "label": "September 2026 MTD",
       "period_start": "2026-09-01",
-      "period_end": "2026-09-03",
+      "period_end": "2026-09-04",
       "status": "active_mtd",
       "us": {
         "currency": "USD",
-        "spend": 1253.5,
-        "clicks": 142,
-        "impressions": 2173,
-        "avg_cpc": 8.83,
-        "ctr_pct": 6.53,
+        "spend": 1650.76,
+        "clicks": 182,
+        "impressions": 2825,
+        "avg_cpc": 9.07,
+        "ctr_pct": 6.44,
         "enquiries": null,
         "sales_calls_completed": null,
         "job_orders_total": null,
@@ -3556,11 +3679,11 @@
       },
       "au": {
         "currency": "AUD",
-        "spend": 576.82,
-        "clicks": 57,
-        "impressions": 778,
-        "avg_cpc": 10.12,
-        "ctr_pct": 7.33,
+        "spend": 739.77,
+        "clicks": 74,
+        "impressions": 947,
+        "avg_cpc": 10.0,
+        "ctr_pct": 7.81,
         "enquiries": null,
         "sales_calls_completed": null,
         "job_orders_total": null,

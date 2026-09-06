@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-09-05T15:23:41.685854+00:00",
+  "generated_at_utc": "2026-09-06T15:36:40.009854+00:00",
   "window_start": "2026-08-31T00:00:00-07:00",
-  "window_end_exclusive": "2026-09-06T00:00:00-07:00",
+  "window_end_exclusive": "2026-09-07T00:00:00-07:00",
   "api_calls": 1,
-  "leads_in_window": 35,
+  "leads_in_window": 37,
   "usa": {
     "n": 20,
     "with_utm_gclid": 0,
@@ -29,21 +29,21 @@
     }
   },
   "au": {
-    "n": 12,
+    "n": 14,
     "with_utm_gclid": 1,
     "discovery_scheduled": 1,
     "job_order_submitted": 3,
     "by_source": {
-      "Website": 8,
+      "Website": 10,
       "Phone": 2,
       "Forbes": 1,
       "(blank)": 1
     },
     "by_status": {
+      "New Enquiry (Auto)": 3,
       "Job Order Submitted": 3,
       "Information Brochure Sent": 3,
       "Junk Lead": 2,
-      "New Enquiry (Auto)": 1,
       "Discovery Scheduled": 1,
       "Sales Call Follow Up 1": 1,
       "Not Ready - 1 Month": 1
@@ -51,7 +51,7 @@
   },
   "all_regions": {
     "USA": 20,
-    "AU": 12,
+    "AU": 14,
     "(blank)": 2,
     "Philippines": 1
   },
