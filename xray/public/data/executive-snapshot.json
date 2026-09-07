@@ -1,30 +1,15 @@
 {
-  "generated_at_utc": "2026-09-06T15:36:38.558482+00:00",
-  "pull_started_utc": "2026-09-06T15:36:35.718307+00:00",
+  "generated_at_utc": "2026-09-07T17:48:28.824439+00:00",
+  "pull_started_utc": "2026-09-07T17:48:28.318056+00:00",
   "customer_ids": {
     "us": "4967151855",
     "au": "5735391940"
   },
-  "filter": "VC_US_% 2026-08-01\u21922026-09-05 + AU active campaigns 2026-08-01\u21922026-09-05 (by-date \u00b7 frozen week locked \u00b7 now vs same weekdays)",
-  "api_calls_used": 2,
+  "filter": "VC_US_% 2026-08-01\u21922026-09-06 + AU active campaigns 2026-08-01\u21922026-09-06 (by-date \u00b7 frozen week locked \u00b7 now vs same weekdays)",
+  "api_calls_used": 0,
   "api_calls_max": 2,
-  "api_calls": [
-    {
-      "n": 1,
-      "name": "campaign_metrics_vc_us_date_range",
-      "ok": true,
-      "row_count": 62,
-      "date_range": "2026-08-01_to_2026-09-05"
-    },
-    {
-      "n": 2,
-      "name": "campaign_metrics_au_active_14d",
-      "ok": true,
-      "row_count": 79,
-      "date_range": "2026-08-01_to_2026-09-05"
-    }
-  ],
-  "hard_stop": null,
+  "api_calls": [],
+  "hard_stop": "Failed to build Google Ads client: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})",
   "conversions_note": "US CORE on Maximize Conversions; US ROLES on Maximize Clicks. Primary stack (George): phone click, 60s calls from ads, 60s website calls, VC_US_Thank_You (GTM v5). Old actions Secondary, not deleted. Thank-you may show Inactive until a gclid-attributed fire. Phone click is a tap \u2014 demote when volume exists. Job seekers never count. Early CPL still uses sales-ops enquiry counts. AU GTM + GA4 are live on Production (GTM-5T6KPVSF / G-7X1K9V2LFE).",
   "executive_verdict": {
     "united_states": "August closed: $6,595 \u2192 45 employer enquiries \u2192 24 completed calls \u2192 13 job orders* \u2192 3 placements*. Cost/enquiry $146.55; cost/call $274.78. Agency pace 21% (closed-month baseline). September MTD spend $2,007 (40% early MTD pace); sales outcomes await the next labeled update.",
@@ -3339,7 +3324,7 @@
     ]
   },
   "operator": {
-    "narrative_as_of": "2026-09-06",
+    "narrative_as_of": "2026-09-07",
     "status_banner": "US and Australia Search are live. Paying per click until call tracking is trusted. Clear Google Ads recommendations daily (account score).",
     "budgets": [
       {
@@ -3523,7 +3508,7 @@
       "job_order_submitted": 3
     },
     "spend_usd": 2361.76,
-    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-30 through Ads pull 2026-09-06 15:36 UTC.",
+    "spend_note": "US Core+Roles 2026-08-24\u20132026-08-30 through Ads pull 2026-09-07 17:48 UTC.",
     "impressions": 4709,
     "clicks": 467,
     "avg_cpc_usd": 5.06,
@@ -3561,7 +3546,7 @@
       "VC_US_S_ROLES"
     ],
     "spend_usd": 2007.48,
-    "spend_note": "US Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-06 15:36 UTC.",
+    "spend_note": "US Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-07 17:48 UTC.",
     "impressions": 3265,
     "clicks": 215,
     "avg_cpc_usd": 9.34,
@@ -3673,7 +3658,7 @@
       "VC_AU_S_ROLES"
     ],
     "spend_usd": 882.74,
-    "spend_note": "AU Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-06 15:36 UTC.",
+    "spend_note": "AU Core+Roles 2026-09-01\u20132026-09-06 through Ads pull 2026-09-07 17:48 UTC.",
     "impressions": 1065,
     "clicks": 89,
     "avg_cpc_usd": 9.92,
@@ -3683,24 +3668,24 @@
     "math_completed_call": ""
   },
   "freshness": {
-    "status": "Awaiting sales update",
-    "status_detail": "Google Ads current through 2026-09-05 (previous complete day) \u00b7 Awaiting sales update (US confirmed through 2026-08-31, AU confirmed through 2026-08-30).",
+    "status": "Refresh failed\u2014showing last good data",
+    "status_detail": "Google Ads refresh failed; verified snapshot through 2026-09-05 was preserved.",
     "google_ads_through": "2026-09-05",
     "google_ads_period_note": "Displayed Google Ads period ends on the previous complete day because of reporting latency.",
-    "zoho_refreshed_at_utc": "2026-09-06T15:36:40.009854+00:00",
+    "zoho_refreshed_at_utc": "2026-09-07T17:48:30.051185+00:00",
     "us_sales_confirmed_through": "2026-08-31",
     "au_sales_confirmed_through": "2026-08-30",
-    "dashboard_generated_at_utc": "2026-09-06T15:36:38.558482+00:00",
+    "dashboard_generated_at_utc": "2026-09-07T17:48:28.824439+00:00",
     "sources": {
       "google_ads": {
-        "ok": true,
+        "ok": false,
         "through": "2026-09-05",
         "scope": "VC_US_* (USD) and VC_AU_* (AUD) enabled Search campaigns",
         "reporting_latency_handled": true
       },
       "zoho": {
         "ok": true,
-        "refreshed_at_utc": "2026-09-05T15:23:41.685854+00:00",
+        "refreshed_at_utc": "2026-09-06T15:36:40.009854+00:00",
         "mode": "read_only_census"
       },
       "sales_us": {
