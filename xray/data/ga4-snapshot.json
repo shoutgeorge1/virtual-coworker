@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-24T19:43:34Z",
+  "generated_at_utc": "2026-09-08T13:19:41Z",
   "api": "ga4_data_api",
   "api_note": "GA4 Data API (analyticsdata.googleapis.com) \u2014 NOT Google Ads API. Does not consume the Ads developer-token ops budget.",
   "metric_labels": {
@@ -9,8 +9,10 @@
   },
   "property_id": "549075481",
   "measurement_id_us": "G-2V3V0BS6JW",
-  "window": "2026-08-17 \u2192 2026-08-23",
-  "window_prior": "2026-08-10 \u2192 2026-08-16",
+  "window": "2026-09-01 \u2192 2026-09-07",
+  "window_prior": "2026-08-01 \u2192 2026-08-31",
+  "current_month_key": "2026-09",
+  "prior_month_key": "2026-08",
   "run_report_requests": 5,
   "run_report_max": 5,
   "api_calls": [
@@ -42,43 +44,43 @@
   ],
   "quota_note": "GA4 standard properties typically allow on the order of 25k\u2013200k tokens/day (property-dependent). A few small RunReport calls are negligible. Separate from Google Ads API quota (~15k ops/day).",
   "totals_last_7_days": {
-    "sessions": 662,
-    "users": 782,
-    "engaged_sessions": 647,
-    "engagement_rate_pct": 97.7,
-    "bounce_rate_pct": 2.3,
-    "conversions": 2944.0,
-    "avg_session_seconds": 102.5
+    "sessions": 274,
+    "users": 454,
+    "engaged_sessions": 273,
+    "engagement_rate_pct": 99.6,
+    "bounce_rate_pct": 0.4,
+    "conversions": 1070.0,
+    "avg_session_seconds": 63.2
   },
   "totals_prior_7_days": {
-    "sessions": 615,
-    "users": 643,
-    "engaged_sessions": 281,
-    "engagement_rate_pct": 45.7,
-    "bounce_rate_pct": 54.3,
-    "conversions": 0.0,
-    "avg_session_seconds": 122.7
+    "sessions": 1970,
+    "users": 2407,
+    "engaged_sessions": 1530,
+    "engagement_rate_pct": 77.7,
+    "bounce_rate_pct": 22.3,
+    "conversions": 4967.0,
+    "avg_session_seconds": 108.9
   },
-  "paid_search_sessions_prior": 458,
+  "paid_search_sessions_prior": 1599,
   "market_from_landing_path": {
-    "US": 620,
+    "US": 247,
     "AU": 0,
     "PH": 0,
-    "other": 34
+    "other": 32
   },
   "path_kind_sessions": {
-    "us_home": 488,
-    "role_lp": 132,
+    "us_home": 193,
+    "role_lp": 54,
     "quiz": 0,
     "au": 0,
     "thank_you": 0,
-    "other_site": 22,
+    "other_site": 23,
     "other": 0,
-    "unknown": 12
+    "unknown": 9
   },
   "landing_compare": {
-    "us_home_sessions": 488,
-    "role_lp_sessions": 132,
+    "us_home_sessions": 193,
+    "role_lp_sessions": 54,
     "quiz_sessions": 0,
     "thank_you_sessions": 0,
     "note": "Path buckets from landingPage dimension. Role LPs = /us/* except home/quiz."
@@ -88,12 +90,12 @@
       "path": "/us",
       "path_display": "/us",
       "path_kind": "us_home",
-      "sessions": 488,
-      "users": 452,
-      "engaged_sessions": 476,
-      "engagement_rate_pct": 97.5,
-      "bounce_rate_pct": 2.5,
-      "avg_session_seconds": 76.7,
+      "sessions": 193,
+      "users": 187,
+      "engaged_sessions": 193,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 59.2,
       "duration_metric": "averageSessionDuration",
       "market_guess": "US"
     },
@@ -101,12 +103,103 @@
       "path": "/how-it-works",
       "path_display": "/how-it-works",
       "path_kind": "other_site",
-      "sessions": 22,
+      "sessions": 23,
       "users": 22,
-      "engaged_sessions": 22,
+      "engaged_sessions": 23,
       "engagement_rate_pct": 100.0,
       "bounce_rate_pct": 0.0,
-      "avg_session_seconds": 36.9,
+      "avg_session_seconds": 207.0,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "other"
+    },
+    {
+      "path": "/us/bookkeeping",
+      "path_display": "/us/bookkeeping",
+      "path_kind": "role_lp",
+      "sessions": 16,
+      "users": 16,
+      "engaged_sessions": 16,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 10.5,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/sales",
+      "path_display": "/us/sales",
+      "path_kind": "role_lp",
+      "sessions": 16,
+      "users": 16,
+      "engaged_sessions": 16,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 18.2,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/administrative-support",
+      "path_display": "/us/administrative-support",
+      "path_kind": "role_lp",
+      "sessions": 11,
+      "users": 11,
+      "engaged_sessions": 11,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 15.0,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "(empty path)",
+      "path_display": "untagged",
+      "path_kind": "unknown",
+      "sessions": 6,
+      "users": 20,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 100.0,
+      "avg_session_seconds": 1.4,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "other"
+    },
+    {
+      "path": "/us/digital-marketing",
+      "path_display": "/us/digital-marketing",
+      "path_kind": "role_lp",
+      "sessions": 5,
+      "users": 5,
+      "engaged_sessions": 5,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 49.1,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/social-media",
+      "path_display": "/us/social-media",
+      "path_kind": "role_lp",
+      "sessions": 5,
+      "users": 5,
+      "engaged_sessions": 5,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 51.9,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "(not set)",
+      "path_display": "untagged",
+      "path_kind": "unknown",
+      "sessions": 3,
+      "users": 195,
+      "engaged_sessions": 3,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 0.0,
       "duration_metric": "averageSessionDuration",
       "market_guess": "other"
     },
@@ -114,12 +207,196 @@
       "path": "/us/customer-service",
       "path_display": "/us/customer-service",
       "path_kind": "role_lp",
-      "sessions": 20,
-      "users": 19,
-      "engaged_sessions": 19,
-      "engagement_rate_pct": 95.0,
-      "bounce_rate_pct": 5.0,
-      "avg_session_seconds": 33.9,
+      "sessions": 1,
+      "users": 1,
+      "engaged_sessions": 1,
+      "engagement_rate_pct": 100.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 0.0,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/services",
+      "path_display": "/services",
+      "path_kind": "other_site",
+      "sessions": 0,
+      "users": 0,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 0.0,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "other"
+    },
+    {
+      "path": "/thank-you",
+      "path_display": "/thank-you",
+      "path_kind": "thank_you",
+      "sessions": 0,
+      "users": 0,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 0.0,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "other"
+    },
+    {
+      "path": "/us/recruitment",
+      "path_display": "/us/recruitment",
+      "path_kind": "role_lp",
+      "sessions": 0,
+      "users": 0,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 0.0,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/tf/bookkeeping",
+      "path_display": "/us/tf/bookkeeping",
+      "path_kind": "role_lp",
+      "sessions": 0,
+      "users": 0,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 0.0,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/tf/hire",
+      "path_display": "/us/tf/hire",
+      "path_kind": "role_lp",
+      "sessions": 0,
+      "users": 0,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
+      "bounce_rate_pct": 0.0,
+      "avg_session_seconds": 0.0,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    }
+  ],
+  "top_landing_pages_prior": [
+    {
+      "path": "/us",
+      "path_display": "/us",
+      "path_kind": "us_home",
+      "sessions": 1471,
+      "users": 1311,
+      "engaged_sessions": 1156,
+      "engagement_rate_pct": 78.6,
+      "bounce_rate_pct": 21.4,
+      "avg_session_seconds": 99.2,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/social-media",
+      "path_display": "/us/social-media",
+      "path_kind": "role_lp",
+      "sessions": 70,
+      "users": 70,
+      "engaged_sessions": 57,
+      "engagement_rate_pct": 81.4,
+      "bounce_rate_pct": 18.6,
+      "avg_session_seconds": 42.7,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/bookkeeping",
+      "path_display": "/us/bookkeeping",
+      "path_kind": "role_lp",
+      "sessions": 66,
+      "users": 65,
+      "engaged_sessions": 44,
+      "engagement_rate_pct": 66.7,
+      "bounce_rate_pct": 33.3,
+      "avg_session_seconds": 47.2,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/how-it-works",
+      "path_display": "/how-it-works",
+      "path_kind": "other_site",
+      "sessions": 55,
+      "users": 54,
+      "engaged_sessions": 53,
+      "engagement_rate_pct": 96.4,
+      "bounce_rate_pct": 3.6,
+      "avg_session_seconds": 171.4,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "other"
+    },
+    {
+      "path": "/us/sales",
+      "path_display": "/us/sales",
+      "path_kind": "role_lp",
+      "sessions": 52,
+      "users": 49,
+      "engaged_sessions": 45,
+      "engagement_rate_pct": 86.5,
+      "bounce_rate_pct": 13.5,
+      "avg_session_seconds": 181.0,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/customer-service",
+      "path_display": "/us/customer-service",
+      "path_kind": "role_lp",
+      "sessions": 47,
+      "users": 45,
+      "engaged_sessions": 34,
+      "engagement_rate_pct": 72.3,
+      "bounce_rate_pct": 27.7,
+      "avg_session_seconds": 50.9,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "(not set)",
+      "path_display": "untagged",
+      "path_kind": "unknown",
+      "sessions": 40,
+      "users": 816,
+      "engaged_sessions": 20,
+      "engagement_rate_pct": 50.0,
+      "bounce_rate_pct": 50.0,
+      "avg_session_seconds": 18.5,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "other"
+    },
+    {
+      "path": "/us/digital-marketing",
+      "path_display": "/us/digital-marketing",
+      "path_kind": "role_lp",
+      "sessions": 38,
+      "users": 33,
+      "engaged_sessions": 24,
+      "engagement_rate_pct": 63.2,
+      "bounce_rate_pct": 36.8,
+      "avg_session_seconds": 110.8,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/us/administrative-support",
+      "path_display": "/us/administrative-support",
+      "path_kind": "role_lp",
+      "sessions": 29,
+      "users": 27,
+      "engaged_sessions": 13,
+      "engagement_rate_pct": 44.8,
+      "bounce_rate_pct": 55.2,
+      "avg_session_seconds": 193.2,
       "duration_metric": "averageSessionDuration",
       "market_guess": "US"
     },
@@ -137,54 +414,28 @@
       "market_guess": "US"
     },
     {
-      "path": "/us/sales",
-      "path_display": "/us/sales",
+      "path": "/us/recruitment",
+      "path_display": "/us/recruitment",
       "path_kind": "role_lp",
-      "sessions": 19,
-      "users": 17,
-      "engaged_sessions": 19,
-      "engagement_rate_pct": 100.0,
-      "bounce_rate_pct": 0.0,
-      "avg_session_seconds": 106.3,
-      "duration_metric": "averageSessionDuration",
-      "market_guess": "US"
-    },
-    {
-      "path": "/us/social-media",
-      "path_display": "/us/social-media",
-      "path_kind": "role_lp",
-      "sessions": 17,
-      "users": 17,
-      "engaged_sessions": 16,
-      "engagement_rate_pct": 94.1,
-      "bounce_rate_pct": 5.9,
-      "avg_session_seconds": 9.4,
-      "duration_metric": "averageSessionDuration",
-      "market_guess": "US"
-    },
-    {
-      "path": "/us/bookkeeping",
-      "path_display": "/us/bookkeeping",
-      "path_kind": "role_lp",
-      "sessions": 13,
-      "users": 12,
-      "engaged_sessions": 13,
-      "engagement_rate_pct": 100.0,
-      "bounce_rate_pct": 0.0,
-      "avg_session_seconds": 143.3,
-      "duration_metric": "averageSessionDuration",
-      "market_guess": "US"
-    },
-    {
-      "path": "(not set)",
-      "path_display": "untagged",
-      "path_kind": "unknown",
       "sessions": 12,
-      "users": 223,
-      "engaged_sessions": 12,
-      "engagement_rate_pct": 100.0,
-      "bounce_rate_pct": 0.0,
-      "avg_session_seconds": 24.6,
+      "users": 11,
+      "engaged_sessions": 3,
+      "engagement_rate_pct": 25.0,
+      "bounce_rate_pct": 75.0,
+      "avg_session_seconds": 9.2,
+      "duration_metric": "averageSessionDuration",
+      "market_guess": "US"
+    },
+    {
+      "path": "/services",
+      "path_display": "/services",
+      "path_kind": "other_site",
+      "sessions": 11,
+      "users": 10,
+      "engaged_sessions": 10,
+      "engagement_rate_pct": 90.9,
+      "bounce_rate_pct": 9.1,
+      "avg_session_seconds": 94.2,
       "duration_metric": "averageSessionDuration",
       "market_guess": "other"
     },
@@ -202,324 +453,268 @@
       "market_guess": "US"
     },
     {
-      "path": "/us/administrative-support",
-      "path_display": "/us/administrative-support",
-      "path_kind": "role_lp",
-      "sessions": 6,
-      "users": 5,
-      "engaged_sessions": 5,
-      "engagement_rate_pct": 83.3,
-      "bounce_rate_pct": 16.7,
-      "avg_session_seconds": 27.0,
-      "duration_metric": "averageSessionDuration",
-      "market_guess": "US"
-    },
-    {
-      "path": "/us/philippines-virtual-assistants",
-      "path_display": "/us/philippines-virtual-assistants",
-      "path_kind": "role_lp",
-      "sessions": 6,
-      "users": 5,
-      "engaged_sessions": 6,
+      "path": "/thank-you",
+      "path_display": "/thank-you",
+      "path_kind": "thank_you",
+      "sessions": 7,
+      "users": 3,
+      "engaged_sessions": 7,
       "engagement_rate_pct": 100.0,
       "bounce_rate_pct": 0.0,
-      "avg_session_seconds": 13.6,
+      "avg_session_seconds": 595.2,
       "duration_metric": "averageSessionDuration",
-      "market_guess": "US"
+      "market_guess": "other"
     },
     {
-      "path": "/us/tf/real-estate",
-      "path_display": "/us/tf/real-estate",
-      "path_kind": "role_lp",
-      "sessions": 6,
-      "users": 6,
-      "engaged_sessions": 6,
-      "engagement_rate_pct": 100.0,
+      "path": "(empty path)",
+      "path_display": "untagged",
+      "path_kind": "unknown",
+      "sessions": 0,
+      "users": 0,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0,
       "bounce_rate_pct": 0.0,
-      "avg_session_seconds": 4.2,
+      "avg_session_seconds": 0.0,
       "duration_metric": "averageSessionDuration",
-      "market_guess": "US"
-    },
-    {
-      "path": "/us/consult",
-      "path_display": "/us/consult",
-      "path_kind": "role_lp",
-      "sessions": 5,
-      "users": 4,
-      "engaged_sessions": 5,
-      "engagement_rate_pct": 100.0,
-      "bounce_rate_pct": 0.0,
-      "avg_session_seconds": 1063.5,
-      "duration_metric": "averageSessionDuration",
-      "market_guess": "US"
-    },
-    {
-      "path": "/us/real-estate",
-      "path_display": "/us/real-estate",
-      "path_kind": "role_lp",
-      "sessions": 5,
-      "users": 4,
-      "engaged_sessions": 5,
-      "engagement_rate_pct": 100.0,
-      "bounce_rate_pct": 0.0,
-      "avg_session_seconds": 277.0,
-      "duration_metric": "averageSessionDuration",
-      "market_guess": "US"
-    },
-    {
-      "path": "/us/digital-marketing",
-      "path_display": "/us/digital-marketing",
-      "path_kind": "role_lp",
-      "sessions": 4,
-      "users": 4,
-      "engaged_sessions": 4,
-      "engagement_rate_pct": 100.0,
-      "bounce_rate_pct": 0.0,
-      "avg_session_seconds": 16.3,
-      "duration_metric": "averageSessionDuration",
-      "market_guess": "US"
+      "market_guess": "other"
     }
   ],
   "channels": [
     {
       "channel": "Paid Search",
-      "sessions": 567,
-      "users": 540,
-      "engaged_sessions": 555,
-      "engagement_rate_pct": 97.9
-    },
-    {
-      "channel": "Direct",
-      "sessions": 49,
-      "users": 36,
-      "engaged_sessions": 46,
-      "engagement_rate_pct": 93.9
-    },
-    {
-      "channel": "Organic Search",
-      "sessions": 26,
-      "users": 10,
-      "engaged_sessions": 26,
-      "engagement_rate_pct": 100.0
-    },
-    {
-      "channel": "Referral",
-      "sessions": 12,
-      "users": 1,
-      "engaged_sessions": 12,
+      "sessions": 244,
+      "users": 237,
+      "engaged_sessions": 244,
       "engagement_rate_pct": 100.0
     },
     {
       "channel": "Cross-network",
-      "sessions": 5,
-      "users": 5,
-      "engaged_sessions": 5,
+      "sessions": 13,
+      "users": 13,
+      "engaged_sessions": 13,
+      "engagement_rate_pct": 100.0
+    },
+    {
+      "channel": "Direct",
+      "sessions": 12,
+      "users": 12,
+      "engaged_sessions": 12,
       "engagement_rate_pct": 100.0
     },
     {
       "channel": "Unassigned",
-      "sessions": 5,
+      "sessions": 6,
       "users": 212,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0
+    },
+    {
+      "channel": "Referral",
+      "sessions": 5,
+      "users": 2,
       "engaged_sessions": 5,
+      "engagement_rate_pct": 100.0
+    },
+    {
+      "channel": "AI Assistant",
+      "sessions": 0,
+      "users": 0,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0
+    },
+    {
+      "channel": "Organic Search",
+      "sessions": 0,
+      "users": 0,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0
+    }
+  ],
+  "channels_prior": [
+    {
+      "channel": "Paid Search",
+      "sessions": 1599,
+      "users": 1502,
+      "engaged_sessions": 1304,
+      "engagement_rate_pct": 81.6
+    },
+    {
+      "channel": "Direct",
+      "sessions": 253,
+      "users": 183,
+      "engaged_sessions": 125,
+      "engagement_rate_pct": 49.4
+    },
+    {
+      "channel": "Referral",
+      "sessions": 52,
+      "users": 4,
+      "engaged_sessions": 41,
+      "engagement_rate_pct": 78.8
+    },
+    {
+      "channel": "Organic Search",
+      "sessions": 41,
+      "users": 17,
+      "engaged_sessions": 34,
+      "engagement_rate_pct": 82.9
+    },
+    {
+      "channel": "Cross-network",
+      "sessions": 16,
+      "users": 16,
+      "engaged_sessions": 16,
+      "engagement_rate_pct": 100.0
+    },
+    {
+      "channel": "Unassigned",
+      "sessions": 9,
+      "users": 794,
+      "engaged_sessions": 9,
+      "engagement_rate_pct": 100.0
+    },
+    {
+      "channel": "AI Assistant",
+      "sessions": 3,
+      "users": 3,
+      "engaged_sessions": 3,
       "engagement_rate_pct": 100.0
     }
   ],
   "devices": [
     {
       "device": "mobile",
-      "sessions": 458,
-      "engaged_sessions": 453,
-      "engagement_rate_pct": 98.9
+      "sessions": 210,
+      "engaged_sessions": 207,
+      "engagement_rate_pct": 98.6
     },
     {
       "device": "desktop",
-      "sessions": 208,
-      "engaged_sessions": 198,
-      "engagement_rate_pct": 95.2
-    },
-    {
-      "device": "tablet",
-      "sessions": 2,
-      "engaged_sessions": 2,
-      "engagement_rate_pct": 100.0
+      "sessions": 70,
+      "engaged_sessions": 67,
+      "engagement_rate_pct": 95.7
     }
   ],
   "devices_by_channel": [
     {
       "device": "mobile",
       "channel": "Paid Search",
-      "sessions": 423,
-      "engaged_sessions": 418,
-      "engagement_rate_pct": 98.8
+      "sessions": 192,
+      "engaged_sessions": 192,
+      "engagement_rate_pct": 100.0
     },
     {
       "device": "desktop",
       "channel": "Paid Search",
-      "sessions": 142,
-      "engaged_sessions": 135,
-      "engagement_rate_pct": 95.1
-    },
-    {
-      "device": "desktop",
-      "channel": "Direct",
-      "sessions": 35,
-      "engaged_sessions": 32,
-      "engagement_rate_pct": 91.4
-    },
-    {
-      "device": "mobile",
-      "channel": "Direct",
-      "sessions": 17,
-      "engaged_sessions": 17,
-      "engagement_rate_pct": 100.0
-    },
-    {
-      "device": "desktop",
-      "channel": "Organic Search",
-      "sessions": 14,
-      "engaged_sessions": 14,
-      "engagement_rate_pct": 100.0
-    },
-    {
-      "device": "desktop",
-      "channel": "Referral",
-      "sessions": 12,
-      "engaged_sessions": 12,
+      "sessions": 52,
+      "engaged_sessions": 52,
       "engagement_rate_pct": 100.0
     },
     {
       "device": "mobile",
-      "channel": "Organic Search",
+      "channel": "Cross-network",
       "sessions": 12,
       "engaged_sessions": 12,
       "engagement_rate_pct": 100.0
     },
     {
       "device": "desktop",
-      "channel": "Unassigned",
-      "sessions": 4,
-      "engaged_sessions": 4,
-      "engagement_rate_pct": 100.0
-    },
-    {
-      "device": "mobile",
-      "channel": "Cross-network",
-      "sessions": 4,
-      "engaged_sessions": 4,
-      "engagement_rate_pct": 100.0
-    },
-    {
-      "device": "tablet",
-      "channel": "Paid Search",
-      "sessions": 2,
-      "engaged_sessions": 2,
+      "channel": "Direct",
+      "sessions": 9,
+      "engaged_sessions": 9,
       "engagement_rate_pct": 100.0
     },
     {
       "device": "desktop",
-      "channel": "Cross-network",
-      "sessions": 1,
-      "engaged_sessions": 1,
+      "channel": "Referral",
+      "sessions": 5,
+      "engaged_sessions": 5,
       "engagement_rate_pct": 100.0
     },
     {
+      "device": "desktop",
+      "channel": "Unassigned",
+      "sessions": 3,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0
+    },
+    {
       "device": "mobile",
-      "channel": "Referral",
-      "sessions": 1,
-      "engaged_sessions": 1,
+      "channel": "Direct",
+      "sessions": 3,
+      "engaged_sessions": 3,
       "engagement_rate_pct": 100.0
     },
     {
       "device": "mobile",
       "channel": "Unassigned",
+      "sessions": 3,
+      "engaged_sessions": 0,
+      "engagement_rate_pct": 0.0
+    },
+    {
+      "device": "desktop",
+      "channel": "Cross-network",
       "sessions": 1,
       "engaged_sessions": 1,
       "engagement_rate_pct": 100.0
     }
   ],
   "device_finding": {
-    "site_desktop": 208,
-    "site_mobile": 458,
-    "paid_search_mobile": 423,
-    "paid_search_desktop": 142,
-    "paid_search_mobile_pct": 75,
+    "site_desktop": 70,
+    "site_mobile": 210,
+    "paid_search_mobile": 192,
+    "paid_search_desktop": 52,
+    "paid_search_mobile_pct": 79,
     "verdict": "ok",
-    "note": "Paid Search 75% mobile \u2014 in line with search-ad expectations."
+    "note": "Paid Search 79% mobile \u2014 in line with search-ad expectations."
   },
   "events_top": [
     {
       "event": "page_view",
-      "event_count": 1019,
-      "conversions": 987.0,
-      "users": 590,
+      "event_count": 311,
+      "conversions": 311.0,
+      "users": 263,
       "is_noise": true
     },
     {
       "event": "session_start",
-      "event_count": 666,
-      "conversions": 634.0,
-      "users": 590,
-      "is_noise": true
-    },
-    {
-      "event": "user_engagement",
-      "event_count": 625,
-      "conversions": 603.0,
-      "users": 384,
+      "event_count": 275,
+      "conversions": 275.0,
+      "users": 263,
       "is_noise": true
     },
     {
       "event": "first_visit",
-      "event_count": 579,
-      "conversions": 548.0,
-      "users": 579,
+      "event_count": 261,
+      "conversions": 261.0,
+      "users": 260,
       "is_noise": true
     },
     {
       "event": "experiment_view",
-      "event_count": 209,
+      "event_count": 217,
       "conversions": 0.0,
-      "users": 201,
+      "users": 205,
       "is_noise": false
     },
     {
-      "event": "scroll",
-      "event_count": 172,
-      "conversions": 168.0,
-      "users": 102,
+      "event": "user_engagement",
+      "event_count": 181,
+      "conversions": 181.0,
+      "users": 158,
       "is_noise": true
     },
     {
-      "event": "lp_micro_quiz_start",
-      "event_count": 7,
-      "conversions": 0.0,
-      "users": 7,
-      "is_noise": false
-    },
-    {
-      "event": "lp_micro_hiring_path_cta",
-      "event_count": 5,
-      "conversions": 0.0,
-      "users": 5,
-      "is_noise": false
-    },
-    {
-      "event": "lp_micro_role_tile",
-      "event_count": 5,
-      "conversions": 0.0,
-      "users": 4,
-      "is_noise": false
-    },
-    {
-      "event": "form_start",
-      "event_count": 4,
-      "conversions": 4.0,
-      "users": 4,
-      "is_noise": false
+      "event": "scroll",
+      "event_count": 42,
+      "conversions": 42.0,
+      "users": 36,
+      "is_noise": true
     },
     {
       "event": "experiment_convert",
-      "event_count": 1,
+      "event_count": 2,
       "conversions": 0.0,
       "users": 1,
       "is_noise": false
@@ -528,42 +723,14 @@
   "events_interesting": [
     {
       "event": "experiment_view",
-      "event_count": 209,
+      "event_count": 217,
       "conversions": 0.0,
-      "users": 201,
-      "is_noise": false
-    },
-    {
-      "event": "lp_micro_quiz_start",
-      "event_count": 7,
-      "conversions": 0.0,
-      "users": 7,
-      "is_noise": false
-    },
-    {
-      "event": "lp_micro_hiring_path_cta",
-      "event_count": 5,
-      "conversions": 0.0,
-      "users": 5,
-      "is_noise": false
-    },
-    {
-      "event": "lp_micro_role_tile",
-      "event_count": 5,
-      "conversions": 0.0,
-      "users": 4,
-      "is_noise": false
-    },
-    {
-      "event": "form_start",
-      "event_count": 4,
-      "conversions": 4.0,
-      "users": 4,
+      "users": 205,
       "is_noise": false
     },
     {
       "event": "experiment_convert",
-      "event_count": 1,
+      "event_count": 2,
       "conversions": 0.0,
       "users": 1,
       "is_noise": false
@@ -571,21 +738,21 @@
   ],
   "insights": [
     "Most paid clicks still open the US home page \u2014 role ads exist, but Final URLs haven\u2019t shifted traffic onto role pages yet.",
-    "\u201cDirect\u201d is 49 sessions (Paid Search 567): typed URL, bookmarks, team checks, and some paid clicks that lose the ad tag \u2014 not mysterious organic growth.",
-    "About 98% stayed and looked around; 2% left right away. (Website behavior \u2014 not Ad CTR.)",
-    "Paid Search is mostly mobile (75% \u2014 423 vs 142 desktop), as expected for search ads.",
+    "\u201cDirect\u201d is 12 sessions (Paid Search 244): typed URL, bookmarks, team checks, and some paid clicks that lose the ad tag \u2014 not mysterious organic growth.",
+    "Engagement rate is saturated (100% \u2014 every session met GA4\u2019s 10s / 2-page / key-event bar), so it does not discriminate health. Avg session 1m 03s. (Website behavior \u2014 not Ad CTR.)",
+    "Paid Search is mostly mobile (79% \u2014 192 vs 52 desktop), as expected for search ads.",
     "This US property has no /au landings \u2014 Australia tags go to a separate AU property."
   ],
   "notes": [
     "US site tags only. Australia is a separate GA4 property \u2014 see the AU block."
   ],
-  "summary_plain": "Last 7 days (US site tags): 662 sessions \u00b7 782 users. About 98% stayed and looked around. Top landings: /us, /how-it-works, /us/customer-service, /us/tf/bookkeeping. Traffic: Paid Search, Direct, Organic Search. US site tags only. Australia is a separate GA4 property \u2014 see the AU block.",
+  "summary_plain": "Last 7 days (US site tags): 274 sessions \u00b7 454 users. Engagement saturated \u00b7 avg session 1m 03s. Top landings: /us, /how-it-works, /us/bookkeeping, /us/sales. Traffic: Paid Search, Cross-network, Direct. US site tags only. Australia is a separate GA4 property \u2014 see the AU block.",
   "au": {
     "ok": true,
     "property_id": "549811743",
     "measurement_id": "G-7X1K9V2LFE",
-    "window": "2026-08-17 \u2192 2026-08-23",
-    "window_prior": "2026-08-10 \u2192 2026-08-16",
+    "window": "2026-09-01 \u2192 2026-09-07",
+    "window_prior": "2026-08-01 \u2192 2026-08-31",
     "tags_live_since": "2026-08-12",
     "run_report_requests": 3,
     "api_calls": [
@@ -606,65 +773,39 @@
       }
     ],
     "totals_last_7_days": {
-      "sessions": 185,
-      "users": 161,
-      "engaged_sessions": 97,
-      "engagement_rate_pct": 52.4,
-      "bounce_rate_pct": 47.6,
+      "sessions": 97,
+      "users": 95,
+      "engaged_sessions": 50,
+      "engagement_rate_pct": 51.5,
+      "bounce_rate_pct": 48.5,
       "conversions": 0.0,
-      "avg_session_seconds": 93.6
+      "avg_session_seconds": 74.2
     },
     "totals_prior_7_days": {
-      "sessions": 149,
-      "users": 132,
-      "engaged_sessions": 81,
-      "engagement_rate_pct": 54.4,
-      "bounce_rate_pct": 45.6,
+      "sessions": 473,
+      "users": 415,
+      "engaged_sessions": 230,
+      "engagement_rate_pct": 48.6,
+      "bounce_rate_pct": 51.4,
       "conversions": 0.0,
-      "avg_session_seconds": 104.0
+      "avg_session_seconds": 86.6
     },
-    "paid_search_sessions": 153,
-    "paid_search_sessions_prior": 124,
-    "paid_search_engagement_rate_pct": 52.3,
-    "au_path_sessions": 177,
+    "paid_search_sessions": 91,
+    "paid_search_sessions_prior": 404,
+    "paid_search_engagement_rate_pct": 50.5,
+    "au_path_sessions": 93,
     "thank_you_sessions": 0,
     "top_landing_pages": [
       {
         "path": "/au",
         "path_display": "/au",
         "path_kind": "au",
-        "sessions": 106,
-        "users": 93,
-        "engaged_sessions": 58,
-        "engagement_rate_pct": 54.7,
-        "bounce_rate_pct": 45.3,
-        "avg_session_seconds": 68.2,
-        "duration_metric": "averageSessionDuration",
-        "market_guess": "AU"
-      },
-      {
-        "path": "/au/recruitment",
-        "path_display": "/au/recruitment",
-        "path_kind": "au",
-        "sessions": 28,
-        "users": 25,
-        "engaged_sessions": 17,
-        "engagement_rate_pct": 60.7,
-        "bounce_rate_pct": 39.3,
-        "avg_session_seconds": 129.1,
-        "duration_metric": "averageSessionDuration",
-        "market_guess": "AU"
-      },
-      {
-        "path": "/au/social-media",
-        "path_display": "/au/social-media",
-        "path_kind": "au",
-        "sessions": 11,
-        "users": 11,
-        "engaged_sessions": 6,
-        "engagement_rate_pct": 54.5,
-        "bounce_rate_pct": 45.5,
-        "avg_session_seconds": 296.4,
+        "sessions": 83,
+        "users": 83,
+        "engaged_sessions": 44,
+        "engagement_rate_pct": 53.0,
+        "bounce_rate_pct": 47.0,
+        "avg_session_seconds": 73.8,
         "duration_metric": "averageSessionDuration",
         "market_guess": "AU"
       },
@@ -672,66 +813,27 @@
         "path": "/au/administrative-support",
         "path_display": "/au/administrative-support",
         "path_kind": "au",
-        "sessions": 7,
-        "users": 7,
-        "engaged_sessions": 4,
-        "engagement_rate_pct": 57.1,
-        "bounce_rate_pct": 42.9,
-        "avg_session_seconds": 253.7,
-        "duration_metric": "averageSessionDuration",
-        "market_guess": "AU"
-      },
-      {
-        "path": "/au/customer-service",
-        "path_display": "/au/customer-service",
-        "path_kind": "au",
-        "sessions": 7,
-        "users": 7,
-        "engaged_sessions": 4,
-        "engagement_rate_pct": 57.1,
-        "bounce_rate_pct": 42.9,
-        "avg_session_seconds": 20.0,
-        "duration_metric": "averageSessionDuration",
-        "market_guess": "AU"
-      },
-      {
-        "path": "/au/digital-marketing",
-        "path_display": "/au/digital-marketing",
-        "path_kind": "au",
-        "sessions": 7,
-        "users": 7,
-        "engaged_sessions": 0,
-        "engagement_rate_pct": 0.0,
-        "bounce_rate_pct": 100.0,
-        "avg_session_seconds": 0.0,
-        "duration_metric": "averageSessionDuration",
-        "market_guess": "AU"
-      },
-      {
-        "path": "/au/sales",
-        "path_display": "/au/sales",
-        "path_kind": "au",
-        "sessions": 5,
-        "users": 5,
-        "engaged_sessions": 1,
-        "engagement_rate_pct": 20.0,
-        "bounce_rate_pct": 80.0,
-        "avg_session_seconds": 7.2,
-        "duration_metric": "averageSessionDuration",
-        "market_guess": "AU"
-      },
-      {
-        "path": "(not set)",
-        "path_display": "untagged",
-        "path_kind": "unknown",
         "sessions": 4,
-        "users": 23,
-        "engaged_sessions": 0,
-        "engagement_rate_pct": 0.0,
-        "bounce_rate_pct": 100.0,
-        "avg_session_seconds": 0.0,
+        "users": 4,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 75.0,
+        "bounce_rate_pct": 25.0,
+        "avg_session_seconds": 24.8,
         "duration_metric": "averageSessionDuration",
-        "market_guess": "other"
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/recruitment",
+        "path_display": "/au/recruitment",
+        "path_kind": "au",
+        "sessions": 4,
+        "users": 3,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 25.0,
+        "bounce_rate_pct": 75.0,
+        "avg_session_seconds": 153.0,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
       },
       {
         "path": "/how-it-works",
@@ -739,23 +841,75 @@
         "path_kind": "other_site",
         "sessions": 3,
         "users": 3,
-        "engaged_sessions": 2,
-        "engagement_rate_pct": 66.7,
-        "bounce_rate_pct": 33.3,
-        "avg_session_seconds": 37.1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 33.3,
+        "bounce_rate_pct": 66.7,
+        "avg_session_seconds": 39.7,
         "duration_metric": "averageSessionDuration",
         "market_guess": "other"
+      },
+      {
+        "path": "(not set)",
+        "path_display": "untagged",
+        "path_kind": "unknown",
+        "sessions": 1,
+        "users": 2,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 100.0,
+        "avg_session_seconds": 0.0,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "other"
+      },
+      {
+        "path": "/au/customer-service",
+        "path_display": "/au/customer-service",
+        "path_kind": "au",
+        "sessions": 1,
+        "users": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "bounce_rate_pct": 0.0,
+        "avg_session_seconds": 237.3,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/sales",
+        "path_display": "/au/sales",
+        "path_kind": "au",
+        "sessions": 1,
+        "users": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 100.0,
+        "avg_session_seconds": 0.0,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
       },
       {
         "path": "/au/accounting",
         "path_display": "/au/accounting",
         "path_kind": "au",
-        "sessions": 2,
-        "users": 2,
-        "engaged_sessions": 1,
-        "engagement_rate_pct": 50.0,
-        "bounce_rate_pct": 50.0,
-        "avg_session_seconds": 34.0,
+        "sessions": 0,
+        "users": 0,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 0.0,
+        "avg_session_seconds": 0.0,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/book",
+        "path_display": "/au/book",
+        "path_kind": "au",
+        "sessions": 0,
+        "users": 0,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
+        "bounce_rate_pct": 0.0,
+        "avg_session_seconds": 0.0,
         "duration_metric": "averageSessionDuration",
         "market_guess": "AU"
       },
@@ -763,51 +917,51 @@
         "path": "/au/bookkeeping",
         "path_display": "/au/bookkeeping",
         "path_kind": "au",
-        "sessions": 1,
-        "users": 1,
-        "engaged_sessions": 1,
-        "engagement_rate_pct": 100.0,
+        "sessions": 0,
+        "users": 0,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
         "bounce_rate_pct": 0.0,
-        "avg_session_seconds": 13.8,
+        "avg_session_seconds": 0.0,
         "duration_metric": "averageSessionDuration",
         "market_guess": "AU"
       },
       {
-        "path": "/au/capacity",
-        "path_display": "/au/capacity",
+        "path": "/au/digital-marketing",
+        "path_display": "/au/digital-marketing",
         "path_kind": "au",
-        "sessions": 1,
-        "users": 1,
-        "engaged_sessions": 1,
-        "engagement_rate_pct": 100.0,
+        "sessions": 0,
+        "users": 0,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
         "bounce_rate_pct": 0.0,
-        "avg_session_seconds": 235.7,
+        "avg_session_seconds": 0.0,
         "duration_metric": "averageSessionDuration",
         "market_guess": "AU"
       },
       {
-        "path": "/au/consult",
-        "path_display": "/au/consult",
+        "path": "/au/hr",
+        "path_display": "/au/hr",
         "path_kind": "au",
-        "sessions": 1,
-        "users": 1,
-        "engaged_sessions": 1,
-        "engagement_rate_pct": 100.0,
+        "sessions": 0,
+        "users": 0,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
         "bounce_rate_pct": 0.0,
-        "avg_session_seconds": 269.1,
+        "avg_session_seconds": 0.0,
         "duration_metric": "averageSessionDuration",
         "market_guess": "AU"
       },
       {
-        "path": "/au/proof",
-        "path_display": "/au/proof",
+        "path": "/au/social-media",
+        "path_display": "/au/social-media",
         "path_kind": "au",
-        "sessions": 1,
-        "users": 1,
-        "engaged_sessions": 1,
-        "engagement_rate_pct": 100.0,
+        "sessions": 0,
+        "users": 0,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0,
         "bounce_rate_pct": 0.0,
-        "avg_session_seconds": 550.2,
+        "avg_session_seconds": 0.0,
         "duration_metric": "averageSessionDuration",
         "market_guess": "AU"
       },
@@ -815,212 +969,1985 @@
         "path": "/services",
         "path_display": "/services",
         "path_kind": "other_site",
-        "sessions": 1,
-        "users": 1,
+        "sessions": 0,
+        "users": 0,
         "engaged_sessions": 0,
         "engagement_rate_pct": 0.0,
-        "bounce_rate_pct": 100.0,
-        "avg_session_seconds": 8.2,
+        "bounce_rate_pct": 0.0,
+        "avg_session_seconds": 0.0,
         "duration_metric": "averageSessionDuration",
         "market_guess": "other"
-      }
-    ],
-    "channels": [
-      {
-        "channel": "Paid Search",
-        "sessions": 153,
-        "users": 146,
-        "engaged_sessions": 80,
-        "engagement_rate_pct": 52.3
       },
       {
-        "channel": "Direct",
-        "sessions": 12,
-        "users": 9,
-        "engaged_sessions": 3,
-        "engagement_rate_pct": 25.0
-      },
-      {
-        "channel": "Unassigned",
-        "sessions": 9,
-        "users": 19,
-        "engaged_sessions": 7,
-        "engagement_rate_pct": 77.8
-      },
-      {
-        "channel": "Cross-network",
-        "sessions": 4,
-        "users": 4,
-        "engaged_sessions": 3,
-        "engagement_rate_pct": 75.0
-      },
-      {
-        "channel": "Organic Search",
-        "sessions": 4,
-        "users": 4,
-        "engaged_sessions": 1,
-        "engagement_rate_pct": 25.0
-      },
-      {
-        "channel": "Referral",
-        "sessions": 3,
-        "users": 1,
-        "engaged_sessions": 3,
-        "engagement_rate_pct": 100.0
-      }
-    ],
-    "insights": [
-      "About 52% stayed and looked around (185 visits)."
-    ],
-    "notes": [
-      "/au pages received 177 landing visits \u2014 tags are firing on the Australia microsite.",
-      "Paid Google ads visits: 153 (the useful volume). Thank-you / form hits are likely internal testing, not leads."
-    ],
-    "summary_plain": "Last 7 days (AU site tags): 185 sessions \u00b7 161 users. Paid Google ads visits: 153. About 52% stayed and looked around. Top landings: /au, /au/recruitment, /au/social-media, /au/administrative-support. /au pages received 177 landing visits \u2014 tags are firing on the Australia microsite."
-  },
-  "run_report_requests_total": 8,
-  "now": {
-    "generated_at_utc": "2026-08-24T19:43:36Z",
-    "window": "2026-08-24 \u2192 2026-08-24",
-    "window_same_weekdays": "2026-08-17 \u2192 2026-08-17",
-    "compare_note": "Same weekdays last week, not a full 7 vs 7. Thursday is partial in the US.",
-    "property_id": "549075481",
-    "measurement_id_us": "G-2V3V0BS6JW",
-    "totals_now": {
-      "sessions": 16,
-      "users": 31,
-      "engaged_sessions": 13,
-      "engagement_rate_pct": 81.2,
-      "bounce_rate_pct": 18.8,
-      "conversions": 53.0,
-      "avg_session_seconds": 52.5023955
-    },
-    "totals_same_weekdays": {
-      "sessions": 129,
-      "users": 112,
-      "engaged_sessions": 114,
-      "engagement_rate_pct": 88.4,
-      "bounce_rate_pct": 11.6,
-      "conversions": 521.0,
-      "avg_session_seconds": 192.3908149922481
-    },
-    "top_landing_pages": [
-      {
-        "path": "/us",
-        "path_display": "/us",
-        "path_kind": "us_home",
-        "sessions": 13,
-        "users": 13,
-        "engaged_sessions": 13,
-        "engagement_rate_pct": 100.0,
-        "bounce_rate_pct": 0.0,
-        "avg_session_seconds": 64.6,
-        "duration_metric": "averageSessionDuration",
-        "market_guess": "US"
-      },
-      {
-        "path": "(not set)",
-        "path_display": "untagged",
-        "path_kind": "unknown",
-        "sessions": 9,
-        "users": 24,
+        "path": "/thank-you",
+        "path_display": "/thank-you",
+        "path_kind": "thank_you",
+        "sessions": 0,
+        "users": 0,
         "engaged_sessions": 0,
         "engagement_rate_pct": 0.0,
-        "bounce_rate_pct": 100.0,
+        "bounce_rate_pct": 0.0,
         "avg_session_seconds": 0.0,
         "duration_metric": "averageSessionDuration",
         "market_guess": "other"
       }
     ],
-    "au": {
-      "ok": true,
-      "property_id": "549811743",
-      "measurement_id": "G-7X1K9V2LFE",
-      "totals_now": {
-        "sessions": 14,
-        "users": 14,
-        "engaged_sessions": 0,
-        "engagement_rate_pct": 0.0,
-        "bounce_rate_pct": 100.0,
-        "conversions": 0.0,
-        "avg_session_seconds": 3.1031775
+    "top_landing_pages_prior": [
+      {
+        "path": "/au",
+        "path_display": "/au",
+        "path_kind": "au",
+        "sessions": 275,
+        "users": 246,
+        "engaged_sessions": 140,
+        "engagement_rate_pct": 50.9,
+        "bounce_rate_pct": 49.1,
+        "avg_session_seconds": 85.5,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
       },
-      "totals_same_weekdays": {
-        "sessions": 43,
-        "users": 39,
-        "engaged_sessions": 30,
-        "engagement_rate_pct": 69.8,
-        "bounce_rate_pct": 30.2,
-        "conversions": 0.0,
-        "avg_session_seconds": 125.04262723255813
+      {
+        "path": "/au/recruitment",
+        "path_display": "/au/recruitment",
+        "path_kind": "au",
+        "sessions": 61,
+        "users": 58,
+        "engaged_sessions": 29,
+        "engagement_rate_pct": 47.5,
+        "bounce_rate_pct": 52.5,
+        "avg_session_seconds": 84.2,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/administrative-support",
+        "path_display": "/au/administrative-support",
+        "path_kind": "au",
+        "sessions": 26,
+        "users": 25,
+        "engaged_sessions": 11,
+        "engagement_rate_pct": 42.3,
+        "bounce_rate_pct": 57.7,
+        "avg_session_seconds": 123.6,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/social-media",
+        "path_display": "/au/social-media",
+        "path_kind": "au",
+        "sessions": 23,
+        "users": 21,
+        "engaged_sessions": 10,
+        "engagement_rate_pct": 43.5,
+        "bounce_rate_pct": 56.5,
+        "avg_session_seconds": 155.6,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/customer-service",
+        "path_display": "/au/customer-service",
+        "path_kind": "au",
+        "sessions": 20,
+        "users": 20,
+        "engaged_sessions": 14,
+        "engagement_rate_pct": 70.0,
+        "bounce_rate_pct": 30.0,
+        "avg_session_seconds": 34.4,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "(not set)",
+        "path_display": "untagged",
+        "path_kind": "unknown",
+        "sessions": 12,
+        "users": 31,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 8.3,
+        "bounce_rate_pct": 91.7,
+        "avg_session_seconds": 1.5,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "other"
+      },
+      {
+        "path": "/au/digital-marketing",
+        "path_display": "/au/digital-marketing",
+        "path_kind": "au",
+        "sessions": 10,
+        "users": 10,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 10.0,
+        "bounce_rate_pct": 90.0,
+        "avg_session_seconds": 1.1,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/bookkeeping",
+        "path_display": "/au/bookkeeping",
+        "path_kind": "au",
+        "sessions": 9,
+        "users": 7,
+        "engaged_sessions": 5,
+        "engagement_rate_pct": 55.6,
+        "bounce_rate_pct": 44.4,
+        "avg_session_seconds": 123.0,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/how-it-works",
+        "path_display": "/how-it-works",
+        "path_kind": "other_site",
+        "sessions": 9,
+        "users": 9,
+        "engaged_sessions": 5,
+        "engagement_rate_pct": 55.6,
+        "bounce_rate_pct": 44.4,
+        "avg_session_seconds": 60.2,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "other"
+      },
+      {
+        "path": "/au/sales",
+        "path_display": "/au/sales",
+        "path_kind": "au",
+        "sessions": 8,
+        "users": 8,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 25.0,
+        "bounce_rate_pct": 75.0,
+        "avg_session_seconds": 27.4,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/au/accounting",
+        "path_display": "/au/accounting",
+        "path_kind": "au",
+        "sessions": 7,
+        "users": 7,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 42.9,
+        "bounce_rate_pct": 57.1,
+        "avg_session_seconds": 39.9,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/thank-you",
+        "path_display": "/thank-you",
+        "path_kind": "thank_you",
+        "sessions": 4,
+        "users": 4,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 50.0,
+        "bounce_rate_pct": 50.0,
+        "avg_session_seconds": 10.3,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "other"
+      },
+      {
+        "path": "/au/hr",
+        "path_display": "/au/hr",
+        "path_kind": "au",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 2,
+        "engagement_rate_pct": 100.0,
+        "bounce_rate_pct": 0.0,
+        "avg_session_seconds": 114.0,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      },
+      {
+        "path": "/services",
+        "path_display": "/services",
+        "path_kind": "other_site",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0,
+        "bounce_rate_pct": 50.0,
+        "avg_session_seconds": 337.8,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "other"
+      },
+      {
+        "path": "/au/book",
+        "path_display": "/au/book",
+        "path_kind": "au",
+        "sessions": 1,
+        "users": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0,
+        "bounce_rate_pct": 0.0,
+        "avg_session_seconds": 666.1,
+        "duration_metric": "averageSessionDuration",
+        "market_guess": "AU"
+      }
+    ],
+    "channels": [
+      {
+        "channel": "Paid Search",
+        "sessions": 91,
+        "users": 89,
+        "engaged_sessions": 46,
+        "engagement_rate_pct": 50.5
+      },
+      {
+        "channel": "Direct",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0
+      },
+      {
+        "channel": "Referral",
+        "sessions": 2,
+        "users": 2,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 50.0
+      },
+      {
+        "channel": "AI Assistant",
+        "sessions": 1,
+        "users": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0
+      },
+      {
+        "channel": "Cross-network",
+        "sessions": 1,
+        "users": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0
+      },
+      {
+        "channel": "Organic Search",
+        "sessions": 0,
+        "users": 0,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0
+      },
+      {
+        "channel": "Unassigned",
+        "sessions": 0,
+        "users": 1,
+        "engaged_sessions": 0,
+        "engagement_rate_pct": 0.0
+      }
+    ],
+    "channels_prior": [
+      {
+        "channel": "Paid Search",
+        "sessions": 404,
+        "users": 378,
+        "engaged_sessions": 193,
+        "engagement_rate_pct": 47.8
+      },
+      {
+        "channel": "Direct",
+        "sessions": 36,
+        "users": 24,
+        "engaged_sessions": 12,
+        "engagement_rate_pct": 33.3
+      },
+      {
+        "channel": "Cross-network",
+        "sessions": 9,
+        "users": 9,
+        "engaged_sessions": 8,
+        "engagement_rate_pct": 88.9
+      },
+      {
+        "channel": "Unassigned",
+        "sessions": 9,
+        "users": 22,
+        "engaged_sessions": 7,
+        "engagement_rate_pct": 77.8
+      },
+      {
+        "channel": "Organic Search",
+        "sessions": 7,
+        "users": 7,
+        "engaged_sessions": 3,
+        "engagement_rate_pct": 42.9
+      },
+      {
+        "channel": "Referral",
+        "sessions": 7,
+        "users": 2,
+        "engaged_sessions": 6,
+        "engagement_rate_pct": 85.7
+      },
+      {
+        "channel": "AI Assistant",
+        "sessions": 1,
+        "users": 1,
+        "engaged_sessions": 1,
+        "engagement_rate_pct": 100.0
+      }
+    ],
+    "by_month": {
+      "2026-08": {
+        "window": "2026-08-01 \u2192 2026-08-31",
+        "status": "complete",
+        "totals_last_7_days": {
+          "sessions": 473,
+          "users": 415,
+          "engaged_sessions": 230,
+          "engagement_rate_pct": 48.6,
+          "bounce_rate_pct": 51.4,
+          "conversions": 0.0,
+          "avg_session_seconds": 86.6
+        },
+        "top_landing_pages": [
+          {
+            "path": "/au",
+            "path_display": "/au",
+            "path_kind": "au",
+            "sessions": 275,
+            "users": 246,
+            "engaged_sessions": 140,
+            "engagement_rate_pct": 50.9,
+            "bounce_rate_pct": 49.1,
+            "avg_session_seconds": 85.5,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/recruitment",
+            "path_display": "/au/recruitment",
+            "path_kind": "au",
+            "sessions": 61,
+            "users": 58,
+            "engaged_sessions": 29,
+            "engagement_rate_pct": 47.5,
+            "bounce_rate_pct": 52.5,
+            "avg_session_seconds": 84.2,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/administrative-support",
+            "path_display": "/au/administrative-support",
+            "path_kind": "au",
+            "sessions": 26,
+            "users": 25,
+            "engaged_sessions": 11,
+            "engagement_rate_pct": 42.3,
+            "bounce_rate_pct": 57.7,
+            "avg_session_seconds": 123.6,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/social-media",
+            "path_display": "/au/social-media",
+            "path_kind": "au",
+            "sessions": 23,
+            "users": 21,
+            "engaged_sessions": 10,
+            "engagement_rate_pct": 43.5,
+            "bounce_rate_pct": 56.5,
+            "avg_session_seconds": 155.6,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/customer-service",
+            "path_display": "/au/customer-service",
+            "path_kind": "au",
+            "sessions": 20,
+            "users": 20,
+            "engaged_sessions": 14,
+            "engagement_rate_pct": 70.0,
+            "bounce_rate_pct": 30.0,
+            "avg_session_seconds": 34.4,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "(not set)",
+            "path_display": "untagged",
+            "path_kind": "unknown",
+            "sessions": 12,
+            "users": 31,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 8.3,
+            "bounce_rate_pct": 91.7,
+            "avg_session_seconds": 1.5,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/digital-marketing",
+            "path_display": "/au/digital-marketing",
+            "path_kind": "au",
+            "sessions": 10,
+            "users": 10,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 10.0,
+            "bounce_rate_pct": 90.0,
+            "avg_session_seconds": 1.1,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/bookkeeping",
+            "path_display": "/au/bookkeeping",
+            "path_kind": "au",
+            "sessions": 9,
+            "users": 7,
+            "engaged_sessions": 5,
+            "engagement_rate_pct": 55.6,
+            "bounce_rate_pct": 44.4,
+            "avg_session_seconds": 123.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/how-it-works",
+            "path_display": "/how-it-works",
+            "path_kind": "other_site",
+            "sessions": 9,
+            "users": 9,
+            "engaged_sessions": 5,
+            "engagement_rate_pct": 55.6,
+            "bounce_rate_pct": 44.4,
+            "avg_session_seconds": 60.2,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/sales",
+            "path_display": "/au/sales",
+            "path_kind": "au",
+            "sessions": 8,
+            "users": 8,
+            "engaged_sessions": 2,
+            "engagement_rate_pct": 25.0,
+            "bounce_rate_pct": 75.0,
+            "avg_session_seconds": 27.4,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/accounting",
+            "path_display": "/au/accounting",
+            "path_kind": "au",
+            "sessions": 7,
+            "users": 7,
+            "engaged_sessions": 3,
+            "engagement_rate_pct": 42.9,
+            "bounce_rate_pct": 57.1,
+            "avg_session_seconds": 39.9,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/thank-you",
+            "path_display": "/thank-you",
+            "path_kind": "thank_you",
+            "sessions": 4,
+            "users": 4,
+            "engaged_sessions": 2,
+            "engagement_rate_pct": 50.0,
+            "bounce_rate_pct": 50.0,
+            "avg_session_seconds": 10.3,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/hr",
+            "path_display": "/au/hr",
+            "path_kind": "au",
+            "sessions": 2,
+            "users": 2,
+            "engaged_sessions": 2,
+            "engagement_rate_pct": 100.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 114.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/services",
+            "path_display": "/services",
+            "path_kind": "other_site",
+            "sessions": 2,
+            "users": 2,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 50.0,
+            "bounce_rate_pct": 50.0,
+            "avg_session_seconds": 337.8,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/book",
+            "path_display": "/au/book",
+            "path_kind": "au",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 666.1,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          }
+        ],
+        "channels": [
+          {
+            "channel": "Paid Search",
+            "sessions": 404,
+            "users": 378,
+            "engaged_sessions": 193,
+            "engagement_rate_pct": 47.8
+          },
+          {
+            "channel": "Direct",
+            "sessions": 36,
+            "users": 24,
+            "engaged_sessions": 12,
+            "engagement_rate_pct": 33.3
+          },
+          {
+            "channel": "Cross-network",
+            "sessions": 9,
+            "users": 9,
+            "engaged_sessions": 8,
+            "engagement_rate_pct": 88.9
+          },
+          {
+            "channel": "Unassigned",
+            "sessions": 9,
+            "users": 22,
+            "engaged_sessions": 7,
+            "engagement_rate_pct": 77.8
+          },
+          {
+            "channel": "Organic Search",
+            "sessions": 7,
+            "users": 7,
+            "engaged_sessions": 3,
+            "engagement_rate_pct": 42.9
+          },
+          {
+            "channel": "Referral",
+            "sessions": 7,
+            "users": 2,
+            "engaged_sessions": 6,
+            "engagement_rate_pct": 85.7
+          },
+          {
+            "channel": "AI Assistant",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0
+          }
+        ],
+        "paid_search_sessions": 404,
+        "paid_search_engagement_rate_pct": 47.8
+      },
+      "2026-09": {
+        "window": "2026-09-01 \u2192 2026-09-07",
+        "status": "active_mtd",
+        "totals_last_7_days": {
+          "sessions": 97,
+          "users": 95,
+          "engaged_sessions": 50,
+          "engagement_rate_pct": 51.5,
+          "bounce_rate_pct": 48.5,
+          "conversions": 0.0,
+          "avg_session_seconds": 74.2
+        },
+        "top_landing_pages": [
+          {
+            "path": "/au",
+            "path_display": "/au",
+            "path_kind": "au",
+            "sessions": 83,
+            "users": 83,
+            "engaged_sessions": 44,
+            "engagement_rate_pct": 53.0,
+            "bounce_rate_pct": 47.0,
+            "avg_session_seconds": 73.8,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/administrative-support",
+            "path_display": "/au/administrative-support",
+            "path_kind": "au",
+            "sessions": 4,
+            "users": 4,
+            "engaged_sessions": 3,
+            "engagement_rate_pct": 75.0,
+            "bounce_rate_pct": 25.0,
+            "avg_session_seconds": 24.8,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/recruitment",
+            "path_display": "/au/recruitment",
+            "path_kind": "au",
+            "sessions": 4,
+            "users": 3,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 25.0,
+            "bounce_rate_pct": 75.0,
+            "avg_session_seconds": 153.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/how-it-works",
+            "path_display": "/how-it-works",
+            "path_kind": "other_site",
+            "sessions": 3,
+            "users": 3,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 33.3,
+            "bounce_rate_pct": 66.7,
+            "avg_session_seconds": 39.7,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "(not set)",
+            "path_display": "untagged",
+            "path_kind": "unknown",
+            "sessions": 1,
+            "users": 2,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 100.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/customer-service",
+            "path_display": "/au/customer-service",
+            "path_kind": "au",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 237.3,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/sales",
+            "path_display": "/au/sales",
+            "path_kind": "au",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 100.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/accounting",
+            "path_display": "/au/accounting",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/book",
+            "path_display": "/au/book",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/bookkeeping",
+            "path_display": "/au/bookkeeping",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/digital-marketing",
+            "path_display": "/au/digital-marketing",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/hr",
+            "path_display": "/au/hr",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/social-media",
+            "path_display": "/au/social-media",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/services",
+            "path_display": "/services",
+            "path_kind": "other_site",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/thank-you",
+            "path_display": "/thank-you",
+            "path_kind": "thank_you",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          }
+        ],
+        "channels": [
+          {
+            "channel": "Paid Search",
+            "sessions": 91,
+            "users": 89,
+            "engaged_sessions": 46,
+            "engagement_rate_pct": 50.5
+          },
+          {
+            "channel": "Direct",
+            "sessions": 2,
+            "users": 2,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 50.0
+          },
+          {
+            "channel": "Referral",
+            "sessions": 2,
+            "users": 2,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 50.0
+          },
+          {
+            "channel": "AI Assistant",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0
+          },
+          {
+            "channel": "Cross-network",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0
+          },
+          {
+            "channel": "Organic Search",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0
+          },
+          {
+            "channel": "Unassigned",
+            "sessions": 0,
+            "users": 1,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0
+          }
+        ],
+        "paid_search_sessions": 91,
+        "paid_search_engagement_rate_pct": 50.5
+      }
+    },
+    "insights": [
+      "About 52% stayed and looked around (97 visits)."
+    ],
+    "notes": [
+      "/au pages received 93 landing visits \u2014 tags are firing on the Australia microsite.",
+      "Paid Google ads visits: 91 (the useful volume). Thank-you / form hits are likely internal testing, not leads."
+    ],
+    "summary_plain": "Last 7 days (AU site tags): 97 sessions \u00b7 95 users. Paid Google ads visits: 91. About 52% stayed and looked around. Top landings: /au, /au/administrative-support, /au/recruitment, /how-it-works. /au pages received 93 landing visits \u2014 tags are firing on the Australia microsite."
+  },
+  "by_month": {
+    "2026-08": {
+      "window": "2026-08-01 \u2192 2026-08-31",
+      "status": "complete",
+      "totals_last_7_days": {
+        "sessions": 1970,
+        "users": 2407,
+        "engaged_sessions": 1530,
+        "engagement_rate_pct": 77.7,
+        "bounce_rate_pct": 22.3,
+        "conversions": 4967.0,
+        "avg_session_seconds": 108.9
       },
       "top_landing_pages": [
         {
-          "path": "/au",
-          "path_display": "/au",
-          "path_kind": "au",
-          "sessions": 10,
+          "path": "/us",
+          "path_display": "/us",
+          "path_kind": "us_home",
+          "sessions": 1471,
+          "users": 1311,
+          "engaged_sessions": 1156,
+          "engagement_rate_pct": 78.6,
+          "bounce_rate_pct": 21.4,
+          "avg_session_seconds": 99.2,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/social-media",
+          "path_display": "/us/social-media",
+          "path_kind": "role_lp",
+          "sessions": 70,
+          "users": 70,
+          "engaged_sessions": 57,
+          "engagement_rate_pct": 81.4,
+          "bounce_rate_pct": 18.6,
+          "avg_session_seconds": 42.7,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/bookkeeping",
+          "path_display": "/us/bookkeeping",
+          "path_kind": "role_lp",
+          "sessions": 66,
+          "users": 65,
+          "engaged_sessions": 44,
+          "engagement_rate_pct": 66.7,
+          "bounce_rate_pct": 33.3,
+          "avg_session_seconds": 47.2,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/how-it-works",
+          "path_display": "/how-it-works",
+          "path_kind": "other_site",
+          "sessions": 55,
+          "users": 54,
+          "engaged_sessions": 53,
+          "engagement_rate_pct": 96.4,
+          "bounce_rate_pct": 3.6,
+          "avg_session_seconds": 171.4,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "other"
+        },
+        {
+          "path": "/us/sales",
+          "path_display": "/us/sales",
+          "path_kind": "role_lp",
+          "sessions": 52,
+          "users": 49,
+          "engaged_sessions": 45,
+          "engagement_rate_pct": 86.5,
+          "bounce_rate_pct": 13.5,
+          "avg_session_seconds": 181.0,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/customer-service",
+          "path_display": "/us/customer-service",
+          "path_kind": "role_lp",
+          "sessions": 47,
+          "users": 45,
+          "engaged_sessions": 34,
+          "engagement_rate_pct": 72.3,
+          "bounce_rate_pct": 27.7,
+          "avg_session_seconds": 50.9,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "(not set)",
+          "path_display": "untagged",
+          "path_kind": "unknown",
+          "sessions": 40,
+          "users": 816,
+          "engaged_sessions": 20,
+          "engagement_rate_pct": 50.0,
+          "bounce_rate_pct": 50.0,
+          "avg_session_seconds": 18.5,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "other"
+        },
+        {
+          "path": "/us/digital-marketing",
+          "path_display": "/us/digital-marketing",
+          "path_kind": "role_lp",
+          "sessions": 38,
+          "users": 33,
+          "engaged_sessions": 24,
+          "engagement_rate_pct": 63.2,
+          "bounce_rate_pct": 36.8,
+          "avg_session_seconds": 110.8,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/administrative-support",
+          "path_display": "/us/administrative-support",
+          "path_kind": "role_lp",
+          "sessions": 29,
+          "users": 27,
+          "engaged_sessions": 13,
+          "engagement_rate_pct": 44.8,
+          "bounce_rate_pct": 55.2,
+          "avg_session_seconds": 193.2,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/tf/bookkeeping",
+          "path_display": "/us/tf/bookkeeping",
+          "path_kind": "role_lp",
+          "sessions": 20,
+          "users": 20,
+          "engaged_sessions": 20,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 18.1,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/recruitment",
+          "path_display": "/us/recruitment",
+          "path_kind": "role_lp",
+          "sessions": 12,
+          "users": 11,
+          "engaged_sessions": 3,
+          "engagement_rate_pct": 25.0,
+          "bounce_rate_pct": 75.0,
+          "avg_session_seconds": 9.2,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/services",
+          "path_display": "/services",
+          "path_kind": "other_site",
+          "sessions": 11,
           "users": 10,
+          "engaged_sessions": 10,
+          "engagement_rate_pct": 90.9,
+          "bounce_rate_pct": 9.1,
+          "avg_session_seconds": 94.2,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "other"
+        },
+        {
+          "path": "/us/tf/hire",
+          "path_display": "/us/tf/hire",
+          "path_kind": "role_lp",
+          "sessions": 11,
+          "users": 11,
+          "engaged_sessions": 11,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 97.9,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/thank-you",
+          "path_display": "/thank-you",
+          "path_kind": "thank_you",
+          "sessions": 7,
+          "users": 3,
+          "engaged_sessions": 7,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 595.2,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "other"
+        },
+        {
+          "path": "(empty path)",
+          "path_display": "untagged",
+          "path_kind": "unknown",
+          "sessions": 0,
+          "users": 0,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 0.0,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "other"
+        }
+      ],
+      "channels": [
+        {
+          "channel": "Paid Search",
+          "sessions": 1599,
+          "users": 1502,
+          "engaged_sessions": 1304,
+          "engagement_rate_pct": 81.6
+        },
+        {
+          "channel": "Direct",
+          "sessions": 253,
+          "users": 183,
+          "engaged_sessions": 125,
+          "engagement_rate_pct": 49.4
+        },
+        {
+          "channel": "Referral",
+          "sessions": 52,
+          "users": 4,
+          "engaged_sessions": 41,
+          "engagement_rate_pct": 78.8
+        },
+        {
+          "channel": "Organic Search",
+          "sessions": 41,
+          "users": 17,
+          "engaged_sessions": 34,
+          "engagement_rate_pct": 82.9
+        },
+        {
+          "channel": "Cross-network",
+          "sessions": 16,
+          "users": 16,
+          "engaged_sessions": 16,
+          "engagement_rate_pct": 100.0
+        },
+        {
+          "channel": "Unassigned",
+          "sessions": 9,
+          "users": 794,
+          "engaged_sessions": 9,
+          "engagement_rate_pct": 100.0
+        },
+        {
+          "channel": "AI Assistant",
+          "sessions": 3,
+          "users": 3,
+          "engaged_sessions": 3,
+          "engagement_rate_pct": 100.0
+        }
+      ],
+      "paid_search_sessions": 1599,
+      "paid_search_engagement_rate_pct": 81.6,
+      "au": {
+        "window": "2026-08-01 \u2192 2026-08-31",
+        "status": "complete",
+        "totals_last_7_days": {
+          "sessions": 473,
+          "users": 415,
+          "engaged_sessions": 230,
+          "engagement_rate_pct": 48.6,
+          "bounce_rate_pct": 51.4,
+          "conversions": 0.0,
+          "avg_session_seconds": 86.6
+        },
+        "top_landing_pages": [
+          {
+            "path": "/au",
+            "path_display": "/au",
+            "path_kind": "au",
+            "sessions": 275,
+            "users": 246,
+            "engaged_sessions": 140,
+            "engagement_rate_pct": 50.9,
+            "bounce_rate_pct": 49.1,
+            "avg_session_seconds": 85.5,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/recruitment",
+            "path_display": "/au/recruitment",
+            "path_kind": "au",
+            "sessions": 61,
+            "users": 58,
+            "engaged_sessions": 29,
+            "engagement_rate_pct": 47.5,
+            "bounce_rate_pct": 52.5,
+            "avg_session_seconds": 84.2,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/administrative-support",
+            "path_display": "/au/administrative-support",
+            "path_kind": "au",
+            "sessions": 26,
+            "users": 25,
+            "engaged_sessions": 11,
+            "engagement_rate_pct": 42.3,
+            "bounce_rate_pct": 57.7,
+            "avg_session_seconds": 123.6,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/social-media",
+            "path_display": "/au/social-media",
+            "path_kind": "au",
+            "sessions": 23,
+            "users": 21,
+            "engaged_sessions": 10,
+            "engagement_rate_pct": 43.5,
+            "bounce_rate_pct": 56.5,
+            "avg_session_seconds": 155.6,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/customer-service",
+            "path_display": "/au/customer-service",
+            "path_kind": "au",
+            "sessions": 20,
+            "users": 20,
+            "engaged_sessions": 14,
+            "engagement_rate_pct": 70.0,
+            "bounce_rate_pct": 30.0,
+            "avg_session_seconds": 34.4,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "(not set)",
+            "path_display": "untagged",
+            "path_kind": "unknown",
+            "sessions": 12,
+            "users": 31,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 8.3,
+            "bounce_rate_pct": 91.7,
+            "avg_session_seconds": 1.5,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/digital-marketing",
+            "path_display": "/au/digital-marketing",
+            "path_kind": "au",
+            "sessions": 10,
+            "users": 10,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 10.0,
+            "bounce_rate_pct": 90.0,
+            "avg_session_seconds": 1.1,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/bookkeeping",
+            "path_display": "/au/bookkeeping",
+            "path_kind": "au",
+            "sessions": 9,
+            "users": 7,
+            "engaged_sessions": 5,
+            "engagement_rate_pct": 55.6,
+            "bounce_rate_pct": 44.4,
+            "avg_session_seconds": 123.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/how-it-works",
+            "path_display": "/how-it-works",
+            "path_kind": "other_site",
+            "sessions": 9,
+            "users": 9,
+            "engaged_sessions": 5,
+            "engagement_rate_pct": 55.6,
+            "bounce_rate_pct": 44.4,
+            "avg_session_seconds": 60.2,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/sales",
+            "path_display": "/au/sales",
+            "path_kind": "au",
+            "sessions": 8,
+            "users": 8,
+            "engaged_sessions": 2,
+            "engagement_rate_pct": 25.0,
+            "bounce_rate_pct": 75.0,
+            "avg_session_seconds": 27.4,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/accounting",
+            "path_display": "/au/accounting",
+            "path_kind": "au",
+            "sessions": 7,
+            "users": 7,
+            "engaged_sessions": 3,
+            "engagement_rate_pct": 42.9,
+            "bounce_rate_pct": 57.1,
+            "avg_session_seconds": 39.9,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/thank-you",
+            "path_display": "/thank-you",
+            "path_kind": "thank_you",
+            "sessions": 4,
+            "users": 4,
+            "engaged_sessions": 2,
+            "engagement_rate_pct": 50.0,
+            "bounce_rate_pct": 50.0,
+            "avg_session_seconds": 10.3,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/hr",
+            "path_display": "/au/hr",
+            "path_kind": "au",
+            "sessions": 2,
+            "users": 2,
+            "engaged_sessions": 2,
+            "engagement_rate_pct": 100.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 114.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/services",
+            "path_display": "/services",
+            "path_kind": "other_site",
+            "sessions": 2,
+            "users": 2,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 50.0,
+            "bounce_rate_pct": 50.0,
+            "avg_session_seconds": 337.8,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/book",
+            "path_display": "/au/book",
+            "path_kind": "au",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 666.1,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          }
+        ],
+        "channels": [
+          {
+            "channel": "Paid Search",
+            "sessions": 404,
+            "users": 378,
+            "engaged_sessions": 193,
+            "engagement_rate_pct": 47.8
+          },
+          {
+            "channel": "Direct",
+            "sessions": 36,
+            "users": 24,
+            "engaged_sessions": 12,
+            "engagement_rate_pct": 33.3
+          },
+          {
+            "channel": "Cross-network",
+            "sessions": 9,
+            "users": 9,
+            "engaged_sessions": 8,
+            "engagement_rate_pct": 88.9
+          },
+          {
+            "channel": "Unassigned",
+            "sessions": 9,
+            "users": 22,
+            "engaged_sessions": 7,
+            "engagement_rate_pct": 77.8
+          },
+          {
+            "channel": "Organic Search",
+            "sessions": 7,
+            "users": 7,
+            "engaged_sessions": 3,
+            "engagement_rate_pct": 42.9
+          },
+          {
+            "channel": "Referral",
+            "sessions": 7,
+            "users": 2,
+            "engaged_sessions": 6,
+            "engagement_rate_pct": 85.7
+          },
+          {
+            "channel": "AI Assistant",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0
+          }
+        ],
+        "paid_search_sessions": 404,
+        "paid_search_engagement_rate_pct": 47.8
+      }
+    },
+    "2026-09": {
+      "window": "2026-09-01 \u2192 2026-09-07",
+      "status": "active_mtd",
+      "totals_last_7_days": {
+        "sessions": 274,
+        "users": 454,
+        "engaged_sessions": 273,
+        "engagement_rate_pct": 99.6,
+        "bounce_rate_pct": 0.4,
+        "conversions": 1070.0,
+        "avg_session_seconds": 63.2
+      },
+      "top_landing_pages": [
+        {
+          "path": "/us",
+          "path_display": "/us",
+          "path_kind": "us_home",
+          "sessions": 193,
+          "users": 187,
+          "engaged_sessions": 193,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 59.2,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/how-it-works",
+          "path_display": "/how-it-works",
+          "path_kind": "other_site",
+          "sessions": 23,
+          "users": 22,
+          "engaged_sessions": 23,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 207.0,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "other"
+        },
+        {
+          "path": "/us/bookkeeping",
+          "path_display": "/us/bookkeeping",
+          "path_kind": "role_lp",
+          "sessions": 16,
+          "users": 16,
+          "engaged_sessions": 16,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 10.5,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/sales",
+          "path_display": "/us/sales",
+          "path_kind": "role_lp",
+          "sessions": 16,
+          "users": 16,
+          "engaged_sessions": 16,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 18.2,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/administrative-support",
+          "path_display": "/us/administrative-support",
+          "path_kind": "role_lp",
+          "sessions": 11,
+          "users": 11,
+          "engaged_sessions": 11,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 15.0,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "(empty path)",
+          "path_display": "untagged",
+          "path_kind": "unknown",
+          "sessions": 6,
+          "users": 20,
           "engaged_sessions": 0,
           "engagement_rate_pct": 0.0,
           "bounce_rate_pct": 100.0,
-          "avg_session_seconds": 4.3,
+          "avg_session_seconds": 1.4,
           "duration_metric": "averageSessionDuration",
-          "market_guess": "AU"
+          "market_guess": "other"
+        },
+        {
+          "path": "/us/digital-marketing",
+          "path_display": "/us/digital-marketing",
+          "path_kind": "role_lp",
+          "sessions": 5,
+          "users": 5,
+          "engaged_sessions": 5,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 49.1,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/social-media",
+          "path_display": "/us/social-media",
+          "path_kind": "role_lp",
+          "sessions": 5,
+          "users": 5,
+          "engaged_sessions": 5,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 51.9,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
         },
         {
           "path": "(not set)",
           "path_display": "untagged",
           "path_kind": "unknown",
           "sessions": 3,
-          "users": 3,
-          "engaged_sessions": 0,
-          "engagement_rate_pct": 0.0,
-          "bounce_rate_pct": 100.0,
+          "users": 195,
+          "engaged_sessions": 3,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
           "avg_session_seconds": 0.0,
           "duration_metric": "averageSessionDuration",
           "market_guess": "other"
         },
         {
-          "path": "/au/accounting",
-          "path_display": "/au/accounting",
-          "path_kind": "au",
+          "path": "/us/customer-service",
+          "path_display": "/us/customer-service",
+          "path_kind": "role_lp",
           "sessions": 1,
           "users": 1,
-          "engaged_sessions": 0,
-          "engagement_rate_pct": 0.0,
-          "bounce_rate_pct": 100.0,
+          "engaged_sessions": 1,
+          "engagement_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
           "avg_session_seconds": 0.0,
           "duration_metric": "averageSessionDuration",
-          "market_guess": "AU"
+          "market_guess": "US"
         },
         {
-          "path": "/au/bookkeeping",
-          "path_display": "/au/bookkeeping",
-          "path_kind": "au",
-          "sessions": 1,
-          "users": 1,
+          "path": "/services",
+          "path_display": "/services",
+          "path_kind": "other_site",
+          "sessions": 0,
+          "users": 0,
           "engaged_sessions": 0,
           "engagement_rate_pct": 0.0,
-          "bounce_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
           "avg_session_seconds": 0.0,
           "duration_metric": "averageSessionDuration",
-          "market_guess": "AU"
+          "market_guess": "other"
         },
         {
-          "path": "/au/recruitment",
-          "path_display": "/au/recruitment",
-          "path_kind": "au",
-          "sessions": 1,
-          "users": 1,
+          "path": "/thank-you",
+          "path_display": "/thank-you",
+          "path_kind": "thank_you",
+          "sessions": 0,
+          "users": 0,
           "engaged_sessions": 0,
           "engagement_rate_pct": 0.0,
-          "bounce_rate_pct": 100.0,
+          "bounce_rate_pct": 0.0,
           "avg_session_seconds": 0.0,
           "duration_metric": "averageSessionDuration",
-          "market_guess": "AU"
+          "market_guess": "other"
+        },
+        {
+          "path": "/us/recruitment",
+          "path_display": "/us/recruitment",
+          "path_kind": "role_lp",
+          "sessions": 0,
+          "users": 0,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 0.0,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/tf/bookkeeping",
+          "path_display": "/us/tf/bookkeeping",
+          "path_kind": "role_lp",
+          "sessions": 0,
+          "users": 0,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 0.0,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
+        },
+        {
+          "path": "/us/tf/hire",
+          "path_display": "/us/tf/hire",
+          "path_kind": "role_lp",
+          "sessions": 0,
+          "users": 0,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0,
+          "bounce_rate_pct": 0.0,
+          "avg_session_seconds": 0.0,
+          "duration_metric": "averageSessionDuration",
+          "market_guess": "US"
         }
-      ]
+      ],
+      "channels": [
+        {
+          "channel": "Paid Search",
+          "sessions": 244,
+          "users": 237,
+          "engaged_sessions": 244,
+          "engagement_rate_pct": 100.0
+        },
+        {
+          "channel": "Cross-network",
+          "sessions": 13,
+          "users": 13,
+          "engaged_sessions": 13,
+          "engagement_rate_pct": 100.0
+        },
+        {
+          "channel": "Direct",
+          "sessions": 12,
+          "users": 12,
+          "engaged_sessions": 12,
+          "engagement_rate_pct": 100.0
+        },
+        {
+          "channel": "Unassigned",
+          "sessions": 6,
+          "users": 212,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0
+        },
+        {
+          "channel": "Referral",
+          "sessions": 5,
+          "users": 2,
+          "engaged_sessions": 5,
+          "engagement_rate_pct": 100.0
+        },
+        {
+          "channel": "AI Assistant",
+          "sessions": 0,
+          "users": 0,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0
+        },
+        {
+          "channel": "Organic Search",
+          "sessions": 0,
+          "users": 0,
+          "engaged_sessions": 0,
+          "engagement_rate_pct": 0.0
+        }
+      ],
+      "paid_search_sessions": 244,
+      "paid_search_engagement_rate_pct": 100.0,
+      "events_top": [
+        {
+          "event": "page_view",
+          "event_count": 311,
+          "conversions": 311.0,
+          "users": 263,
+          "is_noise": true
+        },
+        {
+          "event": "session_start",
+          "event_count": 275,
+          "conversions": 275.0,
+          "users": 263,
+          "is_noise": true
+        },
+        {
+          "event": "first_visit",
+          "event_count": 261,
+          "conversions": 261.0,
+          "users": 260,
+          "is_noise": true
+        },
+        {
+          "event": "experiment_view",
+          "event_count": 217,
+          "conversions": 0.0,
+          "users": 205,
+          "is_noise": false
+        },
+        {
+          "event": "user_engagement",
+          "event_count": 181,
+          "conversions": 181.0,
+          "users": 158,
+          "is_noise": true
+        },
+        {
+          "event": "scroll",
+          "event_count": 42,
+          "conversions": 42.0,
+          "users": 36,
+          "is_noise": true
+        },
+        {
+          "event": "experiment_convert",
+          "event_count": 2,
+          "conversions": 0.0,
+          "users": 1,
+          "is_noise": false
+        }
+      ],
+      "events_interesting": [
+        {
+          "event": "experiment_view",
+          "event_count": 217,
+          "conversions": 0.0,
+          "users": 205,
+          "is_noise": false
+        },
+        {
+          "event": "experiment_convert",
+          "event_count": 2,
+          "conversions": 0.0,
+          "users": 1,
+          "is_noise": false
+        }
+      ],
+      "au": {
+        "window": "2026-09-01 \u2192 2026-09-07",
+        "status": "active_mtd",
+        "totals_last_7_days": {
+          "sessions": 97,
+          "users": 95,
+          "engaged_sessions": 50,
+          "engagement_rate_pct": 51.5,
+          "bounce_rate_pct": 48.5,
+          "conversions": 0.0,
+          "avg_session_seconds": 74.2
+        },
+        "top_landing_pages": [
+          {
+            "path": "/au",
+            "path_display": "/au",
+            "path_kind": "au",
+            "sessions": 83,
+            "users": 83,
+            "engaged_sessions": 44,
+            "engagement_rate_pct": 53.0,
+            "bounce_rate_pct": 47.0,
+            "avg_session_seconds": 73.8,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/administrative-support",
+            "path_display": "/au/administrative-support",
+            "path_kind": "au",
+            "sessions": 4,
+            "users": 4,
+            "engaged_sessions": 3,
+            "engagement_rate_pct": 75.0,
+            "bounce_rate_pct": 25.0,
+            "avg_session_seconds": 24.8,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/recruitment",
+            "path_display": "/au/recruitment",
+            "path_kind": "au",
+            "sessions": 4,
+            "users": 3,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 25.0,
+            "bounce_rate_pct": 75.0,
+            "avg_session_seconds": 153.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/how-it-works",
+            "path_display": "/how-it-works",
+            "path_kind": "other_site",
+            "sessions": 3,
+            "users": 3,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 33.3,
+            "bounce_rate_pct": 66.7,
+            "avg_session_seconds": 39.7,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "(not set)",
+            "path_display": "untagged",
+            "path_kind": "unknown",
+            "sessions": 1,
+            "users": 2,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 100.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/au/customer-service",
+            "path_display": "/au/customer-service",
+            "path_kind": "au",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 237.3,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/sales",
+            "path_display": "/au/sales",
+            "path_kind": "au",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 100.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/accounting",
+            "path_display": "/au/accounting",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/book",
+            "path_display": "/au/book",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/bookkeeping",
+            "path_display": "/au/bookkeeping",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/digital-marketing",
+            "path_display": "/au/digital-marketing",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/hr",
+            "path_display": "/au/hr",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/au/social-media",
+            "path_display": "/au/social-media",
+            "path_kind": "au",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "AU"
+          },
+          {
+            "path": "/services",
+            "path_display": "/services",
+            "path_kind": "other_site",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          },
+          {
+            "path": "/thank-you",
+            "path_display": "/thank-you",
+            "path_kind": "thank_you",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0,
+            "bounce_rate_pct": 0.0,
+            "avg_session_seconds": 0.0,
+            "duration_metric": "averageSessionDuration",
+            "market_guess": "other"
+          }
+        ],
+        "channels": [
+          {
+            "channel": "Paid Search",
+            "sessions": 91,
+            "users": 89,
+            "engaged_sessions": 46,
+            "engagement_rate_pct": 50.5
+          },
+          {
+            "channel": "Direct",
+            "sessions": 2,
+            "users": 2,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 50.0
+          },
+          {
+            "channel": "Referral",
+            "sessions": 2,
+            "users": 2,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 50.0
+          },
+          {
+            "channel": "AI Assistant",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0
+          },
+          {
+            "channel": "Cross-network",
+            "sessions": 1,
+            "users": 1,
+            "engaged_sessions": 1,
+            "engagement_rate_pct": 100.0
+          },
+          {
+            "channel": "Organic Search",
+            "sessions": 0,
+            "users": 0,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0
+          },
+          {
+            "channel": "Unassigned",
+            "sessions": 0,
+            "users": 1,
+            "engaged_sessions": 0,
+            "engagement_rate_pct": 0.0
+          }
+        ],
+        "paid_search_sessions": 91,
+        "paid_search_engagement_rate_pct": 50.5
+      }
     }
-  }
+  },
+  "run_report_requests_total": 8
 }

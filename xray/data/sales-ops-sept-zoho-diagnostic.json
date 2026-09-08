@@ -1,0 +1,63 @@
+{
+  "window": "2026-09-01T00:00:00-07:00 \u2192 2026-09-09T00:00:00-07:00",
+  "leads_in_window": 36,
+  "usa": {
+    "n": 21,
+    "with_utm_gclid": 0,
+    "discovery_scheduled": 1,
+    "job_order_submitted": 2,
+    "by_source": {
+      "Website": 12,
+      "Phone": 7,
+      "External Referral": 1,
+      "(blank)": 1
+    },
+    "by_status": {
+      "Junk Lead": 6,
+      "New Enquiry (Auto)": 3,
+      "No Shows": 3,
+      "Not Ready - 1 Month": 2,
+      "Job Order Submitted": 2,
+      "Attempted to Contact 1 (Auto)": 1,
+      "Decided Against / Not a Fit": 1,
+      "Discovery Scheduled": 1,
+      "Information Brochure Sent": 1,
+      "Attempted to Contact 3 (Auto)": 1
+    }
+  },
+  "au": {
+    "n": 11,
+    "with_utm_gclid": 1,
+    "discovery_scheduled": 2,
+    "job_order_submitted": 2,
+    "by_source": {
+      "Website": 9,
+      "Forbes": 1,
+      "Phone": 1
+    },
+    "by_status": {
+      "Information Brochure Sent": 4,
+      "Junk Lead": 3,
+      "Discovery Scheduled": 2,
+      "Job Order Submitted": 2
+    }
+  },
+  "blank_region": {
+    "n": 3,
+    "with_utm_gclid": 0,
+    "discovery_scheduled": 0,
+    "job_order_submitted": 0,
+    "by_source": {
+      "Website": 3
+    },
+    "by_status": {
+      "Junk Lead": 3
+    }
+  },
+  "all_regions": {
+    "USA": 21,
+    "AU": 11,
+    "(blank)": 3,
+    "Philippines": 1
+  }
+}

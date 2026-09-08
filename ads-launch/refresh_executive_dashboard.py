@@ -241,6 +241,13 @@ def step_9_deploy_to_vercel(dry_run: bool = False, skip_deploy: bool = False) ->
         print("[Notice] Deployment skipped (dry-run or skip-deploy requested)")
         return True, "Deployment skipped as requested"
 
+    js = XRAY_DIR / "executive.js"
+    html = XRAY_DIR / "executive.html"
+    js_txt = js.read_text(encoding="utf-8") if js.is_file() else ""
+    html_txt = html.read_text(encoding="utf-8") if html.is_file() else ""
+    if "renderMonthTabs" not in js_txt or "ex-month-tabs" not in html_txt:
+        return False, "REFUSE DEPLOY: month tabs missing (would wipe September / active MTD tab)"
+
     cmd = ["npm", "run", "deploy"]
     code, out = run_command(cmd, cwd=XRAY_DIR)
     print(out.strip())

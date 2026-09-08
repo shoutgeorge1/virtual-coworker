@@ -1,10 +1,22 @@
 {
-  "generated_at_utc": "2026-09-07T17:48:30.051185+00:00",
+  "generated_at_utc": "2026-09-08T13:20:05.696355+00:00",
   "window_start": "2026-09-07T00:00:00-07:00",
-  "window_end_exclusive": "2026-09-08T00:00:00-07:00",
+  "window_end_exclusive": "2026-09-09T00:00:00-07:00",
   "api_calls": 1,
-  "leads_in_window": 1,
+  "leads_in_window": 4,
   "usa": {
+    "n": 2,
+    "with_utm_gclid": 0,
+    "discovery_scheduled": 0,
+    "job_order_submitted": 0,
+    "by_source": {
+      "Website": 2
+    },
+    "by_status": {
+      "New Enquiry (Auto)": 2
+    }
+  },
+  "au": {
     "n": 1,
     "with_utm_gclid": 0,
     "discovery_scheduled": 0,
@@ -13,19 +25,13 @@
       "Website": 1
     },
     "by_status": {
-      "New Enquiry (Auto)": 1
+      "Information Brochure Sent": 1
     }
   },
-  "au": {
-    "n": 0,
-    "with_utm_gclid": 0,
-    "discovery_scheduled": 0,
-    "job_order_submitted": 0,
-    "by_source": {},
-    "by_status": {}
-  },
   "all_regions": {
-    "USA": 1
+    "USA": 2,
+    "(blank)": 1,
+    "AU": 1
   },
   "cheyenne_note": "Zoho census only \u2014 US Cost / enquiry on Executive uses Cheyenne\u2019s labeled count from Gmail, not this row total."
 }
