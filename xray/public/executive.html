@@ -62,8 +62,10 @@
         <section class="ex-mob-section" aria-label="Market performance">
           <div class="ex-mob-section-title-row">
             <h2 class="ex-mob-section-title">Market Economics</h2>
-            <span class="ex-mob-section-sub">August closed</span>
+            <span class="ex-mob-section-sub" id="ex-mob-section-sub">Selected month</span>
           </div>
+
+          <div class="ex-mob-month-tabs" id="ex-mob-month-tabs" role="tablist" aria-label="Select reporting month"></div>
 
           <!-- Market Segmented Switcher -->
           <div class="ex-mob-segmented" role="tablist" aria-label="Select market">
@@ -226,35 +228,45 @@
       <!-- DESKTOP EXECUTIVE VIEW (> 768px)          -->
       <!-- ========================================== -->
       <div class="ex-desktop-view" id="ex-desktop-view">
-        <!-- A. Header -->
+        <!-- A. Header + month selector -->
         <header class="ex-header">
-          <div class="ex-header-titles">
-            <h1>Executive Performance</h1>
-            <p class="ex-subtitle" id="ex-period">September 2026 · Month to Date</p>
-            <p class="ex-fresh" id="ex-fresh">Loading current period…</p>
+          <div class="ex-header-top">
+            <div class="ex-header-titles">
+              <h1>Executive Performance</h1>
+              <p class="ex-subtitle" id="ex-period">September 2026 · Month to Date</p>
+            </div>
+            <div class="ex-month-tabs" id="ex-month-tabs" role="tablist" aria-label="Select reporting month">
+              <!-- Populated by executive.js from monthly_history -->
+            </div>
           </div>
+          <p class="ex-fresh" id="ex-fresh">Loading current period…</p>
         </header>
 
-        <!-- B. Compact executive summary: August closed is the baseline -->
-        <section class="ex-section" aria-label="Executive summary">
+        <!-- B. Compact US | AU summary -->
+        <section class="ex-section ex-section-summary" aria-label="Executive summary">
           <div class="ex-summary-card" id="ex-summary-card">
-            <div class="ex-summary-label">Pilot baseline · August 2026 closed</div>
+            <div class="ex-summary-label" id="ex-summary-label">Selected month</div>
             <div class="ex-summary-grid" id="ex-summary-grid">
               <div class="ex-summary-market" id="ex-summary-us">Loading US…</div>
               <div class="ex-summary-market" id="ex-summary-au">Loading AU…</div>
             </div>
-            <p class="ex-summary-mtd" id="ex-summary-september">Loading September MTD…</p>
             <p class="ex-summary-decision" id="ex-summary-decision">Loading decision…</p>
-            <p class="ex-summary-footnote" id="ex-summary-footnote"></p>
+            <details class="ex-summary-more">
+              <summary>Month notes</summary>
+              <div class="ex-summary-more-body">
+                <p class="ex-summary-mtd" id="ex-summary-september">Loading month context…</p>
+                <p class="ex-summary-footnote" id="ex-summary-footnote"></p>
+              </div>
+            </details>
           </div>
         </section>
 
-        <!-- C. United States Scorecard (August closed) -->
+        <!-- C. United States Scorecard -->
         <section class="ex-section" aria-label="United States scorecard">
           <div class="ex-section-hd">
             <div>
               <h2>United States · USD</h2>
-              <p class="ex-section-sub">August closed vs two-year agency baseline</p>
+              <p class="ex-section-sub" id="ex-us-section-sub">vs two-year agency baseline</p>
             </div>
           </div>
           <div class="ex-card ex-table-wrap">
@@ -274,17 +286,18 @@
             </table>
           </div>
           <div class="ex-traffic-note" id="ex-us-traffic">Loading traffic efficiency…</div>
+          <div class="ex-month-note" id="ex-us-month-note"></div>
           <p class="ex-footnote" style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem; margin-bottom: 0;">
             * Blended sales-confirmed company outcomes; not all Google Ads-attributed.
           </p>
         </section>
 
-        <!-- D. Australia Scorecard (August closed) -->
+        <!-- D. Australia Scorecard -->
         <section class="ex-section" aria-label="Australia scorecard">
           <div class="ex-section-hd">
             <div>
               <h2>Australia · AUD</h2>
-              <p class="ex-section-sub">August closed vs two-year agency baseline</p>
+              <p class="ex-section-sub" id="ex-au-section-sub">vs two-year agency baseline</p>
             </div>
           </div>
           <div class="ex-card ex-table-wrap">
@@ -304,9 +317,20 @@
             </table>
           </div>
           <div class="ex-traffic-note" id="ex-au-traffic">Loading traffic efficiency…</div>
+          <div class="ex-month-note" id="ex-au-month-note"></div>
           <p class="ex-footnote" style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem; margin-bottom: 0;">
             * Blended sales-confirmed company outcomes; not all Google Ads-attributed.
           </p>
+        </section>
+
+        <section class="ex-section" aria-label="Traffic health">
+          <div class="ex-section-hd">
+            <div>
+              <h2>Traffic health (GA4)</h2>
+              <p class="ex-section-sub">What people do on the site after they arrive · US and AU separate</p>
+            </div>
+          </div>
+          <div class="ex-ga4-wrap" id="ex-ga4-health">Loading GA4…</div>
         </section>
 
         <!-- E. Monthly Ramp History -->
@@ -367,35 +391,36 @@
           </div>
         </section>
 
-        <!-- F. Data Confidence & Next Action -->
-        <section class="ex-section" aria-label="Data confidence and next actions">
-          <div class="ex-section-hd">
-            <div>
-              <h2>Data confidence and next action</h2>
-            </div>
-          </div>
-          <div class="ex-bottom-grid">
-            <div class="ex-card ex-bottom-card">
-              <h3 class="ex-bottom-card-hd">Methodology &amp; Tracking</h3>
-              <div class="ex-bottom-content">
-                <p>
-                  <strong>Management reporting:</strong> Blended costs equal Google Ads spend divided by legitimate sales-confirmed employer outcomes during the reporting period. The same generous company-wide methodology is used for both the pilot and the historical agency baseline.
-                </p>
-                <p>
-                  <strong>Optimization tracking:</strong> Direct GCLID and phone attribution remain incomplete and are not yet reliable enough for automated bidding decisions.
-                </p>
+        <!-- F. Data confidence (collapsed — methodology reference) -->
+        <section class="ex-section ex-section-confidence" aria-label="Data confidence and next actions">
+          <details class="ex-confidence-details">
+            <summary class="ex-confidence-summary">
+              <span>Data confidence and next action</span>
+              <span class="ex-confidence-hint">Methodology · optional</span>
+            </summary>
+            <div class="ex-bottom-grid">
+              <div class="ex-card ex-bottom-card">
+                <h3 class="ex-bottom-card-hd">Methodology &amp; Tracking</h3>
+                <div class="ex-bottom-content">
+                  <p>
+                    <strong>Management reporting:</strong> Blended costs = Ads spend ÷ sales-confirmed employer outcomes. Same method for pilot and agency baseline.
+                  </p>
+                  <p>
+                    <strong>Optimization tracking:</strong> GCLID and phone attribution are still incomplete for automated bidding.
+                  </p>
+                </div>
+              </div>
+              <div class="ex-card ex-bottom-card">
+                <h3 class="ex-bottom-card-hd">Next Actions</h3>
+                <div class="ex-bottom-content">
+                  <ol class="ex-action-list">
+                    <li><strong>Operations:</strong> reconcile recruiting stage transitions with sales intake.</li>
+                    <li><strong>Technical:</strong> pass GCLID, campaign, and phone outcomes into Zoho.</li>
+                  </ol>
+                </div>
               </div>
             </div>
-            <div class="ex-card ex-bottom-card">
-              <h3 class="ex-bottom-card-hd">Next Actions</h3>
-              <div class="ex-bottom-content">
-                <ol class="ex-action-list">
-                  <li><strong>Operations:</strong> reconcile ongoing recruiting stage transitions with sales intake across active job orders.</li>
-                  <li><strong>Technical:</strong> pass GCLID, campaign and usable phone-call outcomes into Zoho.</li>
-                </ol>
-              </div>
-            </div>
-          </div>
+          </details>
         </section>
 
         <!-- Footer -->

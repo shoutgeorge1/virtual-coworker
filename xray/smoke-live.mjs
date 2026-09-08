@@ -71,6 +71,38 @@ const jsonEndpoints = [
   "/data/zoho-field-map-proposal.json",
 ];
 
+/** Hard stop: month tabs must ship. A tabless deploy wiped September before. */
+async function assertExecutiveMonthTabs(baseUrl) {
+  const js = await get(baseUrl + "/executive.js");
+  const html = await get(baseUrl + "/executive");
+  const snap = await get(baseUrl + "/data/executive-snapshot.json");
+  const problems = [];
+  if (!js.ok) problems.push(`executive.js HTTP ${js.status}`);
+  else {
+    if (!/renderMonthTabs/.test(js.text)) problems.push("executive.js missing renderMonthTabs");
+    if (!/ex-month-tab/.test(js.text)) problems.push("executive.js missing ex-month-tab");
+  }
+  if (!html.ok) problems.push(`executive HTML HTTP ${html.status}`);
+  else if (!/ex-month-tabs/.test(html.text)) problems.push("executive HTML missing ex-month-tabs");
+  if (snap.ok) {
+    try {
+      const d = JSON.parse(snap.text);
+      const months = (d.monthly_history || []).map((m) => m && m.month);
+      if (!months.includes("2026-09")) problems.push("monthly_history missing 2026-09");
+      const sep = (d.monthly_history || []).find((m) => m && m.month === "2026-09");
+      if (sep && sep.status !== "active_mtd") problems.push("2026-09 not active_mtd");
+    } catch (e) {
+      problems.push(`snapshot parse: ${e.message}`);
+    }
+  }
+  if (problems.length) {
+    console.error(`FAIL month-tabs guard: ${problems.join("; ")}`);
+    return 1;
+  }
+  console.log("OK month-tabs guard (August/September tabs + 2026-09 history)");
+  return 0;
+}
+
 async function get(url) {
   const r = await fetch(url, { cache: "no-store", redirect: "follow" });
   const text = await r.text();
@@ -78,6 +110,7 @@ async function get(url) {
 }
 
 let failed = 0;
+failed += await assertExecutiveMonthTabs(base);
 
 for (const ep of jsonEndpoints) {
   const { ok, status, text } = await get(base + ep);

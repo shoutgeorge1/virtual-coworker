@@ -19,6 +19,7 @@
     archiveW1: null,
     agency: null,
     activeMobileMarket: "US",
+    selectedMonthKey: null,
   };
 
   function $(sel) {
@@ -72,6 +73,15 @@
     return Number(v).toFixed(1) + "%";
   }
 
+  function formatSessionDuration(sec) {
+    if (sec == null || Number.isNaN(Number(sec))) return "—";
+    var s = Math.max(0, Math.round(Number(sec)));
+    if (s < 60) return s + "s";
+    var m = Math.floor(s / 60);
+    var r = s % 60;
+    return m + "m " + (r < 10 ? "0" : "") + r + "s";
+  }
+
   function asOfDate() {
     var fresh = ((STATE.snapshot || {}).freshness || {});
     return fresh.google_ads_through || ((STATE.snapshot || {}).generated_at_utc || "").slice(0, 10) || "2026-09-03";
@@ -101,6 +111,33 @@
     return ((STATE.snapshot || {}).monthly_history || []).slice();
   }
 
+  function ensureSelectedMonth() {
+    var hist = monthlyHistory();
+    if (!hist.length) {
+      STATE.selectedMonthKey = asOfDate().slice(0, 7);
+      return;
+    }
+    var keys = hist.map(function (h) { return h.month; });
+    if (STATE.selectedMonthKey && keys.indexOf(STATE.selectedMonthKey) >= 0) return;
+    var active = null;
+    for (var i = hist.length - 1; i >= 0; i--) {
+      if (hist[i] && hist[i].status === "active_mtd") {
+        active = hist[i];
+        break;
+      }
+    }
+    STATE.selectedMonthKey = (active && active.month) || hist[hist.length - 1].month;
+  }
+
+  function selectedMonthRecord() {
+    ensureSelectedMonth();
+    var hist = monthlyHistory();
+    for (var i = 0; i < hist.length; i++) {
+      if (hist[i] && hist[i].month === STATE.selectedMonthKey) return hist[i];
+    }
+    return activeMonthRecord();
+  }
+
   function activeMonthRecord() {
     var hist = monthlyHistory();
     for (var i = hist.length - 1; i >= 0; i--) {
@@ -126,12 +163,13 @@
   }
 
   function reportingPeriod() {
-    var rec = activeMonthRecord();
+    var rec = selectedMonthRecord();
     return {
       start: rec.period_start || (asOfDate().slice(0, 8) + "01"),
       end: rec.period_end || asOfDate(),
       label: rec.label || (monthName((rec.period_start || asOfDate()).slice(0, 7)) + " MTD"),
       monthKey: rec.month || (asOfDate().slice(0, 7)),
+      status: rec.status || "active_mtd",
     };
   }
 
@@ -199,7 +237,7 @@
     return Number.isFinite(n) ? n : null;
   }
 
-  /* —— Market Data: August closed is the scoreboard baseline —— */
+  /* —— Market Data: selected month drives the scoreboard —— */
 
   function buildMarketFromRecord(market, rec, fallbackAdsStart, fallbackAdsEnd) {
     var cur = market === "AU" ? "AUD" : "USD";
@@ -245,6 +283,9 @@
       periodStart: start,
       periodEnd: end,
       status: (rec && rec.status) || "active_mtd",
+      adsConversions: m.ads_conversions != null ? Number(m.ads_conversions) : null,
+      salesNote: m.sales_note || null,
+      operatorUiNote: (rec && rec.operator_ui_note) || null,
       agPeriodEquivSpend: agPeriodEquivSpend,
       agCpe: Number(agBlock.cost_per_legitimate_employer_enquiry || (market === "US" ? 816.31 : 615.82)),
       agCpd: Number(agBlock.cost_per_discovery || (market === "US" ? 1285.25 : 812.35)),
@@ -257,21 +298,19 @@
   }
 
   function buildMarketData(market) {
-    // Scorecards always prefer the last closed month (August) so Pending MTD
-    // never replaces confirmed pilot economics.
-    var closed = closedMonthRecord();
-    var active = activeMonthRecord();
+    var rec = selectedMonthRecord();
     var period = reportingPeriod();
-    if (closed) {
-      return buildMarketFromRecord(market, closed, closed.period_start, closed.period_end);
-    }
-    return buildMarketFromRecord(market, active, period.start, period.end);
+    return buildMarketFromRecord(market, rec, period.start, period.end);
   }
 
   function buildMtdMarketData(market) {
     var active = activeMonthRecord();
-    var period = reportingPeriod();
-    return buildMarketFromRecord(market, active, period.start, period.end);
+    return buildMarketFromRecord(
+      market,
+      active,
+      active.period_start || (asOfDate().slice(0, 8) + "01"),
+      active.period_end || asOfDate()
+    );
   }
 
   function buildClosedMarketData(market) {
@@ -327,74 +366,63 @@
     var snap = STATE.snapshot || {};
     var fresh = snap.freshness || {};
     var period = reportingPeriod();
+    var rec = selectedMonthRecord();
     var adsThru = fresh.google_ads_through || asOfDate() || period.end;
-    var zohoRefreshed = (fresh.zoho_refreshed_at_utc || "").slice(0, 16).replace("T", " ") || "—";
     var usConfirmed = fresh.us_sales_confirmed_through || "—";
     var auConfirmed = fresh.au_sales_confirmed_through || "—";
-    var generatedUtc = (fresh.dashboard_generated_at_utc || snap.generated_at_utc || "").slice(0, 16).replace("T", " ");
     var status = fresh.status || "Current";
 
     var adsStr = fmtShortDate(adsThru);
     var usStr = fmtShortDate(usConfirmed);
     var auStr = fmtShortDate(auConfirmed);
+    var isClosed = period.status === "complete";
+    var periodLabel = isClosed
+      ? (rec.label || period.label) + " closed"
+      : period.label.indexOf("MTD") >= 0
+        ? period.label.replace(" MTD", " · Month to Date")
+        : period.label;
 
     var periodEl = $("#ex-period");
-    if (periodEl) {
-      var closed = closedMonthRecord();
-      periodEl.textContent = closed
-        ? (closed.label || "August 2026") + " closed · " + period.label
-        : period.label.indexOf("MTD") >= 0
-          ? period.label.replace(" MTD", " · Month to Date")
-          : period.label;
-    }
-    var mobPeriod = $("#ex-mob-period-badge");
-    if (mobPeriod) {
-      var closedMob = closedMonthRecord();
-      mobPeriod.textContent = closedMob ? (closedMob.label || "August") + " closed" : period.label;
-    }
+    if (periodEl) periodEl.textContent = periodLabel;
 
-    var volLabel = "August volume";
-    var closedRec = closedMonthRecord();
-    if (closedRec && closedRec.label) {
-      volLabel = closedRec.label.replace(" 2026", "") + " volume";
-    }
+    var mobPeriod = $("#ex-mob-period-badge");
+    if (mobPeriod) mobPeriod.textContent = periodLabel;
+
+    var volLabel = isClosed
+      ? (rec.label || "Month").replace(" 2026", "") + " volume"
+      : "MTD volume";
     ["#ex-us-vol-th", "#ex-au-vol-th"].forEach(function (sel) {
       var th = $(sel);
       if (th) th.textContent = volLabel;
     });
 
+    var usSub = $("#ex-us-section-sub");
+    var auSub = $("#ex-au-section-sub");
+    var subText = (rec.label || period.label) + (isClosed ? " closed" : "") + " vs two-year agency baseline";
+    if (usSub) usSub.textContent = subText;
+    if (auSub) auSub.textContent = subText;
+    var mobSub = $("#ex-mob-section-sub");
+    if (mobSub) mobSub.textContent = periodLabel;
+
     var freshEl = $("#ex-fresh");
     if (freshEl) {
-      var closedFresh = closedMonthRecord();
-      var scoreboardSpan = closedFresh
-        ? (closedFresh.period_start + " → " + closedFresh.period_end + " (August closed)")
-        : (period.start + " → " + period.end);
       freshEl.innerHTML =
-        '<span class="ex-fresh-item"><strong>Scoreboard:</strong> ' +
-        scoreboardSpan +
+        '<span class="ex-fresh-item"><strong>Ads:</strong> ' +
+        adsStr +
         "</span> · " +
-        '<span class="ex-fresh-item"><strong>Open MTD:</strong> ' +
+        '<span class="ex-fresh-item"><strong>US sales:</strong> ' +
+        usStr +
+        "</span> · " +
+        '<span class="ex-fresh-item"><strong>AU sales:</strong> ' +
+        auStr +
+        "</span> · " +
+        '<span class="ex-fresh-item">' +
         period.start +
         " → " +
         period.end +
         "</span> · " +
-        '<span class="ex-fresh-item"><strong>Google Ads through:</strong> ' +
-        adsStr +
-        ' <span class="text-muted">(prev complete day)</span></span> · ' +
-        '<span class="ex-fresh-item"><strong>Zoho refreshed:</strong> ' +
-        zohoRefreshed +
-        " UTC</span> · " +
-        '<span class="ex-fresh-item"><strong>US sales confirmed:</strong> ' +
-        usStr +
-        " (Cheyenne)</span> · " +
-        '<span class="ex-fresh-item"><strong>AU sales confirmed:</strong> ' +
-        auStr +
-        " (Holly)</span> · " +
-        '<span class="ex-fresh-item"><strong>Generated:</strong> ' +
-        generatedUtc +
-        " UTC</span> · " +
         '<span class="ex-fresh-status ' +
-        (status === "Current" ? "ok" : status === "Awaiting sales update" ? "warn" : "err") +
+        (status.indexOf("Current") === 0 || status.indexOf("Ads current") === 0 ? "ok" : status.indexOf("Pending") >= 0 || status.indexOf("Awaiting") >= 0 ? "warn" : "err") +
         '">' +
         status +
         "</span>";
@@ -402,10 +430,9 @@
 
     var mobFreshEl = $("#ex-mob-fresh");
     if (mobFreshEl) {
-      var closedFresh = closedMonthRecord();
       mobFreshEl.textContent =
-        (closedFresh ? (closedFresh.label || "August") + " closed · " : "") +
-        "Ads through " +
+        periodLabel +
+        " · Ads through " +
         adsStr +
         " · US sales " +
         usStr +
@@ -416,7 +443,44 @@
     }
   }
 
-  /* —— Render: Above-the-fold summary (scannable, August-first) —— */
+  function renderMonthTabs() {
+    ensureSelectedMonth();
+    var hist = monthlyHistory();
+    function paint(containerId) {
+      var el = $(containerId);
+      if (!el) return;
+      el.innerHTML = hist
+        .map(function (rec) {
+          var on = rec.month === STATE.selectedMonthKey;
+          var label =
+            rec.status === "complete"
+              ? (rec.label || rec.month) + " closed"
+              : rec.label || rec.month;
+          return (
+            '<button type="button" class="ex-month-tab' +
+            (on ? " on" : "") +
+            '" role="tab" aria-selected="' +
+            (on ? "true" : "false") +
+            '" data-month="' +
+            rec.month +
+            '">' +
+            label +
+            "</button>"
+          );
+        })
+        .join("");
+      Array.prototype.forEach.call(el.querySelectorAll("[data-month]"), function (btn) {
+        btn.addEventListener("click", function () {
+          STATE.selectedMonthKey = btn.getAttribute("data-month");
+          renderAll();
+        });
+      });
+    }
+    paint("#ex-month-tabs");
+    paint("#ex-mob-month-tabs");
+  }
+
+  /* —— Render: Above-the-fold summary for the selected month —— */
 
   function marketSummaryHtml(data) {
     if (!data) return "—";
@@ -424,39 +488,59 @@
     var pace = data.pacePct != null ? data.pacePct + "%" : "—";
     var cpe = data.cpe && data.cpe.value != null ? formatMoney2(data.cpe.value, data.currency) : "—";
     var cpd = data.cpd && data.cpd.value != null ? formatMoney2(data.cpd.value, data.currency) : "—";
+    var pill =
+      data.status === "complete"
+        ? '<span class="ex-pill ok ex-pill-sm">Closed</span>'
+        : '<span class="ex-pill ok ex-pill-sm">Active · MTD</span>';
     return (
       '<div class="ex-summary-mkt-name">' +
       (data.market === "US" ? "United States · USD" : "Australia · AUD") +
-      ' <span class="ex-pill ok ex-pill-sm">Closed</span></div>' +
+      " " +
+      pill +
+      "</div>" +
       '<div class="ex-summary-mkt-spend">' +
       formatMoney(data.spend, data.currency) +
       ' spend · <strong>' +
       pace +
       "</strong> of agency-equivalent pace</div>" +
       '<div class="ex-summary-mkt-funnel">' +
-      (f.enquiries != null ? formatNum(f.enquiries) : "—") +
+      (f.enquiries != null ? formatNum(f.enquiries) : "Pending") +
       " enquiries → " +
-      (f.discoveries != null ? formatNum(f.discoveries) : "—") +
+      (f.discoveries != null ? formatNum(f.discoveries) : "Pending") +
       " calls → " +
-      (f.jobOrders != null ? formatNum(f.jobOrders) + "*" : "—") +
+      (f.jobOrders != null ? formatNum(f.jobOrders) + "*" : "Pending") +
       " job orders → " +
-      (f.placements != null ? formatNum(f.placements) + "*" : "—") +
+      (f.placements != null ? formatNum(f.placements) + "*" : "Pending") +
       " placements</div>" +
       '<div class="ex-summary-mkt-costs">Cost/enquiry ' +
       cpe +
       " · Cost/call " +
       cpd +
+      (data.adsConversions != null
+        ? " · Ads conversions " + formatNum(data.adsConversions)
+        : "") +
       "</div>"
     );
   }
 
   function renderExecutiveSummary(us, au) {
+    var closedUs = buildClosedMarketData("US");
+    var closedAu = buildClosedMarketData("AU");
     var mtdUs = buildMtdMarketData("US");
     var mtdAu = buildMtdMarketData("AU");
     var fresh = ((STATE.snapshot || {}).freshness || {});
     var usConfirmed = fresh.us_sales_confirmed_through || "—";
     var auConfirmed = fresh.au_sales_confirmed_through || "—";
     var period = reportingPeriod();
+    var rec = selectedMonthRecord();
+    var isClosed = period.status === "complete";
+
+    var labelEl = $("#ex-summary-label");
+    if (labelEl) {
+      labelEl.textContent = isClosed
+        ? "Pilot baseline · " + (rec.label || "Closed month")
+        : "Current month · " + (rec.label || "MTD");
+    }
 
     var usBox = $("#ex-summary-us");
     var auBox = $("#ex-summary-au");
@@ -465,121 +549,145 @@
 
     var usPace = us.pacePct != null ? us.pacePct + "%" : "—";
     var auPace = au.pacePct != null ? au.pacePct + "%" : "—";
+    var closedUsPace = closedUs && closedUs.pacePct != null ? closedUs.pacePct + "%" : "—";
+    var closedAuPace = closedAu && closedAu.pacePct != null ? closedAu.pacePct + "%" : "—";
     var mtdUsPace = mtdUs.pacePct != null ? mtdUs.pacePct + "%" : "—";
     var mtdAuPace = mtdAu.pacePct != null ? mtdAu.pacePct + "%" : "—";
 
-    var sepEl = $("#ex-summary-september");
-    if (sepEl) {
-      sepEl.innerHTML =
-        "<strong>September through " +
-        fmtShortDate(period.end) +
-        ":</strong> US spend " +
-        formatMoney(mtdUs.spend, "USD") +
-        " (" +
-        mtdUsPace +
-        " early MTD pace) · AU spend " +
-        formatMoney(mtdAu.spend, "AUD") +
-        " (" +
-        mtdAuPace +
-        ' early MTD pace). Sales: <span class="ex-status-tag pending">Awaiting sales update</span>' +
-        " (US confirmed " +
-        fmtShortDate(usConfirmed) +
-        ", AU " +
-        fmtShortDate(auConfirmed) +
-        ").";
+    var ctxEl = $("#ex-summary-september");
+    if (ctxEl) {
+      if (isClosed) {
+        ctxEl.innerHTML =
+          "<strong>Open MTD (" +
+          (mtdUs.periodLabel || "September") +
+          " through " +
+          fmtShortDate(mtdUs.periodEnd) +
+          "):</strong> US " +
+          formatMoney(mtdUs.spend, "USD") +
+          " (" +
+          mtdUsPace +
+          ") · AU " +
+          formatMoney(mtdAu.spend, "AUD") +
+          " (" +
+          mtdAuPace +
+          '). Sales: <span class="ex-status-tag pending">Pending</span>' +
+          " (US " +
+          fmtShortDate(usConfirmed) +
+          ", AU " +
+          fmtShortDate(auConfirmed) +
+          ").";
+      } else {
+        var opNote = rec.operator_ui_note || "";
+        ctxEl.innerHTML =
+          "<strong>" +
+          (rec.label || "Current MTD") +
+          " through " +
+          fmtShortDate(period.end) +
+          ":</strong> US " +
+          formatMoney(us.spend, "USD") +
+          (us.adsConversions != null ? " · " + formatNum(us.adsConversions) + " Ads conv." : "") +
+          " (" +
+          usPace +
+          ") · AU " +
+          formatMoney(au.spend, "AUD") +
+          (au.adsConversions != null ? " · " + formatNum(au.adsConversions) + " Ads conv." : "") +
+          " (" +
+          auPace +
+          '). Sales: <span class="ex-status-tag pending">Pending</span>' +
+          " until a clean September label." +
+          (opNote ? '<div class="ex-summary-meta" style="margin-top:0.35rem">' + opNote + "</div>" : "");
+      }
     }
 
     var decEl = $("#ex-summary-decision");
     if (decEl) {
       decEl.textContent =
-        "Hold current budgets. August closed at ~" +
-        usPace +
+        "Hold budgets. August baseline ~" +
+        closedUsPace +
         " US / ~" +
-        auPace +
-        " AU of agency-equivalent pace — that is the validated pilot baseline vs the two-year agency run. Early September MTD pace is a short-window burn rate (only " +
-        (mtdUs.daysInPeriod || 3) +
-        " days), not a replacement for August. Daily budgets for context: US $350/day · AU A$215/day.";
+        closedAuPace +
+        " AU of agency pace. September MTD is a short-window burn rate (" +
+        (mtdUs.daysInPeriod || daysInclusive(mtdUs.periodStart || period.start, mtdUs.periodEnd || period.end)) +
+        " days), not a replacement for August. Daily: US $350 · AU A$215.";
     }
 
     var footnote = $("#ex-summary-footnote");
     if (footnote) {
       footnote.textContent =
-        "*Blended sales-confirmed company outcomes; not all Google Ads-attributed. Management reporting uses blended company outcomes. Optimization needs GCLID + usable phone attribution.";
+        "* Job orders and placements are blended CRM outcomes (paid + organic + pipeline). Ads conversions are Google Ads tags — not the same as sales-confirmed enquiries.";
     }
 
     var mobSnap = $("#ex-mob-snapshot-text");
     if (mobSnap) {
       mobSnap.textContent =
-        "August closed at ~" +
-        usPace +
-        " US / ~" +
-        auPace +
-        " AU of agency pace. US " +
+        (isClosed ? "August closed" : "September MTD") +
+        " · US " +
         formatMoney(us.spend, "USD") +
-        " → " +
-        formatNum(us.funnel.enquiries) +
-        " enquiries → " +
-        formatNum(us.funnel.discoveries) +
-        " calls. AU " +
+        " · AU " +
         formatMoney(au.spend, "AUD") +
-        " → " +
-        formatNum(au.funnel.enquiries) +
-        " enquiries → " +
-        formatNum(au.funnel.discoveries) +
-        " calls. September sales still awaiting labeled update.";
+        " · pace US " +
+        usPace +
+        " / AU " +
+        auPace +
+        ". " +
+        (isClosed
+          ? "Use the September tab for current-month spend and pending sales."
+          : "Sales outcomes Pending until a clean September label arrives.");
     }
 
     var mobPace = $("#ex-mob-snap-pace");
     if (mobPace) mobPace.textContent = "US " + usPace + " · AU " + auPace;
     var mobPaceLbl = $("#ex-mob-snap-pace-lbl");
-    if (mobPaceLbl) mobPaceLbl.textContent = "Aug agency pace";
+    if (mobPaceLbl) mobPaceLbl.textContent = isClosed ? "Aug agency pace" : "Sept MTD pace";
     var mobPaceSub = $("#ex-mob-snap-pace-sub");
-    if (mobPaceSub) mobPaceSub.textContent = "Closed month baseline";
+    if (mobPaceSub) mobPaceSub.textContent = isClosed ? "Closed month baseline" : "Early-month burn rate";
 
+    var baseline = isClosed ? us : closedUs;
     var cpePct =
-      us.cpe.value != null && us.agCpe
-        ? Math.round(((us.agCpe - us.cpe.value) / us.agCpe) * 100)
+      baseline && baseline.cpe && baseline.cpe.value != null && baseline.agCpe
+        ? Math.round(((baseline.agCpe - baseline.cpe.value) / baseline.agCpe) * 100)
         : null;
     var cpdPct =
-      us.cpd.value != null && us.agCpd
-        ? Math.round(((us.agCpd - us.cpd.value) / us.agCpd) * 100)
+      baseline && baseline.cpd && baseline.cpd.value != null && baseline.agCpd
+        ? Math.round(((baseline.agCpd - baseline.cpd.value) / baseline.agCpd) * 100)
         : null;
     var mobCpe = $("#ex-mob-snap-cpe");
     if (mobCpe) mobCpe.textContent = cpePct != null ? "-" + cpePct + "%" : "—";
     var mobCpeSub = $("#ex-mob-snap-cpe-sub");
     if (mobCpeSub) {
       mobCpeSub.textContent =
-        us.cpe.value != null ? "US " + formatMoney2(us.cpe.value, "USD") + " · Aug closed" : "—";
+        baseline && baseline.cpe && baseline.cpe.value != null
+          ? "US " + formatMoney2(baseline.cpe.value, "USD") + " · Aug closed"
+          : "Aug closed pending";
     }
     var mobCpd = $("#ex-mob-snap-cpd");
     if (mobCpd) mobCpd.textContent = cpdPct != null ? "-" + cpdPct + "%" : "—";
     var mobCpdSub = $("#ex-mob-snap-cpd-sub");
     if (mobCpdSub) {
       mobCpdSub.textContent =
-        us.cpd.value != null ? "US " + formatMoney2(us.cpd.value, "USD") + " · Aug closed" : "—";
+        baseline && baseline.cpd && baseline.cpd.value != null
+          ? "US " + formatMoney2(baseline.cpd.value, "USD") + " · Aug closed"
+          : "Aug closed pending";
     }
 
     var working = $("#ex-mob-working-text");
     if (working) {
-      working.textContent =
-        "August closed with confirmed funnel outcomes at lower blended unit costs than the two-year agency baseline, at about " +
-        usPace +
-        " (US) / " +
-        auPace +
-        " (AU) of agency-equivalent pace.";
+      working.textContent = isClosed
+        ? "August closed with confirmed funnel outcomes at lower blended unit costs than the two-year agency baseline, at about " +
+          closedUsPace +
+          " (US) / " +
+          closedAuPace +
+          " (AU) of agency-equivalent pace."
+        : "September MTD spend is live through the previous complete day. Sales enquiries, discovery calls, job orders, and placements stay Pending until labeled — same scorecard layout as August.";
     }
     var uncertain = $("#ex-mob-uncertain-text");
     if (uncertain) {
       uncertain.textContent =
-        "September sales outcomes await the next Cheyenne / Holly labeled update. US confirmed through " +
+        "Cheyenne’s latest US label (Aug 31–Sep 4: 18 enquiries / 8 calls) spans the month boundary, so it is not written into September MTD. Holly AU September MTD awaits update. US sales confirmed through " +
         fmtShortDate(usConfirmed) +
         "; AU through " +
         fmtShortDate(auConfirmed) +
-        ". Early MTD pace (US " +
-        mtdUsPace +
-        " / AU " +
-        mtdAuPace +
-        ") is a short-window burn rate — not a replacement for the August baseline.";
+        ".";
     }
     var next = $("#ex-mob-next-text");
     if (next) {
@@ -714,6 +822,8 @@
     tbody.innerHTML = rows.join("");
 
     if (trafficEl && data.ads) {
+      var adsConv =
+        data.adsConversions != null ? " · Ads conversions " + formatNum(data.adsConversions) : "";
       trafficEl.textContent =
         "Supporting traffic efficiency: " +
         formatMoney2(data.ads.avgCpc, cur) +
@@ -723,8 +833,343 @@
         formatPct1(data.ads.ctrPct) +
         " CTR vs " +
         formatPct1(data.agCtr) +
-        " agency";
+        " agency" +
+        adsConv;
     }
+
+    var noteId = market === "US" ? "#ex-us-month-note" : "#ex-au-month-note";
+    var noteEl = $(noteId);
+    if (noteEl) {
+      noteEl.textContent = data.salesNote || "";
+      noteEl.style.display = data.salesNote ? "block" : "none";
+    }
+  }
+
+  function renderGa4Health() {
+    var el = $("#ex-ga4-health");
+    if (!el) return;
+    var ga4Root = ((STATE.snapshot || {}).ga4) || {};
+    var monthKey = STATE.selectedMonthKey || ga4Root.current_month_key || null;
+    var byMonth = ga4Root.by_month || {};
+    var monthSlice = (monthKey && byMonth[monthKey]) || null;
+    var priorKey = ga4Root.prior_month_key || (ga4Root.window_prior || "").slice(0, 7);
+    var usePrior =
+      !monthSlice &&
+      monthKey &&
+      priorKey &&
+      monthKey === priorKey &&
+      !!ga4Root.totals_prior_7_days;
+
+    var ga4 = monthSlice || ga4Root;
+    var au = (monthSlice && monthSlice.au) || ga4Root.au || {};
+    var usTotals = usePrior
+      ? ga4Root.totals_prior_7_days
+      : ga4.totals_last_7_days || null;
+    var auTotals = usePrior
+      ? au.totals_prior_7_days || null
+      : au.totals_last_7_days || null;
+    var usLandings = usePrior
+      ? ga4Root.top_landing_pages_prior || []
+      : ga4.top_landing_pages;
+    var auLandings = usePrior
+      ? au.top_landing_pages_prior || []
+      : au.top_landing_pages;
+    var usChannels = usePrior ? ga4Root.channels_prior || [] : ga4.channels;
+    var auChannels = usePrior ? au.channels_prior || [] : au.channels;
+    var auPaidFallback = usePrior
+      ? au.paid_search_sessions_prior
+      : au.paid_search_sessions != null
+        ? au.paid_search_sessions
+        : monthSlice && monthSlice.au
+          ? monthSlice.au.paid_search_sessions
+          : null;
+
+    if (!usTotals && !auTotals && !ga4Root.summary_plain && !(ga4Root.au || {}).summary_plain) {
+      el.innerHTML = '<div class="ex-ga4-empty">GA4 snapshot not loaded yet.</div>';
+      return;
+    }
+
+    /** Near-100% engagement often means every session met GA4’s bar (10s / 2 pages /
+     *  key event) — not that every visit was great. Prefer avg time when saturated. */
+    var ENG_SATURATION_PCT = 95;
+
+    function engagementSaturated(t) {
+      if (!t || t.engagement_rate_pct == null) return false;
+      var eng = Number(t.engagement_rate_pct);
+      if (eng >= ENG_SATURATION_PCT) return true;
+      if (
+        t.sessions != null &&
+        t.engaged_sessions != null &&
+        Number(t.sessions) > 0 &&
+        Number(t.engaged_sessions) >= Number(t.sessions)
+      ) {
+        return true;
+      }
+      return false;
+    }
+
+    function paidChannel(channels, fallbackSessions) {
+      var list = channels || [];
+      for (var i = 0; i < list.length; i++) {
+        if (String(list[i].channel || "").toLowerCase().indexOf("paid search") >= 0) {
+          return list[i];
+        }
+      }
+      if (fallbackSessions != null) {
+        return { channel: "Paid Search", sessions: fallbackSessions };
+      }
+      return null;
+    }
+
+    function paidSharePct(paid, totals) {
+      if (!paid || paid.sessions == null || !totals || !totals.sessions) return null;
+      var sess = Number(totals.sessions);
+      if (!(sess > 0)) return null;
+      return (100 * Number(paid.sessions)) / sess;
+    }
+
+    function engagementDisplay(pct, saturated) {
+      if (pct == null || Number.isNaN(Number(pct))) return "—";
+      if (saturated) return "—";
+      return formatPct1(pct);
+    }
+
+    function landingEngagementCell(p, marketSaturated) {
+      if (p == null || p.engagement_rate_pct == null) return "—";
+      if (marketSaturated) return "—";
+      if (Number(p.engagement_rate_pct) >= ENG_SATURATION_PCT) return "—";
+      return formatPct1(p.engagement_rate_pct);
+    }
+
+    /** Paid Stage 1 host (Ads Final URLs + live microsite). US /au / shared. */
+    var GA4_SITE_ORIGIN = "https://www.virtualcoworker.app";
+
+    function escapeGa4Html(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function resolveLandingHref(path) {
+      var raw = String(path || "").trim();
+      if (
+        !raw ||
+        raw === "—" ||
+        raw === "(not set)" ||
+        raw === "untagged" ||
+        raw === "home"
+      ) {
+        return null;
+      }
+      if (/^https?:\/\//i.test(raw)) return raw;
+      if (raw.charAt(0) !== "/") raw = "/" + raw;
+      return GA4_SITE_ORIGIN + raw;
+    }
+
+    function landingPathLink(p) {
+      var label = (p && (p.path_display || p.path)) || "—";
+      var href = resolveLandingHref((p && p.path) || (p && p.path_display));
+      if (!href) return escapeGa4Html(label);
+      return (
+        '<a class="ex-ga4-lp-link" href="' +
+        escapeGa4Html(href) +
+        '" target="_blank" rel="noopener noreferrer" title="Open ' +
+        escapeGa4Html(href) +
+        '">' +
+        escapeGa4Html(label) +
+        "</a>"
+      );
+    }
+
+    function topLandings(pages) {
+      return (pages || [])
+        .filter(function (p) {
+          return p && Number(p.sessions) > 0 && String(p.path || "") !== "(not set)";
+        })
+        .slice(0, 5);
+    }
+
+    function landingsTable(pages, marketSaturated) {
+      var list = topLandings(pages);
+      if (!list.length) {
+        return '<p class="ex-ga4-empty-inline">No landing pages in this window.</p>';
+      }
+      return (
+        '<table class="ex-ga4-lp-table">' +
+        "<thead><tr>" +
+        "<th scope=\"col\">Page people opened</th>" +
+        "<th scope=\"col\" class=\"num\">Visits</th>" +
+        "<th scope=\"col\" class=\"num\">Avg time</th>" +
+        "<th scope=\"col\" class=\"num\">Engaged</th>" +
+        "</tr></thead><tbody>" +
+        list
+          .map(function (p) {
+            return (
+              "<tr>" +
+              '<td class="path">' +
+              landingPathLink(p) +
+              "</td>" +
+              '<td class="num">' +
+              formatNum(p.sessions) +
+              "</td>" +
+              '<td class="num">' +
+              (p.avg_session_seconds != null
+                ? formatSessionDuration(p.avg_session_seconds)
+                : "—") +
+              "</td>" +
+              '<td class="num">' +
+              landingEngagementCell(p, marketSaturated) +
+              "</td>" +
+              "</tr>"
+            );
+          })
+          .join("") +
+        "</tbody></table>"
+      );
+    }
+
+    function meansLine(opts) {
+      var t = opts.totals || {};
+      var landings = topLandings(opts.landings);
+      var top = landings[0];
+      var share = opts.share;
+      var parts = [];
+      if (top && t.sessions > 0) {
+        var topShare = Math.round((100 * Number(top.sessions)) / Number(t.sessions));
+        var pathHtml = landingPathLink(top);
+        parts.push(
+          topShare >= 50
+            ? "Most traffic still opens <strong>" + pathHtml + "</strong> (" + topShare + "%)."
+            : "Top opener is <strong>" + pathHtml + "</strong> (" + topShare + "%)."
+        );
+      }
+      if (share != null && share >= 70) {
+        parts.push("Almost all of it is Google Ads.");
+      } else if (share != null) {
+        parts.push(formatPct1(share) + " from Google Ads.");
+      }
+      if (opts.engagementSaturated) {
+        parts.push(
+          "Engagement rate is saturated this window (almost every session met GA4’s bar) — compare pages by avg time instead."
+        );
+      } else if (t.engagement_rate_pct != null && Number(t.engagement_rate_pct) < 50) {
+        parts.push(
+          formatPct1(t.engagement_rate_pct) +
+            " engaged — check whether ads land on the right page."
+        );
+      } else if (t.avg_session_seconds != null && Number(t.avg_session_seconds) < 30) {
+        parts.push("Visits are short — page may not match what the ad promised.");
+      }
+      if (!parts.length) return "";
+      return (
+        '<p class="ex-ga4-means"><span class="ex-ga4-means-lbl">What this means</span> ' +
+        parts.join(" ") +
+        "</p>"
+      );
+    }
+
+    function kpiCell(val, lbl, hint) {
+      return (
+        '<div class="ex-ga4-stat">' +
+        '<div class="ex-ga4-stat-val">' +
+        val +
+        "</div>" +
+        '<div class="ex-ga4-stat-lbl">' +
+        lbl +
+        "</div>" +
+        (hint ? '<div class="ex-ga4-stat-hint">' + hint + "</div>" : "") +
+        "</div>"
+      );
+    }
+
+    function marketCard(opts) {
+      var t = opts.totals || {};
+      var paid = opts.paid;
+      var share = paidSharePct(paid, t);
+      var engSaturated = engagementSaturated(t);
+
+      return (
+        '<article class="ex-ga4-mkt">' +
+        '<div class="ex-ga4-mkt-hd">' +
+        '<h3 class="ex-ga4-mkt-title">' +
+        opts.title +
+        "</h3>" +
+        '<span class="ex-ga4-mkt-sub">' +
+        opts.badge +
+        "</span>" +
+        "</div>" +
+        '<div class="ex-ga4-stats ex-ga4-stats-5" role="group" aria-label="' +
+        opts.title +
+        ' traffic KPIs">' +
+        kpiCell(formatNum(t.sessions), "Sessions", "Visits that opened a page") +
+        kpiCell(formatNum(t.users), "Users", "Distinct people") +
+        kpiCell(
+          formatSessionDuration(t.avg_session_seconds),
+          "Avg time",
+          "How long a typical visit lasted"
+        ) +
+        kpiCell(
+          engagementDisplay(t.engagement_rate_pct, engSaturated),
+          "Engagement rate",
+          engSaturated
+            ? "Saturated this window — almost every session met GA4’s bar; use avg time"
+            : "GA4: 10s+ stay, 2+ pages, or a key event"
+        ) +
+        kpiCell(
+          share != null ? formatPct1(share) : "—",
+          "Paid share",
+          "How much of this traffic came from Google Ads"
+        ) +
+        "</div>" +
+        meansLine({
+          totals: t,
+          landings: opts.landings,
+          share: share,
+          engagementSaturated: engSaturated,
+        }) +
+        '<div class="ex-ga4-block">' +
+        '<div class="ex-ga4-block-lbl">Where they landed</div>' +
+        landingsTable(opts.landings, engSaturated) +
+        "</div>" +
+        "</article>"
+      );
+    }
+
+    var usWindow =
+      (monthSlice && monthSlice.window) ||
+      (usePrior ? ga4Root.window_prior : ga4Root.window);
+    var auWindow = (au && au.window) || usWindow;
+    var windowLabel =
+      auWindow && usWindow && auWindow !== usWindow
+        ? "US " + usWindow + " · AU " + auWindow
+        : usWindow || auWindow || "Current GA4 pull";
+
+    var usCard = marketCard({
+      title: "United States",
+      badge: "US site only",
+      totals: usTotals || {},
+      landings: usLandings,
+      paid: paidChannel(usChannels),
+    });
+    var auCard = marketCard({
+      title: "Australia",
+      badge: "AU site only",
+      totals: auTotals || {},
+      landings: auLandings,
+      paid: paidChannel(auChannels, auPaidFallback),
+    });
+
+    el.innerHTML =
+      '<p class="ex-ga4-window"><strong>' +
+      windowLabel +
+      "</strong> · website tags (GA4) · not Ad CTR</p>" +
+      '<div class="ex-ga4-markets">' +
+      usCard +
+      auCard +
+      "</div>" +
+      '<p class="ex-ga4-meta">Same KPIs for US and AU so you can compare markets. Engagement rate is the GA4 metric (10s+ stay, 2+ pages, or a key event). Use avg time when engagement is saturated. Do not blend US + AU.</p>';
   }
 
   function renderMonthlyRamp() {
@@ -831,7 +1276,10 @@
 
     var statusEl = $("#ex-mob-mkt-status");
     if (statusEl) {
-      statusEl.textContent = mktData.status === "complete" ? "August closed" : "Active Search Pilot";
+      statusEl.textContent =
+        mktData.status === "complete"
+          ? (mktData.periodLabel || "Month") + " closed"
+          : (mktData.periodLabel || "Active") + " · MTD";
     }
 
     var metricGrid = $("#ex-mob-metric-cards");
@@ -1096,13 +1544,16 @@
   }
 
   function renderAll() {
+    ensureSelectedMonth();
     var us = buildMarketData("US");
     var au = buildMarketData("AU");
 
+    renderMonthTabs();
     renderHeader();
     renderExecutiveSummary(us, au);
     renderScorecardTable("US", us, "#ex-us-tbody", "#ex-us-traffic");
     renderScorecardTable("AU", au, "#ex-au-tbody", "#ex-au-traffic");
+    renderGa4Health();
     renderMonthlyRamp();
     renderMobileView(us, au);
     setupMobileEvents(us, au);
