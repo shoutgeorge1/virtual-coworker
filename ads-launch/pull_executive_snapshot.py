@@ -1823,18 +1823,62 @@ def _market_month_block(
     return block
 
 
+_SALES_OUTCOME_FIELDS = (
+    "enquiries",
+    "sales_calls_completed",
+    "job_orders_total",
+    "placements",
+    "sales_note",
+    "sales_window_label",
+    "sales_window_spans_prior_month",
+)
+
+
+def _recompute_month_costs(block: dict[str, Any]) -> None:
+    """Keep blended costs aligned with current spend + preserved sales outcomes."""
+    spend = float(block.get("spend") or 0)
+    enq = block.get("enquiries")
+    calls = block.get("sales_calls_completed")
+    jo = block.get("job_orders_total")
+    pl = block.get("placements")
+    block["cost_per_enquiry"] = round(spend / enq, 2) if spend > 0 and enq else None
+    block["cost_per_discovery"] = round(spend / calls, 2) if spend > 0 and calls else None
+    block["cost_per_job_order"] = round(spend / jo, 2) if spend > 0 and jo else None
+    block["cost_per_placement"] = round(spend / pl, 2) if spend > 0 and pl else None
+
+
+def _preserve_labeled_sales(
+    block: dict[str, Any],
+    prev_block: dict[str, Any] | None,
+) -> None:
+    """Daily Ads refresh must not wipe Cheyenne/Holly labeled month outcomes."""
+    prev = prev_block or {}
+    for field in _SALES_OUTCOME_FIELDS:
+        if block.get(field) is None and prev.get(field) is not None:
+            block[field] = prev[field]
+    _recompute_month_costs(block)
+
+
 def compute_monthly_history(
     performance_us: dict[str, Any] | None,
     performance_au: dict[str, Any] | None,
     sales_us: dict[str, Any] | None,
     sales_au: dict[str, Any] | None,
     as_of_date: str,
+    prev_history: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
-    """Closed months stay frozen; current open month updates as active MTD."""
-    del sales_us, sales_au  # outcomes for closed Aug are locked below; Sep stays pending until labeled
+    """Closed months stay frozen; current open month updates Ads MTD.
+
+    Sales outcomes for the open month are preserved from the prior snapshot when
+    Cheyenne/Holly have already labeled them. Fresh Ads spend/clicks still update.
+    """
+    del sales_us, sales_au  # closed Aug outcomes locked below; open-month labels come from prev_history
     us_by_date = (performance_us or {}).get("by_date_stage1") or (performance_us or {}).get("by_date") or {}
     au_by_date = (performance_au or {}).get("by_date_stage1") or (performance_au or {}).get("by_date") or {}
     as_of = date.fromisoformat(as_of_date[:10])
+    prev_by_month = {
+        str(m.get("month")): m for m in (prev_history or []) if isinstance(m, dict) and m.get("month")
+    }
 
     # August 2026 closed: Ads Aug 1–31 + Cheyenne/Holly labeled outcomes through month end.
     # US: Aug 10–16 (18/9) + Aug 17–23 (13/7) + Aug 24–28 (12/8) + Aug 29–31 (2 enq; calls booked only)
@@ -1884,37 +1928,56 @@ def compute_monthly_history(
         "January February March April May June July August September October November December"
     ).split()
     cur_label = f"{month_names[as_of.month - 1]} {as_of.year} MTD"
+    cur_key = f"{as_of.year:04d}-{as_of.month:02d}"
     us_spend, us_clicks, us_impr = _sum_by_date_range(us_by_date, cur_start, cur_end)
     au_spend, au_clicks, au_impr = _sum_by_date_range(au_by_date, cur_start, cur_end)
-    history.append(
-        {
-            "month": f"{as_of.year:04d}-{as_of.month:02d}",
-            "label": cur_label,
-            "period_start": cur_start,
-            "period_end": cur_end,
-            "status": "active_mtd",
-            "us": _market_month_block(
-                currency="USD",
-                spend=us_spend,
-                clicks=us_clicks,
-                impressions=us_impr,
-                enquiries=None,
-                discoveries=None,
-                job_orders=None,
-                placements=None,
-            ),
-            "au": _market_month_block(
-                currency="AUD",
-                spend=au_spend,
-                clicks=au_clicks,
-                impressions=au_impr,
-                enquiries=None,
-                discoveries=None,
-                job_orders=None,
-                placements=None,
-            ),
-        }
+
+    def _sum_conv(by_date: dict[str, Any], start: str, end: str) -> float:
+        total = 0.0
+        for day, row in (by_date or {}).items():
+            if start <= day <= end:
+                total += float((row or {}).get("conversions") or 0)
+        return total
+
+    us_conv = _sum_conv(us_by_date, cur_start, cur_end)
+    au_conv = _sum_conv(au_by_date, cur_start, cur_end)
+    us_block = _market_month_block(
+        currency="USD",
+        spend=us_spend,
+        clicks=us_clicks,
+        impressions=us_impr,
+        enquiries=None,
+        discoveries=None,
+        job_orders=None,
+        placements=None,
     )
+    au_block = _market_month_block(
+        currency="AUD",
+        spend=au_spend,
+        clicks=au_clicks,
+        impressions=au_impr,
+        enquiries=None,
+        discoveries=None,
+        job_orders=None,
+        placements=None,
+    )
+    us_block["ads_conversions"] = us_conv
+    au_block["ads_conversions"] = au_conv
+    prev_cur = prev_by_month.get(cur_key) or {}
+    _preserve_labeled_sales(us_block, prev_cur.get("us") if isinstance(prev_cur.get("us"), dict) else None)
+    _preserve_labeled_sales(au_block, prev_cur.get("au") if isinstance(prev_cur.get("au"), dict) else None)
+    cur_record: dict[str, Any] = {
+        "month": cur_key,
+        "label": cur_label,
+        "period_start": cur_start,
+        "period_end": cur_end,
+        "status": "active_mtd",
+        "us": us_block,
+        "au": au_block,
+    }
+    if prev_cur.get("operator_ui_note"):
+        cur_record["operator_ui_note"] = prev_cur["operator_ui_note"]
+    history.append(cur_record)
     return history
 
 
@@ -2175,17 +2238,60 @@ def _write_payload(
         prev_through = (prev.get("freshness") or {}).get("google_ads_through")
         ads_through_date = prev_through or US_PULL_END
 
+    prev_fresh = prev.get("freshness") or {}
+    us_sales_through = (
+        prev_fresh.get("us_sales_confirmed_through")
+        or (prev.get("sales_ops_us_now") or {}).get("window_end")
+        or "2026-08-31"
+    )
+    au_sales_through = (
+        prev_fresh.get("au_sales_confirmed_through")
+        or (prev.get("sales_ops_au_now") or {}).get("window_end")
+        or "2026-08-30"
+    )
     freshness = compute_freshness(
         google_ads_through=ads_through_date,
         zoho_refreshed_utc=zoho_refreshed_utc,
-        us_sales_confirmed_through="2026-08-31",
-        au_sales_confirmed_through="2026-08-30",
+        us_sales_confirmed_through=str(us_sales_through)[:10],
+        au_sales_confirmed_through=str(au_sales_through)[:10],
         generated_utc=finished,
         ads_ok=ads_ok,
         zoho_ok=True,
         sales_us_ok=True,
         sales_au_ok=True,
     )
+    # Keep rich Cheyenne/Holly detail text, but never overwrite the allowlisted
+    # freshness.status enum (Current / Awaiting sales update / Refresh failed…).
+    # Past agents wrote free-form status strings like "Ads current · US sales labeled…",
+    # which broke local morning refresh validation and let CI keep shipping.
+    prev_detail = str(prev_fresh.get("status_detail") or "")
+    if prev_detail and (
+        "cheyenne" in prev_detail.lower()
+        or "holly" in prev_detail.lower()
+        or "sales labeled" in prev_detail.lower()
+        or "awaiting" in prev_detail.lower()
+        or "pending" in prev_detail.lower()
+    ):
+        detail = prev_detail
+        if ads_through_date:
+            detail = re.sub(
+                r"Google Ads through\s+\d{4}-\d{2}-\d{2}",
+                f"Google Ads through {ads_through_date}",
+                detail,
+                count=1,
+            )
+        freshness["status_detail"] = detail
+        # If ads are healthy but sales lag the open month, force the allowlisted lag status.
+        if ads_ok and freshness.get("status") == "Current":
+            freshness["status"] = "Awaiting sales update"
+    for side_key in ("sales_us", "sales_au"):
+        prev_src = ((prev_fresh.get("sources") or {}).get(side_key) or {})
+        cur_src = dict((freshness.get("sources") or {}).get(side_key) or {})
+        for k in ("latest_labeled_window", "latest_labeled_note"):
+            if prev_src.get(k) is not None:
+                cur_src[k] = prev_src[k]
+        freshness.setdefault("sources", {})[side_key] = cur_src
+
     payload["sales_ops_us"] = build_sales_ops_us(performance_us, prev.get("sales_ops_us"))
     payload["sales_ops_us_now"] = build_sales_ops_us_now(
         performance_us, prev.get("sales_ops_us_now")
@@ -2201,6 +2307,7 @@ def _write_payload(
         payload.get("sales_ops_us"),
         payload.get("sales_ops_au"),
         ads_through_date,
+        prev_history=prev.get("monthly_history") if isinstance(prev.get("monthly_history"), list) else None,
     )
     executive_verdict = build_executive_verdict(
         performance_us,

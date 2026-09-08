@@ -353,10 +353,22 @@ def validate_page_source_parity(xray_dir: Path | None = None) -> list[str]:
         'id="ex-ramp-au-tbody"',
         'id="ex-mob-metric-cards"',
         'id="ex-mob-agency-box"',
+        'id="ex-month-tabs"',
+        'id="ex-mob-month-tabs"',
     )
     for rid in required_ids:
         if rid not in html:
             errors.append(f"executive.html missing required hook {rid}")
+
+    # Month tabs (August closed / September MTD) must ship with the dashboard.
+    # GitHub daily refresh previously redeployed committed main without these hooks
+    # and wiped the live September tab.
+    if "function renderMonthTabs" not in js and "renderMonthTabs()" not in js:
+        errors.append("executive.js missing renderMonthTabs — month tabs would disappear on deploy")
+    if "monthly_history" not in js:
+        errors.append("executive.js missing monthly_history wiring for month tabs")
+    if "ex-month-tab" not in js:
+        errors.append("executive.js missing ex-month-tab button renderer")
 
     return errors
 
