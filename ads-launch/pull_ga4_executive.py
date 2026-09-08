@@ -26,7 +26,7 @@ import json
 import os
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -41,12 +41,32 @@ MEASUREMENT_ID_AU = "G-7X1K9V2LFE"
 MAX_REPORTS = 5
 # AU extra: overview + landings + channels (no device/events)
 MAX_REPORTS_AU = 3
-# Same face week as Executive Ads (not rolling 7daysAgo).
-GA4_WEEK_START = "2026-08-17"
-GA4_WEEK_END = "2026-08-23"
+
+
+def _previous_complete_day(today: date | None = None) -> date:
+    """GA4/Ads face ends on the previous complete calendar day (reporting latency)."""
+    return (today or datetime.now(timezone.utc).date()) - timedelta(days=1)
+
+
+def _month_bounds(d: date) -> tuple[date, date]:
+    start = d.replace(day=1)
+    if d.month == 12:
+        next_month = date(d.year + 1, 1, 1)
+    else:
+        next_month = date(d.year, d.month + 1, 1)
+    end = next_month - timedelta(days=1)
+    return start, end
+
+
+# Open-month MTD through previous complete day; prior = last full calendar month.
+_AS_OF = _previous_complete_day()
+GA4_WEEK_START = _AS_OF.replace(day=1).isoformat()
+GA4_WEEK_END = _AS_OF.isoformat()
 GA4_WINDOW_LABEL = f"{GA4_WEEK_START} → {GA4_WEEK_END}"
-GA4_PRIOR_START = "2026-08-10"
-GA4_PRIOR_END = "2026-08-16"
+_PRIOR_ANCHOR = _AS_OF.replace(day=1) - timedelta(days=1)
+_PRIOR_START_D, _PRIOR_END_D = _month_bounds(_PRIOR_ANCHOR)
+GA4_PRIOR_START = _PRIOR_START_D.isoformat()
+GA4_PRIOR_END = _PRIOR_END_D.isoformat()
 GA4_PRIOR_LABEL = f"{GA4_PRIOR_START} → {GA4_PRIOR_END}"
 THIS_RANGE = "date_range_0"
 PRIOR_RANGE = "date_range_1"
@@ -64,6 +84,83 @@ def _week_date_ranges(DateRange: Any) -> list:
         DateRange(start_date=GA4_WEEK_START, end_date=GA4_WEEK_END),
         DateRange(start_date=GA4_PRIOR_START, end_date=GA4_PRIOR_END),
     ]
+
+
+CURRENT_MONTH_KEY = GA4_WEEK_START[:7]  # e.g. 2026-09
+PRIOR_MONTH_KEY = GA4_PRIOR_START[:7]  # e.g. 2026-08
+
+
+def _landing_row(
+    path: str, mets: dict[str, Any], land_metrics: list[str] | None = None
+) -> dict[str, Any]:
+    _ = land_metrics  # kept for call-site clarity
+    kind = _path_kind(path)
+    sessions = int(mets.get("sessions") or 0)
+    return {
+        "path": path,
+        "path_display": _nice_path(path),
+        "path_kind": kind,
+        "sessions": sessions,
+        "users": int(mets.get("totalUsers") or 0),
+        "engaged_sessions": int(mets.get("engagedSessions") or 0),
+        "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
+        "bounce_rate_pct": _pct_rate(mets.get("bounceRate")),
+        "avg_session_seconds": round(float(mets.get("averageSessionDuration") or 0), 1),
+        "duration_metric": "averageSessionDuration",
+        "market_guess": _infer_market(path),
+    }
+
+
+def _channel_row(ch: str, mets: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "channel": ch,
+        "sessions": int(mets.get("sessions") or 0),
+        "users": int(mets.get("totalUsers") or 0),
+        "engaged_sessions": int(mets.get("engagedSessions") or 0),
+        "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
+    }
+
+
+def _month_slice(
+    *,
+    window: str,
+    status: str,
+    totals: dict[str, Any],
+    landings: list[dict[str, Any]],
+    channels: list[dict[str, Any]],
+    events: list[dict[str, Any]] | None = None,
+    events_interesting: list[dict[str, Any]] | None = None,
+    paid_search_sessions: int | None = None,
+    paid_search_engagement_rate_pct: float | None = None,
+) -> dict[str, Any]:
+    paid = next(
+        (c for c in channels if "paid" in (c.get("channel") or "").lower()),
+        None,
+    )
+    paid_n = (
+        paid_search_sessions
+        if paid_search_sessions is not None
+        else int((paid or {}).get("sessions") or 0)
+    )
+    paid_eng = (
+        paid_search_engagement_rate_pct
+        if paid_search_engagement_rate_pct is not None
+        else (paid or {}).get("engagement_rate_pct")
+    )
+    out: dict[str, Any] = {
+        "window": window,
+        "status": status,
+        "totals_last_7_days": totals,
+        "top_landing_pages": landings,
+        "channels": channels,
+        "paid_search_sessions": paid_n,
+        "paid_search_engagement_rate_pct": paid_eng,
+    }
+    if events is not None:
+        out["events_top"] = events
+    if events_interesting is not None:
+        out["events_interesting"] = events_interesting
+    return out
 
 
 def _load_dotenv_quiet() -> None:
@@ -193,7 +290,6 @@ def build_insights(
     insights: list[str] = []
     s7 = int(last7.get("sessions") or 0)
     eng_rate = last7.get("engagement_rate_pct")
-    bounce = last7.get("bounce_rate_pct")
     _ = events  # kept for callers; not lectured on Executive
     _ = notes
 
@@ -242,11 +338,27 @@ def build_insights(
             "organic growth."
         )
 
-    if eng_rate is not None and bounce is not None:
-        insights.append(
-            f"About {eng_rate:.0f}% stayed and looked around; "
-            f"{bounce:.0f}% left right away. (Website behavior — not Ad CTR.)"
-        )
+    if eng_rate is not None:
+        avg_sec = last7.get("avg_session_seconds")
+        if float(eng_rate) >= 95.0:
+            dur = ""
+            if avg_sec is not None:
+                sec = int(round(float(avg_sec)))
+                if sec < 60:
+                    dur = f" Avg session {sec}s."
+                else:
+                    dur = f" Avg session {sec // 60}m {sec % 60:02d}s."
+            insights.append(
+                f"Engagement rate is saturated ({eng_rate:.0f}% — every session met "
+                f"GA4’s 10s / 2-page / key-event bar), so it does not discriminate health.{dur} "
+                "(Website behavior — not Ad CTR.)"
+            )
+        else:
+            insights.append(
+                f"Engagement rate {eng_rate:.0f}% "
+                f"(GA4: 10s+ stay, 2+ pages, or a key event). "
+                "(Website behavior — not Ad CTR.)"
+            )
 
     # Device: use Paid Search split when available — George expects ~80% mobile
     paid_dev = [
@@ -379,7 +491,7 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
     resp2 = client.run_report(
         RunReportRequest(
             property=prop,
-            date_ranges=[DateRange(start_date=GA4_WEEK_START, end_date=GA4_WEEK_END)],
+            date_ranges=_week_date_ranges(DateRange),
             dimensions=[Dimension(name="landingPage")],
             metrics=[Metric(name=m) for m in land_metrics],
             order_bys=[OrderBy(metric={"metric_name": "sessions"}, desc=True)],
@@ -389,6 +501,7 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
     calls.append({"n": 2, "name": "au_landing_pages", "ok": True})
 
     landings: list[dict[str, Any]] = []
+    landings_prior: list[dict[str, Any]] = []
     au_path_sessions = 0
     thank_you_sessions = 0
     for row in resp2.rows or []:
@@ -396,27 +509,19 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
         if path is None or str(path).strip() == "":
             path = "(empty path)"
         mets = _metric_map(row, land_metrics)
-        kind = _path_kind(path)
-        sessions = int(mets.get("sessions") or 0)
+        entry = _landing_row(path, mets)
+        rng = _range_key(row, 1)
+        if rng == PRIOR_RANGE:
+            landings_prior.append(entry)
+            continue
+        kind = entry["path_kind"]
+        sessions = int(entry["sessions"] or 0)
         if kind == "au":
             au_path_sessions += sessions
         if kind == "thank_you":
             thank_you_sessions += sessions
-        landings.append(
-            {
-                "path": path,
-                "path_display": _nice_path(path),
-                "path_kind": kind,
-                "sessions": sessions,
-                "users": int(mets.get("totalUsers") or 0),
-                "engaged_sessions": int(mets.get("engagedSessions") or 0),
-                "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
-                "bounce_rate_pct": _pct_rate(mets.get("bounceRate")),
-                "avg_session_seconds": round(float(mets.get("averageSessionDuration") or 0), 1),
-                "duration_metric": "averageSessionDuration",
-                "market_guess": _infer_market(path),
-            }
-        )
+        landings.append(entry)
+    landings_prior.sort(key=lambda L: -int(L.get("sessions") or 0))
 
     ch_metrics = ["sessions", "totalUsers", "engagedSessions", "engagementRate"]
     resp3 = client.run_report(
@@ -432,25 +537,21 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
     calls.append({"n": 3, "name": "au_channels", "ok": True})
 
     channels: list[dict[str, Any]] = []
+    channels_prior: list[dict[str, Any]] = []
     paid_search_sessions_prior = 0
     for row in resp3.rows or []:
         ch = row.dimension_values[0].value if row.dimension_values else "(not set)"
         mets = _metric_map(row, ch_metrics)
+        entry = _channel_row(ch, mets)
         rng = _range_key(row, 1)
-        sess_n = int(mets.get("sessions") or 0)
+        sess_n = int(entry["sessions"] or 0)
         if rng == PRIOR_RANGE:
+            channels_prior.append(entry)
             if "paid" in (ch or "").lower():
                 paid_search_sessions_prior += sess_n
             continue
-        channels.append(
-            {
-                "channel": ch,
-                "sessions": sess_n,
-                "users": int(mets.get("totalUsers") or 0),
-                "engaged_sessions": int(mets.get("engagedSessions") or 0),
-                "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
-            }
-        )
+        channels.append(entry)
+    channels_prior.sort(key=lambda c: -int(c.get("sessions") or 0))
 
     paid = next(
         (c for c in channels if "paid" in (c.get("channel") or "").lower()),
@@ -491,11 +592,22 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
             notes.append(
                 f"{thank_you_sessions} thank-you landings — treat as George/sales/agent tests, not leads."
             )
-        if last7.get("engagement_rate_pct") is not None:
-            insights.append(
-                f"About {last7['engagement_rate_pct']:.0f}% stayed and looked around "
-                f"({sess} visits)."
-            )
+    if last7.get("engagement_rate_pct") is not None:
+            eng = float(last7["engagement_rate_pct"])
+            if eng >= 95.0:
+                avg_sec = last7.get("avg_session_seconds")
+                if avg_sec is not None:
+                    sec = int(round(float(avg_sec)))
+                    dur = f"{sec}s" if sec < 60 else f"{sec // 60}m {sec % 60:02d}s"
+                    insights.append(
+                        f"Engagement rate saturated ({eng:.0f}%); avg session {dur} "
+                        f"({sess} visits)."
+                    )
+            else:
+                insights.append(
+                    f"About {eng:.0f}% stayed and looked around "
+                    f"({sess} visits)."
+                )
 
     assert len(calls) <= MAX_REPORTS_AU
 
@@ -509,9 +621,17 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
         f"Paid Google ads visits: {paid_n}.",
     ]
     if last7.get("engagement_rate_pct") is not None and sess:
-        summary_bits.append(
-            f"About {last7['engagement_rate_pct']:.0f}% stayed and looked around."
-        )
+        eng = float(last7["engagement_rate_pct"])
+        if eng >= 95.0:
+            avg_sec = last7.get("avg_session_seconds")
+            if avg_sec is not None:
+                sec = int(round(float(avg_sec)))
+                dur = f"{sec}s" if sec < 60 else f"{sec // 60}m {sec % 60:02d}s"
+                summary_bits.append(f"Engagement saturated · avg session {dur}.")
+        else:
+            summary_bits.append(
+                f"About {eng:.0f}% stayed and looked around."
+            )
     if top_paths:
         summary_bits.append("Top landings: " + ", ".join(top_paths) + ".")
     if notes:
@@ -534,7 +654,28 @@ def pull_ga4_au(client: Any, property_id: str) -> dict[str, Any]:
         "au_path_sessions": au_path_sessions,
         "thank_you_sessions": thank_you_sessions,
         "top_landing_pages": landings,
+        "top_landing_pages_prior": landings_prior,
         "channels": channels,
+        "channels_prior": channels_prior,
+        "by_month": {
+            PRIOR_MONTH_KEY: _month_slice(
+                window=GA4_PRIOR_LABEL,
+                status="complete",
+                totals=prior7,
+                landings=landings_prior,
+                channels=channels_prior,
+                paid_search_sessions=paid_search_sessions_prior,
+            ),
+            CURRENT_MONTH_KEY: _month_slice(
+                window=GA4_WINDOW_LABEL,
+                status="active_mtd",
+                totals=last7,
+                landings=landings,
+                channels=channels,
+                paid_search_sessions=paid_n,
+                paid_search_engagement_rate_pct=paid_eng,
+            ),
+        },
         "insights": insights,
         "notes": notes,
         "summary_plain": " ".join(summary_bits),
@@ -611,7 +752,7 @@ def pull_ga4() -> dict[str, Any]:
     ]
     req2 = RunReportRequest(
         property=prop,
-        date_ranges=[DateRange(start_date=GA4_WEEK_START, end_date=GA4_WEEK_END)],
+        date_ranges=_week_date_ranges(DateRange),
         dimensions=[Dimension(name="landingPage")],
         metrics=[Metric(name=m) for m in land_metrics],
         order_bys=[OrderBy(metric={"metric_name": "sessions"}, desc=True)],
@@ -621,6 +762,7 @@ def pull_ga4() -> dict[str, Any]:
     calls.append({"n": 2, "name": "landing_pages_engagement", "ok": True})
 
     landings: list[dict[str, Any]] = []
+    landings_prior: list[dict[str, Any]] = []
     market_sessions = {"US": 0, "AU": 0, "PH": 0, "other": 0}
     kind_sessions = {
         "us_home": 0,
@@ -637,26 +779,18 @@ def pull_ga4() -> dict[str, Any]:
         if path is None or str(path).strip() == "":
             path = "(empty path)"
         mets = _metric_map(row, land_metrics)
-        market = _infer_market(path)
-        kind = _path_kind(path)
-        sessions = int(mets.get("sessions") or 0)
+        entry = _landing_row(path, mets)
+        rng = _range_key(row, 1)
+        if rng == PRIOR_RANGE:
+            landings_prior.append(entry)
+            continue
+        market = entry["market_guess"]
+        kind = entry["path_kind"]
+        sessions = int(entry["sessions"] or 0)
         market_sessions[market] = market_sessions.get(market, 0) + sessions
         kind_sessions[kind] = kind_sessions.get(kind, 0) + sessions
-        landings.append(
-            {
-                "path": path,
-                "path_display": _nice_path(path),
-                "path_kind": kind,
-                "sessions": sessions,
-                "users": int(mets.get("totalUsers") or 0),
-                "engaged_sessions": int(mets.get("engagedSessions") or 0),
-                "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
-                "bounce_rate_pct": _pct_rate(mets.get("bounceRate")),
-                "avg_session_seconds": round(float(mets.get("averageSessionDuration") or 0), 1),
-                "duration_metric": "averageSessionDuration",
-                "market_guess": market,
-            }
-        )
+        landings.append(entry)
+    landings_prior.sort(key=lambda L: -int(L.get("sessions") or 0))
 
     # --- 3) Channels + engagement ---
     ch_metrics = ["sessions", "totalUsers", "engagedSessions", "engagementRate"]
@@ -672,25 +806,21 @@ def pull_ga4() -> dict[str, Any]:
     calls.append({"n": 3, "name": "channels_engagement", "ok": True})
 
     channels: list[dict[str, Any]] = []
+    channels_prior: list[dict[str, Any]] = []
     paid_search_sessions_prior = 0
     for row in resp3.rows or []:
         ch = row.dimension_values[0].value if row.dimension_values else "(not set)"
         mets = _metric_map(row, ch_metrics)
+        entry = _channel_row(ch, mets)
         rng = _range_key(row, 1)
-        sess_n = int(mets.get("sessions") or 0)
+        sess_n = int(entry["sessions"] or 0)
         if rng == PRIOR_RANGE:
+            channels_prior.append(entry)
             if "paid" in (ch or "").lower():
                 paid_search_sessions_prior += sess_n
             continue
-        channels.append(
-            {
-                "channel": ch,
-                "sessions": sess_n,
-                "users": int(mets.get("totalUsers") or 0),
-                "engaged_sessions": int(mets.get("engagedSessions") or 0),
-                "engagement_rate_pct": _pct_rate(mets.get("engagementRate")),
-            }
-        )
+        channels.append(entry)
+    channels_prior.sort(key=lambda c: -int(c.get("sessions") or 0))
 
     # --- 4) Device × channel (Paid Search split for desktop/mobile investigation) ---
     req4 = RunReportRequest(
@@ -832,9 +962,17 @@ def pull_ga4() -> dict[str, Any]:
         f"Last 7 days (US site tags): {s7:,} sessions · {u7:,} users.",
     ]
     if last7.get("engagement_rate_pct") is not None:
-        summary_bits.append(
-            f"About {last7['engagement_rate_pct']:.0f}% stayed and looked around."
-        )
+        eng = float(last7["engagement_rate_pct"])
+        if eng >= 95.0:
+            avg_sec = last7.get("avg_session_seconds")
+            if avg_sec is not None:
+                sec = int(round(float(avg_sec)))
+                dur = f"{sec}s" if sec < 60 else f"{sec // 60}m {sec % 60:02d}s"
+                summary_bits.append(f"Engagement saturated · avg session {dur}.")
+        else:
+            summary_bits.append(
+                f"About {eng:.0f}% stayed and looked around."
+            )
     if top_paths:
         summary_bits.append("Top landings: " + ", ".join(top_paths) + ".")
     if top_ch:
@@ -927,6 +1065,8 @@ def pull_ga4() -> dict[str, Any]:
         "measurement_id_us": MEASUREMENT_ID_US,
         "window": GA4_WINDOW_LABEL,
         "window_prior": GA4_PRIOR_LABEL,
+        "current_month_key": CURRENT_MONTH_KEY,
+        "prior_month_key": PRIOR_MONTH_KEY,
         "run_report_requests": len(calls),
         "run_report_max": MAX_REPORTS,
         "api_calls": calls,
@@ -942,7 +1082,9 @@ def pull_ga4() -> dict[str, Any]:
         "path_kind_sessions": kind_sessions,
         "landing_compare": compare,
         "top_landing_pages": landings,
+        "top_landing_pages_prior": landings_prior,
         "channels": channels,
+        "channels_prior": channels_prior,
         "devices": devices,
         "devices_by_channel": devices_by_channel,
         "device_finding": device_finding,
@@ -973,6 +1115,53 @@ def pull_ga4() -> dict[str, Any]:
             "error_plain": "GA4_PROPERTY_ID_AU not set.",
             "summary_plain": "AU property id not set — skipped.",
         }
+
+    au_by = ((snap.get("au") or {}).get("by_month") or {})
+    snap["by_month"] = {
+        PRIOR_MONTH_KEY: {
+            **_month_slice(
+                window=GA4_PRIOR_LABEL,
+                status="complete",
+                totals=prior7,
+                landings=landings_prior,
+                channels=channels_prior,
+                paid_search_sessions=paid_search_sessions_prior,
+            ),
+            "au": au_by.get(PRIOR_MONTH_KEY)
+            or {
+                "window": GA4_PRIOR_LABEL,
+                "status": "complete",
+                "totals_last_7_days": (snap.get("au") or {}).get("totals_prior_7_days"),
+                "top_landing_pages": (snap.get("au") or {}).get("top_landing_pages_prior")
+                or [],
+                "channels": (snap.get("au") or {}).get("channels_prior") or [],
+            },
+        },
+        CURRENT_MONTH_KEY: {
+            **_month_slice(
+                window=GA4_WINDOW_LABEL,
+                status="active_mtd",
+                totals=last7,
+                landings=landings,
+                channels=channels,
+                events=events,
+                events_interesting=interesting_events,
+            ),
+            "au": au_by.get(CURRENT_MONTH_KEY)
+            or {
+                "window": GA4_WINDOW_LABEL,
+                "status": "active_mtd",
+                "totals_last_7_days": (snap.get("au") or {}).get("totals_last_7_days"),
+                "top_landing_pages": (snap.get("au") or {}).get("top_landing_pages") or [],
+                "channels": (snap.get("au") or {}).get("channels") or [],
+                "paid_search_sessions": (snap.get("au") or {}).get("paid_search_sessions"),
+                "paid_search_engagement_rate_pct": (snap.get("au") or {}).get(
+                    "paid_search_engagement_rate_pct"
+                ),
+            },
+        },
+    }
+
     snap["run_report_requests_total"] = int(snap["run_report_requests"]) + int(
         (snap.get("au") or {}).get("run_report_requests") or 0
     )
