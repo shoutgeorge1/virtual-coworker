@@ -188,15 +188,26 @@ describe("Paid Landing Page Baseline v1 — August 2026", () => {
     expect(landing).not.toContain("gm-cta-row");
     expect(landing).not.toContain('id="model"');
     expect(landing).not.toContain('id="faq"');
-    // Exactly one form-scroll CTA class in hero; closer is phone-only.
+    // Hero: one primary form CTA + one secondary book link (not equal-weight dual).
     const hero = landing.slice(
       landing.indexOf('className="gm-hero"'),
       landing.indexOf('className="gm-logos"'),
     );
-    expect((hero.match(/sp-hero-cta/g) || []).length).toBe(1);
+    expect((hero.match(/className="sp-hero-cta"/g) || []).length).toBe(1);
+    expect((hero.match(/sp-hero-cta-secondary/g) || []).length).toBe(1);
     const closer = landing.slice(landing.indexOf('id="again"'));
     expect(closer).toContain("phone_href");
     expect(closer).not.toContain('href="#gate"');
+  });
+
+  it("mounts market reinforcement CTA and fires calendly once (no data-track double)", () => {
+    const landing = readFileSync(
+      join(ROOT, "app/components/StaffingBaselineLanding.tsx"),
+      "utf8",
+    );
+    expect(landing).toContain("MarketReinforcementCta");
+    expect(landing).toContain("trackCalendlyClick");
+    expect(landing).not.toMatch(/data-track="calendly_cta_clicked"/);
   });
 
   it("redirects retired challenger aliases to market home", () => {

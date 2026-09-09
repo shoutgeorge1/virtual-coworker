@@ -24,6 +24,12 @@ export const CONVERSION_ASSIST = {
   scrollDepth: 0.32,
   /** Deeper scroll required before chat launcher may appear. */
   chatScrollDepth: 0.55,
+  /**
+   * Market reinforcement sticky (US phone / AU book).
+   * Show after dwell OR mid-page scroll — whichever first. Once per session.
+   */
+  reinforcementMs: 42_000,
+  reinforcementScrollDepth: 0.5,
 } as const;
 
 export const EXIT_SESSION_KEY = "vc_exit_intent_seen";
@@ -32,6 +38,8 @@ export const CHAT_ENGAGED_KEY = "vc_chat_engaged";
 export const PRIMARY_CONVERTED_KEY = "vc_primary_converted";
 /** Session flag: visitor started the employer form — protect completion. */
 export const FORM_STARTED_KEY = "vc_form_started";
+/** Session flag: market reinforcement sticky already shown or dismissed. */
+export const REINFORCEMENT_SEEN_KEY = "vc_reinforcement_cta_seen";
 
 export type AssistKind = "exit" | "chat";
 
@@ -135,6 +143,26 @@ export function hasReachedScrollAssist(): boolean {
 
 export function hasReachedChatScrollAssist(): boolean {
   return pageScrollDepth() >= CONVERSION_ASSIST.chatScrollDepth;
+}
+
+export function hasReachedReinforcementScroll(): boolean {
+  return pageScrollDepth() >= CONVERSION_ASSIST.reinforcementScrollDepth;
+}
+
+export function wasReinforcementSeen(): boolean {
+  return readSessionFlag(REINFORCEMENT_SEEN_KEY);
+}
+
+export function markReinforcementSeen(): void {
+  writeSessionFlag(REINFORCEMENT_SEEN_KEY);
+}
+
+/** Hide reinforcement while form is busy, primary already converted, or already shown. */
+export function shouldSuppressReinforcementCta(): boolean {
+  if (wasReinforcementSeen()) return true;
+  if (wasPrimaryConverted()) return true;
+  if (isFormBusy()) return true;
+  return false;
 }
 
 export function isCoarsePointer(): boolean {

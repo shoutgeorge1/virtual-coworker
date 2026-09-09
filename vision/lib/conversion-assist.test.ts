@@ -4,9 +4,11 @@
 import { describe, expect, it } from "vitest";
 import {
   CONVERSION_ASSIST,
+  shouldSuppressReinforcementCta,
   shouldSuppressSecondaryAssist,
   wasFormStarted,
   wasPrimaryConverted,
+  wasReinforcementSeen,
 } from "./conversion-assist";
 
 describe("CONVERSION_ASSIST timing", () => {
@@ -41,12 +43,23 @@ describe("CONVERSION_ASSIST timing", () => {
       CONVERSION_ASSIST.scrollDepth,
     );
   });
+
+  it("reinforcement sticky is ~42s or ~50% scroll", () => {
+    expect(CONVERSION_ASSIST.reinforcementMs).toBeGreaterThanOrEqual(40_000);
+    expect(CONVERSION_ASSIST.reinforcementMs).toBeLessThanOrEqual(45_000);
+    expect(CONVERSION_ASSIST.reinforcementScrollDepth).toBeGreaterThanOrEqual(
+      0.45,
+    );
+    expect(CONVERSION_ASSIST.reinforcementScrollDepth).toBeLessThanOrEqual(0.55);
+  });
 });
 
 describe("secondary suppress helpers", () => {
   it("exports suppress predicates", () => {
     expect(typeof shouldSuppressSecondaryAssist).toBe("function");
+    expect(typeof shouldSuppressReinforcementCta).toBe("function");
     expect(typeof wasFormStarted).toBe("function");
     expect(typeof wasPrimaryConverted).toBe("function");
+    expect(typeof wasReinforcementSeen).toBe("function");
   });
 });

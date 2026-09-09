@@ -33,6 +33,7 @@ import {
 import { clientMarksForMarket } from "../../config/site";
 import {
   captureAttribution,
+  trackCalendlyClick,
   trackEvent,
   trackPhoneClick,
 } from "../../lib/tracking";
@@ -41,6 +42,7 @@ import { trackLpView } from "../../lib/lp-events";
 import { exitToCareers } from "../../lib/job-seeker-exit";
 import { bookPathForMarket, withCurrentSearch } from "../../lib/preserve-query";
 import GuidedMatchGate from "./GuidedMatchGate";
+import MarketReinforcementCta from "./MarketReinforcementCta";
 import UsBaselineHero from "./UsBaselineHero";
 import "../guided-match.css";
 import "../staffing-partner.css";
@@ -263,14 +265,15 @@ export default function StaffingBaselineLanding({
               <a
                 className="sp-hero-cta-secondary"
                 href={bookPathForMarket(market)}
-                data-track="calendly_cta_clicked"
                 data-market={market}
                 onClick={(e) => {
                   const next = withCurrentSearch(bookPathForMarket(market));
-                  trackEvent("calendly_cta_clicked", {
+                  // Single fire via trackCalendlyClick (no data-track — avoids double push).
+                  trackCalendlyClick({
                     market,
                     href: next,
                     source: "hero_skip_form",
+                    cta_type: "booking",
                     bidding_primary: false,
                   });
                   if (next === bookPathForMarket(market)) return;
@@ -432,14 +435,15 @@ export default function StaffingBaselineLanding({
               Prefer not to fill a form?{" "}
               <a
                 href={bookPathForMarket(market)}
-                data-track="calendly_cta_clicked"
                 data-market={market}
                 onClick={(e) => {
                   const next = withCurrentSearch(bookPathForMarket(market));
-                  trackEvent("calendly_cta_clicked", {
+                  // Single fire via trackCalendlyClick (no data-track — avoids double push).
+                  trackCalendlyClick({
                     market,
                     href: next,
                     source: "gate_skip_form",
+                    cta_type: "booking",
                     bidding_primary: false,
                   });
                   if (next === bookPathForMarket(market)) return;
@@ -509,6 +513,14 @@ export default function StaffingBaselineLanding({
           </a>
         </div>
       </footer>
+
+      <MarketReinforcementCta
+        market={market}
+        phoneHref={cfg.phone_href}
+        phoneDisplay={cfg.phone_display}
+        category={category || ""}
+        variant={variant}
+      />
     </div>
   );
 }
